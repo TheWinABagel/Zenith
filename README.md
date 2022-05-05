@@ -1,9 +1,12 @@
-# Fabric Example Mod
+# Apotheosis Fabric
 
-## Setup
+Apotheosis is a mod about adding additional layers of content to vanilla systems. It doesn't add much in the way of blocks or items, but it adds a significant amount of content. It's divided into modules, each separate from another. Any module can be disabled at will, but all the modules work best when they are all enabled.
 
-For setup instructions please see the [fabric wiki page](https://fabricmc.net/wiki/tutorial:setup) that relates to the IDE that you are using.
+## Credits
+
+**Shadows of Fire**: Creator of Apotheosis and the forge maintainer
+**Faellynna**: Artist of Apotheosis
 
 ## License
 
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+This mod is licensed MIT License
