@@ -1,0 +1,9 @@
+{
+	"block": "apotheosis:crystal_seashelf",
+	"stats": {
+		"maxEterna": 30,
+		"eterna": 2,
+		"quanta": 4,
+		"arcana": 2
+	}
+}

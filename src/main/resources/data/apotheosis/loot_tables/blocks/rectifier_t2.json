@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:block",
+  "fabric:load_conditions": [{
+    "condition": "apotheosis:module",
+    "module": "enchantment"
+  }],
+  "pools": [
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "apotheosis:rectifier_t2"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ]
+    }
+  ]
+}
