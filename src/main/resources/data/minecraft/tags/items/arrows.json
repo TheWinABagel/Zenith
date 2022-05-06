@@ -1,0 +1,24 @@
+{
+	"replace": false,
+	"values": [{
+			"id": "apotheosis:obsidian_arrow",
+			"required": false
+		},
+		{
+			"id": "apotheosis:broadhead_arrow",
+			"required": false
+		},
+		{
+			"id": "apotheosis:explosive_arrow",
+			"required": false
+		},
+		{
+			"id": "apotheosis:iron_mining_arrow",
+			"required": false
+		},
+		{
+			"id": "apotheosis:diamond_mining_arrow",
+			"required": false
+		}
+	]
+}

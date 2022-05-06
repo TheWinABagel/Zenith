@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "apotheosis:potion_charm",
+      "required": false
+    }
+  ]
+}
