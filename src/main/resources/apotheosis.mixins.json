@@ -1,0 +1,57 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "safro.apotheosis.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "ItemStackMixin",
+    "LivingEntityMixin",
+    "CrossbowItemMixin",
+    "ServerPlayerGameModeMixin",
+    "PlayerMixin",
+    "EnchantmentMixin",
+    "ShearsItemMixin",
+    "SheepMixin",
+    "BowItemMixin",
+    "MultiPlayerGameModeMixin",
+    "TemptGoalMixin",
+    "ThrownTridentMixin",
+    "AbstractContainerMenuMixin",
+    "EnchantmentHelperMixin",
+    "ItemMixin",
+    "EnchantmentTableBlockMixin",
+    "CombatRulesMixin",
+    "EnchantRandomlyFunctionMixin",
+    "ServerResourcesMixin",
+    "LootTablesMixin",
+
+    "anvil.FallingBlockEntityMixin",
+    "anvil.AnvilMenuMixin",
+    "anvil.AnvilBlockMixin",
+    "anvil.BlockMixin",
+    "anvil.BlockBehaviourMixin",
+
+    "garden.BambooBlockMixin",
+    "garden.CactusBlockMixin",
+    "garden.SugarCaneBlockMixin",
+    "garden.BlockBehaviourMixin",
+
+    "fletching.FletchingTableBlockMixin",
+
+    "spawner.SpawnerBlockMixin",
+
+    "BlockStateBaseAccessor",
+    "AbstractContainerMenuInvoker"
+  ],
+  "client": [
+    "anvil.AnvilScreenMixin",
+
+    "ClientPacketListenerMixin",
+    "GameRendererMixin",
+    "MinecraftMixin",
+    "ScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "id": "apotheosis",
+  "version": "${version}",
+
+  "name": "Apotheosis",
+  "description": "All things that should have been",
+  "authors": [
+    "Safro",
+    "Shadows of Fire (Forge)"
+  ],
+  "contact": {
+    "homepage": "https://curseforge.com/minecraft/mc-mods/apotheosis-fabric",
+    "sources": "https://github.com/Safrodev/Apotheosis-Fabric",
+    "issues": "https://github.com/Safrodev/Apotheosis-Fabric/issues"
+  },
+
+  "license": "MIT License",
+  "icon": "assets/apotheosis/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "safro.apotheosis.Apotheosis"
+    ],
+    "client": [
+      "safro.apotheosis.ApotheosisClient"
+    ],
+    "rei": [
+      "safro.apotheosis.ench.compat.EnchREIPlugin",
+      "safro.apotheosis.village.compat.VillageREIPlugin",
+      "safro.apotheosis.garden.compat.GardenREIPlugin",
+      "safro.apotheosis.spawn.compat.SpawnerREIPlugin"
+    ],
+    "top_plugin": [
+      "safro.apotheosis.compat.ApothTOPPlugin"
+    ]
+  },
+  "mixins": [
+    "apotheosis.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.13.3",
+    "fabric": "*",
+    "minecraft": "1.18.x",
+    "java": ">=17"
+  },
+  "accessWidener": "apotheosis.aw",
+
+  "waila:plugins": {
+    "id": "apotheosis:plugin",
+    "initializer": "safro.apotheosis.ench.compat.EnchWTHITPlugin"
+  }
+}
