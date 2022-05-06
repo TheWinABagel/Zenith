@@ -1,4 +1,6 @@
-# Apotheosis Fabric
+# Apotheosis (Fabric)
+
+https://www.curseforge.com/minecraft/mc-mods/apotheosis-fabric
 
 Apotheosis is a mod about adding additional layers of content to vanilla systems. It doesn't add much in the way of blocks or items, but it adds a significant amount of content. It's divided into modules, each separate from another. Any module can be disabled at will, but all the modules work best when they are all enabled.
 
