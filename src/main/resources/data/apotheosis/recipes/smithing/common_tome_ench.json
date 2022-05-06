@@ -1,0 +1,24 @@
+{
+	"type": "smithing",
+	"fabric:load_conditions": [{
+		"condition": "fabric:and",
+		"values": [{
+			"condition": "apotheosis:module",
+			"module": "deadly"
+		},
+			{
+				"condition": "apotheosis:module",
+				"module": "enchantment"
+			}
+		]
+	}],
+	"base": {
+		"item": "apotheosis:scrap_tome"
+	},
+	"addition": {
+		"item": "apotheosis:common_shard"
+	},
+	"result": {
+		"item": "apotheosis:common_tome"
+	}
+}

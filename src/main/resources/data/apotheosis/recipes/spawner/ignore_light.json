@@ -1,0 +1,14 @@
+{
+	"type": "apotheosis:spawner_modifier",
+	"fabric:load_conditions": [{
+		"condition": "apotheosis:module",
+		"module": "spawner"
+	}],
+	"mainhand": {
+		"item": "minecraft:soul_lantern"
+	},
+	"stat_changes": [{
+		"id": "ignore_light",
+		"value": true
+	}]
+}

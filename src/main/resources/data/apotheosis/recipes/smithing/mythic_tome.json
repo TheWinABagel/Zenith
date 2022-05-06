@@ -1,0 +1,27 @@
+{
+	"type": "smithing",
+	"fabric:load_conditions": [{
+		"condition": "fabric:and",
+		"values": [{
+			"condition": "fabric:not",
+			"value": {
+				"condition": "apotheosis:module",
+				"module": "enchantment"
+			}
+		},
+			{
+				"condition": "apotheosis:module",
+				"module": "deadly"
+			}
+		]
+	}],
+	"base": {
+		"item": "minecraft:enchanted_book"
+	},
+	"addition": {
+		"item": "apotheosis:mythic_shard"
+	},
+	"result": {
+		"item": "apotheosis:mythic_tome"
+	}
+}

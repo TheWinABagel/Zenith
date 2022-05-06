@@ -1,0 +1,14 @@
+{
+	"type": "apotheosis:spawner_modifier",
+	"fabric:load_conditions": [{
+		"condition": "apotheosis:module",
+		"module": "spawner"
+	}],
+	"mainhand": {
+		"item": "minecraft:chorus_fruit"
+	},
+	"stat_changes": [{
+		"id": "no_ai",
+		"value": true
+	}]
+}

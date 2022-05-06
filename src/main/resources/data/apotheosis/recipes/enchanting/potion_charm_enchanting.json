@@ -1,0 +1,21 @@
+{
+	"type": "apotheosis:potion_charm_enchanting",
+	"fabric:load_conditions": [{
+		"condition": "apotheosis:module",
+		"module": "enchantment"
+	},
+	{
+		"condition": "apotheosis:module",
+		"module": "potion"
+	}],
+	"requirements": {
+		"eterna": 50,
+		"quanta": 8.5,
+		"arcana": 85
+	},
+	"max_requirements": {
+		"eterna": 50,
+		"quanta": 13.5,
+		"arcana": 95
+	}
+}
