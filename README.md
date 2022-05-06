@@ -13,4 +13,4 @@ Apotheosis Fabric is an unofficial fabric port of Apotheosis. The forge version 
 
 ## License
 
-This mod is licensed MIT License
+This mod is licensed under the MIT License
