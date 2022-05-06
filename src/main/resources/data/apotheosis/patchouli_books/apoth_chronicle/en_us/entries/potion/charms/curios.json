@@ -1,0 +1,13 @@
+{
+    "name": "Trinkets",
+    "icon": "trinkets:textures/gui/slots/charm.png",
+    "category": "apotheosis:potion/charms",
+	"flag": "&apotheosis:potion,apotheosis:curiosloaded",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "When you have $(9)Trinkets$() installed, you can equip potion charms in the $(9)Charm$() slot.$(p)They'll work the same way they do in the inventory."
+        }
+	]
+}
