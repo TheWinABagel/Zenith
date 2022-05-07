@@ -286,6 +286,8 @@ public class EnchModule {
 
     public static void reload(boolean e) {
         enchInfoConfig = new Configuration(new File(Apotheosis.configDir, "enchantments.cfg"));
+        enchInfoConfig.setTitle("Apotheosis Enchantment Information");
+        enchInfoConfig.setComment("This file contains configurable data for each enchantment.\nThe names of each category correspond to the registry names of every loaded enchantment.");
         ENCHANTMENT_INFO.clear();
 
         for (Enchantment ench : Registry.ENCHANTMENT) {

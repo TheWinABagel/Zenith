@@ -32,8 +32,6 @@ import safro.apotheosis.village.VillageModule;
 
 import java.io.File;
 
-// TODO: Mod Compat (REI, Trinkets), EnchHooks)
-
 public class Apotheosis implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("apotheosis");
 	public static final String MODID = "apotheosis";
@@ -60,6 +58,8 @@ public class Apotheosis implements ModInitializer {
 		//enableDeadly = config.getBoolean("Enable Deadly Module", "general", true, "If the deadly module is loaded.");
 		enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
 		enableVillage = config.getBoolean("Enable Village Module", "general", true, "If the village module is loaded.");
+		config.setTitle("Apotheosis Module Control");
+		config.setComment("This file allows individual modules of Apotheosis to be enabled or disabled.\nChanges will have no effect until the next game restart.");
 		if (config.hasChanged()) config.save();
 	}
 
