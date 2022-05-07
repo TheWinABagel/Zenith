@@ -46,10 +46,12 @@ public class ApotheosisUtil {
         return 0;
     }
 
+    // Equivalent to stack.canApplyAtEnchantingTable(ench);
     public static boolean canApplyItem(Enchantment ench, ItemStack stack) {
         return ((TableApplicableItem)stack.getItem()).canApplyAtEnchantingTable(stack, ench);
     }
 
+    // Equivalent to ench.canApplyAtEnchantingTable(stack);
     public static boolean canApplyEnchantment(Enchantment ench, ItemStack stack) {
         return ((TableApplicableEnchant)ench).canApplyAtEnchantingTable(stack);
     }

@@ -33,7 +33,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import safro.apotheosis.Apotheosis;
 import safro.apotheosis.util.ApotheosisUtil;
-import safro.apotheosis.util.ScreenUtil;
+import safro.apotheosis.util.ClientUtil;
 
 import java.util.*;
 
@@ -117,7 +117,7 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 
 
         if (this.menu.getSlot(0).hasItem() && this.isHovering(145, -15, 27, 15, pMouseX, pMouseY) && Arrays.stream(this.menu.enchantClue).boxed().map(Enchantment::byId).allMatch(Predicates.notNull())) {
-            ScreenUtil.pushGuiLayer(Minecraft.getInstance(), new EnchantingInfoScreen(this));
+            ClientUtil.pushGuiLayer(Minecraft.getInstance(), new EnchantingInfoScreen(this));
         }
 
         return super.mouseClicked(pMouseX, pMouseY, pButton);

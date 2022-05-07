@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.Blocks;
 import safro.apotheosis.Apotheosis;
 import safro.apotheosis.spawn.SpawnerModule;
 import safro.apotheosis.spawn.modifiers.SpawnerModifier;
-import safro.apotheosis.util.ScreenUtil;
+import safro.apotheosis.util.ClientUtil;
 
 import java.util.List;
 
@@ -42,12 +42,12 @@ public class SpawnerREIPlugin implements REIClientPlugin {
         registry.registerFiller(SpawnerModifier.class, SpawnerDisplay::new);
 
         if (SpawnerModule.spawnerSilkLevel == -1) {
-            ScreenUtil.addInfo(registry, Blocks.SPAWNER, "info.apotheosis.spawner.no_silk");
+            ClientUtil.addInfo(registry, Blocks.SPAWNER, "info.apotheosis.spawner.no_silk");
         } else if (SpawnerModule.spawnerSilkLevel == 0) {
-            ScreenUtil.addInfo(registry, Blocks.SPAWNER, "info.apotheosis.spawner.always_drop");
-        } else ScreenUtil.addInfo(registry, Blocks.SPAWNER, new TranslatableComponent("info.apotheosis.spawner", ((MutableComponent) Enchantments.SILK_TOUCH.getFullname(SpawnerModule.spawnerSilkLevel)).withStyle(ChatFormatting.DARK_BLUE).getString()));
+            ClientUtil.addInfo(registry, Blocks.SPAWNER, "info.apotheosis.spawner.always_drop");
+        } else ClientUtil.addInfo(registry, Blocks.SPAWNER, new TranslatableComponent("info.apotheosis.spawner", ((MutableComponent) Enchantments.SILK_TOUCH.getFullname(SpawnerModule.spawnerSilkLevel)).withStyle(ChatFormatting.DARK_BLUE).getString()));
         for (Item i : Registry.ITEM) {
-            if (i instanceof SpawnEggItem) ScreenUtil.addInfo(registry, i, "info.apotheosis.capturing");
+            if (i instanceof SpawnEggItem) ClientUtil.addInfo(registry, i, "info.apotheosis.capturing");
         }
     }
 

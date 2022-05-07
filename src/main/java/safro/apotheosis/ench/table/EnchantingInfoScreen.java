@@ -29,7 +29,7 @@ import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import safro.apotheosis.Apotheosis;
-import safro.apotheosis.util.ScreenUtil;
+import safro.apotheosis.util.ClientUtil;
 
 public class EnchantingInfoScreen extends Screen {
 
@@ -79,7 +79,7 @@ public class EnchantingInfoScreen extends Screen {
     protected void init() {
         this.leftPos = (this.width - this.imageWidth) / 2;
         this.topPos = (this.height - this.imageHeight) / 2;
-        this.addRenderableWidget(new Button(0, 0, 40, 20, new TextComponent("Close"), btn -> ScreenUtil.popGuiLayer(Minecraft.getInstance())));
+        this.addRenderableWidget(new Button(0, 0, 40, 20, new TextComponent("Close"), btn -> ClientUtil.popGuiLayer(Minecraft.getInstance())));
         this.slider = this.addRenderableWidget(new PowerSlider(this.leftPos + 5, this.topPos + 80, 80, 20));
     }
 

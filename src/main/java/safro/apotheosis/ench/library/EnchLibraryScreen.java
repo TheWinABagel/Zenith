@@ -1,9 +1,12 @@
 package safro.apotheosis.ench.library;
 
+import com.google.common.base.Strings;
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -18,14 +21,18 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import org.lwjgl.glfw.GLFW;
 import safro.apotheosis.Apotheosis;
 import safro.apotheosis.network.ButtonClickPacket;
+import safro.apotheosis.util.ApotheosisUtil;
+import safro.apotheosis.util.ClientUtil;
 
 import javax.annotation.Nullable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContainer> {
 	public static final ResourceLocation TEXTURES = new ResourceLocation(Apotheosis.MODID, "textures/gui/library.png");
@@ -35,6 +42,7 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 	protected int startIndex;
 
 	protected List<LibrarySlot> data = new ArrayList<>();
+	protected EditBox filter = null;
 
 	public EnchLibraryScreen(EnchLibraryContainer container, Inventory inv, Component title) {
 		super(container, inv, title);
@@ -45,6 +53,26 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 		this.inventoryLabelY = 149;
 		this.containerChanged();
 		container.setNotifier(this::containerChanged);
+	}
+
+	@Override
+	protected void init() {
+		super.init();
+		this.filter = this.addRenderableWidget(new EditBox(font, this.leftPos + 91, this.topPos + 20 + font.lineHeight + 2, 78, font.lineHeight + 4, filter, new TextComponent("")));
+		this.filter.setResponder(t -> this.containerChanged());
+	}
+
+	@Override
+	public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
+		InputConstants.Key mouseKey = InputConstants.getKey(pKeyCode, pScanCode);
+		if (pKeyCode == GLFW.GLFW_KEY_ESCAPE && this.getFocused() == this.filter) {
+			this.setFocused(null);
+			this.filter.setFocus(false);
+			return true;
+		} else if (ClientUtil.isActiveAndMatches(this.minecraft.options.keyInventory, mouseKey) && this.getFocused() == this.filter) {
+			return true;
+		}
+		return super.keyPressed(pKeyCode, pScanCode, pModifiers);
 	}
 
 	@Override
@@ -59,8 +87,14 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 		super.renderTooltip(stack, mouseX, mouseY);
 		LibrarySlot libSlot = this.getHoveredSlot(mouseX, mouseY);
 		if (libSlot != null) {
-			List<Component> list = new ArrayList<>();
+			List<FormattedText> list = new ArrayList<>();
 			list.add(new TranslatableComponent(libSlot.ench.getDescriptionId()).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xFFFF80)).withUnderlined(true)));
+			if (I18n.exists(libSlot.ench.getDescriptionId() + ".desc")) {
+				Component txt = new TranslatableComponent(libSlot.ench.getDescriptionId() + ".desc").setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY).withItalic(true));
+				list.addAll(this.font.getSplitter().splitLines(txt, this.leftPos - 16, txt.getStyle()));
+				list.add(new TextComponent(""));
+			}
+
 			list.add(new TranslatableComponent("tooltip.enchlib.max_lvl", new TranslatableComponent("enchantment.level." + libSlot.maxLvl)).withStyle(ChatFormatting.GRAY));
 			list.add(new TranslatableComponent("tooltip.enchlib.points", format(libSlot.points), format(this.menu.getPointCap())).withStyle(ChatFormatting.GRAY));
 			list.add(new TextComponent(""));
@@ -75,7 +109,7 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 				list.add(new TranslatableComponent("tooltip.enchlib.extracting", new TranslatableComponent("enchantment.level." + targetLevel)).withStyle(ChatFormatting.BLUE));
 				list.add(new TranslatableComponent("tooltip.enchlib.cost", cost).withStyle(cost > libSlot.points ? ChatFormatting.RED : ChatFormatting.GOLD));
 			}
-			this.renderComponentTooltip(stack, list, this.leftPos - 16 - this.font.width(list.get(2)), mouseY);
+			this.renderComponentTooltip(stack, list.stream().map(formatted -> (Component) new TextComponent(formatted.getString())).toList(), this.leftPos - 16 - list.stream().map(this.font::width).max(Integer::compare).get(), mouseY);
 		}
 	}
 
@@ -95,6 +129,9 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 			this.renderEntry(stack, this.data.get(idx), this.leftPos + 8, this.topPos + 14 + 19 * (idx - this.startIndex), mouseX, mouseY);
 			idx++;
 		}
+
+		this.font.draw(stack, new TranslatableComponent("tooltip.enchlib.nfilt"), this.leftPos + 91, this.topPos + 20, 4210752);
+		this.font.draw(stack, new TranslatableComponent("tooltip.enchlib.ifilt"), this.leftPos + 91, this.topPos + 50, 4210752);
 	}
 
 	private void renderEntry(PoseStack stack, LibrarySlot data, int x, int y, int mouseX, int mouseY) {
@@ -174,7 +211,8 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 
 	private void containerChanged() {
 		this.data.clear();
-		for (Entry<Enchantment> e : this.menu.getPointsForDisplay()) {
+		List<Entry<Enchantment>> entries = filter(this.menu.getPointsForDisplay());
+		for (Entry<Enchantment> e : entries) {
 			this.data.add(new LibrarySlot(e.getKey(), e.getIntValue(), this.menu.getMaxLevel(e.getKey())));
 		}
 
@@ -183,6 +221,21 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 			this.startIndex = 0;
 		}
 		Collections.sort(this.data, (a, b) -> I18n.get(a.ench.getDescriptionId()).compareTo(I18n.get(b.ench.getDescriptionId())));
+	}
+
+	private List<Entry<Enchantment>> filter(List<Entry<Enchantment>> list) {
+		return list.stream().filter(this::isAllowedByItem).filter(this::isAllowedBySearch).toList();
+	}
+
+	private boolean isAllowedByItem(Entry<Enchantment> e) {
+		ItemStack stack = this.menu.ioInv.getItem(2);
+		return stack.isEmpty() || ApotheosisUtil.canApplyItem(e.getKey(), stack);
+	}
+
+	private boolean isAllowedBySearch(Entry<Enchantment> e) {
+		String name = I18n.get(e.getKey().getDescriptionId()).toLowerCase(Locale.ROOT);
+		String search = this.filter == null ? "" : this.filter.getValue().trim().toLowerCase(Locale.ROOT);
+		return Strings.isNullOrEmpty(search) || ChatFormatting.stripFormatting(name).contains(search);
 	}
 
 	@Nullable

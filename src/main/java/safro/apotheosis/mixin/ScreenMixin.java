@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import safro.apotheosis.util.ScreenUtil;
+import safro.apotheosis.util.ClientUtil;
 
 @Mixin(Screen.class)
 public class ScreenMixin {
@@ -17,6 +17,6 @@ public class ScreenMixin {
 
     @Inject(method = "onClose", at = @At("HEAD"))
     private void apothPopScreen(CallbackInfo ci) {
-        ScreenUtil.popGuiLayer(this.minecraft);
+        ClientUtil.popGuiLayer(this.minecraft);
     }
 }

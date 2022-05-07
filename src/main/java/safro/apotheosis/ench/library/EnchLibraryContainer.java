@@ -20,7 +20,7 @@ import safro.apotheosis.ench.EnchModule;
 import safro.apotheosis.network.ButtonClickPacket;
 
 public class EnchLibraryContainer extends BlockEntityContainer<EnchLibraryTile> implements ButtonClickPacket.IButtonContainer {
-	protected SimpleContainer ioInv = new SimpleContainer(2);
+	protected SimpleContainer ioInv = new SimpleContainer(3);
 	protected Runnable notifier = null;
 
 	public EnchLibraryContainer(int id, Inventory inv, BlockPos pos) {
@@ -37,7 +37,7 @@ public class EnchLibraryContainer extends BlockEntityContainer<EnchLibraryTile> 
 	}
 
 	void initCommon(Inventory inv) {
-		this.addSlot(new Slot(this.ioInv, 0, 148, 47) {
+		this.addSlot(new Slot(this.ioInv, 0, 148, 93) {
 			@Override
 			public boolean mayPlace(ItemStack stack) {
 				return stack.getItem() == Items.ENCHANTED_BOOK;
@@ -58,7 +58,7 @@ public class EnchLibraryContainer extends BlockEntityContainer<EnchLibraryTile> 
 				EnchLibraryContainer.this.ioInv.setItem(0, ItemStack.EMPTY);
 			}
 		});
-		this.addSlot(new Slot(this.ioInv, 1, 148, 98) {
+		this.addSlot(new Slot(this.ioInv, 1, 148, 127) {
 			@Override
 			public boolean mayPlace(ItemStack stack) {
 				return stack.getItem() == Items.ENCHANTED_BOOK;
@@ -69,10 +69,28 @@ public class EnchLibraryContainer extends BlockEntityContainer<EnchLibraryTile> 
 				return 1;
 			}
 		});
+		this.addSlot(new Slot(this.ioInv, 2, 92, 61) {
+			@Override
+			public boolean mayPlace(ItemStack stack) {
+				return true;
+			}
+
+			@Override
+			public int getMaxStackSize() {
+				return 1;
+			}
+
+			@Override
+			public void setChanged() {
+				EnchLibraryContainer.this.onChanged();
+			}
+		});
 		this.addPlayerSlots(inv, 8, 159);
-		this.mover.registerRule((stack, slot) -> slot == 0, 2, 38);
-		this.mover.registerRule((stack, slot) -> slot == 1, 2, 38);
+		this.mover.registerRule((stack, slot) -> slot == 0, 3, 39);
+		this.mover.registerRule((stack, slot) -> slot == 1, 3, 39);
+		this.mover.registerRule((stack, slot) -> slot == 2, 3, 39);
 		this.mover.registerRule((stack, slot) -> stack.is(Items.ENCHANTED_BOOK), 0, 1);
+		this.mover.registerRule((stack, slot) -> true, 2, 3);
 		this.registerInvShuffleRules();
 	}
 

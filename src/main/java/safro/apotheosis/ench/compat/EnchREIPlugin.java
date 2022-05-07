@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.Blocks;
 import safro.apotheosis.Apotheosis;
 import safro.apotheosis.ench.EnchModule;
 import safro.apotheosis.ench.table.EnchantingRecipe;
-import safro.apotheosis.util.ScreenUtil;
+import safro.apotheosis.util.ClientUtil;
 
 import java.util.List;
 
@@ -55,8 +55,8 @@ public class EnchREIPlugin implements REIClientPlugin {
         recipes.sort((r1, r2) -> Float.compare(r1.getRequirements().eterna, r2.getRequirements().eterna));
         recipes.forEach(registry::add);
 
-        ScreenUtil.addInfo(registry, EnchModule.LIBRARY, "info.apotheosis.library");
-        ScreenUtil.addInfo(registry, Blocks.ENCHANTING_TABLE, "info.apotheosis.enchanting");
+        ClientUtil.addInfo(registry, EnchModule.LIBRARY, "info.apotheosis.library");
+        ClientUtil.addInfo(registry, Blocks.ENCHANTING_TABLE, "info.apotheosis.enchanting");
     }
 
     public static List<ItemStack> stack(ItemLike item) {
