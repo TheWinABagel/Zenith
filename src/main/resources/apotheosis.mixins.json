@@ -39,6 +39,7 @@
     "fletching.FletchingTableBlockMixin",
 
     "spawner.SpawnerBlockMixin",
+    "spawner.BlockItemMixin",
 
     "BlockStateBaseAccessor",
     "AbstractContainerMenuInvoker"

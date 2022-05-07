@@ -8,6 +8,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.AnvilBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import safro.apotheosis.Apotheosis;
 import safro.apotheosis.ench.anvil.AnvilTile;
@@ -20,17 +22,21 @@ public class EnchWTHITPlugin implements IWailaPlugin, IBlockComponentProvider, I
     public void register(IRegistrar reg) {
         if (!Apotheosis.enableEnch) return;
         reg.addBlockData(this, AnvilTile.class);
-        reg.addComponent(this, TooltipPosition.BODY, AnvilBlock.class);
+        reg.addComponent(this, TooltipPosition.BODY, Block.class);
     }
 
     @Override
     public void appendBody(ITooltip tooltip, IBlockAccessor accessor, IPluginConfig config) {
         if (!Apotheosis.enableEnch) return;
-        CompoundTag tag = accessor.getServerData();
-        Map<Enchantment, Integer> enchants = EnchantmentHelper.deserializeEnchantments(tag.getList("enchantments", Tag.TAG_COMPOUND));
-        for (Map.Entry<Enchantment, Integer> e : enchants.entrySet()) {
-            tooltip.addLine(e.getKey().getFullname(e.getValue()));
+        if (accessor.getBlock() instanceof AnvilBlock) {
+            CompoundTag tag = accessor.getServerData();
+            Map<Enchantment, Integer> enchants = EnchantmentHelper.deserializeEnchantments(tag.getList("enchantments", Tag.TAG_COMPOUND));
+            for (Map.Entry<Enchantment, Integer> e : enchants.entrySet()) {
+                tooltip.addLine(e.getKey().getFullname(e.getValue()));
+            }
         }
+        CommonTooltipUtil.appendBlockStats(accessor.getWorld(), accessor.getBlockState(), tooltip::addLine);
+        if (accessor.getBlock() == Blocks.ENCHANTING_TABLE) CommonTooltipUtil.appendTableStats(accessor.getWorld(), accessor.getPosition(), tooltip::addLine);
     }
 
     @Override

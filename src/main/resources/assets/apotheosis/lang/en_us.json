@@ -299,8 +299,10 @@
     "advancements.apotheosis.ultimate_spawner.desc": "Create a spawner with minimal delays that has redstone control, no AI, ignores spawn conditions, and ignores players.",
 
     "comment_id": "/Spawner Module",
-    "enchantment.apotheosis.capturing": "Capturing",
 
+	"item.apotheosis.spawner": "%s Spawner",
+
+    "enchantment.apotheosis.capturing": "Capturing",
     "enchantment.apotheosis.capturing.desc": "Makes mobs have a chance to drop their spawn egg.",
 
 	"misc.apotheosis.concat": "%s %s",
@@ -327,6 +329,7 @@
 	"stat.apotheosis.redstone_control": "Redstone Control",
 	"stat.apotheosis.ignore_light": "Ignores Light",
 	"stat.apotheosis.no_ai": "No AI",
+	"stat.apotheosis.silent": "Silent",
 
 	"stat.apotheosis.min_delay.desc": "The minimum number of ticks between spawns",
 	"stat.apotheosis.max_delay.desc": "The maximum number of ticks between spawns",
@@ -339,6 +342,7 @@
 	"stat.apotheosis.redstone_control.desc": "The spawner requires redstone to activate",
 	"stat.apotheosis.ignore_light.desc": "The spawner ignores light levels",
 	"stat.apotheosis.no_ai.desc": "Spawned entities will have no AI",
+	"stat.apotheosis.silent.desc": "Spawned entities will make no noise",
 
     "title.apotheosis.spawner": "Spawner Modification",
     "info.apotheosis.spawner": "Spawners can be collected with %s and may be modified with various items.",
@@ -372,11 +376,11 @@
 	"info.apotheosis.arcana": " - Arcana: %s%%",
 	"info.apotheosis.rectification": " - Rectification: %s%%",
 	"info.apotheosis.clues": " - Enchanting Clues: %s",
-	"info.apotheosis.eterna.p": " - Eterna: +%s (Max %s)",
-	"info.apotheosis.quanta.p": " - Quanta: +%s%%",
-	"info.apotheosis.arcana.p": " - Arcana: +%s%%",
-	"info.apotheosis.rectification.p": " - Rectification: +%s%%",
-	"info.apotheosis.clues.p": " - Enchanting Clues: +%s",
+	"info.apotheosis.eterna.t": "Eterna: %s/%s",
+	"info.apotheosis.quanta.t": "Quanta: %s%%",
+	"info.apotheosis.arcana.t": "Arcana: %s%%",
+	"info.apotheosis.rectification.t": "Rectification: %s%%",
+	"info.apotheosis.clues.t": "Enchanting Clues: %s",
 	"gui.apotheosis.enchant.eterna.desc": " - Magical Energy",
 	"gui.apotheosis.enchant.eterna.desc2": "It controls the enchantment levels.",
 	"gui.apotheosis.enchant.eterna.desc3": "Current Value: %s/%s",

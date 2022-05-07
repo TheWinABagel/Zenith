@@ -39,6 +39,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity implements DataPacketBl
 	public boolean redstoneControl = false;
 	public boolean ignoresLight = false;
 	public boolean hasNoAI = false;
+	public boolean silent = false;
 
 	public ApothSpawnerTile(BlockPos pos, BlockState state) {
 		super(pos, state);
@@ -52,6 +53,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity implements DataPacketBl
 		tag.putBoolean("redstone_control", this.redstoneControl);
 		tag.putBoolean("ignore_light", this.ignoresLight);
 		tag.putBoolean("no_ai", this.hasNoAI);
+		tag.putBoolean("silent", this.silent);
 		super.saveAdditional(tag);
 	}
 
@@ -62,6 +64,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity implements DataPacketBl
 		this.redstoneControl = tag.getBoolean("redstone_control");
 		this.ignoresLight = tag.getBoolean("ignore_light");
 		this.hasNoAI = tag.getBoolean("no_ai");
+		this.silent = tag.getBoolean("silent");
 		super.load(tag);
 	}
 
@@ -198,6 +201,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity implements DataPacketBl
 								mob.setNoAi(true);
 								EntityHelper.getExtraCustomData(entity).putBoolean("apotheosis:movable", true);
 							}
+							if (ApothSpawnerTile.this.silent) entity.setSilent(true);
 
 							int k = pServerLevel.getEntitiesOfClass(entity.getClass(), new AABB(pPos.getX(), pPos.getY(), pPos.getZ(), pPos.getX() + 1, pPos.getY() + 1, pPos.getZ() + 1).inflate(this.spawnRange)).size();
 							if (k >= this.maxNearbyEntities) {
