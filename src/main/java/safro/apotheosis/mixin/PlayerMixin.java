@@ -25,7 +25,7 @@ public class PlayerMixin {
     private void apotheosisBreakSpeed(BlockState blockState, CallbackInfoReturnable<Float> cir, float f) {
         Player player = (Player) (Object) this;
         if (Apotheosis.enableEnch) {
-            float m = MinersFervorEnchant.breakSpeed(player, blockState);
+            float m = MinersFervorEnchant.breakSpeed(player, blockState, f);
             float s = StableFootingEnchant.breakSpeed(player, f, f);
             if (m > -1) {
                 cir.setReturnValue(m);

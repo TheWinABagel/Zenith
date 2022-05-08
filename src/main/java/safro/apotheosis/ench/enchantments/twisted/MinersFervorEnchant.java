@@ -45,14 +45,14 @@ public class MinersFervorEnchant extends DiggingEnchantment {
 		return super.checkCompatibility(e) && e != Enchantments.BLOCK_EFFICIENCY;
 	}
 
-	public static float breakSpeed(Player p, BlockState state) {
+	public static float breakSpeed(Player p, BlockState state, float original) {
 		ItemStack stack = p.getMainHandItem();
 		if (stack.isEmpty()) return -1;
-		int depth = EnchantmentHelper.getItemEnchantmentLevel(EnchModule.MINERS_FERVOR, stack);
-		if (depth > 0) {
+		int level = EnchantmentHelper.getItemEnchantmentLevel(EnchModule.MINERS_FERVOR, stack);
+		if (level > 0) {
 			if (stack.getDestroySpeed(state) > 1.0F) {
 				float hardness = ((BlockStateBaseAccessor)state).getDestroySpeed();
-				return Math.min(29.9999F, 7.5F + 4.5F * depth) * hardness;
+				return Math.max(original, Math.min(29.9999F, 7.5F + 4.5F * level) * hardness);
 			}
 		}
 		return -1;

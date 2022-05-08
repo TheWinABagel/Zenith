@@ -46,9 +46,9 @@ public class EnchModuleEvents {
         LivingEntityEvents.DROPS.register(((target, source, drops) -> {
             if (source.getEntity() instanceof Player player) {
                 if (Apotheosis.enableEnch) {
-                    KnowledgeEnchant.drops(player, target, drops);
                     ScavengerEnchant.drops(player, target, source);
                     SpearfishingEnchant.addFishes(target, drops, source);
+                    KnowledgeEnchant.drops(player, target, drops);
                 }
             }
             return false;

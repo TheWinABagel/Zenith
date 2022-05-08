@@ -1,4 +1,15 @@
 {
+	"fabric:load_conditions": [
+		{
+			"condition": "apotheosis:module",
+			"module": "book"
+		},
+		{
+			"condition": "fabric:any_mod_loaded",
+			"values": [
+				"patchouli"
+			]
+		}],
 	"criteria": {
 		"tick": {
 			"trigger": "minecraft:tick"

@@ -6,6 +6,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
@@ -35,6 +36,7 @@ import safro.apotheosis.util.INBTSensitiveFallingBlock;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -53,15 +55,22 @@ public abstract class AnvilBlockMixin extends FallingBlock implements INBTSensit
         return new AnvilTile(pPos, pState);
     }
 
-    @Inject(method = "falling", at = @At("TAIL"))
-    private void apothFalling(FallingBlockEntity e, CallbackInfo ci) {
+    @Override
+    public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRand) {
         if (Apotheosis.enableEnch) {
-            BlockEntity te = e.level.getBlockEntity(e.blockPosition());
-            e.blockData = new CompoundTag();
-            if (te instanceof AnvilTile) {
-                e.blockData = te.saveWithFullMetadata();
+            if (FallingBlock.isFree(pLevel.getBlockState(pPos.below())) && pPos.getY() >= pLevel.getMinBuildHeight()) {
+                Apotheosis.LOGGER.info("ANVIL IS FREE");
+                BlockEntity be = pLevel.getBlockEntity(pPos);
+                FallingBlockEntity e = FallingBlockEntity.fall(pLevel, pPos, pState);
+                if (be instanceof AnvilTile anvil) {
+                    Apotheosis.LOGGER.info("ANVIL HAS TILE");
+                    e.blockData = new CompoundTag();
+                    anvil.saveAdditional(e.blockData);
+                }
+                this.falling(e);
             }
-        }
+        } else
+            super.tick(pState, pLevel, pPos, pRand);
     }
 
     @Inject(method = "onLand", at = @At("TAIL"))

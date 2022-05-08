@@ -6,16 +6,19 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import safro.apotheosis.api.enchant.TableApplicableEnchant;
 import safro.apotheosis.spawn.SpawnerModule;
+import safro.apotheosis.util.ApotheosisUtil;
 
 import java.util.Collection;
 
-public class CapturingEnchant extends Enchantment {
+public class CapturingEnchant extends Enchantment implements TableApplicableEnchant {
 
     public CapturingEnchant() {
         super(Rarity.VERY_RARE, EnchantmentCategory.WEAPON, new EquipmentSlot[] { EquipmentSlot.MAINHAND });
@@ -34,6 +37,11 @@ public class CapturingEnchant extends Enchantment {
     @Override
     public int getMaxCost(int level) {
         return this.getMinCost(level) + 15;
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack) {
+        return ApotheosisUtil.canApplyItem(this, stack) || stack.getItem() instanceof AxeItem;
     }
 
     public static void handleCapturing(DamageSource source, LivingEntity killed, Collection<ItemEntity> drops) {
