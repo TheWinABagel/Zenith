@@ -1,10 +1,9 @@
 package safro.apotheosis.ench.library;
 
-import java.util.List;
-
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.SimpleContainer;
@@ -19,9 +18,17 @@ import safro.apotheosis.api.container.BlockEntityContainer;
 import safro.apotheosis.ench.EnchModule;
 import safro.apotheosis.network.ButtonClickPacket;
 
+import java.util.List;
+
 public class EnchLibraryContainer extends BlockEntityContainer<EnchLibraryTile> implements ButtonClickPacket.IButtonContainer {
 	protected SimpleContainer ioInv = new SimpleContainer(3);
 	protected Runnable notifier = null;
+
+	public EnchLibraryContainer(int id, Inventory inv, FriendlyByteBuf buf) {
+		super(EnchModule.LIBRARY_CONTAINER, id, inv, buf.readBlockPos());
+		this.tile.addListener(this);
+		this.initCommon(inv);
+	}
 
 	public EnchLibraryContainer(int id, Inventory inv, BlockPos pos) {
 		super(EnchModule.LIBRARY_CONTAINER, id, inv, pos);

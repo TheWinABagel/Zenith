@@ -3,12 +3,12 @@ package safro.apotheosis.ench;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
-import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
-import net.fabricmc.fabric.impl.screenhandler.ExtendedScreenHandlerType;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobType;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -33,7 +33,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import safro.apotheosis.Apotheosis;
 import safro.apotheosis.api.config.Configuration;
-import safro.apotheosis.api.data.LootSystem;
 import safro.apotheosis.ench.anvil.AnvilTile;
 import safro.apotheosis.ench.anvil.ApothAnvilItem;
 import safro.apotheosis.ench.anvil.ObliterationEnchant;
@@ -172,8 +171,8 @@ public class EnchModule {
     public static final BlockEntityType<EnchLibraryTile.EnderLibraryTile> ENDER_LIBRARY_TILE = register("ender_library", FabricBlockEntityTypeBuilder.create(EnchLibraryTile.EnderLibraryTile::new, ENDER_LIBRARY).build(null));
 
     // Container
-    public static final ExtendedScreenHandlerType<EnchLibraryContainer> LIBRARY_CONTAINER = (ExtendedScreenHandlerType) ScreenHandlerRegistry.registerExtended(new ResourceLocation(Apotheosis.MODID, "library"), ((syncId, inventory, buf) -> new EnchLibraryContainer(syncId, inventory, buf.readBlockPos())));
-    public static final MenuType<ApothEnchantContainer> ENCHANTING_TABLE_MENU = ScreenHandlerRegistry.registerSimple(new ResourceLocation(Apotheosis.MODID, "enchantment_table"), ApothEnchantContainer::new);
+    public static final MenuType<EnchLibraryContainer> LIBRARY_CONTAINER = register("library", new ExtendedScreenHandlerType<>(EnchLibraryContainer::new));
+    public static final MenuType<ApothEnchantContainer> ENCHANTING_TABLE_MENU = register("enchanting_table", new MenuType<>(ApothEnchantContainer::new));
 
     // Recipe Serializer
     public static final RecipeSerializer<EnchantingRecipe> ENCHANTING = register("enchanting", EnchantingRecipe.SERIALIZER);
@@ -241,6 +240,10 @@ public class EnchModule {
 
     private static <S extends RecipeSerializer<T>, T extends Recipe<?>> S register(String id, S serializer) {
         return Registry.register(Registry.RECIPE_SERIALIZER, new ResourceLocation(Apotheosis.MODID, id), serializer);
+    }
+
+    private static <M extends MenuType<T>, T extends AbstractContainerMenu> M register(String id, M menu) {
+        return Registry.register(Registry.MENU, new ResourceLocation(Apotheosis.MODID, id), menu);
     }
 
     public static EnchantmentInfo getEnchInfo(Enchantment ench) {

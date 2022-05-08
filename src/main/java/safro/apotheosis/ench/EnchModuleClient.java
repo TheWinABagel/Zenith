@@ -1,8 +1,8 @@
 package safro.apotheosis.ench;
 
-import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -79,7 +79,7 @@ public class EnchModuleClient {
     }
 
     public static void init() {
-        ScreenRegistry.register(EnchModule.LIBRARY_CONTAINER, EnchLibraryScreen::new);
-        ScreenRegistry.register(EnchModule.ENCHANTING_TABLE_MENU, ApothEnchantScreen::new);
+        MenuScreens.register(EnchModule.LIBRARY_CONTAINER, EnchLibraryScreen::new);
+        MenuScreens.register(EnchModule.ENCHANTING_TABLE_MENU, ApothEnchantScreen::new);
     }
 }
