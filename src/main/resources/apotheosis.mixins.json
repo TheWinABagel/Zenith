@@ -13,7 +13,6 @@
     "ShearsItemMixin",
     "SheepMixin",
     "BowItemMixin",
-    "MultiPlayerGameModeMixin",
     "TemptGoalMixin",
     "ThrownTridentMixin",
     "AbstractContainerMenuMixin",

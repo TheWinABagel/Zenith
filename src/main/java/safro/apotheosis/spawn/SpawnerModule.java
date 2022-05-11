@@ -2,6 +2,7 @@ package safro.apotheosis.spawn;
 
 import io.github.fabricators_of_create.porting_lib.event.common.LivingEntityEvents;
 import io.github.fabricators_of_create.porting_lib.util.EntityHelper;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.ChatFormatting;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.core.BlockPos;
@@ -9,6 +10,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -51,16 +53,18 @@ public class SpawnerModule {
         }));
 
         LivingEntityEvents.TICK.register(SpawnerModule::tickDumbMobs);
+
+        UseBlockCallback.EVENT.register(((player, world, hand, hitResult) -> handleUseItem(world, hitResult.getBlockPos(), player.getItemInHand(hand))));
     }
 
-    public static boolean handleUseItem(Level world, BlockPos pos, ItemStack s) {
+    public static InteractionResult handleUseItem(Level world, BlockPos pos, ItemStack s) {
         if (world.getBlockEntity(pos) instanceof ApothSpawnerTile) {
             if (s.getItem() instanceof SpawnEggItem egg) {
                 EntityType<?> type = egg.getType(s.getTag());
-                if (bannedMobs.contains(Registry.ENTITY_TYPE.getKey(type))) return true;
+                if (bannedMobs.contains(Registry.ENTITY_TYPE.getKey(type))) return InteractionResult.SUCCESS;
             }
         }
-        return false;
+        return InteractionResult.PASS;
     }
 
     public static void handleTooltips(List<Component> tooltip, ItemStack s) {

@@ -3,6 +3,7 @@ package safro.apotheosis.ench;
 import com.mojang.datafixers.util.Pair;
 import io.github.fabricators_of_create.porting_lib.event.common.LivingEntityEvents;
 import io.github.fabricators_of_create.porting_lib.event.common.OnDatapackSyncCallback;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.player.Player;
@@ -18,6 +19,7 @@ import safro.apotheosis.Apoth;
 import safro.apotheosis.Apotheosis;
 import safro.apotheosis.api.json.ApothJsonReloadListener;
 import safro.apotheosis.ench.anvil.AnvilTile;
+import safro.apotheosis.ench.enchantments.NaturesBlessingEnchant;
 import safro.apotheosis.ench.enchantments.SpearfishingEnchant;
 import safro.apotheosis.ench.enchantments.masterwork.KnowledgeEnchant;
 import safro.apotheosis.ench.enchantments.masterwork.ScavengerEnchant;
@@ -61,6 +63,8 @@ public class EnchModuleEvents {
             }
             return currentLevel;
         }));
+
+        UseBlockCallback.EVENT.register((player, world, hand, blockHitResult) -> NaturesBlessingEnchant.rightClick(player.getItemInHand(hand), player, world, blockHitResult.getBlockPos(), hand));
     }
 
     public static Pair<ItemStack, List<Integer>> anvilEvent(ItemStack left, ItemStack right, Player player, int cost, int materialCost) {
