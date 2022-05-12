@@ -11,7 +11,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -75,51 +74,47 @@ public abstract class LivingEntityMixin {
         }
     }
 
-    /**
-     * @author Shadows
-     * @reason Injection of Sundering Potion Effect
-     * Calculates damage taken based on potions. Required for sundering.
-     * Called from {@link }
-     * TODO: Reduce to @Inject
-     */
-    @Overwrite
-    public float getDamageAfterMagicAbsorb(DamageSource source, float damage) {
-        if (source.isBypassMagic()) {
-            return damage;
-        } else {
-            float mult = 1;
-            if (this.hasEffect(MobEffects.DAMAGE_RESISTANCE) && source != DamageSource.OUT_OF_WORLD) {
-                int level = this.getEffect(MobEffects.DAMAGE_RESISTANCE).getAmplifier() + 1;
-                mult -= 0.2 * level;
-            }
-            if (PotionModule.SUNDERING_EFFECT != null && this.hasEffect(PotionModule.SUNDERING_EFFECT) && source != DamageSource.OUT_OF_WORLD) {
-                int level = this.getEffect(PotionModule.SUNDERING_EFFECT).getAmplifier() + 1;
-                mult += 0.2 * level;
-            }
-
-            float newDamage = damage * mult;
-            float resisted = damage - newDamage;
-
-            if (resisted > 0.0F && resisted < 3.4028235E37F) {
-                if ((Object) this instanceof ServerPlayer sp) {
-                    sp.awardStat(Stats.CUSTOM.get(Stats.DAMAGE_RESISTED), Math.round(resisted * 10.0F));
-                } else if (source.getEntity() instanceof ServerPlayer sp) {
-                    sp.awardStat(Stats.CUSTOM.get(Stats.DAMAGE_DEALT_RESISTED), Math.round(resisted * 10.0F));
-                }
-            }
-
-            damage = newDamage;
-
-            if (damage <= 0.0F) {
-                return 0.0F;
+    // TODO: Simplify to better inject
+    @Inject(method = "getDamageAfterMagicAbsorb", at = @At("HEAD"), cancellable = true)
+    public void apoGetDamageAfterMagicAbsorb(DamageSource source, float damage, CallbackInfoReturnable<Float> ci) {
+        if (Apotheosis.enablePotion) {
+            if (source.isBypassMagic()) {
+                ci.setReturnValue(damage);
             } else {
-                int k = EnchantmentHelper.getDamageProtection(this.getArmorSlots(), source);
-
-                if (k > 0) {
-                    damage = CombatRules.getDamageAfterMagicAbsorb(damage, k);
+                float mult = 1;
+                if (this.hasEffect(MobEffects.DAMAGE_RESISTANCE) && source != DamageSource.OUT_OF_WORLD) {
+                    int level = this.getEffect(MobEffects.DAMAGE_RESISTANCE).getAmplifier() + 1;
+                    mult -= 0.2 * level;
+                }
+                if (PotionModule.SUNDERING_EFFECT != null && this.hasEffect(PotionModule.SUNDERING_EFFECT) && source != DamageSource.OUT_OF_WORLD) {
+                    int level = this.getEffect(PotionModule.SUNDERING_EFFECT).getAmplifier() + 1;
+                    mult += 0.2 * level;
                 }
 
-                return damage;
+                float newDamage = damage * mult;
+                float resisted = damage - newDamage;
+
+                if (resisted > 0.0F && resisted < 3.4028235E37F) {
+                    if ((Object) this instanceof ServerPlayer sp) {
+                        sp.awardStat(Stats.CUSTOM.get(Stats.DAMAGE_RESISTED), Math.round(resisted * 10.0F));
+                    } else if (source.getEntity() instanceof ServerPlayer sp) {
+                        sp.awardStat(Stats.CUSTOM.get(Stats.DAMAGE_DEALT_RESISTED), Math.round(resisted * 10.0F));
+                    }
+                }
+
+                damage = newDamage;
+
+                if (damage <= 0.0F) {
+                    ci.setReturnValue(0.0F);
+                } else {
+                    int k = EnchantmentHelper.getDamageProtection(this.getArmorSlots(), source);
+
+                    if (k > 0) {
+                        damage = CombatRules.getDamageAfterMagicAbsorb(damage, k);
+                    }
+
+                    ci.setReturnValue(damage);
+                }
             }
         }
     }
