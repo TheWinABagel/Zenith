@@ -3,7 +3,9 @@ package safro.apotheosis.deadly;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.TreeMultimap;
+import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,7 +13,6 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import safro.apotheosis.api.ModifiableAttributes;
 import safro.apotheosis.deadly.commands.CategoryCheckCommand;
 import safro.apotheosis.deadly.commands.LootifyCommand;
 import safro.apotheosis.deadly.commands.ModifierCommand;
@@ -20,6 +21,7 @@ import safro.apotheosis.deadly.loot.LootCategory;
 import safro.apotheosis.deadly.loot.affix.Affix;
 import safro.apotheosis.deadly.loot.affix.AffixHelper;
 
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
 
@@ -35,8 +37,8 @@ public class DeadlyModuleEvents {
     }
 
     public static Multimap<Attribute, AttributeModifier> sortModifiers(ItemStack stack, EquipmentSlot equipmentSlot, Multimap<Attribute,AttributeModifier> modifiers) {
-        if (modifiers == null || modifiers.isEmpty()) return null;
-        Multimap<Attribute, AttributeModifier> map = TreeMultimap.create((k1, k2) -> Registry.ATTRIBUTE.getKey(k1).compareTo(Registry.ATTRIBUTE.getKey(k2)), (v1, v2) -> {
+        if (modifiers == null || modifiers.isEmpty() || FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER) return null;
+        Multimap<Attribute, AttributeModifier> map = TreeMultimap.create(Comparator.comparing(Registry.ATTRIBUTE::getKey), (v1, v2) -> {
             int compOp = Integer.compare(v1.getOperation().ordinal(), v2.getOperation().ordinal());
             int compValue = Double.compare(v2.getAmount(), v1.getAmount());
             return compOp == 0 ? compValue == 0 ? v1.getName().compareTo(v2.getName()) : compValue : compOp;
@@ -51,8 +53,7 @@ public class DeadlyModuleEvents {
     public static void affixModifiers(ItemStack stack, EquipmentSlot equipmentSlot, Multimap<Attribute,AttributeModifier> modifiers) {
         if (stack.hasTag()) {
             Map<Affix, Float> affixes = AffixHelper.getAffixes(stack);
-            ModifiableAttributes modif = (ModifiableAttributes) (Object) stack;
-            affixes.forEach((afx, lvl) -> afx.addModifiers(stack, lvl, equipmentSlot, modif::addModifier));
+            affixes.forEach((afx, lvl) -> afx.addModifiers(stack, lvl, equipmentSlot, modifiers::put));
         }
     }
 
@@ -65,7 +66,7 @@ public class DeadlyModuleEvents {
     public static int drawSpeed(LivingEntity e, ItemStack item, int currentTicks) {
         if (e instanceof Player player) {
             double t = player.getAttribute(DeadlyModule.DRAW_SPEED).getValue() - 1;
-            if (t == 0 || !LootCategory.forItem(item).isRanged()) return currentTicks;
+            if (t == 0 || !isRanged(item)) return currentTicks;
             float clamped = values.stream().filter(f -> f >= t).min(Float::compareTo).orElse(3F);
             while (clamped > 0) {
                 if (e.tickCount % (int) Math.floor(1 / Math.min(1, t)) == 0) currentTicks--;
@@ -75,4 +76,10 @@ public class DeadlyModuleEvents {
         return currentTicks;
     }
 
+    private static boolean isRanged(ItemStack item) {
+        if (LootCategory.forItem(item) == null) {
+            return false;
+        }
+        return LootCategory.forItem(item).isRanged();
+    }
 }
