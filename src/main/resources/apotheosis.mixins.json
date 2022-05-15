@@ -46,10 +46,7 @@
   "client": [
     "anvil.AnvilScreenMixin",
 
-    "ClientPacketListenerMixin",
-    "GameRendererMixin",
-    "MinecraftMixin",
-    "ScreenMixin"
+    "ClientPacketListenerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

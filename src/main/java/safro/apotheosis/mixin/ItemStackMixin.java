@@ -52,16 +52,16 @@ public class ItemStackMixin implements ModifiableAttributes {
     @Inject(method = "getAttributeModifiers", at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
     private void apotheosisModifierEvent(EquipmentSlot equipmentSlot, CallbackInfoReturnable<Multimap<Attribute, AttributeModifier>> cir, Multimap<Attribute, AttributeModifier> multimap) {
         ItemStack stack = (ItemStack) (Object) this;
-        this.originalModifiers = multimap;
-        this.unmodifiableModifiers = multimap;
-        Multimap<Attribute, AttributeModifier> map = DeadlyModuleEvents.sortModifiers(stack, equipmentSlot, multimap);
         if (Apotheosis.enableDeadly) {
+            this.originalModifiers = multimap;
+            this.unmodifiableModifiers = multimap;
+            Multimap<Attribute, AttributeModifier> map = DeadlyModuleEvents.sortModifiers(stack, equipmentSlot, multimap);
             DeadlyModuleEvents.affixModifiers(stack, equipmentSlot, multimap);
+            if (map != null) {
+                this.unmodifiableModifiers = map;
+            }
+            cir.setReturnValue(unmodifiableModifiers);
         }
-        if (map != null) {
-            this.unmodifiableModifiers = map;
-        }
-        cir.setReturnValue(unmodifiableModifiers);
     }
 
     @Override

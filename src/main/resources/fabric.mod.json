@@ -47,9 +47,10 @@
     "java": ">=17"
   },
   "accessWidener": "apotheosis.aw",
-
-  "waila:plugins": {
-    "id": "apotheosis:plugin",
-    "initializer": "safro.apotheosis.ench.compat.EnchWTHITPlugin"
+  "custom": {
+    "waila:plugins": {
+      "id": "apotheosis:plugin",
+      "initializer": "safro.apotheosis.ench.compat.EnchWTHITPlugin"
+    }
   }
 }

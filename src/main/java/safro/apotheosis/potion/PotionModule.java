@@ -133,9 +133,6 @@ public class PotionModule {
 
         PotionBrewing.addMix(Potions.AWKWARD, LUCKY_FOOT, Potions.LUCK);
 
-        // idk
-        CraftingHelper.register(new ResourceLocation("minecraft:item"), VanillaIngredientSerializer.INSTANCE);
-
         Ingredient fireRes = Apotheosis.potionIngredient(Potions.FIRE_RESISTANCE);
         Ingredient abs = Apotheosis.potionIngredient(STRONG_ABSORPTION);
         Ingredient res = Apotheosis.potionIngredient(RESISTANCE);

@@ -117,7 +117,8 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 
 
         if (this.menu.getSlot(0).hasItem() && this.isHovering(145, -15, 27, 15, pMouseX, pMouseY) && Arrays.stream(this.menu.enchantClue).boxed().map(Enchantment::byId).allMatch(Predicates.notNull())) {
-            ClientUtil.pushGuiLayer(Minecraft.getInstance(), new EnchantingInfoScreen(this));
+            Minecraft.getInstance().setScreen(new EnchantingInfoScreen(this));
+          //  ClientUtil.pushGuiLayer(Minecraft.getInstance(), new EnchantingInfoScreen(this));
         }
 
         return super.mouseClicked(pMouseX, pMouseY, pButton);
