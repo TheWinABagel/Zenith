@@ -23,6 +23,7 @@
     "EnchantRandomlyFunctionMixin",
     "ServerResourcesMixin",
     "LootTablesMixin",
+    "MultiPlayerGameModeMixin",
 
     "anvil.FallingBlockEntityMixin",
     "anvil.AnvilMenuMixin",

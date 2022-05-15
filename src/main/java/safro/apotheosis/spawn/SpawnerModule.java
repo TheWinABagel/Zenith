@@ -61,7 +61,7 @@ public class SpawnerModule {
         if (world.getBlockEntity(pos) instanceof ApothSpawnerTile) {
             if (s.getItem() instanceof SpawnEggItem egg) {
                 EntityType<?> type = egg.getType(s.getTag());
-                if (bannedMobs.contains(Registry.ENTITY_TYPE.getKey(type))) return InteractionResult.SUCCESS;
+                if (bannedMobs.contains(Registry.ENTITY_TYPE.getKey(type))) return InteractionResult.FAIL;
             }
         }
         return InteractionResult.PASS;
