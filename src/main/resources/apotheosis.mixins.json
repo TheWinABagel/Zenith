@@ -30,6 +30,7 @@
     "anvil.AnvilBlockMixin",
     "anvil.BlockMixin",
     "anvil.BlockBehaviourMixin",
+    "anvil.ItemMixin",
 
     "garden.BambooBlockMixin",
     "garden.CactusBlockMixin",

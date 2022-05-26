@@ -37,7 +37,7 @@ public class IcyThornsEnchant extends Enchantment {
 
 	@Override
 	public boolean canEnchant(ItemStack stack) {
-		return stack.getItem() instanceof ArmorItem ? true : super.canEnchant(stack);
+		return stack.getItem() instanceof ArmorItem || super.canEnchant(stack);
 	}
 
 	@Override

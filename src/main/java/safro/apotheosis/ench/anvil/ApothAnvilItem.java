@@ -16,16 +16,6 @@ public class ApothAnvilItem extends BlockItem implements TableApplicableItem {
 	}
 
 	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-		return stack.getCount() == 1 && (enchantment == Enchantments.UNBREAKING || enchantment.canEnchant(stack));
-	}
-
-	@Override
-	public boolean isEnchantable(ItemStack stack) {
-		return stack.getCount() == 1;
-	}
-
-	@Override
 	public int getEnchantmentValue() {
 		return 50;
 	}
