@@ -1,7 +1,6 @@
 package safro.apotheosis.spawn;
 
 import io.github.fabricators_of_create.porting_lib.event.common.LivingEntityEvents;
-import io.github.fabricators_of_create.porting_lib.util.EntityHelper;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.ChatFormatting;
 import net.minecraft.ResourceLocationException;
@@ -76,7 +75,7 @@ public class SpawnerModule {
 
     public static void tickDumbMobs(LivingEntity entity) {
         if (entity instanceof Mob mob) {
-            if (!mob.level.isClientSide && mob.isNoAi() && EntityHelper.getExtraCustomData(mob).getBoolean("apotheosis:movable")) {
+            if (!mob.level.isClientSide && mob.isNoAi() && mob.getExtraCustomData().getBoolean("apotheosis:movable")) {
                 mob.setNoAi(false);
                 mob.travel(new Vec3(mob.xxa, mob.zza, mob.yya));
                 mob.setNoAi(true);

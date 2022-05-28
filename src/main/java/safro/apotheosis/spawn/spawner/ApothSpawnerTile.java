@@ -1,10 +1,5 @@
 package safro.apotheosis.spawn.spawner;
 
-import java.util.Optional;
-
-import javax.annotation.Nullable;
-
-import io.github.fabricators_of_create.porting_lib.util.EntityHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -14,23 +9,17 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
-import net.minecraft.world.entity.SpawnPlacements;
-import net.minecraft.world.level.BaseSpawner;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LightLayer;
-import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.SpawnData;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import safro.apotheosis.api.DataPacketBlockEntity;
+
+import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class ApothSpawnerTile extends SpawnerBlockEntity implements DataPacketBlockEntity {
 
@@ -199,7 +188,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity implements DataPacketBl
 
 							if (ApothSpawnerTile.this.hasNoAI && entity instanceof Mob mob) {
 								mob.setNoAi(true);
-								EntityHelper.getExtraCustomData(entity).putBoolean("apotheosis:movable", true);
+								entity.getExtraCustomData().putBoolean("apotheosis:movable", true);
 							}
 							if (ApothSpawnerTile.this.silent) entity.setSilent(true);
 

@@ -46,7 +46,7 @@ dependencies {
 	modImplementation(include("dev.cafeteria:fake-player-api:${project.fpa_version}"))
 
 	// Porting Lib
-	modImplementation(include("io.github.fabricators_of_create:Porting-Lib:${project.port_lib_version}+${project.minecraft_version}.${project.port_lib_hash}"))
+	modImplementation(include("io.github.fabricators_of_create:Porting-Lib:${project.port_lib_version}+${project.minecraft_version}-dev.${project.port_lib_hash}"))
 
 
 	// ******************** Optional Deps ******************** //
