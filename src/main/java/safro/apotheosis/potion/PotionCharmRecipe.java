@@ -3,7 +3,6 @@ package safro.apotheosis.potion;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import io.github.fabricators_of_create.porting_lib.crafting.CraftingHelper;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.core.NonNullList;
@@ -21,6 +20,7 @@ import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
 import safro.apotheosis.Apotheosis;
 import safro.apotheosis.api.data.RecipeHelper;
+import safro.apotheosis.util.ApotheosisUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,7 +105,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
 				width = arr.size();
 				for (JsonElement input : arr) {
 					if (input.isJsonPrimitive() && input.getAsString().equals("potion")) ingredients.add("potion");
-					else ingredients.add(CraftingHelper.getIngredient(input));
+					else ingredients.add(Ingredient.fromJson(input));
 				}
 			}
 			return new PotionCharmRecipe(ingredients, width, height);

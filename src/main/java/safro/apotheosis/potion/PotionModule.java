@@ -1,7 +1,5 @@
 package safro.apotheosis.potion;
 
-import io.github.fabricators_of_create.porting_lib.crafting.CraftingHelper;
-import io.github.fabricators_of_create.porting_lib.crafting.VanillaIngredientSerializer;
 import io.github.fabricators_of_create.porting_lib.event.common.LivingEntityEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;

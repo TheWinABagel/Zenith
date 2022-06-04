@@ -21,7 +21,7 @@
       "item": "minecraft:spyglass"
     },
     "P": {
-      "type": "porting_lib:nbt",
+      "type": "forge:nbt",
       "item": "minecraft:potion",
       "nbt": "{\"Potion\": \"minecraft:night_vision\"}"
     },

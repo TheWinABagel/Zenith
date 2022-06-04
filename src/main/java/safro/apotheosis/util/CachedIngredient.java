@@ -1,17 +1,21 @@
 package safro.apotheosis.util;
 
-import io.github.fabricators_of_create.porting_lib.crafting.IIngredientSerializer;
-import io.github.fabricators_of_create.porting_lib.crafting.VanillaIngredientSerializer;
-import io.github.fabricators_of_create.porting_lib.extensions.IngredientExtensions;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import io.github.fabricators_of_create.porting_lib.crafting.AbstractIngredient;
+import io.github.tropheusj.serialization_hooks.ingredient.IngredientDeserializer;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.Arrays;
+import java.util.stream.Stream;
 
-public class CachedIngredient extends Ingredient implements IngredientExtensions {
+public class CachedIngredient extends AbstractIngredient {
     private static final Int2ObjectMap<CachedIngredient> ingredients = new Int2ObjectOpenHashMap<>();
     private final boolean simple;
 
@@ -31,7 +35,45 @@ public class CachedIngredient extends Ingredient implements IngredientExtensions
     }
 
     @Override
-    public IIngredientSerializer<? extends Ingredient> getSerializer() {
-        return VanillaIngredientSerializer.INSTANCE;
+    public JsonElement toJson() {
+        if (this.values.length == 1) {
+            return this.values[0].serialize();
+        } else {
+            JsonArray jsonArray = new JsonArray();
+            Ingredient.Value[] var2 = this.values;
+            int var3 = var2.length;
+
+            for(int var4 = 0; var4 < var3; ++var4) {
+                Ingredient.Value value = var2[var4];
+                jsonArray.add(value.serialize());
+            }
+
+            return jsonArray;
+        }
+    }
+
+    @Override
+    public IngredientDeserializer getDeserializer() {
+        return VanillaSerializer.INSTANCE;
+    }
+
+    @Override
+    public Value[] getValues() {
+        return values;
+    }
+
+    // Implementation of default vanilla serializer
+    public static class VanillaSerializer implements IngredientDeserializer {
+        public static final VanillaSerializer INSTANCE = new VanillaSerializer();
+
+        @Override
+        public Ingredient fromNetwork(FriendlyByteBuf buffer) {
+            return Ingredient.fromValues(Stream.generate(() -> new Ingredient.ItemValue(buffer.readItem())).limit(buffer.readVarInt()));
+        }
+
+        @Override
+        public Ingredient fromJson(JsonObject json) {
+            return Ingredient.fromValues(Stream.of(Ingredient.valueFromJson(json)));
+        }
     }
 }
