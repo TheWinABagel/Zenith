@@ -1,6 +1,8 @@
 package safro.apotheosis.potion;
 
+import dev.emi.trinkets.api.TrinketsApi;
 import io.github.fabricators_of_create.porting_lib.event.common.LivingEntityEvents;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -95,6 +97,16 @@ public class PotionModule {
             }
             return i;
         }));
+
+        if (FabricLoader.getInstance().isModLoaded("trinkets")) {
+            LivingEntityEvents.TICK.register(entity -> {
+                TrinketsApi.getTrinketComponent(entity).ifPresent(c -> c.forEach((slotReference, stack) -> {
+                    if (stack.getItem() instanceof PotionCharmItem charm) {
+                        charm.inventoryTick(stack, entity.level, entity, slotReference.index(), false);
+                    }
+                }));
+            });
+        }
 
         PotionBrewing.addMix(Potions.AWKWARD, Items.SHULKER_SHELL, RESISTANCE);
         PotionBrewing.addMix(RESISTANCE, Items.REDSTONE, LONG_RESISTANCE);

@@ -7,16 +7,15 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.ItemCombinerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import safro.apotheosis.Apotheosis;
 import safro.apotheosis.ench.EnchModuleEvents;
+import safro.apotheosis.ench.asm.EnchHooks;
 import safro.apotheosis.util.ApotheosisUtil;
 
 @Mixin(AnvilMenu.class)
@@ -29,7 +28,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
         super(MenuType.ANVIL, i, inventory, containerLevelAccess);
     }
 
-    @ModifyConstant(method = "createResult()V", constant = @Constant(intValue = 40), require = 0)
+    @ModifyConstant(method = "createResult", constant = @Constant(intValue = 40, ordinal = 2))
     public int apoth_removeLevelCap(int old) {
         return Integer.MAX_VALUE;
     }
@@ -53,5 +52,10 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
             return EnchModuleEvents.anvilRepair(p, chance);
         }
         return chance;
+    }
+
+    @Redirect(method = "createResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/Enchantment;getMaxLevel()I"))
+    private int apothModifyMaxLevel(Enchantment enchantment) {
+        return EnchHooks.getMaxLevel(enchantment);
     }
 }

@@ -8,8 +8,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import safro.apotheosis.api.enchant.TableApplicableEnchant;
 import safro.apotheosis.util.ApotheosisUtil;
+
+import java.util.Map;
 
 public class ShieldBashEnchant extends Enchantment implements TableApplicableEnchant {
 
@@ -50,10 +53,12 @@ public class ShieldBashEnchant extends Enchantment implements TableApplicableEnc
 	@Override
 	public void doPostAttack(LivingEntity user, Entity target, int level) {
 		if (target instanceof LivingEntity) {
-			ItemStack stack = user.getMainHandItem();
-			stack.hurtAndBreak(Math.max(1, 20 - level), user, e -> {
-				e.broadcastBreakEvent(EquipmentSlot.OFFHAND);
-			});
+			Map.Entry<EquipmentSlot, ItemStack> entry = EnchantmentHelper.getRandomItemWith(this, user);
+			if (entry != null) {
+				entry.getValue().hurtAndBreak(Math.max(1, 20 - level), user, e -> {
+					e.broadcastBreakEvent(entry.getKey());
+				});
+			}
 		}
 	}
 
