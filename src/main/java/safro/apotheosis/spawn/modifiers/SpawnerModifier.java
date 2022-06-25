@@ -19,6 +19,7 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import safro.apotheosis.spawn.SpawnerModule;
 import safro.apotheosis.spawn.spawner.ApothSpawnerTile;
 import safro.apotheosis.util.ApotheosisUtil;
 
@@ -29,7 +30,6 @@ import safro.apotheosis.util.ApotheosisUtil;
  */
 public class SpawnerModifier implements Recipe<Container> {
 
-	public static final RecipeType<SpawnerModifier> TYPE = ApotheosisUtil.makeRecipeType("apotheosis:spawner_modifier");
 	public static final Serializer SERIALIZER = new Serializer();
 
 	protected final ResourceLocation id;
@@ -124,12 +124,12 @@ public class SpawnerModifier implements Recipe<Container> {
 
 	@Override
 	public RecipeType<?> getType() {
-		return SpawnerModifier.TYPE;
+		return SpawnerModule.MODIFIER;
 	}
 
 	@Nullable
 	public static SpawnerModifier findMatch(ApothSpawnerTile tile, ItemStack mainhand, ItemStack offhand) {
-		List<SpawnerModifier> recipes = tile.getLevel().getRecipeManager().getAllRecipesFor(SpawnerModifier.TYPE);
+		List<SpawnerModifier> recipes = tile.getLevel().getRecipeManager().getAllRecipesFor(SpawnerModule.MODIFIER);
 		recipes.sort((r1, r2) -> r1.offHand == Ingredient.EMPTY ? r2.offHand == Ingredient.EMPTY ? 0 : 1 : -1);
 		for (SpawnerModifier r : recipes)
 			if (r.matches(tile, mainhand, offhand)) return r;

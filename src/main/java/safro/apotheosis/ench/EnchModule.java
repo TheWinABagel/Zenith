@@ -18,6 +18,7 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -54,6 +55,7 @@ import safro.apotheosis.ench.replacements.DefenseEnchant;
 import safro.apotheosis.ench.table.ApothEnchantContainer;
 import safro.apotheosis.ench.table.EnchantingRecipe;
 import safro.apotheosis.ench.table.KeepNBTEnchantingRecipe;
+import safro.apotheosis.util.ApotheosisUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -68,6 +70,7 @@ public class EnchModule {
     public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Enchantment");
     public static final List<TomeItem> TYPED_BOOKS = new ArrayList<>();
     public static final EquipmentSlot[] ARMOR = { EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET };
+    public static final RecipeType<EnchantingRecipe> INFUSION_RECIPE = ApotheosisUtil.makeRecipeType("apotheosis:enchanting");
 
     static Configuration enchInfoConfig;
 

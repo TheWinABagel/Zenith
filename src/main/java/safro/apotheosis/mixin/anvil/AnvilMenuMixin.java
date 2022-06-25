@@ -18,7 +18,7 @@ import safro.apotheosis.ench.EnchModuleEvents;
 import safro.apotheosis.ench.asm.EnchHooks;
 import safro.apotheosis.util.ApotheosisUtil;
 
-@Mixin(AnvilMenu.class)
+@Mixin(value = AnvilMenu.class, priority = 999)
 public abstract class AnvilMenuMixin extends ItemCombinerMenu {
     private static Player p = null;
 

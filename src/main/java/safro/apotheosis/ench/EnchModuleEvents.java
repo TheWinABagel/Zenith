@@ -2,7 +2,7 @@ package safro.apotheosis.ench;
 
 import com.mojang.datafixers.util.Pair;
 import io.github.fabricators_of_create.porting_lib.event.common.LivingEntityEvents;
-import io.github.fabricators_of_create.porting_lib.event.common.OnDatapackSyncCallback;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.player.Player;
@@ -33,7 +33,7 @@ public class EnchModuleEvents {
     public static void init() {
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(EnchantingStatManager.INSTANCE);
 
-        OnDatapackSyncCallback.EVENT.register(((playerList, player) -> {
+        ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> {
             if (!ApothJsonReloadListener.SYNC_REGISTRY.isEmpty()) {
                 for (Map.Entry<String, ApothJsonReloadListener<?>> entry : ApothJsonReloadListener.SYNC_REGISTRY.entrySet()) {
                     if (entry.getValue() != null) {
@@ -41,7 +41,7 @@ public class EnchModuleEvents {
                     }
                 }
             }
-        }));
+        });
 
         LivingEntityEvents.DROPS.register(((target, source, drops) -> {
             if (source.getEntity() instanceof Player player) {

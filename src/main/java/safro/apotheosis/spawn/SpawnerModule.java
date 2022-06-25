@@ -17,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -27,6 +28,7 @@ import safro.apotheosis.api.config.Configuration;
 import safro.apotheosis.spawn.enchantment.CapturingEnchant;
 import safro.apotheosis.spawn.modifiers.SpawnerModifier;
 import safro.apotheosis.spawn.spawner.ApothSpawnerTile;
+import safro.apotheosis.util.ApotheosisUtil;
 
 import java.io.File;
 import java.util.HashSet;
@@ -41,6 +43,7 @@ public class SpawnerModule {
 
     public static final Enchantment CAPTURING = register("capturing", new CapturingEnchant());
 
+    public static final RecipeType<SpawnerModifier> MODIFIER = ApotheosisUtil.makeRecipeType("apotheosis:spawner_modifier");
     public static final RecipeSerializer<SpawnerModifier> SPAWNER_MODIFIER = register("spawner_modifier", SpawnerModifier.SERIALIZER);
 
     public static void init() {

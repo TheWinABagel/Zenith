@@ -51,7 +51,7 @@ public class EnchREIPlugin implements REIClientPlugin {
         registry.add(new AnvilRecipe(null, stack(Items.DAMAGED_ANVIL), stack(Blocks.IRON_BLOCK), stack(Blocks.ANVIL)));
 
         registry.registerFiller(EnchantingRecipe.class, EnchantingDisplay::new);
-        List<EnchantingRecipe> recipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(EnchantingRecipe.TYPE);
+        List<EnchantingRecipe> recipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(EnchModule.INFUSION_RECIPE);
         recipes.sort((r1, r2) -> Float.compare(r1.getRequirements().eterna, r2.getRequirements().eterna));
         recipes.forEach(registry::add);
 

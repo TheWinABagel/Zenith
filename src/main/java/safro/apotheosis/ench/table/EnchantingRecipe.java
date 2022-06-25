@@ -18,10 +18,10 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import safro.apotheosis.ench.EnchModule;
 import safro.apotheosis.util.ApotheosisUtil;
 
 public class EnchantingRecipe implements Recipe<Container> {
-    public static final RecipeType<EnchantingRecipe> TYPE = ApotheosisUtil.makeRecipeType("apotheosis:enchanting");
     public static final Serializer SERIALIZER = new Serializer();
     public static final EnchantingStatManager.Stats NO_MAX = new EnchantingStatManager.Stats(-1, -1, -1, -1, -1, -1);
 
@@ -102,7 +102,7 @@ public class EnchantingRecipe implements Recipe<Container> {
 
     @Override
     public RecipeType<?> getType() {
-        return EnchantingRecipe.TYPE;
+        return EnchModule.INFUSION_RECIPE;
     }
 
     public static class Serializer implements RecipeSerializer<EnchantingRecipe> {
@@ -145,7 +145,7 @@ public class EnchantingRecipe implements Recipe<Container> {
 
     @Nullable
     public static EnchantingRecipe findMatch(Level level, ItemStack input, float eterna, float quanta, float arcana) {
-        List<EnchantingRecipe> recipes = level.getRecipeManager().getAllRecipesFor(EnchantingRecipe.TYPE);
+        List<EnchantingRecipe> recipes = level.getRecipeManager().getAllRecipesFor(EnchModule.INFUSION_RECIPE);
         recipes.sort((r1, r2) -> -Float.compare(r1.requirements.eterna, r2.requirements.eterna));
         for (EnchantingRecipe r : recipes)
             if (r.matches(input, eterna, quanta, arcana)) return r;
@@ -153,7 +153,7 @@ public class EnchantingRecipe implements Recipe<Container> {
     }
 
     public static EnchantingRecipe findItemMatch(Level level, ItemStack toEnchant) {
-        return level.getRecipeManager().getAllRecipesFor(EnchantingRecipe.TYPE).stream().filter(r -> r.getInput().test(toEnchant)).findFirst().orElse(null);
+        return level.getRecipeManager().getAllRecipesFor(EnchModule.INFUSION_RECIPE).stream().filter(r -> r.getInput().test(toEnchant)).findFirst().orElse(null);
     }
 
 }
