@@ -26,7 +26,7 @@
     "client": [
       "safro.apotheosis.ApotheosisClient"
     ],
-    "rei": [
+    "rei_plugins": [
       "safro.apotheosis.ench.compat.EnchREIPlugin",
       "safro.apotheosis.village.compat.VillageREIPlugin",
       "safro.apotheosis.garden.compat.GardenREIPlugin",

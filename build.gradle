@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.11-SNAPSHOT'
+	id 'fabric-loom' version '0.12-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -13,12 +13,12 @@ group = project.maven_group
 repositories {
 	maven { url 'https://jitpack.io' }
 
-	maven { url = "https://mvn.devos.one/releases/" }
-	maven { url = "https://mvn.devos.one/snapshots/" }
+	maven { url "https://mvn.devos.one/releases/" }
+	maven { url "https://mvn.devos.one/snapshots/" }
 
 	maven { url "https://maven.jamieswhiteshirt.com/libs-release" }
 
-	maven { url = "https://maven.cafeteria.dev" }
+	maven { url "https://maven.cafeteria.dev" }
 
 	maven { url 'https://maven.blamejared.com' }
 
@@ -26,7 +26,7 @@ repositories {
 
 	maven { url "https://maven.terraformersmc.com" }
 
-	maven { url = "https://ladysnake.jfrog.io/artifactory/mods" }
+	maven { url "https://ladysnake.jfrog.io/artifactory/mods" }
 
 	maven { url "https://cursemaven.com" }
 
@@ -67,14 +67,14 @@ dependencies {
 	}
 
 	// Trinkets
-	modCompileOnly modRuntimeOnly("dev.emi:trinkets:${trinkets_version}")
+	modCompileOnly modRuntimeOnly("dev.emi:trinkets:${project.trinkets_version}")
 
 	// TOP
-	modCompileOnly modRuntimeOnly("curse.maven:top-581847:${top_version}")
+	modCompileOnly modRuntimeOnly("curse.maven:top-581847:${project.top_version}")
 
 	// WTHIT
-	modCompileOnly "mcp.mobius.waila:wthit-api:fabric-${wthit_version}"
-	modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${wthit_version}"
+	modCompileOnly "mcp.mobius.waila:wthit-api:fabric-${project.wthit_version}"
+	modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${project.wthit_version}"
 }
 
 loom {
@@ -103,7 +103,6 @@ jar {
 	}
 }
 
-// configure the maven publication
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
@@ -111,11 +110,7 @@ publishing {
 		}
 	}
 
-	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
 	repositories {
-		// Add repositories to publish to here.
-		// Notice: This block does NOT have the same function as the block in the top level.
-		// The repositories here will be used for publishing your artifact, not for
-		// retrieving dependencies.
+
 	}
 }

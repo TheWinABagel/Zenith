@@ -41,6 +41,7 @@
 
     "spawner.SpawnerBlockMixin",
     "spawner.BlockItemMixin",
+    "spawner.BlockMixin",
 
     "BlockStateBaseAccessor",
     "AbstractContainerMenuInvoker"
