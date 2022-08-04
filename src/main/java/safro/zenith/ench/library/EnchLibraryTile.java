@@ -1,5 +1,6 @@
 package safro.zenith.ench.library;
 
+import io.github.fabricators_of_create.porting_lib.block.CustomDataPacketHandlingBlockEntity;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
@@ -24,7 +25,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
-import safro.zenith.api.DataPacketBlockEntity;
 import safro.zenith.ench.EnchModule;
 import safro.zenith.network.NetworkUtil;
 
@@ -32,7 +32,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class EnchLibraryTile extends BlockEntity implements DataPacketBlockEntity, ExtendedScreenHandlerFactory {
+public abstract class EnchLibraryTile extends BlockEntity implements CustomDataPacketHandlingBlockEntity, ExtendedScreenHandlerFactory {
 	protected final Object2IntMap<Enchantment> points = new Object2IntOpenHashMap<>();
 	protected final Object2IntMap<Enchantment> maxLevels = new Object2IntOpenHashMap<>();
 	protected final Set<EnchLibraryContainer> activeContainers = new HashSet<>();

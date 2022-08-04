@@ -47,9 +47,7 @@
     "AbstractContainerMenuInvoker"
   ],
   "client": [
-    "anvil.AnvilScreenMixin",
-
-    "ClientPacketListenerMixin"
+    "anvil.AnvilScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

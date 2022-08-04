@@ -1,5 +1,6 @@
 package safro.zenith.spawn.spawner;
 
+import io.github.fabricators_of_create.porting_lib.block.CustomDataPacketHandlingBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -16,12 +17,11 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import safro.zenith.api.DataPacketBlockEntity;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class ApothSpawnerTile extends SpawnerBlockEntity implements DataPacketBlockEntity {
+public class ApothSpawnerTile extends SpawnerBlockEntity implements CustomDataPacketHandlingBlockEntity {
 
 	public boolean ignoresPlayers = false;
 	public boolean ignoresConditions = false;
