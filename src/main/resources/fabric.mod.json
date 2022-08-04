@@ -1,56 +1,56 @@
 {
   "schemaVersion": 1,
-  "id": "apotheosis",
+  "id": "zenith",
   "version": "${version}",
 
-  "name": "Apotheosis",
-  "description": "All things that should have been",
+  "name": "Zenith",
+  "description": "Unofficial fabric port of Apotheosis",
   "authors": [
     "Safro",
     "Shadows of Fire (Forge)"
   ],
   "contact": {
-    "homepage": "https://curseforge.com/minecraft/mc-mods/apotheosis-fabric",
+    "homepage": "https://curseforge.com/minecraft/mc-mods/zenith-fabric",
     "sources": "https://github.com/Safrodev/Apotheosis-Fabric",
     "issues": "https://github.com/Safrodev/Apotheosis-Fabric/issues"
   },
 
   "license": "MIT License",
-  "icon": "assets/apotheosis/icon.png",
+  "icon": "assets/zenith/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "safro.apotheosis.Apotheosis"
+      "safro.zenith.Zenith"
     ],
     "client": [
-      "safro.apotheosis.ApotheosisClient"
+      "safro.zenith.ZenithClient"
     ],
     "rei_plugins": [
-      "safro.apotheosis.ench.compat.EnchREIPlugin",
-      "safro.apotheosis.village.compat.VillageREIPlugin",
-      "safro.apotheosis.garden.compat.GardenREIPlugin",
-      "safro.apotheosis.spawn.compat.SpawnerREIPlugin"
+      "safro.zenith.ench.compat.EnchREIPlugin",
+      "safro.zenith.village.compat.VillageREIPlugin",
+      "safro.zenith.garden.compat.GardenREIPlugin",
+      "safro.zenith.spawn.compat.SpawnerREIPlugin"
     ],
     "top_plugin": [
-      "safro.apotheosis.compat.ApothTOPPlugin"
+      "safro.zenith.compat.ApothTOPPlugin"
     ]
   },
   "mixins": [
-    "apotheosis.mixins.json"
+    "zenith.mixins.json"
   ],
 
   "depends": {
-    "fabricloader": ">=0.13.3",
+    "fabricloader": ">=0.14.8",
     "fabric": "*",
     "minecraft": "1.18.x",
     "java": ">=17"
   },
-  "accessWidener": "apotheosis.aw",
+  "accessWidener": "zenith.aw",
   "custom": {
     "waila:plugins": {
-      "id": "apotheosis:plugin",
-      "initializer": "safro.apotheosis.ench.compat.EnchWTHITPlugin"
+      "id": "zenith:plugin",
+      "initializer": "safro.zenith.ench.compat.EnchWTHITPlugin"
     }
   }
 }

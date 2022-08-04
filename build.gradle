@@ -78,7 +78,7 @@ dependencies {
 }
 
 loom {
-	accessWidenerPath = file("src/main/resources/apotheosis.aw")
+	accessWidenerPath = file("src/main/resources/zenith.aw")
 }
 
 processResources {
