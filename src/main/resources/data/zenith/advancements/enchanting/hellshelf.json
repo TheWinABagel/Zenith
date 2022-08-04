@@ -1,0 +1,34 @@
+{
+	"parent": "zenith:enchanting/bookshelf",
+	"conditions": [{
+		"type": "zenith:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "zenith:hellshelf"
+		},
+		"title": {
+			"translate": "advancements.zenith.hellshelf"
+		},
+		"description": {
+			"translate": "advancements.zenith.hellshelf.desc"
+		},
+		"frame": "task"
+	},
+	"criteria": {
+		"hellshelf": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"items": ["zenith:hellshelf"]
+				}]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"hellshelf"
+		]
+	]
+}

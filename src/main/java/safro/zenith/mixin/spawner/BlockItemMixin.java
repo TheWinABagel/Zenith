@@ -50,7 +50,7 @@ public abstract class BlockItemMixin extends Item {
                     } catch (Exception ex) {
 
                     }
-                    return new TranslatableComponent("item.apotheosis.spawner", new TranslatableComponent(key)).withStyle(color);
+                    return new TranslatableComponent("item.zenith.spawner", new TranslatableComponent(key)).withStyle(color);
                 }
             }
         }

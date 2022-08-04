@@ -1,7 +1,0 @@
-{
-    "parent": "block/cube_column",
-    "textures": {
-        "end": "apotheosis:blocks/sightshelf_t2_top",
-        "side": "apotheosis:blocks/sightshelf_t2"
-    }
-}

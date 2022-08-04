@@ -30,8 +30,8 @@ public class EnchModuleClient {
 
     public static void tooltips(ItemStack stack, List<Component> list, Player player) {
         Item i = stack.getItem();
-        if (i == Items.COBWEB) list.add(new TranslatableComponent("info.apotheosis.cobweb").withStyle(ChatFormatting.GRAY));
-        else if (i == EnchModule.PRISMATIC_WEB) list.add(new TranslatableComponent("info.apotheosis.prismatic_cobweb").withStyle(ChatFormatting.GRAY));
+        if (i == Items.COBWEB) list.add(new TranslatableComponent("info.zenith.cobweb").withStyle(ChatFormatting.GRAY));
+        else if (i == EnchModule.PRISMATIC_WEB) list.add(new TranslatableComponent("info.zenith.prismatic_cobweb").withStyle(ChatFormatting.GRAY));
         else if (i instanceof BlockItem) {
             Block block = ((BlockItem) i).getBlock();
             Level world = Minecraft.getInstance().level;
@@ -56,24 +56,24 @@ public class EnchModuleClient {
             float rectification = EnchantingStatManager.getQuantaRectification(state, world, BlockPos.ZERO);
             int clues = EnchantingStatManager.getBonusClues(state, world, BlockPos.ZERO);
             if (eterna != 0 || quanta != 0 || arcana != 0 || rectification != 0 || clues != 0) {
-                list.add(new TranslatableComponent("info.apotheosis.ench_stats").withStyle(ChatFormatting.GOLD));
+                list.add(new TranslatableComponent("info.zenith.ench_stats").withStyle(ChatFormatting.GOLD));
             }
             if (eterna != 0) {
                 if (eterna > 0) {
-                    list.add(new TranslatableComponent("info.apotheosis.eterna.p", String.format("%.2f", eterna), String.format("%.2f", maxEterna)).withStyle(ChatFormatting.GREEN));
-                } else list.add(new TranslatableComponent("info.apotheosis.eterna", String.format("%.2f", eterna)).withStyle(ChatFormatting.GREEN));
+                    list.add(new TranslatableComponent("info.zenith.eterna.p", String.format("%.2f", eterna), String.format("%.2f", maxEterna)).withStyle(ChatFormatting.GREEN));
+                } else list.add(new TranslatableComponent("info.zenith.eterna", String.format("%.2f", eterna)).withStyle(ChatFormatting.GREEN));
             }
             if (quanta != 0) {
-                list.add(new TranslatableComponent("info.apotheosis.quanta" + (quanta > 0 ? ".p" : ""), String.format("%.2f", quanta)).withStyle(ChatFormatting.RED));
+                list.add(new TranslatableComponent("info.zenith.quanta" + (quanta > 0 ? ".p" : ""), String.format("%.2f", quanta)).withStyle(ChatFormatting.RED));
             }
             if (arcana != 0) {
-                list.add(new TranslatableComponent("info.apotheosis.arcana" + (arcana > 0 ? ".p" : ""), String.format("%.2f", arcana)).withStyle(ChatFormatting.DARK_PURPLE));
+                list.add(new TranslatableComponent("info.zenith.arcana" + (arcana > 0 ? ".p" : ""), String.format("%.2f", arcana)).withStyle(ChatFormatting.DARK_PURPLE));
             }
             if (rectification != 0) {
-                list.add(new TranslatableComponent("info.apotheosis.rectification" + (rectification > 0 ? ".p" : ""), String.format("%.2f", rectification)).withStyle(ChatFormatting.YELLOW));
+                list.add(new TranslatableComponent("info.zenith.rectification" + (rectification > 0 ? ".p" : ""), String.format("%.2f", rectification)).withStyle(ChatFormatting.YELLOW));
             }
             if (clues != 0) {
-                list.add(new TranslatableComponent("info.apotheosis.clues" + (clues > 0 ? ".p" : ""), String.format("%d", clues)).withStyle(ChatFormatting.DARK_AQUA));
+                list.add(new TranslatableComponent("info.zenith.clues" + (clues > 0 ? ".p" : ""), String.format("%d", clues)).withStyle(ChatFormatting.DARK_AQUA));
             }
         }
     }

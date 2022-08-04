@@ -1,0 +1,34 @@
+{
+	"parent": "zenith:enchanting/hellshelf",
+	"conditions": [{
+		"type": "zenith:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "zenith:infused_hellshelf"
+		},
+		"title": {
+			"translate": "advancements.zenith.infuse_hellshelf"
+		},
+		"description": {
+			"translate": "advancements.zenith.infuse_hellshelf.desc"
+		},
+		"frame": "task"
+	},
+	"criteria": {
+		"enchanted_item": {
+			"trigger": "minecraft:enchanted_item",
+			"conditions": {
+				"item": {
+					"items": ["zenith:hellshelf"]
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"enchanted_item"
+		]
+	]
+}

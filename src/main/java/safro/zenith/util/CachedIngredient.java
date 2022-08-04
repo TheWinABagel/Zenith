@@ -57,11 +57,6 @@ public class CachedIngredient extends AbstractIngredient {
         return VanillaSerializer.INSTANCE;
     }
 
-    @Override
-    public Value[] getValues() {
-        return values;
-    }
-
     // Implementation of default vanilla serializer
     public static class VanillaSerializer implements IngredientDeserializer {
         public static final VanillaSerializer INSTANCE = new VanillaSerializer();

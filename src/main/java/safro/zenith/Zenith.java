@@ -1,5 +1,6 @@
 package safro.zenith;
 
+import io.github.fabricators_of_create.porting_lib.crafting.NBTIngredient;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
@@ -14,7 +15,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import safro.zenith.advancements.AdvancementTriggers;
-import safro.zenith.api.NBTIngredientPublic;
 import safro.zenith.api.RunnableReloader;
 import safro.zenith.api.config.Configuration;
 import safro.zenith.api.data.RecipeHelper;
@@ -60,8 +60,8 @@ public class Zenith implements ModInitializer {
 		enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
 		enableVillage = config.getBoolean("Enable Village Module", "general", true, "If the village module is loaded.");
 		giveBook = config.getBoolean("Give Book on First Join", "general", true, "If the Chronicle of Shadows is given to new players.");
-		config.setTitle("Apotheosis Module Control");
-		config.setComment("This file allows individual modules of Apotheosis to be enabled or disabled.\nChanges will have no effect until the next game restart.");
+		config.setTitle("Zenith Module Control");
+		config.setComment("This file allows individual modules of Zenith to be enabled or disabled.\nChanges will have no effect until the next game restart.");
 		if (config.hasChanged()) config.save();
 	}
 
@@ -90,7 +90,7 @@ public class Zenith implements ModInitializer {
 	}
 
 	public static Ingredient potionIngredient(Potion type) {
-		return new NBTIngredientPublic(PotionUtils.setPotion(new ItemStack(Items.POTION), type));
+		return NBTIngredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), type));
 	}
 
 	public static void addReloads() {

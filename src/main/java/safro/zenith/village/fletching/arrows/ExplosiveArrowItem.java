@@ -30,7 +30,7 @@ public class ExplosiveArrowItem extends ArrowItem implements IApothArrowItem {
 	@Override
 	@Environment(EnvType.CLIENT)
 	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		tooltip.add(new TranslatableComponent("info.apotheosis.explosive_arrow").withStyle(ChatFormatting.RED));
+		tooltip.add(new TranslatableComponent("info.zenith.explosive_arrow").withStyle(ChatFormatting.RED));
 	}
 
 	@Override

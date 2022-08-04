@@ -1,0 +1,42 @@
+{
+	"parent": "zenith:enchanting/infuse_hellshelf",
+	"conditions": [{
+		"type": "zenith:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "zenith:blazing_hellshelf"
+		},
+		"title": {
+			"translate": "advancements.zenith.upgrade_hellshelf"
+		},
+		"description": {
+			"translate": "advancements.zenith.upgrade_hellshelf.desc"
+		},
+		"frame": "goal"
+	},
+	"criteria": {
+		"blazing": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"items": ["zenith:blazing_hellshelf"]
+				}]
+			}
+		},
+		"glowing": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"items": ["zenith:glowing_hellshelf"]
+				}]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"blazing", "glowing"
+		]
+	]
+}

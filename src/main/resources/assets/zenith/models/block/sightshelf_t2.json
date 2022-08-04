@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "zenith:blocks/sightshelf_t2_top",
+        "side": "zenith:blocks/sightshelf_t2"
+    }
+}

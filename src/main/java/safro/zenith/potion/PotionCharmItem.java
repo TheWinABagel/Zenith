@@ -115,14 +115,14 @@ public class PotionCharmItem extends Item implements TableApplicableItem, Damage
 
 	@Override
 	public Component getName(ItemStack stack) {
-		if (!hasPotion(stack)) return new TranslatableComponent("item.apotheosis.potion_charm_broke");
+		if (!hasPotion(stack)) return new TranslatableComponent("item.zenith.potion_charm_broke");
 		Potion p = PotionUtils.getPotion(stack);
 		MobEffectInstance effect = p.getEffects().get(0);
 		TranslatableComponent potionCmp = new TranslatableComponent(effect.getDescriptionId());
 		if (effect.getAmplifier() > 0) {
 			potionCmp = new TranslatableComponent("potion.withAmplifier", potionCmp, new TranslatableComponent("potion.potency." + effect.getAmplifier()));
 		}
-		return new TranslatableComponent("item.apotheosis.potion_charm", potionCmp);
+		return new TranslatableComponent("item.zenith.potion_charm", potionCmp);
 	}
 
 	public static boolean hasPotion(ItemStack stack) {

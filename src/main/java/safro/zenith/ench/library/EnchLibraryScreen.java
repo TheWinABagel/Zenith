@@ -6,6 +6,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -25,7 +26,6 @@ import org.lwjgl.glfw.GLFW;
 import safro.zenith.Zenith;
 import safro.zenith.network.ButtonClickPacket;
 import safro.zenith.util.ApotheosisUtil;
-import safro.zenith.util.ClientUtil;
 
 import javax.annotation.Nullable;
 import java.text.DecimalFormat;
@@ -69,10 +69,14 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 			this.setFocused(null);
 			this.filter.setFocus(false);
 			return true;
-		} else if (ClientUtil.isActiveAndMatches(this.minecraft.options.keyInventory, mouseKey) && this.getFocused() == this.filter) {
+		} else if (isActiveAndMatches(this.minecraft.options.keyInventory, mouseKey) && this.getFocused() == this.filter) {
 			return true;
 		}
 		return super.keyPressed(pKeyCode, pScanCode, pModifiers);
+	}
+
+	public static boolean isActiveAndMatches(KeyMapping key, InputConstants.Key keyCode) {
+		return key.matchesMouse(keyCode.getValue()) && key.isDown();
 	}
 
 	@Override

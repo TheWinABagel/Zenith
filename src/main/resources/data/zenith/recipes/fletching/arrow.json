@@ -1,0 +1,21 @@
+{
+	"type": "zenith:fletching",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "village"
+	}],
+	"ingredients": [{
+			"item": "minecraft:flint"
+		},
+		{
+			"item": "minecraft:stick"
+		},
+		{
+			"item": "minecraft:feather"
+		}
+	],
+	"result": {
+		"item": "minecraft:arrow",
+		"count": 6
+	}
+}

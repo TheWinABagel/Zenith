@@ -188,7 +188,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity implements DataPacketBl
 
 							if (ApothSpawnerTile.this.hasNoAI && entity instanceof Mob mob) {
 								mob.setNoAi(true);
-								entity.getExtraCustomData().putBoolean("apotheosis:movable", true);
+								entity.getExtraCustomData().putBoolean("zenith:movable", true);
 							}
 							if (ApothSpawnerTile.this.silent) entity.setSilent(true);
 

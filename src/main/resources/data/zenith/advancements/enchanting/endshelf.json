@@ -1,0 +1,34 @@
+{
+	"parent": "zenith:enchanting/bookshelf",
+	"conditions": [{
+		"type": "zenith:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "zenith:endshelf"
+		},
+		"title": {
+			"translate": "advancements.zenith.endshelf"
+		},
+		"description": {
+			"translate": "advancements.zenith.endshelf.desc"
+		},
+		"frame": "goal"
+	},
+	"criteria": {
+		"endshelf": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"items": ["zenith:endshelf"]
+				}]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"endshelf"
+		]
+	]
+}

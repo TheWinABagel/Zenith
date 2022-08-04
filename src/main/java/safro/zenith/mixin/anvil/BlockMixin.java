@@ -73,7 +73,7 @@ public abstract class BlockMixin {
     @Inject(method = "appendHoverText", at = @At("HEAD"))
     private void apothAppend(ItemStack stack, BlockGetter blockGetter, List<Component> tooltip, TooltipFlag tooltipFlag, CallbackInfo ci) {
         if (isValid()) {
-            if (!stack.hasFoil()) tooltip.add(new TranslatableComponent("info.apotheosis.anvil").withStyle(ChatFormatting.GRAY));
+            if (!stack.hasFoil()) tooltip.add(new TranslatableComponent("info.zenith.anvil").withStyle(ChatFormatting.GRAY));
         }
     }
 

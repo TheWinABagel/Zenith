@@ -40,7 +40,7 @@ import java.io.File;
 public class VillageModule {
     public static final RecipeType<FletchingRecipe> FLETCHING = ApotheosisUtil.makeRecipeType(Zenith.MODID + ":fletching");
     public static final RecipeSerializer<FletchingRecipe> FLETCHING_SERIALIZER = new FletchingRecipe.Serializer();
-    public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Village");
+    public static final Logger LOGGER = LogManager.getLogger("Zenith : Village");
 
     public static Configuration config;
 

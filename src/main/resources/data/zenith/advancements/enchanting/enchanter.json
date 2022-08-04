@@ -1,0 +1,35 @@
+{
+	"conditions": [{
+		"type": "zenith:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:enchanting_table"
+		},
+		"title": {
+			"translate": "advancements.zenith.enchantment"
+		},
+		"description": {
+			"translate": "advancements.zenith.enchantment.desc"
+		},
+		"frame": "task",
+		"hidden": false,
+		"background": "zenith:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"enchanting_table": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"items": [ "minecraft:enchanting_table" ]
+				}]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"enchanting_table"
+		]
+	]
+}

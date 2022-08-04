@@ -1,0 +1,32 @@
+{
+	"parent": "zenith:spawner/modifier",
+	"conditions": [{
+		"type": "zenith:module",
+		"module": "spawner"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:chorus_fruit"
+		},
+		"title": {
+			"translate": "advancements.zenith.noai"
+		},
+		"description": {
+			"translate": "advancements.zenith.noai.desc"
+		},
+		"frame": "challenge"
+	},
+	"criteria": {
+		"modifier": {
+			"trigger": "zenith:spawner_modifier",
+			"conditions": {
+				"no_ai": true
+			}
+		}
+	},
+	"requirements": [
+		[
+			"modifier"
+		]
+	]
+}

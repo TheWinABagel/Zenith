@@ -1,6 +1,0 @@
-{
-    "name": "Spawner Module",
-    "description": "The Spawner Module allows you to move and modify $(9)Mob Spawners$().",
-    "icon": "minecraft:spawner",
-	"flag": "apotheosis:spawner"
-}

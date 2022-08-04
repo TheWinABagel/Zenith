@@ -32,6 +32,6 @@ public class SpawnerTOPPlugin {
     }
 
     public static Component concat(Object... args) {
-        return new TranslatableComponent("misc.apotheosis.value_concat", args[0], new TextComponent(args[1].toString()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GREEN);
+        return new TranslatableComponent("misc.zenith.value_concat", args[0], new TextComponent(args[1].toString()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GREEN);
     }
 }

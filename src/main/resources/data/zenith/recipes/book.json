@@ -1,0 +1,21 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"fabric:load_conditions": [{
+		"condition": "fabric:any_mod_loaded",
+		"values": [
+			"patchouli"
+		]
+	}],
+	"group": "something",
+	"ingredients": [{
+			"item": "minecraft:book"
+		},
+		{
+			"item": "minecraft:gold_ingot"
+		}
+	],
+	"result": {
+		"item": "zenith:book",
+		"count": 1
+	}
+}

@@ -204,7 +204,7 @@ public abstract class EnchLibraryTile extends BlockEntity implements DataPacketB
 
 		@Override
 		public Component getDisplayName() {
-			return new TranslatableComponent("apotheosis.ench.library");
+			return new TranslatableComponent("zenith.ench.library");
 		}
 
 		@Nullable
@@ -222,7 +222,7 @@ public abstract class EnchLibraryTile extends BlockEntity implements DataPacketB
 
 		@Override
 		public Component getDisplayName() {
-			return new TranslatableComponent("block.apotheosis.ender_library");
+			return new TranslatableComponent("block.zenith.ender_library");
 		}
 
 		@Nullable

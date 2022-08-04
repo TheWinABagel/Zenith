@@ -112,13 +112,13 @@ public abstract class SpawnerBlockMixin extends BaseEntityBlock {
                     if (tag.getBoolean("no_ai"))
                         tooltip.add(SpawnerStats.NO_AI.name().withStyle(ChatFormatting.DARK_GREEN));
                 } else {
-                    tooltip.add(new TranslatableComponent("misc.apotheosis.shift_stats").withStyle(ChatFormatting.GRAY));
+                    tooltip.add(new TranslatableComponent("misc.zenith.shift_stats").withStyle(ChatFormatting.GRAY));
                 }
             }
         }
     }
 
     private static Component concat(Object... args) {
-        return new TranslatableComponent("misc.apotheosis.value_concat", args[0], new TextComponent(args[1].toString()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GREEN);
+        return new TranslatableComponent("misc.zenith.value_concat", args[0], new TextComponent(args[1].toString()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GREEN);
     }
 }

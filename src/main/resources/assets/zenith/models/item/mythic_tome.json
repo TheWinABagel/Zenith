@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "zenith:items/tome",
+		"layer1": "zenith:items/rarity_tome_1"
+    }
+}

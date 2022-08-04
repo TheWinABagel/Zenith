@@ -1,11 +1,11 @@
 {
 	"replace": false,
 	"values": [{
-			"id": "apotheosis:beeshelf",
+			"id": "zenith:beeshelf",
 			"required": false
 		},
 		{
-			"id": "apotheosis:melonshelf",
+			"id": "zenith:melonshelf",
 			"required": false
 		}
 	]

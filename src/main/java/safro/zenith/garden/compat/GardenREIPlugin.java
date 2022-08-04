@@ -5,7 +5,7 @@ import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import net.minecraft.resources.ResourceLocation;
 import safro.zenith.Zenith;
 import safro.zenith.garden.GardenModule;
-import safro.zenith.util.ClientUtil;
+import safro.zenith.util.REIUtil;
 
 public class GardenREIPlugin implements REIClientPlugin {
 
@@ -17,6 +17,6 @@ public class GardenREIPlugin implements REIClientPlugin {
     @Override
     public void registerDisplays(DisplayRegistry registry) {
         if (!Zenith.enableGarden) return;
-        ClientUtil.addInfo(registry, GardenModule.ENDER_LEAD, "info.apotheosis.ender_lead");
+        REIUtil.addInfo(registry, GardenModule.ENDER_LEAD, "info.zenith.ender_lead");
     }
 }

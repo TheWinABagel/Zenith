@@ -67,10 +67,10 @@ public class EnchModule {
     public static final Map<Enchantment, EnchantmentInfo> ENCHANTMENT_INFO = new HashMap<>();
     public static final Object2IntMap<Enchantment> ENCH_HARD_CAPS = new Object2IntOpenHashMap<>();
     public static final String ENCH_HARD_CAP_IMC = "set_ench_hard_cap";
-    public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Enchantment");
+    public static final Logger LOGGER = LogManager.getLogger("Zenith : Enchantment");
     public static final List<TomeItem> TYPED_BOOKS = new ArrayList<>();
     public static final EquipmentSlot[] ARMOR = { EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET };
-    public static final RecipeType<EnchantingRecipe> INFUSION_RECIPE = ApotheosisUtil.makeRecipeType("apotheosis:enchanting");
+    public static final RecipeType<EnchantingRecipe> INFUSION_RECIPE = ApotheosisUtil.makeRecipeType("zenith:enchanting");
 
     static Configuration enchInfoConfig;
 
@@ -292,7 +292,7 @@ public class EnchModule {
 
     public static void reload(boolean e) {
         enchInfoConfig = new Configuration(new File(Zenith.configDir, "enchantments.cfg"));
-        enchInfoConfig.setTitle("Apotheosis Enchantment Information");
+        enchInfoConfig.setTitle("Zenith Enchantment Information");
         enchInfoConfig.setComment("This file contains configurable data for each enchantment.\nThe names of each category correspond to the registry names of every loaded enchantment.");
         ENCHANTMENT_INFO.clear();
 

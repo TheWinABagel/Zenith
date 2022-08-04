@@ -27,24 +27,24 @@ public class CommonTooltipUtil {
         float rectification = EnchantingStatManager.getQuantaRectification(state, world, BlockPos.ZERO);
         int clues = EnchantingStatManager.getBonusClues(state, world, BlockPos.ZERO);
         if (eterna != 0 || quanta != 0 || arcana != 0 || rectification != 0 || clues != 0) {
-            tooltip.accept(new TranslatableComponent("info.apotheosis.ench_stats").withStyle(ChatFormatting.GOLD));
+            tooltip.accept(new TranslatableComponent("info.zenith.ench_stats").withStyle(ChatFormatting.GOLD));
         }
         if (eterna != 0) {
             if (eterna > 0) {
-                tooltip.accept(new TranslatableComponent("info.apotheosis.eterna.p", String.format("%.2f", eterna), String.format("%.2f", maxEterna)).withStyle(ChatFormatting.GREEN));
-            } else tooltip.accept(new TranslatableComponent("info.apotheosis.eterna", String.format("%.2f", eterna)).withStyle(ChatFormatting.GREEN));
+                tooltip.accept(new TranslatableComponent("info.zenith.eterna.p", String.format("%.2f", eterna), String.format("%.2f", maxEterna)).withStyle(ChatFormatting.GREEN));
+            } else tooltip.accept(new TranslatableComponent("info.zenith.eterna", String.format("%.2f", eterna)).withStyle(ChatFormatting.GREEN));
         }
         if (quanta != 0) {
-            tooltip.accept(new TranslatableComponent("info.apotheosis.quanta" + (quanta > 0 ? ".p" : ""), String.format("%.2f", quanta)).withStyle(ChatFormatting.RED));
+            tooltip.accept(new TranslatableComponent("info.zenith.quanta" + (quanta > 0 ? ".p" : ""), String.format("%.2f", quanta)).withStyle(ChatFormatting.RED));
         }
         if (arcana != 0) {
-            tooltip.accept(new TranslatableComponent("info.apotheosis.arcana" + (arcana > 0 ? ".p" : ""), String.format("%.2f", arcana)).withStyle(ChatFormatting.DARK_PURPLE));
+            tooltip.accept(new TranslatableComponent("info.zenith.arcana" + (arcana > 0 ? ".p" : ""), String.format("%.2f", arcana)).withStyle(ChatFormatting.DARK_PURPLE));
         }
         if (rectification != 0) {
-            tooltip.accept(new TranslatableComponent("info.apotheosis.rectification" + (rectification > 0 ? ".p" : ""), String.format("%.2f", rectification)).withStyle(ChatFormatting.YELLOW));
+            tooltip.accept(new TranslatableComponent("info.zenith.rectification" + (rectification > 0 ? ".p" : ""), String.format("%.2f", rectification)).withStyle(ChatFormatting.YELLOW));
         }
         if (clues != 0) {
-            tooltip.accept(new TranslatableComponent("info.apotheosis.clues" + (clues > 0 ? ".p" : ""), String.format("%d", clues)).withStyle(ChatFormatting.DARK_AQUA));
+            tooltip.accept(new TranslatableComponent("info.zenith.clues" + (clues > 0 ? ".p" : ""), String.format("%d", clues)).withStyle(ChatFormatting.DARK_AQUA));
         }
     }
 
@@ -71,11 +71,11 @@ public class CommonTooltipUtil {
             if (e.getFloatKey() > 0) stats[0] = Math.min(e.getFloatKey(), stats[0] + e.getFloatValue());
             else stats[0] += e.getFloatValue();
         }
-        tooltip.accept(new TranslatableComponent("info.apotheosis.eterna.t", String.format("%.2f", stats[0]), String.format("%.2f", EnchantingStatManager.getAbsoluteMaxEterna())).withStyle(ChatFormatting.GREEN));
-        tooltip.accept(new TranslatableComponent("info.apotheosis.quanta.t", String.format("%.2f", Math.min(100, stats[1]))).withStyle(ChatFormatting.RED));
-        tooltip.accept(new TranslatableComponent("info.apotheosis.arcana.t", String.format("%.2f", Math.min(100, stats[2]))).withStyle(ChatFormatting.DARK_PURPLE));
-        tooltip.accept(new TranslatableComponent("info.apotheosis.rectification.t", String.format("%.2f", Mth.clamp(stats[3], -100, 100))).withStyle(ChatFormatting.YELLOW));
-        tooltip.accept(new TranslatableComponent("info.apotheosis.clues.t", String.format("%d", (int) stats[4] + 1)).withStyle(ChatFormatting.DARK_AQUA));
+        tooltip.accept(new TranslatableComponent("info.zenith.eterna.t", String.format("%.2f", stats[0]), String.format("%.2f", EnchantingStatManager.getAbsoluteMaxEterna())).withStyle(ChatFormatting.GREEN));
+        tooltip.accept(new TranslatableComponent("info.zenith.quanta.t", String.format("%.2f", Math.min(100, stats[1]))).withStyle(ChatFormatting.RED));
+        tooltip.accept(new TranslatableComponent("info.zenith.arcana.t", String.format("%.2f", Math.min(100, stats[2]))).withStyle(ChatFormatting.DARK_PURPLE));
+        tooltip.accept(new TranslatableComponent("info.zenith.rectification.t", String.format("%.2f", Mth.clamp(stats[3], -100, 100))).withStyle(ChatFormatting.YELLOW));
+        tooltip.accept(new TranslatableComponent("info.zenith.clues.t", String.format("%d", (int) stats[4] + 1)).withStyle(ChatFormatting.DARK_AQUA));
     }
 
     public static void gatherStats(Float2FloatMap eternaMap, float[] stats, Level world, BlockPos pos) {

@@ -41,7 +41,7 @@ public class SpawnerWTHITPlugin implements IWailaPlugin, IBlockComponentProvider
             if (stats[8] == 1) tooltip.addLine(SpawnerStats.REDSTONE_CONTROL.name().withStyle(ChatFormatting.DARK_GREEN));
             if (stats[9] == 1) tooltip.addLine(SpawnerStats.IGNORE_LIGHT.name().withStyle(ChatFormatting.DARK_GREEN));
             if (stats[10] == 1) tooltip.addLine(SpawnerStats.NO_AI.name().withStyle(ChatFormatting.DARK_GREEN));
-        } else tooltip.addLine(new TranslatableComponent("misc.apotheosis.ctrl_stats"));
+        } else tooltip.addLine(new TranslatableComponent("misc.zenith.ctrl_stats"));
     }
 
     @Override
@@ -70,6 +70,6 @@ public class SpawnerWTHITPlugin implements IWailaPlugin, IBlockComponentProvider
     }
 
     public static Component concat(Object... args) {
-        return new TranslatableComponent("misc.apotheosis.value_concat", args[0], new TextComponent(args[1].toString()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GREEN);
+        return new TranslatableComponent("misc.zenith.value_concat", args[0], new TextComponent(args[1].toString()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GREEN);
     }
 }

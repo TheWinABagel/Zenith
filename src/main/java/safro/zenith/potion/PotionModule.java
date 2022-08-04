@@ -30,7 +30,7 @@ import safro.zenith.util.ApotheosisUtil;
 import java.io.File;
 
 public class PotionModule {
-    public static final Logger LOG = LogManager.getLogger("Apotheosis : Potion");
+    public static final Logger LOG = LogManager.getLogger("Zenith : Potion");
     public static final ResourceLocation POTION_TEX = new ResourceLocation(Zenith.MODID, "textures/potions.png");
 
     static int knowledgeMult = 4;

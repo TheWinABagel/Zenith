@@ -70,9 +70,9 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
     protected void renderLabels(PoseStack stack, int mouseX, int mouseY) {
         this.font.draw(stack, this.title, 12.0F, 5.0F, 4210752);
         this.font.draw(stack, this.playerInventoryTitle, 7.0F, this.imageHeight - 96 + 4F, 4210752);
-        this.font.draw(stack, I18n.get("gui.apotheosis.enchant.eterna"), 19, 74, 0x3DB53D);
-        this.font.draw(stack, I18n.get("gui.apotheosis.enchant.quanta"), 19, 84, 0xFC5454);
-        this.font.draw(stack, I18n.get("gui.apotheosis.enchant.arcana"), 19, 94, 0xA800A8);
+        this.font.draw(stack, I18n.get("gui.zenith.enchant.eterna"), 19, 74, 0x3DB53D);
+        this.font.draw(stack, I18n.get("gui.zenith.enchant.quanta"), 19, 84, 0xFC5454);
+        this.font.draw(stack, I18n.get("gui.zenith.enchant.arcana"), 19, 94, 0xA800A8);
     }
 
     @Override
@@ -265,16 +265,16 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
                 List<Component> list = Lists.newArrayList();
                 if (enchantment != null) {
                     if (!this.clues.get(slot).isEmpty()) {
-                        list.add(new TranslatableComponent("info.apotheosis.runes" + (this.hasAllClues[slot] ? "_all" : "")).withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
+                        list.add(new TranslatableComponent("info.zenith.runes" + (this.hasAllClues[slot] ? "_all" : "")).withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
                         for (EnchantmentInstance i : this.clues.get(slot)) {
                             list.add(new TranslatableComponent(i.enchantment.getFullname(i.level).getString()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
                         }
                     } else {
-                        list.add(new TranslatableComponent("info.apotheosis.no_clue").withStyle(ChatFormatting.DARK_RED, ChatFormatting.UNDERLINE));
+                        list.add(new TranslatableComponent("info.zenith.no_clue").withStyle(ChatFormatting.DARK_RED, ChatFormatting.UNDERLINE));
                     }
                 } else list.add(new TranslatableComponent("container.enchant.clue", "").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
                 if (enchantment == null) {
-                    Collections.addAll(list, new TextComponent(""), new TranslatableComponent("apotheosis.container.enchant.limitedEnchantability").withStyle(ChatFormatting.RED));
+                    Collections.addAll(list, new TextComponent(""), new TranslatableComponent("zenith.container.enchant.limitedEnchantability").withStyle(ChatFormatting.RED));
                 } else if (!creative) {
                     list.add(new TextComponent(""));
                     if (this.minecraft.player.experienceLevel < level) {
@@ -305,69 +305,69 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
 
         if (this.isHovering(60, 14 + 19 * 3 + 5, 110, 5, mouseX, mouseY)) {
             List<Component> list = Lists.newArrayList();
-            list.add(new TextComponent(eterna() + I18n.get("gui.apotheosis.enchant.eterna.desc")));
-            list.add(new TextComponent(I18n.get("gui.apotheosis.enchant.eterna.desc2")));
+            list.add(new TextComponent(eterna() + I18n.get("gui.zenith.enchant.eterna.desc")));
+            list.add(new TextComponent(I18n.get("gui.zenith.enchant.eterna.desc2")));
             if (this.menu.eterna.get() > 0) {
                 list.add(new TextComponent(""));
-                list.add(new TextComponent(I18n.get("gui.apotheosis.enchant.eterna.desc3", f(this.menu.eterna.get()), this.menu.eterna.getMax())).withStyle(ChatFormatting.GRAY));
+                list.add(new TextComponent(I18n.get("gui.zenith.enchant.eterna.desc3", f(this.menu.eterna.get()), this.menu.eterna.getMax())).withStyle(ChatFormatting.GRAY));
             }
             this.renderComponentTooltip(stack, list, mouseX, mouseY);
         } else if (this.isHovering(60, 14 + 19 * 3 + 15, 110, 5, mouseX, mouseY)) {
             List<Component> list = Lists.newArrayList();
-            list.add(new TextComponent(quanta() + I18n.get("gui.apotheosis.enchant.quanta.desc")));
-            list.add(new TextComponent(I18n.get("gui.apotheosis.enchant.quanta.desc2")));
-            list.add(new TextComponent(I18n.get("gui.apotheosis.enchant.quanta.desc3")));
+            list.add(new TextComponent(quanta() + I18n.get("gui.zenith.enchant.quanta.desc")));
+            list.add(new TextComponent(I18n.get("gui.zenith.enchant.quanta.desc2")));
+            list.add(new TextComponent(I18n.get("gui.zenith.enchant.quanta.desc3")));
             if (this.menu.quanta.get() > 0) {
                 list.add(new TextComponent(""));
-                list.add(new TextComponent(I18n.get("gui.apotheosis.enchant.quanta.desc4", f(this.menu.quanta.get()))).withStyle(ChatFormatting.GRAY));
-                list.add(new TextComponent(I18n.get("info.apotheosis.gui_rectification", f(this.menu.rectification.get()))).withStyle(ChatFormatting.YELLOW));
+                list.add(new TextComponent(I18n.get("gui.zenith.enchant.quanta.desc4", f(this.menu.quanta.get()))).withStyle(ChatFormatting.GRAY));
+                list.add(new TextComponent(I18n.get("info.zenith.gui_rectification", f(this.menu.rectification.get()))).withStyle(ChatFormatting.YELLOW));
             }
             this.renderComponentTooltip(stack, list, mouseX, mouseY);
             float quanta = this.menu.quanta.get();
             float rectification = this.menu.rectification.get();
             if (quanta > 0) {
                 list.clear();
-                list.add(new TranslatableComponent("info.apotheosis.quanta_buff").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.RED));
-                list.add(new TranslatableComponent("info.apotheosis.quanta_reduc", f(-quanta + quanta * rectification / 100F)).withStyle(ChatFormatting.DARK_RED));
-                list.add(new TranslatableComponent("info.apotheosis.quanta_growth", f(quanta)).withStyle(ChatFormatting.BLUE));
+                list.add(new TranslatableComponent("info.zenith.quanta_buff").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.RED));
+                list.add(new TranslatableComponent("info.zenith.quanta_reduc", f(-quanta + quanta * rectification / 100F)).withStyle(ChatFormatting.DARK_RED));
+                list.add(new TranslatableComponent("info.zenith.quanta_growth", f(quanta)).withStyle(ChatFormatting.BLUE));
                 this.drawOnLeft(stack, list, this.topPos + 29);
             }
         } else if (this.isHovering(60, 14 + 19 * 3 + 25, 110, 5, mouseX, mouseY)) {
             List<Component> list = Lists.newArrayList();
             stack.pushPose();
             stack.translate(0, 0, 4);
-            list.add(new TextComponent(arcana() + I18n.get("gui.apotheosis.enchant.arcana.desc")));
-            list.add(new TextComponent(I18n.get("gui.apotheosis.enchant.arcana.desc2")));
-            list.add(new TextComponent(I18n.get("gui.apotheosis.enchant.arcana.desc3")));
+            list.add(new TextComponent(arcana() + I18n.get("gui.zenith.enchant.arcana.desc")));
+            list.add(new TextComponent(I18n.get("gui.zenith.enchant.arcana.desc2")));
+            list.add(new TextComponent(I18n.get("gui.zenith.enchant.arcana.desc3")));
             if (this.menu.arcana.get() > 0) {
                 list.add(new TextComponent(""));
                 float ench = this.menu.getSlot(0).getItem().getItem().getEnchantmentValue() / 2F;
-                list.add(new TextComponent(I18n.get("gui.apotheosis.enchant.arcana.desc4", f(this.menu.arcana.get() - ench))).withStyle(ChatFormatting.GRAY));
-                list.add(new TranslatableComponent("info.apotheosis.ench_bonus", f(ench)).withStyle(ChatFormatting.YELLOW));
+                list.add(new TextComponent(I18n.get("gui.zenith.enchant.arcana.desc4", f(this.menu.arcana.get() - ench))).withStyle(ChatFormatting.GRAY));
+                list.add(new TranslatableComponent("info.zenith.ench_bonus", f(ench)).withStyle(ChatFormatting.YELLOW));
             }
             this.renderComponentTooltip(stack, list, mouseX, mouseY);
             stack.popPose();
             if (this.menu.arcana.get() > 0) {
                 list.clear();
                 ApothEnchantContainer.Arcana a = ApothEnchantContainer.Arcana.getForThreshold(this.menu.arcana.get());
-                list.add(new TranslatableComponent("info.apotheosis.arcana_bonus").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.DARK_PURPLE));
-                if (a != ApothEnchantContainer.Arcana.EMPTY) list.add(new TranslatableComponent("info.apotheosis.weights_changed").withStyle(ChatFormatting.BLUE));
+                list.add(new TranslatableComponent("info.zenith.arcana_bonus").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.DARK_PURPLE));
+                if (a != ApothEnchantContainer.Arcana.EMPTY) list.add(new TranslatableComponent("info.zenith.weights_changed").withStyle(ChatFormatting.BLUE));
                 int minEnchants = this.menu.arcana.get() > 75F ? 3 : this.menu.arcana.get() > 25F ? 2 : 0;
-                if (minEnchants > 0) list.add(new TranslatableComponent("info.apotheosis.min_enchants", minEnchants).withStyle(ChatFormatting.BLUE));
+                if (minEnchants > 0) list.add(new TranslatableComponent("info.zenith.min_enchants", minEnchants).withStyle(ChatFormatting.BLUE));
 
                 this.drawOnLeft(stack, list, this.topPos + 29);
                 int offset = 20 + list.size() * this.minecraft.font.lineHeight;
                 list.clear();
-                list.add(new TranslatableComponent("info.apotheosis.rel_weights").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.YELLOW));
-                list.add(new TranslatableComponent("info.apotheosis.weight", I18n.get("rarity.enchantment.common"), a.rarities[0]).withStyle(ChatFormatting.GRAY));
-                list.add(new TranslatableComponent("info.apotheosis.weight", I18n.get("rarity.enchantment.uncommon"), a.rarities[1]).withStyle(ChatFormatting.GREEN));
-                list.add(new TranslatableComponent("info.apotheosis.weight", I18n.get("rarity.enchantment.rare"), a.rarities[2]).withStyle(ChatFormatting.BLUE));
-                list.add(new TranslatableComponent("info.apotheosis.weight", I18n.get("rarity.enchantment.very_rare"), a.rarities[3]).withStyle(ChatFormatting.GOLD));
+                list.add(new TranslatableComponent("info.zenith.rel_weights").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.YELLOW));
+                list.add(new TranslatableComponent("info.zenith.weight", I18n.get("rarity.enchantment.common"), a.rarities[0]).withStyle(ChatFormatting.GRAY));
+                list.add(new TranslatableComponent("info.zenith.weight", I18n.get("rarity.enchantment.uncommon"), a.rarities[1]).withStyle(ChatFormatting.GREEN));
+                list.add(new TranslatableComponent("info.zenith.weight", I18n.get("rarity.enchantment.rare"), a.rarities[2]).withStyle(ChatFormatting.BLUE));
+                list.add(new TranslatableComponent("info.zenith.weight", I18n.get("rarity.enchantment.very_rare"), a.rarities[3]).withStyle(ChatFormatting.GOLD));
                 this.drawOnLeft(stack, list, this.topPos + 29 + offset);
             }
         } else if (this.menu.getSlot(0).hasItem() && this.isHovering(145, -15, 27, 15, mouseX, mouseY) && Arrays.stream(this.menu.enchantClue).boxed().map(Enchantment::byId).allMatch(Predicates.notNull())) {
             List<Component> list = Lists.newArrayList();
-            list.add(new TranslatableComponent("info.apotheosis.all_available").withStyle(ChatFormatting.BLUE));
+            list.add(new TranslatableComponent("info.zenith.all_available").withStyle(ChatFormatting.BLUE));
             this.renderComponentTooltip(stack, list, mouseX, mouseY);
         }
 
@@ -377,20 +377,20 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
                 if (this.isHovering(60, 14 + 19 * j, 108, 17, mouseX, mouseY)) {
                     List<Component> list = new ArrayList<>();
                     int level = this.menu.costs[j];
-                    list.add(new TextComponent(I18n.get("info.apotheosis.ench_at", level)).withStyle(ChatFormatting.UNDERLINE, ChatFormatting.GREEN));
+                    list.add(new TextComponent(I18n.get("info.zenith.ench_at", level)).withStyle(ChatFormatting.UNDERLINE, ChatFormatting.GREEN));
                     list.add(new TextComponent(""));
                     int cost = 0;
                     for (int i = 0; i <= j; i++) {
                         cost += ApotheosisUtil.getExperienceForLevel(level - i) - ApotheosisUtil.getExperienceForLevel(level - i - 1);
                     }
-                    list.add(new TranslatableComponent("info.apotheosis.xp_cost", new TextComponent("" + cost).withStyle(ChatFormatting.GREEN), new TextComponent("" + ApotheosisUtil.getLevelForExperience(cost)).withStyle(ChatFormatting.GREEN)));
+                    list.add(new TranslatableComponent("info.zenith.xp_cost", new TextComponent("" + cost).withStyle(ChatFormatting.GREEN), new TextComponent("" + ApotheosisUtil.getLevelForExperience(cost)).withStyle(ChatFormatting.GREEN)));
                     float quanta = this.menu.quanta.get() / 100F;
                     float rectification = this.menu.rectification.get() / 100F;
                     int minPow = Math.round(Mth.clamp(level - level * (quanta - quanta * rectification), 1, EnchantingStatManager.getAbsoluteMaxEterna() * 4));
                     int maxPow = Math.round(Mth.clamp(level + level * quanta, 1, EnchantingStatManager.getAbsoluteMaxEterna() * 4));
-                    list.add(new TranslatableComponent("info.apotheosis.power_range", new TextComponent("" + minPow).withStyle(ChatFormatting.DARK_RED), new TextComponent("" + maxPow).withStyle(ChatFormatting.BLUE)));
-                    list.add(new TranslatableComponent("info.apotheosis.item_ench", new TextComponent("" + enchanting.getItem().getEnchantmentValue()).withStyle(ChatFormatting.GREEN)));
-                    list.add(new TranslatableComponent("info.apotheosis.num_clues", new TextComponent("" + (1 + this.menu.clues.get())).withStyle(ChatFormatting.DARK_AQUA)));
+                    list.add(new TranslatableComponent("info.zenith.power_range", new TextComponent("" + minPow).withStyle(ChatFormatting.DARK_RED), new TextComponent("" + maxPow).withStyle(ChatFormatting.BLUE)));
+                    list.add(new TranslatableComponent("info.zenith.item_ench", new TextComponent("" + enchanting.getItem().getEnchantmentValue()).withStyle(ChatFormatting.GREEN)));
+                    list.add(new TranslatableComponent("info.zenith.num_clues", new TextComponent("" + (1 + this.menu.clues.get())).withStyle(ChatFormatting.DARK_AQUA)));
                     this.drawOnLeft(stack, list, this.topPos + 29);
                     break;
                 }
@@ -454,15 +454,15 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
     }
 
     private static String eterna() {
-        return ChatFormatting.GREEN + I18n.get("gui.apotheosis.enchant.eterna") + ChatFormatting.RESET;
+        return ChatFormatting.GREEN + I18n.get("gui.zenith.enchant.eterna") + ChatFormatting.RESET;
     }
 
     private static String quanta() {
-        return ChatFormatting.RED + I18n.get("gui.apotheosis.enchant.quanta") + ChatFormatting.RESET;
+        return ChatFormatting.RED + I18n.get("gui.zenith.enchant.quanta") + ChatFormatting.RESET;
     }
 
     private static String arcana() {
-        return ChatFormatting.DARK_PURPLE + I18n.get("gui.apotheosis.enchant.arcana") + ChatFormatting.RESET;
+        return ChatFormatting.DARK_PURPLE + I18n.get("gui.zenith.enchant.arcana") + ChatFormatting.RESET;
     }
 
     private static String f(float f) {

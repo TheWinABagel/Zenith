@@ -42,8 +42,8 @@ public class ScrappingTomeItem extends BookItem {
 	@Environment(EnvType.CLIENT)
 	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flagIn) {
 		if (stack.isEnchanted()) return;
-		tooltip.add(new TranslatableComponent("info.apotheosis.scrap_tome").withStyle(ChatFormatting.GRAY));
-		tooltip.add(new TranslatableComponent("info.apotheosis.scrap_tome2").withStyle(ChatFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("info.zenith.scrap_tome").withStyle(ChatFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("info.zenith.scrap_tome2").withStyle(ChatFormatting.GRAY));
 	}
 
 	@Override

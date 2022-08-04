@@ -30,7 +30,7 @@ public class BroadheadArrowItem extends ArrowItem implements IApothArrowItem {
 	@Override
 	@Environment(EnvType.CLIENT)
 	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		tooltip.add(new TranslatableComponent("info.apotheosis.broadhead_arrow").withStyle(ChatFormatting.RED));
+		tooltip.add(new TranslatableComponent("info.zenith.broadhead_arrow").withStyle(ChatFormatting.RED));
 	}
 
 	@Override

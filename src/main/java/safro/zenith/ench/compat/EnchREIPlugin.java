@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.Blocks;
 import safro.zenith.Zenith;
 import safro.zenith.ench.EnchModule;
 import safro.zenith.ench.table.EnchantingRecipe;
-import safro.zenith.util.ClientUtil;
+import safro.zenith.util.REIUtil;
 
 import java.util.List;
 
@@ -55,8 +55,8 @@ public class EnchREIPlugin implements REIClientPlugin {
         recipes.sort((r1, r2) -> Float.compare(r1.getRequirements().eterna, r2.getRequirements().eterna));
         recipes.forEach(registry::add);
 
-        ClientUtil.addInfo(registry, EnchModule.LIBRARY, "info.apotheosis.library");
-        ClientUtil.addInfo(registry, Blocks.ENCHANTING_TABLE, "info.apotheosis.enchanting");
+        REIUtil.addInfo(registry, EnchModule.LIBRARY, "info.zenith.library");
+        REIUtil.addInfo(registry, Blocks.ENCHANTING_TABLE, "info.zenith.enchanting");
     }
 
     public static List<ItemStack> stack(ItemLike item) {

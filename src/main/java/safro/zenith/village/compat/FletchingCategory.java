@@ -46,7 +46,7 @@ public class FletchingCategory extends ApothCategory<FletchingDisplay> {
 
     @Override
     public Component getTitle() {
-        return new TranslatableComponent("apotheosis.recipes.fletching");
+        return new TranslatableComponent("zenith.recipes.fletching");
     }
 
     @Override

@@ -22,45 +22,45 @@ import safro.zenith.util.NameHelper;
 import java.io.File;
 
 public class DeadlyModule {
-    public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Deadly");
+    public static final Logger LOGGER = LogManager.getLogger("Zenith : Deadly");
     public static final Registry<Affix> AFFIXES = FabricRegistryBuilder.createSimple(Affix.class, new ResourceLocation(Zenith.MODID, "affixes")).buildAndRegister();
 
     /**
      * Bonus to how fast a ranged weapon is charged. Base Value = (1.0) = 100%
      */
-    public static final Attribute DRAW_SPEED = register("draw_speed", new RangedAttribute("apotheosis:draw_speed", 1.0D, 1.0D, 1024.0D).setSyncable(true));
+    public static final Attribute DRAW_SPEED = register("draw_speed", new RangedAttribute("zenith:draw_speed", 1.0D, 1.0D, 1024.0D).setSyncable(true));
     /**
      * Chance that a non-jump-attack will critically strike.  Base value = (1.0) = 0%
      */
-    public static final Attribute CRIT_CHANCE = register("crit_chance", new RangedAttribute("apotheosis:crit_chance", 0.0D, 0.0D, 1024.0D).setSyncable(true));
+    public static final Attribute CRIT_CHANCE = register("crit_chance", new RangedAttribute("zenith:crit_chance", 0.0D, 0.0D, 1024.0D).setSyncable(true));
     /**
      * Amount of damage caused by critical strikes. Base value = (1.0) = 100%
      */
-    public static final Attribute CRIT_DAMAGE = register("crit_damage", new RangedAttribute("apotheosis:crit_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true));
+    public static final Attribute CRIT_DAMAGE = register("crit_damage", new RangedAttribute("zenith:crit_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true));
     /**
      * Bonus magic damage that slows enemies hit. Base value = (0.0) = 0 damage
      */
-    public static final Attribute COLD_DAMAGE = register("cold_damage", new RangedAttribute("apotheosis:cold_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true));
+    public static final Attribute COLD_DAMAGE = register("cold_damage", new RangedAttribute("zenith:cold_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true));
     /**
      * Bonus magic damage that burns enemies hit. Base value = (0.0) = 0 damage
      */
-    public static final Attribute FIRE_DAMAGE = register("fire_damage", new RangedAttribute("apotheosis:fire_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true));
+    public static final Attribute FIRE_DAMAGE = register("fire_damage", new RangedAttribute("zenith:fire_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true));
     /**
      * Percent of physical damage converted to health. Base value = (1.0) = 0%
      */
-    public static final Attribute LIFE_STEAL = register("life_steal", new RangedAttribute("apotheosis:life_steal", 0.0D, 0.0D, 1024.0D).setSyncable(true));
+    public static final Attribute LIFE_STEAL = register("life_steal", new RangedAttribute("zenith:life_steal", 0.0D, 0.0D, 1024.0D).setSyncable(true));
     /**
      * Percent of physical damage that bypasses armor. Base value = (1.0) = 0%
      */
-    public static final Attribute PIERCING = register("piercing", new RangedAttribute("apotheosis:piercing", 0.0D, 0.0D, 1024.0D).setSyncable(true));
+    public static final Attribute PIERCING = register("piercing", new RangedAttribute("zenith:piercing", 0.0D, 0.0D, 1024.0D).setSyncable(true));
     /**
      * Bonus physical damage dealt equal to enemy's current health. Base value = (1.0) = 0%
      */
-    public static final Attribute CURRENT_HP_DAMAGE = register("current_hp_damage", new RangedAttribute("apotheosis:current_hp_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true));
+    public static final Attribute CURRENT_HP_DAMAGE = register("current_hp_damage", new RangedAttribute("zenith:current_hp_damage", 0.0D, 0.0D, 1024.0D).setSyncable(true));
     /**
      * Percent of physical damage converted to absorption hearts. Base value = (1.0) = 0%
      */
-    public static final Attribute OVERHEAL = register("overheal", new RangedAttribute("apotheosis:overheal", 0.0D, 0.0D, 1024.0D).setSyncable(true));
+    public static final Attribute OVERHEAL = register("overheal", new RangedAttribute("zenith:overheal", 0.0D, 0.0D, 1024.0D).setSyncable(true));
 
     public static void init() {
         reload(false);

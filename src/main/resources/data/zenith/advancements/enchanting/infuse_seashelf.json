@@ -1,0 +1,34 @@
+{
+	"parent": "zenith:enchanting/seashelf",
+	"conditions": [{
+		"type": "zenith:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "zenith:infused_seashelf"
+		},
+		"title": {
+			"translate": "advancements.zenith.infuse_seashelf"
+		},
+		"description": {
+			"translate": "advancements.zenith.infuse_seashelf.desc"
+		},
+		"frame": "task"
+	},
+	"criteria": {
+		"enchanted_item": {
+			"trigger": "minecraft:enchanted_item",
+			"conditions": {
+				"item": {
+					"items": ["zenith:seashelf"]
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"enchanted_item"
+		]
+	]
+}

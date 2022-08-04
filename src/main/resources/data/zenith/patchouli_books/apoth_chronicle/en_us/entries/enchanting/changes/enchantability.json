@@ -1,0 +1,17 @@
+{
+    "name": "Enchantability",
+    "icon": "minecraft:golden_sword",
+    "category": "zenith:enchanting/changes",
+	"flag": "zenith:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "In Vanilla, all items without an explicit $(l:zenith:enchanting/table/enchantability)Item Enchantability$() have a default of zero.$(p)zenith changes the default to one.$(p)This has the side effect of making some items unintentionally enchantable."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "This tweak does not change the enchantability of items that have an explicit value.$(p)Items with an enchantability of zero can never be enchanted."
+        }
+	]
+}

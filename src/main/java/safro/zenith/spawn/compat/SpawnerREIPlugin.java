@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.Blocks;
 import safro.zenith.Zenith;
 import safro.zenith.spawn.SpawnerModule;
 import safro.zenith.spawn.modifiers.SpawnerModifier;
-import safro.zenith.util.ClientUtil;
+import safro.zenith.util.REIUtil;
 
 import java.util.List;
 
@@ -42,12 +42,12 @@ public class SpawnerREIPlugin implements REIClientPlugin {
         registry.registerFiller(SpawnerModifier.class, SpawnerDisplay::new);
 
         if (SpawnerModule.spawnerSilkLevel == -1) {
-            ClientUtil.addInfo(registry, Blocks.SPAWNER, "info.apotheosis.spawner.no_silk");
+            REIUtil.addInfo(registry, Blocks.SPAWNER, "info.zenith.spawner.no_silk");
         } else if (SpawnerModule.spawnerSilkLevel == 0) {
-            ClientUtil.addInfo(registry, Blocks.SPAWNER, "info.apotheosis.spawner.always_drop");
-        } else ClientUtil.addInfo(registry, Blocks.SPAWNER, new TranslatableComponent("info.apotheosis.spawner", ((MutableComponent) Enchantments.SILK_TOUCH.getFullname(SpawnerModule.spawnerSilkLevel)).withStyle(ChatFormatting.DARK_BLUE).getString()));
+            REIUtil.addInfo(registry, Blocks.SPAWNER, "info.zenith.spawner.always_drop");
+        } else REIUtil.addInfo(registry, Blocks.SPAWNER, new TranslatableComponent("info.zenith.spawner", ((MutableComponent) Enchantments.SILK_TOUCH.getFullname(SpawnerModule.spawnerSilkLevel)).withStyle(ChatFormatting.DARK_BLUE).getString()));
         for (Item i : Registry.ITEM) {
-            if (i instanceof SpawnEggItem) ClientUtil.addInfo(registry, i, "info.apotheosis.capturing");
+            if (i instanceof SpawnEggItem) REIUtil.addInfo(registry, i, "info.zenith.capturing");
         }
     }
 

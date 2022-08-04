@@ -22,7 +22,7 @@ import safro.zenith.village.fletching.FletchingContainer;
 
 @Mixin(FletchingTableBlock.class)
 public abstract class FletchingTableBlockMixin extends CraftingTableBlock {
-    private static final Component NAME = new TranslatableComponent("apotheosis.recipes.fletching");
+    private static final Component NAME = new TranslatableComponent("zenith.recipes.fletching");
 
     public FletchingTableBlockMixin(Properties properties) {
         super(properties);

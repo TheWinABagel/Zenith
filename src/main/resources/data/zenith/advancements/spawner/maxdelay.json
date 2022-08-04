@@ -1,0 +1,36 @@
+{
+	"parent": "zenith:spawner/modifier",
+	"conditions": [{
+		"type": "zenith:module",
+		"module": "spawner"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:clock"
+		},
+		"title": {
+			"translate": "advancements.zenith.maxdelay"
+		},
+		"description": {
+			"translate": "advancements.zenith.maxdelay.desc"
+		},
+		"frame": "goal"
+	},
+	"criteria": {
+		"modifier": {
+			"trigger": "zenith:spawner_modifier",
+			"conditions": {
+				"modifier": "max_delay",
+				"max_delay": {
+					"max": 20,
+					"min": 0
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"modifier"
+		]
+	]
+}

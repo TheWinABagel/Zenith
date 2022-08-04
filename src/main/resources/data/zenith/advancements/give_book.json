@@ -1,0 +1,23 @@
+{
+	"fabric:load_conditions": [
+		{
+			"condition": "zenith:module",
+			"module": "book"
+		},
+		{
+			"condition": "fabric:any_mod_loaded",
+			"values": [
+				"patchouli"
+			]
+		}],
+	"criteria": {
+		"tick": {
+			"trigger": "minecraft:tick"
+		}
+	},
+	"rewards": {
+		"loot": [
+			"zenith:book"
+		]
+	}
+}

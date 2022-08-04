@@ -36,14 +36,14 @@ import java.util.List;
 import java.util.Set;
 
 public class SpawnerModule {
-    public static final Logger LOG = LogManager.getLogger("Apotheosis : Spawner");
+    public static final Logger LOG = LogManager.getLogger("Zenith : Spawner");
     public static int spawnerSilkLevel = 1;
     public static int spawnerSilkDamage = 100;
     public static Set<ResourceLocation> bannedMobs = new HashSet<>();
 
     public static final Enchantment CAPTURING = register("capturing", new CapturingEnchant());
 
-    public static final RecipeType<SpawnerModifier> MODIFIER = ApotheosisUtil.makeRecipeType("apotheosis:spawner_modifier");
+    public static final RecipeType<SpawnerModifier> MODIFIER = ApotheosisUtil.makeRecipeType("zenith:spawner_modifier");
     public static final RecipeSerializer<SpawnerModifier> SPAWNER_MODIFIER = register("spawner_modifier", SpawnerModifier.SERIALIZER);
 
     public static void init() {
@@ -72,13 +72,13 @@ public class SpawnerModule {
     public static void handleTooltips(List<Component> tooltip, ItemStack s) {
         if (s.getItem() instanceof SpawnEggItem egg) {
             EntityType<?> type = egg.getType(s.getTag());
-            if (bannedMobs.contains(Registry.ENTITY_TYPE.getKey(type))) tooltip.add(new TranslatableComponent("misc.apotheosis.banned").withStyle(ChatFormatting.GRAY));
+            if (bannedMobs.contains(Registry.ENTITY_TYPE.getKey(type))) tooltip.add(new TranslatableComponent("misc.zenith.banned").withStyle(ChatFormatting.GRAY));
         }
     }
 
     public static void tickDumbMobs(LivingEntity entity) {
         if (entity instanceof Mob mob) {
-            if (!mob.level.isClientSide && mob.isNoAi() && mob.getExtraCustomData().getBoolean("apotheosis:movable")) {
+            if (!mob.level.isClientSide && mob.isNoAi() && mob.getExtraCustomData().getBoolean("zenith:movable")) {
                 mob.setNoAi(false);
                 mob.travel(new Vec3(mob.xxa, mob.zza, mob.yya));
                 mob.setNoAi(true);
@@ -88,7 +88,7 @@ public class SpawnerModule {
 
     public static void reload(boolean e) {
         Configuration config = new Configuration(new File(Zenith.configDir, "spawner.cfg"));
-        config.setTitle("Apotheosis Spawner Module Configuration");
+        config.setTitle("Zenith Spawner Module Configuration");
         spawnerSilkLevel = config.getInt("Spawner Silk Level", "general", 1, -1, 127, "The level of silk touch needed to harvest a spawner.  Set to -1 to disable, 0 to always drop.  The enchantment module can increase the max level of silk touch.");
         spawnerSilkDamage = config.getInt("Spawner Silk Damage", "general", 100, 0, 100000, "The durability damage dealt to an item that silk touches a spawner.");
         bannedMobs.clear();

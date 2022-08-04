@@ -37,7 +37,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class EnchLibraryBlock extends HorizontalDirectionalBlock implements EntityBlock {
-	public static final Component NAME = new TranslatableComponent("apotheosis.ench.library");
+	public static final Component NAME = new TranslatableComponent("zenith.ench.library");
 
 	protected final BlockEntitySupplier<? extends EnchLibraryTile> tileSupplier;
 	protected final int maxLevel;

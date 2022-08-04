@@ -50,9 +50,9 @@ public class TomeItem extends BookItem implements IEnchantableItem, TableApplica
 	@Override
 	@Environment(EnvType.CLIENT)
 	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		tooltip.add(new TranslatableComponent("info.apotheosis." + Registry.ITEM.getKey(this).getPath()).withStyle(ChatFormatting.GRAY));
+		tooltip.add(new TranslatableComponent("info.zenith." + Registry.ITEM.getKey(this).getPath()).withStyle(ChatFormatting.GRAY));
 		if (stack.isEnchanted()) {
-			tooltip.add(new TranslatableComponent("info.apotheosis.tome_error").withStyle(ChatFormatting.RED));
+			tooltip.add(new TranslatableComponent("info.zenith.tome_error").withStyle(ChatFormatting.RED));
 		}
 	}
 

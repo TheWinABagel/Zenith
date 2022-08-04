@@ -1,0 +1,21 @@
+{
+	"type": "zenith:fletching",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "village"
+	}],
+	"ingredients": [{
+			"item": "minecraft:diamond_pickaxe"
+		},
+		{
+			"item": "minecraft:stick"
+		},
+		{
+			"item": "minecraft:feather"
+		}
+	],
+	"result": {
+		"item": "zenith:diamond_mining_arrow",
+		"count": 24
+	}
+}
