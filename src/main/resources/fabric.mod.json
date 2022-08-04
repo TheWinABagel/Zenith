@@ -10,9 +10,9 @@
     "Shadows of Fire (Forge)"
   ],
   "contact": {
-    "homepage": "https://curseforge.com/minecraft/mc-mods/zenith-fabric",
-    "sources": "https://github.com/Safrodev/Apotheosis-Fabric",
-    "issues": "https://github.com/Safrodev/Apotheosis-Fabric/issues"
+    "homepage": "https://curseforge.com/minecraft/mc-mods/zenith",
+    "sources": "https://github.com/Safrodev/Zenith",
+    "issues": "https://github.com/Safrodev/Zenith/issues"
   },
 
   "license": "MIT License",
