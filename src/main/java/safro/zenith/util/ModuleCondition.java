@@ -17,7 +17,7 @@ public class ModuleCondition implements ConditionJsonProvider {
     static {
         types.put("spawner", () -> Zenith.enableSpawner);
         types.put("garden", () -> Zenith.enableGarden);
-        types.put("deadly", () -> Zenith.enableDeadly);
+//        types.put("deadly", () -> Zenith.enableAdventure);
         types.put("enchantment", () -> Zenith.enableEnch);
         types.put("potion", () -> Zenith.enablePotion);
         types.put("village", () -> Zenith.enableVillage);

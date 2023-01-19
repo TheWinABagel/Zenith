@@ -5,8 +5,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.block.SpawnerBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -41,7 +39,7 @@ public class SpawnerWTHITPlugin implements IWailaPlugin, IBlockComponentProvider
             if (stats[8] == 1) tooltip.addLine(SpawnerStats.REDSTONE_CONTROL.name().withStyle(ChatFormatting.DARK_GREEN));
             if (stats[9] == 1) tooltip.addLine(SpawnerStats.IGNORE_LIGHT.name().withStyle(ChatFormatting.DARK_GREEN));
             if (stats[10] == 1) tooltip.addLine(SpawnerStats.NO_AI.name().withStyle(ChatFormatting.DARK_GREEN));
-        } else tooltip.addLine(new TranslatableComponent("misc.zenith.ctrl_stats"));
+        } else tooltip.addLine(Component.translatable("misc.zenith.ctrl_stats"));
     }
 
     @Override
@@ -70,6 +68,6 @@ public class SpawnerWTHITPlugin implements IWailaPlugin, IBlockComponentProvider
     }
 
     public static Component concat(Object... args) {
-        return new TranslatableComponent("misc.zenith.value_concat", args[0], new TextComponent(args[1].toString()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GREEN);
+        return Component.translatable("misc.zenith.value_concat", args[0], Component.literal(args[1].toString()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GREEN);
     }
 }

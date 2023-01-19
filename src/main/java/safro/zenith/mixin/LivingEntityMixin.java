@@ -17,7 +17,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import safro.zenith.Zenith;
-import safro.zenith.deadly.DeadlyModuleEvents;
 import safro.zenith.ench.enchantments.ReflectiveEnchant;
 import safro.zenith.ench.enchantments.corrupted.LifeMendingEnchant;
 import safro.zenith.potion.PotionModule;
@@ -44,11 +43,11 @@ public abstract class LivingEntityMixin {
     @Inject(method = "updatingUsingItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;updateUsingItem(Lnet/minecraft/world/item/ItemStack;)V", shift = At.Shift.BEFORE))
     private void apotheosisUseTickEvent(CallbackInfo ci) {
         LivingEntity entity = (LivingEntity) (Object) this;
-        if (Zenith.enableDeadly) {
-            if (!useItem.isEmpty()) {
-                useItemRemaining = DeadlyModuleEvents.drawSpeed(entity, useItem, useItemRemaining);
-            }
-        }
+//        if (Zenith.enableAdventure) {
+//            if (!useItem.isEmpty()) {
+//                useItemRemaining = DeadlyModuleEvents.drawSpeed(entity, useItem, useItemRemaining);
+//            }
+//        }
     }
 
     @Inject(method = "heal", at = @At("HEAD"), cancellable = true)

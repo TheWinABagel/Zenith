@@ -2,14 +2,14 @@ package safro.zenith.potion;
 
 import java.util.List;
 
-import io.github.fabricators_of_create.porting_lib.util.DamageableItem;
+import io.github.fabricators_of_create.porting_lib.item.DamageableItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -90,20 +90,20 @@ public class PotionCharmItem extends Item implements TableApplicableItem, Damage
 		if (hasPotion(stack)) {
 			Potion p = PotionUtils.getPotion(stack);
 			MobEffectInstance effect = p.getEffects().get(0);
-			TranslatableComponent potionCmp = new TranslatableComponent(effect.getDescriptionId());
+			MutableComponent potionCmp = Component.translatable(effect.getDescriptionId());
 			if (effect.getAmplifier() > 0) {
-				potionCmp = new TranslatableComponent("potion.withAmplifier", potionCmp, new TranslatableComponent("potion.potency." + effect.getAmplifier()));
+				potionCmp = Component.translatable("potion.withAmplifier", potionCmp, Component.translatable("potion.potency." + effect.getAmplifier()));
 			}
-			potionCmp.withStyle(effect.getEffect().getCategory().getTooltipFormatting());
-			tooltip.add(new TranslatableComponent(this.getDescriptionId() + ".desc", potionCmp).withStyle(ChatFormatting.GRAY));
+			potionCmp = potionCmp.withStyle(effect.getEffect().getCategory().getTooltipFormatting());
+			tooltip.add(Component.translatable(this.getDescriptionId() + ".desc", potionCmp).withStyle(ChatFormatting.GRAY));
 			boolean enabled = stack.getOrCreateTag().getBoolean("charm_enabled");
-			TranslatableComponent enabledCmp = new TranslatableComponent(this.getDescriptionId() + (enabled ? ".enabled" : ".disabled"));
-			enabledCmp.withStyle(enabled ? ChatFormatting.BLUE : ChatFormatting.RED);
+			MutableComponent enabledCmp = Component.translatable(this.getDescriptionId() + (enabled ? ".enabled" : ".disabled"));
+			enabledCmp = enabledCmp.withStyle(enabled ? ChatFormatting.BLUE : ChatFormatting.RED);
 			if (effect.getDuration() > 20) {
-				potionCmp = new TranslatableComponent("potion.withDuration", potionCmp, MobEffectUtil.formatDuration(effect, 1));
+				potionCmp = Component.translatable("potion.withDuration", potionCmp, MobEffectUtil.formatDuration(effect, 1));
 			}
-			potionCmp.withStyle(effect.getEffect().getCategory().getTooltipFormatting());
-			tooltip.add(new TranslatableComponent(this.getDescriptionId() + ".desc3", potionCmp).withStyle(ChatFormatting.GRAY));
+			potionCmp = potionCmp.withStyle(effect.getEffect().getCategory().getTooltipFormatting());
+			tooltip.add(Component.translatable(this.getDescriptionId() + ".desc3", potionCmp).withStyle(ChatFormatting.GRAY));
 		}
 	}
 
@@ -115,14 +115,14 @@ public class PotionCharmItem extends Item implements TableApplicableItem, Damage
 
 	@Override
 	public Component getName(ItemStack stack) {
-		if (!hasPotion(stack)) return new TranslatableComponent("item.zenith.potion_charm_broke");
+		if (!hasPotion(stack)) return Component.translatable("item.zenith.potion_charm_broke");
 		Potion p = PotionUtils.getPotion(stack);
 		MobEffectInstance effect = p.getEffects().get(0);
-		TranslatableComponent potionCmp = new TranslatableComponent(effect.getDescriptionId());
+		MutableComponent potionCmp = Component.translatable(effect.getDescriptionId());
 		if (effect.getAmplifier() > 0) {
-			potionCmp = new TranslatableComponent("potion.withAmplifier", potionCmp, new TranslatableComponent("potion.potency." + effect.getAmplifier()));
+			potionCmp = Component.translatable("potion.withAmplifier", potionCmp, Component.translatable("potion.potency." + effect.getAmplifier()));
 		}
-		return new TranslatableComponent("item.zenith.potion_charm", potionCmp);
+		return Component.translatable("item.zenith.potion_charm", potionCmp);
 	}
 
 	public static boolean hasPotion(ItemStack stack) {
@@ -131,7 +131,7 @@ public class PotionCharmItem extends Item implements TableApplicableItem, Damage
 
 	@Override
 	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-		if (this.allowdedIn(group)) {
+		if (this.allowedIn(group)) {
 			for (Potion potion : Registry.POTION) {
 				if (potion.getEffects().size() == 1 && !potion.getEffects().get(0).getEffect().isInstantenous()) {
 					items.add(PotionUtils.setPotion(new ItemStack(this), potion));

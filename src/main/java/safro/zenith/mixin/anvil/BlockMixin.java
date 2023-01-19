@@ -3,7 +3,6 @@ package safro.zenith.mixin.anvil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -73,7 +72,7 @@ public abstract class BlockMixin {
     @Inject(method = "appendHoverText", at = @At("HEAD"))
     private void apothAppend(ItemStack stack, BlockGetter blockGetter, List<Component> tooltip, TooltipFlag tooltipFlag, CallbackInfo ci) {
         if (isValid()) {
-            if (!stack.hasFoil()) tooltip.add(new TranslatableComponent("info.zenith.anvil").withStyle(ChatFormatting.GRAY));
+            if (!stack.hasFoil()) tooltip.add(Component.translatable("info.zenith.anvil").withStyle(ChatFormatting.GRAY));
         }
     }
 

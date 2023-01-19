@@ -3,6 +3,7 @@ package safro.zenith.mixin;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.SimpleMenuProvider;
@@ -44,7 +45,7 @@ public class EnchantmentTableBlockMixin {
     }
 
     @Inject(method = "animateTick", at = @At("HEAD"), cancellable = true)
-    private void apothEnchAnimate(BlockState state, Level level, BlockPos pos, Random rand, CallbackInfo ci) {
+    private void apothEnchAnimate(BlockState blockState, Level level, BlockPos pos, RandomSource rand, CallbackInfo ci) {
         if (Zenith.enableEnch) {
             for (int i = -2; i <= 2; ++i) {
                 for (int j = -2; j <= 2; ++j) {

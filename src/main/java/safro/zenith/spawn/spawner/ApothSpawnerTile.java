@@ -22,7 +22,6 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class ApothSpawnerTile extends SpawnerBlockEntity implements CustomDataPacketHandlingBlockEntity {
-
 	public boolean ignoresPlayers = false;
 	public boolean ignoresConditions = false;
 	public boolean redstoneControl = false;
@@ -188,7 +187,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity implements CustomDataPa
 
 							if (ApothSpawnerTile.this.hasNoAI && entity instanceof Mob mob) {
 								mob.setNoAi(true);
-								entity.getExtraCustomData().putBoolean("zenith:movable", true);
+								entity.addTag("zenith:movable");
 							}
 							if (ApothSpawnerTile.this.silent) entity.setSilent(true);
 

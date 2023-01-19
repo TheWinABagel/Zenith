@@ -4,7 +4,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -50,7 +49,7 @@ public abstract class BlockItemMixin extends Item {
                     } catch (Exception ex) {
 
                     }
-                    return new TranslatableComponent("item.zenith.spawner", new TranslatableComponent(key)).withStyle(color);
+                    return Component.translatable("item.zenith.spawner", Component.translatable(key)).withStyle(color);
                 }
             }
         }

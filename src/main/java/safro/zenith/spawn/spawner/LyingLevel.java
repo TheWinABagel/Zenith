@@ -1,7 +1,6 @@
 package safro.zenith.spawn.spawner;
 
 import java.util.List;
-import java.util.Random;
 import java.util.function.Predicate;
 
 import net.minecraft.core.BlockPos;
@@ -13,6 +12,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -37,6 +37,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.ticks.LevelTickAccess;
 
 public class LyingLevel implements ServerLevelAccessor {
@@ -88,7 +89,7 @@ public class LyingLevel implements ServerLevelAccessor {
     }
 
     @Override
-    public Random getRandom() {
+    public RandomSource getRandom() {
         return wrapped.getRandom();
     }
 
@@ -108,8 +109,8 @@ public class LyingLevel implements ServerLevelAccessor {
     }
 
     @Override
-    public void gameEvent(Entity pEntity, GameEvent pEvent, BlockPos pPos) {
-        wrapped.gameEvent(pEntity, pEvent, pPos);
+    public void gameEvent(GameEvent gameEvent, Vec3 vec3, GameEvent.Context context) {
+        wrapped.gameEvent(gameEvent, vec3, context);
     }
 
     @Override
@@ -230,11 +231,6 @@ public class LyingLevel implements ServerLevelAccessor {
     @Override
     public ServerLevel getLevel() {
         return (ServerLevel) this.wrapped;
-    }
-
-    @Override
-    public float getBrightness(BlockPos pPos) {
-        return this.fakeLightLevel;
     }
 
     @Override

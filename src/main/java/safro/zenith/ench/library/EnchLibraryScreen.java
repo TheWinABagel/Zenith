@@ -58,7 +58,7 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 	@Override
 	protected void init() {
 		super.init();
-		this.filter = this.addRenderableWidget(new EditBox(font, this.leftPos + 91, this.topPos + 20 + font.lineHeight + 2, 78, font.lineHeight + 4, filter, new TextComponent("")));
+		this.filter = this.addRenderableWidget(new EditBox(font, this.leftPos + 91, this.topPos + 20 + font.lineHeight + 2, 78, font.lineHeight + 4, filter, Component.literal("")));
 		this.filter.setResponder(t -> this.containerChanged());
 	}
 
@@ -92,28 +92,28 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 		LibrarySlot libSlot = this.getHoveredSlot(mouseX, mouseY);
 		if (libSlot != null) {
 			List<FormattedText> list = new ArrayList<>();
-			list.add(new TranslatableComponent(libSlot.ench.getDescriptionId()).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xFFFF80)).withUnderlined(true)));
+			list.add(Component.translatable(libSlot.ench.getDescriptionId()).setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xFFFF80)).withUnderlined(true)));
 			if (I18n.exists(libSlot.ench.getDescriptionId() + ".desc")) {
-				Component txt = new TranslatableComponent(libSlot.ench.getDescriptionId() + ".desc").setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY).withItalic(true));
+				Component txt = Component.translatable(libSlot.ench.getDescriptionId() + ".desc").setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY).withItalic(true));
 				list.addAll(this.font.getSplitter().splitLines(txt, this.leftPos - 16, txt.getStyle()));
-				list.add(new TextComponent(""));
+				list.add(Component.literal(""));
 			}
 
-			list.add(new TranslatableComponent("tooltip.enchlib.max_lvl", new TranslatableComponent("enchantment.level." + libSlot.maxLvl)).withStyle(ChatFormatting.GRAY));
-			list.add(new TranslatableComponent("tooltip.enchlib.points", format(libSlot.points), format(this.menu.getPointCap())).withStyle(ChatFormatting.GRAY));
-			list.add(new TextComponent(""));
+			list.add(Component.translatable("tooltip.enchlib.max_lvl", Component.translatable("enchantment.level." + libSlot.maxLvl)).withStyle(ChatFormatting.GRAY));
+			list.add(Component.translatable("tooltip.enchlib.points", format(libSlot.points), format(this.menu.getPointCap())).withStyle(ChatFormatting.GRAY));
+			list.add(Component.literal(""));
 			ItemStack outSlot = this.menu.ioInv.getItem(1);
 			int current = EnchantmentHelper.getEnchantments(outSlot).getOrDefault(libSlot.ench, 0);
 			boolean shift = Screen.hasShiftDown();
 			int targetLevel = shift ? Math.min(libSlot.maxLvl, 1 + (int) (Math.log(libSlot.points + EnchLibraryTile.levelToPoints(current)) / Math.log(2))) : current + 1;
 			if (targetLevel == current) targetLevel++;
 			int cost = EnchLibraryTile.levelToPoints(targetLevel) - EnchLibraryTile.levelToPoints(current);
-			if (targetLevel > libSlot.maxLvl) list.add(new TranslatableComponent("tooltip.enchlib.unavailable").setStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
+			if (targetLevel > libSlot.maxLvl) list.add(Component.translatable("tooltip.enchlib.unavailable").setStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
 			else {
-				list.add(new TranslatableComponent("tooltip.enchlib.extracting", new TranslatableComponent("enchantment.level." + targetLevel)).withStyle(ChatFormatting.BLUE));
-				list.add(new TranslatableComponent("tooltip.enchlib.cost", cost).withStyle(cost > libSlot.points ? ChatFormatting.RED : ChatFormatting.GOLD));
+				list.add(Component.translatable("tooltip.enchlib.extracting", Component.translatable("enchantment.level." + targetLevel)).withStyle(ChatFormatting.BLUE));
+				list.add(Component.translatable("tooltip.enchlib.cost", cost).withStyle(cost > libSlot.points ? ChatFormatting.RED : ChatFormatting.GOLD));
 			}
-			this.renderComponentTooltip(stack, list.stream().map(formatted -> (Component) new TextComponent(formatted.getString())).toList(), this.leftPos - 16 - list.stream().map(this.font::width).max(Integer::compare).get(), mouseY);
+			this.renderComponentTooltip(stack, list.stream().map(formatted -> (Component) Component.literal(formatted.getString())).toList(), this.leftPos - 16 - list.stream().map(this.font::width).max(Integer::compare).get(), mouseY);
 		}
 	}
 
@@ -134,8 +134,8 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 			idx++;
 		}
 
-		this.font.draw(stack, new TranslatableComponent("tooltip.enchlib.nfilt"), this.leftPos + 91, this.topPos + 20, 4210752);
-		this.font.draw(stack, new TranslatableComponent("tooltip.enchlib.ifilt"), this.leftPos + 91, this.topPos + 50, 4210752);
+		this.font.draw(stack, Component.translatable("tooltip.enchlib.nfilt"), this.leftPos + 91, this.topPos + 20, 4210752);
+		this.font.draw(stack, Component.translatable("tooltip.enchlib.ifilt"), this.leftPos + 91, this.topPos + 50, 4210752);
 	}
 
 	private void renderEntry(PoseStack stack, LibrarySlot data, int x, int y, int mouseX, int mouseY) {
@@ -147,7 +147,7 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 		int progress = (int) Math.round(62 * Math.sqrt(data.points) / (float) Math.sqrt(this.menu.getPointCap()));
 		this.blit(stack, x + 1, y + 12, 179, 38, progress, 5);
 		stack.pushPose();
-		Component txt = new TranslatableComponent(data.ench.getDescriptionId());
+		Component txt = Component.translatable(data.ench.getDescriptionId());
 		float scale = 1;
 		if (this.font.width(txt) > 60) {
 			scale = 60F / this.font.width(txt);

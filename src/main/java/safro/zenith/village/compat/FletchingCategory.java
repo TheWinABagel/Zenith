@@ -9,7 +9,6 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import safro.zenith.compat.ApothCategory;
@@ -46,7 +45,7 @@ public class FletchingCategory extends ApothCategory<FletchingDisplay> {
 
     @Override
     public Component getTitle() {
-        return new TranslatableComponent("zenith.recipes.fletching");
+        return Component.translatable("zenith.recipes.fletching");
     }
 
     @Override

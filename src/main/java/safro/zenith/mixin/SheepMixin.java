@@ -60,12 +60,12 @@ public abstract class SheepMixin {
         Sheep sheep = (Sheep) (Object) this;
         sheep.level.playSound(null, sheep, SoundEvents.SHEEP_SHEAR, SoundSource.PLAYERS, 1.0F, 1.0F);
         sheep.setSheared(true);
-        int i = 1 + sheep.random.nextInt(3);
+        int i = 1 + sheep.getRandom().nextInt(3);
 
         for(int j = 0; j < i; ++j) {
             ItemEntity itemEntity = sheep.spawnAtLocation(Sheep.ITEM_BY_DYE.get(id), 1);
             if (itemEntity != null) {
-                itemEntity.setDeltaMovement(itemEntity.getDeltaMovement().add((sheep.random.nextFloat() - sheep.random.nextFloat()) * 0.1F, sheep.random.nextFloat() * 0.05F, (sheep.random.nextFloat() - sheep.random.nextFloat()) * 0.1F));
+                itemEntity.setDeltaMovement(itemEntity.getDeltaMovement().add((sheep.getRandom().nextFloat() - sheep.getRandom().nextFloat()) * 0.1F, sheep.getRandom().nextFloat() * 0.05F, (sheep.getRandom().nextFloat() - sheep.getRandom().nextFloat()) * 0.1F));
             }
         }
     }

@@ -10,7 +10,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -204,7 +203,7 @@ public abstract class EnchLibraryTile extends BlockEntity implements CustomDataP
 
 		@Override
 		public Component getDisplayName() {
-			return new TranslatableComponent("zenith.ench.library");
+			return Component.translatable("zenith.ench.library");
 		}
 
 		@Nullable
@@ -222,7 +221,7 @@ public abstract class EnchLibraryTile extends BlockEntity implements CustomDataP
 
 		@Override
 		public Component getDisplayName() {
-			return new TranslatableComponent("block.zenith.ender_library");
+			return Component.translatable("block.zenith.ender_library");
 		}
 
 		@Nullable

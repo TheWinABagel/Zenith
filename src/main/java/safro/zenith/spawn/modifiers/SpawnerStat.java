@@ -2,7 +2,8 @@ package safro.zenith.spawn.modifiers;
 
 import com.google.gson.JsonElement;
 
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import safro.zenith.spawn.spawner.ApothSpawnerTile;
 
 public interface SpawnerStat<T> {
@@ -29,11 +30,11 @@ public interface SpawnerStat<T> {
 
 	Class<T> getTypeClass();
 
-	default TranslatableComponent name() {
-		return new TranslatableComponent("stat.zenith." + getId());
+	default MutableComponent name() {
+		return Component.translatable("stat.zenith." + getId());
 	}
 
-	default TranslatableComponent desc() {
-		return new TranslatableComponent("stat.zenith." + getId() + ".desc");
+	default MutableComponent desc() {
+		return Component.translatable("stat.zenith." + getId() + ".desc");
 	}
 }

@@ -2,7 +2,8 @@ package safro.zenith.ench.enchantments;
 
 import java.util.Random;
 
-import dev.cafeteria.fakeplayerapi.server.FakeServerPlayer;
+import io.github.fabricators_of_create.porting_lib.fake_players.FakePlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -48,8 +49,8 @@ public class IcyThornsEnchant extends Enchantment {
 	@Override
 	public void doPostHurt(LivingEntity user, Entity attacker, int level) {
 		if (user == null) return;
-		Random rand = user.getRandom();
-		if (attacker instanceof LivingEntity && !(attacker instanceof FakeServerPlayer)) {
+		RandomSource rand = user.getRandom();
+		if (attacker instanceof LivingEntity && !(attacker instanceof FakePlayer)) {
 			LivingEntity ent = (LivingEntity) attacker;
 			ent.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (100 + rand.nextInt(100)) * level, level));
 		}

@@ -1,8 +1,7 @@
 package safro.zenith.util;
 
 import com.mojang.authlib.GameProfile;
-import dev.cafeteria.fakeplayerapi.server.FakePlayerBuilder;
-import dev.cafeteria.fakeplayerapi.server.FakeServerPlayer;
+import io.github.fabricators_of_create.porting_lib.fake_players.FakePlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -33,10 +32,7 @@ public class BlockUtil {
      */
     public static boolean breakExtraBlock(ServerLevel world, BlockPos pos, ItemStack mainhand, @Nullable UUID source) {
         BlockState blockstate = world.getBlockState(pos);
-        FakeServerPlayer player;
-        FakePlayerBuilder builder = new FakePlayerBuilder(new ResourceLocation(Zenith.MODID + ":fake_player"));
-        if (source != null) player = builder.create(world.getServer(), world, new GameProfile(source, world.getPlayerByUUID(source).getDisplayName().getString()));
-        else player = getMinecraft(world);
+        FakePlayer player = new FakePlayer(world, new GameProfile(source, world.getPlayerByUUID(source).getDisplayName().getString()));
         if (player.connection == null) player.connection = new DeadPacketListenerImpl(player);
         player.getInventory().items.set(player.getInventory().selected, mainhand);
         player.setPos(pos.getX(), pos.getY(), pos.getZ());
@@ -93,12 +89,6 @@ public class BlockUtil {
         return removed;
     }
 
-    private static FakeServerPlayer getMinecraft(ServerLevel level) {
-        GameProfile profile = new GameProfile(UUID.fromString("41C82C87-7AfB-4024-BA57-13D2C99CAE77"), "[Minecraft]");
-        FakePlayerBuilder builder = new FakePlayerBuilder(new ResourceLocation("minecraft", "fake_player"));
-        return builder.create(level.getServer(), level, profile);
-    }
-
     private static boolean canHarvestBlock(BlockState state) {
         if (!state.requiresCorrectToolForDrops()) {
             return true;
@@ -107,7 +97,7 @@ public class BlockUtil {
     }
 
     private static int getXpForBlock(BlockState state, ServerLevel level) {
-        if (state.getBlock() instanceof OreBlock ore) {
+        if (state.getBlock() instanceof DropExperienceBlock ore) {
             return ore.xpRange.sample(level.random);
         } else if (state.getBlock() instanceof RedStoneOreBlock) {
             return 1 + level.random.nextInt(5);

@@ -3,6 +3,7 @@ package safro.zenith.ench.table;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -46,7 +47,7 @@ public interface IEnchantableItem {
      * @param treasure If treasure enchantments can be selected or not.
      * @return The list of enchantments selected, given the context.
      */
-    default List<EnchantmentInstance> selectEnchantments(List<EnchantmentInstance> builtList, Random rand, ItemStack stack, int level, float quanta, float arcana, boolean treasure) {
+    default List<EnchantmentInstance> selectEnchantments(List<EnchantmentInstance> builtList, RandomSource rand, ItemStack stack, int level, float quanta, float arcana, boolean treasure) {
         return builtList;
     }
 

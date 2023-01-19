@@ -11,25 +11,15 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-	maven { url 'https://jitpack.io' }
-
 	maven { url "https://mvn.devos.one/releases/" }
 	maven { url "https://mvn.devos.one/snapshots/" }
-
+	maven { url 'https://jitpack.io' }
 	maven { url "https://maven.jamieswhiteshirt.com/libs-release" }
-
-	maven { url "https://maven.cafeteria.dev" }
-
 	maven { url 'https://maven.blamejared.com' }
-
 	maven { url "https://maven.shedaniel.me" }
-
 	maven { url "https://maven.terraformersmc.com" }
-
 	maven { url "https://ladysnake.jfrog.io/artifactory/mods" }
-
 	maven { url "https://cursemaven.com" }
-
 	maven { url "https://maven.bai.lol" }
 }
 
@@ -39,27 +29,11 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	// Reach Library
 	modImplementation(include("com.jamieswhiteshirt:reach-entity-attributes:${project.reach_lib_version}"))
-
-	// Fake Player API
-	modImplementation(include("dev.cafeteria:fake-player-api:${project.fpa_version}"))
-
-	// Porting Lib
-	modImplementation(include("io.github.fabricators_of_create:Porting-Lib:${project.port_lib_version}+${project.minecraft_version}-dev.${project.port_lib_hash}"))
-
-
-	// ******************** Optional Deps ******************** //
-
-	// Patchouli
+	modImplementation(include("io.github.fabricators_of_create.Porting-Lib:porting-lib:${project.port_lib_version}"))
 	modCompileOnly modRuntimeOnly("vazkii.patchouli:Patchouli:${project.patchouli_version}"),{
 		exclude(group: "net.fabricmc.fabric-api")
 	}
-
-	// REI
-	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
-	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
-	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin:${project.rei_version}"
 
 	// ModMenu
 	modCompileOnly modRuntimeOnly("com.terraformersmc:modmenu:${project.modmenu_version}"), {
@@ -69,12 +43,12 @@ dependencies {
 	// Trinkets
 	modCompileOnly modRuntimeOnly("dev.emi:trinkets:${project.trinkets_version}")
 
-	// TOP
-	modCompileOnly modRuntimeOnly("curse.maven:top-581847:${project.top_version}")
-
 	// WTHIT
 	modCompileOnly "mcp.mobius.waila:wthit-api:fabric-${project.wthit_version}"
 	modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${project.wthit_version}"
+
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
 }
 
 loom {

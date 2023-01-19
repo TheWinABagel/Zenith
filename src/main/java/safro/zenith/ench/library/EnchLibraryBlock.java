@@ -7,7 +7,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -37,7 +36,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class EnchLibraryBlock extends HorizontalDirectionalBlock implements EntityBlock {
-	public static final Component NAME = new TranslatableComponent("zenith.ench.library");
+	public static final Component NAME = Component.translatable("zenith.ench.library");
 
 	protected final BlockEntitySupplier<? extends EnchLibraryTile> tileSupplier;
 	protected final int maxLevel;
@@ -102,10 +101,10 @@ public class EnchLibraryBlock extends HorizontalDirectionalBlock implements Enti
 	@Override
 	@Environment(EnvType.CLIENT)
 	public void appendHoverText(ItemStack stack, BlockGetter world, List<Component> list, TooltipFlag advanced) {
-		list.add(new TranslatableComponent("tooltip.enchlib.capacity", new TranslatableComponent("enchantment.level." + this.maxLevel)).withStyle(ChatFormatting.GOLD));
+		list.add(Component.translatable("tooltip.enchlib.capacity", Component.translatable("enchantment.level." + this.maxLevel)).withStyle(ChatFormatting.GOLD));
 		CompoundTag tag = stack.getTagElement("BlockEntityTag");
 		if (tag != null && tag.contains("Points")) {
-			list.add(new TranslatableComponent("tooltip.enchlib.item", tag.getCompound("Points").size()).withStyle(ChatFormatting.GOLD));
+			list.add(Component.translatable("tooltip.enchlib.item", tag.getCompound("Points").size()).withStyle(ChatFormatting.GOLD));
 		}
 	}
 

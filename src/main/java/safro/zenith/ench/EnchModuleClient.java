@@ -1,12 +1,12 @@
 package safro.zenith.ench;
 
+import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -30,8 +30,8 @@ public class EnchModuleClient {
 
     public static void tooltips(ItemStack stack, List<Component> list, Player player) {
         Item i = stack.getItem();
-        if (i == Items.COBWEB) list.add(new TranslatableComponent("info.zenith.cobweb").withStyle(ChatFormatting.GRAY));
-        else if (i == EnchModule.PRISMATIC_WEB) list.add(new TranslatableComponent("info.zenith.prismatic_cobweb").withStyle(ChatFormatting.GRAY));
+        if (i == Items.COBWEB) list.add(Component.translatable("info.zenith.cobweb").withStyle(ChatFormatting.GRAY));
+        else if (i == EnchModule.PRISMATIC_WEB) list.add(Component.translatable("info.zenith.prismatic_cobweb").withStyle(ChatFormatting.GRAY));
         else if (i instanceof BlockItem) {
             Block block = ((BlockItem) i).getBlock();
             Level world = Minecraft.getInstance().level;
@@ -56,30 +56,30 @@ public class EnchModuleClient {
             float rectification = EnchantingStatManager.getQuantaRectification(state, world, BlockPos.ZERO);
             int clues = EnchantingStatManager.getBonusClues(state, world, BlockPos.ZERO);
             if (eterna != 0 || quanta != 0 || arcana != 0 || rectification != 0 || clues != 0) {
-                list.add(new TranslatableComponent("info.zenith.ench_stats").withStyle(ChatFormatting.GOLD));
+                list.add(Component.translatable("info.zenith.ench_stats").withStyle(ChatFormatting.GOLD));
             }
             if (eterna != 0) {
                 if (eterna > 0) {
-                    list.add(new TranslatableComponent("info.zenith.eterna.p", String.format("%.2f", eterna), String.format("%.2f", maxEterna)).withStyle(ChatFormatting.GREEN));
-                } else list.add(new TranslatableComponent("info.zenith.eterna", String.format("%.2f", eterna)).withStyle(ChatFormatting.GREEN));
+                    list.add(Component.translatable("info.zenith.eterna.p", String.format("%.2f", eterna), String.format("%.2f", maxEterna)).withStyle(ChatFormatting.GREEN));
+                } else list.add(Component.translatable("info.zenith.eterna", String.format("%.2f", eterna)).withStyle(ChatFormatting.GREEN));
             }
             if (quanta != 0) {
-                list.add(new TranslatableComponent("info.zenith.quanta" + (quanta > 0 ? ".p" : ""), String.format("%.2f", quanta)).withStyle(ChatFormatting.RED));
+                list.add(Component.translatable("info.zenith.quanta" + (quanta > 0 ? ".p" : ""), String.format("%.2f", quanta)).withStyle(ChatFormatting.RED));
             }
             if (arcana != 0) {
-                list.add(new TranslatableComponent("info.zenith.arcana" + (arcana > 0 ? ".p" : ""), String.format("%.2f", arcana)).withStyle(ChatFormatting.DARK_PURPLE));
+                list.add(Component.translatable("info.zenith.arcana" + (arcana > 0 ? ".p" : ""), String.format("%.2f", arcana)).withStyle(ChatFormatting.DARK_PURPLE));
             }
             if (rectification != 0) {
-                list.add(new TranslatableComponent("info.zenith.rectification" + (rectification > 0 ? ".p" : ""), String.format("%.2f", rectification)).withStyle(ChatFormatting.YELLOW));
+                list.add(Component.translatable("info.zenith.rectification" + (rectification > 0 ? ".p" : ""), String.format("%.2f", rectification)).withStyle(ChatFormatting.YELLOW));
             }
             if (clues != 0) {
-                list.add(new TranslatableComponent("info.zenith.clues" + (clues > 0 ? ".p" : ""), String.format("%d", clues)).withStyle(ChatFormatting.DARK_AQUA));
+                list.add(Component.translatable("info.zenith.clues" + (clues > 0 ? ".p" : ""), String.format("%d", clues)).withStyle(ChatFormatting.DARK_AQUA));
             }
         }
     }
 
     public static void init() {
-        MenuScreens.register(EnchModule.LIBRARY_CONTAINER, EnchLibraryScreen::new);
-        MenuScreens.register(EnchModule.ENCHANTING_TABLE_MENU, ApothEnchantScreen::new);
+        ScreenRegistry.register(EnchModule.LIBRARY_CONTAINER, EnchLibraryScreen::new);
+        ScreenRegistry.register(EnchModule.ENCHANTING_TABLE_MENU, ApothEnchantScreen::new);
     }
 }

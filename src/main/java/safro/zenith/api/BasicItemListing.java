@@ -1,5 +1,6 @@
 package safro.zenith.api;
 
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.ItemStack;
@@ -39,10 +40,9 @@ public class BasicItemListing implements VillagerTrades.ItemListing {
         this(new ItemStack(Items.EMERALD, emeralds), forSale, maxTrades, xp, 1);
     }
 
-    @Override
     @Nullable
-    public MerchantOffer getOffer(Entity merchant, Random rand) {
+    @Override
+    public MerchantOffer getOffer(Entity entity, RandomSource randomSource) {
         return new MerchantOffer(price, price2, forSale, maxTrades, xp, priceMult);
     }
-
 }

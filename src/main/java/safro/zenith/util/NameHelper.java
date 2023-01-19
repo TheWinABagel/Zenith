@@ -10,8 +10,7 @@ import java.util.function.Supplier;
 import com.google.common.base.Preconditions;
 
 import net.minecraft.core.Registry;
-import net.minecraft.network.chat.BaseComponent;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ArmorItem;
@@ -24,7 +23,6 @@ import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.Ingredient;
 import safro.zenith.api.config.Configuration;
-import safro.zenith.deadly.DeadlyModule;
 
 /**
  * Generates names for various objects, based on stuff.
@@ -171,7 +169,7 @@ public class NameHelper {
         if (random.nextBoolean() && suffixes.length > 0) {
             name = String.format(suffixFormat, name, NameHelper.suffixes[random.nextInt(NameHelper.suffixes.length)]);
         }
-        entity.setCustomName(new TextComponent(name));
+        entity.setCustomName(Component.literal(name));
         return root;
     }
 
@@ -184,9 +182,8 @@ public class NameHelper {
      * @param bossName The name of the owning entity, usually created by {@link }
      * @return The name of the item, without the owning prefix of the boss's name
      */
-    public static BaseComponent setItemName(Random random, ItemStack itemStack, String bossName) {
-        BaseComponent name = (BaseComponent) itemStack.getHoverName();
-        return name;
+    public static Component setItemName(Random random, ItemStack itemStack, String bossName) {
+        return itemStack.getHoverName();
         /**
          if (itemStack.getItem() instanceof TieredItem) {
          Tier material = ((TieredItem) itemStack.getItem()).getTier();
@@ -286,7 +283,7 @@ public class NameHelper {
                     armorsByTier.computeIfAbsent(mat, m -> new ArrayList<>()).add(i);
                 }
             } catch (Exception e) {
-                DeadlyModule.LOGGER.error("The item {} has thrown an exception while attempting to access it's tier.", Registry.ITEM.getKey(i));
+
                 e.printStackTrace();
             }
         }

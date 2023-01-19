@@ -1,5 +1,6 @@
 package safro.zenith.mixin;
 
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
@@ -22,8 +23,8 @@ public class EnchantmentHelperMixin {
     }
 
     @Inject(method = "selectEnchantment", at = @At("HEAD"), cancellable = true)
-    private static void apothSelectEnchantment(Random pRandom, ItemStack pItemStack, int pLevel, boolean pAllowTreasure, CallbackInfoReturnable<List<EnchantmentInstance>> cir) {
-        if (Zenith.enableEnch) cir.setReturnValue(RealEnchantmentHelper.selectEnchantment(pRandom, pItemStack, pLevel, 0, 0, 0, pAllowTreasure));
+    private static void apothSelectEnchantment(RandomSource randomSource, ItemStack itemStack, int i, boolean bl, CallbackInfoReturnable<List<EnchantmentInstance>> cir) {
+        if (Zenith.enableEnch) cir.setReturnValue(RealEnchantmentHelper.selectEnchantment((RandomSource) randomSource, itemStack, i, 0, 0, 0, bl));
     }
 
 }

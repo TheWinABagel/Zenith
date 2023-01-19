@@ -1,7 +1,11 @@
 package safro.zenith.village.wanderer;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.trading.MerchantOffer;
+import org.jetbrains.annotations.Nullable;
 import safro.zenith.api.BasicItemListing;
 import safro.zenith.api.json.SerializerBuilder;
 
@@ -43,5 +47,4 @@ public class BasicJsonTrade extends BasicItemListing implements JsonTrade {
 	public boolean isRare() {
 		return this.rare;
 	}
-
 }

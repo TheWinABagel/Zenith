@@ -6,8 +6,8 @@ import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Registry;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -45,7 +45,7 @@ public class SpawnerREIPlugin implements REIClientPlugin {
             REIUtil.addInfo(registry, Blocks.SPAWNER, "info.zenith.spawner.no_silk");
         } else if (SpawnerModule.spawnerSilkLevel == 0) {
             REIUtil.addInfo(registry, Blocks.SPAWNER, "info.zenith.spawner.always_drop");
-        } else REIUtil.addInfo(registry, Blocks.SPAWNER, new TranslatableComponent("info.zenith.spawner", ((MutableComponent) Enchantments.SILK_TOUCH.getFullname(SpawnerModule.spawnerSilkLevel)).withStyle(ChatFormatting.DARK_BLUE).getString()));
+        } else REIUtil.addInfo(registry, Blocks.SPAWNER, Component.translatable("info.zenith.spawner", ((MutableComponent) Enchantments.SILK_TOUCH.getFullname(SpawnerModule.spawnerSilkLevel)).withStyle(ChatFormatting.DARK_BLUE).getString()));
         for (Item i : Registry.ITEM) {
             if (i instanceof SpawnEggItem) REIUtil.addInfo(registry, i, "info.zenith.capturing");
         }

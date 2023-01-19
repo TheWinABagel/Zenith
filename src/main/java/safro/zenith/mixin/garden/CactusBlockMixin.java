@@ -2,6 +2,7 @@ package safro.zenith.mixin.garden;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.CactusBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
@@ -22,7 +23,7 @@ public class CactusBlockMixin {
     @Shadow @Final public static IntegerProperty AGE;
 
     @Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
-    private void apothRandomTick(BlockState state, ServerLevel world, BlockPos pos, Random random, CallbackInfo ci) {
+    private void apothRandomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random, CallbackInfo ci) {
         CactusBlock cactus = (CactusBlock) (Object) this;
         if (Zenith.enableGarden) {
             BlockPos blockpos = pos.above();

@@ -16,7 +16,7 @@ public class PatchouliCompat {
         IPatchouliAPI api = PatchouliAPI.get();
         if (!api.isStub()) {
             api.setConfigFlag("zenith:enchanting", Zenith.enableEnch);
-            api.setConfigFlag("zenith:deadly", Zenith.enableDeadly);
+//            api.setConfigFlag("zenith:deadly", Zenith.enableAdventure);
             api.setConfigFlag("zenith:spawner", Zenith.enableSpawner);
             api.setConfigFlag("zenith:garden", Zenith.enableGarden);
             api.setConfigFlag("zenith:potion", Zenith.enablePotion);

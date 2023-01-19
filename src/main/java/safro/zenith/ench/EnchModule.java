@@ -1,5 +1,6 @@
 package safro.zenith.ench;
 
+import dev.architectury.registry.menu.MenuRegistry;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;

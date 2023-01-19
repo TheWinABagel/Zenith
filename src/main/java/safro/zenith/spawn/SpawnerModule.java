@@ -7,7 +7,6 @@ import net.minecraft.ResourceLocationException;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
@@ -72,13 +71,13 @@ public class SpawnerModule {
     public static void handleTooltips(List<Component> tooltip, ItemStack s) {
         if (s.getItem() instanceof SpawnEggItem egg) {
             EntityType<?> type = egg.getType(s.getTag());
-            if (bannedMobs.contains(Registry.ENTITY_TYPE.getKey(type))) tooltip.add(new TranslatableComponent("misc.zenith.banned").withStyle(ChatFormatting.GRAY));
+            if (bannedMobs.contains(Registry.ENTITY_TYPE.getKey(type))) tooltip.add(Component.translatable("misc.zenith.banned").withStyle(ChatFormatting.GRAY));
         }
     }
 
     public static void tickDumbMobs(LivingEntity entity) {
         if (entity instanceof Mob mob) {
-            if (!mob.level.isClientSide && mob.isNoAi() && mob.getExtraCustomData().getBoolean("zenith:movable")) {
+            if (!mob.level.isClientSide && mob.isNoAi() && entity.getTags().contains("zenith:movable")) {
                 mob.setNoAi(false);
                 mob.travel(new Vec3(mob.xxa, mob.zza, mob.yya));
                 mob.setNoAi(true);

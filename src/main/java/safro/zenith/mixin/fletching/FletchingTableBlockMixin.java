@@ -2,7 +2,6 @@ package safro.zenith.mixin.fletching;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -22,7 +21,7 @@ import safro.zenith.village.fletching.FletchingContainer;
 
 @Mixin(FletchingTableBlock.class)
 public abstract class FletchingTableBlockMixin extends CraftingTableBlock {
-    private static final Component NAME = new TranslatableComponent("zenith.recipes.fletching");
+    private static final Component NAME = Component.translatable("zenith.recipes.fletching");
 
     public FletchingTableBlockMixin(Properties properties) {
         super(properties);

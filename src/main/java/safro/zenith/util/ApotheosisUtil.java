@@ -10,6 +10,7 @@ import net.minecraft.nbt.TagParser;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
@@ -33,9 +34,9 @@ import java.util.Random;
 public class ApotheosisUtil {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 
-    public static ItemStack getRandom(TagKey<Item> tag, Random random) {
+    public static ItemStack getRandom(TagKey<Item> tag, RandomSource random) {
         ItemStack stack = ItemStack.EMPTY;
-        stack = Registry.ITEM.getTag(tag).flatMap((items) -> items.getRandomElement(random)).map((itemEntry) -> (itemEntry.value()).getDefaultInstance()).orElse(stack);
+        stack = Registry.ITEM.getTag(tag).flatMap((items) -> items.getRandomElement((RandomSource) random)).map((itemEntry) -> (itemEntry.value()).getDefaultInstance()).orElse(stack);
         return stack;
     }
 

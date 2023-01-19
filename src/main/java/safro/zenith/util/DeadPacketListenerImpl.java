@@ -2,10 +2,11 @@ package safro.zenith.util;
 
 import java.util.Set;
 
-import dev.cafeteria.fakeplayerapi.server.FakeServerPlayer;
+import io.github.fabricators_of_create.porting_lib.fake_players.FakePlayer;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import net.minecraft.network.Connection;
+import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.PacketFlow;
@@ -53,10 +54,11 @@ import net.minecraft.network.protocol.game.ServerboundTeleportToEntityPacket;
 import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
 import net.minecraft.network.protocol.game.ServerboundUseItemPacket;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
+import org.jetbrains.annotations.Nullable;
 
 public class DeadPacketListenerImpl extends ServerGamePacketListenerImpl {
 
-    public DeadPacketListenerImpl(FakeServerPlayer player) {
+    public DeadPacketListenerImpl(FakePlayer player) {
         super(null, new Connection(PacketFlow.CLIENTBOUND), player);
     }
 
@@ -241,7 +243,8 @@ public class DeadPacketListenerImpl extends ServerGamePacketListenerImpl {
     }
 
     @Override
-    public void send(Packet<?> packetIn, GenericFutureListener<? extends Future<? super Void>> futureListeners) {
+    public void send(Packet<?> packet, @Nullable PacketSendListener packetSendListener) {
+
     }
 
     @Override

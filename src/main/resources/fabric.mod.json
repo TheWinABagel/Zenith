@@ -7,12 +7,13 @@
   "description": "Unofficial fabric port of Apotheosis",
   "authors": [
     "Safro",
-    "Shadows of Fire (Forge)"
+    "Shadows of Fire (Forge)",
+    "mineblock11"
   ],
   "contact": {
     "homepage": "https://curseforge.com/minecraft/mc-mods/zenith",
-    "sources": "https://github.com/Safrodev/Zenith",
-    "issues": "https://github.com/Safrodev/Zenith/issues"
+    "sources": "https://github.com/mineblock11/Zenith",
+    "issues": "https://github.com/mineblock11/Zenith/issues"
   },
 
   "license": "MIT License",
@@ -31,9 +32,6 @@
       "safro.zenith.village.compat.VillageREIPlugin",
       "safro.zenith.garden.compat.GardenREIPlugin",
       "safro.zenith.spawn.compat.SpawnerREIPlugin"
-    ],
-    "top_plugin": [
-      "safro.zenith.compat.ApothTOPPlugin"
     ]
   },
   "mixins": [
@@ -43,7 +41,7 @@
   "depends": {
     "fabricloader": ">=0.14.8",
     "fabric": "*",
-    "minecraft": "1.18.x",
+    "minecraft": "1.19.x",
     "java": ">=17"
   },
   "accessWidener": "zenith.aw",

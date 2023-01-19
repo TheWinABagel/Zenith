@@ -18,8 +18,6 @@ import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -65,12 +63,12 @@ public class SpawnerCategory extends ApothCategory<SpawnerDisplay> {
         if (scn == null) return; // We need this to render tooltips, bail if its not there.
         if (mouseX >= -1 + x && mouseX < 9 + x && mouseY >= 13 + y && mouseY < 13 + 12 + y) {
             GuiComponent.blit(stack, -1, 13, 0, 0, 75, 10, 12, 256, 256);
-            scn.renderComponentTooltip(stack, Arrays.asList(new TranslatableComponent("misc.zenith.mainhand")), (int) mouseX - x, (int) mouseY - y);
+            scn.renderComponentTooltip(stack, Arrays.asList(Component.translatable("misc.zenith.mainhand")), (int) mouseX - x, (int) mouseY - y);
         } else if (mouseX >= -1 + x && mouseX < 9 + x && mouseY >= 50 + y && mouseY < 50 + 12 + y && recipe.getOffhandInput() != Ingredient.EMPTY) {
             GuiComponent.blit(stack, -1, 50, 0, 0, 75, 10, 12, 256, 256);
-            scn.renderComponentTooltip(stack, Arrays.asList(new TranslatableComponent("misc.zenith.offhand"), new TranslatableComponent("misc.zenith.not_consumed").withStyle(ChatFormatting.GRAY)), (int) mouseX - x, (int) mouseY - y);
+            scn.renderComponentTooltip(stack, Arrays.asList(Component.translatable("misc.zenith.offhand"), Component.translatable("misc.zenith.not_consumed").withStyle(ChatFormatting.GRAY)), (int) mouseX - x, (int) mouseY - y);
         } else if (mouseX >= 33 + x && mouseX < 33 + 16 + x && mouseY >= 30 + y && mouseY < 30 + 16 + y) {
-            scn.renderComponentTooltip(stack, Arrays.asList(new TranslatableComponent("misc.zenith.rclick_spawner")), (int) mouseX - x, (int) mouseY - y);
+            scn.renderComponentTooltip(stack, Arrays.asList(Component.translatable("misc.zenith.rclick_spawner")), (int) mouseX - x, (int) mouseY - y);
         }
 
         PoseStack mvStack = RenderSystem.getModelViewStack();
@@ -91,7 +89,7 @@ public class SpawnerCategory extends ApothCategory<SpawnerDisplay> {
             if (value.equals("true")) value = "+";
             else if (value.equals("false")) value = "-";
             else if (s.value instanceof Number num && num.intValue() > 0) value = "+" + value;
-            Component msg = new TranslatableComponent("misc.zenith.concat", value, s.stat.name());
+            Component msg = Component.translatable("misc.zenith.concat", value, s.stat.name());
             int width = font.width(msg);
             boolean hover = mouseX >= left - width + x && mouseX < left + x && mouseY >= top + y && mouseY < top + y + font.lineHeight + 1;
             font.draw(stack, msg, left - font.width(msg), top, hover ? 0x8080FF : 0x333333);
@@ -104,9 +102,9 @@ public class SpawnerCategory extends ApothCategory<SpawnerDisplay> {
                 list.add(s.stat.name().withStyle(ChatFormatting.GREEN, ChatFormatting.UNDERLINE));
                 list.add(s.stat.desc().withStyle(ChatFormatting.GRAY));
                 if (s.value instanceof Number) {
-                    if (((Number) s.min).intValue() > 0 || ((Number) s.max).intValue() != Integer.MAX_VALUE) list.add(new TextComponent(" "));
-                    if (((Number) s.min).intValue() > 0) list.add(new TranslatableComponent("misc.zenith.min_value", s.min).withStyle(ChatFormatting.GRAY));
-                    if (((Number) s.max).intValue() != Integer.MAX_VALUE) list.add(new TranslatableComponent("misc.zenith.max_value", s.max).withStyle(ChatFormatting.GRAY));
+                    if (((Number) s.min).intValue() > 0 || ((Number) s.max).intValue() != Integer.MAX_VALUE) list.add(Component.literal(" "));
+                    if (((Number) s.min).intValue() > 0) list.add(Component.translatable("misc.zenith.min_value", s.min).withStyle(ChatFormatting.GRAY));
+                    if (((Number) s.max).intValue() != Integer.MAX_VALUE) list.add(Component.translatable("misc.zenith.max_value", s.max).withStyle(ChatFormatting.GRAY));
                 }
                 renderComponentTooltip(scn, stack, list, left + 6 - x, (int) mouseY - y, maxWidth, font);
             }
@@ -117,7 +115,7 @@ public class SpawnerCategory extends ApothCategory<SpawnerDisplay> {
 
     private static void renderComponentTooltip(Screen scn, PoseStack stack, List<Component> list, int x, int y, int maxWidth, Font font) {
         List<FormattedText> text = list.stream().map(c -> font.getSplitter().splitLines(c, maxWidth, c.getStyle())).flatMap(List::stream).toList();
-        scn.renderComponentTooltip(stack, text.stream().map(formatted -> (Component) new TextComponent(formatted.getString())).toList(), x, y);
+        scn.renderComponentTooltip(stack, text.stream().map(formatted -> (Component) Component.literal(formatted.getString())).toList(), x, y);
     }
 
     @Override
@@ -143,7 +141,7 @@ public class SpawnerCategory extends ApothCategory<SpawnerDisplay> {
 
     @Override
     public Component getTitle() {
-        return new TranslatableComponent("title.zenith.spawner");
+        return Component.translatable("title.zenith.spawner");
     }
 
     @Override
