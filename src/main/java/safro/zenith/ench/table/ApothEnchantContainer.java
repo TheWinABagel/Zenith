@@ -216,7 +216,9 @@ public class ApothEnchantContainer extends EnchantmentMenu {
     private List<EnchantmentInstance> getEnchantmentList(ItemStack stack, int enchantSlot, int level) {
         this.random.setSeed(this.enchantmentSeed.get() + enchantSlot);
         List<EnchantmentInstance> list = RealEnchantmentHelper.selectEnchantment(this.random, stack, level, this.quanta.get(), this.arcana.get(), this.rectification.get(), false);
-        EnchantingRecipe match = this.access.evaluate((world, pos) -> Optional.ofNullable(EnchantingRecipe.findMatch(world, stack, this.eterna.get(), this.quanta.get(), this.arcana.get()))).get().orElse(null);
+        EnchantingRecipe match = this.access.evaluate((world, pos) ->
+                Optional.ofNullable(EnchantingRecipe.findMatch(world, stack, this.eterna.get(), this.quanta.get(), this.arcana.get()))
+        ).get().orElse(null);
         if (enchantSlot == 2 && match != null) {
             list.clear();
             list.add(new EnchantmentInstance(EnchModule.INFUSION, 1));

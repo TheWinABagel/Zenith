@@ -101,7 +101,7 @@ public class EnchModuleEvents {
         return prev;
     }
 
-    public static interface TridentGetter {
+    public interface TridentGetter {
         ItemStack getTridentItem();
     }
 }
