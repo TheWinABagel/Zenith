@@ -1,27 +1,21 @@
 {
-	"type": "smithing",
-	"fabric:load_conditions": [{
-		"condition": "fabric:and",
-		"values": [{
-			"condition": "fabric:not",
-			"value": {
-				"condition": "zenith:module",
-				"module": "enchantment"
-			}
-		},
-			{
-				"condition": "zenith:module",
-				"module": "deadly"
-			}
-		]
-	}],
-	"base": {
-		"item": "minecraft:enchanted_book"
-	},
-	"addition": {
-		"item": "zenith:rare_shard"
-	},
-	"result": {
-		"item": "zenith:rare_tome"
-	}
+  "type": "smithing",
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:not",
+      "value": {
+        "condition": "zenith:module",
+        "module": "enchantment"
+      }
+    }
+  ],
+  "base": {
+    "item": "minecraft:enchanted_book"
+  },
+  "addition": {
+    "item": "zenith:rare_shard"
+  },
+  "result": {
+    "item": "zenith:rare_tome"
+  }
 }

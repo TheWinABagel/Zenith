@@ -1,24 +1,18 @@
 {
-	"type": "smithing",
-	"fabric:load_conditions": [{
-		"condition": "fabric:and",
-		"values": [{
-			"condition": "zenith:module",
-			"module": "deadly"
-		},
-			{
-				"condition": "zenith:module",
-				"module": "enchantment"
-			}
-		]
-	}],
-	"base": {
-		"item": "zenith:scrap_tome"
-	},
-	"addition": {
-		"item": "zenith:rare_shard"
-	},
-	"result": {
-		"item": "zenith:rare_tome"
-	}
+  "type": "smithing",
+  "fabric:load_conditions": [
+    {
+      "condition": "zenith:module",
+      "module": "enchantment"
+    }
+  ],
+  "base": {
+    "item": "zenith:scrap_tome"
+  },
+  "addition": {
+    "item": "zenith:rare_shard"
+  },
+  "result": {
+    "item": "zenith:rare_tome"
+  }
 }

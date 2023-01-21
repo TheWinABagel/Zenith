@@ -47,6 +47,9 @@ dependencies {
 	modCompileOnly "mcp.mobius.waila:wthit-api:fabric-${project.wthit_version}"
 	modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${project.wthit_version}"
 
+	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
+	modRuntimeOnly "dev.architectury:architectury-fabric:6.4.62"
+
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
 }

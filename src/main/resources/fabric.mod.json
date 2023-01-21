@@ -27,7 +27,7 @@
     "client": [
       "safro.zenith.ZenithClient"
     ],
-    "rei_plugins": [
+    "rei_client": [
       "safro.zenith.ench.compat.EnchREIPlugin",
       "safro.zenith.village.compat.VillageREIPlugin",
       "safro.zenith.garden.compat.GardenREIPlugin",
@@ -43,6 +43,9 @@
     "fabric": "*",
     "minecraft": "1.19.x",
     "java": ">=17"
+  },
+  "suggests": {
+    "roughlyenoughitems": "*"
   },
   "accessWidener": "zenith.aw",
   "custom": {
