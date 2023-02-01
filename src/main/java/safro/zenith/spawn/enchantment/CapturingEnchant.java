@@ -48,7 +48,11 @@ public class CapturingEnchant extends Enchantment implements TableApplicableEnch
         Entity killer = source.getEntity();
         if (killer instanceof LivingEntity) {
             int level = EnchantmentHelper.getItemEnchantmentLevel(SpawnerModule.CAPTURING, ((LivingEntity) killer).getMainHandItem());
-            if (SpawnerModule.bannedMobs.contains(Registry.ENTITY_TYPE.getKey(killed.getType()))) return;
+            if(SpawnerModule.invertBannedMobs) {
+                if (!SpawnerModule.bannedMobs.contains(Registry.ENTITY_TYPE.getKey(killed.getType()))) return;
+            } else {
+                if (SpawnerModule.bannedMobs.contains(Registry.ENTITY_TYPE.getKey(killed.getType()))) return;
+            }
             if (killed.level.random.nextFloat() < level / 250F) {
                 ItemStack egg = new ItemStack(SpawnEggItem.byId(killed.getType()));
                 drops.add(new ItemEntity(killed.level, killed.getX(), killed.getY(), killed.getZ(), egg));

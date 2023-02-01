@@ -38,12 +38,14 @@ public class SpawnerModule {
     public static final Logger LOG = LogManager.getLogger("Zenith : Spawner");
     public static int spawnerSilkLevel = 1;
     public static int spawnerSilkDamage = 100;
+    public static boolean invertBannedMobs;
     public static Set<ResourceLocation> bannedMobs = new HashSet<>();
 
     public static final Enchantment CAPTURING = register("capturing", new CapturingEnchant());
 
     public static final RecipeType<SpawnerModifier> MODIFIER = ApotheosisUtil.makeRecipeType("zenith:spawner_modifier");
     public static final RecipeSerializer<SpawnerModifier> SPAWNER_MODIFIER = register("spawner_modifier", SpawnerModifier.SERIALIZER);
+
 
     public static void init() {
         reload(false);
@@ -62,7 +64,12 @@ public class SpawnerModule {
         if (world.getBlockEntity(pos) instanceof ApothSpawnerTile) {
             if (s.getItem() instanceof SpawnEggItem egg) {
                 EntityType<?> type = egg.getType(s.getTag());
-                if (bannedMobs.contains(Registry.ENTITY_TYPE.getKey(type))) return InteractionResult.FAIL;
+                if(invertBannedMobs) {
+                    if (!bannedMobs.contains(Registry.ENTITY_TYPE.getKey(type))) return InteractionResult.FAIL;
+                } else {
+                    if (bannedMobs.contains(Registry.ENTITY_TYPE.getKey(type))) return InteractionResult.FAIL;
+                }
+
             }
         }
         return InteractionResult.PASS;
@@ -71,7 +78,12 @@ public class SpawnerModule {
     public static void handleTooltips(List<Component> tooltip, ItemStack s) {
         if (s.getItem() instanceof SpawnEggItem egg) {
             EntityType<?> type = egg.getType(s.getTag());
-            if (bannedMobs.contains(Registry.ENTITY_TYPE.getKey(type))) tooltip.add(Component.translatable("misc.zenith.banned").withStyle(ChatFormatting.GRAY));
+            if (invertBannedMobs) {
+                if (!bannedMobs.contains(Registry.ENTITY_TYPE.getKey(type))) tooltip.add(Component.translatable("misc.zenith.banned").withStyle(ChatFormatting.GRAY));
+            } else {
+                if (bannedMobs.contains(Registry.ENTITY_TYPE.getKey(type))) tooltip.add(Component.translatable("misc.zenith.banned").withStyle(ChatFormatting.GRAY));
+            }
+
         }
     }
 
@@ -90,6 +102,7 @@ public class SpawnerModule {
         config.setTitle("Zenith Spawner Module Configuration");
         spawnerSilkLevel = config.getInt("Spawner Silk Level", "general", 1, -1, 127, "The level of silk touch needed to harvest a spawner.  Set to -1 to disable, 0 to always drop.  The enchantment module can increase the max level of silk touch.");
         spawnerSilkDamage = config.getInt("Spawner Silk Damage", "general", 100, 0, 100000, "The durability damage dealt to an item that silk touches a spawner.");
+        invertBannedMobs = config.getBoolean("Enable Whitelist", "spawn_eggs", false, "Turns the blacklist into a whitelist.");
         bannedMobs.clear();
         String[] bans = config.getStringList("Banned Mobs", "spawn_eggs", new String[0], "A list of entity registry names that cannot be applied to spawners via egg.");
         for (String s : bans)
