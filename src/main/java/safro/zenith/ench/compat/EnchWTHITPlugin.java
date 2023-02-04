@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import safro.zenith.Zenith;
-import safro.zenith.ench.anvil.AnvilTile;
 
 import java.util.Map;
 
@@ -21,7 +20,6 @@ public class EnchWTHITPlugin implements IWailaPlugin, IBlockComponentProvider, I
     @Override
     public void register(IRegistrar reg) {
         if (!Zenith.enableEnch) return;
-        reg.addBlockData(this, AnvilTile.class);
         reg.addComponent(this, TooltipPosition.BODY, Block.class);
     }
 
@@ -42,10 +40,5 @@ public class EnchWTHITPlugin implements IWailaPlugin, IBlockComponentProvider, I
     @Override
     public void appendServerData(CompoundTag tag, IServerAccessor<BlockEntity> accessor, IPluginConfig config) {
         if (!Zenith.enableEnch) return;
-        if (accessor.getTarget() instanceof AnvilTile) {
-            ItemStack stack = new ItemStack(Items.ANVIL);
-            EnchantmentHelper.setEnchantments(((AnvilTile) accessor.getTarget()).getEnchantments(), stack);
-            tag.put("enchantments", stack.getEnchantmentTags());
-        }
     }
 }

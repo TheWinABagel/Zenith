@@ -20,7 +20,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import safro.zenith.ench.library.EnchLibraryScreen;
-import safro.zenith.ench.table.ApothEnchantScreen;
 import safro.zenith.ench.table.EnchantingStatManager;
 
 import java.util.List;
@@ -80,6 +79,6 @@ public class EnchModuleClient {
 
     public static void init() {
         ScreenRegistry.register(EnchModule.LIBRARY_CONTAINER, EnchLibraryScreen::new);
-        ScreenRegistry.register(EnchModule.ENCHANTING_TABLE_MENU, ApothEnchantScreen::new);
+//        ScreenRegistry.register(EnchModule.ENCHANTING_TABLE_MENU, ApothEnchantScreen::new);
     }
 }

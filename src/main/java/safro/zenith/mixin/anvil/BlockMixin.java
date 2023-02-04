@@ -21,7 +21,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import safro.zenith.Zenith;
-import safro.zenith.ench.anvil.AnvilTile;
 
 import java.util.List;
 import java.util.Map;
@@ -35,11 +34,6 @@ public abstract class BlockMixin {
         Block block = (Block) (Object) this;
         if (isValid()) {
             ItemStack anvil = new ItemStack(block);
-            if (te instanceof AnvilTile) {
-                Map<Enchantment, Integer> ench = ((AnvilTile) te).getEnchantments();
-                ench = ench.entrySet().stream().filter(e -> e.getValue() > 0).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-                EnchantmentHelper.setEnchantments(ench, anvil);
-            }
             Block.popResource(world, pos, anvil);
         }
     }
@@ -48,9 +42,6 @@ public abstract class BlockMixin {
     private void apothPlaced(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack, CallbackInfo ci) {
         if (isValid()) {
             BlockEntity te = world.getBlockEntity(pos);
-            if (te instanceof AnvilTile) {
-                ((AnvilTile) te).getEnchantments().putAll(EnchantmentHelper.getEnchantments(stack));
-            }
         }
     }
 
@@ -60,11 +51,6 @@ public abstract class BlockMixin {
         if (isValid()) {
             ItemStack anvil = new ItemStack(block);
             BlockEntity te = world.getBlockEntity(pos);
-            if (te instanceof AnvilTile) {
-                Map<Enchantment, Integer> ench = ((AnvilTile) te).getEnchantments();
-                ench = ench.entrySet().stream().filter(e -> e.getValue() > 0).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-                EnchantmentHelper.setEnchantments(ench, anvil);
-            }
             cir.setReturnValue(anvil);
         }
     }

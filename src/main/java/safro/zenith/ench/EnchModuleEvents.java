@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import safro.zenith.Apoth;
 import safro.zenith.Zenith;
 import safro.zenith.api.json.ApothJsonReloadListener;
-import safro.zenith.ench.anvil.AnvilTile;
 import safro.zenith.ench.enchantments.SpearfishingEnchant;
 import safro.zenith.ench.enchantments.masterwork.KnowledgeEnchant;
 import safro.zenith.ench.enchantments.masterwork.ScavengerEnchant;
@@ -96,7 +95,6 @@ public class EnchModuleEvents {
         if (player.containerMenu instanceof AnvilMenu) {
             AnvilMenu r = (AnvilMenu) player.containerMenu;
             BlockEntity te = r.access.evaluate(Level::getBlockEntity).orElse(null);
-            if (te instanceof AnvilTile) return prev / (((AnvilTile) te).getEnchantments().getInt(Enchantments.UNBREAKING) + 1);
         }
         return prev;
     }

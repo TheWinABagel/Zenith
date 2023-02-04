@@ -1,6 +1,5 @@
 package safro.zenith.ench;
 
-import dev.architectury.registry.menu.MenuRegistry;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -35,8 +34,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import safro.zenith.Zenith;
 import safro.zenith.api.config.Configuration;
-import safro.zenith.ench.anvil.AnvilTile;
-import safro.zenith.ench.anvil.ApothAnvilItem;
 import safro.zenith.ench.anvil.ObliterationEnchant;
 import safro.zenith.ench.anvil.SplittingEnchant;
 import safro.zenith.ench.enchantments.*;
@@ -134,9 +131,6 @@ public class EnchModule {
 
     // Items
     public static final Item PRISMATIC_WEB = register("prismatic_web", new Item(new Item.Properties().tab(Zenith.APOTH_GROUP)));
-    public static final Item ANVIL = replacement("anvil", new ApothAnvilItem(Blocks.ANVIL), Items.ANVIL);
-    public static final Item CHIPPED_ANVIL = replacement("chipped_anvil", new ApothAnvilItem(Blocks.CHIPPED_ANVIL), Items.CHIPPED_ANVIL);
-    public static final Item DAMAGED_ANVIL = replacement("damaged_anvil", new ApothAnvilItem(Blocks.DAMAGED_ANVIL), Items.DAMAGED_ANVIL);
     public static final Item OTHER_TOME = register("other_tome", new TomeItem(Items.AIR, null));
     public static final Item HELMET_TOME = register("helmet_tome", new TomeItem(Items.DIAMOND_HELMET, EnchantmentCategory.ARMOR_HEAD));
     public static final Item CHESTPLATE_TOME = register("chestplate_tome", new TomeItem(Items.DIAMOND_CHESTPLATE, EnchantmentCategory.ARMOR_CHEST));
@@ -170,7 +164,6 @@ public class EnchModule {
     public static final Item ENDER_LIBRARY_ITEM = register("ender_library", new BlockItem(ENDER_LIBRARY, new Item.Properties().tab(Zenith.APOTH_GROUP)));
 
     // Tiles
-    public static final BlockEntityType<AnvilTile> ANVIL_TILE = register("anvil", FabricBlockEntityTypeBuilder.create(AnvilTile::new, Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL).build(null));
     public static final BlockEntityType<EnchLibraryTile.BasicLibraryTile> LIBRARY_TILE = register("library", FabricBlockEntityTypeBuilder.create(EnchLibraryTile.BasicLibraryTile::new, LIBRARY).build(null));
     public static final BlockEntityType<EnchLibraryTile.EnderLibraryTile> ENDER_LIBRARY_TILE = register("ender_library", FabricBlockEntityTypeBuilder.create(EnchLibraryTile.EnderLibraryTile::new, ENDER_LIBRARY).build(null));
 

@@ -32,7 +32,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import safro.zenith.Zenith;
 import safro.zenith.advancements.AdvancementTriggers;
 import safro.zenith.ench.EnchModule;
-import safro.zenith.ench.anvil.AnvilTile;
 import safro.zenith.util.INBTSensitiveFallingBlock;
 
 import java.util.List;
@@ -52,22 +51,12 @@ public abstract class AnvilBlockMixin extends FallingBlock implements INBTSensit
     }
 
     @Override
-    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new AnvilTile(pPos, pState);
-    }
-
-    @Override
     public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRand) {
         if (Zenith.enableEnch) {
             if (FallingBlock.isFree(pLevel.getBlockState(pPos.below())) && pPos.getY() >= pLevel.getMinBuildHeight()) {
                 Zenith.LOGGER.info("ANVIL IS FREE");
                 BlockEntity be = pLevel.getBlockEntity(pPos);
                 FallingBlockEntity e = FallingBlockEntity.fall(pLevel, pPos, pState);
-                if (be instanceof AnvilTile anvil) {
-                    Zenith.LOGGER.info("ANVIL HAS TILE");
-                    e.blockData = new CompoundTag();
-                    anvil.saveAdditional(e.blockData);
-                }
                 this.falling(e);
             }
         } else

@@ -24,10 +24,10 @@ public class BlockBehaviourMixin {
     @Inject(method = "onRemove", at = @At("HEAD"), cancellable = true)
     private void apothOnRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving, CallbackInfo ci) {
         if (Zenith.enableEnch && state.is(BlockTags.ANVIL)) {
-            if (!EnchModule.ANVIL_TILE.isValid(newState)) {
-                world.removeBlockEntity(pos);
-                ci.cancel();
-            }
+//            if (!EnchModule.ANVIL_TILE.isValid(newState)) {
+//                world.removeBlockEntity(pos);
+//                ci.cancel();
+//            }
         }
     }
 
