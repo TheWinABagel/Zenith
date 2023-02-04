@@ -42,7 +42,7 @@ public class EnchModuleEvents {
             }
         });
 
-        LivingEntityEvents.DROPS.register(((target, source, drops) -> {
+        LivingEntityEvents.DROPS_WITH_LEVEL.register((target, source, drops, lootingLevel, recentlyHit) -> {
             if (source.getEntity() instanceof Player player) {
                 if (Zenith.enableEnch) {
                     ScavengerEnchant.drops(player, target, source);
@@ -51,7 +51,7 @@ public class EnchModuleEvents {
                 }
             }
             return false;
-        }));
+        });
 
         LivingEntityEvents.LOOTING_LEVEL.register(((src, target, currentLevel, recentlyHit) -> {
             if (src != null && src.getDirectEntity() instanceof ThrownTrident trident) {
