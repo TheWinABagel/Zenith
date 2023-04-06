@@ -25,6 +25,11 @@
     "SheepMixin",
     "TemptGoalMixin",
     "ThrownTridentMixin",
+    "anvil.AnvilBlockMixin",
+    "anvil.AnvilMenuMixin",
+    "anvil.BlockBehaviourMixin",
+    "anvil.FallingBlockEntityMixin",
+    "anvil.ItemMixin",
     "fletching.FletchingTableBlockMixin",
     "garden.BambooBlockMixin",
     "garden.BlockBehaviourMixin",
@@ -36,5 +41,8 @@
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "client": [
+    "anvil.AnvilScreenMixin"
+  ]
 }
