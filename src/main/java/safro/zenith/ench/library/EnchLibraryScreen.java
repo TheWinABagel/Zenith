@@ -1,12 +1,10 @@
 package safro.zenith.ench.library;
 
 import com.google.common.base.Strings;
-import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -64,20 +62,16 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 
 	@Override
 	public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
-		InputConstants.Key mouseKey = InputConstants.getKey(pKeyCode, pScanCode);
 		if (pKeyCode == GLFW.GLFW_KEY_ESCAPE && this.getFocused() == this.filter) {
 			this.setFocused(null);
 			this.filter.setFocus(false);
 			return true;
-		} else if (isActiveAndMatches(this.minecraft.options.keyInventory, mouseKey) && this.getFocused() == this.filter) {
+		} else if (this.minecraft.options.keyInventory.matches(pKeyCode, pScanCode) && this.getFocused() == this.filter) {
 			return true;
 		}
 		return super.keyPressed(pKeyCode, pScanCode, pModifiers);
 	}
 
-	public static boolean isActiveAndMatches(KeyMapping key, InputConstants.Key keyCode) {
-		return key.matchesMouse(keyCode.getValue()) && key.isDown();
-	}
 
 	@Override
 	public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
@@ -118,7 +112,6 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	protected void renderBg(PoseStack stack, float partial, int mouseX, int mouseY) {
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
