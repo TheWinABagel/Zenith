@@ -7,12 +7,13 @@
   "authors": [
     "Safro",
     "Shadows of Fire (Forge)",
-    "mineblock11"
+    "mineblock11",
+    "TheWinABagel"
   ],
   "contact": {
     "homepage": "https://curseforge.com/minecraft/mc-mods/zenith",
-    "sources": "https://github.com/mineblock11/Zenith",
-    "issues": "https://github.com/mineblock11/Zenith/issues"
+    "sources": "https://github.com/thewinabagel/Zenith",
+    "issues": "https://github.com/thewinabagel/Zenith/issues"
   },
   "license": "MIT License",
   "icon": "assets/zenith/icon.png",
