@@ -543,6 +543,8 @@
 	"enchantment.zenith.projectile_protection.desc": "Reduces damage from projectiles such as arrows and fire balls.",
 	"enchantment.zenith.feather_falling.desc": "Reduces fall damage and ender pearl teleportation damage.",
 
+	"config.jade.plugin_zenith.enchantment_power": "Enchantment Power",
+
     "comment_id": "/Vanilla",
 	"generic.reachDistance": "Reach Distance",
 	"forge.swimSpeed": "Swim Speed",
@@ -795,6 +797,9 @@
 	"info.zenith.mining_arrow.diamond": "Breaks blocks like a diamond pickaxe",
 	"effect.zenith.bleeding": "Bleeding",
 	"death.attack.zenith.bleeding": "%s bled out.",
+	"entity.zenith.explosive_arrow": "Explosive Arrow",
+	"entity.zenith.mining_arrow": "Mining Arrow",
+	"entity.zenith.broadhead_arrow": "Broadhead Arrow",
 	
 	"comment_id": "/Misc",
 	"generic.reachDistance": "Reach Distance",

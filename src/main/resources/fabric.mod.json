@@ -30,6 +30,11 @@
       "safro.zenith.village.compat.VillageREIPlugin",
       "safro.zenith.garden.compat.GardenREIPlugin",
       "safro.zenith.spawn.compat.SpawnerREIPlugin"
+    ],
+    "jade": [
+      "safro.zenith.ench.compat.EnchJadePlugin",
+      "snownee.jade.addon.vanilla.VanillaPlugin",
+      "snownee.jade.addon.universal.UniversalPlugin"
     ]
   },
   "mixins": [
