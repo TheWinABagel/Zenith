@@ -74,8 +74,8 @@ import java.util.stream.Collectors;
                     }
                     this.falling(e);
                 }
-             //else
-             //   super.tick(pState, pLevel, pPos, pRand);
+             else
+                super.tick(pState, pLevel, pPos, pRand);
         }
 
         @Inject(method = "onLand", at = @At("TAIL"))
@@ -92,11 +92,11 @@ import java.util.stream.Collectors;
                         if (stack.getItem() == Items.ENCHANTED_BOOK) {
                             ListTag enchants = EnchantedBookItem.getEnchantments(stack);
                             boolean handled = false;
-                            if (enchants.size() == 1 && oblit > 0) {
-                                EnchModule.LOGGER.warn("Attemted to use obliteration");
+                            if (enchants.size() > 1 && oblit > 0) {
+                                EnchModule.LOGGER.warn("Attempted to use obliteration");
                                 handled = this.handleObliteration(world, pos, entity, enchants);
                             } else if (enchants.size() > 1 && split > 0) {
-                                EnchModule.LOGGER.warn("Attemted to use splitting");
+                                EnchModule.LOGGER.warn("Attempted to use splitting");
                                 handled = this.handleSplitting(world, pos, entity, enchants);
                             }
                             if (handled) {
@@ -120,9 +120,7 @@ import java.util.stream.Collectors;
             for (Tag nbt : enchants) {
                 CompoundTag tag = (CompoundTag) nbt;
                 int level = tag.getInt("lvl");
-                EnchModule.LOGGER.warn(level);
                 Enchantment enchant = Registry.ENCHANTMENT.get(new ResourceLocation(tag.getString("id")));
-                EnchModule.LOGGER.warn(enchant);
                 if (enchant == null) continue;
                 ItemStack book = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchant, level));
                 Block.popResource(world, pos.above(), book);
@@ -134,10 +132,12 @@ import java.util.stream.Collectors;
         }
 
         protected boolean handleObliteration(Level world, BlockPos pos, ItemEntity entity, ListTag enchants) {
-            CompoundTag nbt = enchants.getCompound(0);
-            int level = nbt.getInt("lvl") - 1;
+            CompoundTag tag = enchants.getCompound(0);
+            int level = tag.getInt("lvl") - 1;
+            EnchModule.LOGGER.warn("ench level"+level);
             if (level <= 0) return false;
-            Enchantment enchant = Registry.ENCHANTMENT.get(new ResourceLocation(nbt.getString("id")));
+            Enchantment enchant = Registry.ENCHANTMENT.get(new ResourceLocation(tag.getString("id")));
+            EnchModule.LOGGER.warn("enchant"+enchant);
             if (enchant == null) return false;
             ItemStack book = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchant, level));
             entity.remove(Entity.RemovalReason.DISCARDED);

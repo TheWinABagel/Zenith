@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 public abstract class BlockMixin {
 
     @Inject(method = "playerDestroy", at = @At("HEAD"))
-    private void apothPlayerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity te, ItemStack stack, CallbackInfo ci) {
+    private void zenithPlayerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity te, ItemStack stack, CallbackInfo ci) {
         Block block = (Block) (Object) this;
         if (isValid()) {
             ItemStack anvil = new ItemStack(block);
@@ -45,7 +45,7 @@ public abstract class BlockMixin {
     }
 
     @Inject(method = "setPlacedBy", at = @At("HEAD"))
-    private void apothPlaced(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack, CallbackInfo ci) {
+    private void zenithPlaced(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack, CallbackInfo ci) {
         if (isValid()) {
             BlockEntity te = world.getBlockEntity(pos);
             if (te instanceof AnvilBlockEntity) {
@@ -55,7 +55,7 @@ public abstract class BlockMixin {
     }
 
     @Inject(method = "getCloneItemStack", at = @At("HEAD"), cancellable = true)
-    private void apothClone(BlockGetter world, BlockPos pos, BlockState blockState, CallbackInfoReturnable<ItemStack> cir) {
+    private void zenithClone(BlockGetter world, BlockPos pos, BlockState blockState, CallbackInfoReturnable<ItemStack> cir) {
         Block block = (Block) (Object) this;
         if (isValid()) {
             ItemStack anvil = new ItemStack(block);
@@ -70,7 +70,7 @@ public abstract class BlockMixin {
     }
 
     @Inject(method = "appendHoverText", at = @At("HEAD"))
-    private void apothAppend(ItemStack stack, BlockGetter blockGetter, List<Component> tooltip, TooltipFlag tooltipFlag, CallbackInfo ci) {
+    private void zenithAppend(ItemStack stack, BlockGetter blockGetter, List<Component> tooltip, TooltipFlag tooltipFlag, CallbackInfo ci) {
         if (isValid()) {
             if (!stack.hasFoil()) tooltip.add(Component.translatable("info.zenith.anvil").withStyle(ChatFormatting.GRAY));
         }
