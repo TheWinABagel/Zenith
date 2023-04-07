@@ -132,6 +132,8 @@ import java.util.stream.Collectors;
         }
 
         protected boolean handleObliteration(Level world, BlockPos pos, ItemEntity entity, ListTag enchants) {
+            EnchModule.LOGGER.error("Obliteration is temporarily disabled!");
+            return false;
             CompoundTag tag = enchants.getCompound(0);
             int level = tag.getInt("lvl") - 1;
             EnchModule.LOGGER.warn("ench level"+level);
