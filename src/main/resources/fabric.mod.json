@@ -32,9 +32,7 @@
       "safro.zenith.spawn.compat.SpawnerREIPlugin"
     ],
     "jade": [
-      "safro.zenith.ench.compat.EnchJadePlugin",
-      "snownee.jade.addon.vanilla.VanillaPlugin",
-      "snownee.jade.addon.universal.UniversalPlugin"
+      "safro.zenith.ench.compat.EnchJadePlugin"
     ]
   },
   "mixins": [

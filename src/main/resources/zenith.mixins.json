@@ -28,6 +28,7 @@
     "anvil.AnvilBlockMixin",
     "anvil.AnvilMenuMixin",
     "anvil.BlockBehaviourMixin",
+    "anvil.BlockMixin",
     "anvil.FallingBlockEntityMixin",
     "anvil.ItemMixin",
     "fletching.FletchingTableBlockMixin",

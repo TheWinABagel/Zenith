@@ -26,7 +26,6 @@ public class EnchJadePlugin implements IBlockComponentProvider, IWailaPlugin {
     public void registerClient(IWailaClientRegistration registration) {
 
         registration.registerBlockComponent(this, Block.class);
-        registration.addConfig(ZENITH_ENCHANTMENT_POWER, true);
     }
 
     @Override

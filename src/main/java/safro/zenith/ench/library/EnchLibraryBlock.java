@@ -65,8 +65,8 @@ public class EnchLibraryBlock extends HorizontalDirectionalBlock implements Enti
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext p_196258_1_) {
-		return this.defaultBlockState().setValue(FACING, p_196258_1_.getHorizontalDirection().getOpposite());
+	public BlockState getStateForPlacement(BlockPlaceContext playerDirection) {
+		return this.defaultBlockState().setValue(FACING, playerDirection.getHorizontalDirection().getOpposite());
 	}
 
 	@Override

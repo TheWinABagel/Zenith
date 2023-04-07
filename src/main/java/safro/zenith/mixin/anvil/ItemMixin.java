@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class ItemMixin  {
 
     @Inject(method = "isEnchantable", at = @At("HEAD"), cancellable = true)
-    private void apothAnvilEnchantable(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+    private void zenithAnvilEnchantable(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
         if (stack.is(ItemTags.ANVIL)) {
             cir.setReturnValue(stack.getCount() == 1);
         }

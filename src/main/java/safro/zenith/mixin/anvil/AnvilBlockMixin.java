@@ -36,11 +36,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import safro.zenith.advancements.AdvancementTriggers;
 import safro.zenith.ench.EnchModule;
-import safro.zenith.ench.anvil.AnvilTile;
+import safro.zenith.ench.anvil.AnvilBlockEntity;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.stream.Collectors;
 
     /**
@@ -56,29 +55,31 @@ import java.util.stream.Collectors;
 
         @Override
         public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-            return new AnvilTile(pPos, pState);
+            return new AnvilBlockEntity(pPos, pState);
         }
 
         @Override
         public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRand) {
             if (Zenith.enableEnch) {
-                if (FallingBlock.isFree(pLevel.getBlockState(pPos.below())) && pPos.getY() >= pLevel.getMinBuildHeight()) {
-                    Zenith.LOGGER.info("ANVIL IS FREE");
+                if (!FallingBlock.isFree(pLevel.getBlockState(pPos.below())) || pPos.getY() < pLevel.getMinBuildHeight()) {
+                    return;
+                }
+                Zenith.LOGGER.info("ANVIL IS FREE");
                     BlockEntity be = pLevel.getBlockEntity(pPos);
                     FallingBlockEntity e = FallingBlockEntity.fall(pLevel, pPos, pState);
-                    if (be instanceof AnvilTile anvil) {
+                    if (be instanceof AnvilBlockEntity anvil) {
                         Zenith.LOGGER.info("ANVIL HAS TILE");
                         e.blockData = new CompoundTag();
                         anvil.saveAdditional(e.blockData);
                     }
                     this.falling(e);
                 }
-            } else
-                super.tick(pState, pLevel, pPos, pRand);
+             //else
+             //   super.tick(pState, pLevel, pPos, pRand);
         }
 
         @Inject(method = "onLand", at = @At("TAIL"))
-        private void apothOnLand(Level world, BlockPos pos, BlockState fallState, BlockState hitState, FallingBlockEntity anvil, CallbackInfo ci) {
+        private void zenithOnLand(Level world, BlockPos pos, BlockState fallState, BlockState hitState, FallingBlockEntity anvil, CallbackInfo ci) {
             if (Zenith.enableEnch) {
                 List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, new AABB(pos, pos.offset(1, 1, 1)));
                 if (anvil.blockData != null) {
@@ -92,8 +93,10 @@ import java.util.stream.Collectors;
                             ListTag enchants = EnchantedBookItem.getEnchantments(stack);
                             boolean handled = false;
                             if (enchants.size() == 1 && oblit > 0) {
+                                EnchModule.LOGGER.warn("Attemted to use obliteration");
                                 handled = this.handleObliteration(world, pos, entity, enchants);
                             } else if (enchants.size() > 1 && split > 0) {
+                                EnchModule.LOGGER.warn("Attemted to use splitting");
                                 handled = this.handleSplitting(world, pos, entity, enchants);
                             }
                             if (handled) {
