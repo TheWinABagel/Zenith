@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
@@ -16,6 +17,7 @@ import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import safro.zenith.Zenith;
 import safro.zenith.util.INBTSensitiveFallingBlock;
 import net.minecraft.core.Registry;
@@ -60,6 +62,7 @@ import java.util.stream.Collectors;
 
         @Override
         public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRand) {
+            if (!this.zenithIsValidAnvil()) return;
             if (Zenith.enableEnch) {
                 if (!FallingBlock.isFree(pLevel.getBlockState(pPos.below())) || pPos.getY() < pLevel.getMinBuildHeight()) {
                     return;
@@ -80,6 +83,7 @@ import java.util.stream.Collectors;
 
         @Inject(method = "onLand", at = @At("TAIL"))
         private void zenithOnLand(Level world, BlockPos pos, BlockState fallState, BlockState hitState, FallingBlockEntity anvil, CallbackInfo ci) {
+            if (!this.zenithIsValidAnvil()) return;
             if (Zenith.enableEnch) {
                 List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, new AABB(pos, pos.offset(1, 1, 1)));
                 if (anvil.blockData != null) {
@@ -92,11 +96,9 @@ import java.util.stream.Collectors;
                         if (stack.getItem() == Items.ENCHANTED_BOOK) {
                             ListTag enchants = EnchantedBookItem.getEnchantments(stack);
                             boolean handled = false;
-                            if (enchants.size() > 1 && oblit > 0) {
-                                EnchModule.LOGGER.warn("Attempted to use obliteration");
+                            if (enchants.size() == 1 && oblit > 0) {
                                 handled = this.handleObliteration(world, pos, entity, enchants);
                             } else if (enchants.size() > 1 && split > 0) {
-                                EnchModule.LOGGER.warn("Attempted to use splitting");
                                 handled = this.handleSplitting(world, pos, entity, enchants);
                             }
                             if (handled) {
@@ -132,30 +134,32 @@ import java.util.stream.Collectors;
         }
 
         protected boolean handleObliteration(Level world, BlockPos pos, ItemEntity entity, ListTag enchants) {
-            EnchModule.LOGGER.error("Obliteration is temporarily disabled!");
-            return false;/*
             CompoundTag tag = enchants.getCompound(0);
             int level = tag.getInt("lvl") - 1;
-            EnchModule.LOGGER.warn("ench level"+level);
             if (level <= 0) return false;
             Enchantment enchant = Registry.ENCHANTMENT.get(new ResourceLocation(tag.getString("id")));
-            EnchModule.LOGGER.warn("enchant"+enchant);
             if (enchant == null) return false;
             ItemStack book = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchant, level));
             entity.remove(Entity.RemovalReason.DISCARDED);
             Block.popResource(world, pos.above(), book);
             Block.popResource(world, pos.above(), book.copy());
-            return true;*/
+            return true;
         }
 
         @Override
         public ItemStack toStack(BlockState state, CompoundTag tag) {
+            if (!this.zenithIsValidAnvil()) return null;
             AnvilBlock a = (AnvilBlock) (Object) this;
             ItemStack anvil = new ItemStack(a);
             Map<Enchantment, Integer> ench = EnchantmentHelper.deserializeEnchantments(tag.getList("enchantments", Tag.TAG_COMPOUND));
             ench = ench.entrySet().stream().filter(e -> e.getValue() > 0).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
             EnchantmentHelper.setEnchantments(ench, anvil);
             return anvil;
-    }
+
+        }
+        @Unique
+        private boolean zenithIsValidAnvil(){ //dont support modded anvils until I can find a better way to do so
+            return this == Blocks.ANVIL || this == Blocks.CHIPPED_ANVIL || this == Blocks.DAMAGED_ANVIL;
+        }
 }
 
