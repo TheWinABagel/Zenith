@@ -93,18 +93,14 @@ import static net.minecraft.world.level.block.AnvilBlock.FACING;
                     int oblit = enchantments.getOrDefault(EnchModule.OBLITERATION, 0);
                     int split = enchantments.getOrDefault(EnchModule.SPLITTING, 0);
                     int ub = enchantments.getOrDefault(Enchantments.UNBREAKING, 0);
-                    EnchModule.LOGGER.info(oblit + split + ub);
                     if (split > 0 || oblit > 0) for (ItemEntity entity : items) {
                         ItemStack stack = entity.getItem();
                         if (stack.getItem() == Items.ENCHANTED_BOOK) {
                             ListTag enchants = EnchantedBookItem.getEnchantments(stack);
-                            EnchModule.LOGGER.info(enchants);
                             boolean handled = false;
                             if (enchants.size() == 1 && oblit > 0) {
-                                EnchModule.LOGGER.info("Attempted to use obliteration");
                                 handled = this.handleObliteration(world, pos, entity, enchants);
                             } else if (enchants.size() > 1 && split > 0) {
-                                EnchModule.LOGGER.info("Attempted to use splitting");
                                 handled = this.handleSplitting(world, pos, entity, enchants);
                             }
                             if (handled) {
