@@ -5,7 +5,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
@@ -17,7 +16,6 @@ import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import safro.zenith.Zenith;
 import safro.zenith.util.INBTSensitiveFallingBlock;
 import net.minecraft.core.Registry;
@@ -48,7 +46,7 @@ import java.util.stream.Collectors;
      * Anvils were re-written with mixins instead of replacing the block entirely to improve compat
      */
 
-    @Mixin(AnvilBlock.class)
+    @Mixin(value = AnvilBlock.class, priority = 1500)
     public abstract class AnvilBlockMixin extends FallingBlock implements INBTSensitiveFallingBlock, EntityBlock {
 
         public AnvilBlockMixin(Properties properties) {
@@ -62,7 +60,6 @@ import java.util.stream.Collectors;
 
         @Override
         public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRand) {
-            if (!this.zenithIsValidAnvil()) return;
             if (Zenith.enableEnch) {
                 if (!FallingBlock.isFree(pLevel.getBlockState(pPos.below())) || pPos.getY() < pLevel.getMinBuildHeight()) {
                     return;
@@ -83,7 +80,6 @@ import java.util.stream.Collectors;
 
         @Inject(method = "onLand", at = @At("TAIL"))
         private void zenithOnLand(Level world, BlockPos pos, BlockState fallState, BlockState hitState, FallingBlockEntity anvil, CallbackInfo ci) {
-            if (!this.zenithIsValidAnvil()) return;
             if (Zenith.enableEnch) {
                 List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, new AABB(pos, pos.offset(1, 1, 1)));
                 if (anvil.blockData != null) {
@@ -148,7 +144,6 @@ import java.util.stream.Collectors;
 
         @Override
         public ItemStack toStack(BlockState state, CompoundTag tag) {
-            if (!this.zenithIsValidAnvil()) return null;
             AnvilBlock a = (AnvilBlock) (Object) this;
             ItemStack anvil = new ItemStack(a);
             Map<Enchantment, Integer> ench = EnchantmentHelper.deserializeEnchantments(tag.getList("enchantments", Tag.TAG_COMPOUND));
@@ -156,10 +151,6 @@ import java.util.stream.Collectors;
             EnchantmentHelper.setEnchantments(ench, anvil);
             return anvil;
 
-        }
-        @Unique
-        private boolean zenithIsValidAnvil(){ //dont support modded anvils until I can find a better way to do so
-            return this == Blocks.ANVIL || this == Blocks.CHIPPED_ANVIL || this == Blocks.DAMAGED_ANVIL;
         }
 }
 

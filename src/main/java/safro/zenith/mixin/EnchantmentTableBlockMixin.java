@@ -28,7 +28,7 @@ import java.util.Random;
  * Enchantment Tables were re-written with mixins instead of replacing the block entirely to improve compat
  */
 
-@Mixin(EnchantmentTableBlock.class)
+@Mixin(value = EnchantmentTableBlock.class, priority = 1500)
 public class EnchantmentTableBlockMixin {
 
     @Inject(method = "getMenuProvider", at = @At("HEAD"), cancellable = true)
