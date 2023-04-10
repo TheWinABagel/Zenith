@@ -160,4 +160,3 @@ import static net.minecraft.world.level.block.AnvilBlock.FACING;
         }
 
     }
-
