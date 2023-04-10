@@ -93,14 +93,18 @@ import static net.minecraft.world.level.block.AnvilBlock.FACING;
                     int oblit = enchantments.getOrDefault(EnchModule.OBLITERATION, 0);
                     int split = enchantments.getOrDefault(EnchModule.SPLITTING, 0);
                     int ub = enchantments.getOrDefault(Enchantments.UNBREAKING, 0);
+                    EnchModule.LOGGER.info(oblit + split + ub);
                     if (split > 0 || oblit > 0) for (ItemEntity entity : items) {
                         ItemStack stack = entity.getItem();
                         if (stack.getItem() == Items.ENCHANTED_BOOK) {
                             ListTag enchants = EnchantedBookItem.getEnchantments(stack);
+                            EnchModule.LOGGER.info(enchants);
                             boolean handled = false;
                             if (enchants.size() == 1 && oblit > 0) {
+                                EnchModule.LOGGER.info("Attempted to use obliteration");
                                 handled = this.handleObliteration(world, pos, entity, enchants);
                             } else if (enchants.size() > 1 && split > 0) {
+                                EnchModule.LOGGER.info("Attempted to use splitting");
                                 handled = this.handleSplitting(world, pos, entity, enchants);
                             }
                             if (handled) {
@@ -159,21 +163,5 @@ import static net.minecraft.world.level.block.AnvilBlock.FACING;
             return anvil;
         }
 
-        /**
-         * @author TheWinABagel
-         * @reason Testing if I can add support to other mod's anvils
-         */
-        @Overwrite()
-        @Nullable
-        public static BlockState damage(BlockState blockState) {
-            if (blockState.is(EnchModule.UNBREAKABLE_ANVIL)){
-                return blockState.setValue(FACING, (Direction)blockState.getValue(FACING));
-            }
-            if (blockState.is(Blocks.ANVIL)) {
-                return (BlockState)Blocks.CHIPPED_ANVIL.defaultBlockState().setValue(FACING, (Direction)blockState.getValue(FACING));
-            } else {
-                return blockState.is(Blocks.CHIPPED_ANVIL) ? (BlockState)Blocks.DAMAGED_ANVIL.defaultBlockState().setValue(FACING, (Direction)blockState.getValue(FACING)) : null;
-            }
-        }
     }
 

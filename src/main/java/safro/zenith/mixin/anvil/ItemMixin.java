@@ -15,7 +15,7 @@ public class ItemMixin  {
 
     @Inject(method = "isEnchantable", at = @At("HEAD"), cancellable = true)
     private void zenithAnvilEnchantable(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-        if (stack.is(ItemTags.ANVIL) || stack.is(Items.ANVIL)|| stack.is(Items.CHIPPED_ANVIL)|| stack.is(Items.DAMAGED_ANVIL) || stack.is(EnchModule.UNBREAK_ANVIL)) {
+        if (stack.is(ItemTags.ANVIL)) {
             cir.setReturnValue(stack.getCount() == 1);
         }
     }
