@@ -1,5 +1,6 @@
 package safro.zenith.mixin.anvil;
 
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.Tag;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -15,7 +16,10 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import safro.zenith.Zenith;
 import safro.zenith.util.INBTSensitiveFallingBlock;
 import net.minecraft.core.Registry;
@@ -42,7 +46,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-    /**
+import static net.minecraft.world.level.block.AnvilBlock.FACING;
+
+/**
      * Anvils were re-written with mixins instead of replacing the block entirely to improve compat
      */
 
@@ -100,7 +106,8 @@ import java.util.stream.Collectors;
                             if (handled) {
                                 if (world.random.nextInt(1 + ub) == 0) {
                                     BlockState dmg = AnvilBlock.damage(fallState);
-                                    if (dmg == null) {
+                                    boolean isUnbreakable = fallState.is(EnchModule.UNBREAKABLE_ANVIL);
+                                    if (dmg == null && !isUnbreakable) {
                                         world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
                                         world.levelEvent(LevelEvent.SOUND_ANVIL_BROKEN, pos, 0);
                                     } else world.setBlockAndUpdate(pos, dmg);
@@ -150,7 +157,23 @@ import java.util.stream.Collectors;
             ench = ench.entrySet().stream().filter(e -> e.getValue() > 0).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
             EnchantmentHelper.setEnchantments(ench, anvil);
             return anvil;
-
         }
-}
+
+        /**
+         * @author TheWinABagel
+         * @reason Testing if I can add support to other mod's anvils
+         */
+        @Overwrite()
+        @Nullable
+        public static BlockState damage(BlockState blockState) {
+            if (blockState.is(EnchModule.UNBREAKABLE_ANVIL)){
+                return blockState.setValue(FACING, (Direction)blockState.getValue(FACING));
+            }
+            if (blockState.is(Blocks.ANVIL)) {
+                return (BlockState)Blocks.CHIPPED_ANVIL.defaultBlockState().setValue(FACING, (Direction)blockState.getValue(FACING));
+            } else {
+                return blockState.is(Blocks.CHIPPED_ANVIL) ? (BlockState)Blocks.DAMAGED_ANVIL.defaultBlockState().setValue(FACING, (Direction)blockState.getValue(FACING)) : null;
+            }
+        }
+    }
 

@@ -23,7 +23,7 @@ public class BlockBehaviourMixin {
 
     @Inject(method = "onRemove", at = @At("HEAD"), cancellable = true)
     private void zenithOnRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving, CallbackInfo ci) {
-        if (Zenith.enableEnch && state.is(BlockTags.ANVIL)) {
+        if (Zenith.enableEnch && ((state.is(BlockTags.ANVIL)) || (state.is(EnchModule.UNBREAKABLE_ANVIL)))) {
             if (!EnchModule.ANVIL_TILE.isValid(newState)) {
                 world.removeBlockEntity(pos);
                 ci.cancel();
@@ -33,7 +33,7 @@ public class BlockBehaviourMixin {
 
     @Inject(method = "getDrops", at = @At("HEAD"), cancellable = true)
     private void zenithGetDrops(BlockState state, LootContext.Builder builder, CallbackInfoReturnable<List<ItemStack>> cir) {
-        if (Zenith.enableEnch && state.is(BlockTags.ANVIL)) {
+        if (Zenith.enableEnch && ((state.is(BlockTags.ANVIL)) || (state.is(EnchModule.UNBREAKABLE_ANVIL)))) {
             cir.setReturnValue(Collections.emptyList());
         }
     }

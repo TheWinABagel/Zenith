@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityT
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -169,6 +170,13 @@ public class EnchModule {
     public static final Item INERT_TRIDENT = register("inert_trident", new Item(new Item.Properties().stacksTo(1).tab(Zenith.APOTH_GROUP)));
     public static final Item ENDER_LIBRARY_ITEM = register("ender_library", new BlockItem(ENDER_LIBRARY, new Item.Properties().tab(Zenith.APOTH_GROUP)));
 
+    // Block Tags
+    public static final TagKey<Block> UNBREAKABLE_ANVIL = registerBlockTag("unbreakable_anvil");
+
+    // Item Tags
+
+    public static final TagKey<Item> UNBREAK_ANVIL = registerItemTag("unbreakable_anvil");
+
     // Tiles
     public static final BlockEntityType<AnvilBlockEntity> ANVIL_TILE = register("anvil", FabricBlockEntityTypeBuilder.create(AnvilBlockEntity::new, Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL).build(null));
     public static final BlockEntityType<EnchLibraryTile.BasicLibraryTile> LIBRARY_TILE = register("library", FabricBlockEntityTypeBuilder.create(EnchLibraryTile.BasicLibraryTile::new, LIBRARY).build(null));
@@ -218,6 +226,13 @@ public class EnchModule {
         Zenith.HELPER.addShaped(LIBRARY, 3, 3, Blocks.ENDER_CHEST, INFUSED_HELLSHELF, Blocks.ENDER_CHEST, INFUSED_HELLSHELF, Blocks.ENCHANTING_TABLE, INFUSED_HELLSHELF, Blocks.ENDER_CHEST, INFUSED_HELLSHELF, Blocks.ENDER_CHEST);
     }
 
+
+    private static TagKey<Block> registerBlockTag(String string) {
+        return TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(string));
+    }
+    private static TagKey<Item> registerItemTag(String string) {
+        return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(string));
+    }
     private static Enchantment register(String name, Enchantment ench) {
         return Registry.register(Registry.ENCHANTMENT, new ResourceLocation(Zenith.MODID, name), ench);
     }
