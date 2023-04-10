@@ -1,6 +1,7 @@
 {
 	"replace": false,
 	"values": [
+		"minecraft:anvil",
 		"mythicmetals:adamantite_anvil",
 		"mythicmetals:aquarium_anvil",
 		"mythicmetals:bronze_anvil",

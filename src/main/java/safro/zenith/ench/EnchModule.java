@@ -135,9 +135,9 @@ public class EnchModule {
 
     // Items
     public static final Item PRISMATIC_WEB = register("prismatic_web", new Item(new Item.Properties().tab(Zenith.APOTH_GROUP)));
-    public static final Item ANVIL = replacement("anvil", new ZenithAnvilItem(Blocks.ANVIL), Items.ANVIL);
-    public static final Item CHIPPED_ANVIL = replacement("chipped_anvil", new ZenithAnvilItem(Blocks.CHIPPED_ANVIL), Items.CHIPPED_ANVIL);
-    public static final Item DAMAGED_ANVIL = replacement("damaged_anvil", new ZenithAnvilItem(Blocks.DAMAGED_ANVIL), Items.DAMAGED_ANVIL);
+    //public static final Item ANVIL = replacement("anvil", new ZenithAnvilItem(Blocks.ANVIL), Items.ANVIL);
+    //public static final Item CHIPPED_ANVIL = replacement("chipped_anvil", new ZenithAnvilItem(Blocks.CHIPPED_ANVIL), Items.CHIPPED_ANVIL);
+    //public static final Item DAMAGED_ANVIL = replacement("damaged_anvil", new ZenithAnvilItem(Blocks.DAMAGED_ANVIL), Items.DAMAGED_ANVIL);
     public static final Item OTHER_TOME = register("other_tome", new TomeItem(Items.AIR, null));
     public static final Item HELMET_TOME = register("helmet_tome", new TomeItem(Items.DIAMOND_HELMET, EnchantmentCategory.ARMOR_HEAD));
     public static final Item CHESTPLATE_TOME = register("chestplate_tome", new TomeItem(Items.DIAMOND_CHESTPLATE, EnchantmentCategory.ARMOR_CHEST));
