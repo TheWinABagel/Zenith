@@ -317,6 +317,7 @@
 	"misc.zenith.shift_stats": "Hold Shift for Stats",
 	"misc.zenith.ctrl_stats": "Hold Ctrl for Stats",
 	"misc.zenith.banned": "Cannot be used on a Spawner",
+	"config.jade.plugin_zenith.spawner": "Spawner Info",
 	
 	"stat.zenith.min_delay": "Min Spawn Delay",
 	"stat.zenith.max_delay": "Max Spawn Delay",

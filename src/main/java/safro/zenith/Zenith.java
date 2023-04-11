@@ -109,4 +109,7 @@ public class Zenith implements ModInitializer {
 			if (enableSpawner) SpawnerModule.reload(true);
 		}, "spawner_module");
 	}
+	public static ResourceLocation loc(String s) {
+		return new ResourceLocation(MODID, s);
+	}
 }

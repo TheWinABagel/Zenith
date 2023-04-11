@@ -122,4 +122,7 @@ public class SpawnerModule {
     private static Enchantment register(String name, Enchantment ench) {
         return Registry.register(Registry.ENCHANTMENT, new ResourceLocation(Zenith.MODID, name), ench);
     }
+    public static Component concat(Object... args) {
+        return Component.translatable("misc.zenith.value_concat", args[0], Component.literal(args[1].toString()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GREEN);
+    }
 }

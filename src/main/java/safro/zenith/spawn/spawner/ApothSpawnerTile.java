@@ -86,7 +86,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity implements CustomDataPa
 		}
 
 		@Nullable
-	//	@Override
+		//	@Override
 		public BlockEntity getSpawnerBlockEntity() {
 			return ApothSpawnerTile.this;
 		}
