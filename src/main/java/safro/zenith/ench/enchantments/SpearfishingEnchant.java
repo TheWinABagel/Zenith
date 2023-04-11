@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import safro.zenith.Apoth;
+import safro.zenith.Zenith;
 import safro.zenith.ench.EnchModule;
 import safro.zenith.ench.EnchModuleEvents;
 import safro.zenith.util.ApotheosisUtil;
@@ -49,7 +49,7 @@ public class SpearfishingEnchant extends Enchantment {
 			ItemStack triStack = ((EnchModuleEvents.TridentGetter) trident).getTridentItem();
 			int level = EnchantmentHelper.getItemEnchantmentLevel(EnchModule.SPEARFISHING, triStack);
 			if (trident.random.nextFloat() < 3.5F * level) {
-				ItemStack spearDrops = ApotheosisUtil.getRandom(Apoth.SPEARFISHING_DROPS, trident.random);
+				ItemStack spearDrops = ApotheosisUtil.getRandom(Zenith.SPEARFISHING_DROPS, trident.random);
 				spearDrops.setCount(1 + trident.random.nextInt(3));
 				drops.add(new ItemEntity(trident.level, dead.getX(), dead.getY(), dead.getZ(), spearDrops));
 			}

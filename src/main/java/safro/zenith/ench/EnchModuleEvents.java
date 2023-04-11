@@ -14,7 +14,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import safro.zenith.Apoth;
 import safro.zenith.Zenith;
 import safro.zenith.api.json.ApothJsonReloadListener;
 import safro.zenith.ench.enchantments.SpearfishingEnchant;
@@ -74,7 +73,7 @@ public class EnchModuleEvents {
                 return new Pair<>(stack, List.of(30, 1));
             }
         }
-        if ((left.getItem() == Items.CHIPPED_ANVIL || left.getItem() == Items.DAMAGED_ANVIL) && right.is(Apoth.IRON_BLOCKS)) {
+        if ((left.getItem() == Items.CHIPPED_ANVIL || left.getItem() == Items.DAMAGED_ANVIL) && right.is(Zenith.IRON_BLOCKS)) {
             if (left.getCount() != 1) return new Pair<>(ItemStack.EMPTY, List.of(cost, materialCost));
             int dmg = left.getItem() == Items.DAMAGED_ANVIL ? 2 : 1;
             ItemStack out = new ItemStack(dmg == 1 ? Items.ANVIL : Items.CHIPPED_ANVIL);

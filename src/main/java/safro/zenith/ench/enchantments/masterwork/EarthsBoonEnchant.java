@@ -14,7 +14,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import safro.zenith.Apoth;
+import safro.zenith.Zenith;
 import safro.zenith.api.enchant.TableApplicableEnchant;
 import safro.zenith.ench.EnchModule;
 import safro.zenith.util.ApotheosisUtil;
@@ -60,7 +60,7 @@ public class EarthsBoonEnchant extends Enchantment implements TableApplicableEnc
 		int level = EnchantmentHelper.getItemEnchantmentLevel(EnchModule.EARTH_BOON, stack);
 		if (player.level.isClientSide) return;
 		if (state.is(BlockTags.BASE_STONE_OVERWORLD) && level > 0 && player.getRandom().nextFloat() <= 0.01F * level) {
-			ItemStack newDrop = ApotheosisUtil.getRandom(Apoth.BOON_DROPS, player.getRandom());
+			ItemStack newDrop = ApotheosisUtil.getRandom(Zenith.BOON_DROPS, player.getRandom());
 			Block.popResource(player.level, pos, newDrop);
 		}
 	}

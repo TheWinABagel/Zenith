@@ -25,7 +25,7 @@ import safro.zenith.spawn.SpawnerModule;
 public class BlockMixin {
 
     @Inject(method = "setPlacedBy", at = @At("HEAD"))
-    public void apothSetPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack, CallbackInfo ci) {
+    public void zenithSetPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack, CallbackInfo ci) {
         if (Zenith.enableSpawner && state.is(Blocks.SPAWNER)) {
             BlockEntity te = world.getBlockEntity(pos);
             if (te != null && stack.hasTag()) te.load(stack.getOrCreateTagElement("BlockEntityTag"));
@@ -33,7 +33,7 @@ public class BlockMixin {
     }
 
     @Inject(method = "playerDestroy", at = @At("HEAD"), cancellable = true)
-    private void apothPlayerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity te, ItemStack stack, CallbackInfo ci) {
+    private void zenithPlayerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity te, ItemStack stack, CallbackInfo ci) {
         if (Zenith.enableSpawner && state.getBlock() instanceof SpawnerBlock block) {
             if (SpawnerModule.spawnerSilkLevel != -1 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, stack) >= SpawnerModule.spawnerSilkLevel) {
                 ItemStack s = new ItemStack(block);

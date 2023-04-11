@@ -11,7 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import safro.zenith.Apoth;
+import safro.zenith.Zenith;
 import safro.zenith.api.json.ApothJsonReloadListener;
 import safro.zenith.api.json.SerializerBuilder;
 import safro.zenith.ench.EnchModule;
@@ -37,7 +37,7 @@ public class EnchantingStatManager extends ApothJsonReloadListener<EnchantingSta
             Stats stats = GSON.fromJson(obj.get("stats"), Stats.class);
             List<Block> blocks = new ArrayList<>();
             if (obj.has("tag")) {
-                TagKey<Block> tag = Apoth.registerBlock(new ResourceLocation(obj.get("tag").getAsString()));
+                TagKey<Block> tag = Zenith.registerBlock(new ResourceLocation(obj.get("tag").getAsString()));
                 Registry.BLOCK.getTagOrEmpty(tag).iterator().forEachRemaining(blockHolder -> blocks.add(blockHolder.value()));
             } else {
                 Block b = Registry.BLOCK.get(new ResourceLocation(obj.get("block").getAsString()));

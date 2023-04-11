@@ -18,7 +18,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import safro.zenith.Apoth;
+import safro.zenith.Zenith;
 import safro.zenith.advancements.AdvancementTriggers;
 import safro.zenith.ench.EnchModule;
 import safro.zenith.util.FloatReferenceHolder;
@@ -51,7 +51,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
         this.addSecretSlot(new Slot(this.enchantSlots, 1, 35, 47) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.is(Apoth.ENCHANT_FUELS);
+                return stack.is(Zenith.ENCHANT_FUELS);
             }
         });
         this.initCommon(inv);
@@ -76,7 +76,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
         this.addSecretSlot(new Slot(this.enchantSlots, 1, 35, 47) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.is(Apoth.ENCHANT_FUELS);
+                return stack.is(Zenith.ENCHANT_FUELS);
             }
         });
         this.initCommon(inv);

@@ -1,17 +1,22 @@
 package safro.zenith;
 
+import io.github.fabricators_of_create.porting_lib.crafting.CraftingHelper;
 import io.github.fabricators_of_create.porting_lib.crafting.NBTIngredient;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Block;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import safro.zenith.advancements.AdvancementTriggers;
@@ -26,16 +31,32 @@ import safro.zenith.network.NetworkUtil;
 import safro.zenith.potion.PotionModule;
 import safro.zenith.spawn.SpawnerModule;
 import safro.zenith.util.ApotheosisUtil;
+import safro.zenith.util.CachedIngredient;
 import safro.zenith.util.ModuleCondition;
 import safro.zenith.village.VillageModule;
 
 import java.io.File;
+
 
 public class Zenith implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("zenith");
 	public static final String MODID = "zenith";
 	public static final RecipeHelper HELPER = new RecipeHelper(Zenith.MODID);
 	public static final CreativeModeTab APOTH_GROUP = FabricItemGroupBuilder.build(new ResourceLocation(MODID, MODID), () -> new ItemStack(Items.ENCHANTING_TABLE));
+
+	public static final TagKey<Item> BOON_DROPS = registerItem(new ResourceLocation(Zenith.MODID, "boon_drops"));
+	public static final TagKey<Item> SPEARFISHING_DROPS = registerItem(new ResourceLocation(Zenith.MODID, "spearfishing_drops"));
+	public static final TagKey<Item> ENCHANT_FUELS = registerItem(new ResourceLocation(Zenith.MODID, "enchant_fuels"));
+
+	public static final TagKey<Item> IRON_BLOCKS = registerItem(new ResourceLocation("c", "iron_blocks"));
+
+	public static TagKey<Item> registerItem(ResourceLocation id) {
+		return TagKey.create(Registry.ITEM_REGISTRY, id);
+	}
+
+	public static TagKey<Block> registerBlock(ResourceLocation id) {
+		return TagKey.create(Registry.BLOCK_REGISTRY, id);
+	}
 
 	public static File configDir;
 	public static Configuration config;
@@ -67,7 +88,6 @@ public class Zenith implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ServerEvents.init();
-		Apoth.init();
 		AdvancementTriggers.init();
 		NetworkUtil.initServer();
 
@@ -86,6 +106,8 @@ public class Zenith implements ModInitializer {
 		ApotheosisUtil.registerTypes();
 
 		addReloads();
+
+		CraftingHelper.register(new ResourceLocation("minecraft", "item"), CachedIngredient.VanillaSerializer.INSTANCE);
 	}
 
 	public static Ingredient potionIngredient(Potion type) {

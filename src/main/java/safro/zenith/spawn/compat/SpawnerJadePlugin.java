@@ -10,9 +10,7 @@ import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SpawnerBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import safro.zenith.Zenith;
-import safro.zenith.mixin.spawner.SpawnerBlockMixin;
 import safro.zenith.spawn.SpawnerModule;
 import safro.zenith.spawn.modifiers.SpawnerStats;
 import safro.zenith.spawn.spawner.ApothSpawnerTile;
@@ -63,11 +61,10 @@ public class SpawnerJadePlugin implements IWailaPlugin, IBlockComponentProvider,
 
     @Override
     public void appendServerData(CompoundTag tag, ServerPlayer player, Level world, BlockEntity te, boolean arg4) {
-        SpawnerModule.LOG.info(te.getType().toString());
+        SpawnerModule.LOGGER.info(te.getType().toString());
 
-        if (te instanceof ApothSpawnerTile) {
-            SpawnerModule.LOG.info("Is instance of spawner");
-            ApothSpawnerTile spw = (ApothSpawnerTile) te;
+        if (te instanceof ApothSpawnerTile spw) {
+            SpawnerModule.LOGGER.info("Is instance of spawner");
             BaseSpawner logic = spw.getSpawner();
             //Formatter::off
             tag.putIntArray(STATS,

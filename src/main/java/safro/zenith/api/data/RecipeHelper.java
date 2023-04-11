@@ -9,7 +9,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
-import safro.zenith.Apoth;
 import safro.zenith.Zenith;
 import safro.zenith.api.RunnableReloader;
 import safro.zenith.util.CachedIngredient;
@@ -54,7 +53,7 @@ public class RecipeHelper {
         NonNullList<Ingredient> inputL = NonNullList.create();
         for (int i = 0; i < input.length; i++) {
             Object k = input[i];
-            if (k instanceof String) inputL.add(i, Ingredient.of(Apoth.registerItem(new ResourceLocation((String) k))));
+            if (k instanceof String) inputL.add(i, Ingredient.of(Zenith.registerItem(new ResourceLocation((String) k))));
             else if (k instanceof ItemStack && !((ItemStack) k).isEmpty()) inputL.add(i, CachedIngredient.create((ItemStack) k));
             else if (k instanceof ItemLike || k instanceof ItemStack) inputL.add(i, CachedIngredient.create(makeStack(k)));
             else if (k instanceof Ingredient) inputL.add(i, (Ingredient) k);

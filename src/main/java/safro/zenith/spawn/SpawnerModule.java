@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Set;
 
 public class SpawnerModule {
-    public static final Logger LOG = LogManager.getLogger("Zenith : Spawner");
+    public static final Logger LOGGER = LogManager.getLogger("Zenith : Spawner");
     public static int spawnerSilkLevel = 1;
     public static int spawnerSilkDamage = 100;
     public static boolean invertBannedMobs;
@@ -50,7 +50,7 @@ public class SpawnerModule {
     public static void init() {
         reload(false);
 
-        LivingEntityEvents.DROPS.register(((target, source, drops) -> {
+        LivingEntityEvents.DROPS_WITH_LEVEL.register(((target, source, drops, lootingLevel, recentlyHit) -> {
             CapturingEnchant.handleCapturing(source, target, drops);
             return false;
         }));
@@ -109,7 +109,7 @@ public class SpawnerModule {
             try {
                 bannedMobs.add(new ResourceLocation(s));
             } catch (ResourceLocationException ex) {
-                SpawnerModule.LOG.error("Invalid entry {} detected in the spawner banned mobs list.", s);
+                SpawnerModule.LOGGER.error("Invalid entry {} detected in the spawner banned mobs list.", s);
                 ex.printStackTrace();
             }
         if (!e && config.hasChanged()) config.save();
