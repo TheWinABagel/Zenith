@@ -20,6 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -55,10 +56,11 @@ public abstract class EnchLibraryTile extends BlockEntity implements CustomDataP
 		Map<Enchantment, Integer> enchs = EnchantmentHelper.getEnchantments(book);
 		for (Map.Entry<Enchantment, Integer> e : enchs.entrySet()) {
 			if (e.getKey() == null || e.getValue() == null) continue;
-			int newPoints = Math.min(this.maxPoints, this.points.getInt(e.getKey()) + levelToPoints(e.getValue()));
+			Enchantment en = makeValid(e);
+			int newPoints = Math.min(this.maxPoints, this.points.getInt(en) + levelToPoints(e.getValue()));
 			if (newPoints < 0) newPoints = maxPoints;
-			this.points.put(e.getKey(), newPoints);
-			this.maxLevels.put(e.getKey(), Math.min(this.maxLevel, Math.max(this.maxLevels.getInt(e.getKey()), e.getValue())));
+			this.points.put(en, newPoints);
+			this.maxLevels.put(en, Math.min(this.maxLevel, Math.max(this.maxLevels.getInt(en), e.getValue())));
 		}
 		if (enchs.size() > 0) NetworkUtil.dispatchTEToNearbyPlayers(this);
 		this.setChanged();
@@ -231,4 +233,15 @@ public abstract class EnchLibraryTile extends BlockEntity implements CustomDataP
 		}
 	}
 
+	private Enchantment makeValid(Map.Entry<Enchantment, Integer> ench){
+		if (ench.getKey() == Enchantments.BANE_OF_ARTHROPODS) return EnchModule.BOA;
+		else if (ench.getKey() == Enchantments.SMITE) return EnchModule.SMITE;
+		else if (ench.getKey() == Enchantments.SHARPNESS) return EnchModule.SHARPNESS;
+		else if (ench.getKey() == Enchantments.ALL_DAMAGE_PROTECTION) return EnchModule.PROTECTION;
+		else if (ench.getKey() == Enchantments.FIRE_PROTECTION) return EnchModule.FIRE_PROTECTION;
+		else if (ench.getKey() == Enchantments.BLAST_PROTECTION) return EnchModule.BLAST_PROTECTION;
+		else if (ench.getKey() == Enchantments.PROJECTILE_PROTECTION) return EnchModule.PROJECTILE_PROTECTION;
+		else if (ench.getKey() == Enchantments.FALL_PROTECTION) return EnchModule.FEATHER_FALLING;
+		else return ench.getKey();
+	}
 }
