@@ -79,7 +79,7 @@ public class EnchLibraryContainer extends BlockEntityContainer<EnchLibraryTile> 
 		this.addSlot(new Slot(this.ioInv, 2, 92, 61) {
 			@Override
 			public boolean mayPlace(ItemStack stack) {
-				return true;
+				return !(stack.getItem() == Items.ENCHANTED_BOOK);
 			}
 
 			@Override
