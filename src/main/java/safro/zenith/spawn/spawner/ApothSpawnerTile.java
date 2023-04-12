@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import safro.zenith.spawn.SpawnerModule;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -58,6 +59,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity implements CustomDataPa
 
 	@Override
 	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+		SpawnerModule.LOGGER.info("packet info"+pkt.getTag().getAllKeys());
 		this.load(pkt.getTag());
 	}
 
@@ -86,8 +88,8 @@ public class ApothSpawnerTile extends SpawnerBlockEntity implements CustomDataPa
 		}
 
 		@Nullable
-		//	@Override
-		public BlockEntity getSpawnerBlockEntity() {
+		//@Override
+		public BlockEntity getBlockEntity() {
 			return ApothSpawnerTile.this;
 		}
 
@@ -149,7 +151,6 @@ public class ApothSpawnerTile extends SpawnerBlockEntity implements CustomDataPa
 							return;
 						}
 
-						tag.remove("NoAI"); // TODO: Remove, bugfix for extra nbt tag that was erroneously added.
 						ListTag listtag = tag.getList("Pos", 6);
 						int j = listtag.size();
 						double d0 = j >= 1 ? listtag.getDouble(0) : pPos.getX() + (pServerLevel.random.nextDouble() - pServerLevel.random.nextDouble()) * this.spawnRange + 0.5D;

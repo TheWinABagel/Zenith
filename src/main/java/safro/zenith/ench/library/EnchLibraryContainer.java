@@ -1,6 +1,7 @@
 package safro.zenith.ench.library;
 
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
@@ -22,6 +23,7 @@ import java.util.List;
 
 public class EnchLibraryContainer extends BlockEntityContainer<EnchLibraryTile> implements ButtonClickPacket.IButtonContainer {
 	protected SimpleContainer ioInv = new SimpleContainer(3);
+
 	protected Runnable notifier = null;
 
 	public EnchLibraryContainer(int id, Inventory inv, FriendlyByteBuf buf) {

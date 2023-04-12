@@ -41,7 +41,7 @@ public abstract class SpawnerBlockMixin extends BaseEntityBlock {
     }
 
     @Inject(method = "getCloneItemStack", at = @At("HEAD"), cancellable = true)
-    private void apothGetClone(BlockGetter world, BlockPos pos, BlockState blockState, CallbackInfoReturnable<ItemStack> cir) {
+    private void zenithGetClone(BlockGetter world, BlockPos pos, BlockState blockState, CallbackInfoReturnable<ItemStack> cir) {
         if (Zenith.enableSpawner) {
             ItemStack s = new ItemStack(this);
             BlockEntity te = world.getBlockEntity(pos);
@@ -51,7 +51,7 @@ public abstract class SpawnerBlockMixin extends BaseEntityBlock {
     }
 
     @Inject(method = "newBlockEntity", at = @At("HEAD"), cancellable = true)
-    private void apothNew(BlockPos pPos, BlockState pState, CallbackInfoReturnable<BlockEntity> cir) {
+    private void zenithNew(BlockPos pPos, BlockState pState, CallbackInfoReturnable<BlockEntity> cir) {
         if (Zenith.enableSpawner) {
             cir.setReturnValue(new ApothSpawnerTile(pPos, pState));
         }

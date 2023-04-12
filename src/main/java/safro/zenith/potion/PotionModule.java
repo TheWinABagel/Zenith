@@ -73,11 +73,11 @@ public class PotionModule {
     public static void init() {
         reload(false);
 
-        LivingEntityEvents.DROPS.register(((target, source, drops) -> {
+        LivingEntityEvents.DROPS_WITH_LEVEL.register(((target, source, drops, lootingLevel, recentlyHit) -> {
             if (Zenith.enablePotion) {
                 if (target instanceof Rabbit) {
                     Rabbit rabbit = (Rabbit) target;
-                    if (rabbit.level.random.nextFloat() < 0.045F + 0.045F * ApotheosisUtil.getLootingLevel(source)) {
+                    if (rabbit.level.random.nextFloat() < 0.045F + 0.045F * lootingLevel) {
                         drops.clear();
                         drops.add(new ItemEntity(rabbit.level, rabbit.getX(), rabbit.getY(), rabbit.getZ(), new ItemStack(LUCKY_FOOT)));
                     }
@@ -86,7 +86,7 @@ public class PotionModule {
             return false;
         }));
 
-        LivingEntityEvents.EXPERIENCE_DROP.register(((i, player) -> {
+        LivingEntityEvents.EXPERIENCE_DROP_WITH_ENTITY.register(((i, player, entity) -> {
             if (Zenith.enablePotion) {
                 if (player != null && player.getEffect(KNOWLEDGE_EFFECT) != null) {
                     int level = player.getEffect(KNOWLEDGE_EFFECT).getAmplifier() + 1;

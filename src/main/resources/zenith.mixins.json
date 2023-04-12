@@ -38,6 +38,7 @@
     "garden.SugarCaneBlockMixin",
     "spawner.BlockItemMixin",
     "spawner.BlockMixin",
+    "spawner.SpawnerBlockEntityMixin",
     "spawner.SpawnerBlockMixin"
   ],
   "injectors": {

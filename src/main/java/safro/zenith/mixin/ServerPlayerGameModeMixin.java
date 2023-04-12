@@ -29,7 +29,7 @@ public class ServerPlayerGameModeMixin {
     @Shadow @Final protected ServerPlayer player;
 
     @Inject(method = "destroyBlock", at = @At("HEAD"))
-    private void apotheosisBreakBlockEvent(BlockPos blockPos, CallbackInfoReturnable<Boolean> cir) {
+    private void zenithBreakBlockEvent(BlockPos blockPos, CallbackInfoReturnable<Boolean> cir) {
         BlockState state = this.level.getBlockState(blockPos);
         if (Zenith.enableEnch) {
             ChainsawEnchant.chainsaw(player, blockPos, state);
@@ -38,7 +38,7 @@ public class ServerPlayerGameModeMixin {
     }
 
     @Inject(method = "useItemOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;", shift = At.Shift.BEFORE), cancellable = true)
-    private void apotheosisRightClick(ServerPlayer serverPlayer, Level level, ItemStack itemStack, InteractionHand interactionHand, BlockHitResult blockHitResult, CallbackInfoReturnable<InteractionResult> cir) {
+    private void zenithRightClick(ServerPlayer serverPlayer, Level level, ItemStack itemStack, InteractionHand interactionHand, BlockHitResult blockHitResult, CallbackInfoReturnable<InteractionResult> cir) {
         if (Zenith.enableEnch) {
             InteractionResult result = NaturesBlessingEnchant.rightClick(itemStack, player, level, blockHitResult.getBlockPos(), interactionHand);
             if (result != null) {
