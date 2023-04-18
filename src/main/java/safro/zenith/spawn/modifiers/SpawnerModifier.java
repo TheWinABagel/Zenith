@@ -129,10 +129,11 @@ public class SpawnerModifier implements Recipe<Container> {
 	@Nullable
 	public static SpawnerModifier findMatch(ApothSpawnerTile tile, ItemStack mainhand, ItemStack offhand) {
 		List<SpawnerModifier> recipes = tile.getLevel().getRecipeManager().getAllRecipesFor(SpawnerModule.MODIFIER);
-		recipes.sort((r1, r2) -> r1.offHand == Ingredient.EMPTY ? r2.offHand == Ingredient.EMPTY ? 0 : 1 : -1);
-		for (SpawnerModifier r : recipes)
-			if (r.matches(tile, mainhand, offhand)) return r;
-		return null;
+		return recipes.stream()
+				.sorted((r1, r2) -> r1.offHand == Ingredient.EMPTY ? r2.offHand == Ingredient.EMPTY ? 0 : 1 : -1)
+				.filter(r -> r.matches(tile, mainhand, offhand))
+				.findFirst()
+				.orElse(null);
 	}
 
 	public static class Serializer implements RecipeSerializer<SpawnerModifier> {
