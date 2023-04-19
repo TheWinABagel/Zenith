@@ -19,8 +19,9 @@ import safro.zenith.ench.EnchModule;
 
 
 public class AnvilBlockEntity extends BlockEntity {
+
     protected final Object2IntMap<Enchantment> enchantments = new Object2IntOpenHashMap<>();
-protected final Map<Enchantment, Integer> ench = new HashMap<>();
+    protected final Map<Enchantment, Integer> ench = new HashMap<>();
 
     public AnvilBlockEntity(BlockPos pos, BlockState state) {
         super(EnchModule.ANVIL_TILE, pos, state);

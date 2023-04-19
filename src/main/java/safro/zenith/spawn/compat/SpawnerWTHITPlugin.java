@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.SpawnerBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import safro.zenith.Zenith;
 import safro.zenith.spawn.modifiers.SpawnerStats;
-import safro.zenith.spawn.spawner.ApothSpawnerTile;
+import safro.zenith.spawn.spawner.ZenithSpawnerBlockEntity;
 
 public class SpawnerWTHITPlugin implements IWailaPlugin, IBlockComponentProvider, IServerDataProvider<BlockEntity> {
     public static final String STATS = "spw_stats";
@@ -18,7 +18,7 @@ public class SpawnerWTHITPlugin implements IWailaPlugin, IBlockComponentProvider
     @Override
     public void register(IRegistrar registrar) {
         if (!Zenith.enableSpawner) return;
-        registrar.addBlockData(this, ApothSpawnerTile.class);
+        registrar.addBlockData(this, ZenithSpawnerBlockEntity.class);
         registrar.addComponent(this, TooltipPosition.BODY, SpawnerBlock.class);
     }
 
@@ -45,8 +45,8 @@ public class SpawnerWTHITPlugin implements IWailaPlugin, IBlockComponentProvider
     @Override
     public void appendServerData(CompoundTag tag, IServerAccessor<BlockEntity> accessor, IPluginConfig config) {
         if (!Zenith.enableSpawner) return;
-        if (accessor.getTarget() instanceof ApothSpawnerTile) {
-            ApothSpawnerTile spw = (ApothSpawnerTile) accessor.getTarget();
+        if (accessor.getTarget() instanceof ZenithSpawnerBlockEntity) {
+            ZenithSpawnerBlockEntity spw = (ZenithSpawnerBlockEntity) accessor.getTarget();
             BaseSpawner logic = spw.getSpawner();
             //Formatter::off
             tag.putIntArray(STATS,

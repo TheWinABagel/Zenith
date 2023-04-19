@@ -1,5 +1,16 @@
 package safro.zenith.potion.compat;
 
+
+import me.shedaniel.rei.api.client.registry.category.extension.CategoryExtensionProvider;
+import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
+import me.shedaniel.rei.api.client.registry.display.DisplayCategoryView;
+import me.shedaniel.rei.plugin.common.displays.crafting.DefaultCraftingDisplay;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.crafting.Recipe;
+import safro.zenith.potion.PotionModule;
 /*
 @SuppressWarnings("UnstableApiUsage")
 public class PotionCharmExtension implements CategoryExtensionProvider<DefaultCraftingDisplay<?>> {

@@ -29,7 +29,7 @@ import safro.zenith.Zenith;
 import safro.zenith.advancements.AdvancementTriggers;
 import safro.zenith.spawn.modifiers.SpawnerModifier;
 import safro.zenith.spawn.modifiers.SpawnerStats;
-import safro.zenith.spawn.spawner.ApothSpawnerTile;
+import safro.zenith.spawn.spawner.ZenithSpawnerBlockEntity;
 
 import java.util.List;
 
@@ -53,7 +53,7 @@ public abstract class SpawnerBlockMixin extends BaseEntityBlock {
     @Inject(method = "newBlockEntity", at = @At("HEAD"), cancellable = true)
     private void zenithNew(BlockPos pPos, BlockState pState, CallbackInfoReturnable<BlockEntity> cir) {
         if (Zenith.enableSpawner) {
-            cir.setReturnValue(new ApothSpawnerTile(pPos, pState));
+            cir.setReturnValue(new ZenithSpawnerBlockEntity(pPos, pState));
         }
     }
 
@@ -63,7 +63,7 @@ public abstract class SpawnerBlockMixin extends BaseEntityBlock {
             BlockEntity te = world.getBlockEntity(pos);
             ItemStack stack = player.getItemInHand(hand);
             ItemStack otherStack = player.getItemInHand(hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
-            if (te instanceof ApothSpawnerTile tile) {
+            if (te instanceof ZenithSpawnerBlockEntity tile) {
                 SpawnerModifier match = SpawnerModifier.findMatch(tile, stack, otherStack);
                 if (match != null && match.apply(tile)) {
                     if (world.isClientSide) return InteractionResult.SUCCESS;

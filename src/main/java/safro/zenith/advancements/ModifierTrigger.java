@@ -21,7 +21,7 @@ import net.minecraft.server.level.ServerPlayer;
 import safro.zenith.Zenith;
 import safro.zenith.spawn.modifiers.SpawnerModifier;
 import safro.zenith.spawn.modifiers.SpawnerStats;
-import safro.zenith.spawn.spawner.ApothSpawnerTile;
+import safro.zenith.spawn.spawner.ZenithSpawnerBlockEntity;
 
 public class ModifierTrigger implements CriterionTrigger<ModifierTrigger.Instance> {
 	private static final ResourceLocation ID = new ResourceLocation(Zenith.MODID, "spawner_modifier");
@@ -76,7 +76,7 @@ public class ModifierTrigger implements CriterionTrigger<ModifierTrigger.Instanc
 		return new ModifierTrigger.Instance(minDelay, maxDelay, spawnCount, nearbyEnts, playerRange, spawnRange, ignorePlayers, ignoreConditions, redstone, ignoreLight, noAI);
 	}
 
-	public void trigger(ServerPlayer player, ApothSpawnerTile tile, SpawnerModifier modif) {
+	public void trigger(ServerPlayer player, ZenithSpawnerBlockEntity tile, SpawnerModifier modif) {
 		ModifierTrigger.Listeners ModifierTrigger$listeners = this.listeners.get(player.getAdvancements());
 		if (ModifierTrigger$listeners != null) {
 			ModifierTrigger$listeners.trigger(tile, modif);
@@ -117,8 +117,8 @@ public class ModifierTrigger implements CriterionTrigger<ModifierTrigger.Instanc
 			return new JsonObject();
 		}
 
-		public boolean test(ApothSpawnerTile tile, SpawnerModifier modif) {
-			ApothSpawnerTile.SpawnerLogicExt logic = (ApothSpawnerTile.SpawnerLogicExt) tile.spawner;
+		public boolean test(ZenithSpawnerBlockEntity tile, SpawnerModifier modif) {
+			ZenithSpawnerBlockEntity.SpawnerLogicExt logic = (ZenithSpawnerBlockEntity.SpawnerLogicExt) tile.spawner;
 			if (!this.minDelay.matches(logic.minSpawnDelay)) return false;
 			if (!this.maxDelay.matches(logic.maxSpawnDelay)) return false;
 			if (!this.spawnCount.matches(logic.spawnCount)) return false;
@@ -154,7 +154,7 @@ public class ModifierTrigger implements CriterionTrigger<ModifierTrigger.Instanc
 			this.listeners.remove(listener);
 		}
 
-		public void trigger(ApothSpawnerTile tile, SpawnerModifier modif) {
+		public void trigger(ZenithSpawnerBlockEntity tile, SpawnerModifier modif) {
 			List<CriterionTrigger.Listener<ModifierTrigger.Instance>> list = null;
 
 			for (CriterionTrigger.Listener<ModifierTrigger.Instance> listener : this.listeners) {

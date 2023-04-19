@@ -9,11 +9,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SpawnerBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -21,9 +23,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import safro.zenith.Zenith;
 import safro.zenith.spawn.SpawnerModule;
 
-@Mixin(Block.class)
-public class BlockMixin {
+@Mixin(SpawnerBlock.class)
+public class BlockMixin extends BaseEntityBlock {
 
+    public BlockMixin(Properties properties) {
+        super(properties);
+    }
+/*
     @Inject(method = "setPlacedBy", at = @At("HEAD"))
     public void zenithSetPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack, CallbackInfo ci) {
         if (Zenith.enableSpawner && state.is(Blocks.SPAWNER)) {
@@ -45,5 +51,11 @@ public class BlockMixin {
                 ci.cancel();
             }
         }
+    }
+*/
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return null;
     }
 }

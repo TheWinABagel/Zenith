@@ -8,7 +8,7 @@ import java.util.function.Function;
 import com.google.gson.JsonElement;
 
 import net.minecraft.util.Mth;
-import safro.zenith.spawn.spawner.ApothSpawnerTile;
+import safro.zenith.spawn.spawner.ZenithSpawnerBlockEntity;
 
 public class SpawnerStats {
 
@@ -46,10 +46,10 @@ public class SpawnerStats {
 	private static abstract class Base<T> implements SpawnerStat<T> {
 
 		protected final String id;
-		protected final Function<ApothSpawnerTile, T> getter;
-		protected final BiConsumer<ApothSpawnerTile, T> setter;
+		protected final Function<ZenithSpawnerBlockEntity, T> getter;
+		protected final BiConsumer<ZenithSpawnerBlockEntity, T> setter;
 
-		private Base(String id, Function<ApothSpawnerTile, T> getter, BiConsumer<ApothSpawnerTile, T> setter) {
+		private Base(String id, Function<ZenithSpawnerBlockEntity, T> getter, BiConsumer<ZenithSpawnerBlockEntity, T> setter) {
 			this.id = id;
 			this.getter = getter;
 			this.setter = setter;
@@ -64,7 +64,7 @@ public class SpawnerStats {
 
 	private static class BoolStat extends Base<Boolean> {
 
-		private BoolStat(String id, Function<ApothSpawnerTile, Boolean> getter, BiConsumer<ApothSpawnerTile, Boolean> setter) {
+		private BoolStat(String id, Function<ZenithSpawnerBlockEntity, Boolean> getter, BiConsumer<ZenithSpawnerBlockEntity, Boolean> setter) {
 			super(id, getter, setter);
 		}
 
@@ -74,7 +74,7 @@ public class SpawnerStats {
 		}
 
 		@Override
-		public boolean apply(Boolean value, Boolean min, Boolean max, ApothSpawnerTile spawner) {
+		public boolean apply(Boolean value, Boolean min, Boolean max, ZenithSpawnerBlockEntity spawner) {
 			boolean old = getter.apply(spawner);
 			setter.accept(spawner, value);
 			return old != getter.apply(spawner);
@@ -88,7 +88,7 @@ public class SpawnerStats {
 
 	private static class IntStat extends Base<Integer> {
 
-		private IntStat(String id, Function<ApothSpawnerTile, Integer> getter, BiConsumer<ApothSpawnerTile, Integer> setter) {
+		private IntStat(String id, Function<ZenithSpawnerBlockEntity, Integer> getter, BiConsumer<ZenithSpawnerBlockEntity, Integer> setter) {
 			super(id, getter, setter);
 		}
 
@@ -98,7 +98,7 @@ public class SpawnerStats {
 		}
 
 		@Override
-		public boolean apply(Integer value, Integer min, Integer max, ApothSpawnerTile spawner) {
+		public boolean apply(Integer value, Integer min, Integer max, ZenithSpawnerBlockEntity spawner) {
 			int old = getter.apply(spawner);
 			setter.accept(spawner, Mth.clamp(old + value, min, max));
 			return old != getter.apply(spawner);

@@ -136,6 +136,9 @@ public class PotionCharmItem extends Item implements TableApplicableItem, Damage
 				if (potion.getEffects().size() == 1 && !potion.getEffects().get(0).getEffect().isInstantenous()) {
 					items.add(PotionUtils.setPotion(new ItemStack(this), potion));
 				}
+				else {
+				//	PotionModule.LOG.error("potion: "+potion.getEffects().toString());
+				}
 			}
 		}
 

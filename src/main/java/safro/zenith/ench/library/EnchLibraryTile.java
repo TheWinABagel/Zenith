@@ -72,12 +72,13 @@ public abstract class EnchLibraryTile extends BlockEntity implements CustomDataP
 	 * Decrements point values equal to the amount of points required to jump between the current level and the requested level.
 	 */
 	public void extractEnchant(ItemStack stack, Enchantment ench, int level) {
+		Enchantment valid = makeValid(ench);
 		int curLvl = EnchantmentHelper.getEnchantments(stack).getOrDefault(ench, 0);
 		if (stack.isEmpty() || !this.canExtract(ench, level, curLvl) || level == curLvl) return;
 		Map<Enchantment, Integer> enchs = EnchantmentHelper.getEnchantments(stack);
-		enchs.put(ench, level);
+		enchs.put(valid, level);
 		EnchantmentHelper.setEnchantments(enchs, stack);
-		this.points.put(ench, Math.max(0, (this.points.getInt(ench) - levelToPoints(level) + levelToPoints(curLvl)))); //Safety, should never be below zero anyway.
+		this.points.put(valid, Math.max(0, (this.points.getInt(ench) - levelToPoints(level) + levelToPoints(curLvl)))); //Safety, should never be below zero anyway.
 		if (!this.level.isClientSide()) NetworkUtil.dispatchTEToNearbyPlayers(this);
 		this.setChanged();
 	}
@@ -243,5 +244,16 @@ public abstract class EnchLibraryTile extends BlockEntity implements CustomDataP
 		else if (ench.getKey() == Enchantments.PROJECTILE_PROTECTION) return EnchModule.PROJECTILE_PROTECTION;
 		else if (ench.getKey() == Enchantments.FALL_PROTECTION) return EnchModule.FEATHER_FALLING;
 		else return ench.getKey();
+	}
+	private Enchantment makeValid(Enchantment ench){
+		if (ench == Enchantments.BANE_OF_ARTHROPODS) return EnchModule.BOA;
+		else if (ench == Enchantments.SMITE) return EnchModule.SMITE;
+		else if (ench == Enchantments.SHARPNESS) return EnchModule.SHARPNESS;
+		else if (ench == Enchantments.ALL_DAMAGE_PROTECTION) return EnchModule.PROTECTION;
+		else if (ench == Enchantments.FIRE_PROTECTION) return EnchModule.FIRE_PROTECTION;
+		else if (ench == Enchantments.BLAST_PROTECTION) return EnchModule.BLAST_PROTECTION;
+		else if (ench == Enchantments.PROJECTILE_PROTECTION) return EnchModule.PROJECTILE_PROTECTION;
+		else if (ench == Enchantments.FALL_PROTECTION) return EnchModule.FEATHER_FALLING;
+		else return ench;
 	}
 }

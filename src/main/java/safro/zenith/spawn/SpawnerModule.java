@@ -1,6 +1,7 @@
 package safro.zenith.spawn;
 
 import io.github.fabricators_of_create.porting_lib.event.common.LivingEntityEvents;
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.ChatFormatting;
 import net.minecraft.ResourceLocationException;
@@ -26,7 +27,7 @@ import safro.zenith.Zenith;
 import safro.zenith.api.config.Configuration;
 import safro.zenith.spawn.enchantment.CapturingEnchant;
 import safro.zenith.spawn.modifiers.SpawnerModifier;
-import safro.zenith.spawn.spawner.ApothSpawnerTile;
+import safro.zenith.spawn.spawner.ZenithSpawnerBlockEntity;
 import safro.zenith.util.ApotheosisUtil;
 
 import java.io.File;
@@ -58,10 +59,22 @@ public class SpawnerModule {
         LivingEntityEvents.TICK.register(SpawnerModule::tickDumbMobs);
 
         UseBlockCallback.EVENT.register(((player, world, hand, hitResult) -> handleUseItem(world, hitResult.getBlockPos(), player.getItemInHand(hand))));
+
+        ItemTooltipCallback.EVENT.register((stack, context, lines) -> {
+            if (stack.getItem() instanceof SpawnEggItem egg) {
+                EntityType<?> type = egg.getType(stack.getTag());
+                if (invertBannedMobs) {
+                    if (!bannedMobs.contains(Registry.ENTITY_TYPE.getKey(type))) lines.add(Component.translatable("misc.zenith.banned").withStyle(ChatFormatting.GRAY));
+                } else {
+                    if (bannedMobs.contains(Registry.ENTITY_TYPE.getKey(type))) lines.add(Component.translatable("misc.zenith.banned").withStyle(ChatFormatting.GRAY));
+                }
+
+            }
+        });
     }
 
     public static InteractionResult handleUseItem(Level world, BlockPos pos, ItemStack s) {
-        if (world.getBlockEntity(pos) instanceof ApothSpawnerTile) {
+        if (world.getBlockEntity(pos) instanceof ZenithSpawnerBlockEntity) {
             if (s.getItem() instanceof SpawnEggItem egg) {
                 EntityType<?> type = egg.getType(s.getTag());
                 if(invertBannedMobs) {
@@ -74,6 +87,7 @@ public class SpawnerModule {
         }
         return InteractionResult.PASS;
     }
+
 
     public static void handleTooltips(List<Component> tooltip, ItemStack s) {
         if (s.getItem() instanceof SpawnEggItem egg) {

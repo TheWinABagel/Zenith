@@ -46,11 +46,11 @@ public class PlayerMixin {
         }
     }
 
-//    @Inject(method = "createAttributes", at = @At("RETURN"))
-//    private static void createAttributes(CallbackInfoReturnable<AttributeSupplier.Builder> cir) {
-//        AttributeSupplier.Builder builder = cir.getReturnValue();
-//        addIfExists(builder, DeadlyModule.COLD_DAMAGE, DeadlyModule.CRIT_CHANCE, DeadlyModule.CRIT_DAMAGE, DeadlyModule.CURRENT_HP_DAMAGE, DeadlyModule.DRAW_SPEED, DeadlyModule.FIRE_DAMAGE, DeadlyModule.LIFE_STEAL, DeadlyModule.OVERHEAL, DeadlyModule.PIERCING);
-//    }
+   // @Inject(method = "createAttributes", at = @At("RETURN"))
+   // private static void createAttributes(CallbackInfoReturnable<AttributeSupplier.Builder> cir) {
+     //   AttributeSupplier.Builder builder = cir.getReturnValue();
+     //   addIfExists(builder, DeadlyModule.COLD_DAMAGE, DeadlyModule.CRIT_CHANCE, DeadlyModule.CRIT_DAMAGE, DeadlyModule.CURRENT_HP_DAMAGE, DeadlyModule.DRAW_SPEED, DeadlyModule.FIRE_DAMAGE, DeadlyModule.LIFE_STEAL, DeadlyModule.OVERHEAL, DeadlyModule.PIERCING);
+   // }
 
     private static void addIfExists(AttributeSupplier.Builder builder, Attribute... attribs) {
         for (Attribute attrib : attribs)

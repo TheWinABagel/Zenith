@@ -9,6 +9,7 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.*;
@@ -22,7 +23,7 @@ import safro.zenith.spawn.SpawnerModule;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class ApothSpawnerTile extends SpawnerBlockEntity implements CustomDataPacketHandlingBlockEntity {
+public class ZenithSpawnerBlockEntity extends SpawnerBlockEntity implements CustomDataPacketHandlingBlockEntity {
 	public boolean ignoresPlayers = false;
 	public boolean ignoresConditions = false;
 	public boolean redstoneControl = false;
@@ -30,7 +31,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity implements CustomDataPa
 	public boolean hasNoAI = false;
 	public boolean silent = false;
 
-	public ApothSpawnerTile(BlockPos pos, BlockState state) {
+	public ZenithSpawnerBlockEntity(BlockPos pos, BlockState state) {
 		super(pos, state);
 		this.spawner = new SpawnerLogicExt();
 	}
@@ -58,8 +59,18 @@ public class ApothSpawnerTile extends SpawnerBlockEntity implements CustomDataPa
 	}
 
 	@Override
+	public ClientboundBlockEntityDataPacket getUpdatePacket() {
+		return ClientboundBlockEntityDataPacket.create(this);
+	}
+
+	@Override
+	public CompoundTag getUpdateTag() {
+		CompoundTag tag = super.getUpdateTag();
+		CompoundTag points = new CompoundTag();
+		return new CompoundTag();
+	}
+	@Override
 	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-		SpawnerModule.LOGGER.info("packet info"+pkt.getTag().getAllKeys());
 		this.load(pkt.getTag());
 	}
 
@@ -69,7 +80,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity implements CustomDataPa
 		public void setEntityId(EntityType<?> pType) {
 			super.setEntityId(pType);
 			this.spawnPotentials = SimpleWeightedRandomList.single(this.nextSpawnData);
-			if (ApothSpawnerTile.this.level != null) this.delay(ApothSpawnerTile.this.level, ApothSpawnerTile.this.worldPosition);
+			if (ZenithSpawnerBlockEntity.this.level != null) this.delay(ZenithSpawnerBlockEntity.this.level, ZenithSpawnerBlockEntity.this.worldPosition);
 		}
 
 		@Override
@@ -90,12 +101,12 @@ public class ApothSpawnerTile extends SpawnerBlockEntity implements CustomDataPa
 		@Nullable
 		//@Override
 		public BlockEntity getBlockEntity() {
-			return ApothSpawnerTile.this;
+			return ZenithSpawnerBlockEntity.this;
 		}
 
 		private boolean isActivated(Level level, BlockPos pos) {
-			boolean flag = ApothSpawnerTile.this.ignoresPlayers || level.hasNearbyAlivePlayer(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, this.requiredPlayerRange);
-			return flag && (!ApothSpawnerTile.this.redstoneControl || ApothSpawnerTile.this.level.hasNeighborSignal(pos));
+			boolean flag = ZenithSpawnerBlockEntity.this.ignoresPlayers || level.hasNearbyAlivePlayer(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, this.requiredPlayerRange);
+			return flag && (!ZenithSpawnerBlockEntity.this.redstoneControl || ZenithSpawnerBlockEntity.this.level.hasNeighborSignal(pos));
 		}
 
 		private void delay(Level pLevel, BlockPos pPos) {
@@ -162,8 +173,8 @@ public class ApothSpawnerTile extends SpawnerBlockEntity implements CustomDataPa
 							//LOGIC CHANGE : Ability to ignore conditions set in the spawner and by the entity.
 							LyingLevel liar = new LyingLevel(pServerLevel);
 							boolean useLiar = false;
-							if (!ApothSpawnerTile.this.ignoresConditions) {
-								if (ApothSpawnerTile.this.ignoresLight) {
+							if (!ZenithSpawnerBlockEntity.this.ignoresConditions) {
+								if (ZenithSpawnerBlockEntity.this.ignoresLight) {
 									boolean pass = false;
 									for (int light = 0; light < 16; light++) {
 										liar.setFakeLightLevel(light);
@@ -186,11 +197,11 @@ public class ApothSpawnerTile extends SpawnerBlockEntity implements CustomDataPa
 								return;
 							}
 
-							if (ApothSpawnerTile.this.hasNoAI && entity instanceof Mob mob) {
+							if (ZenithSpawnerBlockEntity.this.hasNoAI && entity instanceof Mob mob) {
 								mob.setNoAi(true);
 								entity.addTag("zenith:movable");
 							}
-							if (ApothSpawnerTile.this.silent) entity.setSilent(true);
+							if (ZenithSpawnerBlockEntity.this.silent) entity.setSilent(true);
 
 							int k = pServerLevel.getEntitiesOfClass(entity.getClass(), new AABB(pPos.getX(), pPos.getY(), pPos.getZ(), pPos.getX() + 1, pPos.getY() + 1, pPos.getZ() + 1).inflate(this.spawnRange)).size();
 							if (k >= this.maxNearbyEntities) {
@@ -201,7 +212,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity implements CustomDataPa
 							entity.moveTo(entity.getX(), entity.getY(), entity.getZ(), pServerLevel.random.nextFloat() * 360.0F, 0.0F);
 							if (entity instanceof Mob) {
 								Mob mob = (Mob) entity;
-								if (!ApothSpawnerTile.this.ignoresConditions && (this.nextSpawnData.getCustomSpawnRules().isEmpty() && !mob.checkSpawnRules(pServerLevel, MobSpawnType.SPAWNER) || !mob.checkSpawnObstruction(pServerLevel))) {
+								if (!ZenithSpawnerBlockEntity.this.ignoresConditions && (this.nextSpawnData.getCustomSpawnRules().isEmpty() && !mob.checkSpawnRules(pServerLevel, MobSpawnType.SPAWNER) || !mob.checkSpawnObstruction(pServerLevel))) {
 									continue;
 								}
 
@@ -242,7 +253,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity implements CustomDataPa
 				}
 
 				SpawnData.CustomSpawnRules spawndata$customspawnrules = this.nextSpawnData.getCustomSpawnRules().get();
-				if (ApothSpawnerTile.this.ignoresLight) return true; // All custom spawn rules are light-based, so if we ignore light, we can short-circuit here.
+				if (ZenithSpawnerBlockEntity.this.ignoresLight) return true; // All custom spawn rules are light-based, so if we ignore light, we can short-circuit here.
 				if (!spawndata$customspawnrules.blockLightLimit().isValueInRange(pServerLevel.getBrightness(LightLayer.BLOCK, blockpos)) || !spawndata$customspawnrules.skyLightLimit().isValueInRange(pServerLevel.getBrightness(LightLayer.SKY, blockpos))) {
 					return false;
 				}

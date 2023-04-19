@@ -2,7 +2,7 @@ package safro.zenith.spawn.modifiers;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import safro.zenith.spawn.spawner.ApothSpawnerTile;
+import safro.zenith.spawn.spawner.ZenithSpawnerBlockEntity;
 
 public class StatModifier<T> {
 
@@ -17,7 +17,7 @@ public class StatModifier<T> {
 		this.max = max.equals(-1) ? (T) Integer.valueOf(Integer.MAX_VALUE) : max;
 	}
 
-	public boolean apply(ApothSpawnerTile tile) {
+	public boolean apply(ZenithSpawnerBlockEntity tile) {
 		return this.stat.apply(value, min, max, tile);
 	}
 
