@@ -16,7 +16,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -194,36 +193,6 @@ public class EnchModule {
         reload(false);
 
         EnchModuleEvents.init();
-
-        Ingredient pot = Zenith.potionIngredient(Potions.REGENERATION);
-        Zenith.HELPER.addShaped(HELLSHELF, 3, 3, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Items.BLAZE_ROD, "c:bookshelves", pot, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS);
-        Zenith.HELPER.addShaped(PRISMATIC_WEB, 3, 3, null, Items.PRISMARINE_SHARD, null, Items.PRISMARINE_SHARD, Blocks.COBWEB, Items.PRISMARINE_SHARD, null, Items.PRISMARINE_SHARD, null);
-        ItemStack book = new ItemStack(Items.BOOK);
-        ItemStack stick = new ItemStack(Items.STICK);
-        ItemStack blaze = new ItemStack(Items.BLAZE_ROD);
-        Zenith.HELPER.addShaped(new ItemStack(HELMET_TOME, 5), 3, 2, book, book, book, book, blaze, book);
-        Zenith.HELPER.addShaped(new ItemStack(CHESTPLATE_TOME, 8), 3, 3, book, blaze, book, book, book, book, book, book, book);
-        Zenith.HELPER.addShaped(new ItemStack(LEGGINGS_TOME, 7), 3, 3, book, null, book, book, blaze, book, book, book, book);
-        Zenith.HELPER.addShaped(new ItemStack(BOOTS_TOME, 4), 3, 2, book, null, book, book, blaze, book);
-        Zenith.HELPER.addShaped(new ItemStack(WEAPON_TOME, 2), 1, 3, book, book, new ItemStack(Items.BLAZE_POWDER));
-        Zenith.HELPER.addShaped(new ItemStack(PICKAXE_TOME, 3), 3, 3, book, book, book, null, blaze, null, null, stick, null);
-        Zenith.HELPER.addShaped(new ItemStack(FISHING_TOME, 2), 3, 3, null, null, blaze, null, stick, book, stick, null, book);
-        Zenith.HELPER.addShaped(new ItemStack(BOW_TOME, 3), 3, 3, null, stick, book, blaze, null, book, null, stick, book);
-        Zenith.HELPER.addShapeless(new ItemStack(OTHER_TOME, 6), book, book, book, book, book, book, blaze);
-        Zenith.HELPER.addShaped(new ItemStack(SCRAP_TOME, 8), 3, 3, book, book, book, book, Blocks.ANVIL, book, book, book, book);
-        Ingredient maxHellshelf = Ingredient.of(INFUSED_HELLSHELF);
-        Zenith.HELPER.addShaped(BLAZING_HELLSHELF, 3, 3, null, Items.FIRE_CHARGE, null, Items.FIRE_CHARGE, maxHellshelf, Items.FIRE_CHARGE, Items.BLAZE_POWDER, Items.BLAZE_POWDER, Items.BLAZE_POWDER);
-        Zenith.HELPER.addShaped(GLOWING_HELLSHELF, 3, 3, null, Blocks.GLOWSTONE, null, null, maxHellshelf, null, Blocks.GLOWSTONE, null, Blocks.GLOWSTONE);
-        Zenith.HELPER.addShaped(SEASHELF, 3, 3, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Zenith.potionIngredient(Potions.WATER), "c:bookshelves", Items.PUFFERFISH, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS);
-        Ingredient maxSeashelf = Ingredient.of(INFUSED_SEASHELF);
-        Zenith.HELPER.addShaped(CRYSTAL_SEASHELF, 3, 3, null, Items.PRISMARINE_CRYSTALS, null, null, maxSeashelf, null, Items.PRISMARINE_CRYSTALS, null, Items.PRISMARINE_CRYSTALS);
-        Zenith.HELPER.addShaped(HEART_SEASHELF, 3, 3, null, Items.HEART_OF_THE_SEA, null, Items.PRISMARINE_SHARD, maxSeashelf, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD);
-        Zenith.HELPER.addShaped(ENDSHELF, 3, 3, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Items.DRAGON_BREATH, "c:bookshelves", Items.ENDER_PEARL, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS, Blocks.END_STONE_BRICKS);
-        Zenith.HELPER.addShaped(PEARL_ENDSHELF, 3, 3, Items.END_ROD, null, Items.END_ROD, Items.ENDER_PEARL, ENDSHELF, Items.ENDER_PEARL, Items.END_ROD, null, Items.END_ROD);
-        Zenith.HELPER.addShaped(DRACONIC_ENDSHELF, 3, 3, null, Items.DRAGON_HEAD, null, Items.ENDER_PEARL, ENDSHELF, Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL);
-        Zenith.HELPER.addShaped(BEESHELF, 3, 3, Items.HONEYCOMB, Items.BEEHIVE, Items.HONEYCOMB, Items.HONEY_BLOCK, "c:bookshelves", Items.HONEY_BLOCK, Items.HONEYCOMB, Items.BEEHIVE, Items.HONEYCOMB);
-        Zenith.HELPER.addShaped(MELONSHELF, 3, 3, Items.MELON, Items.MELON, Items.MELON, Items.GLISTERING_MELON_SLICE, "c:bookshelves", Items.GLISTERING_MELON_SLICE, Items.MELON, Items.MELON, Items.MELON);
-        Zenith.HELPER.addShaped(LIBRARY, 3, 3, Blocks.ENDER_CHEST, INFUSED_HELLSHELF, Blocks.ENDER_CHEST, INFUSED_HELLSHELF, Blocks.ENCHANTING_TABLE, INFUSED_HELLSHELF, Blocks.ENDER_CHEST, INFUSED_HELLSHELF, Blocks.ENDER_CHEST);
     }
 
 

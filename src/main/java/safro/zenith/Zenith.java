@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import safro.zenith.advancements.AdvancementTriggers;
 import safro.zenith.api.RunnableReloader;
 import safro.zenith.api.config.Configuration;
-import safro.zenith.api.data.RecipeHelper;
 import safro.zenith.api.event.ServerEvents;
 import safro.zenith.compat.PatchouliCompat;
 import safro.zenith.ench.EnchModule;
@@ -34,7 +33,6 @@ import java.io.File;
 public class Zenith implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("zenith");
 	public static final String MODID = "zenith";
-	public static final RecipeHelper HELPER = new RecipeHelper(Zenith.MODID);
 	public static final CreativeModeTab APOTH_GROUP = FabricItemGroupBuilder.build(new ResourceLocation(MODID, MODID), () -> new ItemStack(Items.ENCHANTING_TABLE));
 
 	public static File configDir;

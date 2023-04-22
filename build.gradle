@@ -21,6 +21,7 @@ repositories {
 	maven { url "https://ladysnake.jfrog.io/artifactory/mods" }
 	maven { url "https://cursemaven.com" }
 	maven { url "https://maven.bai.lol" }
+	maven { url "https://maven.siphalor.de" }
 }
 
 dependencies {
@@ -29,6 +30,8 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
+
+	modImplementation(include("de.siphalor:nbtcrafting-1.19:${project.nbt_crafting_version}"))
 	modImplementation(include("com.jamieswhiteshirt:reach-entity-attributes:${project.reach_lib_version}"))
 	modImplementation(include("io.github.fabricators_of_create.Porting-Lib:porting-lib:${project.port_lib_version}"))
 	modCompileOnly modRuntimeOnly("vazkii.patchouli:Patchouli:${project.patchouli_version}"),{

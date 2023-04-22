@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "fabric:load_conditions": [{
+        "condition": "zenith:module",
+        "module": "enchantment"
+    }],
+    "pattern": ["BBB", "BAB", "BBB"],
+    "key": {
+        "B": { "item": "minecraft:book" },
+        "A": { "item": "minecraft:anvil" }
+    },
+    "result": {
+        "item": "zenith:scrap_tome",
+        "count": 8
+    }
+}

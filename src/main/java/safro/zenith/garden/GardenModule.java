@@ -3,7 +3,6 @@ package safro.zenith.garden;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ComposterBlock;
 import safro.zenith.Zenith;
@@ -20,8 +19,6 @@ public class GardenModule {
 
     public static void init() {
         reload(false);
-
-        Zenith.HELPER.addShapeless(ENDER_LEAD, Items.ENDER_PEARL, Items.LEAD, Items.GOLD_INGOT);
 
         ComposterBlock.COMPOSTABLES.put(Blocks.CACTUS.asItem(), 0.5F);
         ComposterBlock.COMPOSTABLES.put(Blocks.SUGAR_CANE.asItem(), 0.5F);

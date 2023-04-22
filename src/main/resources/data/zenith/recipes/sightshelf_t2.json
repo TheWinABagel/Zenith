@@ -18,9 +18,12 @@
       "item": "minecraft:netherite_ingot"
     },
     "P": {
-      "type": "forge:nbt",
       "item": "minecraft:potion",
-      "nbt": "{\"Potion\": \"minecraft:long_night_vision\"}"
+      "data": {
+        "require": {
+          "Potion": "minecraft:long_night_vision"
+        }
+      }
     },
     "E": {
       "item": "zenith:sightshelf"

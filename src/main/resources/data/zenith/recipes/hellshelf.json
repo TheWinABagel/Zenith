@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "fabric:load_conditions": [{
+        "condition": "zenith:module",
+        "module": "enchantment"
+    }],
+    "pattern": ["BBB", "PSR", "BBB"],
+    "key": {
+        "B": { "item": "minecraft:nether_bricks" },
+        "S": { "tag": "c:bookshelves" },
+        "P": {
+            "item": "minecraft:potion",
+            "data": {
+                "require": {
+                    "Potion": "minecraft:regeneration"
+                }
+            }
+        },
+        "R": { "item": "minecraft:blaze_rod" }
+    },
+    "result": {
+        "item": "zenith:hellshelf",
+        "count": 1
+    }
+}

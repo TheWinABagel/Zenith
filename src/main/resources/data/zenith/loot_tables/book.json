@@ -1,5 +1,9 @@
 {
 	"type": "advancement_reward",
+	"fabric:load_conditions": [{
+		"condition": "fabric:all_mods_loaded",
+		"values": ["patchouli"]
+	}],
 	"pools": [{
 		"rolls": 1,
 		"entries": [{

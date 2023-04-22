@@ -16,7 +16,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import org.apache.logging.log4j.LogManager;
@@ -142,12 +141,6 @@ public class PotionModule {
         PotionBrewing.addMix(KNOWLEDGE, Items.EXPERIENCE_BOTTLE, STRONG_KNOWLEDGE);
 
         PotionBrewing.addMix(Potions.AWKWARD, LUCKY_FOOT, Potions.LUCK);
-
-        Ingredient fireRes = Zenith.potionIngredient(Potions.FIRE_RESISTANCE);
-        Ingredient abs = Zenith.potionIngredient(STRONG_ABSORPTION);
-        Ingredient res = Zenith.potionIngredient(RESISTANCE);
-        Ingredient regen = Zenith.potionIngredient(Potions.STRONG_REGENERATION);
-        Zenith.HELPER.addShaped(Items.ENCHANTED_GOLDEN_APPLE, 3, 3, fireRes, regen, fireRes, abs, Items.GOLDEN_APPLE, abs, res, abs, res);
     }
 
     public static void reload(boolean e) {
