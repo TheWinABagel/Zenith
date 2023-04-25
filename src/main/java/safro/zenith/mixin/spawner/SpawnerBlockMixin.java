@@ -8,12 +8,15 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -24,9 +27,11 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import safro.zenith.Zenith;
 import safro.zenith.advancements.AdvancementTriggers;
+import safro.zenith.spawn.SpawnerModule;
 import safro.zenith.spawn.modifiers.SpawnerModifier;
 import safro.zenith.spawn.modifiers.SpawnerStats;
 import safro.zenith.spawn.spawner.ZenithSpawnerBlockEntity;
@@ -38,6 +43,13 @@ public abstract class SpawnerBlockMixin extends BaseEntityBlock {
 
     public SpawnerBlockMixin(Properties properties) {
         super(properties);
+    }
+    @Inject(method = "spawnAfterBreak", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/BaseEntityBlock;spawnAfterBreak(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/item/ItemStack;Z)V", shift = At.Shift.AFTER), cancellable = true)
+    private void SilkNoXp(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, ItemStack itemStack, boolean dropXp, CallbackInfo ci) {
+        //SpawnerModule.LOGGER.error("TEST");
+        if(EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) <= SpawnerModule.spawnerSilkLevel) {
+            ci.cancel();
+        }
     }
 
     @Inject(method = "getCloneItemStack", at = @At("HEAD"), cancellable = true)

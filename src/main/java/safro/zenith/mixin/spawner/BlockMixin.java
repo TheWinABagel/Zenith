@@ -23,13 +23,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import safro.zenith.Zenith;
 import safro.zenith.spawn.SpawnerModule;
 
-@Mixin(SpawnerBlock.class)
-public class BlockMixin extends BaseEntityBlock {
+@Mixin(Block.class)
+public class BlockMixin  {
 
-    public BlockMixin(Properties properties) {
-        super(properties);
-    }
-/*
+
     @Inject(method = "setPlacedBy", at = @At("HEAD"))
     public void zenithSetPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack, CallbackInfo ci) {
         if (Zenith.enableSpawner && state.is(Blocks.SPAWNER)) {
@@ -52,10 +49,5 @@ public class BlockMixin extends BaseEntityBlock {
             }
         }
     }
-*/
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return null;
-    }
+
 }
