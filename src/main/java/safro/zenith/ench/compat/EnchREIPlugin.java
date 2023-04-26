@@ -52,8 +52,9 @@ public class EnchREIPlugin implements REIClientPlugin {
 
         registry.registerFiller(EnchantingRecipe.class, EnchantingDisplay::new);
         List<EnchantingRecipe> recipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(EnchModule.INFUSION_RECIPE);
-        recipes.sort((r1, r2) -> Float.compare(r1.getRequirements().eterna, r2.getRequirements().eterna));
-        recipes.forEach(registry::add);
+        recipes.stream()
+                .sorted((r1, r2) -> Float.compare(r1.getRequirements().eterna, r2.getRequirements().eterna))
+                .forEach(registry::add);
 
         REIUtil.addInfo(registry, EnchModule.LIBRARY, "info.zenith.library");
         REIUtil.addInfo(registry, Blocks.ENCHANTING_TABLE, "info.zenith.enchanting");
