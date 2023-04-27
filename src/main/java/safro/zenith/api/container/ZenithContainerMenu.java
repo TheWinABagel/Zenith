@@ -13,7 +13,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public abstract class ApotheosisContainerMenu extends AbstractContainerMenu implements QuickMoveHandler.IExposedContainer {
+public abstract class ZenithContainerMenu extends AbstractContainerMenu implements QuickMoveHandler.IExposedContainer {
     protected final Level level;
     protected final QuickMoveHandler mover = new QuickMoveHandler();
     protected final List<Int2IntFunction> syncTransformers = new ArrayList<>();
@@ -21,7 +21,7 @@ public abstract class ApotheosisContainerMenu extends AbstractContainerMenu impl
 
     protected int playerInvStart = -1, hotbarStart = -1;
 
-    protected ApotheosisContainerMenu(MenuType<?> type, int id, Inventory pInv) {
+    protected ZenithContainerMenu(MenuType<?> type, int id, Inventory pInv) {
         super(type, id);
         this.level = pInv.player.level;
     }

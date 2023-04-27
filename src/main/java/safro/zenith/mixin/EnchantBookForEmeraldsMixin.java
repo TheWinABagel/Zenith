@@ -10,7 +10,7 @@ import safro.zenith.ench.asm.EnchHooks;
 public class EnchantBookForEmeraldsMixin {
 
     @Redirect(method = "getOffer", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/Enchantment;isTreasureOnly()Z"))
-    private boolean apothIsTreasure(Enchantment instance) {
+    private boolean zenithIsTreasure(Enchantment instance) {
         return EnchHooks.isTreasureOnly(instance);
     }
 }

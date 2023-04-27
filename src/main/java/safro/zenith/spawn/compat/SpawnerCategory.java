@@ -24,7 +24,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 import safro.zenith.Zenith;
-import safro.zenith.compat.ApothCategory;
+import safro.zenith.compat.ZenithCategory;
 import safro.zenith.spawn.modifiers.SpawnerModifier;
 import safro.zenith.spawn.modifiers.StatModifier;
 
@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SpawnerCategory extends ApothCategory<SpawnerDisplay> {
+public class SpawnerCategory extends ZenithCategory<SpawnerDisplay> {
     public static final ResourceLocation TEXTURES = new ResourceLocation(Zenith.MODID, "textures/gui/spawner_jei.png");
 
     @Override

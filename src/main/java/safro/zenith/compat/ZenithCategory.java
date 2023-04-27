@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public abstract class ApothCategory<T extends Display> implements DisplayCategory<T> {
+public abstract class ZenithCategory<T extends Display> implements DisplayCategory<T> {
 
     @Override
     public List<Widget> setupDisplay(T display, Rectangle bounds) {

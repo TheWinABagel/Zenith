@@ -23,7 +23,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.level.block.Blocks;
 import safro.zenith.Zenith;
-import safro.zenith.compat.ApothCategory;
+import safro.zenith.compat.ZenithCategory;
 import safro.zenith.ench.EnchModule;
 import safro.zenith.ench.table.EnchantingRecipe;
 import safro.zenith.ench.table.EnchantingStatManager;
@@ -33,7 +33,7 @@ import java.util.List;
 
 import static safro.zenith.ench.table.EnchantingStatManager.*;
 
-public class EnchantingCategory extends ApothCategory<EnchantingDisplay> {
+public class EnchantingCategory extends ZenithCategory<EnchantingDisplay> {
     public static final ResourceLocation TEXTURES = new ResourceLocation(Zenith.MODID, "textures/gui/enchanting_jei.png");
 
     @Override

@@ -6,7 +6,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-public abstract class BlockEntityContainer<T extends BlockEntity> extends ApotheosisContainerMenu implements QuickMoveHandler.IExposedContainer {
+public abstract class BlockEntityContainer<T extends BlockEntity> extends ZenithContainerMenu implements QuickMoveHandler.IExposedContainer {
     protected final BlockPos pos;
     protected final T tile;
 

@@ -173,12 +173,7 @@ public class EnchModule {
     // Block Tags
     public static final TagKey<Block> UNBREAKABLE_ANVIL = registerBlockTag("unbreakable_anvil");
 
-    // Item Tags
-
-    public static final TagKey<Item> UNBREAK_ANVIL = registerItemTag("unbreakable_anvil");
-
     // Tiles
-    public static final BlockEntityType<AnvilBlockEntity> ANVIL_TILE = register("anvil", FabricBlockEntityTypeBuilder.create(AnvilBlockEntity::new, Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL).build(null));
     public static final BlockEntityType<EnchLibraryTile.BasicLibraryTile> LIBRARY_TILE = register("library", FabricBlockEntityTypeBuilder.create(EnchLibraryTile.BasicLibraryTile::new, LIBRARY).build(null));
     public static final BlockEntityType<EnchLibraryTile.EnderLibraryTile> ENDER_LIBRARY_TILE = register("ender_library", FabricBlockEntityTypeBuilder.create(EnchLibraryTile.EnderLibraryTile::new, ENDER_LIBRARY).build(null));
 

@@ -15,6 +15,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import safro.zenith.Zenith;
 import safro.zenith.ench.EnchModule;
 
 
@@ -24,7 +25,7 @@ public class AnvilBlockEntity extends BlockEntity {
     protected final Map<Enchantment, Integer> ench = new HashMap<>();
 
     public AnvilBlockEntity(BlockPos pos, BlockState state) {
-        super(EnchModule.ANVIL_TILE, pos, state);
+        super(Zenith.ANVIL_TILE, pos, state);
     }
 
 

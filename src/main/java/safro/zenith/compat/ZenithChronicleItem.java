@@ -12,9 +12,9 @@ import net.minecraft.world.level.Level;
 import safro.zenith.Zenith;
 import vazkii.patchouli.api.PatchouliAPI;
 
-public class ApothChronicleItem extends Item {
+public class ZenithChronicleItem extends Item {
 
-    public ApothChronicleItem(Properties settings) {
+    public ZenithChronicleItem(Properties settings) {
         super(settings);
     }
 

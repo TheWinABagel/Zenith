@@ -4,6 +4,7 @@ import io.github.fabricators_of_create.porting_lib.crafting.CraftingHelper;
 import io.github.fabricators_of_create.porting_lib.crafting.NBTIngredient;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
@@ -17,6 +18,9 @@ import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import safro.zenith.advancements.AdvancementTriggers;
@@ -26,6 +30,7 @@ import safro.zenith.api.data.RecipeHelper;
 import safro.zenith.api.event.ServerEvents;
 import safro.zenith.compat.PatchouliCompat;
 import safro.zenith.ench.EnchModule;
+import safro.zenith.ench.anvil.AnvilBlockEntity;
 import safro.zenith.garden.GardenModule;
 import safro.zenith.network.NetworkUtil;
 import safro.zenith.potion.PotionModule;
@@ -50,12 +55,16 @@ public class Zenith implements ModInitializer {
 
 	public static final TagKey<Item> IRON_BLOCKS = registerItem(new ResourceLocation("c", "iron_blocks"));
 
+	public static final BlockEntityType<AnvilBlockEntity> ANVIL_TILE = registerBlockEntity("anvil", FabricBlockEntityTypeBuilder.create(AnvilBlockEntity::new, Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL).build(null));
 	public static TagKey<Item> registerItem(ResourceLocation id) {
 		return TagKey.create(Registry.ITEM_REGISTRY, id);
 	}
 
 	public static TagKey<Block> registerBlock(ResourceLocation id) {
 		return TagKey.create(Registry.BLOCK_REGISTRY, id);
+	}
+	private static<T extends BlockEntity> BlockEntityType<T> registerBlockEntity(String name, BlockEntityType<T> be) {
+		return Registry.register(Registry.BLOCK_ENTITY_TYPE, new ResourceLocation(Zenith.MODID, name), be);
 	}
 
 	public static File configDir;
@@ -108,6 +117,7 @@ public class Zenith implements ModInitializer {
 		addReloads();
 
 		CraftingHelper.register(new ResourceLocation("minecraft", "item"), CachedIngredient.VanillaSerializer.INSTANCE);
+
 	}
 
 	public static Ingredient potionIngredient(Potion type) {

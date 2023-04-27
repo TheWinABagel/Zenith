@@ -1,9 +1,12 @@
 package safro.zenith.ench;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -21,7 +24,6 @@ import safro.zenith.ench.table.EnchantingStatManager;
 
 public class EnchModuleClient{
     static BlockHitResult res = BlockHitResult.miss(Vec3.ZERO, Direction.NORTH, BlockPos.ZERO);
-
 
     public static void tooltips() {
         ItemTooltipCallback.EVENT.register((stack, context, lines) -> {
@@ -76,9 +78,8 @@ public class EnchModuleClient{
     }
 
     public static void init() {
-        ScreenRegistry.register(EnchModule.LIBRARY_CONTAINER, EnchLibraryScreen::new);
-        ScreenRegistry.register(EnchModule.ENCHANTING_TABLE_MENU, ApothEnchantScreen::new);
+        MenuScreens.register(EnchModule.LIBRARY_CONTAINER, EnchLibraryScreen::new);
+        MenuScreens.register(EnchModule.ENCHANTING_TABLE_MENU, ApothEnchantScreen::new);
         tooltips();
-
     }
 }

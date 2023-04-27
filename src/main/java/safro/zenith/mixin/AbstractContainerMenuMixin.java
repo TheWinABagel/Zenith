@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import safro.zenith.api.container.ApotheosisContainerMenu;
+import safro.zenith.api.container.ZenithContainerMenu;
 
 @Mixin(AbstractContainerMenu.class)
 public class AbstractContainerMenuMixin {
@@ -24,7 +24,7 @@ public class AbstractContainerMenuMixin {
     @Inject(method = "synchronizeDataSlotToRemote", at = @At(value = "HEAD"), cancellable = true)
     private void apothDataSync(int i, int j, CallbackInfo ci) {
         AbstractContainerMenu menu = (AbstractContainerMenu) (Object) this;
-        if (menu instanceof ApotheosisContainerMenu am) {
+        if (menu instanceof ZenithContainerMenu am) {
             if (!this.suppressRemoteUpdates) {
                 int k = this.remoteDataSlots.getInt(i);
                 if (k != j) {

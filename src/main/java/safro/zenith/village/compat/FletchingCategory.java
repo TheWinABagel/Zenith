@@ -11,12 +11,12 @@ import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
-import safro.zenith.compat.ApothCategory;
+import safro.zenith.compat.ZenithCategory;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class FletchingCategory extends ApothCategory<FletchingDisplay> {
+public class FletchingCategory extends ZenithCategory<FletchingDisplay> {
 
 
     @Override

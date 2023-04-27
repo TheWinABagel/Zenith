@@ -5,6 +5,7 @@ import safro.zenith.api.event.ClientEvents;
 import safro.zenith.ench.EnchModuleClient;
 import safro.zenith.network.NetworkUtil;
 import safro.zenith.potion.PotionModuleClient;
+import safro.zenith.spawn.SpawnerModuleClient;
 import safro.zenith.village.VillageModuleClient;
 
 public class ZenithClient implements ClientModInitializer {
@@ -17,5 +18,6 @@ public class ZenithClient implements ClientModInitializer {
         if (Zenith.enableEnch) EnchModuleClient.init();
         if (Zenith.enablePotion) PotionModuleClient.init();
         if (Zenith.enableVillage) VillageModuleClient.init();
+        if (Zenith.enableSpawner) SpawnerModuleClient.init();
     }
 }
