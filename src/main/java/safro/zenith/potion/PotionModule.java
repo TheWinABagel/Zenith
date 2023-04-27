@@ -3,6 +3,7 @@ package safro.zenith.potion;
 import dev.emi.trinkets.api.TrinketsApi;
 import io.github.fabricators_of_create.porting_lib.event.common.LivingEntityEvents;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.ResourceLocationException;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -25,7 +26,6 @@ import safro.zenith.Zenith;
 import safro.zenith.api.config.Configuration;
 import safro.zenith.potion.potions.KnowledgeEffect;
 import safro.zenith.potion.potions.SunderingEffect;
-import safro.zenith.util.ApotheosisUtil;
 
 import java.io.File;
 
@@ -34,6 +34,7 @@ public class PotionModule {
     public static final ResourceLocation POTION_TEX = new ResourceLocation(Zenith.MODID, "textures/potions.png");
 
     static int knowledgeMult = 4;
+    static boolean charmsInTrinketsOnly = false;
 
     // Items
     public static final Item LUCKY_FOOT = register("lucky_foot", new LuckyFootItem());
@@ -102,7 +103,7 @@ public class PotionModule {
             LivingEntityEvents.TICK.register(entity -> {
                 TrinketsApi.getTrinketComponent(entity).ifPresent(c -> c.forEach((slotReference, stack) -> {
                     if (stack.getItem() instanceof PotionCharmItem charm) {
-                        charm.inventoryTick(stack, entity.level, entity, slotReference.index(), false);
+                        charm.charmLogic(stack, entity.level, entity, slotReference.index(), false);
                     }
                 }));
             });
@@ -152,7 +153,20 @@ public class PotionModule {
 
     public static void reload(boolean e) {
         Configuration config = new Configuration(new File(Zenith.configDir, "potion.cfg"));
-        knowledgeMult = config.getInt("Knowledge XP Multiplier", "general", knowledgeMult, 1, Integer.MAX_VALUE, "The strength of Ancient Knowledge.  This multiplier determines how much additional xp is granted.");
+        config.setTitle("Zenith Potion Module Configuration");
+        knowledgeMult = config.getInt("Knowledge XP Multiplier", "general", knowledgeMult, 1, Integer.MAX_VALUE, "The strength of Ancient Knowledge.  This multiplier determines how much additional xp is granted.\nServer-authoritative.");
+        charmsInTrinketsOnly = config.getBoolean("Restrict Charms to Trinkets", "general", charmsInTrinketsOnly, "If Potion Charms will only work when in a curios slot, instead of in the inventory.");
+        String[] defExt = new String[] { Registry.MOB_EFFECT.getKey(MobEffects.NIGHT_VISION).toString(), Registry.MOB_EFFECT.getKey(MobEffects.HEALTH_BOOST).toString() };
+        String[] names = config.getStringList("Extended Potion Charms", "general", defExt, "A list of effects that, when as charms, will be applied and reapplied at a longer threshold to avoid issues at low durations, like night vision.\nServer-authoritative.");
+        PotionCharmItem.EXTENDED_POTIONS.clear();
+        for (String s : names) {
+            try {
+                PotionCharmItem.EXTENDED_POTIONS.add(new ResourceLocation(s));
+            } catch (ResourceLocationException ex) {
+                LOG.error("Invalid extended potion charm entry {} will be ignored.", s);
+            }
+        }
+
         if (!e && config.hasChanged()) config.save();
     }
 

@@ -31,6 +31,8 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
         @ModifyConstant(method = "createResult", constant = @Constant(intValue = 40, ordinal = 2))
         public int zenith_removeLevelCap(int old) {
+            if (!Zenith.enableEnch)
+                return old;
             return Integer.MAX_VALUE;
         }
 
@@ -57,6 +59,8 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
         @Redirect(method = "createResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/Enchantment;getMaxLevel()I"))
         private int zenithModifyMaxLevel(Enchantment enchantment) {
+            if (!Zenith.enableEnch)
+                return enchantment.getMaxLevel();
             return EnchHooks.getMaxLevel(enchantment);
         }
     }

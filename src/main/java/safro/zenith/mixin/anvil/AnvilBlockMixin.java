@@ -61,7 +61,7 @@ import static net.minecraft.world.level.block.AnvilBlock.FACING;
 
         @Override
         public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-            return new AnvilBlockEntity(pPos, pState);
+                return new AnvilBlockEntity(pPos, pState);
         }
 
         @Override

@@ -15,6 +15,5 @@ public class PotionREIPlugin implements REIClientPlugin {
     @Override
     public void registerSubsets(SubsetsRegistry registry) {
         if (!Zenith.enablePotion) return;
-
     }
 }

@@ -764,6 +764,7 @@
 	"item.zenith.potion_charm.desc3": "Source: %s",
 	"item.zenith.potion_charm.enabled": "Enabled",
 	"item.zenith.potion_charm.disabled": "Disabled",
+		"item.zenith.potion_charm.trinkets_only": "Only works in a Trinkets slot",
 	
     "comment_id": "/Anvil Module",
     "info.zenith.anvil": "Can be enchanted.",

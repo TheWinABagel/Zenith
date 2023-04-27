@@ -37,20 +37,22 @@ public class EnchJadePlugin implements IBlockComponentProvider, IWailaPlugin, IS
 
     @Override
     public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
-        if (accessor.getBlock() instanceof AnvilBlock) {
+        if ((accessor.getBlock() instanceof AnvilBlock) && Zenith.enableEnch) {
             CompoundTag tag = accessor.getServerData();
             Map<Enchantment, Integer> enchants = EnchantmentHelper.deserializeEnchantments(tag.getList("enchantments", Tag.TAG_COMPOUND));
             for (Map.Entry<Enchantment, Integer> e : enchants.entrySet()) {
                 tooltip.add(e.getKey().getFullname(e.getValue()));
             }
         }
+        if (Zenith.enableEnch)
         CommonTooltipUtil.appendBlockStats(accessor.getLevel(), accessor.getBlockState(), tooltip::add);
-        if (accessor.getBlock() == Blocks.ENCHANTING_TABLE) CommonTooltipUtil.appendTableStats(accessor.getLevel(), accessor.getPosition(), tooltip::add);
+        if ((accessor.getBlock() == Blocks.ENCHANTING_TABLE) && (Zenith.enableEnch))
+            CommonTooltipUtil.appendTableStats(accessor.getLevel(), accessor.getPosition(), tooltip::add);
     }
 
     @Override
     public void appendServerData(CompoundTag tag, ServerPlayer player, Level world, BlockEntity te, boolean something) {
-        if (te instanceof AnvilBlockEntity) {
+        if ((te instanceof AnvilBlockEntity) && (Zenith.enableEnch)) {
             ItemStack stack = new ItemStack(Items.ANVIL);
             EnchantmentHelper.setEnchantments(((AnvilBlockEntity) te).getEnchantments(), stack);
             tag.put("enchantments", stack.getEnchantmentTags());
