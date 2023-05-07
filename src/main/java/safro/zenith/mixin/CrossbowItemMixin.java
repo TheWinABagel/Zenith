@@ -22,21 +22,21 @@ import safro.zenith.ench.enchantments.masterwork.CrescendoEnchant;
 public class CrossbowItemMixin {
 
     @Inject(method = "use", at = @At(value = "RETURN", ordinal = 0))
-    public void apoth_addCharges(Level pLevel, Player pPlayer, InteractionHand pHand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> ci) {
+    public void zenithAddCharges(Level pLevel, Player pPlayer, InteractionHand pHand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> ci) {
         if (Zenith.enableEnch) {
             CrescendoEnchant.onArrowFired(pPlayer.getItemInHand(pHand));
         }
     }
 
     @Inject(method = "use", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/CrossbowItem;performShooting(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/item/ItemStack;FF)V"))
-    public void apoth_preFired(Level pLevel, Player pPlayer, InteractionHand pHand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> ci) {
+    public void zenithPreFired(Level pLevel, Player pPlayer, InteractionHand pHand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> ci) {
         if (Zenith.enableEnch) {
             CrescendoEnchant.preArrowFired(pPlayer.getItemInHand(pHand));
         }
     }
 
     @Inject(method = "shootProjectile", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/world/item/CrossbowItem;getArrow(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/projectile/AbstractArrow;"), locals = LocalCapture.CAPTURE_FAILSOFT)
-    private static void apoth_markArrows(Level pLevel, LivingEntity pShooter, InteractionHand pHand, ItemStack pCrossbowStack, ItemStack pAmmoStack, float pSoundPitch, boolean pIsCreativeMode, float pVelocity, float pInaccuracy, float pProjectileAngle, CallbackInfo ci, boolean flag, Projectile arrow) {
+    private static void zenithMarkArrows(Level pLevel, LivingEntity pShooter, InteractionHand pHand, ItemStack pCrossbowStack, ItemStack pAmmoStack, float pSoundPitch, boolean pIsCreativeMode, float pVelocity, float pInaccuracy, float pProjectileAngle, CallbackInfo ci, boolean flag, Projectile arrow) {
         if (Zenith.enableEnch) {
             CrescendoEnchant.markGeneratedArrows(arrow, pCrossbowStack);
         }

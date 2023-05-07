@@ -19,10 +19,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import safro.zenith.Zenith;
-import safro.zenith.ench.table.ApothEnchantContainer;
+import safro.zenith.ench.table.ZenithEnchantContainer;
 import safro.zenith.ench.table.EnchantingStatManager;
-
-import java.util.Random;
 
 /**
  * Enchantment Tables were re-written with mixins instead of replacing the block entirely to improve compat
@@ -32,12 +30,12 @@ import java.util.Random;
 public class EnchantmentTableBlockMixin {
 
     @Inject(method = "getMenuProvider", at = @At("HEAD"), cancellable = true)
-    private void apothEnchMenu(BlockState state, Level world, BlockPos pos, CallbackInfoReturnable<MenuProvider> cir) {
+    private void zenithEnchMenu(BlockState state, Level world, BlockPos pos, CallbackInfoReturnable<MenuProvider> cir) {
         if (Zenith.enableEnch) {
             BlockEntity tileentity = world.getBlockEntity(pos);
             if (tileentity instanceof EnchantmentTableBlockEntity) {
                 Component itextcomponent = ((Nameable) tileentity).getDisplayName();
-                cir.setReturnValue(new SimpleMenuProvider((id, inventory, player) -> new ApothEnchantContainer(id, inventory, ContainerLevelAccess.create(world, pos)), itextcomponent));
+                cir.setReturnValue(new SimpleMenuProvider((id, inventory, player) -> new ZenithEnchantContainer(id, inventory, ContainerLevelAccess.create(world, pos)), itextcomponent));
             } else {
                 cir.setReturnValue(null);
             }
@@ -45,7 +43,7 @@ public class EnchantmentTableBlockMixin {
     }
 
     @Inject(method = "animateTick", at = @At("HEAD"), cancellable = true)
-    private void apothEnchAnimate(BlockState blockState, Level level, BlockPos pos, RandomSource rand, CallbackInfo ci) {
+    private void zenithEnchAnimate(BlockState blockState, Level level, BlockPos pos, RandomSource rand, CallbackInfo ci) {
         if (Zenith.enableEnch) {
             for (int i = -2; i <= 2; ++i) {
                 for (int j = -2; j <= 2; ++j) {

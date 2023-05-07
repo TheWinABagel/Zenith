@@ -26,11 +26,11 @@ import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import safro.zenith.Zenith;
 import safro.zenith.network.ReloadListenerPacket;
-import safro.zenith.util.ApotheosisUtil;
+import safro.zenith.util.ZenithUtil;
 
-public abstract class ApothJsonReloadListener<V extends ApothJsonReloadListener.TypeKeyed<V>> extends SimpleJsonResourceReloadListener implements IdentifiableResourceReloadListener {
+public abstract class ZenithJsonReloadListener<V extends ZenithJsonReloadListener.TypeKeyed<V>> extends SimpleJsonResourceReloadListener implements IdentifiableResourceReloadListener {
 
-    public static final Map<String, ApothJsonReloadListener<?>> SYNC_REGISTRY = new HashMap<>();
+    public static final Map<String, ZenithJsonReloadListener<?>> SYNC_REGISTRY = new HashMap<>();
 
     public static final ResourceLocation DEFAULT = new ResourceLocation("default");
 
@@ -44,7 +44,7 @@ public abstract class ApothJsonReloadListener<V extends ApothJsonReloadListener.
 
     private final Map<ResourceLocation, V> staged = new HashMap<>();
 
-    public ApothJsonReloadListener(Logger logger, String path, boolean synced, boolean subtypes) {
+    public ZenithJsonReloadListener(Logger logger, String path, boolean synced, boolean subtypes) {
         super(new GsonBuilder().setLenient().create(), path);
         this.logger = logger;
         this.path = path;
@@ -193,7 +193,7 @@ public abstract class ApothJsonReloadListener<V extends ApothJsonReloadListener.
     }
 
     public static boolean checkConditions(JsonElement e, ResourceLocation id, String type, Logger logger) {
-        if (e.isJsonObject() && !ApotheosisUtil.processConditions(e.getAsJsonObject(), "conditions")) {
+        if (e.isJsonObject() && !ZenithUtil.processConditions(e.getAsJsonObject(), "conditions")) {
             logger.debug("Skipping loading {} item with id {} as it's conditions were not met", type, id);
             return false;
         }
@@ -276,7 +276,7 @@ public abstract class ApothJsonReloadListener<V extends ApothJsonReloadListener.
     public static <V extends TypeKeyed<V>> void endSync(String path) {
         SYNC_REGISTRY.computeIfPresent(path, (k, v) -> {
             v.beginReload();
-            v.staged.forEach(((ApothJsonReloadListener) v)::register);
+            v.staged.forEach(((ZenithJsonReloadListener) v)::register);
             v.onReload();
             return v;
         });

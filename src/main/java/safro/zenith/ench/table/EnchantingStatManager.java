@@ -12,14 +12,14 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import safro.zenith.Zenith;
-import safro.zenith.api.json.ApothJsonReloadListener;
+import safro.zenith.api.json.ZenithJsonReloadListener;
 import safro.zenith.api.json.SerializerBuilder;
 import safro.zenith.ench.EnchModule;
 import safro.zenith.ench.objects.IEnchantingBlock;
 
 import java.util.*;
 
-public class EnchantingStatManager extends ApothJsonReloadListener<EnchantingStatManager.BlockStats> {
+public class EnchantingStatManager extends ZenithJsonReloadListener<EnchantingStatManager.BlockStats> {
     public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     public static final EnchantingStatManager INSTANCE = new EnchantingStatManager();
     private final Map<Block, Stats> statsPerBlock = new HashMap<>();

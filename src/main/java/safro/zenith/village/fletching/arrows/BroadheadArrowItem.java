@@ -15,10 +15,10 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import safro.zenith.Zenith;
 
-public class BroadheadArrowItem extends ArrowItem implements IApothArrowItem {
+public class BroadheadArrowItem extends ArrowItem implements IZenithArrowItem {
 
 	public BroadheadArrowItem() {
-		super(new Item.Properties().tab(Zenith.APOTH_GROUP));
+		super(new Item.Properties().tab(Zenith.ZENITH_GROUP));
 	}
 
 	@Override

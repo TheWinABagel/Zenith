@@ -22,7 +22,7 @@ public class AbstractContainerMenuMixin {
     @Shadow @Nullable private ContainerSynchronizer synchronizer;
 
     @Inject(method = "synchronizeDataSlotToRemote", at = @At(value = "HEAD"), cancellable = true)
-    private void apothDataSync(int i, int j, CallbackInfo ci) {
+    private void zenithDataSync(int i, int j, CallbackInfo ci) {
         AbstractContainerMenu menu = (AbstractContainerMenu) (Object) this;
         if (menu instanceof ZenithContainerMenu am) {
             if (!this.suppressRemoteUpdates) {

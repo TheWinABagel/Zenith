@@ -16,7 +16,7 @@ import safro.zenith.Zenith;
 public class BlockBehaviourMixin {
 
     @Inject(method = "neighborChanged", at = @At("HEAD"), cancellable = true)
-    private void apothSugarCaneNeighbor(BlockState state, Level world, BlockPos pos, Block block, BlockPos origin, boolean isMoving, CallbackInfo ci) {
+    private void zenithSugarCaneNeighbor(BlockState state, Level world, BlockPos pos, Block block, BlockPos origin, boolean isMoving, CallbackInfo ci) {
         if (Zenith.enableGarden && state.is(Blocks.SUGAR_CANE)) {
             if (pos.getY() != origin.getY()) {
                 return;

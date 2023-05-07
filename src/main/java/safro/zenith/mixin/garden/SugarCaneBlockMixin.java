@@ -23,7 +23,7 @@ public class SugarCaneBlockMixin {
     @Shadow @Final public static IntegerProperty AGE;
 
     @Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
-    private void apothRandomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random, CallbackInfo ci) {
+    private void zenithRandomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random, CallbackInfo ci) {
         SugarCaneBlock s = (SugarCaneBlock) (Object) this;
         if (Zenith.enableGarden) {
             if (worldIn.isEmptyBlock(pos.above())) {

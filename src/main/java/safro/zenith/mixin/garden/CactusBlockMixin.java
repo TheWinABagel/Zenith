@@ -23,7 +23,7 @@ public class CactusBlockMixin {
     @Shadow @Final public static IntegerProperty AGE;
 
     @Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
-    private void apothRandomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random, CallbackInfo ci) {
+    private void zenithRandomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random, CallbackInfo ci) {
         CactusBlock cactus = (CactusBlock) (Object) this;
         if (Zenith.enableGarden) {
             BlockPos blockpos = pos.above();

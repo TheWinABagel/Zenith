@@ -41,7 +41,7 @@ public abstract class LivingEntityMixin {
     public abstract MobEffectInstance getEffect(MobEffect ef);
 
     @Inject(method = "updatingUsingItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;updateUsingItem(Lnet/minecraft/world/item/ItemStack;)V", shift = At.Shift.BEFORE))
-    private void apotheosisUseTickEvent(CallbackInfo ci) {
+    private void zenithUseTickEvent(CallbackInfo ci) {
         LivingEntity entity = (LivingEntity) (Object) this;
 //        if (Zenith.enableAdventure) {
 //            if (!useItem.isEmpty()) {
@@ -51,7 +51,7 @@ public abstract class LivingEntityMixin {
     }
 
     @Inject(method = "heal", at = @At("HEAD"), cancellable = true)
-    private void apotheosisHealEvent(float f, CallbackInfo ci) {
+    private void zenithHealEvent(float f, CallbackInfo ci) {
         LivingEntity entity = (LivingEntity) (Object) this;
         if (Zenith.enableEnch) {
             float a = LifeMendingEnchant.lifeMend(entity, f);
@@ -66,7 +66,7 @@ public abstract class LivingEntityMixin {
     }
 
     @Inject(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;hurtCurrentlyUsedShield(F)V", shift = At.Shift.BEFORE))
-    private void apotheosisShieldBlock(DamageSource damageSource, float f, CallbackInfoReturnable<Boolean> cir) {
+    private void zenithShieldBlock(DamageSource damageSource, float f, CallbackInfoReturnable<Boolean> cir) {
         LivingEntity entity = (LivingEntity) (Object) this;
         if (Zenith.enableEnch) {
             ReflectiveEnchant.reflect(entity, damageSource, f);
@@ -75,7 +75,7 @@ public abstract class LivingEntityMixin {
 
     // TODO: Simplify to better inject
     @Inject(method = "getDamageAfterMagicAbsorb", at = @At("HEAD"), cancellable = true)
-    public void apoGetDamageAfterMagicAbsorb(DamageSource source, float damage, CallbackInfoReturnable<Float> ci) {
+    public void zenithGetDamageAfterMagicAbsorb(DamageSource source, float damage, CallbackInfoReturnable<Float> ci) {
         if (Zenith.enablePotion) {
             if (source.isBypassMagic()) {
                 ci.setReturnValue(damage);

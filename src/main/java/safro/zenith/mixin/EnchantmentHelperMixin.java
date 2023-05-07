@@ -18,12 +18,12 @@ import java.util.Random;
 public class EnchantmentHelperMixin {
 
     @Inject(method = "getAvailableEnchantmentResults", at = @At("HEAD"), cancellable = true)
-    private static void apothGetAvailableEnchantmentResults(int power, ItemStack stack, boolean allowTreasure, CallbackInfoReturnable<List<EnchantmentInstance>> cir) {
+    private static void zenithGetAvailableEnchantmentResults(int power, ItemStack stack, boolean allowTreasure, CallbackInfoReturnable<List<EnchantmentInstance>> cir) {
         if (Zenith.enableEnch) cir.setReturnValue(RealEnchantmentHelper.getAvailableEnchantmentResults(power, stack, allowTreasure));
     }
 
     @Inject(method = "selectEnchantment", at = @At("HEAD"), cancellable = true)
-    private static void apothSelectEnchantment(RandomSource randomSource, ItemStack itemStack, int i, boolean bl, CallbackInfoReturnable<List<EnchantmentInstance>> cir) {
+    private static void zenithSelectEnchantment(RandomSource randomSource, ItemStack itemStack, int i, boolean bl, CallbackInfoReturnable<List<EnchantmentInstance>> cir) {
         if (Zenith.enableEnch) cir.setReturnValue(RealEnchantmentHelper.selectEnchantment((RandomSource) randomSource, itemStack, i, 0, 0, 0, bl));
     }
 

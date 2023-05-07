@@ -4,9 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import dev.emi.trinkets.api.TrinketInventory;
-import dev.emi.trinkets.api.TrinketItem;
-import dev.emi.trinkets.api.TrinketsApi;
 import io.github.fabricators_of_create.porting_lib.item.DamageableItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -43,7 +40,7 @@ public class PotionCharmItem extends Item implements TableApplicableItem, Damage
 
 	public static final Set<ResourceLocation> EXTENDED_POTIONS = new HashSet<>();
 	public PotionCharmItem() {
-		super(new Item.Properties().stacksTo(1).durability(192).tab(Zenith.APOTH_GROUP));
+		super(new Item.Properties().stacksTo(1).durability(192).tab(Zenith.ZENITH_GROUP));
 	}
 
 	@Override

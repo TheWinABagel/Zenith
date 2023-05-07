@@ -26,7 +26,7 @@ import safro.zenith.api.LeftClickItem;
 public class EnderLeadItem extends Item implements LeftClickItem {
 
     public EnderLeadItem() {
-        super(new Item.Properties().stacksTo(1).durability(15).tab(Zenith.APOTH_GROUP));
+        super(new Item.Properties().stacksTo(1).durability(15).tab(Zenith.ZENITH_GROUP));
     }
 
     @Override

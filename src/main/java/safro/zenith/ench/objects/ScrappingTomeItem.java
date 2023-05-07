@@ -29,7 +29,7 @@ public class ScrappingTomeItem extends BookItem {
 	static Random rand = new Random();
 
 	public ScrappingTomeItem() {
-		super(new Item.Properties().tab(Zenith.APOTH_GROUP));
+		super(new Item.Properties().tab(Zenith.ZENITH_GROUP));
 	}
 
 	@Override

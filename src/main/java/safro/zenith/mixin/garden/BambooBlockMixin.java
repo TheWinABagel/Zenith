@@ -39,7 +39,7 @@ public abstract class BambooBlockMixin {
     @Shadow protected abstract void growBamboo(BlockState blockState, Level level, BlockPos blockPos, RandomSource randomSource, int i);
 
     @Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
-    private void apothRandomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random, CallbackInfo ci) {
+    private void zenithRandomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random, CallbackInfo ci) {
         if (Zenith.enableGarden) {
             if (state.getValue(STAGE) == 0) {
                 if (random.nextInt(3) == 0 && worldIn.isEmptyBlock(pos.above()) && worldIn.getRawBrightness(pos.above(), 0) >= 9) {
@@ -54,7 +54,7 @@ public abstract class BambooBlockMixin {
     }
 
     @Inject(method = "isValidBonemealTarget", at = @At("HEAD"), cancellable = true)
-    private void apothIsValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient, CallbackInfoReturnable<Boolean> cir) {
+    private void zenithIsValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient, CallbackInfoReturnable<Boolean> cir) {
         if (Zenith.enableGarden) {
             int i = this.getHeightAboveUpToMax(worldIn, pos);
             int j = this.getHeightBelowUpToMax(worldIn, pos);
@@ -63,7 +63,7 @@ public abstract class BambooBlockMixin {
     }
 
     @Inject(method = "performBonemeal", at = @At("HEAD"), cancellable = true)
-    private void apothPerformBonemeal(ServerLevel worldIn, RandomSource rand, BlockPos pos, BlockState blockState, CallbackInfo ci) {
+    private void zenithPerformBonemeal(ServerLevel worldIn, RandomSource rand, BlockPos pos, BlockState blockState, CallbackInfo ci) {
         if (Zenith.enableGarden) {
             int bambooAbove = this.getHeightAboveUpToMax(worldIn, pos);
             int bambooBelow = this.getHeightBelowUpToMax(worldIn, pos);
@@ -86,7 +86,7 @@ public abstract class BambooBlockMixin {
     }
 
     @Inject(method = "getHeightAboveUpToMax", at = @At("HEAD"), cancellable = true)
-    private void apothGetHeightAbove(BlockGetter worldIn, BlockPos pos, CallbackInfoReturnable<Integer> cir) {
+    private void zenithGetHeightAbove(BlockGetter worldIn, BlockPos pos, CallbackInfoReturnable<Integer> cir) {
         if (Zenith.enableGarden) {
             int i;
             for (i = 0; i < GardenModule.maxBambooHeight && worldIn.getBlockState(pos.above(i + 1)).getBlock() == Blocks.BAMBOO; ++i) {
@@ -97,7 +97,7 @@ public abstract class BambooBlockMixin {
     }
 
     @Inject(method = "growBamboo", at = @At("HEAD"), cancellable = true)
-    private void apothGrow(BlockState blockStateIn, Level worldIn, BlockPos posIn, RandomSource rand, int size, CallbackInfo ci) {
+    private void zenithGrow(BlockState blockStateIn, Level worldIn, BlockPos posIn, RandomSource rand, int size, CallbackInfo ci) {
         BambooBlock b = (BambooBlock) (Object) this;
         if (Zenith.enableGarden) {
             BlockState blockstate = worldIn.getBlockState(posIn.below());

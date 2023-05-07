@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import safro.zenith.api.enchant.TableApplicableEnchant;
 import safro.zenith.api.event.TaskQueue;
 import safro.zenith.ench.EnchModule;
-import safro.zenith.util.ApotheosisUtil;
+import safro.zenith.util.ZenithUtil;
 import safro.zenith.util.BlockUtil;
 
 import java.util.ArrayDeque;
@@ -62,7 +62,7 @@ public class ChainsawEnchant extends Enchantment implements TableApplicableEncha
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack) {
-		return ApotheosisUtil.canApplyItem(this, stack);
+		return ZenithUtil.canApplyItem(this, stack);
 	}
 
 	public static void chainsaw(Player player, BlockPos pos, BlockState state) {

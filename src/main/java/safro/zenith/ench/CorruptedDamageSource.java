@@ -6,7 +6,7 @@ public class CorruptedDamageSource extends DamageSource {
     public static final DamageSource DEFAULT = new CorruptedDamageSource().bypassArmor().bypassMagic();
 
     public CorruptedDamageSource() {
-        super("apoth_corrupted");
+        super("zenith_corrupted");
     }
 
 }

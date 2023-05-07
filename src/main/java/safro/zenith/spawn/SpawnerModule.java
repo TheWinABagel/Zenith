@@ -29,7 +29,7 @@ import safro.zenith.api.config.Configuration;
 import safro.zenith.spawn.enchantment.CapturingEnchant;
 import safro.zenith.spawn.modifiers.SpawnerModifier;
 import safro.zenith.spawn.spawner.ZenithSpawnerBlockEntity;
-import safro.zenith.util.ApotheosisUtil;
+import safro.zenith.util.ZenithUtil;
 
 import java.io.File;
 import java.util.HashSet;
@@ -45,7 +45,7 @@ public class SpawnerModule {
 
     public static final Enchantment CAPTURING = register("capturing", new CapturingEnchant());
 
-    public static final RecipeType<SpawnerModifier> MODIFIER = ApotheosisUtil.makeRecipeType("zenith:spawner_modifier");
+    public static final RecipeType<SpawnerModifier> MODIFIER = ZenithUtil.makeRecipeType("zenith:spawner_modifier");
     public static final RecipeSerializer<SpawnerModifier> SPAWNER_MODIFIER = register("spawner_modifier", SpawnerModifier.SERIALIZER);
 
 

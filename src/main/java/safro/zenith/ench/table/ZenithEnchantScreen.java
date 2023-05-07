@@ -30,11 +30,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import safro.zenith.Zenith;
-import safro.zenith.util.ApotheosisUtil;
+import safro.zenith.util.ZenithUtil;
 
 import java.util.*;
 
-public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantContainer> {
+public class ZenithEnchantScreen extends AbstractContainerScreen<ZenithEnchantContainer> {
 
     private static final ResourceLocation ENCHANTMENT_TABLE_GUI_TEXTURE = new ResourceLocation(Zenith.MODID, "textures/gui/enchanting_table.png");
     private static final ResourceLocation ENCHANTMENT_TABLE_BOOK_TEXTURE = new ResourceLocation("textures/entity/enchanting_table_book.png");
@@ -52,7 +52,7 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
     protected final Int2ObjectMap<List<EnchantmentInstance>> clues = new Int2ObjectOpenHashMap<>();
     protected boolean[] hasAllClues = { false, false, false };
 
-    public ApothEnchantScreen(ApothEnchantContainer container, Inventory inv, Component title) {
+    public ZenithEnchantScreen(ZenithEnchantContainer container, Inventory inv, Component title) {
         super(container, inv, title);
         this.imageHeight = 197;
         this.clues.defaultReturnValue(new ArrayList<>());
@@ -347,9 +347,9 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
             stack.popPose();
             if (this.menu.arcana.get() > 0) {
                 list.clear();
-                ApothEnchantContainer.Arcana a = ApothEnchantContainer.Arcana.getForThreshold(this.menu.arcana.get());
+                ZenithEnchantContainer.Arcana a = ZenithEnchantContainer.Arcana.getForThreshold(this.menu.arcana.get());
                 list.add(Component.translatable("info.zenith.arcana_bonus").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.DARK_PURPLE));
-                if (a != ApothEnchantContainer.Arcana.EMPTY) list.add(Component.translatable("info.zenith.weights_changed").withStyle(ChatFormatting.BLUE));
+                if (a != ZenithEnchantContainer.Arcana.EMPTY) list.add(Component.translatable("info.zenith.weights_changed").withStyle(ChatFormatting.BLUE));
                 int minEnchants = this.menu.arcana.get() > 75F ? 3 : this.menu.arcana.get() > 25F ? 2 : 0;
                 if (minEnchants > 0) list.add(Component.translatable("info.zenith.min_enchants", minEnchants).withStyle(ChatFormatting.BLUE));
 
@@ -379,9 +379,9 @@ public class ApothEnchantScreen extends AbstractContainerScreen<ApothEnchantCont
                     list.add(Component.literal(""));
                     int cost = 0;
                     for (int i = 0; i <= j; i++) {
-                        cost += ApotheosisUtil.getExperienceForLevel(level - i) - ApotheosisUtil.getExperienceForLevel(level - i - 1);
+                        cost += ZenithUtil.getExperienceForLevel(level - i) - ZenithUtil.getExperienceForLevel(level - i - 1);
                     }
-                    list.add(Component.translatable("info.zenith.xp_cost", Component.literal("" + cost).withStyle(ChatFormatting.GREEN), Component.literal("" + ApotheosisUtil.getLevelForExperience(cost)).withStyle(ChatFormatting.GREEN)));
+                    list.add(Component.translatable("info.zenith.xp_cost", Component.literal("" + cost).withStyle(ChatFormatting.GREEN), Component.literal("" + ZenithUtil.getLevelForExperience(cost)).withStyle(ChatFormatting.GREEN)));
                     float quanta = this.menu.quanta.get() / 100F;
                     float rectification = this.menu.rectification.get() / 100F;
                     int minPow = Math.round(Mth.clamp(level - level * (quanta - quanta * rectification), 1, EnchantingStatManager.getAbsoluteMaxEterna() * 4));

@@ -27,7 +27,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import safro.zenith.Zenith;
 import safro.zenith.api.config.Configuration;
-import safro.zenith.util.ApotheosisUtil;
+import safro.zenith.util.ZenithUtil;
 import safro.zenith.village.fletching.FletchingContainer;
 import safro.zenith.village.fletching.FletchingRecipe;
 import safro.zenith.village.fletching.arrows.*;
@@ -38,7 +38,7 @@ import safro.zenith.village.wanderer.WandererTradeManager;
 import java.io.File;
 
 public class VillageModule {
-    public static final RecipeType<FletchingRecipe> FLETCHING = ApotheosisUtil.makeRecipeType(Zenith.MODID + ":fletching");
+    public static final RecipeType<FletchingRecipe> FLETCHING = ZenithUtil.makeRecipeType(Zenith.MODID + ":fletching");
     public static final RecipeSerializer<FletchingRecipe> FLETCHING_SERIALIZER = new FletchingRecipe.Serializer();
     public static final Logger LOGGER = LogManager.getLogger("Zenith : Village");
 
@@ -93,11 +93,11 @@ public class VillageModule {
         register(FletchingRecipe.Serializer.NAME, FLETCHING_SERIALIZER);
 
         for (Item i : Registry.ITEM) {
-            if (i instanceof IApothArrowItem) {
+            if (i instanceof IZenithArrowItem) {
                 DispenserBlock.registerBehavior(i, new AbstractProjectileDispenseBehavior() {
                     @Override
                     protected Projectile getProjectile(Level world, Position pos, ItemStack stack) {
-                        return ((IApothArrowItem) i).fromDispenser(world, pos.x(), pos.y(), pos.z());
+                        return ((IZenithArrowItem) i).fromDispenser(world, pos.x(), pos.y(), pos.z());
                     }
                 });
             }

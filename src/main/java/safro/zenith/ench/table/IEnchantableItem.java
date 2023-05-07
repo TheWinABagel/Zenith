@@ -1,7 +1,6 @@
 package safro.zenith.ench.table;
 
 import java.util.List;
-import java.util.Random;
 
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.EnchantedBookItem;
@@ -9,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
-import safro.zenith.util.ApotheosisUtil;
+import safro.zenith.util.ZenithUtil;
 
 public interface IEnchantableItem {
     /**
@@ -59,7 +58,7 @@ public interface IEnchantableItem {
      * @return If the enchantment is allowed on this itemstack, overriding standard rules.
      */
     default boolean forciblyAllowsTableEnchantment(ItemStack stack, Enchantment enchantment) {
-        return stack.is(Items.BOOK) && ApotheosisUtil.isAllowedOnBooks(enchantment);
+        return stack.is(Items.BOOK) && ZenithUtil.isAllowedOnBooks(enchantment);
     }
 
     /**

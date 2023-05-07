@@ -26,7 +26,7 @@ import safro.zenith.Zenith;
 import safro.zenith.api.enchant.TableApplicableItem;
 import safro.zenith.ench.EnchModule;
 import safro.zenith.ench.table.IEnchantableItem;
-import safro.zenith.util.ApotheosisUtil;
+import safro.zenith.util.ZenithUtil;
 
 public class TomeItem extends BookItem implements IEnchantableItem, TableApplicableItem {
 
@@ -34,7 +34,7 @@ public class TomeItem extends BookItem implements IEnchantableItem, TableApplica
 	final EnchantmentCategory type;
 
 	public TomeItem(Item rep, EnchantmentCategory type) {
-		super(new Item.Properties().tab(Zenith.APOTH_GROUP));
+		super(new Item.Properties().tab(Zenith.ZENITH_GROUP));
 		this.type = type;
 		this.rep = new ItemStack(rep);
 		EnchModule.TYPED_BOOKS.add(this);
@@ -43,7 +43,7 @@ public class TomeItem extends BookItem implements IEnchantableItem, TableApplica
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
 		if (this.type == null) return EnchModule.TYPED_BOOKS.stream().filter(b -> b != this).allMatch(b -> !enchantment.canEnchant(new ItemStack(b)));
-		return enchantment.category == this.type || ApotheosisUtil.canApplyEnchantment(enchantment, this.rep);
+		return enchantment.category == this.type || ZenithUtil.canApplyEnchantment(enchantment, this.rep);
 	}
 
 	@Override

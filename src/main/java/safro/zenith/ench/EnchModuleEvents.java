@@ -15,7 +15,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import safro.zenith.Zenith;
-import safro.zenith.api.json.ApothJsonReloadListener;
+import safro.zenith.api.json.ZenithJsonReloadListener;
 import safro.zenith.ench.enchantments.SpearfishingEnchant;
 import safro.zenith.ench.enchantments.masterwork.KnowledgeEnchant;
 import safro.zenith.ench.enchantments.masterwork.ScavengerEnchant;
@@ -32,8 +32,8 @@ public class EnchModuleEvents {
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(EnchantingStatManager.INSTANCE);
 
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> {
-            if (!ApothJsonReloadListener.SYNC_REGISTRY.isEmpty()) {
-                for (Map.Entry<String, ApothJsonReloadListener<?>> entry : ApothJsonReloadListener.SYNC_REGISTRY.entrySet()) {
+            if (!ZenithJsonReloadListener.SYNC_REGISTRY.isEmpty()) {
+                for (Map.Entry<String, ZenithJsonReloadListener<?>> entry : ZenithJsonReloadListener.SYNC_REGISTRY.entrySet()) {
                     if (entry.getValue() != null) {
                         entry.getValue().sync(player);
                     }

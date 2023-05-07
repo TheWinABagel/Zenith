@@ -9,7 +9,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.Vec3;
 import safro.zenith.api.enchant.TableApplicableEnchant;
-import safro.zenith.util.ApotheosisUtil;
+import safro.zenith.util.ZenithUtil;
 
 public class ReboundingEnchant extends Enchantment implements TableApplicableEnchant {
 
@@ -39,7 +39,7 @@ public class ReboundingEnchant extends Enchantment implements TableApplicableEnc
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack) {
-		return ApotheosisUtil.canApplyItem(this, stack);
+		return ZenithUtil.canApplyItem(this, stack);
 	}
 
 	@Override

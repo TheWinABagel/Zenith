@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
 import safro.zenith.Zenith;
 import safro.zenith.api.BasicItemListing;
-import safro.zenith.api.json.ApothJsonReloadListener;
+import safro.zenith.api.json.ZenithJsonReloadListener;
 import safro.zenith.api.json.ItemAdapter;
 import safro.zenith.api.json.SerializerBuilder;
 import safro.zenith.village.VillageModule;
@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class WandererTradeManager extends ApothJsonReloadListener<JsonTrade> {
+public class WandererTradeManager extends ZenithJsonReloadListener<JsonTrade> {
 
 	public static final WandererTradeManager INSTANCE = new WandererTradeManager();
 

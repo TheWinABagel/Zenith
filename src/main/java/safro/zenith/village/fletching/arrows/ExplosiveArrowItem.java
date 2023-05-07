@@ -15,10 +15,10 @@ import safro.zenith.Zenith;
 
 import java.util.List;
 
-public class ExplosiveArrowItem extends ArrowItem implements IApothArrowItem {
+public class ExplosiveArrowItem extends ArrowItem implements IZenithArrowItem {
 
 	public ExplosiveArrowItem() {
-		super(new Item.Properties().tab(Zenith.APOTH_GROUP));
+		super(new Item.Properties().tab(Zenith.ZENITH_GROUP));
 	}
 
 	@Override

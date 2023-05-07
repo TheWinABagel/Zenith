@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
@@ -21,7 +20,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import safro.zenith.ench.EnchModule;
 import safro.zenith.ench.EnchantmentInfo;
-import safro.zenith.util.ApotheosisUtil;
+import safro.zenith.util.ZenithUtil;
 
 public class RealEnchantmentHelper {
 
@@ -64,7 +63,7 @@ public class RealEnchantmentHelper {
         if (enchantability > 0) {
             float quantaFactor = 1 + Mth.nextFloat((RandomSource) rand, -1F + rectification / 100F, 1F) * quanta / 100F; //The randomly selected value to multiply the level by, within range [-Q+Q*QR, +Q]
             level = Mth.clamp(Math.round(level * quantaFactor), 1, (int) (EnchantingStatManager.getAbsoluteMaxEterna() * 4));
-            ApothEnchantContainer.Arcana arcanaVals = ApothEnchantContainer.Arcana.getForThreshold(arcana);
+            ZenithEnchantContainer.Arcana arcanaVals = ZenithEnchantContainer.Arcana.getForThreshold(arcana);
             List<EnchantmentInstance> allEnchants = getAvailableEnchantmentResults(level, stack, treasure);
             Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);
             allEnchants.removeIf(e -> enchants.containsKey(e.enchantment)); //Remove duplicates.
@@ -129,7 +128,7 @@ public class RealEnchantmentHelper {
         for (Enchantment enchantment : Registry.ENCHANTMENT) {
             EnchantmentInfo info = EnchModule.getEnchInfo(enchantment);
             if ((info.isTreasure() && !allowTreasure) || !info.isDiscoverable()) continue;
-            if (ApotheosisUtil.canApply(enchantment, stack) || enchi.forciblyAllowsTableEnchantment(stack, enchantment)) {
+            if (ZenithUtil.canApply(enchantment, stack) || enchi.forciblyAllowsTableEnchantment(stack, enchantment)) {
                 for (int level = info.getMaxLevel(); level > enchantment.getMinLevel() - 1; --level) {
                     if (power >= info.getMinPower(level) && power <= info.getMaxPower(level)) {
                         list.add(new EnchantmentInstance(enchantment, level));
@@ -144,7 +143,7 @@ public class RealEnchantmentHelper {
     public static class ArcanaEnchantmentData extends IntrusiveBase {
         EnchantmentInstance data;
 
-        public ArcanaEnchantmentData(ApothEnchantContainer.Arcana arcana, EnchantmentInstance data) {
+        public ArcanaEnchantmentData(ZenithEnchantContainer.Arcana arcana, EnchantmentInstance data) {
             super(arcana.getRarities()[data.enchantment.getRarity().ordinal()]);
             this.data = data;
         }

@@ -13,7 +13,7 @@ import safro.zenith.ench.enchantments.TemptingEnchant;
 public class TemptGoalMixin {
 
     @Inject(method = "shouldFollow", at = @At(value = "RETURN"), cancellable = true)
-    public void apoth_tempting(LivingEntity entity, CallbackInfoReturnable<Boolean> ci) {
+    public void zenithTempting(LivingEntity entity, CallbackInfoReturnable<Boolean> ci) {
         if (Zenith.enableEnch && !ci.getReturnValueZ() && TemptingEnchant.shouldFollow(entity)) ci.setReturnValue(true);
     }
 

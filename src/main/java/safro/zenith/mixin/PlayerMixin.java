@@ -21,7 +21,7 @@ import safro.zenith.ench.enchantments.twisted.MinersFervorEnchant;
 public class PlayerMixin {
 
     @Inject(method = "getDestroySpeed", at = @At("TAIL"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
-    private void apotheosisBreakSpeed(BlockState blockState, CallbackInfoReturnable<Float> cir, float f) {
+    private void zenithBreakSpeed(BlockState blockState, CallbackInfoReturnable<Float> cir, float f) {
         Player player = (Player) (Object) this;
         if (Zenith.enableEnch) {
             float m = MinersFervorEnchant.breakSpeed(player, blockState, f);
@@ -36,7 +36,7 @@ public class PlayerMixin {
     }
 
     @Inject(method = "attack", at = @At("HEAD"), cancellable = true)
-    private void apothLeftClickEntity(Entity entity, CallbackInfo ci) {
+    private void zenithLeftClickEntity(Entity entity, CallbackInfo ci) {
         Player player = (Player) (Object) this;
         ItemStack stack = player.getMainHandItem();
         if (!stack.isEmpty()) {

@@ -31,11 +31,11 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
 		MinMaxBounds.Ints full = MinMaxBounds.Ints.fromJson(slots.get("full"));
 		MinMaxBounds.Ints empty = MinMaxBounds.Ints.fromJson(slots.get("empty"));
 		ItemPredicate[] predicate = ItemPredicate.fromJsonArray(json.get("items"));
-		if (json.has("apoth")) predicate = this.deserializeApoth(json.getAsJsonObject("apoth"));
+		if (json.has("apoth")) predicate = this.deserializeZenith(json.getAsJsonObject("apoth"));
 		return new InventoryChangeTrigger.TriggerInstance(andPred, occupied, full, empty, predicate);
 	}
 
-	ItemPredicate[] deserializeApoth(JsonObject json) {
+	ItemPredicate[] deserializeZenith(JsonObject json) {
 		String type = json.get("type").getAsString();
 		if (type.equals("spawn_egg")) return new ItemPredicate[] { new TrueItemPredicate(s -> s.getItem() instanceof SpawnEggItem) };
 		if (type.equals("enchanted")) {

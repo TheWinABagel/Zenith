@@ -14,7 +14,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import safro.zenith.api.enchant.TableApplicableEnchant;
 import safro.zenith.spawn.SpawnerModule;
-import safro.zenith.util.ApotheosisUtil;
+import safro.zenith.util.ZenithUtil;
 
 import java.util.Collection;
 
@@ -41,7 +41,7 @@ public class CapturingEnchant extends Enchantment implements TableApplicableEnch
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack) {
-        return ApotheosisUtil.canApplyItem(this, stack) || stack.getItem() instanceof AxeItem;
+        return ZenithUtil.canApplyItem(this, stack) || stack.getItem() instanceof AxeItem;
     }
 
     public static void handleCapturing(DamageSource source, LivingEntity killed, Collection<ItemEntity> drops) {

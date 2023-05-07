@@ -34,7 +34,7 @@ import safro.zenith.garden.GardenModule;
 import safro.zenith.network.NetworkUtil;
 import safro.zenith.potion.PotionModule;
 import safro.zenith.spawn.SpawnerModule;
-import safro.zenith.util.ApotheosisUtil;
+import safro.zenith.util.ZenithUtil;
 import safro.zenith.util.CachedIngredient;
 import safro.zenith.util.ModuleCondition;
 import safro.zenith.village.VillageModule;
@@ -45,7 +45,7 @@ import java.io.File;
 public class Zenith implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("zenith");
 	public static final String MODID = "zenith";
-	public static final CreativeModeTab APOTH_GROUP = FabricItemGroupBuilder.build(new ResourceLocation(MODID, MODID), () -> new ItemStack(Items.ENCHANTING_TABLE));
+	public static final CreativeModeTab ZENITH_GROUP = FabricItemGroupBuilder.build(new ResourceLocation(MODID, MODID), () -> new ItemStack(Items.ENCHANTING_TABLE));
 
 	public static final TagKey<Item> BOON_DROPS = registerItem(new ResourceLocation(Zenith.MODID, "boon_drops"));
 	public static final TagKey<Item> SPEARFISHING_DROPS = registerItem(new ResourceLocation(Zenith.MODID, "spearfishing_drops"));
@@ -110,7 +110,7 @@ public class Zenith implements ModInitializer {
 
 		if (config.hasChanged()) config.save();
 
-		ApotheosisUtil.registerTypes();
+		ZenithUtil.registerTypes();
 
 		addReloads();
 

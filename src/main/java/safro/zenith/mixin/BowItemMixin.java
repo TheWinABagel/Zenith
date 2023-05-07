@@ -20,7 +20,7 @@ import safro.zenith.ench.enchantments.masterwork.EndlessQuiverEnchant;
 public class BowItemMixin {
 
     @Redirect(method = "releaseUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z"))
-    private boolean apothEndlessQuiver(ItemStack stack, Item item, ItemStack bow, Level level, LivingEntity livingEntity, int i) {
+    private boolean zenithEndlessQuiver(ItemStack stack, Item item, ItemStack bow, Level level, LivingEntity livingEntity, int i) {
         if (Zenith.enableEnch) {
             return EndlessQuiverEnchant.isTrulyInfinite(stack, bow) || stack.is(Items.ARROW);
         }
@@ -28,7 +28,7 @@ public class BowItemMixin {
     }
 
     @Redirect(method = "releaseUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;getItemEnchantmentLevel(Lnet/minecraft/world/item/enchantment/Enchantment;Lnet/minecraft/world/item/ItemStack;)I", ordinal = 0))
-    private int apothEndlessQuiver(Enchantment enchantment, ItemStack itemStack) {
+    private int zenithEndlessQuiver(Enchantment enchantment, ItemStack itemStack) {
         if (Zenith.enableEnch) {
             int i = EnchantmentHelper.getItemEnchantmentLevel(EnchModule.ENDLESS_QUIVER, itemStack);
             return i > 0 ? i : EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, itemStack);

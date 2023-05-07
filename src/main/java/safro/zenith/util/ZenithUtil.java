@@ -29,9 +29,8 @@ import safro.zenith.ench.EnchModuleEvents;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
-public class ApotheosisUtil {
+public class ZenithUtil {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 
     public static ItemStack getRandom(TagKey<Item> tag, RandomSource random) {

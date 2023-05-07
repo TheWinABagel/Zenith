@@ -11,7 +11,7 @@ import safro.zenith.ench.asm.EnchHooks;
 public class EnchantRandomlyFunctionMixin {
 
     @Redirect(method = "enchantItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/Enchantment;getMaxLevel()I"))
-    private static int apothGetMaxLevel(Enchantment instance) {
+    private static int zenithGetMaxLevel(Enchantment instance) {
         return EnchHooks.getMaxLootLevel(instance);
     }
 }

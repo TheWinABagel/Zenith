@@ -23,7 +23,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.lwjgl.glfw.GLFW;
 import safro.zenith.Zenith;
 import safro.zenith.network.ButtonClickPacket;
-import safro.zenith.util.ApotheosisUtil;
+import safro.zenith.util.ZenithUtil;
 
 import javax.annotation.Nullable;
 import java.text.DecimalFormat;
@@ -226,7 +226,7 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 
 	private boolean isAllowedByItem(Entry<Enchantment> e) {
 		ItemStack stack = this.menu.ioInv.getItem(2);
-		return stack.isEmpty() || ApotheosisUtil.canApplyItem(e.getKey(), stack);
+		return stack.isEmpty() || ZenithUtil.canApplyItem(e.getKey(), stack);
 	}
 
 	private boolean isAllowedBySearch(Entry<Enchantment> e) {

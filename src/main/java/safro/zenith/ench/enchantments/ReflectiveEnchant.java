@@ -12,7 +12,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import safro.zenith.api.enchant.TableApplicableEnchant;
 import safro.zenith.ench.EnchModule;
-import safro.zenith.util.ApotheosisUtil;
+import safro.zenith.util.ZenithUtil;
 
 public class ReflectiveEnchant extends Enchantment implements TableApplicableEnchant {
 
@@ -42,7 +42,7 @@ public class ReflectiveEnchant extends Enchantment implements TableApplicableEnc
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack) {
-		return ApotheosisUtil.canApplyItem(this, stack);
+		return ZenithUtil.canApplyItem(this, stack);
 	}
 
 	/**

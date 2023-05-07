@@ -1,9 +1,6 @@
 package safro.zenith.ench;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
-import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -19,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import safro.zenith.ench.library.EnchLibraryScreen;
-import safro.zenith.ench.table.ApothEnchantScreen;
+import safro.zenith.ench.table.ZenithEnchantScreen;
 import safro.zenith.ench.table.EnchantingStatManager;
 
 public class EnchModuleClient{
@@ -79,7 +76,7 @@ public class EnchModuleClient{
 
     public static void init() {
         MenuScreens.register(EnchModule.LIBRARY_CONTAINER, EnchLibraryScreen::new);
-        MenuScreens.register(EnchModule.ENCHANTING_TABLE_MENU, ApothEnchantScreen::new);
+        MenuScreens.register(EnchModule.ENCHANTING_TABLE_MENU, ZenithEnchantScreen::new);
         tooltips();
     }
 }

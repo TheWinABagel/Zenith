@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import safro.zenith.Zenith;
 import safro.zenith.api.enchant.TableApplicableEnchant;
 import safro.zenith.ench.EnchModule;
-import safro.zenith.util.ApotheosisUtil;
+import safro.zenith.util.ZenithUtil;
 
 public class EarthsBoonEnchant extends Enchantment implements TableApplicableEnchant {
 
@@ -52,7 +52,7 @@ public class EarthsBoonEnchant extends Enchantment implements TableApplicableEnc
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack) {
-		return ApotheosisUtil.canApplyItem(this, stack);
+		return ZenithUtil.canApplyItem(this, stack);
 	}
 
 	public static void provideBenefits(Player player, BlockPos pos, BlockState state) {
@@ -60,7 +60,7 @@ public class EarthsBoonEnchant extends Enchantment implements TableApplicableEnc
 		int level = EnchantmentHelper.getItemEnchantmentLevel(EnchModule.EARTH_BOON, stack);
 		if (player.level.isClientSide) return;
 		if (state.is(BlockTags.BASE_STONE_OVERWORLD) && level > 0 && player.getRandom().nextFloat() <= 0.01F * level) {
-			ItemStack newDrop = ApotheosisUtil.getRandom(Zenith.BOON_DROPS, player.getRandom());
+			ItemStack newDrop = ZenithUtil.getRandom(Zenith.BOON_DROPS, player.getRandom());
 			Block.popResource(player.level, pos, newDrop);
 		}
 	}

@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import safro.zenith.Zenith;
 import safro.zenith.api.event.ServerEvents;
-import safro.zenith.api.json.ApothJsonReloadListener;
+import safro.zenith.api.json.ZenithJsonReloadListener;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class ReloadListenerPacket {
         public static void init() {
             ClientPlayNetworking.registerGlobalReceiver(ID, ((client, handler, buf, responseSender) -> {
                 String msg = buf.readUtf(50);
-                ApothJsonReloadListener.initSync(msg);
+                ZenithJsonReloadListener.initSync(msg);
             }));
         }
     }
@@ -43,7 +43,7 @@ public class ReloadListenerPacket {
     public static class Content {
         public static ResourceLocation ID = new ResourceLocation(Zenith.MODID, "reload_listener_content");
 
-        public static <V extends ApothJsonReloadListener.TypeKeyed<V>> void sendToAll(String path, ResourceLocation k, V v) {
+        public static <V extends ZenithJsonReloadListener.TypeKeyed<V>> void sendToAll(String path, ResourceLocation k, V v) {
             if (ServerEvents.getCurrentServer() != null) {
                 List<ServerPlayer> list = ServerEvents.getCurrentServer().getPlayerList().getPlayers();
                 for (ServerPlayer p : list) {
@@ -52,20 +52,20 @@ public class ReloadListenerPacket {
             }
         }
 
-        public static <V extends ApothJsonReloadListener.TypeKeyed<V>> void sendTo(ServerPlayer player, String path, ResourceLocation k, V v) {
+        public static <V extends ZenithJsonReloadListener.TypeKeyed<V>> void sendTo(ServerPlayer player, String path, ResourceLocation k, V v) {
             FriendlyByteBuf buf = PacketByteBufs.create();
             buf.writeUtf(path, 50);
             buf.writeResourceLocation(k);
-            ApothJsonReloadListener.writeItem(path, v, buf);
+            ZenithJsonReloadListener.writeItem(path, v, buf);
             ServerPlayNetworking.send(player, ID, buf);
         }
 
-        public static <V extends ApothJsonReloadListener.TypeKeyed<V>> void init() {
+        public static <V extends ZenithJsonReloadListener.TypeKeyed<V>> void init() {
             ClientPlayNetworking.registerGlobalReceiver(ID, ((client, handler, buf, responseSender) -> {
                 String path = buf.readUtf(50);
                 ResourceLocation key = buf.readResourceLocation();
-                V item = ApothJsonReloadListener.readItem(path, key, buf);
-                ApothJsonReloadListener.acceptItem(path, key, item);
+                V item = ZenithJsonReloadListener.readItem(path, key, buf);
+                ZenithJsonReloadListener.acceptItem(path, key, item);
             }));
         }
     }
@@ -91,7 +91,7 @@ public class ReloadListenerPacket {
         public static void init() {
             ClientPlayNetworking.registerGlobalReceiver(ID, ((client, handler, buf, responseSender) -> {
                 String path = buf.readUtf(50);
-                ApothJsonReloadListener.endSync(path);
+                ZenithJsonReloadListener.endSync(path);
             }));
         }
     }

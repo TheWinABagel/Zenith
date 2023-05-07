@@ -34,7 +34,7 @@ public class EnchantingInfoScreen extends Screen {
 
     protected static ChatFormatting[] colors = new ChatFormatting[] { ChatFormatting.WHITE, ChatFormatting.YELLOW, ChatFormatting.BLUE, ChatFormatting.GOLD };
 
-    protected final ApothEnchantScreen parent;
+    protected final ZenithEnchantScreen parent;
     protected final int imageWidth, imageHeight;
     protected final ItemStack toEnchant;
     protected final int[] costs;
@@ -50,7 +50,7 @@ public class EnchantingInfoScreen extends Screen {
     List<RealEnchantmentHelper.ArcanaEnchantmentData> enchantments = Collections.emptyList();
     Map<Enchantment, List<Enchantment>> exclusions = new HashMap<>();
 
-    public EnchantingInfoScreen(ApothEnchantScreen parent) {
+    public EnchantingInfoScreen(ZenithEnchantScreen parent) {
         super(Component.translatable("info.zenith.enchinfo_title"));
         this.parent = parent;
         this.imageWidth = 240;
@@ -121,13 +121,13 @@ public class EnchantingInfoScreen extends Screen {
         }
 
         List<Component> list = new ArrayList<>();
-        ApothEnchantContainer.Arcana a = ApothEnchantContainer.Arcana.getForThreshold(this.parent.getMenu().arcana.get());
+        ZenithEnchantContainer.Arcana a = ZenithEnchantContainer.Arcana.getForThreshold(this.parent.getMenu().arcana.get());
         list.add(Component.translatable("info.zenith.weights").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.YELLOW));
         list.add(Component.translatable("info.zenith.weight", I18n.get("rarity.enchantment.common"), a.rarities[0]).withStyle(ChatFormatting.GRAY));
         list.add(Component.translatable("info.zenith.weight", I18n.get("rarity.enchantment.uncommon"), a.rarities[1]).withStyle(ChatFormatting.GREEN));
         list.add(Component.translatable("info.zenith.weight", I18n.get("rarity.enchantment.rare"), a.rarities[2]).withStyle(ChatFormatting.BLUE));
         list.add(Component.translatable("info.zenith.weight", I18n.get("rarity.enchantment.very_rare"), a.rarities[3]).withStyle(ChatFormatting.GOLD));
-        this.renderComponentTooltip(pPoseStack, list, a == ApothEnchantContainer.Arcana.MAX ? -2 : 1, 120);
+        this.renderComponentTooltip(pPoseStack, list, a == ZenithEnchantContainer.Arcana.MAX ? -2 : 1, 120);
 
         this.font.draw(pPoseStack, this.title, 7, 4, 4210752);
         pPoseStack.popPose();
@@ -245,7 +245,7 @@ public class EnchantingInfoScreen extends Screen {
     }
 
     protected void recomputeEnchantments() {
-        ApothEnchantContainer.Arcana arc = ApothEnchantContainer.Arcana.getForThreshold(this.parent.getMenu().arcana.get());
+        ZenithEnchantContainer.Arcana arc = ZenithEnchantContainer.Arcana.getForThreshold(this.parent.getMenu().arcana.get());
         this.enchantments = RealEnchantmentHelper.getAvailableEnchantmentResults(this.currentPower, this.toEnchant, false).stream().map(e -> new RealEnchantmentHelper.ArcanaEnchantmentData(arc, e)).collect(Collectors.toList());
         if (this.startIndex + 11 >= this.enchantments.size()) {
             this.startIndex = 0;

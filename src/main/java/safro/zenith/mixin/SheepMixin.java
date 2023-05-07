@@ -28,7 +28,7 @@ public abstract class SheepMixin {
     @Shadow public abstract void shear(SoundSource soundSource);
 
     @Redirect(method = "mobInteract", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/Sheep;shear(Lnet/minecraft/sounds/SoundSource;)V"))
-    private void apotheosisPreShear(Sheep sheep, SoundSource soundSource, Player player, InteractionHand interactionHand) {
+    private void zenithPreShear(Sheep sheep, SoundSource soundSource, Player player, InteractionHand interactionHand) {
         ItemStack shears = player.getItemInHand(interactionHand);
         if (Zenith.enableEnch && EnchantmentHelper.getItemEnchantmentLevel(EnchModule.CHROMATIC, shears) > 0) {
             randomColor = DyeColor.byId(sheep.getRandom().nextInt(16));
@@ -38,7 +38,7 @@ public abstract class SheepMixin {
     }
 
     @Inject(method = "mobInteract", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/Sheep;shear(Lnet/minecraft/sounds/SoundSource;)V", shift = At.Shift.AFTER))
-    private void apotheosisPostShear(Player player, InteractionHand interactionHand, CallbackInfoReturnable<InteractionResult> cir) {
+    private void zenithPostShear(Player player, InteractionHand interactionHand, CallbackInfoReturnable<InteractionResult> cir) {
         Sheep sheep = (Sheep) (Object) this;
         ItemStack shears = player.getItemInHand(interactionHand);
         if (Zenith.enableEnch) {

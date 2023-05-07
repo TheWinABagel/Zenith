@@ -17,13 +17,13 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import safro.zenith.Zenith;
 
-public class MiningArrowItem extends ArrowItem implements IApothArrowItem {
+public class MiningArrowItem extends ArrowItem implements IZenithArrowItem {
 
 	protected final Supplier<Item> breakerItem;
 	protected final MiningArrowEntity.Type arrowType;
 
 	public MiningArrowItem(Supplier<Item> breakerItem, MiningArrowEntity.Type arrowType) {
-		super(new Item.Properties().tab(Zenith.APOTH_GROUP));
+		super(new Item.Properties().tab(Zenith.ZENITH_GROUP));
 		this.breakerItem = breakerItem;
 		this.arrowType = arrowType;
 	}

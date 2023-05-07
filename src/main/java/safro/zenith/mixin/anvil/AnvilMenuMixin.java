@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import safro.zenith.Zenith;
 import safro.zenith.ench.EnchModuleEvents;
 import safro.zenith.ench.asm.EnchHooks;
-import safro.zenith.util.ApotheosisUtil;
+import safro.zenith.util.ZenithUtil;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
     @Mixin(value = AnvilMenu.class, priority = 999)
@@ -39,7 +39,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
         @Inject(method = "createResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z", ordinal = 1, shift = At.Shift.AFTER), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
         private void zenithAnvilChange(CallbackInfo ci, ItemStack stack, int i, int j, int k, ItemStack itemStack1, ItemStack itemStack2) {
             AnvilMenu menu = (AnvilMenu) (Object) this;
-            if (!ApotheosisUtil.anvilChanged(menu, stack, itemStack2, resultSlots, itemName, j, player)) {
+            if (!ZenithUtil.anvilChanged(menu, stack, itemStack2, resultSlots, itemName, j, player)) {
                 ci.cancel();
             }
         }

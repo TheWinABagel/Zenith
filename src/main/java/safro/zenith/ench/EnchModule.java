@@ -34,10 +34,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import safro.zenith.Zenith;
 import safro.zenith.api.config.Configuration;
-import safro.zenith.ench.anvil.AnvilBlockEntity;
 import safro.zenith.ench.anvil.ObliterationEnchant;
 import safro.zenith.ench.anvil.SplittingEnchant;
-import safro.zenith.ench.anvil.ZenithAnvilItem;
 import safro.zenith.ench.enchantments.*;
 import safro.zenith.ench.enchantments.corrupted.BerserkersFuryEnchant;
 import safro.zenith.ench.enchantments.corrupted.LifeMendingEnchant;
@@ -52,10 +50,10 @@ import safro.zenith.ench.objects.ScrappingTomeItem;
 import safro.zenith.ench.objects.TomeItem;
 import safro.zenith.ench.replacements.BaneEnchant;
 import safro.zenith.ench.replacements.DefenseEnchant;
-import safro.zenith.ench.table.ApothEnchantContainer;
+import safro.zenith.ench.table.ZenithEnchantContainer;
 import safro.zenith.ench.table.EnchantingRecipe;
 import safro.zenith.ench.table.KeepNBTEnchantingRecipe;
-import safro.zenith.util.ApotheosisUtil;
+import safro.zenith.util.ZenithUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -70,7 +68,7 @@ public class EnchModule {
     public static final Logger LOGGER = LogManager.getLogger("Zenith : Enchantment");
     public static final List<TomeItem> TYPED_BOOKS = new ArrayList<>();
     public static final EquipmentSlot[] ARMOR = { EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET };
-    public static final RecipeType<EnchantingRecipe> INFUSION_RECIPE = ApotheosisUtil.makeRecipeType("zenith:enchanting");
+    public static final RecipeType<EnchantingRecipe> INFUSION_RECIPE = ZenithUtil.makeRecipeType("zenith:enchanting");
 
 
     static Configuration enchInfoConfig;
@@ -133,7 +131,7 @@ public class EnchModule {
     public static final Block ENDER_LIBRARY = register("ender_library", new EnchLibraryBlock(EnchLibraryTile.EnderLibraryTile::new, 31));
 
     // Items
-    public static final Item PRISMATIC_WEB = register("prismatic_web", new Item(new Item.Properties().tab(Zenith.APOTH_GROUP)));
+    public static final Item PRISMATIC_WEB = register("prismatic_web", new Item(new Item.Properties().tab(Zenith.ZENITH_GROUP)));
     //public static final Item ANVIL = replacement("anvil", new ZenithAnvilItem(Blocks.ANVIL), Items.ANVIL);
     //public static final Item CHIPPED_ANVIL = replacement("chipped_anvil", new ZenithAnvilItem(Blocks.CHIPPED_ANVIL), Items.CHIPPED_ANVIL);
     //public static final Item DAMAGED_ANVIL = replacement("damaged_anvil", new ZenithAnvilItem(Blocks.DAMAGED_ANVIL), Items.DAMAGED_ANVIL);
@@ -147,27 +145,27 @@ public class EnchModule {
     public static final Item FISHING_TOME = register("fishing_tome", new TomeItem(Items.FISHING_ROD, EnchantmentCategory.FISHING_ROD));
     public static final Item BOW_TOME = register("bow_tome", new TomeItem(Items.BOW, EnchantmentCategory.BOW));
     public static final Item SCRAP_TOME = register("scrap_tome", new ScrappingTomeItem());
-    public static final Item HELLSHELF_ITEM = register("hellshelf", new BlockItem(HELLSHELF, new Item.Properties().tab(Zenith.APOTH_GROUP)));
-    public static final Item INFUSED_HELLSHELF_ITEM = register("infused_hellshelf", new GlowyItem(INFUSED_HELLSHELF, new Item.Properties().tab(Zenith.APOTH_GROUP)));
-    public static final Item BLAZING_HELLSHELF_ITEM = register("blazing_hellshelf", new BlockItem(BLAZING_HELLSHELF, new Item.Properties().tab(Zenith.APOTH_GROUP)));
-    public static final Item GLOWING_HELLSHELF_ITEM = register("glowing_hellshelf", new BlockItem(GLOWING_HELLSHELF, new Item.Properties().tab(Zenith.APOTH_GROUP)));
-    public static final Item SEASHELF_ITEM = register("seashelf", new BlockItem(SEASHELF, new Item.Properties().tab(Zenith.APOTH_GROUP)));
-    public static final Item INFUSED_SEASHELF_ITEM = register("infused_seashelf", new GlowyItem(INFUSED_SEASHELF, new Item.Properties().tab(Zenith.APOTH_GROUP)));
-    public static final Item CRYSTAL_SEASHELF_ITEM = register("crystal_seashelf", new BlockItem(CRYSTAL_SEASHELF, new Item.Properties().tab(Zenith.APOTH_GROUP)));
-    public static final Item HEART_SEASHELF_ITEM = register("heart_seashelf", new BlockItem(HEART_SEASHELF, new Item.Properties().tab(Zenith.APOTH_GROUP)));
-    public static final Item ENDSHELF_ITEM = register("endshelf", new BlockItem(ENDSHELF, new Item.Properties().tab(Zenith.APOTH_GROUP)));
-    public static final Item PEARL_ENDSHELF_ITEM = register("pearl_endshelf", new BlockItem(PEARL_ENDSHELF, new Item.Properties().tab(Zenith.APOTH_GROUP)));
-    public static final Item DRACONIC_ENDSHELF_ITEM = register("draconic_endshelf", new BlockItem(DRACONIC_ENDSHELF, new Item.Properties().tab(Zenith.APOTH_GROUP)));
-    public static final Item BEESHELF_ITEM = register("beeshelf", new BlockItem(BEESHELF, new Item.Properties().tab(Zenith.APOTH_GROUP)));
-    public static final Item MELONSHELF_ITEM = register("melonshelf", new BlockItem(MELONSHELF, new Item.Properties().tab(Zenith.APOTH_GROUP)));
-    public static final Item LIBRARY_ITEM = register("library", new BlockItem(LIBRARY, new Item.Properties().tab(Zenith.APOTH_GROUP)));
-    public static final Item RECTIFIER_ITEM = register("rectifier", new BlockItem(RECTIFIER, new Item.Properties().tab(Zenith.APOTH_GROUP)));
-    public static final Item RECTIFIER_T2_ITEM = register("rectifier_t2", new BlockItem(RECTIFIER_T2, new Item.Properties().tab(Zenith.APOTH_GROUP)));
-    public static final Item RECTIFIER_T3_ITEM = register("rectifier_t3", new BlockItem(RECTIFIER_T3, new Item.Properties().tab(Zenith.APOTH_GROUP)));
-    public static final Item SIGHTSHELF_ITEM = register("sightshelf", new BlockItem(SIGHTSHELF, new Item.Properties().tab(Zenith.APOTH_GROUP)));
-    public static final Item SIGHTSHELF_T2_ITEM = register("sightshelf_t2", new BlockItem(SIGHTSHELF_T2, new Item.Properties().tab(Zenith.APOTH_GROUP)));
-    public static final Item INERT_TRIDENT = register("inert_trident", new Item(new Item.Properties().stacksTo(1).tab(Zenith.APOTH_GROUP)));
-    public static final Item ENDER_LIBRARY_ITEM = register("ender_library", new BlockItem(ENDER_LIBRARY, new Item.Properties().tab(Zenith.APOTH_GROUP)));
+    public static final Item HELLSHELF_ITEM = register("hellshelf", new BlockItem(HELLSHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item INFUSED_HELLSHELF_ITEM = register("infused_hellshelf", new GlowyItem(INFUSED_HELLSHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item BLAZING_HELLSHELF_ITEM = register("blazing_hellshelf", new BlockItem(BLAZING_HELLSHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item GLOWING_HELLSHELF_ITEM = register("glowing_hellshelf", new BlockItem(GLOWING_HELLSHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item SEASHELF_ITEM = register("seashelf", new BlockItem(SEASHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item INFUSED_SEASHELF_ITEM = register("infused_seashelf", new GlowyItem(INFUSED_SEASHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item CRYSTAL_SEASHELF_ITEM = register("crystal_seashelf", new BlockItem(CRYSTAL_SEASHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item HEART_SEASHELF_ITEM = register("heart_seashelf", new BlockItem(HEART_SEASHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item ENDSHELF_ITEM = register("endshelf", new BlockItem(ENDSHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item PEARL_ENDSHELF_ITEM = register("pearl_endshelf", new BlockItem(PEARL_ENDSHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item DRACONIC_ENDSHELF_ITEM = register("draconic_endshelf", new BlockItem(DRACONIC_ENDSHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item BEESHELF_ITEM = register("beeshelf", new BlockItem(BEESHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item MELONSHELF_ITEM = register("melonshelf", new BlockItem(MELONSHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item LIBRARY_ITEM = register("library", new BlockItem(LIBRARY, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item RECTIFIER_ITEM = register("rectifier", new BlockItem(RECTIFIER, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item RECTIFIER_T2_ITEM = register("rectifier_t2", new BlockItem(RECTIFIER_T2, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item RECTIFIER_T3_ITEM = register("rectifier_t3", new BlockItem(RECTIFIER_T3, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item SIGHTSHELF_ITEM = register("sightshelf", new BlockItem(SIGHTSHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item SIGHTSHELF_T2_ITEM = register("sightshelf_t2", new BlockItem(SIGHTSHELF_T2, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item INERT_TRIDENT = register("inert_trident", new Item(new Item.Properties().stacksTo(1).tab(Zenith.ZENITH_GROUP)));
+    public static final Item ENDER_LIBRARY_ITEM = register("ender_library", new BlockItem(ENDER_LIBRARY, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
 
     // Block Tags
     public static final TagKey<Block> UNBREAKABLE_ANVIL = registerBlockTag("unbreakable_anvil");
@@ -178,7 +176,7 @@ public class EnchModule {
 
     // Container
     public static final MenuType<EnchLibraryContainer> LIBRARY_CONTAINER = register("library", new ExtendedScreenHandlerType<>(EnchLibraryContainer::new));
-    public static final MenuType<ApothEnchantContainer> ENCHANTING_TABLE_MENU = register("enchanting_table", new MenuType<>(ApothEnchantContainer::new));
+    public static final MenuType<ZenithEnchantContainer> ENCHANTING_TABLE_MENU = register("enchanting_table", new MenuType<>(ZenithEnchantContainer::new));
 
     // Recipe Serializer
     public static final RecipeSerializer<EnchantingRecipe> ENCHANTING = register("enchanting", EnchantingRecipe.SERIALIZER);
@@ -235,7 +233,7 @@ public class EnchModule {
         EnchantmentInfo info = ENCHANTMENT_INFO.get(ench);
 
         if (enchInfoConfig == null) { //Legitimate occurances can now happen, such as when vanilla calls fillItemGroup
-            //LOGGER.error("A mod has attempted to access enchantment information before Apotheosis init, this should not happen.");
+            //LOGGER.error("A mod has attempted to access enchantment information before Zenith init, this should not happen.");
             //Thread.dumpStack();
             return new EnchantmentInfo(ench);
         }
@@ -251,7 +249,7 @@ public class EnchModule {
     }
 
     /**
-     * Tries to find a max level for this enchantment.  This is used to scale up default levels to the Apoth cap.
+     * Tries to find a max level for this enchantment.  This is used to scale up default levels to the Zenith cap.
      * Single-Level enchantments are not scaled.
      * Barring that, enchantments are scaled using the {@link EnchantmentInfo#defaultMin(Enchantment)} until it is >= 150
      */

@@ -7,7 +7,7 @@ import safro.zenith.Zenith;
 public class LuckyFootItem extends Item {
 
 	public LuckyFootItem() {
-		super(new Item.Properties().stacksTo(1).tab(Zenith.APOTH_GROUP));
+		super(new Item.Properties().stacksTo(1).tab(Zenith.ZENITH_GROUP));
 	}
 
 	@Override

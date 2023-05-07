@@ -11,7 +11,7 @@ import vazkii.patchouli.api.PatchouliAPI.IPatchouliAPI;
 public class PatchouliCompat {
 
     public static void register() {
-        Registry.register(Registry.ITEM, new ResourceLocation(Zenith.MODID, "book"), new ZenithChronicleItem(new Item.Properties().tab(Zenith.APOTH_GROUP).stacksTo(1)));
+        Registry.register(Registry.ITEM, new ResourceLocation(Zenith.MODID, "book"), new ZenithChronicleItem(new Item.Properties().tab(Zenith.ZENITH_GROUP).stacksTo(1)));
 
         IPatchouliAPI api = PatchouliAPI.get();
         if (!api.isStub()) {

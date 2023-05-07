@@ -1,7 +1,6 @@
 package safro.zenith.ench.table;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.Nullable;
 
@@ -20,7 +19,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import safro.zenith.ench.EnchModule;
-import safro.zenith.util.ApotheosisUtil;
+import safro.zenith.util.ZenithUtil;
 
 public class EnchantingRecipe implements Recipe<Container> {
     public static final Serializer SERIALIZER = new Serializer();
@@ -112,7 +111,7 @@ public class EnchantingRecipe implements Recipe<Container> {
 
         @Override
         public EnchantingRecipe fromJson(ResourceLocation id, JsonObject obj) {
-            ItemStack output = ApotheosisUtil.getItemStack(obj.get("result").getAsJsonObject(), true, true);
+            ItemStack output = ZenithUtil.getItemStack(obj.get("result").getAsJsonObject(), true, true);
             Ingredient input = Ingredient.fromJson(obj.get("input"));
             EnchantingStatManager.Stats stats = GSON.fromJson(obj.get("requirements"), EnchantingStatManager.Stats.class);
             EnchantingStatManager.Stats maxStats = obj.has("max_requirements") ? GSON.fromJson(obj.get("max_requirements"), EnchantingStatManager.Stats.class) : NO_MAX;

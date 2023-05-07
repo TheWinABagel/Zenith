@@ -25,7 +25,7 @@ import safro.zenith.util.FloatReferenceHolder;
 
 import java.util.*;
 
-public class ApothEnchantContainer extends EnchantmentMenu {
+public class ZenithEnchantContainer extends EnchantmentMenu {
     protected final FloatReferenceHolder eterna = new FloatReferenceHolder(0F, 0, EnchantingStatManager.getAbsoluteMaxEterna());
     protected final FloatReferenceHolder quanta = new FloatReferenceHolder(0F, 0, 100);
     protected final FloatReferenceHolder arcana = new FloatReferenceHolder(0F, 0, 100);
@@ -33,7 +33,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
     protected final DataSlot clues = DataSlot.standalone();
     protected final Player player;
 
-    public ApothEnchantContainer(int id, Inventory inv) {
+    public ZenithEnchantContainer(int id, Inventory inv) {
         super(id, inv, ContainerLevelAccess.NULL);
         this.player = inv.player;
         this.slots.clear();
@@ -58,7 +58,7 @@ public class ApothEnchantContainer extends EnchantmentMenu {
 
     }
 
-    public ApothEnchantContainer(int id, Inventory inv, ContainerLevelAccess wPos) {
+    public ZenithEnchantContainer(int id, Inventory inv, ContainerLevelAccess wPos) {
         super(id, inv, wPos);
         this.player = inv.player;
         this.slots.clear();

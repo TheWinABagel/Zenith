@@ -28,7 +28,7 @@ public abstract class FletchingTableBlockMixin extends CraftingTableBlock {
     }
 
     @Inject(method = "use", at = @At("HEAD"), cancellable = true)
-    private void apothUse(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
+    private void zenithUse(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
         if (Zenith.enableVillage) {
             if (worldIn.isClientSide) cir.setReturnValue(InteractionResult.SUCCESS);
             player.openMenu(this.getMenuProvider(state, worldIn, pos));

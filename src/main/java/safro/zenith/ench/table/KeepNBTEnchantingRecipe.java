@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import safro.zenith.util.ApotheosisUtil;
+import safro.zenith.util.ZenithUtil;
 
 public class KeepNBTEnchantingRecipe extends EnchantingRecipe {
     public static final Serializer SERIALIZER = new Serializer();
@@ -34,7 +34,7 @@ public class KeepNBTEnchantingRecipe extends EnchantingRecipe {
 
         @Override
         public KeepNBTEnchantingRecipe fromJson(ResourceLocation id, JsonObject obj) {
-            ItemStack output = ApotheosisUtil.getItemStack(obj.get("result").getAsJsonObject(), true, true);
+            ItemStack output = ZenithUtil.getItemStack(obj.get("result").getAsJsonObject(), true, true);
             Ingredient input = Ingredient.fromJson(obj.get("input"));
             EnchantingStatManager.Stats stats = GSON.fromJson(obj.get("requirements"), EnchantingStatManager.Stats.class);
             EnchantingStatManager.Stats maxStats = obj.has("max_requirements") ? GSON.fromJson(obj.get("max_requirements"), EnchantingStatManager.Stats.class) : NO_MAX;
