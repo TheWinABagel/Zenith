@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "fabric:load_conditions": [{
+        "condition": "zenith:module",
+        "module": "enchantment"
+    }],
+    "pattern": [" H ", "PSP", "PPP"],
+    "key": {
+        "H": { "item": "minecraft:heart_of_the_sea" },
+        "S": { "item": "zenith:infused_seashelf" },
+        "P": { "item": "minecraft:prismarine_shard" }
+    },
+    "result": {
+        "item": "zenith:heart_seashelf",
+        "count": 1
+    }
+}
