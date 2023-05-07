@@ -148,7 +148,7 @@ public class PotionModule {
         Configuration config = new Configuration(new File(Zenith.configDir, "potion.cfg"));
         config.setTitle("Zenith Potion Module Configuration");
         knowledgeMult = config.getInt("Knowledge XP Multiplier", "general", knowledgeMult, 1, Integer.MAX_VALUE, "The strength of Ancient Knowledge.  This multiplier determines how much additional xp is granted.\nServer-authoritative.");
-        charmsInTrinketsOnly = config.getBoolean("Restrict Charms to Trinkets", "general", charmsInTrinketsOnly, "If Potion Charms will only work when in a curios slot, instead of in the inventory.");
+        charmsInTrinketsOnly = config.getBoolean("Restrict Charms to Trinkets", "general", charmsInTrinketsOnly, "If Potion Charms will only work when in a trinkets slot, instead of in the inventory.");
         String[] defExt = new String[] { Registry.MOB_EFFECT.getKey(MobEffects.NIGHT_VISION).toString(), Registry.MOB_EFFECT.getKey(MobEffects.HEALTH_BOOST).toString() };
         String[] names = config.getStringList("Extended Potion Charms", "general", defExt, "A list of effects that, when as charms, will be applied and reapplied at a longer threshold to avoid issues at low durations, like night vision.\nServer-authoritative.");
         PotionCharmItem.EXTENDED_POTIONS.clear();

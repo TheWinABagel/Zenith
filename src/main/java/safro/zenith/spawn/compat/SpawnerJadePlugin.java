@@ -61,8 +61,6 @@ public class SpawnerJadePlugin implements IWailaPlugin, IBlockComponentProvider,
 
     @Override
     public void appendServerData(CompoundTag tag, ServerPlayer player, Level world, BlockEntity te, boolean arg4) {
-        SpawnerModule.LOGGER.info(te.getType().toString());
-
         if (te instanceof ZenithSpawnerBlockEntity spw) {
             BaseSpawner logic = spw.getSpawner();
             //Formatter::off

@@ -63,12 +63,7 @@ public class ZenithSpawnerBlockEntity extends SpawnerBlockEntity implements Cust
 		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
-	@Override
-	public CompoundTag getUpdateTag() {
-		CompoundTag tag = super.getUpdateTag();
-		CompoundTag points = new CompoundTag();
-		return new CompoundTag();
-	}
+
 	@Override
 	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
 		this.load(pkt.getTag());

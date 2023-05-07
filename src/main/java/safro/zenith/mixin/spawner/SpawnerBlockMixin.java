@@ -1,5 +1,6 @@
 package safro.zenith.mixin.spawner;
 
+import io.github.fabricators_of_create.porting_lib.block.CustomExpBlock;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
@@ -10,6 +11,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -19,16 +21,21 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.SpawnerBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 import safro.zenith.Zenith;
 import safro.zenith.advancements.AdvancementTriggers;
 import safro.zenith.spawn.SpawnerModule;
@@ -44,12 +51,11 @@ public abstract class SpawnerBlockMixin extends BaseEntityBlock {
     public SpawnerBlockMixin(Properties properties) {
         super(properties);
     }
-    @Inject(method = "spawnAfterBreak", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/BaseEntityBlock;spawnAfterBreak(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/item/ItemStack;Z)V", shift = At.Shift.AFTER), cancellable = true)
-    private void SilkNoXp(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, ItemStack itemStack, boolean dropXp, CallbackInfo ci) {
-        //SpawnerModule.LOGGER.error("TEST");
-        if(EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) <= SpawnerModule.spawnerSilkLevel) {
-            ci.cancel();
-        }
+
+    @ModifyArgs(method = "spawnAfterBreak", at = @At(value = "INVOKE", target = "net/minecraft/world/level/block/SpawnerBlock.popExperience (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;I)V"))
+    private void disableXpDrop(Args args, BlockState state, ServerLevel level, BlockPos pos, ItemStack stack, boolean dropExperience){
+        if(EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, stack) >= SpawnerModule.spawnerSilkLevel)
+            args.set(2, 0);
     }
 
     @Inject(method = "getCloneItemStack", at = @At("HEAD"), cancellable = true)
