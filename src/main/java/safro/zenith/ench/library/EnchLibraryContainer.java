@@ -17,11 +17,11 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import safro.zenith.api.container.BlockEntityContainer;
 import safro.zenith.ench.EnchModule;
-import safro.zenith.network.ButtonClickPacket;
+import safro.zenith.network.ButtonClickPacket.IButtonContainer;
 
 import java.util.List;
 
-public class EnchLibraryContainer extends BlockEntityContainer<EnchLibraryTile> implements ButtonClickPacket.IButtonContainer {
+public class EnchLibraryContainer extends BlockEntityContainer<EnchLibraryTile> implements IButtonContainer {
 	protected SimpleContainer ioInv = new SimpleContainer(3);
 
 	protected Runnable notifier = null;

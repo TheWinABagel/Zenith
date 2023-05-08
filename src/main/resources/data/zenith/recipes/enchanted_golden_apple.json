@@ -26,16 +26,16 @@
             "item": "minecraft:potion",
             "data": {
                 "require": {
-                    "Potion": "minecraft:strong_absorption"
+                    "Potion": "zenith:strong_absorption"
                 }
             }
         },
-        "G": { "item": "minecraft:enchanted_golden_apple" },
+        "G": { "item": "minecraft:golden_apple" },
         "R": {
             "item": "minecraft:potion",
             "data": {
                 "require": {
-                    "Potion": "minecraft:resistance"
+                    "Potion": "zenith:resistance"
                 }
             }
         }
