@@ -18,10 +18,11 @@ import net.minecraft.advancements.critereon.SerializationContext;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import safro.zenith.Zenith;
 import safro.zenith.spawn.modifiers.SpawnerModifier;
 import safro.zenith.spawn.modifiers.SpawnerStats;
-import safro.zenith.spawn.spawner.ZenithSpawnerBlockEntity;
+import safro.zenith.util.IBaseSpawner;
 
 public class ModifierTrigger implements CriterionTrigger<ModifierTrigger.Instance> {
 	private static final ResourceLocation ID = new ResourceLocation(Zenith.MODID, "spawner_modifier");
@@ -76,7 +77,7 @@ public class ModifierTrigger implements CriterionTrigger<ModifierTrigger.Instanc
 		return new ModifierTrigger.Instance(minDelay, maxDelay, spawnCount, nearbyEnts, playerRange, spawnRange, ignorePlayers, ignoreConditions, redstone, ignoreLight, noAI);
 	}
 
-	public void trigger(ServerPlayer player, ZenithSpawnerBlockEntity tile, SpawnerModifier modif) {
+	public void trigger(ServerPlayer player, SpawnerBlockEntity tile, SpawnerModifier modif) {
 		ModifierTrigger.Listeners ModifierTrigger$listeners = this.listeners.get(player.getAdvancements());
 		if (ModifierTrigger$listeners != null) {
 			ModifierTrigger$listeners.trigger(tile, modif);
@@ -117,19 +118,19 @@ public class ModifierTrigger implements CriterionTrigger<ModifierTrigger.Instanc
 			return new JsonObject();
 		}
 
-		public boolean test(ZenithSpawnerBlockEntity tile, SpawnerModifier modif) {
-			ZenithSpawnerBlockEntity.SpawnerLogicExt logic = (ZenithSpawnerBlockEntity.SpawnerLogicExt) tile.spawner;
-			if (!this.minDelay.matches(logic.minSpawnDelay)) return false;
-			if (!this.maxDelay.matches(logic.maxSpawnDelay)) return false;
-			if (!this.spawnCount.matches(logic.spawnCount)) return false;
-			if (!this.nearbyEnts.matches(logic.maxNearbyEntities)) return false;
-			if (!this.playerRange.matches(logic.requiredPlayerRange)) return false;
-			if (!this.spawnRange.matches(logic.spawnRange)) return false;
-			if (this.ignorePlayers != null && tile.ignoresPlayers != this.ignorePlayers) return false;
-			if (this.ignoreConditions != null && tile.ignoresConditions != this.ignoreConditions) return false;
-			if (this.redstone != null && tile.redstoneControl != this.redstone) return false;
-			if (this.ignoreLight != null && tile.ignoresLight != this.ignoreLight) return false;
-			if (this.noAI != null && tile.hasNoAI != this.noAI) return false;
+		public boolean test(SpawnerBlockEntity tile, SpawnerModifier modif) {
+			IBaseSpawner logic = (IBaseSpawner) tile;
+			if (!this.minDelay.matches(logic.getSpawner().minSpawnDelay)) return false;
+			if (!this.maxDelay.matches(logic.getSpawner().maxSpawnDelay)) return false;
+			if (!this.spawnCount.matches(logic.getSpawner().spawnCount)) return false;
+			if (!this.nearbyEnts.matches(logic.getSpawner().maxNearbyEntities)) return false;
+			if (!this.playerRange.matches(logic.getSpawner().requiredPlayerRange)) return false;
+			if (!this.spawnRange.matches(logic.getSpawner().spawnRange)) return false;
+			if (this.ignorePlayers != null && logic.getIgnoresPlayers() != this.ignorePlayers) return false;
+			if (this.ignoreConditions != null && logic.getIgnoresConditions() != this.ignoreConditions) return false;
+			if (this.redstone != null && logic.getRedstoneControl() != this.redstone) return false;
+			if (this.ignoreLight != null && logic.getIgnoreLight() != this.ignoreLight) return false;
+			if (this.noAI != null && logic.getNoAi() != this.noAI) return false;
 			return true;
 		}
 	}
@@ -154,7 +155,7 @@ public class ModifierTrigger implements CriterionTrigger<ModifierTrigger.Instanc
 			this.listeners.remove(listener);
 		}
 
-		public void trigger(ZenithSpawnerBlockEntity tile, SpawnerModifier modif) {
+		public void trigger(SpawnerBlockEntity tile, SpawnerModifier modif) {
 			List<CriterionTrigger.Listener<ModifierTrigger.Instance>> list = null;
 
 			for (CriterionTrigger.Listener<ModifierTrigger.Instance> listener : this.listeners) {

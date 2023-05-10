@@ -4,7 +4,9 @@ import com.google.gson.JsonElement;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import safro.zenith.spawn.spawner.ZenithSpawnerBlockEntity;
+import safro.zenith.util.IBaseSpawner;
 
 public interface SpawnerStat<T> {
 
@@ -26,7 +28,7 @@ public interface SpawnerStat<T> {
 	 * @param spawner The spawner tile entity.
 	 * @return If the application was successful (was a spawner stat changed).
 	 */
-	boolean apply(T value, T min, T max, ZenithSpawnerBlockEntity spawner);
+	boolean apply(T value, T min, T max, IBaseSpawner spawner);
 
 	Class<T> getTypeClass();
 

@@ -1,29 +1,27 @@
 package safro.zenith.spawn.spawner;
 
-import io.github.fabricators_of_create.porting_lib.block.CustomDataPacketHandlingBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.random.SimpleWeightedRandomList;
-import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.Nullable;
 import safro.zenith.spawn.SpawnerModule;
 
-import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class ZenithSpawnerBlockEntity extends SpawnerBlockEntity implements CustomDataPacketHandlingBlockEntity {
+public class ZenithSpawnerBlockEntity extends SpawnerBlockEntity {
 	public boolean ignoresPlayers = false;
 	public boolean ignoresConditions = false;
 	public boolean redstoneControl = false;
@@ -44,29 +42,38 @@ public class ZenithSpawnerBlockEntity extends SpawnerBlockEntity implements Cust
 		tag.putBoolean("ignore_light", this.ignoresLight);
 		tag.putBoolean("no_ai", this.hasNoAI);
 		tag.putBoolean("silent", this.silent);
-		super.saveAdditional(tag);
 	}
 
 	@Override
 	public void load(CompoundTag tag) {
+		super.load(tag);
 		this.ignoresPlayers = tag.getBoolean("ignore_players");
 		this.ignoresConditions = tag.getBoolean("ignore_conditions");
 		this.redstoneControl = tag.getBoolean("redstone_control");
 		this.ignoresLight = tag.getBoolean("ignore_light");
 		this.hasNoAI = tag.getBoolean("no_ai");
 		this.silent = tag.getBoolean("silent");
-		super.load(tag);
 	}
 
+
+	@Override
+	public CompoundTag getUpdateTag() {
+		CompoundTag tag = super.getUpdateTag();
+		tag.putBoolean("ignore_players", this.ignoresPlayers);
+		tag.putBoolean("ignore_conditions", this.ignoresConditions);
+		tag.putBoolean("redstone_control", this.redstoneControl);
+		tag.putBoolean("ignore_light", this.ignoresLight);
+		tag.putBoolean("no_ai", this.hasNoAI);
+		tag.putBoolean("silent", this.silent);
+		SpawnerModule.LOGGER.error("getUpdateTag silent: "+tag.getBoolean("silent"));
+		return this.saveWithoutMetadata();
+	}
+
+
+	@Nullable
 	@Override
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {
 		return ClientboundBlockEntityDataPacket.create(this);
-	}
-
-
-	@Override
-	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-		this.load(pkt.getTag());
 	}
 
 	public class SpawnerLogicExt extends BaseSpawner {
@@ -75,7 +82,8 @@ public class ZenithSpawnerBlockEntity extends SpawnerBlockEntity implements Cust
 		public void setEntityId(EntityType<?> pType) {
 			super.setEntityId(pType);
 			this.spawnPotentials = SimpleWeightedRandomList.single(this.nextSpawnData);
-			if (ZenithSpawnerBlockEntity.this.level != null) this.delay(ZenithSpawnerBlockEntity.this.level, ZenithSpawnerBlockEntity.this.worldPosition);
+			if (ZenithSpawnerBlockEntity.this.level != null)
+				this.delay(ZenithSpawnerBlockEntity.this.level, ZenithSpawnerBlockEntity.this.worldPosition);
 		}
 
 		@Override
@@ -91,12 +99,6 @@ public class ZenithSpawnerBlockEntity extends SpawnerBlockEntity implements Cust
 				BlockState state = level.getBlockState(pos);
 				level.sendBlockUpdated(pos, state, state, 4);
 			}
-		}
-
-		@Nullable
-		//@Override
-		public BlockEntity getBlockEntity() {
-			return ZenithSpawnerBlockEntity.this;
 		}
 
 		private boolean isActivated(Level level, BlockPos pos) {

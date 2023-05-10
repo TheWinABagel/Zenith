@@ -26,6 +26,7 @@
     "ThrownTridentMixin",
     "anvil.AnvilBlockMixin",
     "anvil.AnvilMenuMixin",
+    "anvil.AnvilMenuMixinHigherPriority",
     "anvil.BlockBehaviourMixin",
     "anvil.BlockMixin",
     "anvil.FallingBlockEntityMixin",

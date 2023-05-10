@@ -2,7 +2,9 @@ package safro.zenith.spawn.modifiers;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import safro.zenith.spawn.spawner.ZenithSpawnerBlockEntity;
+import safro.zenith.util.IBaseSpawner;
 
 public class StatModifier<T> {
 
@@ -17,7 +19,7 @@ public class StatModifier<T> {
 		this.max = max.equals(-1) ? (T) Integer.valueOf(Integer.MAX_VALUE) : max;
 	}
 
-	public boolean apply(ZenithSpawnerBlockEntity tile) {
+	public boolean apply(IBaseSpawner tile) {
 		return this.stat.apply(value, min, max, tile);
 	}
 

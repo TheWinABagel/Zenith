@@ -19,8 +19,10 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import safro.zenith.spawn.SpawnerModule;
 import safro.zenith.spawn.spawner.ZenithSpawnerBlockEntity;
+import safro.zenith.util.IBaseSpawner;
 
 /**
  * Parent class for all spawner modifiers.
@@ -48,7 +50,7 @@ public class SpawnerModifier implements Recipe<Container> {
 	 * Tests if this modifier matches the held items.
 	 * @return If this modifier matches the given items.
 	 */
-	public boolean matches(ZenithSpawnerBlockEntity tile, ItemStack mainhand, ItemStack offhand) {
+	public boolean matches(SpawnerBlockEntity tile, ItemStack mainhand, ItemStack offhand) {
 		if (this.mainHand.test(mainhand)) {
 			if (this.offHand == Ingredient.EMPTY) return true;
 			return this.offHand.test(offhand);
@@ -60,12 +62,11 @@ public class SpawnerModifier implements Recipe<Container> {
 	 * Applies this modifier.
 	 * @return If any part of the modification was successful, and items should be consumed.
 	 */
-	public boolean apply(ZenithSpawnerBlockEntity tile) {
+	public boolean apply(IBaseSpawner tile) {
 		boolean success = false;
 		for (StatModifier<?> m : this.statChanges) {
 			if (m.apply(tile)) {
 				success = true;
-				tile.setChanged();
 			}
 		}
 		return success;
@@ -127,7 +128,7 @@ public class SpawnerModifier implements Recipe<Container> {
 	}
 
 	@Nullable
-	public static SpawnerModifier findMatch(ZenithSpawnerBlockEntity tile, ItemStack mainhand, ItemStack offhand) {
+	public static SpawnerModifier findMatch(SpawnerBlockEntity tile, ItemStack mainhand, ItemStack offhand) {
 		List<SpawnerModifier> recipes = tile.getLevel().getRecipeManager().getAllRecipesFor(SpawnerModule.MODIFIER);
 		return recipes.stream()
 				.sorted((r1, r2) -> r1.offHand == Ingredient.EMPTY ? r2.offHand == Ingredient.EMPTY ? 0 : 1 : -1)

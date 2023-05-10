@@ -1,6 +1,5 @@
 package safro.zenith.mixin.spawner;
 
-import io.github.fabricators_of_create.porting_lib.block.CustomExpBlock;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
@@ -11,7 +10,6 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -25,10 +23,10 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.SpawnerBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -41,7 +39,7 @@ import safro.zenith.advancements.AdvancementTriggers;
 import safro.zenith.spawn.SpawnerModule;
 import safro.zenith.spawn.modifiers.SpawnerModifier;
 import safro.zenith.spawn.modifiers.SpawnerStats;
-import safro.zenith.spawn.spawner.ZenithSpawnerBlockEntity;
+import safro.zenith.util.IBaseSpawner;
 
 import java.util.List;
 
@@ -52,10 +50,10 @@ public abstract class SpawnerBlockMixin extends BaseEntityBlock {
         super(properties);
     }
 
-    @ModifyArgs(method = "spawnAfterBreak", at = @At(value = "INVOKE", target = "net/minecraft/world/level/block/SpawnerBlock.popExperience (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;I)V"))
-    private void disableXpDrop(Args args, BlockState state, ServerLevel level, BlockPos pos, ItemStack stack, boolean dropExperience){
-        if(EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, stack) >= SpawnerModule.spawnerSilkLevel)
-            args.set(2, 0);
+    @Inject(method = "spawnAfterBreak", at = @At(value = "INVOKE", target = "net/minecraft/world/level/block/BaseEntityBlock.spawnAfterBreak (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/item/ItemStack;Z)V", shift = At.Shift.AFTER), cancellable = true)
+    private void zenithSilkDisableExp(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, ItemStack itemStack, boolean bl, CallbackInfo ci){
+        if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) >= SpawnerModule.spawnerSilkLevel)
+            ci.cancel();
     }
 
     @Inject(method = "getCloneItemStack", at = @At("HEAD"), cancellable = true)
@@ -67,13 +65,13 @@ public abstract class SpawnerBlockMixin extends BaseEntityBlock {
             cir.setReturnValue(s);
         }
     }
-
+/*
     @Inject(method = "newBlockEntity", at = @At("HEAD"), cancellable = true)
     private void zenithNew(BlockPos pPos, BlockState pState, CallbackInfoReturnable<BlockEntity> cir) {
         if (Zenith.enableSpawner) {
             cir.setReturnValue(new ZenithSpawnerBlockEntity(pPos, pState));
         }
-    }
+    }*/
 
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
@@ -81,9 +79,10 @@ public abstract class SpawnerBlockMixin extends BaseEntityBlock {
             BlockEntity te = world.getBlockEntity(pos);
             ItemStack stack = player.getItemInHand(hand);
             ItemStack otherStack = player.getItemInHand(hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
-            if (te instanceof ZenithSpawnerBlockEntity tile) {
+            Zenith.LOGGER.warn(te.toString());
+            if (te instanceof SpawnerBlockEntity tile) {
                 SpawnerModifier match = SpawnerModifier.findMatch(tile, stack, otherStack);
-                if (match != null && match.apply(tile)) {
+                if (match != null && match.apply((IBaseSpawner) tile)) {
                     if (world.isClientSide) return InteractionResult.SUCCESS;
                     if (!player.isCreative()) {
                         stack.shrink(1);
@@ -127,6 +126,8 @@ public abstract class SpawnerBlockMixin extends BaseEntityBlock {
                         tooltip.add(SpawnerStats.IGNORE_LIGHT.name().withStyle(ChatFormatting.DARK_GREEN));
                     if (tag.getBoolean("no_ai"))
                         tooltip.add(SpawnerStats.NO_AI.name().withStyle(ChatFormatting.DARK_GREEN));
+                    if (tag.getBoolean("silent"))
+                        tooltip.add(SpawnerStats.SILENT.name().withStyle(ChatFormatting.DARK_GREEN));
                 } else {
                     tooltip.add(Component.translatable("misc.zenith.shift_stats").withStyle(ChatFormatting.GRAY));
                 }

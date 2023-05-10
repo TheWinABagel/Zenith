@@ -21,6 +21,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -63,7 +64,7 @@ public class SpawnerModule {
     }
 
     public static InteractionResult handleUseItem(Level world, BlockPos pos, ItemStack s) {
-        if (world.getBlockEntity(pos) instanceof ZenithSpawnerBlockEntity) {
+        if (world.getBlockEntity(pos) instanceof SpawnerBlockEntity) {
             if (s.getItem() instanceof SpawnEggItem egg) {
                 EntityType<?> type = egg.getType(s.getTag());
                 if(invertBannedMobs) {
