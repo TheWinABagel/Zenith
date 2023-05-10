@@ -4,8 +4,6 @@ import com.google.gson.JsonElement;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
-import safro.zenith.spawn.spawner.ZenithSpawnerBlockEntity;
 import safro.zenith.util.IBaseSpawner;
 
 public interface SpawnerStat<T> {

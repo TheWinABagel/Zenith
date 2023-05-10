@@ -29,7 +29,6 @@ import safro.zenith.Zenith;
 import safro.zenith.api.config.Configuration;
 import safro.zenith.spawn.enchantment.CapturingEnchant;
 import safro.zenith.spawn.modifiers.SpawnerModifier;
-import safro.zenith.spawn.spawner.ZenithSpawnerBlockEntity;
 import safro.zenith.util.ZenithUtil;
 
 import java.io.File;

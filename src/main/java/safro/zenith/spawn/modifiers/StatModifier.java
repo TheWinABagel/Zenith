@@ -2,8 +2,6 @@ package safro.zenith.spawn.modifiers;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
-import safro.zenith.spawn.spawner.ZenithSpawnerBlockEntity;
 import safro.zenith.util.IBaseSpawner;
 
 public class StatModifier<T> {

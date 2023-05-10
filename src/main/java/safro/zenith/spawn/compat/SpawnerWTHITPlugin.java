@@ -8,9 +8,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.block.SpawnerBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import safro.zenith.Zenith;
 import safro.zenith.spawn.modifiers.SpawnerStats;
-import safro.zenith.spawn.spawner.ZenithSpawnerBlockEntity;
+import safro.zenith.util.IBaseSpawner;
 
 public class SpawnerWTHITPlugin implements IWailaPlugin, IBlockComponentProvider, IServerDataProvider<BlockEntity> {
     public static final String STATS = "spw_stats";
@@ -18,7 +19,7 @@ public class SpawnerWTHITPlugin implements IWailaPlugin, IBlockComponentProvider
     @Override
     public void register(IRegistrar registrar) {
         if (!Zenith.enableSpawner) return;
-        registrar.addBlockData(this, ZenithSpawnerBlockEntity.class);
+        registrar.addBlockData(this, SpawnerBlockEntity.class);
         registrar.addComponent(this, TooltipPosition.BODY, SpawnerBlock.class);
     }
 
@@ -27,7 +28,7 @@ public class SpawnerWTHITPlugin implements IWailaPlugin, IBlockComponentProvider
         if (!Zenith.enableSpawner) return;
         if (Screen.hasControlDown()) {
             int[] stats = accessor.getServerData().getIntArray(STATS);
-            if (stats.length != 11) return;
+            if (stats.length != 12) return;
             tooltip.addLine(concat(SpawnerStats.MIN_DELAY.name(), stats[0]));
             tooltip.addLine(concat(SpawnerStats.MAX_DELAY.name(), stats[1]));
             tooltip.addLine(concat(SpawnerStats.SPAWN_COUNT.name(), stats[2]));
@@ -39,32 +40,34 @@ public class SpawnerWTHITPlugin implements IWailaPlugin, IBlockComponentProvider
             if (stats[8] == 1) tooltip.addLine(SpawnerStats.REDSTONE_CONTROL.name().withStyle(ChatFormatting.DARK_GREEN));
             if (stats[9] == 1) tooltip.addLine(SpawnerStats.IGNORE_LIGHT.name().withStyle(ChatFormatting.DARK_GREEN));
             if (stats[10] == 1) tooltip.addLine(SpawnerStats.NO_AI.name().withStyle(ChatFormatting.DARK_GREEN));
+            if (stats[11] == 1) tooltip.addLine(SpawnerStats.SILENT.name().withStyle(ChatFormatting.DARK_GREEN));
         } else tooltip.addLine(Component.translatable("misc.zenith.ctrl_stats"));
     }
 
     @Override
     public void appendServerData(CompoundTag tag, IServerAccessor<BlockEntity> accessor, IPluginConfig config) {
         if (!Zenith.enableSpawner) return;
-        if (accessor.getTarget() instanceof ZenithSpawnerBlockEntity) {
-            ZenithSpawnerBlockEntity spw = (ZenithSpawnerBlockEntity) accessor.getTarget();
-            BaseSpawner logic = spw.getSpawner();
+        if (accessor.getTarget() instanceof SpawnerBlockEntity spw) {
+            BaseSpawner spawner = spw.getSpawner();
             //Formatter::off
             tag.putIntArray(STATS,
                     new int[] {
-                            logic.minSpawnDelay,
-                            logic.maxSpawnDelay,
-                            logic.spawnCount,
-                            logic.maxNearbyEntities,
-                            logic.requiredPlayerRange,
-                            logic.spawnRange,
-                            spw.ignoresPlayers ? 1 : 0,
-                            spw.ignoresConditions ? 1 : 0,
-                            spw.redstoneControl ? 1 : 0,
-                            spw.ignoresLight ? 1 : 0,
-                            spw.hasNoAI ? 1 : 0
+                            spawner.minSpawnDelay,
+                            spawner.maxSpawnDelay,
+                            spawner.spawnCount,
+                            spawner.maxNearbyEntities,
+                            spawner.requiredPlayerRange,
+                            spawner.spawnRange,
+                            (((IBaseSpawner) spw).getIgnoresPlayers()) ? 1 : 0,
+                            (((IBaseSpawner) spw).getIgnoresConditions()) ? 1 : 0,
+                            (((IBaseSpawner) spw).getRedstoneControl()) ? 1 : 0,
+                            (((IBaseSpawner) spw).getIgnoreLight()) ? 1 : 0,
+                            (((IBaseSpawner) spw).getNoAi()) ? 1 : 0,
+                            (((IBaseSpawner) spw).getSilent()) ? 1 : 0
                     });
             //Formatter::on
         }
+
     }
 
     public static Component concat(Object... args) {

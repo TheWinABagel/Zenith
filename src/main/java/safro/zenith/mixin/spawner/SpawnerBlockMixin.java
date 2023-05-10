@@ -8,18 +8,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.SpawnerBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -29,14 +25,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 import safro.zenith.Zenith;
 import safro.zenith.advancements.AdvancementTriggers;
-import safro.zenith.spawn.SpawnerModule;
 import safro.zenith.spawn.modifiers.SpawnerModifier;
 import safro.zenith.spawn.modifiers.SpawnerStats;
 import safro.zenith.util.IBaseSpawner;
@@ -50,11 +41,7 @@ public abstract class SpawnerBlockMixin extends BaseEntityBlock {
         super(properties);
     }
 
-    @Inject(method = "spawnAfterBreak", at = @At(value = "INVOKE", target = "net/minecraft/world/level/block/BaseEntityBlock.spawnAfterBreak (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/item/ItemStack;Z)V", shift = At.Shift.AFTER), cancellable = true)
-    private void zenithSilkDisableExp(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, ItemStack itemStack, boolean bl, CallbackInfo ci){
-        if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, itemStack) >= SpawnerModule.spawnerSilkLevel)
-            ci.cancel();
-    }
+    //Injecting at the call for spawnAfterBreak doesn't work for disabling xp and I don't know why and I wasted multiple hours of my life trying to get it to work aaaaaaaa
 
     @Inject(method = "getCloneItemStack", at = @At("HEAD"), cancellable = true)
     private void zenithGetClone(BlockGetter world, BlockPos pos, BlockState blockState, CallbackInfoReturnable<ItemStack> cir) {
@@ -65,13 +52,6 @@ public abstract class SpawnerBlockMixin extends BaseEntityBlock {
             cir.setReturnValue(s);
         }
     }
-/*
-    @Inject(method = "newBlockEntity", at = @At("HEAD"), cancellable = true)
-    private void zenithNew(BlockPos pPos, BlockState pState, CallbackInfoReturnable<BlockEntity> cir) {
-        if (Zenith.enableSpawner) {
-            cir.setReturnValue(new ZenithSpawnerBlockEntity(pPos, pState));
-        }
-    }*/
 
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
@@ -79,7 +59,6 @@ public abstract class SpawnerBlockMixin extends BaseEntityBlock {
             BlockEntity te = world.getBlockEntity(pos);
             ItemStack stack = player.getItemInHand(hand);
             ItemStack otherStack = player.getItemInHand(hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
-            Zenith.LOGGER.warn(te.toString());
             if (te instanceof SpawnerBlockEntity tile) {
                 SpawnerModifier match = SpawnerModifier.findMatch(tile, stack, otherStack);
                 if (match != null && match.apply((IBaseSpawner) tile)) {

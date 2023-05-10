@@ -10,10 +10,11 @@ import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SpawnerBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import safro.zenith.Zenith;
 import safro.zenith.spawn.SpawnerModule;
 import safro.zenith.spawn.modifiers.SpawnerStats;
-import safro.zenith.spawn.spawner.ZenithSpawnerBlockEntity;
+import safro.zenith.util.IBaseSpawner;
 import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.IBlockComponentProvider;
 import snownee.jade.api.IServerDataProvider;
@@ -31,7 +32,7 @@ public class SpawnerJadePlugin implements IWailaPlugin, IBlockComponentProvider,
 
     @Override
     public void register(IWailaCommonRegistration reg) {
-        reg.registerBlockDataProvider(this, ZenithSpawnerBlockEntity.class);
+        reg.registerBlockDataProvider(this, SpawnerBlockEntity.class);
     }
 
     @Override
@@ -61,7 +62,7 @@ public class SpawnerJadePlugin implements IWailaPlugin, IBlockComponentProvider,
 
     @Override
     public void appendServerData(CompoundTag tag, ServerPlayer player, Level world, BlockEntity te, boolean arg4) {
-        if (te instanceof ZenithSpawnerBlockEntity spw) {
+        if (te instanceof SpawnerBlockEntity spw) {
             BaseSpawner logic = spw.getSpawner();
             //Formatter::off
             tag.putIntArray(STATS,
@@ -72,12 +73,12 @@ public class SpawnerJadePlugin implements IWailaPlugin, IBlockComponentProvider,
                             logic.maxNearbyEntities,
                             logic.requiredPlayerRange,
                             logic.spawnRange,
-                            spw.ignoresPlayers ? 1 : 0,
-                            spw.ignoresConditions ? 1 : 0,
-                            spw.redstoneControl ? 1 : 0,
-                            spw.ignoresLight ? 1 : 0,
-                            spw.hasNoAI ? 1 : 0,
-                            spw.silent ? 1 : 0
+                            (((IBaseSpawner) spw).getIgnoresPlayers()) ? 1 : 0,
+                            (((IBaseSpawner) spw).getIgnoresConditions()) ? 1 : 0,
+                            (((IBaseSpawner) spw).getRedstoneControl()) ? 1 : 0,
+                            (((IBaseSpawner) spw).getIgnoreLight()) ? 1 : 0,
+                            (((IBaseSpawner) spw).getNoAi()) ? 1 : 0,
+                            (((IBaseSpawner) spw).getSilent()) ? 1 : 0
                     });
             //Formatter::on
         }

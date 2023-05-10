@@ -21,7 +21,6 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import safro.zenith.spawn.SpawnerModule;
-import safro.zenith.spawn.spawner.ZenithSpawnerBlockEntity;
 import safro.zenith.util.IBaseSpawner;
 
 /**
