@@ -1,18 +1,17 @@
 package safro.zenith.ench.objects;
 
-import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
 
-public class GlowyItem extends BlockItem {
+public class GlowyItem extends Item {
 
-	public GlowyItem(Block pBlock, Properties pProperties) {
-		super(pBlock, pProperties);
-	}
+    public GlowyItem(Properties pProperties) {
+        super(pProperties);
+    }
 
-	@Override
-	public boolean isFoil(ItemStack pStack) {
-		return true;
-	}
+    @Override
+    public boolean isFoil(ItemStack pStack) {
+        return true;
+    }
 
 }

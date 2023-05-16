@@ -1,0 +1,19 @@
+{
+	"conditions": [{
+		"type": "forge:mod_loaded",
+		"modid": "twilightforest"
+	}],
+  "weight": 100,
+  "quality": 1,
+  "stack": {
+    "item": "twilightforest:ironwood_shovel",
+    "count": 1,
+    "nbt": "{Damage:0}"
+  },
+  "type": "BREAKER",
+  "dimensions": [
+    "twilightforest:twilight_forest"
+  ],
+  "min_rarity": "uncommon",
+  "max_rarity": "epic"
+}

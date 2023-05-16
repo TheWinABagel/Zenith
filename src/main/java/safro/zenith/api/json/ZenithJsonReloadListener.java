@@ -138,6 +138,10 @@ public abstract class ZenithJsonReloadListener<V extends ZenithJsonReloadListene
         }
     }
 
+    protected <T extends V> void validateItem(T item) {
+        Preconditions.checkNotNull(item);
+    }
+
     /**
      * Registers a single item of this type to the registry during reload.
      * You can override this method to process things a bit differently.

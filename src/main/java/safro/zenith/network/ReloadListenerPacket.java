@@ -9,6 +9,8 @@ import net.minecraft.server.level.ServerPlayer;
 import safro.zenith.Zenith;
 import safro.zenith.api.event.ServerEvents;
 import safro.zenith.api.json.ZenithJsonReloadListener;
+import safro.zenith.api.placebo.json.PlaceboJsonReloadListener;
+import safro.zenith.api.placebo.json.TypeKey;
 
 import java.util.List;
 
@@ -51,6 +53,21 @@ public class ReloadListenerPacket {
                 }
             }
         }
+        public static <V extends TypeKey<V>> void sendToAllNew(String path, ResourceLocation k, V v) {
+            if (ServerEvents.getCurrentServer() != null) {
+                List<ServerPlayer> list = ServerEvents.getCurrentServer().getPlayerList().getPlayers();
+                for (ServerPlayer p : list) {
+                    sendToNew(p, path, k, v);
+                }
+            }
+        }
+        public static <V extends TypeKey<V>> void sendToNew(ServerPlayer player, String path, ResourceLocation k, V v) {
+            FriendlyByteBuf buf = PacketByteBufs.create();
+            buf.writeUtf(path, 50);
+            buf.writeResourceLocation(k);
+            PlaceboJsonReloadListener.writeItem(path, v, buf);
+            ServerPlayNetworking.send(player, ID, buf);
+        }
 
         public static <V extends ZenithJsonReloadListener.TypeKeyed<V>> void sendTo(ServerPlayer player, String path, ResourceLocation k, V v) {
             FriendlyByteBuf buf = PacketByteBufs.create();
@@ -66,6 +83,7 @@ public class ReloadListenerPacket {
                 ResourceLocation key = buf.readResourceLocation();
                 V item = ZenithJsonReloadListener.readItem(path, key, buf);
                 ZenithJsonReloadListener.acceptItem(path, key, item);
+
             }));
         }
     }

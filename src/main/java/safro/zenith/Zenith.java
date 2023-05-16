@@ -24,6 +24,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import safro.zenith.advancements.AdvancementTriggers;
+import safro.zenith.adventure.AdventureModule;
 import safro.zenith.api.RunnableReloader;
 import safro.zenith.api.config.Configuration;
 import safro.zenith.api.event.ServerEvents;
@@ -69,7 +70,7 @@ public class Zenith implements ModInitializer {
 	public static Configuration config;
 	public static boolean enableSpawner = true;
 	public static boolean enableGarden = true;
-//	public static boolean enableAdventure = false;
+	public static boolean enableAdventure = false;
 	public static boolean enableEnch = true;
 	public static boolean enablePotion = true;
 	public static boolean enableVillage = true;
@@ -83,7 +84,7 @@ public class Zenith implements ModInitializer {
 		enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
 		enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If the spawner module is enabled.");
 		enableGarden = config.getBoolean("Enable Garden Module", "general", true, "If the garden module is loaded.");
-//		enableAdventure = config.getBoolean("Enable Adventure Module", "general", true, "If the adventure module is loaded.");
+		enableAdventure = config.getBoolean("Enable Adventure Module", "general",  false, "If the adventure module is loaded. WARNING: UNFINISHED, BUGGY");
 		enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
 		enableVillage = config.getBoolean("Enable Village Module", "general", true, "If the village module is loaded.");
 		giveBook = config.getBoolean("Give Book on First Join", "general", true, "If the Chronicle of Shadows is given to new players.");
@@ -104,7 +105,7 @@ public class Zenith implements ModInitializer {
 		if (enableEnch) EnchModule.init();
 		if (enableSpawner) SpawnerModule.init();
 		if (enableGarden) GardenModule.init();
-//		if (enableAdventure) AdventureModule.init();
+		if (enableAdventure) AdventureModule.init();
 		if (enablePotion) PotionModule.init();
 		if (enableVillage) VillageModule.init();
 
@@ -123,9 +124,9 @@ public class Zenith implements ModInitializer {
 	}
 
 	public static void addReloads() {
-//		RunnableReloader.add(() -> {
-//			if (enableAdventure) AdventureModule.init();
-//		}, "adventure_module");
+		RunnableReloader.add(() -> {
+			if (enableAdventure) AdventureModule.init();
+		}, "adventure_module");
 		RunnableReloader.add(() -> {
 			if (enableEnch) EnchModule.reload(true);
 		}, "enchantment_module");
