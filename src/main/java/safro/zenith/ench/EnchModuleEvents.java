@@ -16,9 +16,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import safro.zenith.Zenith;
 import safro.zenith.api.json.ZenithJsonReloadListener;
+import safro.zenith.api.placebo.json.PlaceboJsonReloadListener;
 import safro.zenith.ench.enchantments.SpearfishingEnchant;
 import safro.zenith.ench.enchantments.masterwork.KnowledgeEnchant;
 import safro.zenith.ench.enchantments.masterwork.ScavengerEnchant;
+import safro.zenith.ench.objects.ExtractionTomeItem;
+import safro.zenith.ench.objects.ImprovedScrappingTomeItem;
 import safro.zenith.ench.objects.ScrappingTomeItem;
 import safro.zenith.ench.table.EnchantingStatManager;
 
@@ -34,6 +37,11 @@ public class EnchModuleEvents {
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> {
             if (!ZenithJsonReloadListener.SYNC_REGISTRY.isEmpty()) {
                 for (Map.Entry<String, ZenithJsonReloadListener<?>> entry : ZenithJsonReloadListener.SYNC_REGISTRY.entrySet()) {
+                    if (entry.getValue() != null) {
+                        entry.getValue().sync(player);
+                    }
+                }
+                for (Map.Entry<String, PlaceboJsonReloadListener<?>> entry : PlaceboJsonReloadListener.SYNC_REGISTRY.entrySet()) {
                     if (entry.getValue() != null) {
                         entry.getValue().sync(player);
                     }
@@ -84,9 +92,11 @@ public class EnchModuleEvents {
         }
 
         Pair<ItemStack, List<Integer>> scrapTome = ScrappingTomeItem.updateAnvil(left, right, player);
-        if (scrapTome != null) {
-            return scrapTome;
-        }
+        Pair<ItemStack, List<Integer>> improvedScrapTome = ImprovedScrappingTomeItem.updateAnvil(left, right, player);
+        Pair<ItemStack, List<Integer>> extractionTome = ExtractionTomeItem.updateAnvil(left, right, player);
+        if (scrapTome != null) return scrapTome;
+        if (improvedScrapTome != null) return improvedScrapTome;
+        if (extractionTome != null) return extractionTome;
         return new Pair<>(ItemStack.EMPTY, List.of(cost, materialCost));
     }
 

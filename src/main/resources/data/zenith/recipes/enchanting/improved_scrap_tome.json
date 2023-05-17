@@ -1,0 +1,28 @@
+{
+	"type": "apotheosis:enchanting",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "enchantment"
+	},
+	{
+		"condition": "zenith:module",
+		"module": "adventure"
+	}],
+	"input": {
+		"item": "zenith:scrap_tome"
+	},
+	"requirements": {
+		"eterna": 22.5,
+		"quanta": 25,
+		"arcana": 35
+	},
+	"max_requirements": {
+		"eterna": -1,
+		"quanta": 50,
+		"arcana": -1
+	},
+	"result": {
+		"item": "zenith:improved_scrap_tome",
+		"count": 4
+	}
+}

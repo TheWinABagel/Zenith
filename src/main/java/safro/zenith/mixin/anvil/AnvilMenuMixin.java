@@ -7,16 +7,22 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.ItemCombinerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import safro.zenith.Zenith;
 import safro.zenith.ench.EnchModuleEvents;
+import safro.zenith.ench.objects.ExtractionTomeItem;
 import safro.zenith.util.ZenithUtil;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-    @Mixin(value = AnvilMenu.class, priority = 999)
+import java.util.Collections;
+
+import static safro.zenith.ench.objects.ExtractionTomeItem.giveItem;
+
+@Mixin(value = AnvilMenu.class, priority = 999)
     public abstract class AnvilMenuMixin extends ItemCombinerMenu {
         private static Player p = null;
 
@@ -44,6 +50,14 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
         @Inject(method = "onTake", at = @At("HEAD"))
         private void zenithGetVars(Player player, ItemStack itemStack, CallbackInfo ci) {
+            if (Zenith.enableEnch) {
+            ItemStack left = inputSlots.getItem(0);
+            ItemStack right = inputSlots.getItem(1);
+                if ((right.getItem() instanceof ExtractionTomeItem) && left.isEnchanted() && !right.isEnchanted()) {
+                    EnchantmentHelper.setEnchantments(Collections.emptyMap(), left);
+                    giveItem(player, left);
+                }
+            }
             p = player;
         }
 

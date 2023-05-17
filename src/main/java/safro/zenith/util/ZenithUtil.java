@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class ZenithUtil {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 
@@ -67,6 +68,7 @@ public class ZenithUtil {
 
         // Definitely not cursed
         Pair<ItemStack, List<Integer>> results = EnchModuleEvents.anvilEvent(left, right, player, cost, materialCost);
+
         output = results.getFirst();
         cost = results.getSecond().get(0);
         materialCost = results.getSecond().get(1);
