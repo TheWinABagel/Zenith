@@ -35,7 +35,7 @@ public abstract class PlaceboJsonReloadListener<V extends TypeKey<V>> extends Si
 	 */
 	public static final ResourceLocation DEFAULT = new ResourceLocation("default");
 
-	private static final Map<String, PlaceboJsonReloadListener<?>> SYNC_REGISTRY = new HashMap<>();
+	public static final Map<String, PlaceboJsonReloadListener<?>> SYNC_REGISTRY = new HashMap<>();
 
 	protected final Logger logger;
 	protected final String path;
@@ -63,6 +63,12 @@ public abstract class PlaceboJsonReloadListener<V extends TypeKey<V>> extends Si
 		this.serializers = new SerializerMap<>(path);
 		this.registerBuiltinSerializers();
 		if (this.serializers.isEmpty()) throw new RuntimeException("Attempted to create a json reload listener for " + path + " with no built-in serializers!");
+	}
+
+	public void init(){
+		if (this.synced) {
+			registerForSync(this);
+		}
 	}
 
 	@Override
@@ -146,7 +152,7 @@ public abstract class PlaceboJsonReloadListener<V extends TypeKey<V>> extends Si
 		return this.callbacks.remove(callback);
 	}
 
-	private final void sync(ServerPlayer player) {
+	public final void sync(ServerPlayer player) {
 		if (player == null) {
 			ReloadListenerPacket.Start.sendToAll(this.path);
 			this.registry.forEach((k, v) -> {

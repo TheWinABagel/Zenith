@@ -8,6 +8,8 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,9 +20,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import safro.zenith.Zenith;
 import safro.zenith.adventure.AdventureEvents;
+import safro.zenith.adventure.AdventureModule;
+import safro.zenith.adventure.affix.Affix;
+import safro.zenith.adventure.affix.AffixHelper;
+import safro.zenith.adventure.affix.AffixInstance;
 import safro.zenith.ench.enchantments.ReflectiveEnchant;
 import safro.zenith.ench.enchantments.corrupted.LifeMendingEnchant;
 import safro.zenith.potion.PotionModule;
+
+import java.util.Map;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
@@ -64,6 +72,18 @@ public abstract class LivingEntityMixin {
                 ci.cancel();
             }
         }
+    }
+//TODO create Inject for shield
+    public void shieldBlock(DamageSource damageSource, float f, CallbackInfoReturnable<Boolean> cir) {
+        LivingEntity source= ((LivingEntity) damageSource.getEntity());
+        ItemStack stack = source.getUseItem();
+        Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
+        float blocked = f;
+        for (AffixInstance inst : affixes.values()) {
+            blocked = inst.onShieldBlock(source, damageSource, blocked);
+        }
+        if (blocked != f)
+            f = blocked;
     }
 
     @Inject(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;hurtCurrentlyUsedShield(F)V", shift = At.Shift.BEFORE))
@@ -117,5 +137,18 @@ public abstract class LivingEntityMixin {
                 }
             }
         }
+    }
+    @Inject(method = "createLivingAttributes", at = @At("RETURN"))
+    private static void createAttributes(CallbackInfoReturnable<AttributeSupplier.Builder> cir) {
+        AttributeSupplier.Builder builder = cir.getReturnValue();
+        if (Zenith.enableAdventure) {
+            addIfExists(builder, AdventureModule.COLD_DAMAGE, AdventureModule.CRIT_CHANCE, AdventureModule.CRIT_DAMAGE, AdventureModule.CURRENT_HP_DAMAGE, AdventureModule.DRAW_SPEED, AdventureModule.FIRE_DAMAGE, AdventureModule.LIFE_STEAL, AdventureModule.OVERHEAL, AdventureModule.PIERCING, AdventureModule.GHOST_HEALTH, AdventureModule.MINING_SPEED, AdventureModule.ARROW_DAMAGE, AdventureModule.ARROW_VELOCITY, AdventureModule.EXPERIENCE_GAINED);
+        }
+    }
+
+
+    private static void addIfExists(AttributeSupplier.Builder builder, Attribute... attribs) {
+        for (Attribute attrib : attribs)
+            if (attrib != null) builder.add(attrib);
     }
 }

@@ -226,11 +226,11 @@ public abstract class GemBonus implements PlaceboCodecs.CodecProvider<GemBonus> 
 	}
 
 	public static void initCodecs() {
-	//	register("attribute", AttributeBonus.CODEC);
-	//	register("multi_attribute", MultiAttrBonus.CODEC);
-	//	register("durability", DurabilityBonus.CODEC);
-	//	register("damage_reduction", DamageReductionBonus.CODEC);
-	//	register("enchantment", EnchantmentBonus.CODEC);
+		register("attribute", AttributeBonus.CODEC);
+		register("multi_attribute", MultiAttrBonus.CODEC);
+		register("durability", DurabilityBonus.CODEC);
+		register("damage_reduction", DamageReductionBonus.CODEC);
+		register("enchantment", EnchantmentBonus.CODEC);
 	}
 
 	private static void register(String id, Codec<? extends GemBonus> codec) {

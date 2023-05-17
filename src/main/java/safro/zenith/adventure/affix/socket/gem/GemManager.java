@@ -19,8 +19,8 @@ public class GemManager extends WeightedJsonReloadListener<Gem> {
 		super(AdventureModule.LOGGER, "gems", true, false);
 	}
 
-	public static void init() {
-	}
+//	public static void init() {
+	//}
 
 
 	@Override

@@ -1,5 +1,5 @@
 {
-	"type": "apotheosis:enchanting",
+	"type": "zenith:enchanting",
 	"fabric:load_conditions": [{
 		"condition": "zenith:module",
 		"module": "enchantment"

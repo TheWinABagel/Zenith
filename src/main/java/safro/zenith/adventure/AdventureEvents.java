@@ -1,22 +1,38 @@
 package safro.zenith.adventure;
 
 import com.google.common.collect.ImmutableSet;
+import io.github.fabricators_of_create.porting_lib.event.common.BlockEvents;
+import io.github.fabricators_of_create.porting_lib.event.common.EntityEvents;
+import io.github.fabricators_of_create.porting_lib.event.common.LivingEntityEvents;
+import io.github.fabricators_of_create.porting_lib.event.common.PlayerEvents;
+import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.item.v1.ModifyItemAttributeModifiersCallback;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import safro.zenith.Zenith;
 import safro.zenith.adventure.affix.Affix;
 import safro.zenith.adventure.affix.AffixHelper;
 import safro.zenith.adventure.affix.AffixInstance;
-import safro.zenith.adventure.commands.GemCommand;
-import safro.zenith.adventure.commands.LootifyCommand;
-import safro.zenith.adventure.commands.RarityCommand;
-import safro.zenith.adventure.commands.SocketCommand;
+import safro.zenith.adventure.commands.*;
 import safro.zenith.adventure.loot.LootCategory;
+import safro.zenith.ench.EnchModuleEvents;
+import safro.zenith.util.DamageSourceUtil;
 
 import java.util.Map;
 import java.util.Set;
@@ -26,10 +42,16 @@ public class AdventureEvents {
 
 	static void init() {
 		affixModifiers();
+	//	pierce();
+		breakSpd();
+		attack();
+		onDamage();
+		afterDamage();
 		LootifyCommand.init();
 		RarityCommand.init();
 		GemCommand.init();
 		SocketCommand.init();
+		ModifierCommand.init();
 	}
 
 /*
@@ -38,7 +60,6 @@ public class AdventureEvents {
 
 	public void cmds(ApotheosisCommandEvent e) {
 		CategoryCheckCommand.register(e.getRoot());
-		ModifierCommand.register(e.getRoot());
 	}
 */
 	private static final UUID HEAVY_WEAPON_AS = UUID.fromString("f8c3de3d-1fea-4d7c-a8b0-29f63c4c3454");
@@ -67,7 +88,7 @@ public class AdventureEvents {
 	public static int drawSpeed(LivingEntity e, ItemStack item, int currentTicks) {
 		if (e instanceof Player player) {
 			double t = player.getAttribute(AdventureModule.DRAW_SPEED).getValue() - 1;
-			if (t == 0 || !LootCategory.forItem(item).isRanged()) return currentTicks;
+			if (t == 0 || !isRanged(item)) return currentTicks;
 			float clamped = values.stream().filter(f -> f >= t).min(Float::compareTo).orElse(3F);
 			while (clamped > 0) {
 				if (e.tickCount % (int) Math.floor(1 / Math.min(1, t)) == 0) currentTicks--;
@@ -111,98 +132,115 @@ public class AdventureEvents {
 			affixes.values().forEach(inst -> inst.onArrowImpact(arrow, e.getRayTraceResult(), e.getRayTraceResult().getType()));
 		}
 	}
+*/
 
-	public void pierce(LivingHurtEvent e) {
-		if (e.getSource().getDirectEntity() instanceof LivingEntity attacker) {
-			if (!e.getSource().isBypassArmor() && !e.getSource().isMagic()) {
-				LivingEntity target = e.getEntity();
-				float pierce = (float) (attacker.getAttributeValue(AdventureModule.PIERCING) - 1);
-				if (pierce > 0.001) {
-					float pierceDmg = e.getAmount() * pierce;
-					e.setAmount(e.getAmount() - pierceDmg);
-					int time = target.invulnerableTime;
-					target.invulnerableTime = 0;
-					target.hurt(DamageSourceUtil.copy(e.getSource()).bypassArmor(), pierceDmg);
-					target.invulnerableTime = time;
+	public static void pierce() {
+		LivingEntityEvents.ACTUALLY_HURT.register(((source, damaged, amount) -> {
+			if (source.getDirectEntity() instanceof LivingEntity attacker) {
+				if (!source.isBypassArmor() && !source.isMagic()) {
+					LivingEntity target = damaged;
+					float pierce = (float) (attacker.getAttributeValue(AdventureModule.PIERCING) - 1);
+					if (pierce > 0.001) {
+						float pierceDmg = amount * pierce;
+						float newAmount = (amount - pierceDmg);
+						int time = damaged.invulnerableTime;
+						damaged.invulnerableTime = 0;
+						damaged.hurt(DamageSourceUtil.copy(source).bypassArmor(), pierceDmg);
+						damaged.invulnerableTime = time;
+						return newAmount;
+					}
 				}
 			}
-		}
+			return amount;
+		}));
+
 	}
 
-	public void onDamage(LivingHurtEvent e) {
-		Apoth.Affixes.MAGICAL.ifPresent(afx -> afx.onHurt(e));
-		DamageSource src = e.getSource();
-		LivingEntity ent = e.getEntity();
-		float amount = e.getAmount();
+	public static void onDamage() {
+		LivingEntityEvents.ACTUALLY_HURT.register(((source, damaged, amount) -> {
+			float finalAmount = amount;
+			AdventureModule.MAGICAL.ifPresent(afx -> afx.onHurt(source, finalAmount));
+			LivingEntity ent = (LivingEntity) source.getEntity();
+			if (ent==null)
+				return amount;
 		for (ItemStack s : ent.getAllSlots()) {
 			Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(s);
 			for (AffixInstance inst : affixes.values()) {
-				amount = inst.onHurt(src, ent, amount);
+				amount = inst.onHurt(source, ent, amount);
 			}
 		}
-		e.setAmount(amount);
+		return amount;
+		}));
 	}
 
 	/**
 	 * This event handler manages the Life Steal and Overheal attributes.
 	 */
-/*	public void afterDamage(LivingHurtEvent e) {
-		if (e.getSource().getDirectEntity() instanceof LivingEntity attacker && !e.getSource().isMagic()) {
+	public static void afterDamage() {
+		LivingEntityEvents.ACTUALLY_HURT.register(((source, damaged, amount) -> {
+		if (source.getDirectEntity() instanceof LivingEntity attacker && !source.isMagic()) {
 			float lifesteal = (float) attacker.getAttributeValue(AdventureModule.LIFE_STEAL) - 1;
-			float dmg = Math.min(e.getAmount(), e.getEntity().getHealth());
+			AdventureModule.LOGGER.error("lifesteal level: " + lifesteal);
+			float dmg = Math.min(amount, damaged.getHealth());
 			if (lifesteal > 0.001) {
 				attacker.heal(dmg * lifesteal);
 			}
 			float overheal = (float) attacker.getAttributeValue(AdventureModule.OVERHEAL) - 1;
+			AdventureModule.LOGGER.error("overheal level: " + overheal);
 			if (overheal > 0 && attacker.getAbsorptionAmount() < 20) {
 				attacker.setAbsorptionAmount(Math.min(20, attacker.getAbsorptionAmount() + dmg * overheal));
 			}
 		}
 
-		if (e.getSource() == DamageSource.IN_WALL && e.getEntity().getPersistentData().contains("apoth.boss")) {
-			e.setCanceled(true);
+		if (source == DamageSource.IN_WALL && damaged.getExtraCustomData().contains("apoth.boss")) {
+			return 0;
 		}
+
+			return amount;
+		}));
 	}
 
 	private static boolean noRecurse = false;
 
-	LivingEntityEvents.Attack
 
-	public void attack(LivingAttackEvent e) {
-		if (e.getEntity().level.isClientSide) return;
-		if (noRecurse) return;
+	public static void attack() {
+		LivingEntityEvents.ACTUALLY_HURT.register(((source, damaged, amount) -> {
+		if (source.getEntity()==null) return amount;
+		if (source.getEntity().level.isClientSide) return amount;
+		if (noRecurse) return amount;
 		noRecurse = true;
-		Entity direct = e.getSource().getDirectEntity();
+		Entity direct = source.getDirectEntity();
 		direct = direct instanceof AbstractArrow arr ? arr.getOwner() : direct;
-		if (direct instanceof LivingEntity attacker && !e.getSource().isMagic()) {
+		if (direct instanceof LivingEntity attacker && !source.isMagic()) {
 			float hpDmg = (float) attacker.getAttributeValue(AdventureModule.CURRENT_HP_DAMAGE) - 1;
 			float fireDmg = (float) attacker.getAttributeValue(AdventureModule.FIRE_DAMAGE);
 			float coldDmg = (float) attacker.getAttributeValue(AdventureModule.COLD_DAMAGE);
-			LivingEntity target = e.getEntity();
-			int time = target.invulnerableTime;
-			target.invulnerableTime = 0;
+			int time = damaged.invulnerableTime;
+			damaged.invulnerableTime = 0;
 			if (hpDmg > 0.001 && Zenith.localAtkStrength >= 0.85F) {
-				target.hurt(src(attacker), Zenith.localAtkStrength * hpDmg * target.getHealth());
+				damaged.hurt(src(attacker), Zenith.localAtkStrength * hpDmg * damaged.getHealth());
 			}
-			target.invulnerableTime = 0;
+			damaged.invulnerableTime = 0;
 			if (fireDmg > 0.001 && Zenith.localAtkStrength >= 0.45F) {
-				target.hurt(src(attacker).setMagic().bypassArmor(), Zenith.localAtkStrength * fireDmg);
-				target.setRemainingFireTicks(Math.max(target.getRemainingFireTicks(), (int) (15 * fireDmg)));
+				damaged.hurt(src(attacker).setMagic().bypassArmor(), Zenith.localAtkStrength * fireDmg);
+				damaged.setRemainingFireTicks(Math.max(damaged.getRemainingFireTicks(), (int) (15 * fireDmg)));
 			}
-			target.invulnerableTime = 0;
+			damaged.invulnerableTime = 0;
 			if (coldDmg > 0.001 && Zenith.localAtkStrength >= 0.45F) {
-				target.hurt(src(attacker).setMagic().bypassArmor(), Zenith.localAtkStrength * coldDmg);
-				target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (15 * coldDmg), Mth.floor(coldDmg / 5)));
+				damaged.hurt(src(attacker).setMagic().bypassArmor(), Zenith.localAtkStrength * coldDmg);
+				damaged.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (15 * coldDmg), Mth.floor(coldDmg / 5)));
 			}
-			target.invulnerableTime = time;
+			damaged.invulnerableTime = time;
 		}
 		noRecurse = false;
+			return amount;
+		}));
 	}
 
 	private static DamageSource src(LivingEntity entity) {
 		return entity instanceof Player p ? DamageSource.playerAttack(p) : DamageSource.mobAttack(entity);
 	}
-
+/*
 	public void crit(CriticalHitEvent e) {
 		double critChance = e.getEntity().getAttributeValue(AdventureModule.CRIT_CHANCE) - 1;
 		float critDmg = (float) e.getEntity().getAttributeValue(AdventureModule.CRIT_DAMAGE);
@@ -229,43 +267,41 @@ public class AdventureEvents {
 
 		e.setDamageModifier(critDmg);
 	}
+*/
+	public static void breakSpd() {
 
-	public void breakSpd(PlayerEvents.BreakSpeed e) {
-		e.setNewSpeed(e.getNewSpeed() * (float) e.getEntity().getAttributeValue(AdventureModule.MINING_SPEED));
+		PlayerEvents.BREAK_SPEED.register((player) -> {
+			player.setNewSpeed(player.getNewSpeed() * (float) ((LivingEntity) (player.getEntity())).getAttributeValue(AdventureModule.MINING_SPEED));
+		});
 	}
-
-	public void onItemUse(ItemUseEvent e) {
-		ItemStack s = e.getItemStack();
-		Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(s);
-		for (AffixInstance inst : affixes.values()) {
-			InteractionResult type = inst.onItemUse(e.getContext());
-			if (type != null) {
-				e.setCanceled(true);
-				e.setCancellationResult(type);
+//TODO figure out how to get this to work
+	public void onItemUse(){
+	UseItemCallback.EVENT.register((player, world, hand) -> {
+			ItemStack s = player.getItemInHand(hand);
+			Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(s);
+			for (AffixInstance inst : affixes.values()) {
+			//	InteractionResult type = inst.onItemUse(player.getContext());
+			//	if (type != null) {
+				//	return;
+			//	}
 			}
-		}
+		return InteractionResultHolder.success(player.getItemInHand(hand));
+	});
 	}
 
-	public void shieldBlock(ShieldBlockEvent e) {
-		ItemStack stack = e.getEntity().getUseItem();
-		Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
-		float blocked = e.getBlockedDamage();
-		for (AffixInstance inst : affixes.values()) {
-			blocked = inst.onShieldBlock(e.getEntity(), e.getDamageSource(), blocked);
-		}
-		if (blocked != e.getOriginalBlockedDamage()) e.setBlockedDamage(blocked);
-	}
+
 
 	public void blockBreak(BlockEvents.BreakEvent e) {
-		double xpMult = e.getPlayer().getAttributeValue(AdventureModule.EXPERIENCE_GAINED);
-		e.setExpToDrop((int) (e.getExpToDrop() * xpMult));
-		ItemStack stack = e.getPlayer().getMainHandItem();
-		Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
-		for (AffixInstance inst : affixes.values()) {
-			inst.onBlockBreak(e.getPlayer(), e.getWorld(), e.getPos(), e.getState());
+			double xpMult = e.getPlayer().getAttributeValue(AdventureModule.EXPERIENCE_GAINED);
+			e.setExpToDrop((int) (e.getExpToDrop() * xpMult));
+			ItemStack stack = e.getPlayer().getMainHandItem();
+			Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
+			for (AffixInstance inst : affixes.values()) {
+				inst.onBlockBreak(e.getPlayer(), e.getWorld(), e.getPos(), e.getState());
+			}
 		}
-	}
 
+/*
 	public void mobXp(LivingExperienceDropEvent e) {
 		Player player = e.getAttackingPlayer();
 		if (player == null) return;
@@ -274,6 +310,7 @@ public class AdventureEvents {
 	}
 
 	public void arrow(EntityJoinLevelEvent e) {
+		EntityEvents.ON_JOIN_WORLD.register();
 		if (e.getEntity() instanceof AbstractArrow arrow) {
 			if (arrow.level.isClientSide || arrow.getExtraCustomData().getBoolean("apoth.attrib.done")) return; //TODO add custom data
 			if (arrow.getOwner() instanceof LivingEntity le) {
@@ -335,17 +372,7 @@ public class AdventureEvents {
 		}
 	}
 
-	public void gemSmashing(AnvilLandEvent e) {
-		Level level = e.getLevel();
-		BlockPos pos = e.getPos();
-		List<ItemEntity> items = level.getEntitiesOfClass(ItemEntity.class, new AABB(pos, pos.offset(1, 1, 1)));
-		for (ItemEntity ent : items) {
-			ItemStack stack = ent.getItem();
-			if (stack.getItem() == Apoth.Items.GEM.get()) {
-				ent.setItem(new ItemStack(Apoth.Items.GEM_DUST.get(), stack.getCount()));
-			}
-		}
-	}
+
 
 	public void enchLevels(GetEnchantmentLevelEvent e) {
 		AffixHelper.streamAffixes(e.getStack()).forEach(inst -> inst.getEnchantmentLevels(e.getEnchantments()));

@@ -21,6 +21,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import safro.zenith.Zenith;
+import safro.zenith.adventure.AdventureModule;
 import safro.zenith.util.INBTSensitiveFallingBlock;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -93,6 +94,7 @@ import static net.minecraft.world.level.block.AnvilBlock.FACING;
                     int oblit = enchantments.getOrDefault(EnchModule.OBLITERATION, 0);
                     int split = enchantments.getOrDefault(EnchModule.SPLITTING, 0);
                     int ub = enchantments.getOrDefault(Enchantments.UNBREAKING, 0);
+                    gemSmashing(world, pos);
                     if (split > 0 || oblit > 0) for (ItemEntity entity : items) {
                         ItemStack stack = entity.getItem();
                         if (stack.getItem() == Items.ENCHANTED_BOOK) {
@@ -159,4 +161,14 @@ import static net.minecraft.world.level.block.AnvilBlock.FACING;
             return anvil;
         }
 
+
+    public void gemSmashing(Level world, BlockPos pos) {
+        List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, new AABB(pos, pos.offset(1, 1, 1)));
+        for (ItemEntity ent : items) {
+            ItemStack stack = ent.getItem();
+            if (stack.getItem() == AdventureModule.GEM) {
+                ent.setItem(new ItemStack(AdventureModule.GEM_DUST, stack.getCount()));
+            }
+        }
+    }
     }

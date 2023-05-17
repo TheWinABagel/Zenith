@@ -46,7 +46,7 @@ public class PlayerMixin {
             }
         }
     }
-
+/*
     @Inject(method = "createAttributes", at = @At("RETURN"))
     private static void createAttributes(CallbackInfoReturnable<AttributeSupplier.Builder> cir) {
         AttributeSupplier.Builder builder = cir.getReturnValue();
@@ -57,5 +57,5 @@ public class PlayerMixin {
     private static void addIfExists(AttributeSupplier.Builder builder, Attribute... attribs) {
         for (Attribute attrib : attribs)
             if (attrib != null) builder.add(attrib);
-    }
+    }*/
 }

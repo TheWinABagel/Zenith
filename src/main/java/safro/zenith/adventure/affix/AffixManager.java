@@ -6,7 +6,6 @@ import com.google.common.collect.Multimap;
 import safro.zenith.Zenith;
 import safro.zenith.adventure.AdventureModule;
 import safro.zenith.adventure.affix.socket.SocketAffix;
-import safro.zenith.api.json.ZenithJsonReloadListener;
 import safro.zenith.api.placebo.json.PlaceboJsonReloadListener;
 
 public class AffixManager extends PlaceboJsonReloadListener<Affix> {
@@ -19,13 +18,13 @@ public class AffixManager extends PlaceboJsonReloadListener<Affix> {
 		super(AdventureModule.LOGGER, "affixes", true, true);
 	}
 
-	public static void init() {
+//	public static void init() {
 /*		LivingEntityEvents.DROPS_WITH_LEVEL.register(((target, source, drops, lootingLevel, recentlyHit) -> {
 			FestiveAffix.drops(source, target, drops);
 			return false;
 		}));
  */
-	}
+//	}
 
 	@Override
 	protected void beginReload() {

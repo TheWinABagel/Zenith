@@ -30,7 +30,6 @@ import org.jetbrains.annotations.Nullable;
 import safro.zenith.adventure.loot.LootRarity;
 import safro.zenith.api.json.ItemAdapter;
 import safro.zenith.api.json.NBTAdapter;
-import safro.zenith.api.json.ZenithJsonReloadListener;
 import safro.zenith.api.placebo.json.JsonUtil;
 import safro.zenith.api.placebo.json.TypeKey;
 import safro.zenith.ench.asm.EnchHooks;

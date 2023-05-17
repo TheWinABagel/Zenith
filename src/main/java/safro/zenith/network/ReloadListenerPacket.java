@@ -38,6 +38,7 @@ public class ReloadListenerPacket {
             ClientPlayNetworking.registerGlobalReceiver(ID, ((client, handler, buf, responseSender) -> {
                 String msg = buf.readUtf(50);
                 ZenithJsonReloadListener.initSync(msg);
+                PlaceboJsonReloadListener.initSync(msg);
             }));
         }
     }
@@ -77,13 +78,25 @@ public class ReloadListenerPacket {
             ServerPlayNetworking.send(player, ID, buf);
         }
 
-        public static <V extends ZenithJsonReloadListener.TypeKeyed<V>> void init() {
+
+        public static void init(){
+            init1();
+            init2();
+        }
+        public static <V extends ZenithJsonReloadListener.TypeKeyed<V>> void init1() {
             ClientPlayNetworking.registerGlobalReceiver(ID, ((client, handler, buf, responseSender) -> {
                 String path = buf.readUtf(50);
                 ResourceLocation key = buf.readResourceLocation();
                 V item = ZenithJsonReloadListener.readItem(path, key, buf);
                 ZenithJsonReloadListener.acceptItem(path, key, item);
-
+            }));
+        }
+        public static <V extends TypeKey<V>> void init2() {
+            ClientPlayNetworking.registerGlobalReceiver(ID, ((client, handler, buf, responseSender) -> {
+                String path = buf.readUtf(50);
+                ResourceLocation key = buf.readResourceLocation();
+                V item = ZenithJsonReloadListener.readItem(path, key, buf);;
+                PlaceboJsonReloadListener.acceptItem(path, item);
             }));
         }
     }
@@ -110,6 +123,7 @@ public class ReloadListenerPacket {
             ClientPlayNetworking.registerGlobalReceiver(ID, ((client, handler, buf, responseSender) -> {
                 String path = buf.readUtf(50);
                 ZenithJsonReloadListener.endSync(path);
+                PlaceboJsonReloadListener.endSync(path);
             }));
         }
     }

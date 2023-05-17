@@ -24,9 +24,11 @@ import org.apache.logging.log4j.Logger;
 import safro.zenith.Zenith;
 import safro.zenith.adventure.affix.Affix;
 import safro.zenith.adventure.affix.AffixManager;
+import safro.zenith.adventure.affix.effect.MagicalArrowAffix;
 import safro.zenith.adventure.affix.socket.SocketAffix;
 import safro.zenith.adventure.affix.socket.gem.GemItem;
 import safro.zenith.adventure.affix.socket.gem.GemManager;
+import safro.zenith.adventure.affix.socket.gem.bonus.GemBonus;
 import safro.zenith.api.config.Configuration;
 import safro.zenith.api.data.LootSystem;
 import safro.zenith.api.placebo.json.DynamicRegistryObject;
@@ -122,8 +124,8 @@ public class AdventureModule {
 
 		AdventureEvents.init();
 		//BossEvents.init();
-		AffixManager.init();
-		GemManager.init();
+	//	AffixManager.init();
+	//	GemManager.init();
 		//AffixLootManager.init();
 		//BossArmorManager.init();
 		//BossItemManager.init();
@@ -143,7 +145,8 @@ public class AdventureModule {
 		//	Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Zenith.MODID, "random_affix_item"), AffixLootPoolEntry.TYPE);
 		//	Registry.register(Registry.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Zenith.MODID, "random_gem"), GemLootPoolEntry.TYPE);
 			//Exclusion.initSerializers();
-			//GemBonus.initCodecs();
+			GemBonus.initCodecs();
+
 
 		//register(SocketingRecipe.Serializer.INSTANCE, SOCKETING_SERIALIZER);
 		//register(ExpulsionRecipe.Serializer.INSTANCE, EXPULSION_SERIALIZER);
@@ -209,10 +212,11 @@ public class AdventureModule {
 //	public static final MenuType<ZenithEnchantContainer> GEM_CUTTING_MENU = register("gem_cutting", new MenuType<>(GemCuttingMenu::new));
 
 	//Affixes
+
 	public static final DynamicRegistryObject<SocketAffix> SOCKET = AffixManager.INSTANCE.makeObj(Zenith.loc("socket"));
 	//public static final DynamicRegistryObject<DurableAffix> DURABLE = AffixManager.INSTANCE.makeObj(Zenith.loc("durable"));
 	// Real affixes
-	//public static final DynamicRegistryObject<MagicalArrowAffix> MAGICAL = AffixManager.INSTANCE.makeObj(Zenith.loc("ranged/special/magical"));
+	public static final DynamicRegistryObject<MagicalArrowAffix> MAGICAL = AffixManager.INSTANCE.makeObj(Zenith.loc("ranged/special/magical"));
 	//public static final DynamicRegistryObject<FestiveAffix> FESTIVE = AffixManager.INSTANCE.makeObj(Zenith.loc("sword/special/festive"));
 	//public static final DynamicRegistryObject<TelepathicAffix> TELEPATHIC = AffixManager.INSTANCE.makeObj(Zenith.loc("telepathic"));
 	//public static final DynamicRegistryObject<OmneticAffix> OMNETIC = AffixManager.INSTANCE.makeObj(Zenith.loc("breaker/special/omnetic"));
