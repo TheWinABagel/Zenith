@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.jetbrains.annotations.Nullable;
+import safro.zenith.adventure.AdventureModule;
 import safro.zenith.adventure.affix.Affix;
 import safro.zenith.adventure.affix.AffixHelper;
 import safro.zenith.adventure.affix.AffixInstance;
@@ -60,11 +61,11 @@ public class LootController {
 
 		// Socket and Durability handling, which is non-standard.
 		if (sockets.intValue() > 0) {
-		//	loaded.put(Affixes.SOCKET.get(), new AffixInstance(Affixes.SOCKET.get(), stack, rarity, sockets.intValue()));
+			loaded.put(AdventureModule.SOCKET.get(), new AffixInstance(AdventureModule.SOCKET.get(), stack, rarity, sockets.intValue()));
 		}
 
 		if (durability > 0) {
-		//	loaded.put(Affixes.DURABLE.get(), new AffixInstance(Affixes.DURABLE.get(), stack, rarity, durability + AffixHelper.step(-0.07F, 14, 0.01F).get(rand.nextFloat())));
+		//	loaded.put(AdventureModule.DURABLE.get(), new AffixInstance(AdventureModule.DURABLE.get(), stack, rarity, durability + AffixHelper.step(-0.07F, 14, 0.01F).get(rand.nextFloat())));
 		}
 
 		jRand.setSeed(rand.nextLong());
@@ -87,7 +88,7 @@ public class LootController {
 	 * @return An affix item, or an empty ItemStack if no entries were available for the dimension.
 	 */
 	public static ItemStack createRandomLootItem(RandomSource rand, @Nullable LootRarity rarity, Player player, ServerLevelAccessor level) {
-//		AffixLootEntry entry = AffixLootManager.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(level.getLevel()), IStaged.matches(player));
+	//	AffixLootEntry entry = AffixLootManager.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(level.getLevel()), IStaged.matches(player));
 	//	if (entry == null) return ItemStack.EMPTY;
 	//	if (rarity == null) rarity = LootRarity.random(rand, player.getLuck(), entry);
 	//	return createLootItem(entry.getStack(), entry.getType(), rarity, rand);

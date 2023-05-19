@@ -52,3 +52,5 @@ accessible field net/minecraft/world/level/BaseSpawner maxNearbyEntities I
 accessible field net/minecraft/world/level/BaseSpawner nextSpawnData Lnet/minecraft/world/level/SpawnData;
 accessible field net/minecraft/world/item/crafting/RecipeManager recipes Ljava/util/Map;
 mutable field net/minecraft/advancements/CriteriaTriggers INVENTORY_CHANGED Lnet/minecraft/advancements/critereon/InventoryChangeTrigger;
+
+accessible field net/minecraft/world/entity/LivingEntity attackStrengthTicker I

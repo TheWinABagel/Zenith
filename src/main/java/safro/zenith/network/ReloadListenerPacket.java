@@ -95,7 +95,7 @@ public class ReloadListenerPacket {
             ClientPlayNetworking.registerGlobalReceiver(ID, ((client, handler, buf, responseSender) -> {
                 String path = buf.readUtf(50);
                 ResourceLocation key = buf.readResourceLocation();
-                V item = ZenithJsonReloadListener.readItem(path, key, buf);;
+                V item = PlaceboJsonReloadListener.readItem(path, key, buf);;
                 PlaceboJsonReloadListener.acceptItem(path, item);
             }));
         }

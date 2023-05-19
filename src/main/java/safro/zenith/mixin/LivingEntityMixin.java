@@ -76,6 +76,7 @@ public abstract class LivingEntityMixin {
 //TODO create Inject for shield
     public void shieldBlock(DamageSource damageSource, float f, CallbackInfoReturnable<Boolean> cir) {
         LivingEntity source= ((LivingEntity) damageSource.getEntity());
+        LivingEntity entity = (LivingEntity) (Object) this;
         ItemStack stack = source.getUseItem();
         Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
         float blocked = f;

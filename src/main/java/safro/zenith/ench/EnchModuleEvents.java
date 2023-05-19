@@ -52,7 +52,7 @@ public class EnchModuleEvents {
         LivingEntityEvents.DROPS_WITH_LEVEL.register((target, source, drops, lootingLevel, recentlyHit) -> {
             if (source.getEntity() instanceof Player player) {
                 if (Zenith.enableEnch) {
-                    ScavengerEnchant.drops(player, target, source);
+                    ScavengerEnchant.drops(player, target, drops, source);
                     SpearfishingEnchant.addFishes(target, drops, source);
                     KnowledgeEnchant.drops(player, target, drops);
                 }

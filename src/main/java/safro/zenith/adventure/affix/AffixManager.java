@@ -5,6 +5,9 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import safro.zenith.Zenith;
 import safro.zenith.adventure.AdventureModule;
+import safro.zenith.adventure.affix.effect.DamageReductionAffix;
+import safro.zenith.adventure.affix.effect.DurableAffix;
+import safro.zenith.adventure.affix.effect.MagicalArrowAffix;
 import safro.zenith.adventure.affix.socket.SocketAffix;
 import safro.zenith.api.placebo.json.PlaceboJsonReloadListener;
 
@@ -42,24 +45,24 @@ public class AffixManager extends PlaceboJsonReloadListener<Affix> {
 	}
 
 	@Override
-	protected void registerBuiltinSerializers() { /*
+	protected void registerBuiltinSerializers() {
 		this.registerSerializer(Zenith.loc("attribute"), AttributeAffix.SERIALIZER);
-		this.registerSerializer(Zenith.loc("mob_effect"), PotionAffix.SERIALIZER);
+	//	this.registerSerializer(Zenith.loc("mob_effect"), PotionAffix.SERIALIZER);
 		this.registerSerializer(Zenith.loc("damage_reduction"), DamageReductionAffix.SERIALIZER);
-		this.registerSerializer(Zenith.loc("catalyzing"), CatalyzingAffix.SERIALIZER);
-		this.registerSerializer(Zenith.loc("cleaving"), CleavingAffix.SERIALIZER);
-		this.registerSerializer(Zenith.loc("enlightened"), EnlightenedAffix.SERIALIZER);
-		this.registerSerializer(Zenith.loc("executing"), ExecutingAffix.SERIALIZER);
-		this.registerSerializer(Zenith.loc("festive"), FestiveAffix.SERIALIZER);
+	//	this.registerSerializer(Zenith.loc("catalyzing"), CatalyzingAffix.SERIALIZER);
+	//	this.registerSerializer(Zenith.loc("cleaving"), CleavingAffix.SERIALIZER);
+	//	this.registerSerializer(Zenith.loc("enlightened"), EnlightenedAffix.SERIALIZER);
+	//	this.registerSerializer(Zenith.loc("executing"), ExecutingAffix.SERIALIZER);
+	//	this.registerSerializer(Zenith.loc("festive"), FestiveAffix.SERIALIZER);
 		this.registerSerializer(Zenith.loc("magical"), MagicalArrowAffix.SERIALIZER);
-		this.registerSerializer(Zenith.loc("omnetic"), OmneticAffix.SERIALIZER);
-		this.registerSerializer(Zenith.loc("psychic"), PsychicAffix.SERIALIZER);
-		this.registerSerializer(Zenith.loc("radial"), RadialAffix.SERIALIZER);
-		this.registerSerializer(Zenith.loc("retreating"), RetreatingAffix.SERIALIZER);
-		this.registerSerializer(Zenith.loc("spectral"), SpectralShotAffix.SERIALIZER);
-		this.registerSerializer(Zenith.loc("telepathic"), TelepathicAffix.SERIALIZER);
-		this.registerSerializer(Zenith.loc("thunderstruck"), ThunderstruckAffix.SERIALIZER);
-		this.registerSerializer(Zenith.loc("durable"), DurableAffix.SERIALIZER);*/
+	//	this.registerSerializer(Zenith.loc("omnetic"), OmneticAffix.SERIALIZER);
+	//	this.registerSerializer(Zenith.loc("psychic"), PsychicAffix.SERIALIZER);
+	//	this.registerSerializer(Zenith.loc("radial"), RadialAffix.SERIALIZER);
+	//	this.registerSerializer(Zenith.loc("retreating"), RetreatingAffix.SERIALIZER);
+	//	this.registerSerializer(Zenith.loc("spectral"), SpectralShotAffix.SERIALIZER);
+	//	this.registerSerializer(Zenith.loc("telepathic"), TelepathicAffix.SERIALIZER);
+	//	this.registerSerializer(Zenith.loc("thunderstruck"), ThunderstruckAffix.SERIALIZER);
+		this.registerSerializer(Zenith.loc("durable"), DurableAffix.SERIALIZER);
 		this.registerSerializer(Zenith.loc("socket"), SocketAffix.SERIALIZER);
 
 	}

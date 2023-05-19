@@ -13,7 +13,7 @@ group = project.maven_group
 repositories {
 	maven { url "https://mvn.devos.one/releases/" }
 	maven { url "https://mvn.devos.one/snapshots/" }
-	maven { url 'https://jitpack.io' }
+	maven { url = "https://jitpack.io/" }
 	maven { url "https://maven.jamieswhiteshirt.com/libs-release" }
 	maven { url 'https://maven.blamejared.com' }
 	maven { url "https://maven.shedaniel.me" }
@@ -33,7 +33,7 @@ dependencies {
 
 	modImplementation(include("de.siphalor:nbtcrafting-1.19:${project.nbt_crafting_version}"))
 	modImplementation(include("com.jamieswhiteshirt:reach-entity-attributes:${project.reach_lib_version}"))
-	modImplementation(include("io.github.fabricators_of_create.Porting-Lib:porting-lib:${project.port_lib_version}"))
+	modImplementation(include("io.github.fabricators_of_create.Porting-Lib:Porting-Lib:${project.port_lib_version}"))
 	modCompileOnly modRuntimeOnly("vazkii.patchouli:Patchouli:${project.patchouli_version}"),{
 		exclude(group: "net.fabricmc.fabric-api")
 	}

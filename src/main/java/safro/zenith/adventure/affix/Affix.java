@@ -37,13 +37,14 @@ import safro.zenith.ench.asm.EnchHooks;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import safro.zenith.api.placebo.json.TypeKey.TypeKeyedBase;
 
 /**
  * An affix is a construct very similar to an enchantment, providing bonuses to arbitrary items.
  * The Affix's Level is a float from 0 to 1 that defines its relative power level, compared to max.
  * What the level means is up to the individual affix.
  */
-public abstract class Affix extends TypeKey.TypeKeyedBase<Affix> {
+public abstract class Affix extends TypeKeyedBase<Affix> {
 
 	//Formatter::off
 	protected static final Gson GSON = new GsonBuilder()
