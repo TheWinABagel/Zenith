@@ -84,7 +84,7 @@ public class Zenith implements ModInitializer {
 		enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
 		enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If the spawner module is enabled.");
 		enableGarden = config.getBoolean("Enable Garden Module", "general", true, "If the garden module is loaded.");
-		enableAdventure = config.getBoolean("Enable Adventure Module", "general",  false, "If the adventure module is loaded. WARNING: UNFINISHED, BUGGY");
+		//enableAdventure = config.getBoolean("Enable Adventure Module", "general",  false, "If the adventure module is loaded. WARNING: UNFINISHED, BUGGY");
 		enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
 		enableVillage = config.getBoolean("Enable Village Module", "general", true, "If the village module is loaded.");
 		giveBook = config.getBoolean("Give Book on First Join", "general", true, "If the Chronicle of Shadows is given to new players.");
