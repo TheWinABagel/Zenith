@@ -21,14 +21,17 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.material.Material;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.spongepowered.include.com.google.common.collect.BiMap;
+import org.spongepowered.include.com.google.common.collect.HashBiMap;
 import safro.zenith.Zenith;
 import safro.zenith.adventure.affix.Affix;
 import safro.zenith.adventure.affix.AffixManager;
-import safro.zenith.adventure.affix.effect.MagicalArrowAffix;
+import safro.zenith.adventure.affix.effect.*;
 import safro.zenith.adventure.affix.socket.SocketAffix;
 import safro.zenith.adventure.affix.socket.gem.GemItem;
 import safro.zenith.adventure.affix.socket.gem.GemManager;
 import safro.zenith.adventure.affix.socket.gem.bonus.GemBonus;
+import safro.zenith.adventure.loot.LootRarity;
 import safro.zenith.api.config.Configuration;
 import safro.zenith.api.data.LootSystem;
 import safro.zenith.api.placebo.json.DynamicRegistryObject;
@@ -43,7 +46,7 @@ public class AdventureModule {
 
 	public static final Registry<Affix> AFFIXES = FabricRegistryBuilder.createSimple(Affix.class, new ResourceLocation(Zenith.MODID, "affixes")).buildAndRegister();
 
-	//public static final BiMap<LootRarity, Item> RARITY_MATERIALS = HashBiMap.create();
+	public static final BiMap<LootRarity, Item> RARITY_MATERIALS = HashBiMap.create();
 	//public static final RecipeSerializer<SocketingRecipe> SOCKETING_SERIALIZER = new SocketingRecipe.Serializer();
 	//public static final RecipeSerializer<ExpulsionRecipe> EXPULSION_SERIALIZER = new ExpulsionRecipe.Serializer();
 	//public static final RecipeSerializer<ExtractionRecipe> EXTRACTION_SERIALIZER = new ExtractionRecipe.Serializer();
@@ -200,7 +203,7 @@ public class AdventureModule {
 
 	//Recipes
 /*	public static final RecipeType<SocketingRecipe> SOCKETING_RECIPE = ZenithUtil.makeRecipeType("zenith:socketing");
-	public static final RecipeType<ExpulsionRecipe> SOCKETING_RECIPE = ZenithUtil.makeRecipeType("zenith:expulsion");
+	public static final RecipeType<ExpulsionRecipe> EXPULSION_RECIPE = ZenithUtil.makeRecipeType("zenith:expulsion");
 	public static final RecipeType<ExtractionRecipe> SOCKETING_RECIPE = ZenithUtil.makeRecipeType("zenith:extraction");
 	public static final RecipeType<AddSocketsRecipe> SOCKETING_RECIPE = ZenithUtil.makeRecipeType("zenith:add_sockets");
 	public static final RecipeType<SalvagingRecipe> SOCKETING_RECIPE = ZenithUtil.makeRecipeType("zenith:salvaging");
@@ -214,13 +217,13 @@ public class AdventureModule {
 	//Affixes
 
 	public static final DynamicRegistryObject<SocketAffix> SOCKET = AffixManager.INSTANCE.makeObj(Zenith.loc("socket"));
-	//public static final DynamicRegistryObject<DurableAffix> DURABLE = AffixManager.INSTANCE.makeObj(Zenith.loc("durable"));
+	public static final DynamicRegistryObject<DurableAffix> DURABLE = AffixManager.INSTANCE.makeObj(Zenith.loc("durable"));
 	// Real affixes
 	public static final DynamicRegistryObject<MagicalArrowAffix> MAGICAL = AffixManager.INSTANCE.makeObj(Zenith.loc("ranged/special/magical"));
-	//public static final DynamicRegistryObject<FestiveAffix> FESTIVE = AffixManager.INSTANCE.makeObj(Zenith.loc("sword/special/festive"));
-	//public static final DynamicRegistryObject<TelepathicAffix> TELEPATHIC = AffixManager.INSTANCE.makeObj(Zenith.loc("telepathic"));
+	public static final DynamicRegistryObject<FestiveAffix> FESTIVE = AffixManager.INSTANCE.makeObj(Zenith.loc("sword/special/festive"));
+	public static final DynamicRegistryObject<TelepathicAffix> TELEPATHIC = AffixManager.INSTANCE.makeObj(Zenith.loc("telepathic"));
 	//public static final DynamicRegistryObject<OmneticAffix> OMNETIC = AffixManager.INSTANCE.makeObj(Zenith.loc("breaker/special/omnetic"));
-	//public static final DynamicRegistryObject<RadialAffix> RADIAL = AffixManager.INSTANCE.makeObj(Zenith.loc("breaker/special/radial"));
+	public static final DynamicRegistryObject<RadialAffix> RADIAL = AffixManager.INSTANCE.makeObj(Zenith.loc("breaker/special/radial"));
 
 	/*
 	public void miscRegistration(RegisterEvent e) {

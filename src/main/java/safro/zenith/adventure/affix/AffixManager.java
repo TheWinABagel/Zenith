@@ -41,7 +41,7 @@ public class AffixManager extends PlaceboJsonReloadListener<Affix> {
 		this.registry.values().forEach(a -> builder.put(a.type, a));
 		byType = builder.build();
 		Preconditions.checkArgument(AdventureModule.SOCKET.get() instanceof SocketAffix, "Socket Affix not registered!");
-	//	Preconditions.checkArgument(Affixes.DURABLE.get() instanceof DurableAffix, "Durable Affix not registered!");
+		Preconditions.checkArgument(AdventureModule.DURABLE.get() instanceof DurableAffix, "Durable Affix not registered!");
 	}
 
 	@Override

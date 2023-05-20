@@ -75,6 +75,7 @@ public class AffixHelper {
 	public static Map<Affix, AffixInstance> getAffixes(ItemStack stack) {
 		Map<Affix, AffixInstance> map = new HashMap<>();
 		if (!hasAffixes(stack)) return map;
+		Zenith.LOGGER.warn("Has Affixes");
 		CompoundTag afxData = stack.getTagElement(AFFIX_DATA);
 		if (afxData != null && afxData.contains(AFFIXES)) {
 			CompoundTag affixes = afxData.getCompound(AFFIXES);

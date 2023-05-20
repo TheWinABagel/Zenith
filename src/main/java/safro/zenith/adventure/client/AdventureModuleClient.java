@@ -8,6 +8,8 @@ import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.datafixers.util.Either;
 import com.mojang.math.Vector3f;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
@@ -59,6 +61,7 @@ import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
+@Environment(EnvType.CLIENT)
 public class AdventureModuleClient {
 
 //	public static List<BossSpawnData> BOSS_SPAWNS = new ArrayList<>();
@@ -105,34 +108,34 @@ public class AdventureModuleClient {
 		}
 	}
 
-	public static void render(RenderLevelStageEvent e) {
-		if (e.getStage() != Stage.AFTER_TRIPWIRE_BLOCKS) return;
-		PoseStack stack = e.getPoseStack();
-		MultiBufferSource.BufferSource buf = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
-		Player p = Minecraft.getInstance().player;
-		for (int i = 0; i < BOSS_SPAWNS.size(); i++) {
-			BossSpawnData data = BOSS_SPAWNS.get(i);
-			stack.pushPose();
-			float partials = e.getPartialTick();
-			Vec3 vec = Minecraft.getInstance().getCameraEntity().getEyePosition(partials);
-			stack.translate(-vec.x, -vec.y, -vec.z);
-			stack.translate(data.pos().getX(), data.pos().getY(), data.pos().getZ());
-			BeaconRenderer.renderBeaconBeam(stack, buf, BeaconRenderer.BEAM_LOCATION, partials, 1, p.level.getGameTime(), 0, 64, data.color(), 0.166F, 0.33F);
-			stack.popPose();
-		}
-		buf.endBatch();
-	}
+        public static void render(RenderLevelStageEvent e) {
+            if (e.getStage() != Stage.AFTER_TRIPWIRE_BLOCKS) return;
+            PoseStack stack = e.getPoseStack();
+            MultiBufferSource.BufferSource buf = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
+            Player p = Minecraft.getInstance().player;
+            for (int i = 0; i < BOSS_SPAWNS.size(); i++) {
+                BossSpawnData data = BOSS_SPAWNS.get(i);
+                stack.pushPose();
+                float partials = e.getPartialTick();
+                Vec3 vec = Minecraft.getInstance().getCameraEntity().getEyePosition(partials);
+                stack.translate(-vec.x, -vec.y, -vec.z);
+                stack.translate(data.pos().getX(), data.pos().getY(), data.pos().getZ());
+                BeaconRenderer.renderBeaconBeam(stack, buf, BeaconRenderer.BEAM_LOCATION, partials, 1, p.level.getGameTime(), 0, 64, data.color(), 0.166F, 0.33F);
+                stack.popPose();
+            }
+            buf.endBatch();
+        }
 
-	public static void time(ClientTickEvent e) {
-		if (e.phase != Phase.END) return;
-		for (int i = 0; i < BOSS_SPAWNS.size(); i++) {
-			BossSpawnData data = BOSS_SPAWNS.get(i);
-			if (data.ticks().getAndIncrement() > 400) {
-				BOSS_SPAWNS.remove(i--);
-			}
-		}
-	}
-*/
+        public static void time(ClientTickEvent e) {
+            if (e.phase != Phase.END) return;
+            for (int i = 0; i < BOSS_SPAWNS.size(); i++) {
+                BossSpawnData data = BOSS_SPAWNS.get(i);
+                if (data.ticks().getAndIncrement() > 400) {
+                    BOSS_SPAWNS.remove(i--);
+                }
+            }
+        }
+    */
 	public static void tooltips() {
 		ItemTooltipCallback.EVENT.register((stack, context, lines) -> {
 			int markIdx1 = -1, markIdx2 = -1;
