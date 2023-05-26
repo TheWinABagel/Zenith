@@ -87,6 +87,7 @@ import static net.minecraft.world.level.block.AnvilBlock.FACING;
 
         @Inject(method = "onLand", at = @At("TAIL"))
         private void zenithOnLand(Level world, BlockPos pos, BlockState fallState, BlockState hitState, FallingBlockEntity anvil, CallbackInfo ci) {
+            if (Zenith.enableAdventure) gemSmashing(world, pos);
             if (Zenith.enableEnch) {
                 List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, new AABB(pos, pos.offset(1, 1, 1)));
                 if (anvil.blockData != null) {
@@ -94,8 +95,7 @@ import static net.minecraft.world.level.block.AnvilBlock.FACING;
                     int oblit = enchantments.getOrDefault(EnchModule.OBLITERATION, 0);
                     int split = enchantments.getOrDefault(EnchModule.SPLITTING, 0);
                     int ub = enchantments.getOrDefault(Enchantments.UNBREAKING, 0);
-                    gemSmashing(world, pos);
-                    if (split > 0 || oblit > 0) for (ItemEntity entity : items) {
+                  if (split > 0 || oblit > 0) for (ItemEntity entity : items) {
                         ItemStack stack = entity.getItem();
                         if (stack.getItem() == Items.ENCHANTED_BOOK) {
                             ListTag enchants = EnchantedBookItem.getEnchantments(stack);

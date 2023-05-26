@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import safro.zenith.Zenith;
 import safro.zenith.ench.asm.EnchHooks;
 
-@Mixin(value = AnvilMenu.class, priority = 1001)
+@Mixin(value = AnvilMenu.class, priority = 1500)
 public abstract class AnvilMenuMixinHigherPriority extends ItemCombinerMenu {
 
 
