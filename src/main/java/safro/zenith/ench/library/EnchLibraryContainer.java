@@ -20,6 +20,7 @@ import safro.zenith.ench.EnchModule;
 import safro.zenith.network.ButtonClickPacket.IButtonContainer;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class EnchLibraryContainer extends BlockEntityContainer<EnchLibraryTile> implements IButtonContainer {
 	protected SimpleContainer ioInv = new SimpleContainer(3);
@@ -111,6 +112,8 @@ public class EnchLibraryContainer extends BlockEntityContainer<EnchLibraryTile> 
 	public int getNumStoredEnchants() {
 		return (int) this.tile.getPointsMap().values().intStream().filter(s -> s > 0).count();
 	}
+
+
 
 	public List<Object2IntMap.Entry<Enchantment>> getPointsForDisplay() {
 		return this.tile.getPointsMap().object2IntEntrySet().stream().filter(s -> s.getIntValue() > 0).toList();

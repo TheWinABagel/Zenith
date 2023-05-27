@@ -79,6 +79,8 @@ public abstract class EnchLibraryTile extends BlockEntity implements CustomDataP
 		enchs.put(valid, level);
 		EnchantmentHelper.setEnchantments(enchs, stack);
 		this.points.put(valid, Math.max(0, (this.points.getInt(ench) - levelToPoints(level) + levelToPoints(curLvl)))); //Safety, should never be below zero anyway.
+		this.points.forEach((s,v) -> {
+			if (v == 0) points.remove(s,0);});
 		if (!this.level.isClientSide()) NetworkUtil.dispatchTEToNearbyPlayers(this);
 		this.setChanged();
 	}
@@ -245,6 +247,7 @@ public abstract class EnchLibraryTile extends BlockEntity implements CustomDataP
 		else if (ench.getKey() == Enchantments.FALL_PROTECTION) return EnchModule.FEATHER_FALLING;
 		else return ench.getKey();
 	}
+
 	private Enchantment makeValid(Enchantment ench){
 		if (ench == Enchantments.BANE_OF_ARTHROPODS) return EnchModule.BOA;
 		else if (ench == Enchantments.SMITE) return EnchModule.SMITE;
