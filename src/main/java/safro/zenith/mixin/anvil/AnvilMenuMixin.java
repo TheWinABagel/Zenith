@@ -42,9 +42,11 @@ import static safro.zenith.ench.objects.ExtractionTomeItem.giveItem;
 
         @Inject(method = "createResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z", ordinal = 1, shift = At.Shift.AFTER), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
         private void zenithAnvilChange(CallbackInfo ci, ItemStack stack, int i, int j, int k, ItemStack itemStack1, ItemStack itemStack2) {
-            AnvilMenu menu = (AnvilMenu) (Object) this;
-            if (!ZenithUtil.anvilChanged(menu, stack, itemStack2, resultSlots, itemName, j, player)) {
-                ci.cancel();
+            if (Zenith.enableEnch) {
+                AnvilMenu menu = (AnvilMenu) (Object) this;
+                if (!ZenithUtil.anvilChanged(menu, stack, itemStack2, resultSlots, itemName, j, player)) {
+                    ci.cancel();
+                }
             }
         }
 

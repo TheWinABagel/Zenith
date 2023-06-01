@@ -42,6 +42,7 @@ public class SpawnerJadePlugin implements IWailaPlugin, IBlockComponentProvider,
 
     @Override
     public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
+        if (!Zenith.enableSpawner) return;
         if (Screen.hasControlDown()) {
             int[] stats = accessor.getServerData().getIntArray(STATS);
             if (stats.length != 12) return;
@@ -62,6 +63,7 @@ public class SpawnerJadePlugin implements IWailaPlugin, IBlockComponentProvider,
 
     @Override
     public void appendServerData(CompoundTag tag, ServerPlayer player, Level world, BlockEntity te, boolean arg4) {
+        if (!Zenith.enableSpawner) return;
         if (te instanceof SpawnerBlockEntity spw) {
             BaseSpawner logic = spw.getSpawner();
             //Formatter::off

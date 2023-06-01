@@ -14,10 +14,10 @@ public class GrievousEffect extends MobEffect {
 		super(MobEffectCategory.HARMFUL, ChatFormatting.DARK_RED.getColor());
 	}
 	public static float GrievousEffects(Float f, LivingEntity entity) {
-	//	if (entity.hasEffect(PotionModule.GRIEVOUS_EFFECT)) {
-	//		int level = entity.getEffect(PotionModule.GRIEVOUS_EFFECT).getAmplifier() + 1;
-	//		return (f * Math.max(0, 1 - level * 0.4F));
-	//	}
+		if (entity.hasEffect(PotionModule.GRIEVOUS_EFFECT)) {
+			int level = entity.getEffect(PotionModule.GRIEVOUS_EFFECT).getAmplifier() + 1;
+			return (f * Math.max(0, 1 - level * 0.4F));
+		}
 		return f;
 	}
 }
