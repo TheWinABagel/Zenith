@@ -27,6 +27,7 @@ import safro.zenith.advancements.AdvancementTriggers;
 import safro.zenith.adventure.AdventureModule;
 import safro.zenith.api.RunnableReloader;
 import safro.zenith.api.config.Configuration;
+import safro.zenith.api.data.RecipeHelper;
 import safro.zenith.api.event.ServerEvents;
 import safro.zenith.compat.PatchouliCompat;
 import safro.zenith.ench.EnchModule;
@@ -47,7 +48,7 @@ public class Zenith implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("zenith");
 	public static final String MODID = "zenith";
 	public static final CreativeModeTab ZENITH_GROUP = FabricItemGroupBuilder.build(new ResourceLocation(MODID, MODID), () -> new ItemStack(Items.ENCHANTING_TABLE));
-
+	public static final RecipeHelper HELPER = new RecipeHelper(Zenith.MODID);
 	public static final TagKey<Item> BOON_DROPS = registerItem(new ResourceLocation(Zenith.MODID, "boon_drops"));
 	public static final TagKey<Item> SPEARFISHING_DROPS = registerItem(new ResourceLocation(Zenith.MODID, "spearfishing_drops"));
 	public static final TagKey<Item> ENCHANT_FUELS = registerItem(new ResourceLocation(Zenith.MODID, "enchant_fuels"));

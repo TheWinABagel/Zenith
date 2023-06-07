@@ -45,7 +45,7 @@ public class EnchJadePlugin implements IBlockComponentProvider, IWailaPlugin, IS
             }
         }
         if (Zenith.enableEnch)
-        CommonTooltipUtil.appendBlockStats(accessor.getLevel(), accessor.getBlockState(), tooltip::add);
+            CommonTooltipUtil.appendBlockStats(accessor.getLevel(), accessor.getBlockState(), tooltip::add);
         if ((accessor.getBlock() == Blocks.ENCHANTING_TABLE) && (Zenith.enableEnch))
             CommonTooltipUtil.appendTableStats(accessor.getLevel(), accessor.getPosition(), tooltip::add);
     }

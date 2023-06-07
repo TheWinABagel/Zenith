@@ -13,7 +13,10 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -22,6 +25,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -183,6 +187,12 @@ public class EnchModule {
         reload(false);
 
         EnchModuleEvents.init();
+
+        Ingredient pot = Zenith.potionIngredient(Potions.REGENERATION);
+        Zenith.HELPER.addShaped(HELLSHELF, 3, 3, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Items.BLAZE_ROD, "c:bookshelves", pot, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS);
+        Zenith.HELPER.addShaped(SEASHELF, 3, 3, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Zenith.potionIngredient(Potions.WATER), "c:bookshelves", Items.PUFFERFISH, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS);
+        Zenith.HELPER.addShaped(SIGHTSHELF, 3, 3, Blocks.GOLD_BLOCK, INFUSED_HELLSHELF, Blocks.GOLD_BLOCK, Zenith.potionIngredient(Potions.NIGHT_VISION), Items.ENDER_EYE, Items.SPYGLASS, Blocks.GOLD_BLOCK, INFUSED_HELLSHELF, Blocks.GOLD_BLOCK);
+        Zenith.HELPER.addShaped(SIGHTSHELF_T2, 3, 3, Blocks.EMERALD_BLOCK, Items.NETHERITE_INGOT, Blocks.EMERALD_BLOCK, Zenith.potionIngredient(Potions.LONG_NIGHT_VISION), SIGHTSHELF, Zenith.potionIngredient(Potions.LONG_NIGHT_VISION), Blocks.EMERALD_BLOCK, Items.NETHERITE_INGOT, Blocks.EMERALD_BLOCK);
     }
 
 

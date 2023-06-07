@@ -17,6 +17,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import org.apache.logging.log4j.LogManager;
@@ -42,6 +43,8 @@ public class PotionModule {
     // Effects
     public static final MobEffect SUNDERING_EFFECT = register("sundering", new SunderingEffect());
     public static final MobEffect KNOWLEDGE_EFFECT = register("knowledge", new KnowledgeEffect());
+    public static final MobEffect VITALITY_EFFECT = register("vitality", new KnowledgeEffect());
+    public static final MobEffect GRIEVOUS_EFFECT = register("grievous", new KnowledgeEffect());
 
     // Serializers
     public static final RecipeSerializer<PotionCharmRecipe> POTION_CHARM_SERIALIZER = register("potion_charm", PotionCharmRecipe.Serializer.INSTANCE);
@@ -69,14 +72,21 @@ public class PotionModule {
     public static final Potion KNOWLEDGE = register("knowledge", new Potion("knowledge", new MobEffectInstance(KNOWLEDGE_EFFECT, 2400)));
     public static final Potion LONG_KNOWLEDGE = register("long_knowledge", new Potion("knowledge", new MobEffectInstance(KNOWLEDGE_EFFECT, 4800)));
     public static final Potion STRONG_KNOWLEDGE = register("strong_knowledge", new Potion("knowledge", new MobEffectInstance(KNOWLEDGE_EFFECT, 1200, 1)));
+    public static final Potion VITALITY = register("vitality", new Potion("vitality", new MobEffectInstance(VITALITY_EFFECT, 1200, 1)));
+    public static final Potion LONG_VITALITY = register("long_vitality", new Potion("vitality", new MobEffectInstance(VITALITY_EFFECT, 1200, 1)));
+    public static final Potion STRONG_VITALITY = register("strong_vitality", new Potion("vitality", new MobEffectInstance(VITALITY_EFFECT, 1200, 1)));
+    public static final Potion GRIEVOUS = register("grievous", new Potion("grievous", new MobEffectInstance(GRIEVOUS_EFFECT, 1200, 1)));
+    public static final Potion LONG_GRIEVOUS = register("long_grievous", new Potion("grievous", new MobEffectInstance(GRIEVOUS_EFFECT, 1200, 1)));
+    public static final Potion STRONG_GRIEVOUS = register("strong_grievous", new Potion("grievous", new MobEffectInstance(GRIEVOUS_EFFECT, 1200, 1)));
+
+
 
     public static void init() {
         reload(false);
 
         LivingEntityEvents.DROPS_WITH_LEVEL.register(((target, source, drops, lootingLevel, recentlyHit) -> {
             if (Zenith.enablePotion) {
-                if (target instanceof Rabbit) {
-                    Rabbit rabbit = (Rabbit) target;
+                if (target instanceof Rabbit rabbit) {
                     if (rabbit.level.random.nextFloat() < 0.045F + 0.045F * lootingLevel) {
                         drops.clear();
                         drops.add(new ItemEntity(rabbit.level, rabbit.getX(), rabbit.getY(), rabbit.getZ(), new ItemStack(LUCKY_FOOT)));
@@ -142,6 +152,22 @@ public class PotionModule {
         PotionBrewing.addMix(KNOWLEDGE, Items.EXPERIENCE_BOTTLE, STRONG_KNOWLEDGE);
 
         PotionBrewing.addMix(Potions.AWKWARD, LUCKY_FOOT, Potions.LUCK);
+
+        PotionBrewing.addMix(Potions.AWKWARD, Items.SWEET_BERRIES, VITALITY);
+        PotionBrewing.addMix(VITALITY, Items.REDSTONE, LONG_VITALITY);
+        PotionBrewing.addMix(VITALITY, Items.GLOWSTONE_DUST, STRONG_VITALITY);
+
+        PotionBrewing.addMix(VITALITY, Items.FERMENTED_SPIDER_EYE, GRIEVOUS);
+        PotionBrewing.addMix(LONG_VITALITY, Items.FERMENTED_SPIDER_EYE, LONG_GRIEVOUS);
+        PotionBrewing.addMix(STRONG_VITALITY, Items.FERMENTED_SPIDER_EYE, STRONG_GRIEVOUS);
+        PotionBrewing.addMix(GRIEVOUS, Items.REDSTONE, LONG_GRIEVOUS);
+        PotionBrewing.addMix(GRIEVOUS, Items.GLOWSTONE_DUST, STRONG_GRIEVOUS);
+
+        Ingredient fireRes = Zenith.potionIngredient(Potions.FIRE_RESISTANCE);
+        Ingredient abs = Zenith.potionIngredient(STRONG_ABSORPTION);
+        Ingredient res = Zenith.potionIngredient(RESISTANCE);
+        Ingredient regen = Zenith.potionIngredient(Potions.STRONG_REGENERATION);
+        Zenith.HELPER.addShaped(Items.ENCHANTED_GOLDEN_APPLE, 3, 3, fireRes, regen, fireRes, abs, Items.GOLDEN_APPLE, abs, res, abs, res);
     }
 
     public static void reload(boolean e) {

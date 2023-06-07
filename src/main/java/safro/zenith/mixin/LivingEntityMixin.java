@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import safro.zenith.Zenith;
@@ -27,6 +28,7 @@ import safro.zenith.adventure.affix.AffixInstance;
 import safro.zenith.ench.enchantments.ReflectiveEnchant;
 import safro.zenith.ench.enchantments.corrupted.LifeMendingEnchant;
 import safro.zenith.potion.PotionModule;
+import safro.zenith.potion.potions.GrievousEffect;
 
 import java.util.Map;
 
@@ -62,12 +64,19 @@ public abstract class LivingEntityMixin {
     @Inject(method = "heal", at = @At("HEAD"), cancellable = true)
     private void zenithHealEvent(float f, CallbackInfo ci) {
         LivingEntity entity = (LivingEntity) (Object) this;
+        float health = this.getHealth();
+    //    if (Zenith.enablePotion) {
+   //         float a = GrievousEffect.GrievousEffects(f, entity);
+    //        if (f != a) {
+    //            this.setHealth(g + a);
+    //            ci.cancel();
+    //        }
+    //    }
         if (Zenith.enableEnch) {
             float a = LifeMendingEnchant.lifeMend(entity, f);
             if (a > -1) {
-                float g = this.getHealth();
-                if (g > 0.0F) {
-                    this.setHealth(g + a);
+                if (health > 0.0F) {
+                    this.setHealth(health + a);
                 }
                 ci.cancel();
             }

@@ -71,11 +71,11 @@ import static net.minecraft.world.level.block.AnvilBlock.FACING;
                 if (!FallingBlock.isFree(pLevel.getBlockState(pPos.below())) || pPos.getY() < pLevel.getMinBuildHeight()) {
                     return;
                 }
-                Zenith.LOGGER.info("ANVIL IS FREE");
+                //Zenith.LOGGER.info("ANVIL IS FREE");
                     BlockEntity be = pLevel.getBlockEntity(pPos);
                     FallingBlockEntity e = FallingBlockEntity.fall(pLevel, pPos, pState);
                     if (be instanceof AnvilBlockEntity anvil) {
-                        Zenith.LOGGER.info("ANVIL HAS TILE");
+                       // Zenith.LOGGER.info("ANVIL HAS TILE");
                         e.blockData = new CompoundTag();
                         anvil.saveAdditional(e.blockData);
                     }
@@ -95,7 +95,7 @@ import static net.minecraft.world.level.block.AnvilBlock.FACING;
                     int oblit = enchantments.getOrDefault(EnchModule.OBLITERATION, 0);
                     int split = enchantments.getOrDefault(EnchModule.SPLITTING, 0);
                     int ub = enchantments.getOrDefault(Enchantments.UNBREAKING, 0);
-                  if (split > 0 || oblit > 0) for (ItemEntity entity : items) {
+                    if (split > 0 || oblit > 0) for (ItemEntity entity : items) {
                         ItemStack stack = entity.getItem();
                         if (stack.getItem() == Items.ENCHANTED_BOOK) {
                             ListTag enchants = EnchantedBookItem.getEnchantments(stack);
