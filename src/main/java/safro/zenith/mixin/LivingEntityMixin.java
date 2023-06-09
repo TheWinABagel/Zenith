@@ -29,6 +29,7 @@ import safro.zenith.ench.enchantments.ReflectiveEnchant;
 import safro.zenith.ench.enchantments.corrupted.LifeMendingEnchant;
 import safro.zenith.potion.PotionModule;
 import safro.zenith.potion.potions.GrievousEffect;
+import safro.zenith.potion.potions.VitalityEffect;
 
 import java.util.Map;
 
@@ -65,24 +66,29 @@ public abstract class LivingEntityMixin {
     private void zenithHealEvent(float f, CallbackInfo ci) {
         LivingEntity entity = (LivingEntity) (Object) this;
         float health = this.getHealth();
-    //    if (Zenith.enablePotion) {
-   //         float a = GrievousEffect.GrievousEffects(f, entity);
-    //        if (f != a) {
-    //            this.setHealth(g + a);
-    //            ci.cancel();
-    //        }
-    //    }
-        if (Zenith.enableEnch) {
-            float a = LifeMendingEnchant.lifeMend(entity, f);
-            if (a > -1) {
-                if (health > 0.0F) {
-                    this.setHealth(health + a);
-                }
-                ci.cancel();
+        float total = f;
+        if (Zenith.enablePotion) {
+            float grievous = GrievousEffect.GrievousEffects(f, entity);
+            if (grievous > -1) {
+                total+=(grievous - 1);
             }
         }
+        if (Zenith.enablePotion) {
+            float vitality = VitalityEffect.vitalityEffects(total, entity);
+            total+=vitality;
+        }
+        if (Zenith.enableEnch) {
+            float lifeMend = LifeMendingEnchant.lifeMend(entity, total);
+            if (lifeMend > -1) {
+                total-=lifeMend;
+            }
+        }
+        if (health > 0.0F) {
+            this.setHealth(health + total);
+        }
+        ci.cancel();
     }
-//TODO create Inject for shield
+//TODO create Inject for shield event
     public void shieldBlock(DamageSource damageSource, float f, CallbackInfoReturnable<Boolean> cir) {
         LivingEntity source= ((LivingEntity) damageSource.getEntity());
         LivingEntity entity = (LivingEntity) (Object) this;

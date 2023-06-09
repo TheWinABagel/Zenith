@@ -21,6 +21,7 @@ repositories {
 	maven { url "https://ladysnake.jfrog.io/artifactory/mods" }
 	maven { url "https://cursemaven.com" }
 	maven { url "https://maven.bai.lol" }
+	maven { url "file:///E:/localmaven/devmods" }
 }
 
 dependencies {
@@ -56,6 +57,9 @@ dependencies {
 
 	//Jade
 	modImplementation "curse.maven:jade-324717:${jade_id}"
+
+	//Other Mods for Testing
+	//modCompileOnly "com.mrcrayfish:goblintraders-fabric:1.8.1-1.19.2"
 }
 
 loom {

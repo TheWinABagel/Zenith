@@ -761,6 +761,20 @@
     "item.minecraft.lingering_potion.effect.knowledge": "Lingering Potion of Ancient Knowledge",
     "item.minecraft.tipped_arrow.effect.knowledge": "Arrow of Ancient Knowledge",
 
+	"effect.zenith.vitality": "Bursting Vitality",
+	"effect.zenith.vitality.desc": "Increases healing received",
+	"item.minecraft.potion.effect.vitality": "Potion of Healing Boost",
+	"item.minecraft.splash_potion.effect.vitality": "Splash Potion of Healing Boost",
+	"item.minecraft.lingering_potion.effect.vitality": "Lingering Potion of Healing Boost",
+	"item.minecraft.tipped_arrow.effect.vitality": "Arrow of Healing Boost",
+
+	"effect.zenith.grievous": "Grievous Wounds",
+	"effect.zenith.grievous.desc": "Decreases healing received",
+	"item.minecraft.potion.effect.grievous": "Potion of Healing Reduction",
+	"item.minecraft.splash_potion.effect.grievous": "Splash Potion of Healing Reduction",
+	"item.minecraft.lingering_potion.effect.grievous": "Lingering Potion of Healing Reduction",
+	"item.minecraft.tipped_arrow.effect.grievous": "Arrow of Healing Reduction",
+
     "item.zenith.lucky_foot": "Lucky Rabbit's Foot",
 
     "item.zenith.potion_charm_broke": "Invalid Potion Charm",

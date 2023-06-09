@@ -54,6 +54,8 @@ public class Zenith implements ModInitializer {
 	public static final TagKey<Item> ENCHANT_FUELS = registerItem(new ResourceLocation(Zenith.MODID, "enchant_fuels"));
 
 	public static final TagKey<Item> IRON_BLOCKS = registerItem(new ResourceLocation("c", "iron_blocks"));
+	public static final TagKey<Item> BOOKSHELVES = registerItem(new ResourceLocation("c", "bookshelves"));
+
 
 	public static final BlockEntityType<AnvilBlockEntity> ANVIL_TILE = registerBlockEntity("anvil", FabricBlockEntityTypeBuilder.create(AnvilBlockEntity::new, Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL).build(null));
 	public static TagKey<Item> registerItem(ResourceLocation id) {

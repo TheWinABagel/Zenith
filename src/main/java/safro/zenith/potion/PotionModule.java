@@ -24,8 +24,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import safro.zenith.Zenith;
 import safro.zenith.api.config.Configuration;
+import safro.zenith.potion.potions.GrievousEffect;
 import safro.zenith.potion.potions.KnowledgeEffect;
 import safro.zenith.potion.potions.SunderingEffect;
+import safro.zenith.potion.potions.VitalityEffect;
 
 import java.io.File;
 
@@ -43,8 +45,8 @@ public class PotionModule {
     // Effects
     public static final MobEffect SUNDERING_EFFECT = register("sundering", new SunderingEffect());
     public static final MobEffect KNOWLEDGE_EFFECT = register("knowledge", new KnowledgeEffect());
-    public static final MobEffect VITALITY_EFFECT = register("vitality", new KnowledgeEffect());
-    public static final MobEffect GRIEVOUS_EFFECT = register("grievous", new KnowledgeEffect());
+    public static final MobEffect VITALITY_EFFECT = register("vitality", new VitalityEffect());
+    public static final MobEffect GRIEVOUS_EFFECT = register("grievous", new GrievousEffect());
 
     // Serializers
     public static final RecipeSerializer<PotionCharmRecipe> POTION_CHARM_SERIALIZER = register("potion_charm", PotionCharmRecipe.Serializer.INSTANCE);
@@ -72,12 +74,12 @@ public class PotionModule {
     public static final Potion KNOWLEDGE = register("knowledge", new Potion("knowledge", new MobEffectInstance(KNOWLEDGE_EFFECT, 2400)));
     public static final Potion LONG_KNOWLEDGE = register("long_knowledge", new Potion("knowledge", new MobEffectInstance(KNOWLEDGE_EFFECT, 4800)));
     public static final Potion STRONG_KNOWLEDGE = register("strong_knowledge", new Potion("knowledge", new MobEffectInstance(KNOWLEDGE_EFFECT, 1200, 1)));
-    public static final Potion VITALITY = register("vitality", new Potion("vitality", new MobEffectInstance(VITALITY_EFFECT, 1200, 1)));
-    public static final Potion LONG_VITALITY = register("long_vitality", new Potion("vitality", new MobEffectInstance(VITALITY_EFFECT, 1200, 1)));
-    public static final Potion STRONG_VITALITY = register("strong_vitality", new Potion("vitality", new MobEffectInstance(VITALITY_EFFECT, 1200, 1)));
-    public static final Potion GRIEVOUS = register("grievous", new Potion("grievous", new MobEffectInstance(GRIEVOUS_EFFECT, 1200, 1)));
-    public static final Potion LONG_GRIEVOUS = register("long_grievous", new Potion("grievous", new MobEffectInstance(GRIEVOUS_EFFECT, 1200, 1)));
-    public static final Potion STRONG_GRIEVOUS = register("strong_grievous", new Potion("grievous", new MobEffectInstance(GRIEVOUS_EFFECT, 1200, 1)));
+    public static final Potion VITALITY = register("vitality", new Potion("vitality", new MobEffectInstance(VITALITY_EFFECT, 4800)));
+    public static final Potion LONG_VITALITY = register("long_vitality", new Potion("vitality", new MobEffectInstance(VITALITY_EFFECT, 14400)));
+    public static final Potion STRONG_VITALITY = register("strong_vitality", new Potion("vitality", new MobEffectInstance(VITALITY_EFFECT, 3600, 1)));
+    public static final Potion GRIEVOUS = register("grievous", new Potion("grievous", new MobEffectInstance(GRIEVOUS_EFFECT, 4800)));
+    public static final Potion LONG_GRIEVOUS = register("long_grievous", new Potion("grievous", new MobEffectInstance(GRIEVOUS_EFFECT, 14400)));
+    public static final Potion STRONG_GRIEVOUS = register("strong_grievous", new Potion("grievous", new MobEffectInstance(GRIEVOUS_EFFECT, 3600, 1)));
 
 
 

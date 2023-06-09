@@ -35,7 +35,6 @@
     "anvil.BlockMixin",
     "anvil.FallingBlockEntityMixin",
     "anvil.ItemMixin",
-    "compat.goblintraders.present.GoblinTradeProviderMixin",
     "compat.goblintraders.present.GoblinTraderAnvilMenuMixin",
     "fletching.FletchingTableBlockMixin",
     "garden.BambooBlockMixin",

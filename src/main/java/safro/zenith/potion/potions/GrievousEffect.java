@@ -18,6 +18,6 @@ public class GrievousEffect extends MobEffect {
 			int level = entity.getEffect(PotionModule.GRIEVOUS_EFFECT).getAmplifier() + 1;
 			return (f * Math.max(0, 1 - level * 0.4F));
 		}
-		return f;
+		return -1;
 	}
 }
