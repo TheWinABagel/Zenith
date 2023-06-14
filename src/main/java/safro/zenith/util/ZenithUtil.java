@@ -24,6 +24,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import safro.zenith.Zenith;
 import safro.zenith.api.enchant.TableApplicableEnchant;
 import safro.zenith.api.enchant.TableApplicableItem;
+import safro.zenith.ench.EnchModule;
 import safro.zenith.ench.EnchModuleEvents;
 
 import java.util.HashMap;
@@ -38,13 +39,6 @@ public class ZenithUtil {
         ItemStack stack = ItemStack.EMPTY;
         stack = Registry.ITEM.getTag(tag).flatMap((items) -> items.getRandomElement((RandomSource) random)).map((itemEntry) -> (itemEntry.value()).getDefaultInstance()).orElse(stack);
         return stack;
-    }
-
-    public static int getLootingLevel(DamageSource source) {
-        if (source.getEntity() instanceof Player p) {
-            return EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, p.getMainHandItem());
-        }
-        return 0;
     }
 
     // Equivalent to stack.canApplyAtEnchantingTable(ench);
@@ -165,7 +159,7 @@ public class ZenithUtil {
         if (stack.getItem() instanceof ShearsItem) {
             return canApplyEnchantment(ench, stack) || ench == Enchantments.UNBREAKING || ench == Enchantments.BLOCK_EFFICIENCY || ench == Enchantments.BLOCK_FORTUNE;
         } else if (stack.getItem() instanceof TridentItem) {
-            return canApplyEnchantment(ench, stack) || ench == Enchantments.SHARPNESS || ench == Enchantments.MOB_LOOTING || ench == Enchantments.PIERCING;
+            return canApplyEnchantment(ench, stack) || ench == EnchModule.SHARPNESS || ench == Enchantments.MOB_LOOTING || ench == Enchantments.PIERCING;
         }
         return canApplyEnchantment(ench, stack);
     }

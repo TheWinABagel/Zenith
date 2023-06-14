@@ -7,7 +7,7 @@
     "pages": [
 		{
             "type": "patchouli:text",
-            "text": "$(9)Protection$() is no longer exclusive with the subtypes of protection.$(p)This means you can now have $(9)Protection$() and one other defensive enchantment that is normally exclusive. (Mod porter's note: NYI)"
+            "text": "$(9)Protection$() is no longer exclusive with the subtypes of protection.$(p)This means you can now have $(9)Protection$() and one other defensive enchantment that is normally exclusive. (Mod porter's note: you have to use an anvil rn, will not give both when enchanting)"
         },
         {
             "type": "patchouli:text",

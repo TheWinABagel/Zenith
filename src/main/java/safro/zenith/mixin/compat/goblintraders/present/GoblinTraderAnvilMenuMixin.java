@@ -40,6 +40,7 @@ public class GoblinTraderAnvilMenuMixin
         {
             this.maxLevel = rightLevel + 1;
         }
+
     }
 
     @ModifyArg(method = "createResult", at = @At(value = "INVOKE", target = "Ljava/util/Map;put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"), index = 1)

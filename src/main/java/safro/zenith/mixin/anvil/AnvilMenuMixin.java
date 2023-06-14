@@ -17,10 +17,12 @@ import safro.zenith.Zenith;
 import safro.zenith.ench.EnchModuleEvents;
 import safro.zenith.ench.asm.EnchHooks;
 import safro.zenith.ench.objects.ExtractionTomeItem;
+import safro.zenith.ench.table.IEnchantableItem;
 import safro.zenith.util.ZenithUtil;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.Collections;
+import java.util.Map;
 
 import static safro.zenith.ench.objects.ExtractionTomeItem.giveItem;
 
@@ -30,7 +32,7 @@ import static safro.zenith.ench.objects.ExtractionTomeItem.giveItem;
         @Shadow
         private String itemName;
         private static Player p = null;
-
+        private Map<Enchantment, Integer> enchants;
 
 
         public AnvilMenuMixin(int i, Inventory inventory, ContainerLevelAccess containerLevelAccess) {
@@ -58,6 +60,25 @@ import static safro.zenith.ench.objects.ExtractionTomeItem.giveItem;
         if (!ZenithUtil.anvilChanged(menu, stack, itemStack2, resultSlots, itemName, j, player) && Zenith.enableEnch) {
             ci.cancel();
         }
+    }
+/*
+    @ModifyVariable
+            (method = "createResult", slice = @Slice(from = @At(value = "INVOKE", target = "net/minecraft/world/item/enchantment/EnchantmentHelper.getEnchantments (Lnet/minecraft/world/item/ItemStack;)Ljava/util/Map;", shift = At.Shift.BEFORE)),
+                    at = @At(value = "INVOKE", target = "net/minecraft/world/item/enchantment/EnchantmentHelper.getEnchantments (Lnet/minecraft/world/item/ItemStack;)Ljava/util/Map;"), ordinal = 0)
+    private Map<Enchantment, Integer> zenithCaptureLocals(Map<Enchantment, Integer> value){
+        enchants=value;
+        return value;
+    }*/
+
+    @Redirect(method = "createResult", at = @At(value = "INVOKE", target = "net/minecraft/world/item/enchantment/Enchantment.isCompatibleWith (Lnet/minecraft/world/item/enchantment/Enchantment;)Z"))
+    private boolean zenithModifyPossibleEnchants(Enchantment instance, Enchantment enchantment){
+            if (Zenith.enableEnch) {
+                ItemStack itemStack = this.inputSlots.getItem(0);
+                IEnchantableItem enchi = (IEnchantableItem) itemStack.getItem();
+                Zenith.LOGGER.warn("can apply: " + (ZenithUtil.canApply(instance, itemStack) + ", and Instance: " + instance));
+                return (ZenithUtil.canApply(instance, itemStack) || enchi.forciblyAllowsTableEnchantment(itemStack, instance));
+            }
+        return instance.isCompatibleWith(enchantment);
     }
 
         @Inject(method = "onTake", at = @At("HEAD"))

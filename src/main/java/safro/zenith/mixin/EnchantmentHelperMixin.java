@@ -19,7 +19,7 @@ public class EnchantmentHelperMixin {
 
     /**
      * @author Shadows
-     * @reason Enables apotheosis special handling of enchanting rules.  More lenient injection is not possible.
+     * @reason Enables zenith special handling of enchanting rules.  More lenient injection is not possible.
      * @param power The current enchanting power.
      * @param stack The ItemStack being enchanted.
      * @param allowTreasure If treasure enchantments are allowed.

@@ -1,6 +1,5 @@
 package safro.zenith.mixin.anvil;
 
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.Tag;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -16,9 +15,7 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import safro.zenith.Zenith;
 import safro.zenith.adventure.AdventureModule;
@@ -83,6 +80,20 @@ import static net.minecraft.world.level.block.AnvilBlock.FACING;
                 }
              else
                 super.tick(pState, pLevel, pPos, pRand);
+        }
+
+        @Inject(method = "damage", at = @At("HEAD"), cancellable = true)
+        private static void zenithDamage(BlockState blockState, CallbackInfoReturnable<BlockState> cir) {
+
+            if (Zenith.enableEnch) {
+
+                if (blockState.is(Blocks.ANVIL)) {
+                    cir.setReturnValue(Blocks.CHIPPED_ANVIL.withPropertiesOf(blockState).setValue(FACING, blockState.getValue(FACING)));
+                }
+                if (blockState.is(Blocks.CHIPPED_ANVIL)) {
+                    cir.setReturnValue(Blocks.DAMAGED_ANVIL.withPropertiesOf(blockState).setValue(FACING, blockState.getValue(FACING)));
+                }
+            }
         }
 
         @Inject(method = "onLand", at = @At("TAIL"))
@@ -171,4 +182,4 @@ import static net.minecraft.world.level.block.AnvilBlock.FACING;
             }
         }
     }
-    }
+}
