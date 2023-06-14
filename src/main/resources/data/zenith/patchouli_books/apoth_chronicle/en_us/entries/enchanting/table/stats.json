@@ -6,7 +6,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "With zenith, enchanting is dependent on more than just levels.$(p)There are currently five new enchanting stats.$(p)Blocks that provide enchanting stats will have them on their tooltip."
+            "text": "With Zenith, enchanting is dependent on more than just levels.$(p)There are currently five new enchanting stats.$(p)Blocks that provide enchanting stats will have them on their tooltip."
         },
 		{
 			"type": "patchouli:text",

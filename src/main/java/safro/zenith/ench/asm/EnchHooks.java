@@ -1,5 +1,6 @@
 package safro.zenith.ench.asm;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -9,11 +10,6 @@ import safro.zenith.ench.EnchModule;
 // Coremod Injects are being replaced with mixins
 // Only some are implemented atm
 
-/**
- * Methods injected by Javascript Coremods.
- * @author Shadows
- *
- */
 public class EnchHooks {
 
     /**
@@ -87,7 +83,7 @@ public class EnchHooks {
 
     /**
      * Calculates the delay for catching a fish.  Ensures that the value never returns <= 0, so that it doesn't get infinitely locked.
-     * Called at the end of {@link }
+     * Called at the end of {@link FishingHook#catchingFish(BlockPos)}
      * Injected by coremods/ench/fishing_hook.js
      */
     public static int getTicksCaughtDelay(FishingHook bobber) {

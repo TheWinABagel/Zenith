@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "zenith introduces a new type of crafting called $(9)Fletching$().$(p)It allows you to make arrows more efficiently.$(p)Alongside the crafting type, there are also new arrows."
+            "text": "Zenith introduces a new type of crafting called $(9)Fletching$().$(p)It allows you to make arrows more efficiently.$(p)Alongside the crafting type, there are also new arrows."
         },
 		{
             "type": "patchouli:spotlight",

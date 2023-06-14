@@ -14,7 +14,7 @@
 			"title": "Making Tridents",
 			"item": "zenith:inert_trident",
 			"link_recipe": true,
-            "text": "zenith also adds a method of creating tridents.$(p)Simply create an $(9)Inert Trident$() and upgrade it through $(l:zenith:enchanting/table/infusion)Infusion Enchanting$()."
+            "text": "Zenith also adds a method of creating tridents.$(p)Simply create an $(9)Inert Trident$() and upgrade it through $(l:zenith:enchanting/table/infusion)Infusion Enchanting$()."
         }
 	]
 }

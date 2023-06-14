@@ -16,13 +16,13 @@ public class PatchouliCompat {
         IPatchouliAPI api = PatchouliAPI.get();
         if (!api.isStub()) {
             api.setConfigFlag("zenith:enchanting", Zenith.enableEnch);
-//            api.setConfigFlag("zenith:deadly", Zenith.enableAdventure);
+            api.setConfigFlag("zenith:adventure", Zenith.enableAdventure);
             api.setConfigFlag("zenith:spawner", Zenith.enableSpawner);
             api.setConfigFlag("zenith:garden", Zenith.enableGarden);
             api.setConfigFlag("zenith:potion", Zenith.enablePotion);
             api.setConfigFlag("zenith:village", Zenith.enableVillage);
         //    api.setConfigFlag("zenith:wstloaded", ModList.get().isLoaded("wstweaks"));
-            api.setConfigFlag("zenith:curiosloaded", FabricLoader.getInstance().isModLoaded("trinkets"));
+            api.setConfigFlag("zenith:trinketsloaded", FabricLoader.getInstance().isModLoaded("trinkets"));
         }
     }
 

@@ -57,7 +57,7 @@
 		{
             "type": "patchouli:text",
 			"title": "No AI",
-            "text": "A spawner with $(9)No AI$() enabled will spawn mobs without any AI.$(p)Normally, these mobs will just simply float there, immobile, doing nothing.$(p)However, the ones created by zenith can still be moved."
+            "text": "A spawner with $(9)No AI$() enabled will spawn mobs without any AI.$(p)Normally, these mobs will just simply float there, immobile, doing nothing.$(p)However, the ones created by Zenith can still be moved."
         },
 		{
             "type": "patchouli:text",

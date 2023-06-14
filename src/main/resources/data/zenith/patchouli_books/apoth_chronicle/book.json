@@ -1,16 +1,17 @@
 {
-    "name": "book.zenith.name",
-    "landing_text": "book.zenith.landing",
+	"name": "book.zenith.name",
+	"landing_text": "book.zenith.landing",
     "subtitle": "book.zenith.subtitle",
+	"custom_book_item": "zenith:book",
 	"show_progress": false,
+	"creative_tab": "zenith",
 	"use_blocky_font": true,
+	"dont_generate_book": true,
 	"macros": {
 		"$(eterna)": "$(#3DB53D)Eterna$()",
 		"$(quanta)": "$(#FC5454)Quanta$()",
 		"$(arcana)": "$(#A800A8)Arcana$()",
 		"$(fpower)": "$(#CC00CC)Final Power$()",
 		"$(bpower)": "$(6)Base Power$()"
-	},
-	"dont_generate_book": true,
-	"custom_book_item": "zenith:book"
+	}
 }

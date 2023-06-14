@@ -6,7 +6,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "In vanilla, an item's enchantability contributes to your $(fpower).$(p)zenith changes it to provide a direct $(arcana) boost instead.$(p)$(arcana) is increased by 50% of an item's enchantability."
+            "text": "In vanilla, an item's enchantability contributes to your $(fpower).$(p)Zenith changes it to provide a direct $(arcana) boost instead.$(p)$(arcana) is increased by 50% of an item's enchantability."
         }
 	]
 }

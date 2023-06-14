@@ -49,6 +49,7 @@ import safro.zenith.ench.library.EnchLibraryTile;
 import safro.zenith.ench.objects.*;
 import safro.zenith.ench.replacements.BaneEnchant;
 import safro.zenith.ench.replacements.DefenseEnchant;
+import safro.zenith.ench.table.EnchantingStatManager;
 import safro.zenith.ench.table.ZenithEnchantContainer;
 import safro.zenith.ench.table.EnchantingRecipe;
 import safro.zenith.ench.table.KeepNBTEnchantingRecipe;
@@ -63,7 +64,6 @@ import java.util.Map;
 public class EnchModule {
     public static final Map<Enchantment, EnchantmentInfo> ENCHANTMENT_INFO = new HashMap<>();
     public static final Object2IntMap<Enchantment> ENCH_HARD_CAPS = new Object2IntOpenHashMap<>();
-    public static final String ENCH_HARD_CAP_IMC = "set_ench_hard_cap";
     public static final Logger LOGGER = LogManager.getLogger("Zenith : Enchantment");
     public static final List<TomeItem> TYPED_BOOKS = new ArrayList<>();
     public static final EquipmentSlot[] ARMOR = { EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET };
@@ -218,9 +218,6 @@ public class EnchModule {
         return Registry.register(Registry.BLOCK, new ResourceLocation(Zenith.MODID, name), block);
     }
 
-    private static Item replacement(String name, Item item, Item original) {
-        return Registry.registerMapping(Registry.ITEM, Registry.ITEM.getId(original), Zenith.MODID + ":" + name, item);
-    }
 
     private static<T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType<T> be) {
         return Registry.register(Registry.BLOCK_ENTITY_TYPE, new ResourceLocation(Zenith.MODID, name), be);
@@ -263,13 +260,15 @@ public class EnchModule {
     public static int getDefaultMax(Enchantment ench) {
         int level = ench.getMaxLevel();
         if (level == 1) return 1;
-        EnchantmentInfo.PowerFunc func = EnchantmentInfo.defaultMin(ench);
-        int minPower = func.getPower(level);
-        if (minPower >= 150) return level;
+        EnchantmentInfo.PowerFunc minFunc = EnchantmentInfo.defaultMin(ench);
+        int max = (int) (EnchantingStatManager.getAbsoluteMaxEterna() * 4);
+        int minPower = minFunc.getPower(level);
+        if (minPower >= max) return level;
         int lastPower = minPower;
-        while (minPower < 150) {
-            minPower = func.getPower(++level);
+        while (minPower < max) {
+            minPower = minFunc.getPower(++level);
             if (lastPower == minPower) return level;
+            if (minPower > max) return level - 1;
             lastPower = minPower;
         }
         return level;

@@ -21,6 +21,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
 import org.apache.logging.log4j.LogManager;
@@ -83,14 +84,21 @@ public class VillageModule {
     public static final Item IRON_MINING_ARROW = register("iron_mining_arrow", new MiningArrowItem(() -> Items.IRON_PICKAXE, MiningArrowEntity.Type.IRON));
     public static final Item DIAMOND_MINING_ARROW = register("diamond_mining_arrow", new MiningArrowItem(() -> Items.DIAMOND_PICKAXE, MiningArrowEntity.Type.DIAMOND));
 
+    public static Explosion.BlockInteraction expArrowMode = Explosion.BlockInteraction.DESTROY;
+
     public static void init() {
         config = new Configuration(new File(Zenith.configDir, "village.cfg"));
         WandererReplacements.load(config);
+
+        boolean blockDmg = config.getBoolean("Explosive Arrow Block Damage", "arrows", true, "If explosive arrows can break blocks.\nServer-authoritative.");
+        expArrowMode = blockDmg ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE;
         if (config.hasChanged()) config.save();
 
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(WandererTradeManager.INSTANCE);
 
         register(FletchingRecipe.Serializer.NAME, FLETCHING_SERIALIZER);
+
+
 
         for (Item i : Registry.ITEM) {
             if (i instanceof IZenithArrowItem) {

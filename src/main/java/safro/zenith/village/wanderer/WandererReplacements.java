@@ -21,7 +21,7 @@ public class WandererReplacements {
 
 	public static boolean clearNormTrades = false;
 	public static boolean clearRareTrades = false;
-	public static boolean affixTrades = true;
+	public static boolean undergroundTrader = true;
 
 	public static final Gson GSON = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(BasicItemListing.class, BasicItemListingAdapter.INSTANCE).registerTypeAdapter(ItemStack.class, ItemAdapter.INSTANCE).registerTypeAdapter(CompoundTag.class, NBTAdapter.INSTANCE).create();
 
@@ -34,7 +34,8 @@ public class WandererReplacements {
 	}
 
 	public static void load(Configuration cfg) {
-		clearNormTrades = cfg.getBoolean("Clear Generic Trades", "wanderer", false, "If the generic trade list will be cleared before datapack loaded trades are added.");
-		clearRareTrades = cfg.getBoolean("Clear Rare Trades", "wanderer", false, "If the rare trade list will be cleared before datapack loaded trades are added.");
+		clearNormTrades = cfg.getBoolean("Clear Generic Trades", "wanderer", clearNormTrades, "If the generic trade list will be cleared before datapack loaded trades are added.\nServer-authoritative.");
+		clearRareTrades = cfg.getBoolean("Clear Rare Trades", "wanderer", clearRareTrades, "If the rare trade list will be cleared before datapack loaded trades are added.\nServer-authoritative.");
+		undergroundTrader = cfg.getBoolean("Underground Trader", "wanderer", undergroundTrader, "If the Wandering Trader can attempt to spawn underground.\nServer-authoritative.");
 	}
 }

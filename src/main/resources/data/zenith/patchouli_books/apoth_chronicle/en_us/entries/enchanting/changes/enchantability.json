@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "In Vanilla, all items without an explicit $(l:zenith:enchanting/table/enchantability)Item Enchantability$() have a default of zero.$(p)zenith changes the default to one.$(p)This has the side effect of making some items unintentionally enchantable."
+            "text": "In Vanilla, all items without an explicit $(l:zenith:enchanting/table/enchantability)Item Enchantability$() have a default of zero.$(p)Zenith changes the default to one.$(p)This has the side effect of making some items unintentionally enchantable."
         },
 		{
             "type": "patchouli:text",

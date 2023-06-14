@@ -1,5 +1,6 @@
 package safro.zenith.mixin;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.damagesource.CombatRules;
@@ -17,6 +18,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import safro.zenith.Zenith;
@@ -31,6 +33,7 @@ import safro.zenith.potion.PotionModule;
 import safro.zenith.potion.potions.GrievousEffect;
 import safro.zenith.potion.potions.VitalityEffect;
 
+import javax.annotation.Nullable;
 import java.util.Map;
 
 @Mixin(LivingEntity.class)
@@ -61,7 +64,7 @@ public abstract class LivingEntityMixin {
            }
         }
     }
-
+//TODO make this less shit
     @Inject(method = "heal", at = @At("HEAD"), cancellable = true)
     private void zenithHealEvent(float f, CallbackInfo ci) {
         LivingEntity entity = (LivingEntity) (Object) this;
@@ -88,7 +91,7 @@ public abstract class LivingEntityMixin {
         }
         ci.cancel();
     }
-//TODO create Inject for shield event
+
     public void shieldBlock(DamageSource damageSource, float f, CallbackInfoReturnable<Boolean> cir) {
         LivingEntity source= ((LivingEntity) damageSource.getEntity());
         LivingEntity entity = (LivingEntity) (Object) this;
@@ -110,50 +113,42 @@ public abstract class LivingEntityMixin {
         }
     }
 
-    // TODO: Simplify to better inject
-    @Inject(method = "getDamageAfterMagicAbsorb", at = @At("HEAD"), cancellable = true)
-    public void zenithGetDamageAfterMagicAbsorb(DamageSource source, float damage, CallbackInfoReturnable<Float> ci) {
-        if (Zenith.enablePotion) {
-            if (source.isBypassMagic()) {
-                ci.setReturnValue(damage);
-            } else {
-                float mult = 1;
-                if (this.hasEffect(MobEffects.DAMAGE_RESISTANCE) && source != DamageSource.OUT_OF_WORLD) {
-                    int level = this.getEffect(MobEffects.DAMAGE_RESISTANCE).getAmplifier() + 1;
-                    mult -= 0.2 * level;
-                }
-                if (PotionModule.SUNDERING_EFFECT != null && this.hasEffect(PotionModule.SUNDERING_EFFECT) && source != DamageSource.OUT_OF_WORLD) {
-                    int level = this.getEffect(PotionModule.SUNDERING_EFFECT).getAmplifier() + 1;
-                    mult += 0.2 * level;
-                }
-
-                float newDamage = damage * mult;
-                float resisted = damage - newDamage;
-
-                if (resisted > 0.0F && resisted < 3.4028235E37F) {
-                    if ((Object) this instanceof ServerPlayer sp) {
-                        sp.awardStat(Stats.CUSTOM.get(Stats.DAMAGE_RESISTED), Math.round(resisted * 10.0F));
-                    } else if (source.getEntity() instanceof ServerPlayer sp) {
-                        sp.awardStat(Stats.CUSTOM.get(Stats.DAMAGE_DEALT_RESISTED), Math.round(resisted * 10.0F));
-                    }
-                }
-
-                damage = newDamage;
-
-                if (damage <= 0.0F) {
-                    ci.setReturnValue(0.0F);
-                } else {
-                    int k = EnchantmentHelper.getDamageProtection(this.getArmorSlots(), source);
-
-                    if (k > 0) {
-                        damage = CombatRules.getDamageAfterMagicAbsorb(damage, k);
-                    }
-
-                    ci.setReturnValue(damage);
-                }
-            }
+    /**
+     * @author Shadows
+     * @reason Injection of the Sundering potion effect, which is applied during resistance calculations.
+     * @param value Damage modifier percentage after resistance has been applied [1.0, -inf]
+     * @param max Zero
+     * @param source The damage source
+     * @param damage The initial damage amount
+     */
+    @Redirect(at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F"), method = "getDamageAfterMagicAbsorb(Lnet/minecraft/world/damagesource/DamageSource;F)F")
+    public float zenithSunderingMax(float value, float max, DamageSource source, float damage) {
+        if (Zenith.enablePotion && this.hasEffect(PotionModule.SUNDERING_EFFECT) && source != DamageSource.OUT_OF_WORLD) {
+            int level = this.getEffect(PotionModule.SUNDERING_EFFECT).getAmplifier() + 1;
+            value += damage * level * 0.2F;
         }
+        return Math.max(value, max);
     }
+
+    /**
+     * @author Shadows
+     * @reason Used to enter an if-condition so the above mixin always triggers.
+     */
+    @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;hasEffect(Lnet/minecraft/world/effect/MobEffect;)Z"), method = "getDamageAfterMagicAbsorb(Lnet/minecraft/world/damagesource/DamageSource;F)F")
+    public boolean zenithSunderingHasEffect(LivingEntity ths, MobEffect effect) {
+        return true;
+    }
+
+    /**
+     * @author Shadows
+     * @reason Used to prevent an NPE since we're faking true on hasEffect
+     */
+    @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/effect/MobEffectInstance;getAmplifier()I"), method = "getDamageAfterMagicAbsorb(Lnet/minecraft/world/damagesource/DamageSource;F)F")
+    public int zenithSunderingGetAmplifier(@Nullable MobEffectInstance inst) {
+        return inst == null ? -1 : inst.getAmplifier();
+    }
+
+
     @Inject(method = "createLivingAttributes", at = @At("RETURN"))
     private static void createAttributes(CallbackInfoReturnable<AttributeSupplier.Builder> cir) {
         AttributeSupplier.Builder builder = cir.getReturnValue();

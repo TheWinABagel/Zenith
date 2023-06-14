@@ -41,7 +41,7 @@ public class ExplosiveArrowEntity extends AbstractArrow {
 			Entity shooter = this.getOwner();
 			LivingEntity explosionSource = null;
 			if (shooter instanceof LivingEntity) explosionSource = (LivingEntity) shooter;
-			this.level.explode(null, DamageSource.explosion(explosionSource), null, living.getX(), living.getY(), living.getZ(), 2, false, BlockInteraction.DESTROY);
+			this.level.explode(null, DamageSource.explosion(explosionSource), null, living.getX(), living.getY(), living.getZ(), 2, false, VillageModule.expArrowMode);
 			this.discard();
 		}
 	}
@@ -54,7 +54,7 @@ public class ExplosiveArrowEntity extends AbstractArrow {
 			Entity shooter = this.getOwner();
 			LivingEntity explosionSource = null;
 			if (shooter instanceof LivingEntity) explosionSource = (LivingEntity) shooter;
-			this.level.explode(null, DamageSource.explosion(explosionSource), null, vec.x(), vec.y(), vec.z(), 3, false, BlockInteraction.DESTROY);
+			this.level.explode(null, DamageSource.explosion(explosionSource), null, vec.x(), vec.y(), vec.z(), 3, false, VillageModule.expArrowMode);
 			this.discard();
 		}
 	}

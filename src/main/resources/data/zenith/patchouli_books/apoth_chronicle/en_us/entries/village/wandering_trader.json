@@ -11,7 +11,11 @@
         },
 		{
             "type": "patchouli:text",
-            "text": "However, zenith adds a ton of new trades to their tables so they are actually worth interacting with.$(p)These trades include items like $(9)Beacons$() or $(9)Totems of Undying$(), and heavily enchanted diamond gear."
+            "text": "However, Zenith adds a ton of new trades to their tables so they are actually worth interacting with.$(p)These trades include items like $(9)Beacons$() or $(9)Totems of Undying$(), and heavily enchanted diamond gear."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "Zenith also improves the spawn rates of Wandering Traders, and allows them to spawn underground, instead of only on the surface."
         }
 	]
 }

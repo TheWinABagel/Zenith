@@ -38,19 +38,32 @@ public abstract class ThrownTridentMixin extends AbstractArrow implements EnchMo
     @Accessor
     public abstract ItemStack getTridentItem();
 
-    @Inject(method = "onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V", at = @At("HEAD"), cancellable = true)
-    public void startHitEntity(EntityHitResult res, CallbackInfo ci) {
-        this.oldVel = this.getDeltaMovement();
-        if (this.piercingIgnoreEntityIds.contains(res.getEntity().getId())) ci.cancel();
+    @Inject(method = "<init>(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;)V", at = @At("TAIL"), require = 1, remap = false)
+    private void init(CallbackInfo ci) {
+        this.setPierceLevel((byte) EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, this.getTridentItem()));
     }
 
-    @Inject(method = "onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V", at = @At("TAIL"), cancellable = true)
+    @Inject(method = "onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V", at = @At("HEAD"), cancellable = true, require = 1)
+    public void startHitEntity(EntityHitResult res, CallbackInfo ci) {
+        if (this.getPierceLevel() > 0) {
+            if (this.piercingIgnoreEntityIds == null) {
+                this.piercingIgnoreEntityIds = new IntOpenHashSet(this.getPierceLevel());
+            }
+            if (this.piercingIgnoreEntityIds.contains(res.getEntity().getId())) ci.cancel();
+        }
+
+        this.oldVel = this.getDeltaMovement();
+    }
+
+    @Inject(method = "onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V", at = @At("TAIL"), cancellable = true, require = 1)
     public void endHitEntity(EntityHitResult res, CallbackInfo ci) {
-        int pierceLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, this.getTridentItem());
-        if (this.pierces++ < pierceLevel) {
-            this.dealtDamage = false;
-            this.setDeltaMovement(this.oldVel);
+        if (this.getPierceLevel() > 0) {
             this.piercingIgnoreEntityIds.add(res.getEntity().getId());
+
+            if (this.piercingIgnoreEntityIds.size() <= this.getPierceLevel()) {
+                this.dealtDamage = false;
+                this.setDeltaMovement(this.oldVel);
+            }
         }
     }
 

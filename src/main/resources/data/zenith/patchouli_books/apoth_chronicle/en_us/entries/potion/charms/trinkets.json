@@ -1,8 +1,8 @@
 {
     "name": "Trinkets",
-    "icon": "trinkets:textures/gui/slots/charm.png",
+    "icon": "curios:textures/item/empty_charm_slot.png",
     "category": "zenith:potion/charms",
-	"flag": "&zenith:potion,zenith:curiosloaded",
+	"flag": "&zenith:potion,zenith:trinketsloaded",
 	"sortnum": 1,
     "pages": [
         {

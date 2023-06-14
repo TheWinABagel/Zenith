@@ -7,7 +7,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "A $(9)Mob Spawner$() is a magical block that can funnel in entities from the void.$(p)But you knew that already, so let's get on to the new stuff.$(p)In zenith, spawners can be picked up with $(9)Silk Touch$()."
+            "text": "A $(9)Mob Spawner$() is a magical block that can funnel in entities from the void.$(p)But you knew that already, so let's get on to the new stuff.$(p)In Zenith, spawners can be picked up with $(9)Silk Touch$()."
         },
 		{
             "type": "patchouli:text",

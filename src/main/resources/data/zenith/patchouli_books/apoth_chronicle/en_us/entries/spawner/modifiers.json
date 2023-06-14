@@ -12,17 +12,17 @@
 		{
             "type": "patchouli:text",
 			"title": "Viewing Modifiers",
-            "text": "Every single modifier is visible in JEI.$(p)They can be accessed by looking at both the uses and recipes for $(9)Mob Spawners$(), or the uses for the modifier items.$(p)There's a lot of tooltips in there, so look around."
+            "text": "Every single modifier is visible in REI.$(p)They can be accessed by looking at both the uses and recipes for $(9)Mob Spawners$(), or the uses for the modifier items.$(p)There's a lot of tooltips in there, so look around."
         },
 		{
             "type": "patchouli:text",
 			"title": "Notation",
-            "text": "In JEI, stat changes are noted as$(br)$(9)+/- X Stat$().$(p)Some stats do not have numerical values, so they will be shown as $(9)+/- Stat$().$(p)In tooltips, non-numeric stats are not shown unless enabled."
+            "text": "In REI, stat changes are noted as$(br)$(9)+/- X Stat$().$(p)Some stats do not have numerical values, so they will be shown as $(9)+/- Stat$().$(p)In tooltips, non-numeric stats are not shown unless enabled."
         },
 		{
             "type": "patchouli:text",
 			"title": "Modifier Caps",
-            "text": "Certain modifiers cannot reduce or increase stats past a certain value.$(p)These will be noted in the tooltip for that particular stat in JEI.$(p)These caps are modifier-specific, so one modifier may have a different cap than another for the same stat."
+            "text": "Certain modifiers cannot reduce or increase stats past a certain value.$(p)These will be noted in the tooltip for that particular stat in REI.$(p)These caps are modifier-specific, so one modifier may have a different cap than another for the same stat."
         },
 		{
             "type": "patchouli:text",
@@ -31,7 +31,7 @@
         },
 		{
             "type": "patchouli:text",
-            "text": "Even though JEI states that items must be held in particular hands, that is not required.$(p)You can apply a modifier as long as you are holding the items in your hands, regardless of which hand."
+            "text": "Even though REI states that items must be held in particular hands, that is not required.$(p)You can apply a modifier as long as you are holding the items in your hands, regardless of which hand."
         }
 	]
 }

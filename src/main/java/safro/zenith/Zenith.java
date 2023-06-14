@@ -1,5 +1,6 @@
 package safro.zenith;
 
+import com.chocohead.mm.api.ClassTinkerers;
 import io.github.fabricators_of_create.porting_lib.crafting.CraftingHelper;
 import io.github.fabricators_of_create.porting_lib.crafting.NBTIngredient;
 import net.fabricmc.api.ModInitializer;
@@ -7,6 +8,7 @@ import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
 import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.MappingResolver;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -17,6 +19,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -117,7 +120,6 @@ public class Zenith implements ModInitializer {
 		ZenithUtil.registerTypes();
 
 		addReloads();
-
 		CraftingHelper.register(new ResourceLocation("minecraft", "item"), CachedIngredient.VanillaSerializer.INSTANCE);
 
 	}
