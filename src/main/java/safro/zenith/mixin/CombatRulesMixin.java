@@ -28,12 +28,13 @@ public class CombatRulesMixin {
      */
     @Overwrite
     public static float getDamageAfterMagicAbsorb(float damage, float protPoints) {
-        float clamped = Mth.clamp(protPoints, 0, 20);
+        float clamped = clamp(protPoints, 0, 20);
         float remaining = Zenith.enableEnch ? Mth.clamp(protPoints - 20, 0, 45) : 0;
         float factor = 1F - clamped / 25F;
         if (remaining > 0) {
             factor -= 0.2F * remaining / 60;
         }
+        if (Zenith.DEBUG) Zenith.LOGGER.info("PROTECTION: Recieved {} damage with a clamped value of {}, damage reduction factor is {}, final damage is {}. (Prot points: {}) ", damage, clamped, factor, (damage * factor), protPoints);
         return damage * factor;
     }
 
@@ -59,9 +60,22 @@ public class CombatRulesMixin {
     private static void getDamageAfterAbsorb(float damage, float armor, float toughness, CallbackInfoReturnable<Float> cir) {
         if (Zenith.enableEnch){
             float toughnessModif = 2F + toughness / 4F;
-            float clamped = Mth.clamp(1.25F * armor - damage / toughnessModif, armor * (0.25F + 0.005F * toughness), 20F);
-            float factor = 1F - clamped / 25F;
+            float clamped = clamp(1.25F * armor - damage / toughnessModif, armor * (0.25F + 0.005F * toughness), 20F);
+            float factor = (1F - clamped / 25F);
+            //float factor = Math.min((1F - clamped / 25F), 0);
+            if (Zenith.DEBUG) Zenith.LOGGER.info("ARMOR: Recieved {} damage with a clamped value of {}, damage reduction factor is {}, final damage is {}. (Armor: {}, Toughness: {}) ", damage, clamped, factor, (damage * factor), armor, toughness);
             cir.setReturnValue(damage * factor);
+        }
+    }
+    private static float clamp(float value, float min, float max) {
+        if (min > max){
+            return max;
+        }
+        else if (value < min) {
+            return min;
+        }
+        else {
+            return value > max ? max : value;
         }
     }
 }

@@ -19,7 +19,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import safro.zenith.ench.EnchModuleEvents;
 
-@Mixin(ThrownTrident.class)
+@Mixin(value= ThrownTrident.class)
 public abstract class ThrownTridentMixin extends AbstractArrow implements EnchModuleEvents.TridentGetter {
 
     int pierces = 0;
@@ -38,7 +38,7 @@ public abstract class ThrownTridentMixin extends AbstractArrow implements EnchMo
     @Accessor
     public abstract ItemStack getTridentItem();
 
-    @Inject(method = "<init>(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;)V", at = @At("TAIL"), require = 1, remap = false)
+    @Inject(method = "<init>*", at = @At("TAIL"), require = 1, remap = false)
     private void init(CallbackInfo ci) {
         this.setPierceLevel((byte) EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, this.getTridentItem()));
     }

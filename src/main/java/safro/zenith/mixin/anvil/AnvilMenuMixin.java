@@ -6,7 +6,9 @@ import net.minecraft.world.inventory.AnvilMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.ItemCombinerMenu;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.spongepowered.asm.mixin.Mixin;
@@ -32,7 +34,7 @@ import static safro.zenith.ench.objects.ExtractionTomeItem.giveItem;
         @Shadow
         private String itemName;
         private static Player p = null;
-        private Map<Enchantment, Integer> enchants;
+        private boolean enchants = false;
 
 
         public AnvilMenuMixin(int i, Inventory inventory, ContainerLevelAccess containerLevelAccess) {
@@ -40,7 +42,7 @@ import static safro.zenith.ench.objects.ExtractionTomeItem.giveItem;
         }
 
         @ModifyConstant(method = "createResult", constant = @Constant(intValue = 40, ordinal = 2))
-        public int zenith_removeLevelCap(int old) {
+        public int zenithRemoveLevelCap(int old) {
             if (!Zenith.enableEnch)
                 return old;
             return Integer.MAX_VALUE;
@@ -62,12 +64,12 @@ import static safro.zenith.ench.objects.ExtractionTomeItem.giveItem;
         }
     }
 /*
-    @ModifyVariable
-            (method = "createResult", slice = @Slice(from = @At(value = "INVOKE", target = "net/minecraft/world/item/enchantment/EnchantmentHelper.getEnchantments (Lnet/minecraft/world/item/ItemStack;)Ljava/util/Map;", shift = At.Shift.BEFORE)),
-                    at = @At(value = "INVOKE", target = "net/minecraft/world/item/enchantment/EnchantmentHelper.getEnchantments (Lnet/minecraft/world/item/ItemStack;)Ljava/util/Map;"), ordinal = 0)
-    private Map<Enchantment, Integer> zenithCaptureLocals(Map<Enchantment, Integer> value){
-        enchants=value;
-        return value;
+    @Redirect(method = "createResult", at = @At(value = "INVOKE", target = "net/minecraft/world/item/ItemStack.is (Lnet/minecraft/world/item/Item;)Z"))
+    private boolean zenithModifyPossible(ItemStack instance, Item item){
+        if (Zenith.enableEnch) {
+            return enchants || instance.is(Items.ENCHANTED_BOOK);
+        }
+        else return instance.is(Items.ENCHANTED_BOOK);
     }*/
 
     @Redirect(method = "createResult", at = @At(value = "INVOKE", target = "net/minecraft/world/item/enchantment/Enchantment.isCompatibleWith (Lnet/minecraft/world/item/enchantment/Enchantment;)Z"))
@@ -76,8 +78,9 @@ import static safro.zenith.ench.objects.ExtractionTomeItem.giveItem;
                 ItemStack itemStack = this.inputSlots.getItem(0);
                 IEnchantableItem enchi = (IEnchantableItem) itemStack.getItem();
                 Zenith.LOGGER.warn("can apply: " + (ZenithUtil.canApply(instance, itemStack) + ", and Instance: " + instance));
-                return (ZenithUtil.canApply(instance, itemStack) || enchi.forciblyAllowsTableEnchantment(itemStack, instance));
-            }
+                enchants=(ZenithUtil.canApply(instance, itemStack) || enchi.forciblyAllowsTableEnchantment(itemStack, instance));
+                return enchants;
+            } else
         return instance.isCompatibleWith(enchantment);
     }
 

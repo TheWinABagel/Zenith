@@ -144,7 +144,6 @@ public class PotionModule {
         PotionBrewing.addMix(FATIGUE, Items.REDSTONE, LONG_FATIGUE);
         PotionBrewing.addMix(FATIGUE, Items.GLOWSTONE_DUST, STRONG_FATIGUE);
 
-    //    if (Apoth.Items.SKULL_FRAGMENT != null) PotionBrewing.addMix(Potions.AWKWARD, Apoth.Items.SKULL_FRAGMENT, WITHER);
         PotionBrewing.addMix(Potions.AWKWARD, Items.WITHER_SKELETON_SKULL, WITHER);
         PotionBrewing.addMix(WITHER, Items.REDSTONE, LONG_WITHER);
         PotionBrewing.addMix(WITHER, Items.GLOWSTONE_DUST, STRONG_WITHER);
