@@ -161,6 +161,7 @@ public class ZenithUtil {
         } else if (stack.getItem() instanceof TridentItem) {
             return canApplyEnchantment(ench, stack) || ench == EnchModule.SHARPNESS || ench == Enchantments.MOB_LOOTING || ench == Enchantments.PIERCING;
         }
+
         return canApplyEnchantment(ench, stack);
     }
 

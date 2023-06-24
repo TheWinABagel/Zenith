@@ -5,7 +5,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ProtectionEnchantment;
-import safro.zenith.Zenith;
+import safro.zenith.ench.EnchModule;
 
 public class DefenseEnchant extends ProtectionEnchantment {
 
@@ -35,7 +35,7 @@ public class DefenseEnchant extends ProtectionEnchantment {
 	 */
 	@Override
 	public boolean checkCompatibility(Enchantment ench) {
-		if ((this == Enchantments.FALL_PROTECTION) || (this == Enchantments.ALL_DAMAGE_PROTECTION)) return ench != this;
+		if ((this == Enchantments.FALL_PROTECTION) || (this == EnchModule.PROTECTION)) return ench != this;
 		if (ench instanceof ProtectionEnchantment) {
 			ProtectionEnchantment pEnch = (ProtectionEnchantment) ench;
 			if (ench == this) return false;

@@ -48,7 +48,7 @@ import java.io.File;
 
 
 public class Zenith implements ModInitializer {
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 	public static final Logger LOGGER = LoggerFactory.getLogger("zenith");
 	public static final String MODID = "zenith";
 	public static final CreativeModeTab ZENITH_GROUP = FabricItemGroupBuilder.build(new ResourceLocation(MODID, MODID), () -> new ItemStack(Items.ENCHANTING_TABLE));

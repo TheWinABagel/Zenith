@@ -68,12 +68,12 @@ import static net.minecraft.world.level.block.AnvilBlock.FACING;
                 if (!FallingBlock.isFree(pLevel.getBlockState(pPos.below())) || pPos.getY() < pLevel.getMinBuildHeight()) {
                     return;
                 }
-                //Zenith.LOGGER.info("ANVIL IS FREE");
+                    if (Zenith.DEBUG) Zenith.LOGGER.info("ANVIL IS FREE");
                     BlockEntity be = pLevel.getBlockEntity(pPos);
                     FallingBlockEntity e = FallingBlockEntity.fall(pLevel, pPos, pState);
                     if (be instanceof AnvilBlockEntity anvil) {
-                       // Zenith.LOGGER.info("ANVIL HAS TILE");
-                        e.blockData = new CompoundTag();
+                       if (Zenith.DEBUG) Zenith.LOGGER.info("ANVIL HAS TILE");
+                       e.blockData = new CompoundTag();
                         anvil.saveAdditional(e.blockData);
                     }
                     this.falling(e);
@@ -118,7 +118,9 @@ import static net.minecraft.world.level.block.AnvilBlock.FACING;
                             }
                             if (handled) {
                                 if (world.random.nextInt(1 + ub) == 0) {
+                                    BlockEntity copy = world.getBlockEntity(pos);
                                     BlockState dmg = AnvilBlock.damage(fallState);
+                                    if (copy != null) world.setBlockEntity(copy);
                                     boolean isUnbreakable = fallState.is(EnchModule.UNBREAKABLE_ANVIL);
                                     if (dmg == null && !isUnbreakable) {
                                         world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());

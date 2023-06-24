@@ -8,7 +8,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.enchantment.DamageEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.Enchantments;
+import safro.zenith.ench.EnchModule;
 
 public class BaneEnchant extends DamageEnchantment {
 
@@ -45,7 +45,7 @@ public class BaneEnchant extends DamageEnchantment {
 	@Override
 	public boolean checkCompatibility(Enchantment ench) {
 		if (this.attrib == MobType.UNDEFINED) return ench != this;
-		return ench == Enchantments.SHARPNESS ? ench != this : !(ench instanceof BaneEnchant);
+		return ench == EnchModule.SHARPNESS ? ench != this : !(ench instanceof BaneEnchant);
 	}
 
 	/**
