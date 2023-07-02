@@ -12,7 +12,7 @@ import net.minecraft.server.ReloadableServerResources;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 import safro.zenith.api.data.RecipeHelper;
 
-@Mixin(ReloadableServerResources.class)
+@Mixin(value = ReloadableServerResources.class, priority = 1100)
 public class ServerResourcesMixin {
 
     @Inject(method = "listeners()Ljava/util/List;", at = @At("RETURN"), cancellable = true)

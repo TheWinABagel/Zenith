@@ -65,7 +65,7 @@ public class PotionCharmItem extends Item implements TableApplicableItem, Damage
 				if (contained.getEffect() == MobEffects.REGENERATION) durationOffset += 50 >> contained.getAmplifier();
 				MobEffectInstance newEffect = new MobEffectInstance(contained.getEffect(), (int) Math.ceil(contained.getDuration() / 24D) + durationOffset, contained.getAmplifier(), false, false);
 				((ServerPlayer) entity).addEffect(newEffect);
-				if (((ServerPlayer) entity).isCreative())
+				if (!((ServerPlayer) entity).isCreative())
 					if (stack.hurt(contained.getEffect() == MobEffects.REGENERATION ? 2 : 1, world.random, (ServerPlayer) entity)) stack.shrink(1);
 			}
 		}
