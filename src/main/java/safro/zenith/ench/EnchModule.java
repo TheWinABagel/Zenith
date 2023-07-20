@@ -128,12 +128,18 @@ public class EnchModule {
     public static final Block SIGHTSHELF = register("sightshelf", new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)));
     public static final Block SIGHTSHELF_T2 = register("sightshelf_t2", new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)));
     public static final Block ENDER_LIBRARY = register("ender_library", new EnchLibraryBlock(EnchLibraryTile.EnderLibraryTile::new, 31));
+    public static final Block DORMANT_DEEPSHELF = register("dormant_deepshelf", new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)));
+    public static final Block DEEPSHELF = register("deepshelf", new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)));
+    public static final Block ECHOING_DEEPSHELF = register("echoing_deepshelf", new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)));
+    public static final Block SOUL_TOUCHED_DEEPSHELF = register("soul_touched_deepshelf", new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)));
+    public static final Block ECHOING_SCULKSHELF = register("echoing_sculkshelf", new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)));
+    public static final Block SOUL_TOUCHED_SCULKSHELF = register("soul_touched_sculkshelf", new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)));
+    public static final Block STONESHELF = register("stoneshelf", new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).sound(SoundType.STONE)));
 
     // Items
     public static final Item PRISMATIC_WEB = register("prismatic_web", new Item(new Item.Properties().tab(Zenith.ZENITH_GROUP)));
-    //public static final Item ANVIL = replacement("anvil", new ZenithAnvilItem(Blocks.ANVIL), Items.ANVIL);
-    //public static final Item CHIPPED_ANVIL = replacement("chipped_anvil", new ZenithAnvilItem(Blocks.CHIPPED_ANVIL), Items.CHIPPED_ANVIL);
-    //public static final Item DAMAGED_ANVIL = replacement("damaged_anvil", new ZenithAnvilItem(Blocks.DAMAGED_ANVIL), Items.DAMAGED_ANVIL);
+    public static final Item WARDEN_TENDRIL = register("warden_tendril", new Item(new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item INFUSED_BREATH = register("infused_breath", new Item(new Item.Properties().tab(Zenith.ZENITH_GROUP).rarity(net.minecraft.world.item.Rarity.EPIC)));
     public static final Item OTHER_TOME = register("other_tome", new TomeItem(Items.AIR, null));
     public static final Item HELMET_TOME = register("helmet_tome", new TomeItem(Items.DIAMOND_HELMET, EnchantmentCategory.ARMOR_HEAD));
     public static final Item CHESTPLATE_TOME = register("chestplate_tome", new TomeItem(Items.DIAMOND_CHESTPLATE, EnchantmentCategory.ARMOR_CHEST));
@@ -146,6 +152,7 @@ public class EnchModule {
     public static final Item SCRAP_TOME = register("scrap_tome", new ScrappingTomeItem());
     public static final Item IMPROVED_SCRAP_TOME = register("improved_scrap_tome", new ImprovedScrappingTomeItem());
     public static final Item EXTRACTION_TOME = register("extraction_tome", new ExtractionTomeItem());
+
     public static final Item HELLSHELF_ITEM = register("hellshelf", new BlockItem(HELLSHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
     public static final Item INFUSED_HELLSHELF_ITEM = register("infused_hellshelf", new GlowyBlock(INFUSED_HELLSHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
     public static final Item BLAZING_HELLSHELF_ITEM = register("blazing_hellshelf", new BlockItem(BLAZING_HELLSHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
@@ -167,6 +174,13 @@ public class EnchModule {
     public static final Item SIGHTSHELF_T2_ITEM = register("sightshelf_t2", new BlockItem(SIGHTSHELF_T2, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
     public static final Item INERT_TRIDENT = register("inert_trident", new Item(new Item.Properties().stacksTo(1).tab(Zenith.ZENITH_GROUP)));
     public static final Item ENDER_LIBRARY_ITEM = register("ender_library", new BlockItem(ENDER_LIBRARY, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item DORMANT_DEEPSHELF_ITEM = register("dormant_deepshelf", new BlockItem(DORMANT_DEEPSHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item DEEPSHELF_ITEM = register("deepshelf", new GlowyBlock(DEEPSHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item ECHOING_DEEPSHELF_ITEM = register("echoing_deepshelf", new BlockItem(ECHOING_DEEPSHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item SOUL_TOUCHED_DEEPSHELF_ITEM = register("soul_touched_deepshelf", new BlockItem(SOUL_TOUCHED_DEEPSHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item ECHOING_SCULKSHELF_ITEM = register("echoing_sculkshelf", new BlockItem(ECHOING_SCULKSHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item SOUL_TOUCHED_SCULKSHELF_ITEM = register("soul_touched_sculkshelf", new BlockItem(SOUL_TOUCHED_SCULKSHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
+    public static final Item STONESHELF_ITEM = register("stoneshelf", new BlockItem(STONESHELF, new Item.Properties().tab(Zenith.ZENITH_GROUP)));
 
     // Block Tags
     public static final TagKey<Block> UNBREAKABLE_ANVIL = registerBlockTag("unbreakable_anvil");
@@ -187,12 +201,6 @@ public class EnchModule {
         reload(false);
 
         EnchModuleEvents.init();
-
-        Ingredient pot = Zenith.potionIngredient(Potions.REGENERATION);
-        Zenith.HELPER.addShaped(HELLSHELF, 3, 3, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Items.BLAZE_ROD, "c:bookshelves", pot, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS);
-        Zenith.HELPER.addShaped(SEASHELF, 3, 3, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Zenith.potionIngredient(Potions.WATER), "c:bookshelves", Items.PUFFERFISH, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS);
-        Zenith.HELPER.addShaped(SIGHTSHELF, 3, 3, Blocks.GOLD_BLOCK, INFUSED_HELLSHELF, Blocks.GOLD_BLOCK, Zenith.potionIngredient(Potions.NIGHT_VISION), Items.ENDER_EYE, Items.SPYGLASS, Blocks.GOLD_BLOCK, INFUSED_HELLSHELF, Blocks.GOLD_BLOCK);
-        Zenith.HELPER.addShaped(SIGHTSHELF_T2, 3, 3, Blocks.EMERALD_BLOCK, Items.NETHERITE_INGOT, Blocks.EMERALD_BLOCK, Zenith.potionIngredient(Potions.LONG_NIGHT_VISION), SIGHTSHELF, Zenith.potionIngredient(Potions.LONG_NIGHT_VISION), Blocks.EMERALD_BLOCK, Items.NETHERITE_INGOT, Blocks.EMERALD_BLOCK);
     }
 
 

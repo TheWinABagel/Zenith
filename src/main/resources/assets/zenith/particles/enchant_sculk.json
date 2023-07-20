@@ -1,0 +1,30 @@
+{
+  "textures": [
+    "zenith:sga_a_sculk",
+    "zenith:sga_b_sculk",
+    "zenith:sga_c_sculk",
+    "zenith:sga_d_sculk",
+    "zenith:sga_e_sculk",
+    "zenith:sga_f_sculk",
+    "zenith:sga_g_sculk",
+    "zenith:sga_h_sculk",
+    "zenith:sga_i_sculk",
+    "zenith:sga_j_sculk",
+    "zenith:sga_k_sculk",
+    "zenith:sga_l_sculk",
+    "zenith:sga_m_sculk",
+    "zenith:sga_n_sculk",
+    "zenith:sga_o_sculk",
+    "zenith:sga_p_sculk",
+    "zenith:sga_q_sculk",
+    "zenith:sga_r_sculk",
+    "zenith:sga_s_sculk",
+    "zenith:sga_t_sculk",
+    "zenith:sga_u_sculk",
+    "zenith:sga_v_sculk",
+    "zenith:sga_w_sculk",
+    "zenith:sga_x_sculk",
+    "zenith:sga_y_sculk",
+    "zenith:sga_z_sculk"
+  ]
+}

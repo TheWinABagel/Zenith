@@ -1,6 +1,6 @@
 {
     "name": "Trinkets",
-    "icon": "trinkets:textures/item/empty_charm_slot.png",
+    "icon": "trinkets:textures/gui/slots/charm.png",
     "category": "zenith:potion/charms",
 	"flag": "&zenith:potion,zenith:trinketsloaded",
 	"sortnum": 1,

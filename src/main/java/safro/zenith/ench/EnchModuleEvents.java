@@ -5,6 +5,10 @@ import io.github.fabricators_of_create.porting_lib.event.common.LivingEntityEven
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.server.packs.PackType;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.inventory.AnvilMenu;
@@ -25,6 +29,7 @@ import safro.zenith.ench.objects.ImprovedScrappingTomeItem;
 import safro.zenith.ench.objects.ScrappingTomeItem;
 import safro.zenith.ench.table.EnchantingStatManager;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -55,6 +60,7 @@ public class EnchModuleEvents {
                     ScavengerEnchant.drops(player, target, drops, source);
                     SpearfishingEnchant.addFishes(target, drops, source);
                     KnowledgeEnchant.drops(player, target, drops);
+                    wardenDrops(player, target, drops, lootingLevel);
                 }
             }
             return false;
@@ -106,6 +112,16 @@ public class EnchModuleEvents {
             BlockEntity te = r.access.evaluate(Level::getBlockEntity).orElse(null);
         }
         return prev;
+    }
+
+    private static void wardenDrops(Player p, LivingEntity warden, Collection<ItemEntity> drops, int lootingLevel) {
+        if (Zenith.enableEnch && warden instanceof Warden){
+            int amount = 1;
+            if (p.getRandom().nextFloat() <= 0.10F + lootingLevel * 0.10F) {
+                amount++;
+            }
+            drops.add(new ItemEntity(warden.level, warden.getX(), warden.getY(), warden.getZ(), new ItemStack(EnchModule.WARDEN_TENDRIL, amount)));
+        }
     }
 
     public interface TridentGetter {

@@ -4,11 +4,15 @@
         "condition": "zenith:module",
         "module": "enchantment"
     }],
-    "pattern": ["BBB", "PSR", "BBB"],
+    "pattern": [
+        "BBB",
+        "PSR",
+        "BBB"
+    ],
     "key": {
         "B": { "item": "minecraft:end_stone_bricks" },
         "S": { "tag": "c:bookshelves" },
-        "P": { "item": "minecraft:dragon_breath" },
+        "P": { "item": "zenith:infused_breath" },
         "R": { "item": "minecraft:ender_pearl" }
     },
     "result": {

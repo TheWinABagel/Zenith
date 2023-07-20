@@ -45,6 +45,34 @@
 			"required": false
 		},
 		{
+			"id": "zenith:dormant_deepshelf",
+			"required": false
+		},
+		{
+			"id": "zenith:deepshelf",
+			"required": false
+		},
+		{
+			"id": "zenith:echoing_deepshelf",
+			"required": false
+		},
+		{
+			"id": "zenith:soul_touched_deepshelf",
+			"required": false
+		},
+		{
+			"id": "zenith:echoing_sculkshelf",
+			"required": false
+		},
+		{
+			"id": "zenith:soul_touched_sculkshelf",
+			"required": false
+		},
+		{
+			"id": "zenith:stoneshelf",
+			"required": false
+		},
+		{
 			"id": "zenith:library",
 			"required": false
 		},

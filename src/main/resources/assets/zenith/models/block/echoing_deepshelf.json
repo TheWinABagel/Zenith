@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "block/cracked_deepslate_tiles",
+        "side": "zenith:blocks/echoing_deepshelf"
+    }
+}

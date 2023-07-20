@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "zenith:blocks/sculkshelf_top",
+        "side": "zenith:blocks/echoing_sculkshelf"
+    }
+}

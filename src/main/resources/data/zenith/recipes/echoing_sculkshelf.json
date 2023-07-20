@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "fabric:load_conditions": [{
+    "condition": "zenith:module",
+    "module": "enchantment"
+  }],
+  "group": "lemons",
+  "pattern": [
+    " T ",
+    "SBS",
+    "SCS"
+  ],
+  "key": {
+    "T": {
+      "item": "zenith:warden_tendril"
+    },
+	"B": {
+      "item": "zenith:echoing_deepshelf"
+    },
+	"S": {
+      "item": "minecraft:sculk"
+    },
+	"C": {
+      "item": "minecraft:sculk_catalyst"
+    }
+  },
+  "result": {
+    "item": "zenith:echoing_sculkshelf",
+    "count": 1
+  }
+}

@@ -7,7 +7,7 @@
     "pattern": ["EHE", "HTH", "EHE"],
     "key": {
         "E": { "item": "minecraft:ender_chest" },
-        "H": { "item": "zenith:infused_hellshelf" },
+        "H": { "tag": "zenith:infused_shelves" },
         "T": { "item": "minecraft:enchanting_table" }
     },
     "result": {

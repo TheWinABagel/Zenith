@@ -1,8 +1,13 @@
 package safro.zenith.ench.objects;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
+import safro.zenith.ench.table.EnchantingStatManager;
 
 /**
  * This is the main interface for all blocks that provide stats to an enchanting table.
@@ -62,4 +67,33 @@ public interface IEnchantingBlock {
 		return 0;
 	}
 
+	/**
+	 * Spawns Enchant particles in the world flowing towards the Enchanting Table.<br>
+	 * Only called on the client.
+	 * @param state The state of this block.
+	 * @param level The level.
+	 * @param rand The random.
+	 * @param pos The position of the enchanting table.
+	 * @param offset The position of this shelf, relative to the table.
+	 */
+	default void spawnTableParticle(BlockState state, Level level, RandomSource rand, BlockPos pos, BlockPos offset) {
+		if (rand.nextInt(16) == 0) {
+			if (EnchantingStatManager.getEterna(level.getBlockState(pos.offset(offset)), level, pos.offset(offset)) > 0) {
+				if (level.isEmptyBlock(pos.offset(offset.getX() / 2, 0, offset.getZ() / 2))) {
+					level.addParticle(getTableParticle(state), pos.getX() + 0.5D, pos.getY() + 2.0D, pos.getZ() + 0.5D, offset.getX() + rand.nextFloat() - 0.5D, offset.getY() - rand.nextFloat() - 1.0F, offset.getZ() + rand.nextFloat() - 0.5D);
+				}
+			}
+		}
+	}
+
+	/**
+	 * To avoid having to duplicate the logic in {@link #spawnTableParticle} just to change the particle type,
+	 * this method is provided.<br>
+	 * If you need to do anything more complex, then override {@link #spawnTableParticle}
+	 * @param state The state of this block.
+	 * @return The particle type this block will spawn when near an Enchanting Table.
+	 */
+	default ParticleOptions getTableParticle(BlockState state) {
+		return ParticleTypes.ENCHANT;
+	}
 }

@@ -24,7 +24,6 @@
     "LootTablesMixin",
     "PlayerMixin",
     "ServerPlayerGameModeMixin",
-    "ServerResourcesMixin",
     "ShearsItemMixin",
     "SheepMixin",
     "TemptGoalMixin",

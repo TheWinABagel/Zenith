@@ -1,0 +1,19 @@
+{
+	"type": "zenith:enchanting",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "enchantment"
+	}],
+	"input": {
+		"item": "zenith:dormant_deepshelf"
+	},
+	"requirements": {
+		"eterna": 30,
+		"quanta": 40,
+		"arcana": 40
+	},
+	"result": {
+		"item": "zenith:deepshelf",
+		"count": 1
+	}
+}

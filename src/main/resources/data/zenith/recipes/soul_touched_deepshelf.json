@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "fabric:load_conditions": [{
+    "condition": "zenith:module",
+    "module": "enchantment"
+  }],
+  "group": "lemons",
+  "pattern": [
+    " E ",
+    " B ",
+    "CCC"
+  ],
+  "key": {
+    "E": {
+      "item": "minecraft:soul_lantern"
+    },
+	"B": {
+      "item": "zenith:deepshelf"
+    },
+	"C": {
+      "item": "minecraft:sculk"
+    }
+  },
+  "result": {
+    "item": "zenith:soul_touched_deepshelf",
+    "count": 1
+  }
+}

@@ -164,11 +164,6 @@ public class PotionModule {
         PotionBrewing.addMix(GRIEVOUS, Items.REDSTONE, LONG_GRIEVOUS);
         PotionBrewing.addMix(GRIEVOUS, Items.GLOWSTONE_DUST, STRONG_GRIEVOUS);
 
-        Ingredient fireRes = Zenith.potionIngredient(Potions.FIRE_RESISTANCE);
-        Ingredient abs = Zenith.potionIngredient(STRONG_ABSORPTION);
-        Ingredient res = Zenith.potionIngredient(RESISTANCE);
-        Ingredient regen = Zenith.potionIngredient(Potions.STRONG_REGENERATION);
-        Zenith.HELPER.addShaped(Items.ENCHANTED_GOLDEN_APPLE, 3, 3, fireRes, regen, fireRes, abs, Items.GOLDEN_APPLE, abs, res, abs, res);
     }
 
     public static void reload(boolean e) {

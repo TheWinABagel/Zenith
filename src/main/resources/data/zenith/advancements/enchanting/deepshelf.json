@@ -1,0 +1,34 @@
+{
+	"parent": "zenith:enchanting/upgrade_hellshelf",
+	"conditions": [{
+		"type": "zenith:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "zenith:dormant_deepshelf"
+		},
+		"title": {
+			"translate": "advancements.zenith.deepshelf"
+		},
+		"description": {
+			"translate": "advancements.zenith.deepshelf.desc"
+		},
+		"frame": "task"
+	},
+	"criteria": {
+		"deepshelf": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"items": ["zenith:deepshelf"]
+				}]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"deepshelf"
+		]
+	]
+}
