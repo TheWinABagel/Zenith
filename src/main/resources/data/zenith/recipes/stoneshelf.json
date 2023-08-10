@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "fabric:load_conditions": [{
+    "condition": "zenith:module",
+    "module": "enchantment"
+  }],
+  "group": "lemons",
+  "pattern": [
+    "EEE",
+    "BBB",
+    "EEE"
+  ],
+  "key": {
+    "E": {
+      "item": "minecraft:polished_andesite"
+    },
+	"B": {
+      "item": "minecraft:book"
+    }
+  },
+  "result": {
+    "item": "zenith:stoneshelf",
+    "count": 1
+  }
+}
