@@ -1,7 +1,6 @@
 package safro.zenith;
 
 import net.fabricmc.api.ClientModInitializer;
-import safro.zenith.adventure.client.AdventureModuleClient;
 import safro.zenith.api.event.ClientEvents;
 import safro.zenith.ench.EnchModuleClient;
 import safro.zenith.network.NetworkUtil;
@@ -15,7 +14,7 @@ public class ZenithClient implements ClientModInitializer {
         ClientEvents.init();
         NetworkUtil.initClient();
 
-        if (Zenith.enableAdventure) AdventureModuleClient.init();
+        //if (Zenith.enableAdventure) AdventureModuleClient.init();
         if (Zenith.enableEnch) EnchModuleClient.init();
         if (Zenith.enablePotion) PotionModuleClient.init();
         if (Zenith.enableVillage) VillageModuleClient.init();

@@ -103,13 +103,15 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 java {
-	withSourcesJar()
+
 }
 
 jar {
 	from("LICENSE") {
 		rename { "${it}_${project.archivesBaseName}"}
 	}
+	exclude "safro/zenith/adventure/**" //not implemented :)
+	exclude "safro/zenith/util/NameHelper.class"
 }
 
 publishing {

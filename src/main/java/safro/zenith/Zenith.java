@@ -26,7 +26,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import safro.zenith.advancements.AdvancementTriggers;
-import safro.zenith.adventure.AdventureModule;
 import safro.zenith.api.RunnableReloader;
 import safro.zenith.api.config.Configuration;
 import safro.zenith.api.event.ServerEvents;
@@ -109,7 +108,7 @@ public class Zenith implements ModInitializer {
 		if (enableEnch) EnchModule.init();
 		if (enableSpawner) SpawnerModule.init();
 		if (enableGarden) GardenModule.init();
-		if (enableAdventure) AdventureModule.init();
+		//if (enableAdventure) AdventureModule.init();
 		if (enablePotion) PotionModule.init();
 		if (enableVillage) VillageModule.init();
 
@@ -128,7 +127,7 @@ public class Zenith implements ModInitializer {
 
 	public static void addReloads() {
 		RunnableReloader.add(() -> {
-			if (enableAdventure) AdventureModule.init();
+		//	if (enableAdventure) AdventureModule.init();
 		}, "adventure_module");
 		RunnableReloader.add(() -> {
 			if (enableEnch) EnchModule.reload(true);
