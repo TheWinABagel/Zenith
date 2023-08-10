@@ -68,30 +68,23 @@ dependencies {
 
 	//Other Mods for Testing
 	//modCompileOnly "com.mrcrayfish:goblintraders-fabric:1.8.1-1.19.2"
-	modImplementation "curse.maven:bewitchment-394915:4048571"
-	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
-	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
-	//^ don't include because trinkets already does
-	include "me.lucko:fabric-permissions-api:${fabric_permissions_api_version}"
-	modImplementation "io.github.ladysnake:impersonate:${impersonate_version}"
-	include "io.github.ladysnake:impersonate:${impersonate_version}"
-	modImplementation "maven.modrinth:midnightlib:${midnightlib_version}"
-	include "maven.modrinth:midnightlib:${midnightlib_version}"
-	modImplementation "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
-	include "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
-	modImplementation "com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}"
-	include "com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}"
-	modImplementation "com.terraformersmc.terraform-api:terraform-wood-api-v1:${terraform_wood_api_version}"
-	include "com.terraformersmc.terraform-api:terraform-wood-api-v1:${terraform_wood_api_version}"
+	modCompileOnly "curse.maven:bewitchment-394915:4048571"
+	modCompileOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
+	modCompileOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
+	modCompileOnly "io.github.ladysnake:impersonate:${impersonate_version}"
+	modCompileOnly "maven.modrinth:midnightlib:${midnightlib_version}"
+	modCompileOnly "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
+	modCompileOnly "com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}"
+	modCompileOnly "com.terraformersmc.terraform-api:terraform-wood-api-v1:${terraform_wood_api_version}"
 
-	modImplementation("com.github.Virtuoel:Pehkui:${pehkui_version}") {
+	modCompileOnly("com.github.Virtuoel:Pehkui:${pehkui_version}") {
 		exclude group: "net.fabricmc.fabric-api"
 	}
 
-	modImplementation("maven.modrinth:spell-engine:${project.spell_engine_version}-fabric")
-	modImplementation("maven.modrinth:spell-power:${project.spell_power_version}-fabric")
-	modImplementation("com.github.ZsoltMolnarrr:TinyConfig:${project.tiny_config_version}")
-	modImplementation("dev.kosmx.player-anim:player-animation-lib-fabric:${project.player_anim}")
+	modCompileOnly("maven.modrinth:spell-engine:${project.spell_engine_version}-fabric")
+	modCompileOnly("maven.modrinth:spell-power:${project.spell_power_version}-fabric")
+	modCompileOnly("com.github.ZsoltMolnarrr:TinyConfig:${project.tiny_config_version}")
+	modCompileOnly("dev.kosmx.player-anim:player-animation-lib-fabric:${project.player_anim}")
 }
 loom {
 	accessWidenerPath = file("src/main/resources/zenith.aw")
