@@ -98,7 +98,7 @@ import static net.minecraft.world.level.block.AnvilBlock.FACING;
 
         @Inject(method = "onLand", at = @At("TAIL"))
         private void zenithOnLand(Level world, BlockPos pos, BlockState fallState, BlockState hitState, FallingBlockEntity anvil, CallbackInfo ci) {
-            if (Zenith.enableAdventure) gemSmashing(world, pos);
+            //if (Zenith.enableAdventure) gemSmashing(world, pos);
             if (Zenith.enableEnch) {
                 List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, new AABB(pos, pos.offset(1, 1, 1)));
                 if (anvil.blockData != null) {
@@ -174,7 +174,7 @@ import static net.minecraft.world.level.block.AnvilBlock.FACING;
             return anvil;
         }
 
-
+/*
     public void gemSmashing(Level world, BlockPos pos) {
         List<ItemEntity> items = world.getEntitiesOfClass(ItemEntity.class, new AABB(pos, pos.offset(1, 1, 1)));
         for (ItemEntity ent : items) {
@@ -183,5 +183,5 @@ import static net.minecraft.world.level.block.AnvilBlock.FACING;
                 ent.setItem(new ItemStack(AdventureModule.GEM_DUST, stack.getCount()));
             }
         }
-    }
+    }*/
 }

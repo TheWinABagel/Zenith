@@ -111,7 +111,7 @@ jar {
 		rename { "${it}_${project.archivesBaseName}"}
 	}
 	exclude "safro/zenith/adventure/**" //not implemented :)
-	exclude "safro/zenith/util/NameHelper.class"
+	exclude "safro/zenith/util/NameHelper.class" //curseforge sux
 }
 
 publishing {

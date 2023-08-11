@@ -51,7 +51,7 @@ public abstract class LivingEntityMixin {
 
     @Shadow
     public abstract MobEffectInstance getEffect(MobEffect ef);
-
+/*
     @Inject(method = "updatingUsingItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;updateUsingItem(Lnet/minecraft/world/item/ItemStack;)V", shift = At.Shift.BEFORE))
     private void zenithUseTickEvent(CallbackInfo ci) {
         LivingEntity entity = (LivingEntity) (Object) this;
@@ -60,7 +60,7 @@ public abstract class LivingEntityMixin {
                 useItemRemaining = AdventureEvents.drawSpeed(entity, useItem, useItemRemaining);
            }
         }
-    }/*
+    }*//*
     @ModifyVariable(method = "heal")
     private float zenithHealEvent(float f){
 
@@ -93,18 +93,7 @@ public abstract class LivingEntityMixin {
         ci.cancel();
     }
 
-    public void shieldBlock(DamageSource damageSource, float f, CallbackInfoReturnable<Boolean> cir) {
-        LivingEntity source= ((LivingEntity) damageSource.getEntity());
-        LivingEntity entity = (LivingEntity) (Object) this;
-        ItemStack stack = source.getUseItem();
-        Map<Affix, AffixInstance> affixes = AffixHelper.getAffixes(stack);
-        float blocked = f;
-        for (AffixInstance inst : affixes.values()) {
-            blocked = inst.onShieldBlock(source, damageSource, blocked);
-        }
-        if (blocked != f)
-            f = blocked;
-    }
+
 
     @Inject(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;hurtCurrentlyUsedShield(F)V", shift = At.Shift.BEFORE))
     private void zenithShieldBlock(DamageSource damageSource, float f, CallbackInfoReturnable<Boolean> cir) {
@@ -149,14 +138,14 @@ public abstract class LivingEntityMixin {
         return inst == null ? -1 : inst.getAmplifier();
     }
 
-
+/*
     @Inject(method = "createLivingAttributes", at = @At("RETURN"))
     private static void createAttributes(CallbackInfoReturnable<AttributeSupplier.Builder> cir) {
         AttributeSupplier.Builder builder = cir.getReturnValue();
         if (Zenith.enableAdventure) {
             addIfExists(builder, AdventureModule.COLD_DAMAGE, AdventureModule.CRIT_CHANCE, AdventureModule.CRIT_DAMAGE, AdventureModule.CURRENT_HP_DAMAGE, AdventureModule.DRAW_SPEED, AdventureModule.FIRE_DAMAGE, AdventureModule.LIFE_STEAL, AdventureModule.OVERHEAL, AdventureModule.PIERCING, AdventureModule.GHOST_HEALTH, AdventureModule.MINING_SPEED, AdventureModule.ARROW_DAMAGE, AdventureModule.ARROW_VELOCITY, AdventureModule.EXPERIENCE_GAINED);
         }
-    }
+    }*/
 
 
     private static void addIfExists(AttributeSupplier.Builder builder, Attribute... attribs) {

@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import safro.zenith.Zenith;
 
 /**
  * Fixes combining tools in an anvil reducing enchantment level to it's max level when the
@@ -27,9 +28,21 @@ public class SpellPowerMagicProtectionEnchantmentMixin extends ProtectionEnchant
 
 @Override
     public boolean checkCompatibility(Enchantment ench) {
+    if (Zenith.enableEnch) {
         if (ench instanceof ProtectionEnchantment pEnch) {
             return (pEnch.type == Type.ALL || pEnch.type == Type.FALL);
         }
         return (super.checkCompatibility(ench));
+    } else {
+    if (ench instanceof ProtectionEnchantment) {
+        ProtectionEnchantment protectionEnchantment = (ProtectionEnchantment) ench;
+        if (this.type == protectionEnchantment.type) {
+            return false;
+        }
+        return this.type == Type.FALL || protectionEnchantment.type == Type.FALL;
     }
+    return super.checkCompatibility(ench);
+    }
+}
+
 }

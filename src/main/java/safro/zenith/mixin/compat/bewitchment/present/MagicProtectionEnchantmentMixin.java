@@ -7,6 +7,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
+import safro.zenith.Zenith;
 import safro.zenith.ench.EnchModule;
 
 /**
@@ -20,17 +21,27 @@ import safro.zenith.ench.EnchModule;
  */
 @Pseudo
 @Mixin(value = MagicProtectionEnchantment.class)
-public class MagicProtectionEnchantmentMixin extends ProtectionEnchantment
-{
+public class MagicProtectionEnchantmentMixin extends ProtectionEnchantment {
     public MagicProtectionEnchantmentMixin(Rarity rarity, Type type, EquipmentSlot... equipmentSlots) {
         super(rarity, type, equipmentSlots);
     }
 
     @Override
     public boolean checkCompatibility(Enchantment ench) {
-        if (ench instanceof ProtectionEnchantment pEnch) {
-            return pEnch.type == Type.ALL || pEnch.type == Type.FALL;
+        if (Zenith.enableEnch) {
+            if (ench instanceof ProtectionEnchantment pEnch) {
+                return pEnch.type == Type.ALL || pEnch.type == Type.FALL;
+            }
+            return super.checkCompatibility(ench);
+        } else {
+            if (ench instanceof ProtectionEnchantment) {
+                ProtectionEnchantment protectionEnchantment = (ProtectionEnchantment) ench;
+                if (this.type == protectionEnchantment.type) {
+                    return false;
+                }
+                return this.type == Type.FALL || protectionEnchantment.type == Type.FALL;
+            }
+            return super.checkCompatibility(ench);
         }
-        return super.checkCompatibility(ench);
     }
 }
