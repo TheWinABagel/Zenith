@@ -2,7 +2,7 @@ package dev.shadowsoffire.apotheosis;
 
 
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryContainer;
-import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantContainer;
+import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingRecipe;
 import dev.shadowsoffire.apotheosis.garden.EnderLeadItem;
 
@@ -57,7 +57,7 @@ public class Apoth {
         public static final Item EXPLOSIVE_ARROW = new ExplosiveArrowItem(new Item.Properties());
         public static final Item IRON_MINING_ARROW = new MiningArrowItem(() -> net.minecraft.world.item.Items.IRON_PICKAXE, MiningArrowEntity.Type.IRON);
         public static final Item DIAMOND_MINING_ARROW = new MiningArrowItem(() -> net.minecraft.world.item.Items.DIAMOND_PICKAXE, MiningArrowEntity.Type.DIAMOND);
-        public static final RegistryObject<EnderLeadItem> ENDER_LEAD = R.item("ENDER_LEAD");
+        public static final Item ENDER_LEAD = new EnderLeadItem();
         public static final RegistryObject<Item> SKULL_FRAGMENT = new RegistryObject(new ResourceLocation("wstweaks", "fragment"), Registries.ITEM);
     }
 
@@ -135,7 +135,7 @@ public class Apoth {
     public static final class Menus {
         public static final MenuType<FletchingContainer> FLETCHING = ScreenHandlerRegistry.registerSimple(new ResourceLocation(Apotheosis.MODID, "fletching"), FletchingContainer::new);
         public static final MenuType<EnchLibraryContainer> LIBRARY = Apoth.registerMenu("library", new ExtendedScreenHandlerType<>(EnchLibraryContainer::new));
-        public static final MenuType<ApothEnchantContainer> ENCHANTING_TABLE = ScreenHandlerRegistry.registerSimple(new ResourceLocation(Apotheosis.MODID, "enchanting_table"), ApothEnchantContainer::new);
+        public static final MenuType<ApothEnchantmentMenu> ENCHANTING_TABLE = ScreenHandlerRegistry.registerSimple(new ResourceLocation(Apotheosis.MODID, "enchanting_table"), ApothEnchantmentMenu::new);
     }
 
     public static final class Tiles {

@@ -3,7 +3,7 @@ package dev.shadowsoffire.apotheosis.ench.table;
 import com.google.common.collect.Lists;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.EnchantmentInfo;
-import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantContainer.Arcana;
+import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu.Arcana;
 import net.minecraft.Util;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.Mth;

@@ -19,13 +19,15 @@ import net.minecraft.world.level.block.ComposterBlock;
 
 import java.io.File;
 
+import static dev.shadowsoffire.apotheosis.Apoth.Items.ENDER_LEAD;
+
 public class GardenModule {
 
     public static int maxCactusHeight = 5;
     public static int maxReedHeight = 255;
     public static int maxBambooHeight = 32;
 
-    public static final Item ENDER_LEAD = new EnderLeadItem();
+
     private static final CreativeModeTab ITEM_GROUP = FabricItemGroup.builder()
             .icon(() -> new ItemStack(ENDER_LEAD))
             .title(Component.translatable("apotheosis.creative_tab"))
@@ -37,7 +39,7 @@ public class GardenModule {
     //        factory.addShapeless(ENDER_LEAD, Items.ENDER_PEARL, Items.LEAD, Items.GOLD_INGOT);
     //    });
         items();
-        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register((content) ->{
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register((content) -> {
         content.accept(ENDER_LEAD);
         });
     }

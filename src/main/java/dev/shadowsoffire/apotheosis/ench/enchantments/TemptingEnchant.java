@@ -4,6 +4,7 @@ import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.TemptGoal;
+import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -31,10 +32,14 @@ public class TemptingEnchant extends Enchantment {
      * Injected by {link TemptGoalMixin}
      */
     public boolean shouldFollow(LivingEntity target) {
-        ItemStack stack = target.getMainHandItem();
-        if (EnchantmentHelper.getItemEnchantmentLevel(this, stack) > 0) return true;
-        stack = target.getOffhandItem();
-        return EnchantmentHelper.getItemEnchantmentLevel(this, stack) > 0;
+        return shouldFollow(target.getMainHandItem()) || shouldFollow(target.getOffhandItem());
     }
 
+    /**
+     * Checks if a stack has the tempting enchantment.<br>
+     * Explicitly checks instanceof HoeItem since this code path is extremely hot, and getEnchantmentLevel is expensive.
+     */
+    private boolean shouldFollow(ItemStack stack) {
+        return stack.getItem() instanceof HoeItem && EnchantmentHelper.getItemEnchantmentLevel(this, stack) > 0;
+    }
 }
