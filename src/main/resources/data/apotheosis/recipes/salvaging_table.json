@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [{
+	"type": "apotheosis:module",
+    "module": "adventure"
+  }],
+  "group": "something",
+  "pattern": [
+    "CCC",
+    "PSA",
+    "GLG"
+  ],
+  "key": {
+    "C": {
+      "tag": "forge:ingots/copper"
+    },
+	"G": {
+      "item": "apotheosis:gem_dust"
+    },
+	"S": {
+      "item": "minecraft:smithing_table"
+    },
+	"L": {
+      "item": "minecraft:lava_bucket"
+    },
+	"P": {
+      "item": "minecraft:iron_pickaxe"
+    },
+	"A": {
+      "item": "minecraft:iron_axe"
+    }
+  },
+  "result": {
+    "item": "apotheosis:salvaging_table",
+    "count": 1
+  }
+}

@@ -1,0 +1,38 @@
+{
+	"parent": "apotheosis:affix/rare_gem",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "adventure"
+	}],
+	"display": {
+		"icon": {
+			"item": "apotheosis:gem",
+			"nbt": "{gem:\"apotheosis:the_nether/blood_lord\"}"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.mythic_gem"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.mythic_gem.desc"
+		},
+		"frame": "goal",
+		"hidden": true,
+		"background": "apotheosis:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"gem": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"apoth": {
+					"type": "gem_rarity",
+					"rarity": "mythic"
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"gem"
+		]
+	]
+}

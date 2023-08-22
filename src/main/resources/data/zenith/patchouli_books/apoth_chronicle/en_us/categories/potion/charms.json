@@ -1,8 +1,0 @@
-{
-    "name": "Potion Charms",
-	"parent": "zenith:potion/potion",
-    "description": "This section details $(9)Potion Charms$() and all their uses and nuances.$(p)If other modules are disabled, or some mods aren't installed, this section might be a bit empty.",
-    "icon": "zenith:potion_charm",
-	"flag": "zenith:potion",
-	"sortnum": 1
-}

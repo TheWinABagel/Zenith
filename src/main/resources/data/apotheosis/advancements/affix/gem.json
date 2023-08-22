@@ -1,0 +1,37 @@
+{
+	"parent": "apotheosis:affix/root",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "adventure"
+	}],
+	"display": {
+		"icon": {
+			"item": "apotheosis:gem",
+			"nbt": "{gem:\"apotheosis:core/guardian\"}"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.gem"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.gem.desc"
+		},
+		"frame": "task",
+		"hidden": true,
+		"background": "apotheosis:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"gem": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"items": ["apotheosis:gem"]
+				}]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"gem"
+		]
+	]
+}

@@ -1,0 +1,23 @@
+Advenutre module:
+all
+
+Enchanting module:
+Figure out events (anvil damage, anvil , heal event,)
+
+Potion module:
+all
+
+Spawner module:
+Reimplement spawner with mixins
+REI support for Spawner Recipes
+
+Village module:
+REI support for Fletching table
+
+Garden module:
+Add info to REI
+
+General stuff
+figure out what breaks if modules are disabled
+Fabricify the rest of the recipe conditions
+Change modid+class names (last step)

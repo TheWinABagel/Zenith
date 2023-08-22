@@ -1,7 +1,0 @@
-{
-    "name": "Utility Items",
-    "description": "This section details all the random tools used to make enchanting easier.",
-    "icon": "zenith:library",
-	"flag": "zenith:enchanting",
-	"parent": "zenith:enchanting/enchanting"
-}

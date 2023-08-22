@@ -10,9 +10,6 @@ accessible class net/minecraft/world/inventory/MenuType$MenuSupplier
 accessible field net/minecraft/world/entity/Entity random Lnet/minecraft/util/RandomSource;
 
 accessible  method  net/minecraft/network/chat/TextColor <init>  (ILjava/lang/String;)V
-accessible method net/minecraft/world/damagesource/DamageSource bypassMagic ()Lnet/minecraft/world/damagesource/DamageSource;
-accessible method net/minecraft/world/damagesource/DamageSource bypassArmor ()Lnet/minecraft/world/damagesource/DamageSource;
-accessible method net/minecraft/world/entity/LivingEntity dropFromLootTable (Lnet/minecraft/world/damagesource/DamageSource;Z)V
 accessible method net/minecraft/world/level/block/Block popExperience (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;I)V
 accessible method net/minecraft/world/entity/Entity getEncodeId ()Ljava/lang/String;
 accessible method net/minecraft/world/item/alchemy/PotionBrewing addMix (Lnet/minecraft/world/item/alchemy/Potion;Lnet/minecraft/world/item/Item;Lnet/minecraft/world/item/alchemy/Potion;)V
@@ -54,3 +51,13 @@ accessible field net/minecraft/world/item/crafting/RecipeManager recipes Ljava/u
 mutable field net/minecraft/advancements/CriteriaTriggers INVENTORY_CHANGED Lnet/minecraft/advancements/critereon/InventoryChangeTrigger;
 
 accessible field net/minecraft/world/entity/LivingEntity attackStrengthTicker I
+
+accessible method net/minecraft/world/level/BaseSpawner getOrCreateNextSpawnData (Lnet/minecraft/world/level/Level;Lnet/minecraft/util/RandomSource;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/SpawnData;
+accessible method net/minecraft/world/level/BaseSpawner isNearPlayer (Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z
+accessible method net/minecraft/client/renderer/entity/EntityRenderers register (Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V
+accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen leftPos I
+accessible field net/minecraft/client/gui/screens/Screen font Lnet/minecraft/client/gui/Font;
+accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen topPos I
+
+accessible method net/minecraft/client/gui/screens/inventory/EnchantmentScreen renderBook (Lnet/minecraft/client/gui/GuiGraphics;IIF)V
+accessible method net/minecraft/world/entity/LivingEntity dropFromLootTable (Lnet/minecraft/world/damagesource/DamageSource;Z)V

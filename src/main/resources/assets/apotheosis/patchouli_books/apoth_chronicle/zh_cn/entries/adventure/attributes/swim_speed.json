@@ -1,0 +1,13 @@
+{
+    "name": "游泳速度",
+    "icon": "minecraft:kelp",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)游泳速度$()是对实际游泳速度的加成。如果你的游泳速度是200%，你的游泳速度将变为原来的两倍。$(p)只发现于靴子。"
+        }
+	]
+}

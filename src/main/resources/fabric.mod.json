@@ -5,9 +5,8 @@
   "name": "Zenith",
   "description": "Unofficial fabric port of Apotheosis",
   "authors": [
-    "Safro",
-    "Shadows of Fire (Forge)",
-    "mineblock11",
+    "Safro (original port)",
+    "ShadowsOfFire (Forge)",
     "TheWinABagel"
   ],
   "contact": {
@@ -16,24 +15,17 @@
     "issues": "https://github.com/thewinabagel/Zenith/issues"
   },
   "license": "MIT License",
-  "icon": "assets/zenith/icon.png",
+  "icon": "assets/apotheosis/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "safro.zenith.Zenith"
+      "dev.shadowsoffire.apotheosis.Apotheosis"
     ],
     "client": [
-      "safro.zenith.ZenithClient"
-    ],
-    "rei_client": [
-      "safro.zenith.ench.compat.EnchREIPlugin",
-      "safro.zenith.village.compat.VillageREIPlugin",
-      "safro.zenith.garden.compat.GardenREIPlugin",
-      "safro.zenith.spawn.compat.SpawnerREIPlugin"
+      "dev.shadowsoffire.apotheosis.ApotheosisClient"
     ],
     "jade": [
-      "safro.zenith.ench.compat.EnchJadePlugin",
-      "safro.zenith.spawn.compat.SpawnerJadePlugin"
+      "dev.shadowsoffire.apotheosis.spawn.compat.SpawnerHwylaPlugin"
     ]
   },
   "mixins": [
@@ -41,19 +33,13 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.14.8",
+    "fabricloader": ">=0.14.22",
     "fabric": "*",
-    "minecraft": "1.19.x",
+    "minecraft": "1.20.1",
     "java": ">=17"
   },
   "suggests": {
     "roughlyenoughitems": "*"
   },
-  "accessWidener": "zenith.aw",
-  "custom": {
-    "waila:plugins": {
-      "id": "zenith:plugin",
-      "initializer": "safro.zenith.ench.compat.EnchWTHITPlugin"
-    }
-  }
+  "accessWidener": "zenith.aw"
 }

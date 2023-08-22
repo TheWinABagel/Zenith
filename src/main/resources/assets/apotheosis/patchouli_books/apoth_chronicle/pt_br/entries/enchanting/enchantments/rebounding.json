@@ -1,0 +1,13 @@
+{
+    "name": "Ricochete",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Ricochete$() é um encantamento para peitorais e calças.$(p)Faz com que todos os atacantes corpo a corpo sejam lançados para longe do usuário.$(p)Níveis mais altos aumentam a distância."
+        }
+	]
+}

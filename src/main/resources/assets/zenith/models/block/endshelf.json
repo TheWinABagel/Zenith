@@ -1,7 +1,0 @@
-{
-    "parent": "block/cube_column",
-    "textures": {
-        "end": "block/end_stone_bricks",
-        "side": "zenith:blocks/endshelf"
-    }
-}

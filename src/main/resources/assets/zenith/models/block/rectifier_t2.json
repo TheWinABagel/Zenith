@@ -1,7 +1,0 @@
-{
-    "parent": "block/cube_column",
-    "textures": {
-        "end": "zenith:blocks/rectifier_t2_top",
-        "side": "zenith:blocks/rectifier_t2"
-    }
-}

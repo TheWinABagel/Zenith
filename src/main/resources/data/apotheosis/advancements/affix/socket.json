@@ -1,0 +1,36 @@
+{
+	"parent": "apotheosis:affix/gem",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "adventure"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:smithing_table"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.socket"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.socket.desc"
+		},
+		"frame": "task",
+		"hidden": false,
+		"background": "apotheosis:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"socket": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"apoth": {
+					"type": "socket"
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"socket"
+		]
+	]
+}

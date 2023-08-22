@@ -1,0 +1,21 @@
+{
+	"fabric:load_conditions": [
+	{
+		"condition": "apotheosis:module",
+		"module": "book"
+	},
+	{
+		"type": "fabric:any_mod_loaded",
+		"modid": "patchouli"
+	}],
+	"criteria": {
+		"tick": {
+			"trigger": "minecraft:tick"
+		}
+	},
+	"rewards": {
+		"loot": [
+			"apotheosis:book"
+		]
+	}
+}

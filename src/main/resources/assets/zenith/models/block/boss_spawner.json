@@ -1,7 +1,0 @@
-{
-    "parent": "block/cube_column",
-    "textures": {
-        "end": "zenith:blocks/boss_spawner_top",
-        "side": "zenith:blocks/boss_spawner"
-    }
-}

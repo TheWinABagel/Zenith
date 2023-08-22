@@ -1,0 +1,34 @@
+{
+	"parent": "apotheosis:enchanting/upgrade_hellshelf",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "apotheosis:dormant_deepshelf"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.deepshelf"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.deepshelf.desc"
+		},
+		"frame": "task"
+	},
+	"criteria": {
+		"deepshelf": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"items": ["apotheosis:deepshelf"]
+				}]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"deepshelf"
+		]
+	]
+}

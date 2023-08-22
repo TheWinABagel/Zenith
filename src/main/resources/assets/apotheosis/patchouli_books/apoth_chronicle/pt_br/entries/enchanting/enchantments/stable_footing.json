@@ -1,0 +1,17 @@
+{
+    "name": "Piso firme",
+    "icon": "minecraft:enchanted_book",
+    "category": "apotheosis:enchanting/enchantments",
+	"flag": "apotheosis:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Piso firme$() é um encantamento para botas.$(p)Faz com que a penalidade de velocidade de quebra para voar seja revertida.$(p)Isso inclui todas as penalidades por não ficar no chão."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "Quando combinado com $(9)afinidade aquática$(), você pode ter velocidade máxima ao nadar."
+		}
+	]
+}

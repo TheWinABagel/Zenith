@@ -1,0 +1,38 @@
+{
+	"parent": "apotheosis:affix/gem",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "adventure"
+	}],
+	"display": {
+		"icon": {
+			"item": "apotheosis:gem",
+			"nbt": "{gem:\"apotheosis:core/splendor\"}"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.rare_gem"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.rare_gem.desc"
+		},
+		"frame": "task",
+		"hidden": true,
+		"background": "apotheosis:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"gem": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"apoth": {
+					"type": "gem_rarity",
+					"rarity": "rare"
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"gem"
+		]
+	]
+}

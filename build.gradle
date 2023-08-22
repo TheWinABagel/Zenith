@@ -11,8 +11,19 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-	maven { url "https://mvn.devos.one/releases/" }
-	maven { url "https://mvn.devos.one/snapshots/" }
+	maven {
+		name = "Parchment"
+		url = 'https://maven.parchmentmc.org'
+	}
+	maven {
+		name = "Porting Lib"
+		url = "https://mvn.devos.one/snapshots/"
+	}
+	maven {
+		name = "CCA"
+		url = 'https://maven.ladysnake.org/releases'
+	}
+
 	maven { url "https://jitpack.io/" }
 	maven { url "https://maven.jamieswhiteshirt.com/libs-release" }
 	maven { url 'https://maven.blamejared.com' }
@@ -20,30 +31,31 @@ repositories {
 	maven { url "https://maven.terraformersmc.com" }
 	maven { url "https://cursemaven.com" }
 	maven { url "https://maven.bai.lol" }
-	maven { url "https://maven.ladysnake.org/releases" }
-	maven { url "https://api.modrinth.com/maven" }
-	maven {
-		name "impersonate"
-		url "https://oss.sonatype.org/content/repositories/snapshots"
-	}
-	maven {
-		name "KosmX's maven"
-		url 'https://maven.kosmx.dev/'
-	}
+
+	mavenLocal()
 }
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings loom.officialMojangMappings()
+	mappings loom.layered() {
+		officialMojangMappings()
+		parchment("org.parchmentmc.data:parchment-1.20.1:2023.06.26@zip")
+	}
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	modImplementation( "dev.shadowsoffire.placebo:placebo-fabric-1.20.1:${project.fakerlib_version}")
 
-
-	modImplementation(include("com.jamieswhiteshirt:reach-entity-attributes:${project.reach_lib_version}"))
-	modImplementation(include("io.github.fabricators_of_create.Porting-Lib:Porting-Lib:${project.port_lib_version}"))
+	//modImplementation(include("com.jamieswhiteshirt:reach-entity-attributes:${project.reach_lib_version}"))
+	modImplementation("io.github.fabricators_of_create.Porting-Lib:Porting-Lib:${project.port_lib_version}") //not included as it is already included with fakerlib
 	modCompileOnly modRuntimeOnly("vazkii.patchouli:Patchouli:${project.patchouli_version}"), {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
+
+	// Fabric ASM
+	modImplementation(include("com.github.Chocohead:Fabric-ASM:${project.fabric_asm_version}"))
+
+	// CCA
+	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components_version}")
 
 	// ModMenu
 	modCompileOnly modRuntimeOnly("com.terraformersmc:modmenu:${project.modmenu_version}"), {
@@ -59,7 +71,7 @@ dependencies {
 
 	// REI + Arch
 	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
-	modRuntimeOnly "dev.architectury:architectury-fabric:6.4.62"
+	modRuntimeOnly "dev.architectury:architectury-fabric:${project.arch_version}"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
 
@@ -68,23 +80,7 @@ dependencies {
 
 	//Other Mods for Testing
 	//modCompileOnly "com.mrcrayfish:goblintraders-fabric:1.8.1-1.19.2"
-	modCompileOnly "curse.maven:bewitchment-394915:4048571"
-	modCompileOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}"
-	modCompileOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}"
-	modCompileOnly "io.github.ladysnake:impersonate:${impersonate_version}"
-	modCompileOnly "maven.modrinth:midnightlib:${midnightlib_version}"
-	modCompileOnly "io.github.ladysnake:PlayerAbilityLib:${playerabilitylib_version}"
-	modCompileOnly "com.github.emilyploszaj:step-height-entity-attribute:${step_height_version}"
-	modCompileOnly "com.terraformersmc.terraform-api:terraform-wood-api-v1:${terraform_wood_api_version}"
 
-	modCompileOnly("com.github.Virtuoel:Pehkui:${pehkui_version}") {
-		exclude group: "net.fabricmc.fabric-api"
-	}
-
-	modCompileOnly("maven.modrinth:spell-engine:${project.spell_engine_version}-fabric")
-	modCompileOnly("maven.modrinth:spell-power:${project.spell_power_version}-fabric")
-	modCompileOnly("com.github.ZsoltMolnarrr:TinyConfig:${project.tiny_config_version}")
-	modCompileOnly("dev.kosmx.player-anim:player-animation-lib-fabric:${project.player_anim}")
 }
 loom {
 	accessWidenerPath = file("src/main/resources/zenith.aw")
@@ -106,12 +102,12 @@ java {
 
 }
 
+
 jar {
 	from("LICENSE") {
 		rename { "${it}_${project.archivesBaseName}"}
 	}
-	exclude "safro/zenith/adventure/**" //not implemented :)
-	exclude "safro/zenith/util/NameHelper.class" //curseforge sux
+	exclude "dev/shadowsoffire/apotheosis/**"
 }
 
 publishing {

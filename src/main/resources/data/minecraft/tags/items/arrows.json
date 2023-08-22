@@ -1,23 +1,23 @@
 {
 	"replace": false,
 	"values": [{
-			"id": "zenith:obsidian_arrow",
+			"id": "apotheosis:obsidian_arrow",
 			"required": false
 		},
 		{
-			"id": "zenith:broadhead_arrow",
+			"id": "apotheosis:broadhead_arrow",
 			"required": false
 		},
 		{
-			"id": "zenith:explosive_arrow",
+			"id": "apotheosis:explosive_arrow",
 			"required": false
 		},
 		{
-			"id": "zenith:iron_mining_arrow",
+			"id": "apotheosis:iron_mining_arrow",
 			"required": false
 		},
 		{
-			"id": "zenith:diamond_mining_arrow",
+			"id": "apotheosis:diamond_mining_arrow",
 			"required": false
 		}
 	]

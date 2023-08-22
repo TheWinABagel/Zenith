@@ -1,11 +1,19 @@
 {
 	"replace": false,
 	"values": [{
-			"id": "zenith:beeshelf",
+			"id": "apotheosis:beeshelf",
 			"required": false
 		},
 		{
-			"id": "zenith:melonshelf",
+			"id": "apotheosis:melonshelf",
+			"required": false
+		},
+		{
+			"id": "apotheosis:salvaging_table",
+			"required": false
+		},
+		{
+			"id": "apotheosis:gem_cutting_table",
 			"required": false
 		}
 	]

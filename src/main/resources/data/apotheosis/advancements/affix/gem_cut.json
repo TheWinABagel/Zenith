@@ -1,0 +1,31 @@
+{
+	"parent": "apotheosis:affix/socket",
+	"conditions": [{
+		"type": "apotheosis:module",
+		"module": "adventure"
+	}],
+	"display": {
+		"icon": {
+			"item": "apotheosis:gem_cutting_table"
+		},
+		"title": {
+			"translate": "advancements.apotheosis.gem_cut"
+		},
+		"description": {
+			"translate": "advancements.apotheosis.gem_cut.desc"
+		},
+		"frame": "task",
+		"background": "apotheosis:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"cut": {
+			"trigger": "apotheosis:gem_cutting",
+			"conditions": {}
+		}
+	},
+	"requirements": [
+		[
+			"cut"
+		]
+	]
+}
