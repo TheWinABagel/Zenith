@@ -62,7 +62,8 @@ public class EnchantingStatRegistry extends DynamicRegistry<EnchantingStatRegist
     public static float getEterna(BlockState state, Level world, BlockPos pos) {
         Block block = state.getBlock();
         if (INSTANCE.statsPerBlock.containsKey(block)) return INSTANCE.statsPerBlock.get(block).eterna;
-        return ((EnchantmentBonusBlock) state).getEnchantPowerBonus(state, world, pos);
+        if (state instanceof EnchantmentBonusBlock enchantingBlock) return enchantingBlock.getEnchantPowerBonus(state, world, pos);
+        return 0;
     }
 
     /**
@@ -73,7 +74,8 @@ public class EnchantingStatRegistry extends DynamicRegistry<EnchantingStatRegist
     public static float getMaxEterna(BlockState state, Level world, BlockPos pos) {
         Block block = state.getBlock();
         if (INSTANCE.statsPerBlock.containsKey(block)) return INSTANCE.statsPerBlock.get(block).maxEterna;
-        return ((IEnchantingBlock) block).getMaxEnchantingPower(state, world, pos);
+        if (block instanceof IEnchantingBlock enchantingBlock) return enchantingBlock.getMaxEnchantingPower(state, world, pos);
+        return 0;
     }
 
     /**

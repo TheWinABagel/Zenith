@@ -23,10 +23,14 @@ public class EnchModuleEvents {
     public static float breakChance = .12f;
 
     public static void registerEvents() {
+        anvilEvent();
 
+
+
+        livingHurt();
     }
 
-    public void anvilEvent() {
+    public static void anvilEvent() {
         Events.AnvilUpdateEvent.EVENT.register((left, right, name, baseCost, player) -> {
             if (left.isEnchanted()) {
                 if (right.getItem() == Items.COBWEB) {
@@ -149,7 +153,7 @@ public class EnchModuleEvents {
     }
 
 
-    public void livingHurt() {
+    public static void livingHurt() {
         Ench.Enchantments.BERSERKERS_FURY.livingHurt();
     }
 

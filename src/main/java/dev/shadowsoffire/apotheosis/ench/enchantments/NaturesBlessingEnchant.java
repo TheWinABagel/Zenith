@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class NaturesBlessingEnchant extends Enchantment {
 
     public NaturesBlessingEnchant() {
-        super(Rarity.RARE, EnchantmentCategory.BREAKABLE, new EquipmentSlot[0]);
+        super(Rarity.RARE, EnchModule.HOE, new EquipmentSlot[0]);
     }
 
     @Override

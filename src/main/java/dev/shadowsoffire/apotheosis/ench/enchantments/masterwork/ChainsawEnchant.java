@@ -30,7 +30,7 @@ import java.util.function.BooleanSupplier;
 public class ChainsawEnchant extends Enchantment {
 
     public ChainsawEnchant() {
-        super(Rarity.VERY_RARE, EnchantmentCategory.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND });
+        super(Rarity.VERY_RARE, EnchModule.AXE, new EquipmentSlot[] { EquipmentSlot.MAINHAND });
     }
 
     @Override

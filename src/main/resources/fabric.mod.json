@@ -26,6 +26,9 @@
     ],
     "jade": [
       "dev.shadowsoffire.apotheosis.spawn.compat.SpawnerHwylaPlugin"
+    ],
+    "mm:early_risers": [
+      "dev.shadowsoffire.apotheosis.util.PreInit"
     ]
   },
   "mixins": [

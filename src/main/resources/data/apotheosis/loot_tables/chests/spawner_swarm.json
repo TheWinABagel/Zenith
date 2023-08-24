@@ -1,8 +1,8 @@
 {
-	"conditions": [{
-		"type": "apotheosis:module",
-		"module": "adventure"
-	}],
+  "fabric:load_conditions": [{
+    "condition": "apotheosis:module",
+    "module": "adventure"
+  }],
   "pools": [
     {
       "name": "placebo_code_pool_19",

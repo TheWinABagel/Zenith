@@ -98,7 +98,7 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
 
     @Override
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!Apoth.Tiles.ENDER_LIBRARY.get().isValid(newState)) {
+        if (!Apoth.Tiles.ENDER_LIBRARY.isValid(newState)) {
             world.removeBlockEntity(pos);
         }
     }

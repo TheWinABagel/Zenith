@@ -1,7 +1,7 @@
 {
 	"parent": "apotheosis:enchanting/arcana50",
-	"conditions": [{
-		"type": "apotheosis:module",
+	"fabric:load_conditions": [{
+		"condition": "apotheosis:module",
 		"module": "enchantment"
 	}],
 	"display": {

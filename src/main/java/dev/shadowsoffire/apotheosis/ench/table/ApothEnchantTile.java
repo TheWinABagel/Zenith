@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.ench.table;
 import io.github.fabricators_of_create.porting_lib.tags.Tags;
 import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandler;
 import io.github.fabricators_of_create.porting_lib.util.LazyOptional;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -14,10 +15,10 @@ import net.minecraft.world.level.block.state.BlockState;
 public class ApothEnchantTile extends EnchantmentTableBlockEntity {
 
     protected ItemStackHandler inv = new ItemStackHandler(1){
-        //@Override TODO itemstack handler, change over to vanilla style stuff
-        public boolean isItemValid(int slot, ItemStack stack) {
-            return stack.is(Tags.Items.ENCHANTING_FUELS);
-        };
+        @Override
+        public boolean isItemValid(int slot, ItemVariant resource) {
+            return resource.toStack().is(Tags.Items.ENCHANTING_FUELS);
+        }
     };
 
     public ApothEnchantTile(BlockPos pos, BlockState state) {

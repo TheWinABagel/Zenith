@@ -1,9 +1,9 @@
 {
 	"type": "campfire_cooking",
-	"conditions": [{
-		"type": "apotheosis:module",
+	"fabric:load_conditions": [{
+		"condition": "apotheosis:module",
 		"module": "village"
-	}],  
+	}],
 	"ingredient": {
 		"item": "minecraft:stick"
 	},

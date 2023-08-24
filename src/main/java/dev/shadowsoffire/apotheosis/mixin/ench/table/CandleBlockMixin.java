@@ -1,4 +1,4 @@
-package dev.shadowsoffire.apotheosis.mixin.ench;
+package dev.shadowsoffire.apotheosis.mixin.ench.table;
 
 import dev.shadowsoffire.apotheosis.ench.api.IEnchantingBlock;
 import net.minecraft.core.BlockPos;
@@ -17,7 +17,7 @@ public abstract class CandleBlockMixin extends AbstractCandleBlock implements IE
 
     @Override
     public float getArcanaBonus(BlockState state, LevelReader world, BlockPos pos) {
-        return 1.25F * state.getValue(CandleBlock.CANDLES).intValue();
+        return 1.25F * state.getValue(CandleBlock.CANDLES);
     }
 
 }

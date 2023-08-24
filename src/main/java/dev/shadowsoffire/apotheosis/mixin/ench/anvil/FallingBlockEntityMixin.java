@@ -1,4 +1,4 @@
-package dev.shadowsoffire.apotheosis.mixin.ench;
+package dev.shadowsoffire.apotheosis.mixin.ench.anvil;
 
 import dev.shadowsoffire.apotheosis.util.INBTSensitiveFallingBlock;
 import net.minecraft.world.entity.Entity;

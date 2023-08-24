@@ -1,11 +1,11 @@
 {
 	"type": "apotheosis:potion_charm_enchanting",
-	"conditions": [{
-		"type": "apotheosis:module",
+	"fabric:load_conditions": [{
+		"condition": "apotheosis:module",
 		"module": "enchantment"
 	},
 	{
-		"type": "apotheosis:module",
+		"condition": "apotheosis:module",
 		"module": "potion"
 	}],
 	"requirements": {

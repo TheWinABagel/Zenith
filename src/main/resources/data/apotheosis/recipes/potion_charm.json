@@ -1,7 +1,7 @@
 {
 	"type": "apotheosis:potion_charm",
-	"conditions": [{
-		"type": "apotheosis:module",
+	"fabric:load_conditions": [{
+		"condition": "apotheosis:module",
 		"module": "potion"
 	}],
 	"recipe": [

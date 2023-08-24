@@ -1,4 +1,4 @@
-package dev.shadowsoffire.apotheosis.mixin.ench;
+package dev.shadowsoffire.apotheosis.mixin.ench.anvil;
 
 import net.minecraft.world.inventory.AnvilMenu;
 import org.spongepowered.asm.mixin.Mixin;

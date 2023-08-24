@@ -5,7 +5,7 @@
 		"module": "book"
 	},
 	{
-		"type": "fabric:any_mod_loaded",
+		"condition": "fabric:any_mod_loaded",
 		"modid": "patchouli"
 	}],
 	"criteria": {

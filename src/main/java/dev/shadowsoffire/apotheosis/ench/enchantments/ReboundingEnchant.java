@@ -12,7 +12,7 @@ import net.minecraft.world.phys.Vec3;
 public class ReboundingEnchant extends Enchantment {
 
     public ReboundingEnchant() {
-        super(Rarity.RARE, EnchantmentCategory.ARMOR, new EquipmentSlot[] { EquipmentSlot.CHEST, EquipmentSlot.LEGS });
+        super(Rarity.RARE, EnchModule.CORE_ARMOR, new EquipmentSlot[] { EquipmentSlot.CHEST, EquipmentSlot.LEGS });
     }
 
     @Override

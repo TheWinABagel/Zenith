@@ -1,9 +1,12 @@
 package dev.shadowsoffire.apotheosis.ench.table;
 
 import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.advancements.AdvancementTriggers;
 import dev.shadowsoffire.apotheosis.advancements.EnchantedTrigger;
 import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.util.FloatReferenceHolder;
+import dev.shadowsoffire.placebo.network.PacketDistro;
 import io.github.fabricators_of_create.porting_lib.tags.Tags;
 import io.github.fabricators_of_create.porting_lib.transfer.item.SlotItemHandler;
 import it.unimi.dsi.fastutil.floats.Float2FloatMap;
@@ -144,7 +147,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
 
                 player.awardStat(Stats.ENCHANT_ITEM);
                 if (player instanceof ServerPlayer) {
-                    ((EnchantedTrigger) CriteriaTriggers.ENCHANTED_ITEM).trigger((ServerPlayer) player, enchanted, level, eterna, quanta, arcana, rectification);
+                    (AdvancementTriggers.ENCHANTED).trigger((ServerPlayer) player, enchanted, level, eterna, quanta, arcana, rectification);
                 }
 
                 this.enchantSlots.setChanged();
@@ -199,8 +202,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
                                 while (clues-- > 0 && !list.isEmpty()) {
                                     clueList.add(list.remove(this.random.nextInt(list.size())));
                                 }
-                                //TODO packets, my mortal enemy
-                                //PacketDistro.sendTo(Apotheosis.CHANNEL, new ClueMessage(slot, clueList, list.isEmpty()), this.player);
+                                ClueMessage.sendTo(slot, clueList, list.isEmpty(), this.player);
                             }
                         }
                     }

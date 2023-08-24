@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.ench.objects;
 import dev.shadowsoffire.apotheosis.ench.api.IEnchantingBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -14,21 +15,21 @@ import java.util.function.Supplier;
 
 public class TypedShelfBlock extends Block implements IEnchantingBlock {
 
-    protected final Supplier<? extends ParticleOptions> particle;
+    protected final SimpleParticleType particle;
 
-    public TypedShelfBlock(Properties props, Supplier<? extends ParticleOptions> particle) {
+    public TypedShelfBlock(Properties props, SimpleParticleType particle) {
         super(props);
         this.particle = particle;
     }
 
     @Override
     public ParticleOptions getTableParticle(BlockState state) {
-        return this.particle.get();
+        return this.particle;
     }
 
     public static class SculkShelfBlock extends TypedShelfBlock {
 
-        public SculkShelfBlock(Properties props, Supplier<? extends ParticleOptions> particle) {
+        public SculkShelfBlock(Properties props, SimpleParticleType particle) {
             super(props, particle);
         }
 

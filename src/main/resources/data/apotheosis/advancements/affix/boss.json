@@ -1,8 +1,8 @@
 {
 	"parent": "apotheosis:affix/random",
-	"conditions": [{
-		"type": "apotheosis:module",
-		"module": "deadly"
+	"fabric:load_conditions": [{
+		"condition": "apotheosis:module",
+		"module": "adventure"
 	}],
 	"display": {
 		"icon": {

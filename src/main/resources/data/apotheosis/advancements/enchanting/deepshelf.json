@@ -1,7 +1,7 @@
 {
 	"parent": "apotheosis:enchanting/upgrade_hellshelf",
-	"conditions": [{
-		"type": "apotheosis:module",
+	"fabric:load_conditions": [{
+		"condition": "apotheosis:module",
 		"module": "enchantment"
 	}],
 	"display": {

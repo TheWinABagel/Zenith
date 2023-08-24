@@ -1,7 +1,7 @@
 {
   "type": "apotheosis:add_sockets",
-  "conditions": [{
-	"type": "apotheosis:module",
+  "fabric:load_conditions": [{
+    "condition": "apotheosis:module",
     "module": "adventure"
   }],
   "group": "something",

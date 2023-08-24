@@ -8,7 +8,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 public class ObliterationEnchant extends Enchantment {
 
     public ObliterationEnchant() {
-        super(Rarity.RARE, EnchantmentCategory.BREAKABLE, new EquipmentSlot[0]);
+        super(Rarity.RARE, EnchModule.ANVIL, new EquipmentSlot[0]);
     }
 
     @Override

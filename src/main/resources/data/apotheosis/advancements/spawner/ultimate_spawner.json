@@ -1,7 +1,7 @@
 {
 	"parent": "apotheosis:spawner/conditions",
-	"conditions": [{
-		"type": "apotheosis:module",
+	"fabric:load_conditions": [{
+		"condition": "apotheosis:module",
 		"module": "spawner"
 	}],
 	"display": {

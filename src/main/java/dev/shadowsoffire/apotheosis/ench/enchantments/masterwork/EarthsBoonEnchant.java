@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.Block;
 public class EarthsBoonEnchant extends Enchantment {
 
     public EarthsBoonEnchant() {
-        super(Rarity.VERY_RARE, EnchantmentCategory.BREAKABLE, new EquipmentSlot[] { EquipmentSlot.MAINHAND });
+        super(Rarity.VERY_RARE, EnchModule.PICKAXE, new EquipmentSlot[] { EquipmentSlot.MAINHAND });
     }
 
     @Override

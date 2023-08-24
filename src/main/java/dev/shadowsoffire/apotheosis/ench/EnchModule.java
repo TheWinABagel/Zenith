@@ -1,9 +1,11 @@
 package dev.shadowsoffire.apotheosis.ench;
 
+import com.chocohead.mm.api.ClassTinkerers;
 import com.google.common.collect.ImmutableSet;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.EnchantmentInfo.PowerFunc;
+import dev.shadowsoffire.apotheosis.ench.Ench.*;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryTile.BasicLibraryTile;
 import dev.shadowsoffire.apotheosis.ench.objects.TypedShelfBlock.SculkShelfBlock;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
@@ -18,9 +20,12 @@ import dev.shadowsoffire.placebo.tabs.ITabFiller;
 import dev.shadowsoffire.placebo.tabs.TabFillingRegistry;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.MappingResolver;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -29,8 +34,10 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.CreativeModeTab.TabVisibility;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantment.Rarity;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -52,89 +59,30 @@ public class EnchModule {
     public static final String ENCH_HARD_CAP_IMC = "set_ench_hard_cap";
     public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Enchantment");
     public static final List<TomeItem> TYPED_BOOKS = new ArrayList<>();
-    //public static final EquipmentSlot[] ARMOR = { EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET };
-    //public static final EnchantmentCategory HOE = EnchantmentCategory.create("HOE", i -> i instanceof HoeItem);
-    //public static final EnchantmentCategory SHIELD = EnchantmentCategory.create("SHIELD", i -> i instanceof ShieldItem);
-    //public static final EnchantmentCategory ANVIL = EnchantmentCategory.create("ANVIL", i -> i instanceof BlockItem && ((BlockItem) i).getBlock() instanceof AnvilBlock);
-    //public static final EnchantmentCategory SHEARS = EnchantmentCategory.create("SHEARS", i -> i instanceof ShearsItem);
-    //public static final EnchantmentCategory PICKAXE = EnchantmentCategory.create("PICKAXE", i -> i.canPerformAction(new ItemStack(i), ToolActions.PICKAXE_DIG));
-    //public static final EnchantmentCategory AXE = EnchantmentCategory.create("AXE", i -> i.canPerformAction(new ItemStack(i), ToolActions.AXE_DIG));
-    //public static final EnchantmentCategory CORE_ARMOR = EnchantmentCategory.create("CORE_ARMOR", i -> EnchantmentCategory.ARMOR_CHEST.canEnchant(i) || EnchantmentCategory.ARMOR_LEGS.canEnchant(i));
+    public static final EquipmentSlot[] ARMOR = { EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET };
+    public static final EnchantmentCategory HOE = ClassTinkerers.getEnum(EnchantmentCategory.class, "HOE");
+    public static final EnchantmentCategory SHIELD = ClassTinkerers.getEnum(EnchantmentCategory.class, "SHIELD");
+    public static final EnchantmentCategory ANVIL = ClassTinkerers.getEnum(EnchantmentCategory.class, "ANVIL");
+    public static final EnchantmentCategory SHEARS = ClassTinkerers.getEnum(EnchantmentCategory.class, "SHEARS");
+    public static final EnchantmentCategory PICKAXE = ClassTinkerers.getEnum(EnchantmentCategory.class, "PICKAXE");
+    public static final EnchantmentCategory AXE = ClassTinkerers.getEnum(EnchantmentCategory.class, "AXE");
+    public static final EnchantmentCategory CORE_ARMOR = ClassTinkerers.getEnum(EnchantmentCategory.class, "CORE_ARMOR");
+
     static Configuration enchInfoConfig;
 
-    public EnchModule() {
-
-    }
-
-    public void init() {
-        this.reload(false);
+    public static void init() {
+        reload(false);
 
         Ench.bootstrap();
-/*
-        Apotheosis.HELPER.registerProvider(factory -> { //take your own advice and use a damn json shadows >:(
-            Ingredient pot = Apotheosis.potionIngredient(Potions.REGENERATION);
-            factory.addShaped(Ench.Blocks.HELLSHELF, 3, 3, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS, Items.BLAZE_ROD, "forge:bookshelves", pot, Blocks.NETHER_BRICKS, Blocks.NETHER_BRICKS,
-                    Blocks.NETHER_BRICKS);
-            factory.addShaped(Ench.Items.PRISMATIC_WEB, 3, 3, null, Items.PRISMARINE_SHARD, null, Items.PRISMARINE_SHARD, Blocks.COBWEB, Items.PRISMARINE_SHARD, null, Items.PRISMARINE_SHARD, null);
-            ItemStack book = new ItemStack(Items.BOOK);
-            ItemStack stick = new ItemStack(Items.STICK);
-            ItemStack blaze = new ItemStack(Items.BLAZE_ROD);
-            factory.addShaped(new ItemStack(Ench.Items.HELMET_TOME, 5), 3, 2, book, book, book, book, blaze, book);
-            factory.addShaped(new ItemStack(Ench.Items.CHESTPLATE_TOME, 8), 3, 3, book, blaze, book, book, book, book, book, book, book);
-            factory.addShaped(new ItemStack(Ench.Items.LEGGINGS_TOME, 7), 3, 3, book, null, book, book, blaze, book, book, book, book);
-            factory.addShaped(new ItemStack(Ench.Items.BOOTS_TOME, 4), 3, 2, book, null, book, book, blaze, book);
-            factory.addShaped(new ItemStack(Ench.Items.WEAPON_TOME, 2), 1, 3, book, book, new ItemStack(Items.BLAZE_POWDER));
-            factory.addShaped(new ItemStack(Ench.Items.PICKAXE_TOME, 3), 3, 3, book, book, book, null, blaze, null, null, stick, null);
-            factory.addShaped(new ItemStack(Ench.Items.FISHING_TOME, 2), 3, 3, null, null, blaze, null, stick, book, stick, null, book);
-            factory.addShaped(new ItemStack(Ench.Items.BOW_TOME, 3), 3, 3, null, stick, book, blaze, null, book, null, stick, book);
-            factory.addShapeless(new ItemStack(Ench.Items.OTHER_TOME, 6), book, book, book, book, book, book, blaze);
-            factory.addShaped(new ItemStack(Ench.Items.SCRAP_TOME, 8), 3, 3, book, book, book, book, Blocks.ANVIL, book, book, book, book);
-            Ingredient maxHellshelf = Ingredient.of(Ench.Blocks.INFUSED_HELLSHELF);
-            factory.addShaped(Ench.Blocks.BLAZING_HELLSHELF, 3, 3, null, Items.FIRE_CHARGE, null, Items.FIRE_CHARGE, maxHellshelf, Items.FIRE_CHARGE, Items.BLAZE_POWDER, Items.BLAZE_POWDER, Items.BLAZE_POWDER);
-            factory.addShaped(Ench.Blocks.GLOWING_HELLSHELF, 3, 3, null, Blocks.GLOWSTONE, null, null, maxHellshelf, null, Blocks.GLOWSTONE, null, Blocks.GLOWSTONE);
-            factory.addShaped(Ench.Blocks.SEASHELF, 3, 3, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Apotheosis.potionIngredient(Potions.WATER), "forge:bookshelves", Items.PUFFERFISH,
-                    Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS, Blocks.PRISMARINE_BRICKS);
-            Ingredient maxSeashelf = Ingredient.of(Ench.Blocks.INFUSED_SEASHELF);
-            factory.addShaped(Ench.Blocks.CRYSTAL_SEASHELF, 3, 3, null, Items.PRISMARINE_CRYSTALS, null, null, maxSeashelf, null, Items.PRISMARINE_CRYSTALS, null, Items.PRISMARINE_CRYSTALS);
-            factory.addShaped(Ench.Blocks.HEART_SEASHELF, 3, 3, null, Items.HEART_OF_THE_SEA, null, Items.PRISMARINE_SHARD, maxSeashelf, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD, Items.PRISMARINE_SHARD,
-                    Items.PRISMARINE_SHARD);
-            factory.addShaped(Ench.Blocks.PEARL_ENDSHELF, 3, 3, Items.END_ROD, null, Items.END_ROD, Items.ENDER_PEARL, Ench.Blocks.ENDSHELF, Items.ENDER_PEARL, Items.END_ROD, null, Items.END_ROD);
-            factory.addShaped(Ench.Blocks.DRACONIC_ENDSHELF, 3, 3, null, Items.DRAGON_HEAD, null, Items.ENDER_PEARL, Ench.Blocks.ENDSHELF, Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL, Items.ENDER_PEARL);
-            factory.addShaped(Ench.Blocks.BEESHELF, 3, 3, Items.HONEYCOMB, Items.BEEHIVE, Items.HONEYCOMB, Items.HONEY_BLOCK, "forge:bookshelves", Items.HONEY_BLOCK, Items.HONEYCOMB, Items.BEEHIVE, Items.HONEYCOMB);
-            factory.addShaped(Ench.Blocks.MELONSHELF, 3, 3, Items.MELON, Items.MELON, Items.MELON, Items.GLISTERING_MELON_SLICE, "forge:bookshelves", Items.GLISTERING_MELON_SLICE, Items.MELON, Items.MELON, Items.MELON);
-        });*/
+        particles();
 
+
+
+        //containers();
         EnchModuleEvents.registerEvents();
 
-    /*    e.enqueueWork(() -> {
-            LootSystem.defaultBlockTable(Ench.Blocks.HELLSHELF);
-            LootSystem.defaultBlockTable(Ench.Blocks.INFUSED_HELLSHELF);
-            LootSystem.defaultBlockTable(Ench.Blocks.BLAZING_HELLSHELF);
-            LootSystem.defaultBlockTable(Ench.Blocks.GLOWING_HELLSHELF);
-            LootSystem.defaultBlockTable(Ench.Blocks.SEASHELF);
-            LootSystem.defaultBlockTable(Ench.Blocks.INFUSED_SEASHELF);
-            LootSystem.defaultBlockTable(Ench.Blocks.CRYSTAL_SEASHELF);
-            LootSystem.defaultBlockTable(Ench.Blocks.HEART_SEASHELF);
-            LootSystem.defaultBlockTable(Ench.Blocks.DORMANT_DEEPSHELF);
-            LootSystem.defaultBlockTable(Ench.Blocks.DEEPSHELF);
-            LootSystem.defaultBlockTable(Ench.Blocks.ECHOING_DEEPSHELF);
-            LootSystem.defaultBlockTable(Ench.Blocks.SOUL_TOUCHED_DEEPSHELF);
-            LootSystem.defaultBlockTable(Ench.Blocks.ECHOING_SCULKSHELF);
-            LootSystem.defaultBlockTable(Ench.Blocks.SOUL_TOUCHED_SCULKSHELF);
-            LootSystem.defaultBlockTable(Ench.Blocks.ENDSHELF);
-            LootSystem.defaultBlockTable(Ench.Blocks.PEARL_ENDSHELF);
-            LootSystem.defaultBlockTable(Ench.Blocks.DRACONIC_ENDSHELF);
-            LootSystem.defaultBlockTable(Ench.Blocks.BEESHELF);
-            LootSystem.defaultBlockTable(Ench.Blocks.MELONSHELF);
-            LootSystem.defaultBlockTable(Ench.Blocks.STONESHELF);
-            LootSystem.defaultBlockTable(Ench.Blocks.LIBRARY);
-            LootSystem.defaultBlockTable(Ench.Blocks.RECTIFIER);
-            LootSystem.defaultBlockTable(Ench.Blocks.RECTIFIER_T2);
-            LootSystem.defaultBlockTable(Ench.Blocks.RECTIFIER_T3);
-            LootSystem.defaultBlockTable(Ench.Blocks.SIGHTSHELF);
-            LootSystem.defaultBlockTable(Ench.Blocks.SIGHTSHELF_T2);
-            LootSystem.defaultBlockTable(Ench.Blocks.ENDER_LIBRARY);
-            DispenserBlock.registerBehavior(Items.SHEARS, new ShearsDispenseItemBehavior());
+    /*
+
 
             TabFillingRegistry.register(Ench.Tabs.ENCH, Ench.Items.HELLSHELF, Ench.Items.INFUSED_HELLSHELF, Ench.Items.BLAZING_HELLSHELF, Ench.Items.GLOWING_HELLSHELF, Ench.Items.SEASHELF, Ench.Items.INFUSED_SEASHELF,
                     Ench.Items.CRYSTAL_SEASHELF, Ench.Items.HEART_SEASHELF, Ench.Items.DORMANT_DEEPSHELF, Ench.Items.DEEPSHELF, Ench.Items.ECHOING_DEEPSHELF, Ench.Items.SOUL_TOUCHED_DEEPSHELF, Ench.Items.ECHOING_SCULKSHELF,
@@ -159,70 +107,33 @@ public class EnchModule {
     }
 
     public void tiles() {
-        Apoth.registerBEType("library", new BlockEntityType<>(BasicLibraryTile::new, ImmutableSet.of(Ench.Blocks.LIBRARY), null));
-        Apoth.registerBEType("ender_library", new BlockEntityType<>(BasicLibraryTile::new, ImmutableSet.of(Ench.Blocks.ENDER_LIBRARY), null));
         //e.getRegistry().register(new BlockEntityType<>(AnvilTile::new, ImmutableSet.of(Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL), null), "anvil");
         //BlockEntityType.ENCHANTING_TABLE.factory = ApothEnchantTile::new;
         BlockEntityType.ENCHANTING_TABLE.validBlocks = ImmutableSet.of(Blocks.ENCHANTING_TABLE);
-    }
-
-    public void containers() {
-        Apoth.registerMenu("enchanting_table", MenuUtil.type(ApothEnchantmentMenu::new));
-        Apoth.registerMenu("library", MenuUtil.posType(EnchLibraryContainer::new));
     }
 
     public void recipeSerializers() {
         Apoth.registerSerializer("enchanting", EnchantingRecipe.SERIALIZER);
         Apoth.registerSerializer("keep_nbt_enchanting", KeepNBTEnchantingRecipe.SERIALIZER);
     }
-    /* //TODO particles
-    public void particles(Register<ParticleType<?>> e) {
-        e.getRegistry().registerAll(
-                new SimpleParticleType(false), "enchant_fire",
-                new SimpleParticleType(false), "enchant_water",
-                new SimpleParticleType(false), "enchant_sculk",
-                new SimpleParticleType(false), "enchant_end");
-    }*/
 
-    /**
-     * This handles IMC events for the enchantment module. <br>
-     * Currently only one type is supported. A mod may pass a single {@link EnchantmentInstance} indicating the hard capped max level for an enchantment. <br>
-     * That pair must use the method {link ENCH_HARD_CAP_IMC}.
-     */
-    /*
-    public void handleIMC(InterModProcessEvent e) {
-        e.getIMCStream(ENCH_HARD_CAP_IMC::equals).forEach(msg -> {
-            try {
-                EnchantmentInstance data = (EnchantmentInstance) msg.messageSupplier();
-                if (data != null && data.enchantment != null && data.level > 0) {
-                    ENCH_HARD_CAPS.put(data.enchantment, data.level);
-                }
-                else LOGGER.error("Failed to process IMC message with method {} from {} (invalid values passed).", msg.method(), msg.senderModId());
-            }
-            catch (Exception ex) {
-                LOGGER.error("Exception thrown during IMC message with method {} from {}.", msg.method(), msg.senderModId());
-                ex.printStackTrace();
-            }
-        });
-    }*/
-
-    public void blocks() {
-        //        new ApothAnvilBlock(), new ResourceLocation("minecraft", "anvil"),
-        //        new ApothAnvilBlock(), new ResourceLocation("minecraft", "chipped_anvil"),
-        //        new ApothAnvilBlock(), new ResourceLocation("minecraft", "damaged_anvil"));
-        //PlaceboUtil.registerOverride(Blocks.ENCHANTING_TABLE, new ApothEnchantBlock(), Apotheosis.MODID);
+    public static void particles() {
+        Registry.register(BuiltInRegistries.PARTICLE_TYPE, Apotheosis.loc("enchant_fire"), Particles.ENCHANT_FIRE);
+        Registry.register(BuiltInRegistries.PARTICLE_TYPE, Apotheosis.loc("enchant_water"), Particles.ENCHANT_WATER);
+        Registry.register(BuiltInRegistries.PARTICLE_TYPE, Apotheosis.loc("enchant_sculk"), Particles.ENCHANT_SCULK);
+        Registry.register(BuiltInRegistries.PARTICLE_TYPE, Apotheosis.loc("enchant_end"), Particles.ENCHANT_END);
     }
 
     private static Block shelf(BlockBehaviour.Properties props, float strength) {
-        return shelf(props, strength, () -> ParticleTypes.ENCHANT);
+        return shelf(props, strength, ParticleTypes.ENCHANT);
     }
 
-    private static Block shelf(BlockBehaviour.Properties props, float strength, Supplier<? extends ParticleOptions> particle) {
+    private static Block shelf(BlockBehaviour.Properties props, float strength, SimpleParticleType particle) {
         props.strength(strength);
         return new TypedShelfBlock(props, particle);
     }
 
-    private static Block sculkShelf(float strength, Supplier<? extends ParticleOptions> particle) {
+    private static Block sculkShelf(float strength, SimpleParticleType particle) {
         var props = BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).sound(SoundType.STONE).strength(strength).randomTicks().requiresCorrectToolForDrops();
         return new SculkShelfBlock(props, particle);
     }
@@ -307,7 +218,9 @@ public class EnchModule {
         };
     }
 
-    public void reload(boolean e) {
+
+
+    public static void reload(boolean e) {
         enchInfoConfig = new Configuration(new File(Apotheosis.configDir, "enchantments.cfg"));
         enchInfoConfig.setTitle("Apotheosis Enchantment Information");
         enchInfoConfig.setComment("This file contains configurable data for each enchantment.\nThe names of each category correspond to the registry names of every loaded enchantment.");

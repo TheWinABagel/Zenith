@@ -13,7 +13,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 public class TemptingEnchant extends Enchantment {
 
     public TemptingEnchant() {
-        super(Rarity.UNCOMMON, EnchantmentCategory.BREAKABLE, new EquipmentSlot[0]);
+        super(Rarity.UNCOMMON, EnchModule.HOE, new EquipmentSlot[0]);
     }
 
     @Override

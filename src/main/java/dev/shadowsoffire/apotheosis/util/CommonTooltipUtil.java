@@ -70,19 +70,4 @@ public class CommonTooltipUtil {
         tooltip.accept(Component.translatable("info.apotheosis.clues.t", String.format("%d", stats.clues())).withStyle(ChatFormatting.DARK_AQUA));
     }
 
-    public static void gatherStats(Float2FloatMap eternaMap, float[] stats, Level world, BlockPos pos) {
-        BlockState state = world.getBlockState(pos);
-        if (state.isAir()) return;
-        float max = EnchantingStatRegistry.getMaxEterna(state, world, pos);
-        float eterna = EnchantingStatRegistry.getEterna(state, world, pos);
-        eternaMap.put(max, eternaMap.getOrDefault(max, 0) + eterna);
-        float quanta = EnchantingStatRegistry.getQuanta(state, world, pos);
-        stats[1] += quanta;
-        float arcana = EnchantingStatRegistry.getArcana(state, world, pos);
-        stats[2] += arcana;
-        float quantaRec = EnchantingStatRegistry.getQuantaRectification(state, world, pos);
-        stats[3] += quantaRec;
-        int clues = EnchantingStatRegistry.getBonusClues(state, world, pos);
-        stats[4] += clues;
-    }
 }

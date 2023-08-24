@@ -1,4 +1,4 @@
-package dev.shadowsoffire.apotheosis.mixin.ench;
+package dev.shadowsoffire.apotheosis.mixin.ench.enchantment;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import net.minecraft.world.item.Item;

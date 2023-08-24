@@ -277,7 +277,7 @@ public abstract class EnchLibraryTile extends BlockEntity {
     public static class BasicLibraryTile extends EnchLibraryTile {
 
         public BasicLibraryTile(BlockPos pos, BlockState state) {
-            super(Apoth.Tiles.LIBRARY.get(), pos, state, 16);
+            super(Apoth.Tiles.LIBRARY, pos, state, 16);
         }
 
     }
@@ -285,7 +285,7 @@ public abstract class EnchLibraryTile extends BlockEntity {
     public static class EnderLibraryTile extends EnchLibraryTile {
 
         public EnderLibraryTile(BlockPos pos, BlockState state) {
-            super(Apoth.Tiles.ENDER_LIBRARY.get(), pos, state, 31);
+            super(Apoth.Tiles.ENDER_LIBRARY, pos, state, 31);
         }
 
     }

@@ -1,4 +1,4 @@
-package dev.shadowsoffire.apotheosis.mixin.ench;
+package dev.shadowsoffire.apotheosis.mixin.ench.enchantment;
 
 import dev.shadowsoffire.apotheosis.ench.EnchModuleEvents.TridentGetter;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;

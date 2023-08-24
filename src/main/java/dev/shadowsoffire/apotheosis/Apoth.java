@@ -1,7 +1,10 @@
 package dev.shadowsoffire.apotheosis;
 
 
+import com.google.common.collect.ImmutableSet;
+import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryContainer;
+import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryTile;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingRecipe;
 import dev.shadowsoffire.apotheosis.garden.EnderLeadItem;
@@ -17,6 +20,7 @@ import dev.shadowsoffire.placebo.registry.RegObjHelper;
 import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.core.Registry;
@@ -133,14 +137,19 @@ public class Apoth {
     }
 
     public static final class Menus {
+        public static void bootstrap(){}
         public static final MenuType<FletchingContainer> FLETCHING = ScreenHandlerRegistry.registerSimple(new ResourceLocation(Apotheosis.MODID, "fletching"), FletchingContainer::new);
         public static final MenuType<EnchLibraryContainer> LIBRARY = Apoth.registerMenu("library", new ExtendedScreenHandlerType<>(EnchLibraryContainer::new));
         public static final MenuType<ApothEnchantmentMenu> ENCHANTING_TABLE = ScreenHandlerRegistry.registerSimple(new ResourceLocation(Apotheosis.MODID, "enchanting_table"), ApothEnchantmentMenu::new);
     }
 
     public static final class Tiles {
-        public static final RegistryObject<BlockEntityType<BlockEntity>> LIBRARY = R.blockEntity("LIBRARY");
-        public static final RegistryObject<BlockEntityType<BlockEntity>> ENDER_LIBRARY = R.blockEntity("ENDER_LIBRARY");
+        public static void bootstrap(){}
+        public static final BlockEntityType<EnchLibraryTile.BasicLibraryTile> LIBRARY = Apoth.registerBEType("library", new BlockEntityType<>(EnchLibraryTile.BasicLibraryTile::new, ImmutableSet.of(Ench.Blocks.LIBRARY), null));
+        public static final BlockEntityType<EnchLibraryTile.EnderLibraryTile> ENDER_LIBRARY = Apoth.registerBEType("ender_library", new BlockEntityType<>(EnchLibraryTile.EnderLibraryTile::new, ImmutableSet.of(Ench.Blocks.ENDER_LIBRARY), null));
+        //public static final RegistryObject<BlockEntityType<BlockEntity>> LIBRARY = R.blockEntity("LIBRARY");
+
+        //public static final RegistryObject<BlockEntityType<BlockEntity>> ENDER_LIBRARY = R.blockEntity("ENDER_LIBRARY");
     //      public static final RegistryObject<BlockEntityType<BossSpawnerTile>> BOSS_SPAWNER = R.blockEntity("BOSS_SPAWNER");
     //    public static final RegistryObject<BlockEntityType<ReforgingTableTile>> REFORGING_TABLE = R.blockEntity("REFORGING_TABLE");
     //    public static final RegistryObject<BlockEntityType<SalvagingTableTile>> SALVAGING_TABLE = R.blockEntity("SALVAGING_TABLE");
@@ -179,12 +188,7 @@ public class Apoth {
         public static final ResourceLocation TOME_TOWER = Apotheosis.loc("chests/tome_tower");
     }
 
-    public static final class Particles {
-        public static final RegistryObject<SimpleParticleType> ENCHANT_FIRE = R.particle("enchant_fire");
-        public static final RegistryObject<SimpleParticleType> ENCHANT_WATER = R.particle("enchant_water");
-        public static final RegistryObject<SimpleParticleType> ENCHANT_SCULK = R.particle("enchant_sculk");
-        public static final RegistryObject<SimpleParticleType> ENCHANT_END = R.particle("enchant_end");
-    }
+
 
     public static final class DamageTypes {
         public static final ResourceKey<DamageType> EXECUTE = ResourceKey.create(Registries.DAMAGE_TYPE, Apotheosis.loc("execute"));

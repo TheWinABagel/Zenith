@@ -2,7 +2,11 @@ Advenutre module:
 all
 
 Enchanting module:
-Figure out events (anvil damage, anvil , heal event,)
+Figure out events (anvil damage, anvil repair, heal event, etc)
+Library menu is laggy? also doesnt extract enchants
+all of the enchanting table
+ench stats dont show up on blocks
+
 
 Potion module:
 all
@@ -13,6 +17,7 @@ REI support for Spawner Recipes
 
 Village module:
 REI support for Fletching table
+fix mining arrows not breaking blocks that can be broken with hand
 
 Garden module:
 Add info to REI

@@ -2,6 +2,7 @@ accessWidener   v1  named
 
 extendable class net/minecraft/network/chat/TextColor
 accessible class net/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier
+extendable class net/minecraft/world/item/enchantment/EnchantmentCategory
 
 accessible field net/minecraft/world/level/block/DropExperienceBlock xpRange Lnet/minecraft/util/valueproviders/IntProvider;
 accessible class net/minecraft/world/inventory/MenuType

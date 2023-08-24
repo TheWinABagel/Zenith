@@ -1,8 +1,7 @@
 package dev.shadowsoffire.apotheosis.ench;
 
-import dev.shadowsoffire.apotheosis.Apoth.Particles;
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.Apotheosis.ModularDeferredHelper;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryTile.BasicLibraryTile;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryTile.EnderLibraryTile;
 import dev.shadowsoffire.apotheosis.ench.objects.TypedShelfBlock.SculkShelfBlock;
@@ -16,15 +15,20 @@ import dev.shadowsoffire.apotheosis.ench.enchantments.twisted.ExploitationEnchan
 import dev.shadowsoffire.apotheosis.ench.enchantments.twisted.MinersFervorEnchant;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryBlock;
 import dev.shadowsoffire.apotheosis.ench.objects.*;
-import dev.shadowsoffire.placebo.registry.DeferredHelper;
+import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
+import net.minecraft.core.Registry;
+import net.minecraft.core.dispenser.ShearsDispenseItemBehavior;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -35,7 +39,7 @@ public class Ench {
 
     public static final class Blocks {
 
-        public static final Block BEESHELF = woodShelf("beeshelf", MapColor.COLOR_YELLOW, 0.75F, () -> ParticleTypes.ENCHANT);
+        public static final Block BEESHELF = woodShelf("beeshelf", MapColor.COLOR_YELLOW, 0.75F, ParticleTypes.ENCHANT);
 
         public static final Block BLAZING_HELLSHELF = stoneShelf("blazing_hellshelf", MapColor.COLOR_BLACK, 1.5F, Particles.ENCHANT_FIRE);
 
@@ -67,7 +71,7 @@ public class Ench {
 
         public static final EnchLibraryBlock LIBRARY = new EnchLibraryBlock(BasicLibraryTile::new, 16);
 
-        public static final Block MELONSHELF = woodShelf("melonshelf", MapColor.COLOR_GREEN, 0.75F, () -> ParticleTypes.ENCHANT);
+        public static final Block MELONSHELF = woodShelf("melonshelf", MapColor.COLOR_GREEN, 0.75F, ParticleTypes.ENCHANT);
 
         public static final Block PEARL_ENDSHELF = stoneShelf("pearl_endshelf", MapColor.SAND, 4.5F, Particles.ENCHANT_END);
 
@@ -87,20 +91,53 @@ public class Ench {
 
         public static final Block SOUL_TOUCHED_SCULKSHELF = sculkShelf("soul_touched_sculkshelf");
 
-        public static final Block STONESHELF = stoneShelf("stoneshelf", MapColor.STONE, 1.25F, () -> ParticleTypes.ENCHANT);
+        public static final Block STONESHELF = stoneShelf("stoneshelf", MapColor.STONE, 1.25F, ParticleTypes.ENCHANT);
 
-        private static void bootstrap() {}
-
-        private static Block sculkShelf(String id) {
-            return  new SculkShelfBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).sound(SoundType.STONE).randomTicks().requiresCorrectToolForDrops().strength(3.5F), Particles.ENCHANT_SCULK);
+        private static void init() {
+            reg(BEESHELF, "beeshelf");
+            reg(BLAZING_HELLSHELF, "blazing_hellshelf");
+            reg(CRYSTAL_SEASHELF, "crystal_seashelf");
+            reg(DEEPSHELF, "deepshelf");
+            reg(DORMANT_DEEPSHELF, "dormant_deepshelf");
+            reg(DRACONIC_ENDSHELF, "draconic_endshelf");
+            reg(ECHOING_DEEPSHELF, "echoing_deepshelf");
+            reg(ECHOING_SCULKSHELF, "echoing_sculkshelf");
+            reg(ENDER_LIBRARY, "ender_library");
+            reg(ENDSHELF, "endshelf");
+            reg(GLOWING_HELLSHELF, "glowing_hellshelf");
+            reg(HEART_SEASHELF, "heart_seashelf");
+            reg(HELLSHELF, "hellshelf");
+            reg(INFUSED_HELLSHELF, "infused_hellshelf");
+            reg(INFUSED_SEASHELF, "infused_seashelf");
+            reg(LIBRARY, "library");
+            reg(MELONSHELF, "melonshelf");
+            reg(PEARL_ENDSHELF, "pearl_endshelf");
+            reg(RECTIFIER, "rectifier");
+            reg(RECTIFIER_T2, "rectifier_t2");
+            reg(RECTIFIER_T3, "rectifier_t3");
+            reg(SEASHELF, "seashelf");
+            reg(SIGHTSHELF, "sightshelf");
+            reg(SIGHTSHELF_T2, "sightshelf_t2");
+            reg(SOUL_TOUCHED_DEEPSHELF, "soul_touched_deepshelf");
+            reg(SOUL_TOUCHED_SCULKSHELF, "soul_touched_sculkshelf");
+            reg(STONESHELF, "stoneshelf");
+            DispenserBlock.registerBehavior(net.minecraft.world.item.Items.SHEARS, new ShearsDispenseItemBehavior());
         }
 
-        private static Block stoneShelf(String id, MapColor color, float strength, Supplier<? extends ParticleOptions> particle) {
+        private static Block sculkShelf(String id) {
+            return new SculkShelfBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).sound(SoundType.STONE).randomTicks().requiresCorrectToolForDrops().strength(3.5F), Particles.ENCHANT_SCULK);
+        }
+
+        private static Block stoneShelf(String id, MapColor color, float strength, SimpleParticleType particle) {
             return new TypedShelfBlock(Block.Properties.of().requiresCorrectToolForDrops().sound(SoundType.STONE).mapColor(color).strength(strength), particle);
         }
 
-        private static Block woodShelf(String id, MapColor color, float strength, Supplier<? extends ParticleOptions> particle) {
-            return  new TypedShelfBlock(Block.Properties.of().sound(SoundType.WOOD).mapColor(color).strength(strength), particle);
+        private static Block woodShelf(String id, MapColor color, float strength, SimpleParticleType particle) {
+            return new TypedShelfBlock(Block.Properties.of().sound(SoundType.WOOD).mapColor(color).strength(strength), particle);
+        }
+
+        private static void reg(Block item, String id){
+            Registry.register(BuiltInRegistries.BLOCK, Apotheosis.loc(id), item);
         }
 
     }
@@ -193,11 +230,55 @@ public class Ench {
 
         public static final TomeItem WEAPON_TOME = new TomeItem(net.minecraft.world.item.Items.DIAMOND_SWORD, EnchantmentCategory.WEAPON);
 
-        private static void bootstrap() {}
-        /*
-        private Item register(){
-            return new
-        }*/
+        private static void init() {
+            reg(BEESHELF, "beeshelf");
+            reg(BLAZING_HELLSHELF, "blazing_hellshelf");
+            reg(BOOTS_TOME, "boots_tome");
+            reg(BOW_TOME, "bow_tome");
+            reg(CHESTPLATE_TOME, "chestplate_tome");
+            reg(CRYSTAL_SEASHELF, "crystal_seashelf");
+            reg(DEEPSHELF, "deepshelf");
+            reg(DORMANT_DEEPSHELF, "dormant_deepshelf");
+            reg(DRACONIC_ENDSHELF, "draconic_endshelf");
+            reg(ECHOING_DEEPSHELF, "echoing_deepshelf");
+            reg(ECHOING_SCULKSHELF, "echoing_sculkshelf");
+            reg(ENDER_LIBRARY, "ender_library");
+            reg(ENDSHELF, "endshelf");
+            reg(EXTRACTION_TOME, "extraction_tome");
+            reg(FISHING_TOME, "fishing_tome");
+            reg(GLOWING_HELLSHELF, "glowing_hellshelf");
+            reg(HEART_SEASHELF, "heart_seashelf");
+            reg(HELLSHELF, "hellshelf");
+            reg(HELMET_TOME, "helmet_tome");
+            reg(IMPROVED_SCRAP_TOME, "improved_scrap_tome");
+            reg(INERT_TRIDENT, "inert_trident");
+            reg(INFUSED_BREATH, "infused_breath");
+            reg(INFUSED_HELLSHELF, "infused_hellshelf");
+            reg(INFUSED_SEASHELF, "infused_seashelf");
+            reg(LEGGINGS_TOME, "leggings_tome");
+            reg(LIBRARY, "library");
+            reg(MELONSHELF, "melonshelf");
+            reg(OTHER_TOME, "other_tome");
+            reg(PEARL_ENDSHELF, "pearl_endshelf");
+            reg(PICKAXE_TOME, "pickaxe_tome");
+            reg(PRISMATIC_WEB, "prismatic_web");
+            reg(RECTIFIER, "rectifier");
+            reg(RECTIFIER_T2, "rectifier_t2");
+            reg(RECTIFIER_T3, "rectifier_t3");
+            reg(SCRAP_TOME, "scrap_tome");
+            reg(SEASHELF, "seashelf");
+            reg(SIGHTSHELF, "sightshelf");
+            reg(SIGHTSHELF_T2, "sightshelf_t2");
+            reg(SOUL_TOUCHED_DEEPSHELF, "soul_touched_deepshelf");
+            reg(SOUL_TOUCHED_SCULKSHELF, "soul_touched_sculkshelf");
+            reg(STONESHELF, "stoneshelf");
+            reg(WARDEN_TENDRIL, "warden_tendril");
+            reg(WEAPON_TOME, "weapon_tome");
+        }
+
+        private static void reg(Item item, String id){
+            Registry.register(BuiltInRegistries.ITEM, Apotheosis.loc(id), item);
+        }
     }
 
     public static final class Enchantments {
@@ -248,8 +329,34 @@ public class Ench {
 
         public static final TemptingEnchant TEMPTING = new TemptingEnchant();
 
-        private static void bootstrap() {}
-
+        private static void init() {
+            reg(BERSERKERS_FURY, "berserkers_fury");
+            reg(CHAINSAW, "chainsaw");
+            reg(CHROMATIC, "chromatic");
+            reg(CRESCENDO, "crescendo");
+            reg(EARTHS_BOON, "earths_boon");
+            reg(ENDLESS_QUIVER, "endless_quiver");
+            reg(EXPLOITATION, "exploitation");
+            reg(GROWTH_SERUM, "growth_serum");
+            reg(ICY_THORNS, "icy_thorns");
+            reg(INFUSION, "infusion");
+            reg(KNOWLEDGE, "knowledge");
+            reg(LIFE_MENDING, "life_mending");
+            reg(MINERS_FERVOR, "miners_fervor");
+            reg(NATURES_BLESSING, "natures_blessing");
+            reg(OBLITERATION, "obliteration");
+            reg(REBOUNDING, "rebounding");
+            reg(REFLECTIVE, "reflective");
+            reg(SCAVENGER, "scavenger");
+            reg(SHIELD_BASH, "shield_bash");
+            reg(SPEARFISHING, "spearfishing");
+            reg(SPLITTING, "splitting");
+            reg(STABLE_FOOTING, "stable_footing");
+            reg(TEMPTING, "tempting");
+        }
+        private static void reg(Enchantment ench, String id){
+            Registry.register(BuiltInRegistries.ENCHANTMENT, Apotheosis.loc(id), ench);
+        }
     }
 
     public static class Tabs {
@@ -261,13 +368,20 @@ public class Ench {
 
     }
 
-    private static final DeferredHelper R = ModularDeferredHelper.create(() -> Apotheosis.enableEnch);
+    public static final class Particles {
+        public static final SimpleParticleType ENCHANT_FIRE = FabricParticleTypes.simple();
+        public static final SimpleParticleType ENCHANT_WATER = FabricParticleTypes.simple();
+        public static final SimpleParticleType ENCHANT_SCULK = FabricParticleTypes.simple();
+        public static final SimpleParticleType ENCHANT_END = FabricParticleTypes.simple();
+    }
 
     public static void bootstrap() {
-        Blocks.bootstrap();
-        Items.bootstrap();
-        Enchantments.bootstrap();
+        Blocks.init();
+        Items.init();
+        Enchantments.init();
         Tabs.bootstrap();
+        Apoth.Tiles.bootstrap();
+        Apoth.Menus.bootstrap();
     }
 
 }
