@@ -79,9 +79,10 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
         return List.of(anvil);
     }
 
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
+    @Override
+    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
         ItemStack anvil = new ItemStack(this);
-        BlockEntity te = world.getBlockEntity(pos);
+        BlockEntity te = level.getBlockEntity(pos);
         if (te instanceof AnvilTile) {
             Map<Enchantment, Integer> ench = ((AnvilTile) te).getEnchantments();
             ench = ench.entrySet().stream().filter(e -> e.getValue() > 0).collect(Collectors.toMap(Entry::getKey, Entry::getValue));

@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.ench.objects;
 
+import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.util.Events;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -49,15 +50,17 @@ public class ExtractionTomeItem extends BookItem {
         return true;
     }
 
-    public static boolean updateAnvil(ItemStack weapon, ItemStack book, String name, int baseCost, Player player) {
+    public static boolean updateAnvil(Events.AnvilUpdate.UpdateAnvilEvent ev) {
+        ItemStack weapon = ev.left;
+        ItemStack book = ev.right;
         if (!(book.getItem() instanceof ExtractionTomeItem) || book.isEnchanted() || !weapon.isEnchanted()) return false;
 
         Map<Enchantment, Integer> wepEnch = EnchantmentHelper.getEnchantments(weapon);
         ItemStack out = new ItemStack(Items.ENCHANTED_BOOK);
         EnchantmentHelper.setEnchantments(wepEnch, out);
-        //ev.setMaterialCost(1);
-        //ev.setCost(wepEnch.size() * 16);
-        //ev.setOutput(out);
+        ev.setMaterialCost(1);
+        ev.setCost(wepEnch.size() * 16);
+        ev.setOutput(out);
         return true;
     }
 
@@ -74,12 +77,14 @@ public class ExtractionTomeItem extends BookItem {
     }
 
     public static void updateRepair() {
-        Events.AnvilRepairEvent.EVENT.register((player, output, weapon, book) -> {
-            float ret = 0.12f;
-            if (!(book.getItem() instanceof ExtractionTomeItem) || book.isEnchanted() || !weapon.isEnchanted()) return ret;
+        Events.ANVIL_REPAIR.register((ev) -> {
+            ItemStack weapon = ev.left;
+            ItemStack book = ev.right;
+            if (!(book.getItem() instanceof ExtractionTomeItem) || book.isEnchanted() || !weapon.isEnchanted()) return;
+            EnchModule.LOGGER.error("test2");
             EnchantmentHelper.setEnchantments(Collections.emptyMap(), weapon);
-            giveItem(player, weapon);
-            return ret;
+            giveItem(ev.player, weapon);
         });
     }
+
 }

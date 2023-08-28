@@ -4,6 +4,7 @@ import dev.shadowsoffire.apotheosis.advancements.AdvancementTriggers;
 import dev.shadowsoffire.apotheosis.compat.PatchouliCompat;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.garden.GardenModule;
+import dev.shadowsoffire.apotheosis.potion.PotionModule;
 import dev.shadowsoffire.apotheosis.spawn.SpawnerModule;
 import dev.shadowsoffire.apotheosis.util.Events;
 import dev.shadowsoffire.apotheosis.util.ModuleCondition;
@@ -40,7 +41,7 @@ public class Apotheosis implements ModInitializer {
         if (enableSpawner) SpawnerModule.init();
         if (enableGarden) GardenModule.init();
     //    if (enableAdventure) AdventureModule.init(); this might be a while :P
-   //     if (enablePotion) PotionModule.init();
+        if (enablePotion) PotionModule.init();
         if (enableVillage) VillageModule.init();
 
         if (config.hasChanged()) config.save();
@@ -69,11 +70,6 @@ public class Apotheosis implements ModInitializer {
         if (config.hasChanged()) config.save();
 
     }
-/*
-    public static Ingredient potionIngredient(Potion type) {
-        return new NBTIngredient(PotionUtils.setPotion(new ItemStack(Items.POTION), type));
-    }
-*/
     public static ResourceLocation loc(String id) {
         return new ResourceLocation(MODID, id);
     }

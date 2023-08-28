@@ -3,22 +3,27 @@ package dev.shadowsoffire.apotheosis;
 
 import com.google.common.collect.ImmutableSet;
 import dev.shadowsoffire.apotheosis.ench.Ench;
+import dev.shadowsoffire.apotheosis.ench.anvil.AnvilTile;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryContainer;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryTile;
+import dev.shadowsoffire.apotheosis.ench.objects.GlowyBlockItem;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingRecipe;
 import dev.shadowsoffire.apotheosis.garden.EnderLeadItem;
 
 //import dev.shadowsoffire.apotheosis.village.fletching.arrows.*;
+import dev.shadowsoffire.apotheosis.potion.PotionCharmItem;
 import dev.shadowsoffire.apotheosis.spawn.enchantment.CapturingEnchant;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
 import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerBlock;
 import dev.shadowsoffire.apotheosis.village.fletching.FletchingContainer;
 import dev.shadowsoffire.apotheosis.village.fletching.FletchingRecipe;
 import dev.shadowsoffire.apotheosis.village.fletching.arrows.*;
+import dev.shadowsoffire.attributeslib.api.ALObjects;
 import dev.shadowsoffire.placebo.registry.RegObjHelper;
 import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
@@ -31,6 +36,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -43,6 +50,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
@@ -54,8 +62,8 @@ public class Apoth {
     public static final RegObjHelper R = new RegObjHelper(Apotheosis.MODID);
 
     public static final class Items {
-    //    public static final RegistryObject<PotionCharmItem> POTION_CHARM = R.item("POTION_CHARM");
-        public static final RegistryObject<Item> LUCKY_FOOT = R.item("LUCKY_FOOT");
+        public static final PotionCharmItem POTION_CHARM = new PotionCharmItem();
+        public static final Item LUCKY_FOOT = new GlowyBlockItem.GlowyItem(new Item.Properties());
         public static final Item OBSIDIAN_ARROW = new ObsidianArrowItem(new Item.Properties());
         public static final Item BROADHEAD_ARROW = new BroadheadArrowItem(new Item.Properties());
         public static final Item EXPLOSIVE_ARROW = new ExplosiveArrowItem(new Item.Properties());
@@ -70,37 +78,39 @@ public class Apoth {
     }
 
     public static final class Potions {
-        public static final RegistryObject<Potion> RESISTANCE = R.potion("RESISTANCE");
-        public static final RegistryObject<Potion> LONG_RESISTANCE = R.potion("LONG_RESISTANCE");
-        public static final RegistryObject<Potion> STRONG_RESISTANCE = R.potion("STRONG_RESISTANCE");
-        public static final RegistryObject<Potion> ABSORPTION = R.potion("ABSORPTION");
-        public static final RegistryObject<Potion> LONG_ABSORPTION = R.potion("LONG_ABSORPTION");
-        public static final RegistryObject<Potion> STRONG_ABSORPTION = R.potion("STRONG_ABSORPTION");
-        public static final RegistryObject<Potion> HASTE = R.potion("HASTE");
-        public static final RegistryObject<Potion> LONG_HASTE = R.potion("LONG_HASTE");
-        public static final RegistryObject<Potion> STRONG_HASTE = R.potion("STRONG_HASTE");
-        public static final RegistryObject<Potion> FATIGUE = R.potion("FATIGUE");
-        public static final RegistryObject<Potion> LONG_FATIGUE = R.potion("LONG_FATIGUE");
-        public static final RegistryObject<Potion> STRONG_FATIGUE = R.potion("STRONG_FATIGUE");
-        public static final RegistryObject<Potion> SUNDERING = R.potion("SUNDERING");
-        public static final RegistryObject<Potion> LONG_SUNDERING = R.potion("LONG_SUNDERING");
-        public static final RegistryObject<Potion> STRONG_SUNDERING = R.potion("STRONG_SUNDERING");
-        public static final RegistryObject<Potion> KNOWLEDGE = R.potion("KNOWLEDGE");
-        public static final RegistryObject<Potion> LONG_KNOWLEDGE = R.potion("LONG_KNOWLEDGE");
-        public static final RegistryObject<Potion> STRONG_KNOWLEDGE = R.potion("STRONG_KNOWLEDGE");
-        public static final RegistryObject<Potion> WITHER = R.potion("WITHER");
-        public static final RegistryObject<Potion> LONG_WITHER = R.potion("LONG_WITHER");
-        public static final RegistryObject<Potion> STRONG_WITHER = R.potion("STRONG_WITHER");
-        public static final RegistryObject<Potion> VITALITY = R.potion("VITALITY");
-        public static final RegistryObject<Potion> LONG_VITALITY = R.potion("LONG_VITALITY");
-        public static final RegistryObject<Potion> STRONG_VITALITY = R.potion("STRONG_VITALITY");
-        public static final RegistryObject<Potion> GRIEVOUS = R.potion("GRIEVOUS");
-        public static final RegistryObject<Potion> LONG_GRIEVOUS = R.potion("LONG_GRIEVOUS");
-        public static final RegistryObject<Potion> STRONG_GRIEVOUS = R.potion("STRONG_GRIEVOUS");
+        public static final Potion RESISTANCE = registerPot(new Potion("resistance", new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 3600)), "resistance");
+        public static final Potion LONG_RESISTANCE = registerPot(new Potion("resistance", new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 9600)), "long_resistance");
+        public static final Potion STRONG_RESISTANCE = registerPot(new Potion("resistance", new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1800, 1)), "strong_resistance");
+        public static final Potion ABSORPTION = registerPot(new Potion("absorption", new MobEffectInstance(MobEffects.ABSORPTION, 1200, 1)), "absorption");
+        public static final Potion LONG_ABSORPTION = registerPot(new Potion("absorption", new MobEffectInstance(MobEffects.ABSORPTION, 3600, 1)), "long_absorption");
+        public static final Potion STRONG_ABSORPTION = registerPot(new Potion("absorption", new MobEffectInstance(MobEffects.ABSORPTION, 600, 3)), "strong_absorption");
+        public static final Potion HASTE = registerPot(new Potion("haste", new MobEffectInstance(MobEffects.DIG_SPEED, 3600)), "haste");
+        public static final Potion LONG_HASTE = registerPot(new Potion("haste", new MobEffectInstance(MobEffects.DIG_SPEED, 9600)), "long_haste");
+        public static final Potion STRONG_HASTE = registerPot(new Potion("haste", new MobEffectInstance(MobEffects.DIG_SPEED, 1800, 1)), "strong_haste");
+        public static final Potion FATIGUE = registerPot(new Potion("fatigue", new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 3600)), "fatigue");
+        public static final Potion LONG_FATIGUE = registerPot(new Potion("fatigue", new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 9600)), "long_fatigue");
+        public static final Potion STRONG_FATIGUE = registerPot(new Potion("fatigue", new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 1800, 1)), "strong_fatigue");
+        public static final Potion WITHER = registerPot(new Potion("wither", new MobEffectInstance(MobEffects.WITHER, 3600)), "wither");
+        public static final Potion LONG_WITHER = registerPot(new Potion("wither", new MobEffectInstance(MobEffects.WITHER, 9600)), "long_wither");
+        public static final Potion STRONG_WITHER = registerPot(new Potion("wither", new MobEffectInstance(MobEffects.WITHER, 1800, 1)), "strong_wither");
+        public static final Potion SUNDERING = registerPot(new Potion("sundering", new MobEffectInstance(ALObjects.MobEffects.SUNDERING, 3600)), "sundering");
+        public static final Potion LONG_SUNDERING = registerPot(new Potion("sundering", new MobEffectInstance(ALObjects.MobEffects.SUNDERING, 9600)), "long_sundering");
+        public static final Potion STRONG_SUNDERING = registerPot(new Potion("sundering", new MobEffectInstance(ALObjects.MobEffects.SUNDERING, 1800, 1)), "strong_sundering");
+        public static final Potion KNOWLEDGE = registerPot(new Potion("knowledge", new MobEffectInstance(ALObjects.MobEffects.KNOWLEDGE, 2400)), "knowledge");
+        public static final Potion LONG_KNOWLEDGE = registerPot(new Potion("knowledge", new MobEffectInstance(ALObjects.MobEffects.KNOWLEDGE, 4800)), "long_knowledge");
+        public static final Potion STRONG_KNOWLEDGE = registerPot(new Potion("knowledge", new MobEffectInstance(ALObjects.MobEffects.KNOWLEDGE, 1200, 1)), "strong_knowledge");
+        public static final Potion VITALITY = registerPot(new Potion("vitality", new MobEffectInstance(ALObjects.MobEffects.VITALITY, 4800)), "vitality");
+        public static final Potion LONG_VITALITY = registerPot(new Potion("vitality", new MobEffectInstance(ALObjects.MobEffects.VITALITY, 14400)), "long_vitality");
+        public static final Potion STRONG_VITALITY = registerPot(new Potion("vitality", new MobEffectInstance(ALObjects.MobEffects.VITALITY, 3600, 1)), "strong_vitality");
+        public static final Potion GRIEVOUS = registerPot(new Potion("grievous", new MobEffectInstance(ALObjects.MobEffects.GRIEVOUS, 4800)), "grievous");
+        public static final Potion LONG_GRIEVOUS = registerPot(new Potion("grievous", new MobEffectInstance(ALObjects.MobEffects.GRIEVOUS, 14400)), "long_grievous");
+        public static final Potion STRONG_GRIEVOUS = registerPot(new Potion("grievous", new MobEffectInstance(ALObjects.MobEffects.GRIEVOUS, 3600, 1)), "strong_grievous");
+        public static final Potion LEVITATION = registerPot(new Potion("levitation", new MobEffectInstance(MobEffects.LEVITATION, 2400)), "levitation");
+        public static final Potion FLYING = registerPot(new Potion("flying", new MobEffectInstance(ALObjects.MobEffects.FLYING, 9600)), "flying");
+        public static final Potion LONG_FLYING = registerPot(new Potion("flying", new MobEffectInstance(ALObjects.MobEffects.FLYING, 18000)), "long_flying");
+        public static final Potion EXTRA_LONG_FLYING = registerPot(new Potion("flying", new MobEffectInstance(ALObjects.MobEffects.FLYING, 36000)), "extra_long_flying");
     }
-    public static final class Blocks {
-        public static final Block SPAWNER_TEST = new ApothSpawnerBlock();
-    }
+
     public static final class Entities {
         public static final EntityType<ObsidianArrowEntity> OBSIDIAN_ARROW = Registry.register(
                 BuiltInRegistries.ENTITY_TYPE,
@@ -147,9 +157,8 @@ public class Apoth {
         public static void bootstrap(){}
         public static final BlockEntityType<EnchLibraryTile.BasicLibraryTile> LIBRARY = Apoth.registerBEType("library", new BlockEntityType<>(EnchLibraryTile.BasicLibraryTile::new, ImmutableSet.of(Ench.Blocks.LIBRARY), null));
         public static final BlockEntityType<EnchLibraryTile.EnderLibraryTile> ENDER_LIBRARY = Apoth.registerBEType("ender_library", new BlockEntityType<>(EnchLibraryTile.EnderLibraryTile::new, ImmutableSet.of(Ench.Blocks.ENDER_LIBRARY), null));
-        //public static final RegistryObject<BlockEntityType<BlockEntity>> LIBRARY = R.blockEntity("LIBRARY");
+        public static final BlockEntityType<AnvilTile> ANVIL_TILE = Apoth.registerBEType("anvil", new BlockEntityType<>(AnvilTile::new, ImmutableSet.of(Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL), null));
 
-        //public static final RegistryObject<BlockEntityType<BlockEntity>> ENDER_LIBRARY = R.blockEntity("ENDER_LIBRARY");
     //      public static final RegistryObject<BlockEntityType<BossSpawnerTile>> BOSS_SPAWNER = R.blockEntity("BOSS_SPAWNER");
     //    public static final RegistryObject<BlockEntityType<ReforgingTableTile>> REFORGING_TABLE = R.blockEntity("REFORGING_TABLE");
     //    public static final RegistryObject<BlockEntityType<SalvagingTableTile>> SALVAGING_TABLE = R.blockEntity("SALVAGING_TABLE");
@@ -197,11 +206,11 @@ public class Apoth {
     }
 
     public static Item registerItem(String path, Item item){
-        return Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Apotheosis.MODID, path), item);
+        return Registry.register(BuiltInRegistries.ITEM, Apotheosis.loc( path), item);
     }
 
     public static Enchantment registerEnchantment(String path, Enchantment enchantment){
-        return Registry.register(BuiltInRegistries.ENCHANTMENT, new ResourceLocation(Apotheosis.MODID, path), enchantment);
+        return Registry.register(BuiltInRegistries.ENCHANTMENT, Apotheosis.loc( path), enchantment);
     }
 
     public static TagKey<Item> registerItemTag(ResourceLocation id) {
@@ -220,4 +229,7 @@ public class Apoth {
         return Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, Apotheosis.loc(id), be);
     }
 
+    private static Potion registerPot(Potion potion, String name) {
+        return Registry.register(BuiltInRegistries.POTION, Apotheosis.loc(name), potion);
+    }
 }

@@ -14,9 +14,13 @@ import net.minecraft.world.Nameable;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EnchantmentTableBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.EnchantmentTableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -28,10 +32,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.List;
 
 @Mixin(value = EnchantmentTableBlock.class, priority = 1500)
-public class EnchantmentTableBlockMixin {
+public class EnchantmentTableBlockMixin extends BaseEntityBlock {
 
     @Shadow @Final
     public static List<BlockPos> BOOKSHELF_OFFSETS;
+
+    protected EnchantmentTableBlockMixin(Properties properties) {
+        super(properties);
+    }
 
     @Inject(method = "getMenuProvider", at = @At("HEAD"), cancellable = true)
     private void zenithEnchMenu(BlockState state, Level world, BlockPos pos, CallbackInfoReturnable<MenuProvider> cir) {
@@ -40,15 +48,19 @@ public class EnchantmentTableBlockMixin {
             if (tileentity instanceof ApothEnchantTile) {
                 Component itextcomponent = ((Nameable) tileentity).getDisplayName();
                 cir.setReturnValue(new SimpleMenuProvider((id, inventory, player) -> new ApothEnchantmentMenu(id, inventory, ContainerLevelAccess.create(world, pos), (ApothEnchantTile) tileentity), itextcomponent));
-            } else {
-                cir.setReturnValue(null);
             }
         }
     }
 
-    @Inject(method = "newBlockEntity", at = @At("HEAD"), cancellable = true)
-    private void zenithNewBlockEntity(BlockPos pos, BlockState state, CallbackInfoReturnable<BlockEntity> cir){
-        if (Apotheosis.enableEnch) cir.setReturnValue(new ApothEnchantTile(pos, state));
+    @Override
+    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (state.getBlock() != newState.getBlock()) {
+            BlockEntity tileentity = world.getBlockEntity(pos);
+            if (tileentity instanceof ApothEnchantTile) {
+                Block.popResource(world, pos, ((ApothEnchantTile) tileentity).inv.getStackInSlot(0));
+                world.removeBlockEntity(pos);
+            }
+        }
     }
 
     @Inject(method = "animateTick", at = @At("HEAD"))
@@ -60,4 +72,10 @@ public class EnchantmentTableBlockMixin {
         }
     }
 
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        if (Apotheosis.enableEnch) return new ApothEnchantTile(pos, state);
+        return new EnchantmentTableBlockEntity(pos, state);
+    }
 }

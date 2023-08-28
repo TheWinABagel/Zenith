@@ -2,14 +2,15 @@ Advenutre module:
 all
 
 Enchanting module:
-Figure out events (anvil damage, anvil repair, heal event, etc)
-Library menu is laggy? also doesnt extract enchants
-all of the enchanting table
-ench stats dont show up on blocks
-
+Figure out events (heal event, etc)
+enchanting table doesnt get stats properly from nearby blocks
+ench table doesnt save inventory
+anvil
+warden drops
 
 Potion module:
-all
+potion charms arent all showing up in rei or creative
+flight + elytra work with lib
 
 Spawner module:
 Reimplement spawner with mixins
@@ -24,5 +25,7 @@ Add info to REI
 
 General stuff
 figure out what breaks if modules are disabled
-Fabricify the rest of the recipe conditions
 Change modid+class names (last step)
+
+Mod support
+TBD

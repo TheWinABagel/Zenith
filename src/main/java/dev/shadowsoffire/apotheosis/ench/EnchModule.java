@@ -6,6 +6,7 @@ import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.EnchantmentInfo.PowerFunc;
 import dev.shadowsoffire.apotheosis.ench.Ench.*;
+import dev.shadowsoffire.apotheosis.ench.anvil.AnvilTile;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryTile.BasicLibraryTile;
 import dev.shadowsoffire.apotheosis.ench.objects.TypedShelfBlock.SculkShelfBlock;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
@@ -99,7 +100,7 @@ public class EnchModule {
                     Enchantments.REFLECTIVE, Enchantments.SCAVENGER, Enchantments.SHIELD_BASH, Enchantments.SPEARFISHING, Enchantments.SPLITTING, Enchantments.STABLE_FOOTING, Enchantments.TEMPTING);
         });*/
 
-        EnchantingStatRegistry.INSTANCE.registerToBus();
+        EnchantingStatRegistry.INSTANCE.register();
     }
 
     public void miscRegistration() {
@@ -107,7 +108,7 @@ public class EnchModule {
     }
 
     public void tiles() {
-        //e.getRegistry().register(new BlockEntityType<>(AnvilTile::new, ImmutableSet.of(Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL), null), "anvil");
+        //Registry.register(new BlockEntityType<>(AnvilTile::new, ImmutableSet.of(Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL), null), "anvil");
         //BlockEntityType.ENCHANTING_TABLE.factory = ApothEnchantTile::new;
         BlockEntityType.ENCHANTING_TABLE.validBlocks = ImmutableSet.of(Blocks.ENCHANTING_TABLE);
     }

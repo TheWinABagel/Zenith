@@ -5,7 +5,7 @@
   }],
   "pools": [
     {
-      "name": "placebo_code_pool_18",
+      "name": "fakerlib_code_pool_18",
       "rolls": {
         "min": 5.0,
         "max": 8.0,
@@ -13,7 +13,7 @@
       },
       "entries": [
         {
-          "type": "placebo:stack_entry",
+          "type": "fakerlib:stack_entry",
           "quality": 2,
           "min": 1,
           "max": 2,
@@ -23,7 +23,7 @@
           }
         },
         {
-          "type": "placebo:stack_entry",
+          "type": "fakerlib:stack_entry",
           "quality": 2,
           "min": 1,
           "max": 2,
@@ -33,7 +33,7 @@
           }
         },
         {
-          "type": "placebo:stack_entry",
+          "type": "fakerlib:stack_entry",
           "quality": 2,
           "min": 1,
           "max": 2,
@@ -43,7 +43,7 @@
           }
         },
         {
-          "type": "placebo:stack_entry",
+          "type": "fakerlib:stack_entry",
           "quality": 2,
           "min": 1,
           "max": 2,
@@ -53,7 +53,7 @@
           }
         },
         {
-          "type": "placebo:stack_entry",
+          "type": "fakerlib:stack_entry",
           "quality": 2,
           "min": 1,
           "max": 2,
@@ -63,7 +63,7 @@
           }
         },
         {
-          "type": "placebo:stack_entry",
+          "type": "fakerlib:stack_entry",
           "weight": 2,
           "min": 1,
           "max": 2,
@@ -73,7 +73,7 @@
           }
         },
         {
-          "type": "placebo:stack_entry",
+          "type": "fakerlib:stack_entry",
           "weight": 3,
           "quality": 5,
           "min": 1,
@@ -84,7 +84,7 @@
           }
         },
         {
-          "type": "placebo:stack_entry",
+          "type": "fakerlib:stack_entry",
           "weight": 3,
           "quality": 6,
           "min": 1,
@@ -95,7 +95,7 @@
           }
         },
         {
-          "type": "placebo:stack_entry",
+          "type": "fakerlib:stack_entry",
           "weight": 10,
           "quality": 3,
           "min": 1,
@@ -106,7 +106,7 @@
           }
         },
         {
-          "type": "placebo:stack_entry",
+          "type": "fakerlib:stack_entry",
           "weight": 10,
           "quality": 4,
           "min": 1,
@@ -117,7 +117,7 @@
           }
         },
         {
-          "type": "placebo:stack_entry",
+          "type": "fakerlib:stack_entry",
           "quality": 3,
           "min": 1,
           "max": 2,
@@ -127,7 +127,7 @@
           }
         },
         {
-          "type": "placebo:stack_entry",
+          "type": "fakerlib:stack_entry",
           "weight": 5,
           "min": 1,
           "max": 2,
@@ -137,7 +137,7 @@
           }
         },
         {
-          "type": "placebo:stack_entry",
+          "type": "fakerlib:stack_entry",
           "weight": 5,
           "min": 1,
           "max": 2,
@@ -147,7 +147,7 @@
           }
         },
         {
-          "type": "placebo:stack_entry",
+          "type": "fakerlib:stack_entry",
           "weight": 3,
           "min": 1,
           "max": 2,
@@ -157,7 +157,7 @@
           }
         },
         {
-          "type": "placebo:stack_entry",
+          "type": "fakerlib:stack_entry",
           "quality": 5,
           "min": 1,
           "max": 2,
@@ -167,7 +167,7 @@
           }
         },
         {
-          "type": "placebo:stack_entry",
+          "type": "fakerlib:stack_entry",
           "weight": 3,
           "quality": 1,
           "min": 1,
@@ -178,7 +178,7 @@
           }
         },
         {
-          "type": "placebo:stack_entry",
+          "type": "fakerlib:stack_entry",
           "weight": 3,
           "min": 1,
           "max": 1,
@@ -188,7 +188,7 @@
           }
         },
         {
-          "type": "placebo:stack_entry",
+          "type": "fakerlib:stack_entry",
           "weight": 3,
           "min": 1,
           "max": 1,
@@ -198,7 +198,7 @@
           }
         },
         {
-          "type": "placebo:stack_entry",
+          "type": "fakerlib:stack_entry",
           "weight": 3,
           "min": 1,
           "max": 1,
@@ -208,7 +208,7 @@
           }
         },
         {
-          "type": "placebo:stack_entry",
+          "type": "fakerlib:stack_entry",
           "weight": 3,
           "min": 1,
           "max": 3,
@@ -218,7 +218,7 @@
           }
         },
         {
-          "type": "placebo:stack_entry",
+          "type": "fakerlib:stack_entry",
           "weight": 3,
           "quality": 5,
           "functions": [

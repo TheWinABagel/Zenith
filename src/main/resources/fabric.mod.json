@@ -25,7 +25,10 @@
       "dev.shadowsoffire.apotheosis.ApotheosisClient"
     ],
     "jade": [
-      "dev.shadowsoffire.apotheosis.spawn.compat.SpawnerHwylaPlugin"
+      "dev.shadowsoffire.apotheosis.spawn.compat.SpawnerHwylaPlugin",
+      "dev.shadowsoffire.apotheosis.ench.compat.EnchHwylaPlugin"
+    ],
+    "rei_client": [
     ],
     "mm:early_risers": [
       "dev.shadowsoffire.apotheosis.util.PreInit"

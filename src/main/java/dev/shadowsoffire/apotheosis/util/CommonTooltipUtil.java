@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.util;
 
+import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
 import it.unimi.dsi.fastutil.floats.Float2FloatMap;

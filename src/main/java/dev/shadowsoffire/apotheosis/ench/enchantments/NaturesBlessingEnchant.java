@@ -62,7 +62,6 @@ public class NaturesBlessingEnchant extends Enchantment {
             if (!level.isClientSide) {
                 level.levelEvent(1505, blockPos, 0);
             }
-
             return true;
         } else {
             BlockState blockState = level.getBlockState(blockPos);
@@ -71,7 +70,6 @@ public class NaturesBlessingEnchant extends Enchantment {
                 if (!level.isClientSide) {
                     level.levelEvent(1505, blockPos2, 0);
                 }
-
                 return true;
             } else {
                 return false;

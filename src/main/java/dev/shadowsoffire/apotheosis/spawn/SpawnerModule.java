@@ -38,7 +38,6 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
-import static dev.shadowsoffire.apotheosis.Apoth.Blocks.SPAWNER_TEST;
 import static dev.shadowsoffire.apotheosis.Apotheosis.enableDebug;
 
 public class SpawnerModule {
@@ -62,7 +61,6 @@ public class SpawnerModule {
     public static void register() {
         Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, Apotheosis.loc("spawner_modifier"), SpawnerModifier.SERIALIZER);
         Registry.register(BuiltInRegistries.ENCHANTMENT, Apotheosis.loc("capturing"), Apoth.Enchantments.CAPTURING);
-        Registry.register(BuiltInRegistries.BLOCK, Apotheosis.loc("spawner"), SPAWNER_TEST);
     }
 
     public static void dropsEvent() {

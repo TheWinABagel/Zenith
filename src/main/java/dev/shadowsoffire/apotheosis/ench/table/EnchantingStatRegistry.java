@@ -10,6 +10,10 @@ import dev.shadowsoffire.placebo.json.PSerializer;
 import dev.shadowsoffire.placebo.reload.DynamicRegistry;
 import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
 import io.github.fabricators_of_create.porting_lib.enchant.EnchantmentBonusBlock;
+import io.github.fabricators_of_create.porting_lib.tags.TagHelper;
+import io.github.fabricators_of_create.porting_lib.tags.Tags;
+import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
+import net.fabricmc.fabric.impl.resource.conditions.ResourceConditionsImpl;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -18,6 +22,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.*;
@@ -63,6 +68,7 @@ public class EnchantingStatRegistry extends DynamicRegistry<EnchantingStatRegist
         Block block = state.getBlock();
         if (INSTANCE.statsPerBlock.containsKey(block)) return INSTANCE.statsPerBlock.get(block).eterna;
         if (state instanceof EnchantmentBonusBlock enchantingBlock) return enchantingBlock.getEnchantPowerBonus(state, world, pos);
+        if (state.is(Blocks.BOOKSHELF)) return 1;
         return 0;
     }
 
@@ -75,6 +81,7 @@ public class EnchantingStatRegistry extends DynamicRegistry<EnchantingStatRegist
         Block block = state.getBlock();
         if (INSTANCE.statsPerBlock.containsKey(block)) return INSTANCE.statsPerBlock.get(block).maxEterna;
         if (block instanceof IEnchantingBlock enchantingBlock) return enchantingBlock.getMaxEnchantingPower(state, world, pos);
+        if (state.is(Blocks.BOOKSHELF)) return 15;
         return 0;
     }
 
@@ -187,7 +194,7 @@ public class EnchantingStatRegistry extends DynamicRegistry<EnchantingStatRegist
             this.blocks = new ArrayList<>();
             if (!blocks.isEmpty()) this.blocks.addAll(blocks);
             // TODO figure out tag registration for this
-            //if (tag.isPresent()) this.blocks.addAll(EnchantingStatRegistry.INSTANCE.getContext().getTag(tag.get()).stream().map(Holder::value).toList());
+            if (tag.isPresent()) this.blocks.addAll(TagHelper.getContents(BuiltInRegistries.BLOCK, tag.get()));// EnchantingStatRegistry.INSTANCE.getContext().getTag(tag.get()).stream().map(Holder::value).toList());
             if (block.isPresent()) this.blocks.add(block.get());
             this.stats = stats;
         }

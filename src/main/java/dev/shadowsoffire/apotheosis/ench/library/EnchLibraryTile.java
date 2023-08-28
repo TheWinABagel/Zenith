@@ -2,6 +2,7 @@ package dev.shadowsoffire.apotheosis.ench.library;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.placebo.recipe.VanillaPacketDispatcher;
+import io.github.fabricators_of_create.porting_lib.block.CustomDataPacketHandlingBlockEntity;
 import io.github.fabricators_of_create.porting_lib.util.LazyOptional;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
@@ -30,7 +31,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class EnchLibraryTile extends BlockEntity {
+public abstract class EnchLibraryTile extends BlockEntity implements CustomDataPacketHandlingBlockEntity {
 
     protected final Object2IntMap<Enchantment> points = new Object2IntOpenHashMap<>();
     protected final Object2IntMap<Enchantment> maxLevels = new Object2IntOpenHashMap<>();
@@ -135,7 +136,7 @@ public abstract class EnchLibraryTile extends BlockEntity {
         }
     }
 
-    //@Override
+    @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         CompoundTag tag = pkt.getTag();
         CompoundTag points = tag.getCompound("Points");

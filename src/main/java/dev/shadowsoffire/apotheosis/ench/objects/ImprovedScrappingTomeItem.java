@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.ench.objects;
 
+import dev.shadowsoffire.apotheosis.util.Events;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
@@ -40,15 +41,17 @@ public class ImprovedScrappingTomeItem extends BookItem {
         return Rarity.RARE;
     }
 
-    public static boolean updateAnvil(ItemStack weapon, ItemStack book, String name, int baseCost, Player player) {
+    public static boolean updateAnvil(Events.AnvilUpdate.UpdateAnvilEvent ev) {
+        ItemStack weapon = ev.left;
+        ItemStack book = ev.right;
         if (!(book.getItem() instanceof ImprovedScrappingTomeItem) || book.isEnchanted() || !weapon.isEnchanted()) return false;
 
         Map<Enchantment, Integer> wepEnch = EnchantmentHelper.getEnchantments(weapon);
         ItemStack out = new ItemStack(Items.ENCHANTED_BOOK);
         EnchantmentHelper.setEnchantments(wepEnch, out);
-        //ev.setMaterialCost(1);
-        //ev.setCost(wepEnch.size() * 10);
-        //ev.setOutput(out);
+        ev.setMaterialCost(1);
+        ev.setCost(wepEnch.size() * 10);
+        ev.setOutput(out);
         return true;
     }
 }

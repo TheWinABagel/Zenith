@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.block.AnvilBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import snownee.jade.api.*;
@@ -33,7 +34,7 @@ public class EnchHwylaPlugin implements IWailaPlugin, IBlockComponentProvider, I
 
     @Override
     public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
-        if (accessor.getBlock() instanceof ApothAnvilBlock) {
+        if (accessor.getBlock() instanceof AnvilBlock) {
             CompoundTag tag = accessor.getServerData();
             Map<Enchantment, Integer> enchants = EnchantmentHelper.deserializeEnchantments(tag.getList("enchantments", Tag.TAG_COMPOUND));
             for (Map.Entry<Enchantment, Integer> e : enchants.entrySet()) {

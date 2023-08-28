@@ -61,6 +61,9 @@
 	"affix.apotheosis:armor/attribute/fortunate": "Fortunate",
     "affix.apotheosis:armor/attribute/fortunate.suffix": "of the Four-Leaf Clover",
 
+	"affix.apotheosis:armor/attribute/winged": "Winged",
+	"affix.apotheosis:armor/attribute/winged.suffix": "of the Skies",
+
 	"affix.apotheosis:sword/attribute/intricate": "Intricate",
     "affix.apotheosis:sword/attribute/intricate.suffix": "of Critical Thinking",
 
@@ -380,6 +383,7 @@
 	"item.apotheosis.rare_material": "Luminous Crystal Shard",
 	"item.apotheosis.epic_material": "Arcane Sands",
 	"item.apotheosis.mythic_material": "Godforged Pearl",
+	"item.apotheosis.ancient_material": "Manifestation of Infinity",
 	"item.apotheosis.sigil_of_socketing": "Sigil of Socketing",
 	"item.apotheosis.superior_sigil_of_socketing": "Superior Sigil of Socketing",
 	"item.apotheosis.sigil_of_enhancement": "[NYI] Sigil of Enhancement",
@@ -912,6 +916,8 @@
     "enchantment.apotheosis.endless_quiver": "Endless Quiver",
     "enchantment.apotheosis.endless_quiver.desc": "Makes all arrows infinite.",
 
+
+
     "comment_id": "/Vanilla",
     "generic.reachDistance": "Reach Distance",
     "forge.swimSpeed": "Swim Speed",
@@ -1121,6 +1127,11 @@
     "item.minecraft.lingering_potion.effect.grievous": "Lingering Potion of Healing Reduction",
     "item.minecraft.tipped_arrow.effect.grievous": "Arrow of Healing Reduction",
 
+	"item.minecraft.potion.effect.flying": "Potion of Flying",
+	"item.minecraft.splash_potion.effect.flying": "Splash Potion of Flying",
+	"item.minecraft.lingering_potion.effect.flying": "Lingering Potion of Flying",
+	"item.minecraft.tipped_arrow.effect.flying": "Arrow of Flying",
+
     "item.apotheosis.lucky_foot": "Lucky Rabbit's Foot",
 
     "item.apotheosis.potion_charm_broke": "Invalid Potion Charm",
@@ -1130,10 +1141,11 @@
     "item.apotheosis.potion_charm.desc3": "Source: %s",
     "item.apotheosis.potion_charm.enabled": "Enabled",
     "item.apotheosis.potion_charm.disabled": "Disabled",
-	"item.apotheosis.potion_charm.curios_only": "Only works in a Curios slot",
+	"item.apotheosis.potion_charm.trinkets_only": "Only works in a Trinkets slot",
     
     "comment_id": "/Anvil Module",
     "info.apotheosis.anvil": "Can be enchanted.",
+	"apotheosis.easy_anvils": "Easy Anvils is not compatible with Zenith's anvil additions. Enchantments will not work!",
 
     "comment_id": "/Garden Module",
     "item.apotheosis.ender_lead": "Ender Lead",

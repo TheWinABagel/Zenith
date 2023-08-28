@@ -1,0 +1,42 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "fabric:load_conditions": [{
+    "condition": "apotheosis:module",
+    "module": "potion"
+  }],
+  "group": "lemons",
+  "pattern": [
+    "FHF",
+    "AGA",
+    "RAR"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:golden_apple"
+    },
+    "F": {
+      "type": "forge:nbt",
+      "item": "minecraft:potion",
+      "nbt": "{\"Potion\": \"minecraft:fire_resistance\"}"
+    },
+    "H": {
+      "type": "forge:nbt",
+      "item": "minecraft:potion",
+      "nbt": "{\"Potion\": \"minecraft:strong_regeneration\"}"
+    },
+    "A": {
+      "type": "forge:nbt",
+      "item": "minecraft:potion",
+      "nbt": "{\"Potion\": \"apotheosis:strong_absorption\"}"
+    },
+    "R": {
+      "type": "forge:nbt",
+      "item": "minecraft:potion",
+      "nbt": "{\"Potion\": \"apotheosis:resistance\"}"
+    }
+  },
+  "result": {
+    "item": "minecraft:enchanted_golden_apple",
+    "count": 1
+  }
+}

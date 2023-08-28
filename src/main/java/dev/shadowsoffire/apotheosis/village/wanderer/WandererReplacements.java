@@ -35,7 +35,7 @@ public class WandererReplacements {
         .registerTypeAdapter(CompoundTag.class, NBTAdapter.INSTANCE).create();
 
     public static void setup() {
-        WandererTradesRegistry.INSTANCE.registerToBus();
+        WandererTradesRegistry.INSTANCE.register();
     }
 
     public static void replaceWandererArrays(List<VillagerTrades.ItemListing> generic,List<VillagerTrades.ItemListing> rare) {

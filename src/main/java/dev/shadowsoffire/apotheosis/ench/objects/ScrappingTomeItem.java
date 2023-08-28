@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.ench.objects;
 
 import com.google.common.collect.Lists;
+import dev.shadowsoffire.apotheosis.util.Events;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
@@ -43,7 +44,9 @@ public class ScrappingTomeItem extends BookItem {
         return Rarity.UNCOMMON;
     }
 
-    public static boolean updateAnvil(ItemStack weapon, ItemStack book, String name, int baseCost, Player player) {
+    public static boolean updateAnvil(Events.AnvilUpdate.UpdateAnvilEvent ev) {
+        ItemStack weapon = ev.left;
+        ItemStack book = ev.right;
         if (!(book.getItem() instanceof ScrappingTomeItem) || book.isEnchanted() || !weapon.isEnchanted()) return false;
 
         Map<Enchantment, Integer> wepEnch = EnchantmentHelper.getEnchantments(weapon);
@@ -53,7 +56,7 @@ public class ScrappingTomeItem extends BookItem {
         for (Enchantment e : keys) {
             seed ^= BuiltInRegistries.ENCHANTMENT.getKey(e).hashCode();
         }
-        seed ^= player.getEnchantmentSeed();
+        seed ^= ev.player.getEnchantmentSeed();
         rand.setSeed(seed);
         while (wepEnch.size() > size) {
             Enchantment lost = keys.get(rand.nextInt(keys.size()));
@@ -62,9 +65,9 @@ public class ScrappingTomeItem extends BookItem {
         }
         ItemStack out = new ItemStack(Items.ENCHANTED_BOOK);
         EnchantmentHelper.setEnchantments(wepEnch, out);
-        //ev.setMaterialCost(1);
-        //ev.setCost(wepEnch.size() * 6);
-        //ev.setOutput(out);
+        ev.setMaterialCost(1);
+        ev.setCost(wepEnch.size() * 6);
+        ev.setOutput(out);
         return true;
     }
 }

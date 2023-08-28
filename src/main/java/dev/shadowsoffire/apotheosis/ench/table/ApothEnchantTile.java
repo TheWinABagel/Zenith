@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class ApothEnchantTile extends EnchantmentTableBlockEntity {
 
-    protected ItemStackHandler inv = new ItemStackHandler(1){
+    public ItemStackHandler inv = new ItemStackHandler(1){
         @Override
         public boolean isItemValid(int slot, ItemVariant resource) {
             return resource.toStack().is(Tags.Items.ENCHANTING_FUELS);
