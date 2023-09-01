@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.EnchantmentInfo;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu.Arcana;
+import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingBehaviorItem;
+import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingTableBehaviorEnchantment;
 import net.minecraft.Util;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.Mth;
@@ -127,7 +129,10 @@ public class RealEnchantmentHelper {
         for (Enchantment enchantment : BuiltInRegistries.ENCHANTMENT) {
             EnchantmentInfo info = EnchModule.getEnchInfo(enchantment);
             if (info.isTreasure() && !allowTreasure || !info.isDiscoverable()) continue;
-            if (enchantment.category.canEnchant(stack.getItem()) || enchi.forciblyAllowsTableEnchantment(stack, enchantment)) {
+            boolean special = false;
+            if (enchantment instanceof CustomEnchantingTableBehaviorEnchantment customEnch) special = customEnch.canApplyAtEnchantingTable(stack);
+            if (stack.getItem() instanceof CustomEnchantingBehaviorItem customItem) special = customItem.canApplyAtEnchantingTable(stack, enchantment);
+            if (special || enchantment.category.canEnchant(stack.getItem()) || enchi.forciblyAllowsTableEnchantment(stack, enchantment) ) {
                 for (int level = info.getMaxLevel(); level > enchantment.getMinLevel() - 1; --level) {
                     if (power >= info.getMinPower(level) && power <= info.getMaxPower(level)) {
                         list.add(new EnchantmentInstance(enchantment, level));

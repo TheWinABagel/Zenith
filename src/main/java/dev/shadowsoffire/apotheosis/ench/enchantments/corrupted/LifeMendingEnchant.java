@@ -1,6 +1,8 @@
 package dev.shadowsoffire.apotheosis.ench.enchantments.corrupted;
 
 import dev.shadowsoffire.apotheosis.util.Events;
+import dev.shadowsoffire.attributeslib.api.HealEvent;
+import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingTableBehaviorEnchantment;
 import io.github.fabricators_of_create.porting_lib.tool.ToolActions;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
@@ -18,7 +20,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 import java.util.List;
 
-public class LifeMendingEnchant extends Enchantment {
+public class LifeMendingEnchant extends Enchantment implements CustomEnchantingTableBehaviorEnchantment {
 
     public LifeMendingEnchant() {
         super(Rarity.VERY_RARE, EnchantmentCategory.BREAKABLE, EquipmentSlot.values());
@@ -43,11 +45,11 @@ public class LifeMendingEnchant extends Enchantment {
     public boolean isCurse() {
         return true;
     }
-/*
+
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack) {
-        return super.canApplyAtEnchantingTable(stack) || stack.canPerformAction(ToolActions.SHIELD_BLOCK);
-    }*/
+        return CustomEnchantingTableBehaviorEnchantment.super.canApplyAtEnchantingTable(stack) || stack.canPerformAction(ToolActions.SHIELD_BLOCK);
+    }
 
     @Override
     public Component getFullname(int level) {
@@ -69,7 +71,7 @@ public class LifeMendingEnchant extends Enchantment {
     }
 
     public void lifeMend() {
-        Events.LivingHealEvent.EVENT.register((entity, amount) -> {
+         HealEvent.EVENT.register((entity, amount) -> {
             if (entity.getType() == EntityType.ARMOR_STAND) return amount;
             if (entity.level().isClientSide) return amount;
             if (amount <= 0F) return 0f;
@@ -79,12 +81,12 @@ public class LifeMendingEnchant extends Enchantment {
                 if (this.lifeMend(entity, amount, stack) == amount) return amount;
 
             }
-          /*  if (FabricLoader.getInstance().isModLoaded("trinkets")) { TODO reenable with adventure
-                List<ItemStack> stacks = AdventureCuriosCompat.getLifeMendingCurios(e.getEntity());
+            if (FabricLoader.getInstance().isModLoaded("trinkets")) { //TODO reenable after trinkets compat
+            /*    List<ItemStack> stacks = AdventureCuriosCompat.getLifeMendingCurios(entity);
                 for (ItemStack stack : stacks) {
-                    if (this.lifeMend(e, stack)) return;
-                }
-            }*/
+                    if (this.lifeMend(entity, stack)) return;
+                }*/
+            }
             return amount;
         });
 

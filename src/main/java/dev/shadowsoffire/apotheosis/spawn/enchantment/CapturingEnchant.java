@@ -2,7 +2,9 @@ package dev.shadowsoffire.apotheosis.spawn.enchantment;
 
 import dev.shadowsoffire.apotheosis.Apoth.Enchantments;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.spawn.SpawnerModule;
+import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingTableBehaviorEnchantment;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -19,7 +21,7 @@ import java.util.Collection;
 
 import static dev.shadowsoffire.apotheosis.Apotheosis.enableDebug;
 
-public class CapturingEnchant extends Enchantment {
+public class CapturingEnchant extends Enchantment implements CustomEnchantingTableBehaviorEnchantment {
 
     public CapturingEnchant() {
         super(Rarity.VERY_RARE, EnchantmentCategory.WEAPON, new EquipmentSlot[] { EquipmentSlot.MAINHAND });
@@ -39,11 +41,11 @@ public class CapturingEnchant extends Enchantment {
     public int getMaxCost(int level) {
         return this.getMinCost(level) + 15;
     }
-/*
+
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack) {
-        return super.canApplyAtEnchantingTable(stack) || EnchModule.AXE.canEnchant(stack.getItem());
-    }*///TODO Redo this properly
+        return CustomEnchantingTableBehaviorEnchantment.super.canApplyAtEnchantingTable(stack) || EnchModule.AXE.canEnchant(stack.getItem());
+    }
 
     public static void handleCapturing(LivingEntity target, DamageSource source, Collection<ItemEntity> drops) {
         Entity killer = source.getEntity();

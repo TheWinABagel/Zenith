@@ -4,12 +4,15 @@ import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryScreen;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchScreen;
+import dev.shadowsoffire.apotheosis.ench.table.ClueMessage;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.particle.EnchantmentTableParticle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -115,15 +118,16 @@ public class EnchModuleClient {
 
     public static void init() {
         tooltips();
-        //BlockEntityRenderers.register(BlockEntityType.ENCHANTING_TABLE, EnchantTableRenderer::new);
+        ClueMessage.init();
         MenuScreens.register(Apoth.Menus.ENCHANTING_TABLE, ApothEnchScreen::new);
         MenuScreens.register(Apoth.Menus.LIBRARY, EnchLibraryScreen::new);
+        particles();
     }
-/* //TODO particles
-    public static void particleFactories(RegisterParticleProvidersEvent e) {
-        e.registerSpriteSet(Particles.ENCHANT_FIRE.get(), EnchantmentTableParticle.Provider::new);
-        e.registerSpriteSet(Particles.ENCHANT_WATER.get(), EnchantmentTableParticle.Provider::new);
-        e.registerSpriteSet(Particles.ENCHANT_SCULK.get(), EnchantmentTableParticle.Provider::new);
-        e.registerSpriteSet(Particles.ENCHANT_END.get(), EnchantmentTableParticle.Provider::new);
-    }*/
+
+    public static void particles() {
+        ParticleFactoryRegistry.getInstance().register(Ench.Particles.ENCHANT_FIRE, EnchantmentTableParticle.Provider::new);
+        ParticleFactoryRegistry.getInstance().register(Ench.Particles.ENCHANT_WATER, EnchantmentTableParticle.Provider::new);
+        ParticleFactoryRegistry.getInstance().register(Ench.Particles.ENCHANT_SCULK, EnchantmentTableParticle.Provider::new);
+        ParticleFactoryRegistry.getInstance().register(Ench.Particles.ENCHANT_END, EnchantmentTableParticle.Provider::new);
+    }
 }

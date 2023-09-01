@@ -32,7 +32,7 @@ public class BlockUtil {
      *
      * @param world    The world the block is in.
      * @param pos      The position of the block.
-     * @param mainhand The main hand item that the player is supposibly holding.
+     * @param mainhand The main hand item that the player is supposedly holding.
      * @param source   The UUID of the breaking player.
      * @return If the block was successfully broken.
      */
@@ -49,8 +49,8 @@ public class BlockUtil {
         else player = FakePlayer.get(world);
         player.getInventory().items.set(player.getInventory().selected, mainhand);
 
-        if (blockstate.getDestroySpeed(world, pos) < 0 || !mainhand.isCorrectToolForDrops(blockstate)){
-            if (Apotheosis.enableDebug) VillageModule.LOGGER.info("Cant harvest block {}", blockstate);
+        if (blockstate.getDestroySpeed(world, pos) < 0) {
+            if (Apotheosis.enableDebug) VillageModule.LOGGER.info("Destroy speed too low {}", blockstate);
             return false;
         }
         GameType type = player.getAbilities().instabuild ? GameType.CREATIVE : GameType.SURVIVAL;
@@ -79,7 +79,7 @@ public class BlockUtil {
                 else {
                     ItemStack itemstack = player.getMainHandItem();
                     ItemStack itemstack1 = itemstack.copy();
-                    boolean canHarvest = mainhand.isCorrectToolForDrops(blockstate);
+                    boolean canHarvest = mainhand.isCorrectToolForDrops(blockstate) || canHarvest(blockstate);
                     itemstack.mineBlock(world, blockstate, pos, player);
                     //if (itemstack.isEmpty() && !itemstack1.isEmpty()) net.minecraftforge.event.ForgeEventFactory.onPlayerDestroyItem(player, itemstack1, InteractionHand.MAIN_HAND);
                     boolean removed = removeBlock(world, player, pos, canHarvest);
@@ -127,5 +127,12 @@ public class BlockUtil {
     private static boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
         state.getBlock().playerWillDestroy(level, pos, state, player);
         return level.setBlock(pos, fluid.createLegacyBlock(), level.isClientSide ? 11 : 3);
+    }
+
+    private static boolean canHarvest(BlockState state) {
+        if (!state.requiresCorrectToolForDrops()) {
+            return true;
+        }
+        return !state.requiresCorrectToolForDrops();
     }
 }

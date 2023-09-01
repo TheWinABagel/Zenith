@@ -21,24 +21,6 @@ import java.util.function.Supplier;
 
 public class ClueMessage {
     public static ResourceLocation ID = Apotheosis.loc("enchant_clue");
-    protected final int slot;
-    protected final List<EnchantmentInstance> clues;
-    protected final boolean all;
-
-    /**
-     * Sends a clue message to the client.
-     *
-     * @param slot
-     * @param clues The clues.
-     * @param all   If this is all of the enchantments being received.
-     */
-    public ClueMessage(int slot, List<EnchantmentInstance> clues, boolean all) {
-        this.slot = slot;
-        this.clues = clues;
-        this.all = all;
-    }
-
-
 
     public static void init() {
         ClientPlayNetworking.registerGlobalReceiver(ID, ((client, handler, buf, responseSender) -> {
@@ -69,11 +51,7 @@ public class ClueMessage {
         ServerPlayNetworking.send((ServerPlayer) p, ID, buf);
     }
 
-
-
-
-
-/* //TODO reimplement with fabric packets
+/*
     public static class Provider implements MessageProvider<ClueMessage> {
 
         @Override

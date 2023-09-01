@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.village.wanderer;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.adventure.affix.trades.AffixTrade;
 import dev.shadowsoffire.apotheosis.village.VillageModule;
 import dev.shadowsoffire.apotheosis.village.util.BasicItemListing;
 import dev.shadowsoffire.placebo.reload.DynamicRegistry;
@@ -27,7 +28,7 @@ public class WandererTradesRegistry extends DynamicRegistry<JsonTrade> {
     @Override
     protected void registerBuiltinSerializers() {
         this.registerSerializer(Apotheosis.loc("basic_trade"), WandererTrade.SERIALIZER);
-    //    this.registerSerializer(Apotheosis.loc("affix"), AffixTrade.SERIALIZER); TODO enable with adventure
+        this.registerSerializer(Apotheosis.loc("affix"), AffixTrade.SERIALIZER);
     }
 
     @Override

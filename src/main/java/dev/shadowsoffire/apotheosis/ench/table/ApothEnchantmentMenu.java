@@ -8,9 +8,11 @@ import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.util.FloatReferenceHolder;
 import dev.shadowsoffire.placebo.network.PacketDistro;
 import io.github.fabricators_of_create.porting_lib.tags.Tags;
+import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandler;
 import io.github.fabricators_of_create.porting_lib.transfer.item.SlotItemHandler;
 import it.unimi.dsi.fastutil.floats.Float2FloatMap;
 import it.unimi.dsi.fastutil.floats.Float2FloatOpenHashMap;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -24,11 +26,13 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EnchantmentTableBlock;
+import net.minecraft.world.level.block.entity.EnchantmentTableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.*;
@@ -122,6 +126,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
         int cost = id + 1;
         if ((lapis.isEmpty() || lapis.getCount() < cost) && !player.getAbilities().instabuild) return false;
 
+
         if (this.costs[id] <= 0 || toEnchant.isEmpty() || (player.experienceLevel < cost || player.experienceLevel < this.costs[id]) && !player.getAbilities().instabuild) return false;
 
         this.access.execute((world, pos) -> {
@@ -185,7 +190,6 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
                         if (this.costs[slot] < slot + 1) {
                             this.costs[slot]++;
                         }
-                        //this.costs[slot] = ForgeEventFactory.onEnchantmentLevelSet(world, pos, slot, Math.round(eterna), toEnchant, this.costs[slot]);
                     }
 
                     for (int slot = 0; slot < 3; ++slot) {
@@ -297,6 +301,8 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
         BlockState state = world.getBlockState(pos);
         if (state.isAir()) return;
         float max = EnchantingStatRegistry.getMaxEterna(state, world, pos);
+        float eterna = EnchantingStatRegistry.getEterna(state, world, pos);
+        eternaMap.put(max, eternaMap.getOrDefault(max, 0) + eterna);
         stats[1] += EnchantingStatRegistry.getQuanta(state, world, pos);
         stats[2] += EnchantingStatRegistry.getArcana(state, world, pos);
         stats[3] += EnchantingStatRegistry.getQuantaRectification(state, world, pos);

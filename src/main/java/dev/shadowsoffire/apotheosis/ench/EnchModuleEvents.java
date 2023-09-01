@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.ench;
 
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.anvil.AnvilTile;
 import dev.shadowsoffire.apotheosis.ench.objects.ExtractionTomeItem;
 import dev.shadowsoffire.apotheosis.ench.objects.ImprovedScrappingTomeItem;
@@ -7,6 +8,9 @@ import dev.shadowsoffire.apotheosis.ench.objects.ScrappingTomeItem;
 import dev.shadowsoffire.apotheosis.util.Events;
 import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityLootEvents;
 import io.github.fabricators_of_create.porting_lib.tags.Tags;
+import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.inventory.AnvilMenu;
@@ -25,7 +29,7 @@ public class EnchModuleEvents {
         anvilEvent();
         repairEvent();
         drops();
-        dropsLowest();
+        dropsWarden();
         healing();
         block();
         livingHurt();
@@ -81,12 +85,23 @@ public class EnchModuleEvents {
      * Event handler for the Scavenger and Spearfishing enchantments.
      */
     public static void drops()  {
-            Ench.Enchantments.SCAVENGER.drops();
-            Ench.Enchantments.SPEARFISHING.addFishes();
+        Ench.Enchantments.SCAVENGER.drops();
+        Ench.Enchantments.SPEARFISHING.addFishes();
+        Ench.Enchantments.KNOWLEDGE.drops();
     }
 
-    public static void dropsLowest() {
-            Ench.Enchantments.KNOWLEDGE.drops();
+    public static void dropsWarden() {
+        LivingEntityLootEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
+            if (Apotheosis.enableEnch && target instanceof Warden warden) {
+                int amount = 1;
+                if (warden.random.nextFloat() <= 0.10F + lootingLevel * 0.10F) {
+                    amount++;
+                }
+                drops.add(new ItemEntity(warden.level(), warden.getX(), warden.getY(), warden.getZ(),
+                        new ItemStack(dev.shadowsoffire.apotheosis.ench.Ench.Items.WARDEN_TENDRIL, amount)));
+            }
+            return false;
+        });
     }
 
     public static void healing() {

@@ -8,7 +8,7 @@ public class AdvancementTriggers {
     public static final SplittingTrigger SPLIT_BOOK = new SplittingTrigger();
     public static final ModifierTrigger SPAWNER_MODIFIER = new ModifierTrigger();
     public static final EnchantedTrigger ENCHANTED = new EnchantedTrigger();
-//    public static final GemCutTrigger GEM_CUT = new GemCutTrigger();
+    public static final GemCutTrigger GEM_CUT = new GemCutTrigger();
 
     public static void init() {
         CriteriaTriggers.CRITERIA.remove(new ResourceLocation("inventory_changed"));
@@ -16,7 +16,7 @@ public class AdvancementTriggers {
         CriteriaTriggers.CRITERIA.replace(CriteriaTriggers.ENCHANTED_ITEM.getId(), ENCHANTED);
         CriteriaTriggers.register(AdvancementTriggers.SPAWNER_MODIFIER);
         CriteriaTriggers.register(AdvancementTriggers.SPLIT_BOOK);
-//        CriteriaTriggers.register(AdvancementTriggers.GEM_CUT);
+        CriteriaTriggers.register(AdvancementTriggers.GEM_CUT);
     }
 
 }

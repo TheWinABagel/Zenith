@@ -41,7 +41,7 @@ public class KnowledgeEnchant extends Enchantment {
 
     public void drops() {
         LivingEntityLootEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
-            if (!(source.getEntity() instanceof Player p)) return recentlyHit;
+            if (!(source.getEntity() instanceof Player p)) return false;
             int knowledge = EnchantmentHelper.getItemEnchantmentLevel(this, p.getMainHandItem());
             if (knowledge > 0 && !(target instanceof Player)) {
                 int items = 0;
@@ -55,7 +55,7 @@ public class KnowledgeEnchant extends Enchantment {
                     p.level().addFreshEntity(new ExperienceOrb(p.level(), target.getX(), target.getY(), target.getZ(), i));
                 }
             }
-            return recentlyHit;
+            return false;
         });
 
 

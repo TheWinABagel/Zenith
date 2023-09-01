@@ -7,9 +7,12 @@ import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.EnchantmentTableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 
 public class ApothEnchantTile extends EnchantmentTableBlockEntity {
@@ -17,7 +20,13 @@ public class ApothEnchantTile extends EnchantmentTableBlockEntity {
     public ItemStackHandler inv = new ItemStackHandler(1){
         @Override
         public boolean isItemValid(int slot, ItemVariant resource) {
+
             return resource.toStack().is(Tags.Items.ENCHANTING_FUELS);
+        }
+
+        @Override
+        protected void onContentsChanged(int slot) {
+            ApothEnchantTile.this.setChanged();
         }
     };
 
@@ -25,36 +34,20 @@ public class ApothEnchantTile extends EnchantmentTableBlockEntity {
         super(pos, state);
     }
 
+
+
     @Override
     public void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
         tag.put("inventory", this.inv.serializeNBT());
     }
 
+
     @Override
     public void load(CompoundTag tag) {
-        super.load(tag);
         this.inv.deserializeNBT(tag.getCompound("inventory"));
-    }
-/*
-    LazyOptional<IItemHandler> invCap = LazyOptional.of(() -> this.inv);
-
-    @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) return this.invCap.cast();
-        return super.getCapability(cap, side);
+        super.load(tag);
     }
 
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        this.invCap.invalidate();
-    }
-
-    @Override
-    public void reviveCaps() {
-        super.reviveCaps();
-        this.invCap = LazyOptional.of(() -> this.inv);
-    }*/
 
 }

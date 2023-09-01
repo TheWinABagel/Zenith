@@ -2,14 +2,16 @@
 	"type": "minecraft:crafting_shapeless",
 	"fabric:load_conditions": [{
 		"condition": "fabric:any_mod_loaded",
-		"module": "patchouli"
+		"values": [
+			"patchouli"
+		]
 	}],
 	"group": "something",
 	"ingredients": [{
 			"item": "minecraft:book"
 		},
 		{
-			"tag": "c:ingots/gold"
+			"item": "minecraft:gold_ingot"
 		}
 	],
 	"result": {

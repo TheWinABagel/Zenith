@@ -48,7 +48,7 @@ public class SpearfishingEnchant extends Enchantment {
         LivingEntityLootEvents.DROPS.register((target, src, drops, lootingLevel, recentlyHit) -> {
             if (!(src.getEntity() instanceof Player)){
             if (src.getDirectEntity() instanceof ThrownTrident trident) {
-                if (trident.level().isClientSide) return recentlyHit;
+                if (trident.level().isClientSide) return false;
                 ItemStack triStack = ((TridentGetter) trident).getTridentItem();
                 int level = EnchantmentHelper.getItemEnchantmentLevel(this, triStack);
                 if (trident.random.nextFloat() < 3.5F * level) {
@@ -57,7 +57,7 @@ public class SpearfishingEnchant extends Enchantment {
                 }
             }
             }
-            return recentlyHit;
+            return false;
         });
 
     }

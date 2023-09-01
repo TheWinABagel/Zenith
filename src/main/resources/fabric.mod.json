@@ -47,5 +47,8 @@
   "suggests": {
     "roughlyenoughitems": "*"
   },
+  "breaks": {
+    "easymagic": "*"
+  },
   "accessWidener": "zenith.aw"
 }

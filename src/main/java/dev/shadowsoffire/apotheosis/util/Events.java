@@ -6,9 +6,11 @@ import io.github.fabricators_of_create.porting_lib.core.event.object.Cancellable
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 public class Events {
@@ -98,16 +100,34 @@ public class Events {
             }
         }
     }
-    public interface LivingHealEvent {
-        Event<LivingHealEvent> EVENT = EventFactory.createArrayBacked(LivingHealEvent.class, //TODO logic+math, my worst enemy
-                (listeners) -> (entity, amount) -> {
-                    for (LivingHealEvent listener : listeners) {
-                        float result = listener.onLivingHeal(entity, amount);
-                        return result;
-                    }
-                    return amount;
-                });
 
-        float onLivingHeal(Entity entity, float amount);
+    public class onEntityDeath{
+
+        public static final Event<onLivingDeath> LIVING_DEATH = EventFactory.createArrayBacked(onLivingDeath.class, callbacks -> (entity, source) -> {
+            for (onLivingDeath callback : callbacks) {
+                return !callback.onDeath(entity, source);
+            }
+            return false;
+        });
+
+        @FunctionalInterface
+        public interface onLivingDeath {
+            boolean onDeath(LivingEntity entity, DamageSource source);
+        }
+    }
+
+    public class HarvestCheck {
+
+        public static final Event<onHarvestAttempt> ATTEMPT_HARVEST = EventFactory.createArrayBacked(onHarvestAttempt.class, callbacks -> (player, state) -> {
+            for (onHarvestAttempt callback : callbacks) {
+                return !callback.harvestAttempt(player, state);
+            }
+            return false;
+        });
+
+        @FunctionalInterface
+        public interface onHarvestAttempt {
+            boolean harvestAttempt(Player player, BlockState state);
+        }
     }
 }

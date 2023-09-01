@@ -1,16 +1,19 @@
-Advenutre module:
-all
+Adventure module:
+rendering
+some affixes(on hit, loot, etc)
+advancements
+shield has no loot category, tools gets weapon affixes
+all blocks are very very broken
 
 Enchanting module:
-Figure out events (heal event, etc)
-enchanting table doesnt get stats properly from nearby blocks
-ench table doesnt save inventory
-anvil
-warden drops
+REI support for ench recipes
+tags require restart to load properly, might be a fabric limitation?
+add prot enchantment changes
+sheep mixin
 
 Potion module:
-potion charms arent all showing up in rei or creative
-flight + elytra work with lib
+potion charms arent all showing up in rei or creative (fix with placebo)
+potion charm
 
 Spawner module:
 Reimplement spawner with mixins
@@ -18,13 +21,15 @@ REI support for Spawner Recipes
 
 Village module:
 REI support for Fletching table
-fix mining arrows not breaking blocks that can be broken with hand
+Fix wandering trader trades
 
 Garden module:
 Add info to REI
 
 General stuff
-figure out what breaks if modules are disabled
+figure out patchouli book
+figure out what breaks if modules are disabled, as some mixins dont check if modules are loaded
+crafting recipes
 Change modid+class names (last step)
 
 Mod support

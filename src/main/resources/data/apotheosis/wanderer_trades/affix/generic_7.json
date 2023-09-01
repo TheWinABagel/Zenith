@@ -1,9 +1,0 @@
-{
-  "fabric:load_conditions": [{
-    "condition": "apotheosis:module",
-    "module": "adventure"
-  }],
-  "type": "apotheosis:affix",
-  "rarity_offset": 0,
-  "rare": false
-}

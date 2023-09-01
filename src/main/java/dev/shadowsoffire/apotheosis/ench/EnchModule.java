@@ -21,6 +21,7 @@ import dev.shadowsoffire.placebo.tabs.ITabFiller;
 import dev.shadowsoffire.placebo.tabs.TabFillingRegistry;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.MappingResolver;
 import net.minecraft.core.Registry;
@@ -28,6 +29,8 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobType;
@@ -76,44 +79,20 @@ public class EnchModule {
 
         Ench.bootstrap();
         particles();
+        recipeSerializers();
 
 
 
-        //containers();
+        registerTab();
         EnchModuleEvents.registerEvents();
+        enchants();
 
-    /*
-
-
-            TabFillingRegistry.register(Ench.Tabs.ENCH, Ench.Items.HELLSHELF, Ench.Items.INFUSED_HELLSHELF, Ench.Items.BLAZING_HELLSHELF, Ench.Items.GLOWING_HELLSHELF, Ench.Items.SEASHELF, Ench.Items.INFUSED_SEASHELF,
-                    Ench.Items.CRYSTAL_SEASHELF, Ench.Items.HEART_SEASHELF, Ench.Items.DORMANT_DEEPSHELF, Ench.Items.DEEPSHELF, Ench.Items.ECHOING_DEEPSHELF, Ench.Items.SOUL_TOUCHED_DEEPSHELF, Ench.Items.ECHOING_SCULKSHELF,
-                    Ench.Items.SOUL_TOUCHED_SCULKSHELF, Ench.Items.ENDSHELF, Ench.Items.PEARL_ENDSHELF, Ench.Items.DRACONIC_ENDSHELF, Ench.Items.BEESHELF, Ench.Items.MELONSHELF, Ench.Items.STONESHELF, Ench.Items.RECTIFIER,
-                    Ench.Items.RECTIFIER_T2, Ench.Items.RECTIFIER_T3, Ench.Items.SIGHTSHELF, Ench.Items.SIGHTSHELF_T2, Ench.Items.LIBRARY, Ench.Items.ENDER_LIBRARY);
-
-            TabFillingRegistry.register(Ench.Tabs.ENCH, Ench.Items.HELMET_TOME, Ench.Items.CHESTPLATE_TOME, Ench.Items.LEGGINGS_TOME, Ench.Items.BOOTS_TOME, Ench.Items.WEAPON_TOME, Ench.Items.BOW_TOME, Ench.Items.PICKAXE_TOME,
-                    Ench.Items.FISHING_TOME, Ench.Items.OTHER_TOME, Ench.Items.SCRAP_TOME, Ench.Items.IMPROVED_SCRAP_TOME, Ench.Items.EXTRACTION_TOME);
-
-            TabFillingRegistry.register(Ench.Tabs.ENCH, Ench.Items.PRISMATIC_WEB, Ench.Items.INERT_TRIDENT, Ench.Items.WARDEN_TENDRIL, Ench.Items.INFUSED_BREATH);
-
-            fill(Ench.Tabs.ENCH, Enchantments.BERSERKERS_FURY, Enchantments.CHAINSAW, Enchantments.CHROMATIC, Enchantments.CRESCENDO, Enchantments.EARTHS_BOON, Enchantments.ENDLESS_QUIVER, Enchantments.EXPLOITATION,
-                    Enchantments.GROWTH_SERUM, Enchantments.ICY_THORNS, Enchantments.KNOWLEDGE, Enchantments.LIFE_MENDING, Enchantments.MINERS_FERVOR, Enchantments.NATURES_BLESSING, Enchantments.OBLITERATION, Enchantments.REBOUNDING,
-                    Enchantments.REFLECTIVE, Enchantments.SCAVENGER, Enchantments.SHIELD_BASH, Enchantments.SPEARFISHING, Enchantments.SPLITTING, Enchantments.STABLE_FOOTING, Enchantments.TEMPTING);
-        });*/
 
         EnchantingStatRegistry.INSTANCE.register();
+        BlockEntityType.ENCHANTING_TABLE.factory = ApothEnchantTile::new;
     }
 
-    public void miscRegistration() {
-        //Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS, (Apotheosis.loc("warden_tendril")), new WardenLootModifier());
-    }
-
-    public void tiles() {
-        //Registry.register(new BlockEntityType<>(AnvilTile::new, ImmutableSet.of(Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL), null), "anvil");
-        //BlockEntityType.ENCHANTING_TABLE.factory = ApothEnchantTile::new;
-        BlockEntityType.ENCHANTING_TABLE.validBlocks = ImmutableSet.of(Blocks.ENCHANTING_TABLE);
-    }
-
-    public void recipeSerializers() {
+    public static void recipeSerializers() {
         Apoth.registerSerializer("enchanting", EnchantingRecipe.SERIALIZER);
         Apoth.registerSerializer("keep_nbt_enchanting", KeepNBTEnchantingRecipe.SERIALIZER);
     }
@@ -139,14 +118,7 @@ public class EnchModule {
         return new SculkShelfBlock(props, particle);
     }
 
-    public void items() {
-                //e.getRegistry().registerAll(
-                //new ApothAnvilItem(Blocks.ANVIL), new ResourceLocation("minecraft", "anvil"),
-                //new ApothAnvilItem(Blocks.CHIPPED_ANVIL), new ResourceLocation("minecraft", "chipped_anvil"),
-                //new ApothAnvilItem(Blocks.DAMAGED_ANVIL), new ResourceLocation("minecraft", "damaged_anvil"));
-    }
-
-    public void enchants() {
+    public static void enchants() {
                 registerEnch("bane_of_illagers", new BaneEnchant(Rarity.UNCOMMON, MobType.ILLAGER, EquipmentSlot.MAINHAND));
                 //new BaneEnchant(Rarity.UNCOMMON, MobType.ARTHROPOD, EquipmentSlot.MAINHAND), new ResourceLocation("minecraft", "bane_of_arthropods"),
                 //new BaneEnchant(Rarity.UNCOMMON, MobType.UNDEAD, EquipmentSlot.MAINHAND), new ResourceLocation("minecraft", "smite"),
@@ -171,11 +143,11 @@ public class EnchModule {
             return new EnchantmentInfo(ench);
         }
 
-        if (info == null) { // Should be impossible now.
+        if (info == null) { // Happens every time the game is loaded... odd
             info = EnchantmentInfo.load(ench, enchInfoConfig);
             ENCHANTMENT_INFO.put(ench, info);
             if (enchInfoConfig.hasChanged()) enchInfoConfig.save();
-            LOGGER.error("Had to late load enchantment info for {}, this is a bug in the mod {} as they are registering late!", BuiltInRegistries.ENCHANTMENT.getKey(ench), BuiltInRegistries.ENCHANTMENT.getKey(ench).getNamespace());
+        //    LOGGER.error("Had to late load enchantment info for {}, this is a bug in the mod {} as they are registering late!", BuiltInRegistries.ENCHANTMENT.getKey(ench), BuiltInRegistries.ENCHANTMENT.getKey(ench).getNamespace());
         }
 
         return info;
@@ -203,21 +175,10 @@ public class EnchModule {
         return level;
     }
 
-    @SafeVarargs
-    public static void fill(ResourceKey<CreativeModeTab> tab, Supplier<? extends Enchantment>... enchants) {
-        Arrays.stream(enchants).map(EnchModule::enchFiller).forEach(filler -> TabFillingRegistry.register(filler, tab));
+    public static void registerTab(){
+        Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, Tabs.ENCH, Tabs.ENCHTAB);
     }
 
-    public static ITabFiller enchFiller(Supplier<? extends Enchantment> e) {
-        return (tab, output) -> {
-            Enchantment ench = e.get();
-            int maxLevel = EnchHooks.getMaxLevel(ench);
-            output.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(ench, maxLevel)), TabVisibility.PARENT_TAB_ONLY);
-            for (int level = 1; level <= maxLevel; level++) {
-                output.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(ench, level)), TabVisibility.SEARCH_TAB_ONLY);
-            }
-        };
-    }
 
 
 

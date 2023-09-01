@@ -43,7 +43,7 @@ public class EndlessQuiverEnchant extends Enchantment {
         return super.checkCompatibility(ench) && ench != Enchantments.INFINITY_ARROWS;
     }
 
-    public boolean isTrulyInfinite(ItemStack stack, ItemStack bow, Player player) {
+    public boolean isTrulyInfinite(ItemStack stack, ItemStack bow, Player player) { //TODO implement
         return EnchantmentHelper.getItemEnchantmentLevel(this, bow) > 0 && stack.getItem() instanceof ArrowItem;
     }
 }

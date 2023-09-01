@@ -60,8 +60,9 @@ dependencies {
 	// Fabric ASM
 	modImplementation(include("com.github.Chocohead:Fabric-ASM:${project.fabric_asm_version}"))
 
-	// CCA
-	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components_version}")
+	// CCA + PAL
+	modImplementation(include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components_version}"))
+	modImplementation("io.github.ladysnake:PlayerAbilityLib:${project.pal_version}")
 
 	// ModMenu
 	modCompileOnly modRuntimeOnly("com.terraformersmc:modmenu:${project.modmenu_version}"), {

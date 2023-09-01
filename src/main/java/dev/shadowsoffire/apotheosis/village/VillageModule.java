@@ -38,7 +38,6 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 
 public class VillageModule {
-//Problems:  wandering trader things arent replaced
     public static final RecipeSerializer<FletchingRecipe> FLETCHING_SERIALIZER = new FletchingRecipe.Serializer();
     public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Village");
 
@@ -55,7 +54,7 @@ public class VillageModule {
         boolean blockDmg = config.getBoolean("Explosive Arrow Block Damage", "arrows", true, "If explosive arrows can break blocks.\nServer-authoritative.");
         expArrowMode = blockDmg ? ExplosionInteraction.BLOCK : ExplosionInteraction.NONE;
         if (config.hasChanged()) config.save();
-
+        Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, FletchingRecipe.Serializer.NAME, FLETCHING_SERIALIZER);
 
         items();
         for (Item i : BuiltInRegistries.ITEM) {

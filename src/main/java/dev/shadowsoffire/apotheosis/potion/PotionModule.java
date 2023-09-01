@@ -39,8 +39,8 @@ public class PotionModule {
     }
 
     public static void items() {
-        Apoth.registerItem("lucky_foot", Apoth.Items.LUCKY_FOOT);
-        Apoth.registerItem("potion_charm", Apoth.Items.POTION_CHARM);
+        Apoth.registerItem(Apoth.Items.LUCKY_FOOT, "lucky_foot");
+        Apoth.registerItem(Apoth.Items.POTION_CHARM, "potion_charm");
     }
 
     public static void serializers() {
@@ -56,7 +56,7 @@ public class PotionModule {
                     drops.add(new ItemEntity(rabbit.level(), rabbit.getX(), rabbit.getY(), rabbit.getZ(), new ItemStack(Apoth.Items.LUCKY_FOOT)));
                 }
             }
-            return true;
+            return false;
         });
     }
 

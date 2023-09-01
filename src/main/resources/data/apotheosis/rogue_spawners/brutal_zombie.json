@@ -1,0 +1,80 @@
+{
+	"stats": {
+		"spawn_delay": 20,
+		"min_delay": 200,
+		"max_delay": 400,
+		"spawn_count": 3,
+		"max_nearby_entities": 6,
+		"spawn_range": 5,
+		"player_activation_range": 12
+	},
+	"spawn_potentials": [{
+		"data": {
+			"entity": {
+				"Health": 30.0,
+				"Attributes": [{
+						"Base": 0.23,
+						"Modifiers": [{
+							"Amount": 0.15,
+							"Operation": 2,
+							"UUID": [
+								-1015019516,
+								-1053671403,
+								-2022218929,
+								-660669376
+							],
+							"Name": "placebo:brutal_max_spd"
+						}],
+						"Name": "minecraft:generic.movement_speed"
+					},
+					{
+						"Base": 3.0,
+						"Modifiers": [{
+							"Amount": 0.5,
+							"Operation": 2,
+							"UUID": [
+								1196188625,
+								-245480066,
+								-1688560149,
+								2127781011
+							],
+							"Name": "placebo:brutal_max_dmg"
+						}],
+						"Name": "minecraft:generic.attack_damage"
+					},
+					{
+						"Base": 20.0,
+						"Modifiers": [{
+							"Amount": 0.5,
+							"Operation": 2,
+							"UUID": [
+								1251298849,
+								971720602,
+								-1424695206,
+								147657752
+							],
+							"Name": "placebo:brutal_max_hp"
+						}],
+						"Name": "minecraft:generic.max_health"
+					}
+				],
+				"id": "zombie",
+				"ActiveEffects": [{
+					"Ambient": 0,
+					"CurativeItems": [{
+						"id": "minecraft:milk_bucket",
+						"Count": 1
+					}],
+					"ShowIcon": 1,
+					"ShowParticles": 1,
+					"Duration": 10000000,
+					"Id": 12,
+					"Amplifier": 0
+				}]
+			}
+		},
+		"weight": 1
+	}],
+	"loot_table": "apotheosis:chests/spawner_brutal",
+	"weight": 3
+}

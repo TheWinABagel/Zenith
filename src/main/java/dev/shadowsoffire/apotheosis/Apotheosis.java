@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis;
 
 import dev.shadowsoffire.apotheosis.advancements.AdvancementTriggers;
+import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.compat.PatchouliCompat;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.garden.GardenModule;
@@ -40,7 +41,7 @@ public class Apotheosis implements ModInitializer {
         if (enableEnch) EnchModule.init();
         if (enableSpawner) SpawnerModule.init();
         if (enableGarden) GardenModule.init();
-    //    if (enableAdventure) AdventureModule.init(); this might be a while :P
+        if (enableAdventure) AdventureModule.init();
         if (enablePotion) PotionModule.init();
         if (enableVillage) VillageModule.init();
 
@@ -58,7 +59,7 @@ public class Apotheosis implements ModInitializer {
         configDir = new File(FabricLoader.getInstance().getConfigDir().toFile(), MODID);
         config = new Configuration(new File(configDir, MODID + ".cfg"));
         enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
-        enableAdventure = config.getBoolean("Enable Adventure Module", "general", true, "If the adventure module is loaded.");
+        enableAdventure = config.getBoolean("Enable Adventure Module", "general", false, "If the adventure module is loaded. WARNING! Work in progress, enable at your own risk! YOU WILL ENCOUNTER BUGS!");
         enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If the spawner module is enabled.");
         enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
         enableVillage = config.getBoolean("Enable Village Module", "general", true, "If the village module is loaded.");

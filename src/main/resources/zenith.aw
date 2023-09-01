@@ -62,3 +62,11 @@ accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScr
 
 accessible method net/minecraft/client/gui/screens/inventory/EnchantmentScreen renderBook (Lnet/minecraft/client/gui/GuiGraphics;IIF)V
 accessible method net/minecraft/world/entity/LivingEntity dropFromLootTable (Lnet/minecraft/world/damagesource/DamageSource;Z)V
+accessible field net/minecraft/world/level/block/entity/BlockEntityType factory Lnet/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier;
+mutable field net/minecraft/world/level/block/entity/BlockEntityType factory Lnet/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier;
+
+accessible field net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal targetType Ljava/lang/Class;
+accessible field net/minecraft/world/entity/Mob goalSelector Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+accessible method net/minecraft/client/renderer/entity/ItemRenderer renderModelLists (Lnet/minecraft/client/resources/model/BakedModel;Lnet/minecraft/world/item/ItemStack;IILcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;)V
+accessible field net/minecraft/world/entity/ai/goal/GoalSelector availableGoals Ljava/util/Set;
+accessible method net/minecraft/world/level/BaseSpawner setNextSpawnData (Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/SpawnData;)V

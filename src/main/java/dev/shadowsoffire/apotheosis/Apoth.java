@@ -2,11 +2,21 @@ package dev.shadowsoffire.apotheosis;
 
 
 import com.google.common.collect.ImmutableSet;
+import dev.shadowsoffire.apotheosis.adventure.Adventure;
+import dev.shadowsoffire.apotheosis.adventure.affix.AffixRegistry;
+import dev.shadowsoffire.apotheosis.adventure.affix.effect.*;
+import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingRecipe;
+import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingTableTile;
+import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
+import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingTableTile;
+import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketAffix;
+import dev.shadowsoffire.apotheosis.adventure.boss.BossSpawnerBlock;
 import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.ench.anvil.AnvilTile;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryContainer;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryTile;
 import dev.shadowsoffire.apotheosis.ench.objects.GlowyBlockItem;
+import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantTile;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingRecipe;
 import dev.shadowsoffire.apotheosis.garden.EnderLeadItem;
@@ -20,7 +30,9 @@ import dev.shadowsoffire.apotheosis.village.fletching.FletchingContainer;
 import dev.shadowsoffire.apotheosis.village.fletching.FletchingRecipe;
 import dev.shadowsoffire.apotheosis.village.fletching.arrows.*;
 import dev.shadowsoffire.attributeslib.api.ALObjects;
+import dev.shadowsoffire.placebo.block_entity.TickingBlockEntityType;
 import dev.shadowsoffire.placebo.registry.RegObjHelper;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -158,12 +170,14 @@ public class Apoth {
         public static final BlockEntityType<EnchLibraryTile.BasicLibraryTile> LIBRARY = Apoth.registerBEType("library", new BlockEntityType<>(EnchLibraryTile.BasicLibraryTile::new, ImmutableSet.of(Ench.Blocks.LIBRARY), null));
         public static final BlockEntityType<EnchLibraryTile.EnderLibraryTile> ENDER_LIBRARY = Apoth.registerBEType("ender_library", new BlockEntityType<>(EnchLibraryTile.EnderLibraryTile::new, ImmutableSet.of(Ench.Blocks.ENDER_LIBRARY), null));
         public static final BlockEntityType<AnvilTile> ANVIL_TILE = Apoth.registerBEType("anvil", new BlockEntityType<>(AnvilTile::new, ImmutableSet.of(Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL), null));
+        //public static final BlockEntityType<ApothEnchantTile> ENCHANT_TILE = Apoth.registerBEType("enchanting_table", new BlockEntityType<>(ApothEnchantTile::new, ImmutableSet.of(Blocks.ENCHANTING_TABLE), null));
 
-    //      public static final RegistryObject<BlockEntityType<BossSpawnerTile>> BOSS_SPAWNER = R.blockEntity("BOSS_SPAWNER");
-    //    public static final RegistryObject<BlockEntityType<ReforgingTableTile>> REFORGING_TABLE = R.blockEntity("REFORGING_TABLE");
-    //    public static final RegistryObject<BlockEntityType<SalvagingTableTile>> SALVAGING_TABLE = R.blockEntity("SALVAGING_TABLE");
+          public static final BlockEntityType<BossSpawnerBlock.BossSpawnerTile> BOSS_SPAWNER = Apoth.registerBEType("boss_spawner", new BlockEntityType<>(BossSpawnerBlock.BossSpawnerTile::new, ImmutableSet.of(Ench.Blocks.ENDER_LIBRARY), null));
+          public static final BlockEntityType<ReforgingTableTile> REFORGING_TABLE = Apoth.registerBEType("reforging_table", new TickingBlockEntityType<>(ReforgingTableTile::new, ImmutableSet.of(Adventure.Blocks.SIMPLE_REFORGING_TABLE, Adventure.Blocks.REFORGING_TABLE), true, false));
+          public static final BlockEntityType<SalvagingTableTile> SALVAGING_TABLE = Apoth.registerBEType("salvaging_table", new BlockEntityType<>(SalvagingTableTile::new, ImmutableSet.of(Adventure.Blocks.SALVAGING_TABLE), null));
     }
-    /*
+
+
         public static final class Affixes {
             // Implicit affixes
             public static final DynamicHolder<SocketAffix> SOCKET = AffixRegistry.INSTANCE.holder(Apotheosis.loc("socket"));
@@ -175,8 +189,9 @@ public class Apoth {
             public static final DynamicHolder<OmneticAffix> OMNETIC = AffixRegistry.INSTANCE.holder(Apotheosis.loc("breaker/special/omnetic"));
             public static final DynamicHolder<RadialAffix> RADIAL = AffixRegistry.INSTANCE.holder(Apotheosis.loc("breaker/special/radial"));
         }
-*/
+
         public static final class Tags {
+        public static final TagKey<Item> CUSTOM_ENCHANTABLES = registerItemTag(new ResourceLocation(Apotheosis.MODID, "custom_enchantables"));
             public static final TagKey<Item> BOON_DROPS = registerItemTag(new ResourceLocation(Apotheosis.MODID, "boon_drops"));
             public static final TagKey<Item> SPEARFISHING_DROPS = registerItemTag(new ResourceLocation(Apotheosis.MODID, "spearfishing_drops"));
         }
@@ -185,8 +200,8 @@ public class Apoth {
         public static final RecipeType<FletchingRecipe> FLETCHING = PlaceboUtil.makeRecipeType("apotheosis:fletching");
         public static final RecipeType<EnchantingRecipe> INFUSION = PlaceboUtil.makeRecipeType("apotheosis:enchanting");
         public static final RecipeType<SpawnerModifier> MODIFIER = PlaceboUtil.makeRecipeType("apotheosis:spawner_modifier");
-    //    public static final RecipeType<SalvagingRecipe> SALVAGING = PlaceboUtil.makeRecipeType("apotheosis:salvaging");
-    //    public static final RecipeType<ReforgingRecipe> REFORGING = PlaceboUtil.makeRecipeType("apotheosis:reforging");
+        public static final RecipeType<SalvagingRecipe> SALVAGING = PlaceboUtil.makeRecipeType("apotheosis:salvaging");
+        public static final RecipeType<ReforgingRecipe> REFORGING = PlaceboUtil.makeRecipeType("apotheosis:reforging");
     }
 
     public static final class LootTables {
@@ -205,12 +220,16 @@ public class Apoth {
         public static final ResourceKey<DamageType> CORRUPTED = ResourceKey.create(Registries.DAMAGE_TYPE, Apotheosis.loc("corrupted"));
     }
 
-    public static Item registerItem(String path, Item item){
-        return Registry.register(BuiltInRegistries.ITEM, Apotheosis.loc( path), item);
+    public static Item registerItem(Item item, String path){
+        return Registry.register(BuiltInRegistries.ITEM, Apotheosis.loc(path), item);
     }
 
     public static Enchantment registerEnchantment(String path, Enchantment enchantment){
         return Registry.register(BuiltInRegistries.ENCHANTMENT, Apotheosis.loc( path), enchantment);
+    }
+
+    public static void registerBlock(Block item, String id){
+        Registry.register(BuiltInRegistries.BLOCK, Apotheosis.loc(id), item);
     }
 
     public static TagKey<Item> registerItemTag(ResourceLocation id) {

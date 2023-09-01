@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
+import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
 import dev.shadowsoffire.apotheosis.util.Events;
 import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityDamageEvents;
 import net.minecraft.world.Container;
@@ -11,16 +12,14 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
@@ -80,6 +79,12 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
         ths().cost.set(e.cost);
         ths().repairItemCountCost = e.materialCost;
         return false;
+    }
+
+    @Redirect(method = "createResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/Enchantment;getMaxLevel()I"))
+    private int zenithModifyMaxLevel(Enchantment enchantment) {
+        if (!Apotheosis.enableEnch) return enchantment.getMaxLevel();
+        return EnchHooks.getMaxLevel(enchantment);
     }
 
     @Unique

@@ -2,37 +2,51 @@ package dev.shadowsoffire.apotheosis.mixin.ench.enchantment;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.Ench;
-import net.minecraft.core.BlockPos;
+import dev.shadowsoffire.apotheosis.ench.enchantments.ChromaticEnchant;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.animal.Sheep;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.ItemLike;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
 
 @Mixin(Sheep.class)
 public class SheepMixin {
-//Inject at mobInteract instead
-    //@Inject(method = "onSheared", at = @At("RETURN"), remap = false, cancellable = true)
-    public void onSheared(@Nullable Player player, @Nonnull ItemStack item, Level world, BlockPos pos, int fortune, CallbackInfoReturnable<List<ItemStack>> ci) {
+
+    @Unique private Player player;
+    @Unique private InteractionHand hand;
+    @Inject(method = "mobInteract", at = @At(value = "INVOKE", target = "net/minecraft/world/entity/animal/Sheep.shear (Lnet/minecraft/sounds/SoundSource;)V", shift = At.Shift.BEFORE), remap = false, cancellable = true)
+    public void onSheared(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         if (Apotheosis.enableEnch) {
-            ci.setReturnValue(Ench.Enchantments.CHROMATIC.molestSheepItems((Sheep) (Object) this, item, ci.getReturnValue()));
-            ci.setReturnValue(Ench.Enchantments.EXPLOITATION.molestSheepItems((Sheep) (Object) this, item, ci.getReturnValue()));
+            this.player = player;
+            this.hand = hand;
+            ItemStack item = player.getItemInHand(hand);
+            //cir.setReturnValue(Ench.Enchantments.CHROMATIC.molestSheepItems((Sheep) (Object) this, item, cir.getReturnValue()));
+            //cir.setReturnValue(Ench.Enchantments.EXPLOITATION.molestSheepItems((Sheep) (Object) this, item, cir.getReturnValue()));
             Ench.Enchantments.GROWTH_SERUM.unshear((Sheep) (Object) this, item);
         }
     }
-    //Inject at mobInteract instead
-    //@ModifyConstant(method = "onSheared", constant = @Constant(intValue = 3), remap = false)
-    public int onSheared(int oldVal, @Nullable Player player, @Nonnull ItemStack item, Level world, BlockPos pos, int fortune) {
-        if (Apotheosis.enableEnch) return oldVal + fortune * 2;
+
+    @Redirect(method = "shear", at = @At(value = "INVOKE", target = "net/minecraft/world/entity/animal/Sheep.spawnAtLocation (Lnet/minecraft/world/level/ItemLike;I)Lnet/minecraft/world/entity/item/ItemEntity;"), remap = false)
+    private ItemEntity test(Sheep instance, ItemLike itemLike, int i){
+        if (Apotheosis.enableEnch && EnchantmentHelper.getItemEnchantmentLevel(Ench.Enchantments.EXPLOITATION, player.getItemInHand(hand)) > 0) {
+            return ((Sheep) (Object) this).spawnAtLocation(ChromaticEnchant.ITEM_BY_DYE.get(((Sheep) (Object) this).random.nextInt(16)));
+        }
+        return (ItemEntity) itemLike;
+    }
+
+    @ModifyConstant(method = "shear", constant = @Constant(intValue = 3), remap = false)
+    public int onSheared(int oldVal) {
+        if (Apotheosis.enableEnch) return oldVal + (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player.getItemInHand(hand))) * 2;
         return oldVal;
     }
 

@@ -1175,9 +1175,8 @@
 	"entity.apotheosis.explosive_arrow": "Explosive Arrow",
     "info.apotheosis.explosive_arrow": "Explosion Radius: 2",
     "item.apotheosis.iron_mining_arrow": "Iron Mining Arrow",
-	"entity.apotheosis.iron_mining_arrow": "Iron Mining Arrow",
     "item.apotheosis.diamond_mining_arrow": "Diamond Mining Arrow",
-	"entity.apotheosis.diamond_mining_arrow": "Diamond Mining Arrow",
+	"entity.apotheosis.mining_arrow": "Mining Arrow",
     "info.apotheosis.mining_arrow.iron": "Breaks blocks like an iron pickaxe",
     "info.apotheosis.mining_arrow.diamond": "Breaks blocks like a diamond pickaxe",
     

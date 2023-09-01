@@ -21,7 +21,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Predicate;
 
-// TODO: Replace with uses of forge's Custom ItemPredicate API. That's all this does anyway.
 public class ExtendedInvTrigger extends InventoryChangeTrigger {
 
     @Override

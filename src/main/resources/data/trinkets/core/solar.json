@@ -1,0 +1,63 @@
+{
+	"variant": "solar",
+	"weight": 10,
+	"quality": 0,
+	"dimensions": [
+	],
+	"bonuses": [{
+			"type": "apotheosis:attribute",
+			"gem_class": {
+				"key": "light_weapon",
+				"types": [
+					"sword",
+					"trident"
+				]
+			},
+			"attribute": "attributeslib:fire_damage",
+			"operation": "ADDITION",
+			"values": {
+				"common": 1,
+				"uncommon": 1.5,
+				"rare": 2.5,
+				"epic": 4,
+				"mythic": 6
+			}
+		},
+		{
+			"type": "apotheosis:attribute",
+			"gem_class": {
+				"key": "core_armor",
+				"types": [
+					"chestplate", "leggings"
+				]
+			},
+			"attribute": "porting_lib_attributes:entity_gravity",
+			"operation": "MULTIPLY_TOTAL",
+			"values": {
+				"common": 0.10,
+				"uncommon": 0.25,
+				"rare": 0.45,
+				"epic": 0.65,
+				"mythic": 0.85
+			}
+		},
+		{
+			"type": "apotheosis:attribute",
+			"gem_class": {
+				"key": "boots",
+				"types": [
+					"boots"
+				]
+			},
+			"attribute": "porting_lib_attributes:step_height_addition",
+			"operation": "ADDITION",
+			"values": {
+				"common": 0.25,
+				"uncommon": 0.5,
+				"rare": 1,
+				"epic": 1.5,
+				"mythic": 2
+			}
+		}
+	]
+}
