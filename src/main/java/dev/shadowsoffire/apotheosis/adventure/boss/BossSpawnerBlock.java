@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.adventure.boss;
 
 import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntity;
@@ -50,7 +51,7 @@ public class BossSpawnerBlock extends Block implements TickingEntityBlock {
         protected int ticks = 0;
 
         public BossSpawnerTile(BlockPos pos, BlockState state) {
-            super(Apoth.Tiles.BOSS_SPAWNER, pos, state);
+            super(Adventure.Tiles.BOSS_SPAWNER, pos, state);
         }
 
         @Override

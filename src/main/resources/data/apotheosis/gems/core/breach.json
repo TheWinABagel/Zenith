@@ -52,7 +52,7 @@
 					"pickaxe"
 				]
 			},
-			"attribute": "forge:block_reach",
+			"attribute": "reach-entity-attributes:reach",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.5,

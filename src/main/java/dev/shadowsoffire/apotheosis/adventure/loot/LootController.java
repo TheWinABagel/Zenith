@@ -1,6 +1,6 @@
 package dev.shadowsoffire.apotheosis.adventure.loot;
 
-import dev.shadowsoffire.apotheosis.Apoth.Affixes;
+import dev.shadowsoffire.apotheosis.adventure.Adventure.Affixes;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;

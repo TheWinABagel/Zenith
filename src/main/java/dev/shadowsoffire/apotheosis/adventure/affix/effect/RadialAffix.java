@@ -3,7 +3,7 @@ package dev.shadowsoffire.apotheosis.adventure.affix.effect;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import dev.shadowsoffire.apotheosis.Apoth.Affixes;
+import dev.shadowsoffire.apotheosis.adventure.Adventure.Affixes;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;

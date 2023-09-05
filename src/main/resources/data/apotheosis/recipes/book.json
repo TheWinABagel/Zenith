@@ -1,22 +1,12 @@
 {
-	"type": "minecraft:crafting_shapeless",
-	"fabric:load_conditions": [{
-		"condition": "fabric:any_mod_loaded",
-		"values": [
-			"patchouli"
-		]
-	}],
-	"group": "something",
-	"ingredients": [{
-			"item": "minecraft:book"
-		},
+	"type": "patchouli:shapeless_book_recipe",
+	"ingredients": [
 		{
 			"item": "minecraft:gold_ingot"
+		},
+		{
+			"item": "minecraft:book"
 		}
 	],
-	"result": {
-		"item": "patchouli:guide_book",
-		"nbt": "{\"patchouli:book\": \"apotheosis:apoth_chronicle\"}",
-		"count": 1
-	}
+	"book": "apotheosis:apoth_chronicle"
 }

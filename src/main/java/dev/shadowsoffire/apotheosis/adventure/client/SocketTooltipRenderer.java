@@ -2,6 +2,7 @@ package dev.shadowsoffire.apotheosis.adventure.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemInstance;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -29,6 +30,7 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
 
     @Override
     public int getHeight() {
+        AdventureModule.LOGGER.info(this.comp.gems.size());
         return this.spacing * this.comp.gems.size();
     }
 
@@ -43,6 +45,8 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
 
     @Override
     public void renderImage(Font font, int x, int y, GuiGraphics gfx) {
+        AdventureModule.LOGGER.info("render image");
+        gfx.blit(SOCKET, x, y + this.spacing, 0, 0, 0, 9, 9, 9, 9);
         for (int i = 0; i < this.comp.gems.size(); i++) {
             gfx.blit(SOCKET, x, y + this.spacing * i, 0, 0, 0, 9, 9, 9, 9);
         }
@@ -60,6 +64,7 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
 
     @Override
     public void renderText(Font pFont, int pX, int pY, Matrix4f pMatrix4f, BufferSource pBufferSource) {
+        AdventureModule.LOGGER.info("render text");
         for (int i = 0; i < this.comp.gems.size(); i++) {
             pFont.drawInBatch(getSocketDesc(this.comp.socketed, this.comp.gems.get(i)), pX + 12, pY + 1 + this.spacing * i, 0xAABBCC, true, pMatrix4f, pBufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
         }

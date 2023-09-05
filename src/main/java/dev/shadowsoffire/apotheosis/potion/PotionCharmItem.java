@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.potion;
 
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.placebo.tabs.ITabFiller;
 import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingBehaviorItem;
 import io.github.fabricators_of_create.porting_lib.item.DamageableItem;
@@ -35,7 +36,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class PotionCharmItem extends Item implements ITabFiller, CustomEnchantingBehaviorItem, DamageableItem {
+public class PotionCharmItem extends Item implements CustomEnchantingBehaviorItem, DamageableItem {
 
     public static final Set<ResourceLocation> EXTENDED_POTIONS = new HashSet<>();
 
@@ -51,7 +52,7 @@ public class PotionCharmItem extends Item implements ITabFiller, CustomEnchantin
     @Override
     public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean isSelected) {
         if (PotionModule.charmsInTrinketsOnly) return;
-        charmLogic(stack, world, entity, slot ,isSelected);
+        charmLogic(stack, world, entity, slot , isSelected);
     }
 
     public void charmLogic(ItemStack stack, Level world, Entity entity, int slot, boolean isSelected){
@@ -149,11 +150,10 @@ public class PotionCharmItem extends Item implements ITabFiller, CustomEnchantin
         return PotionUtils.getPotion(stack) != Potions.EMPTY;
     }
 
-    @Override
-    public void fillItemCategory(CreativeModeTab group, CreativeModeTab.Output out) {
+    public static void fillItemCategory(CreativeModeTab.Output out) {
         for (Potion potion : BuiltInRegistries.POTION) {
             if (potion.getEffects().size() == 1 && !potion.getEffects().get(0).getEffect().isInstantenous()) {
-                out.accept(PotionUtils.setPotion(new ItemStack(this), potion));
+                out.accept(PotionUtils.setPotion(new ItemStack(Apoth.Items.POTION_CHARM), potion));
             }
         }
     }

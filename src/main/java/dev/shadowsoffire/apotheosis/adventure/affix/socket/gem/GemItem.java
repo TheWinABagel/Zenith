@@ -1,12 +1,16 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.socket.gem;
 
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
+import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
+import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketHelper;
+import dev.shadowsoffire.apotheosis.adventure.client.SocketTooltipRenderer;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.tabs.ITabFiller;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
@@ -17,15 +21,13 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.inventory.tooltip.TooltipComponent;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 
 import java.util.*;
 
-public class GemItem extends Item implements ITabFiller {
+public class GemItem extends Item  {
 
     public static final String HAS_REFRESHED = "has_refreshed";
     public static final String UUID_ARRAY = "uuids";
@@ -45,6 +47,12 @@ public class GemItem extends Item implements ITabFiller {
         }
         gem.get().addInformation(pStack, rarity.get(), tooltip::add);
     }
+/*
+    @Override
+    public Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
+        List<ItemStack> gems = SocketHelper.getGems(stack);
+        return Optional.of(new SocketTooltipRenderer.SocketComponent(stack, gems));
+    }*/
 
     @Override
     public Component getName(ItemStack pStack) {
@@ -76,8 +84,8 @@ public class GemItem extends Item implements ITabFiller {
         return super.canBeHurtBy(src) && !src.is(DamageTypes.FALLING_ANVIL);
     }
 
-    @Override
-    public void fillItemCategory(CreativeModeTab group, CreativeModeTab.Output out) {
+
+    public void fillItemCategory(CreativeModeTab.Output out) {
         GemRegistry.INSTANCE.getValues().stream().sorted(Comparator.comparing(Gem::getId)).forEach(gem -> {
             for (LootRarity rarity : RarityRegistry.INSTANCE.getValues()) {
                 if (gem.clamp(rarity) != rarity) continue;

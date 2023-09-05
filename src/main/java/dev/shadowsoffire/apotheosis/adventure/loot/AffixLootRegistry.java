@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.adventure.loot;
 
 import com.google.common.base.Preconditions;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry;
 
@@ -23,6 +24,7 @@ public class AffixLootRegistry extends WeightedDynamicRegistry<AffixLootEntry> {
     @Override
     protected void validateItem(AffixLootEntry item) {
         super.validateItem(item);
+        if (!Apotheosis.enableAdventure) return;
         Preconditions.checkArgument(!item.stack.isEmpty());
         Preconditions.checkArgument(!item.getType().isNone());
     }

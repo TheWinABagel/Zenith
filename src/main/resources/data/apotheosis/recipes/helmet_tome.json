@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "fabric:load_conditions": [{
+        "condition": "apotheosis:module",
+        "module": "enchantment"
+    }],
+    "pattern": ["BBB", "BPB"],
+    "key": {
+        "B": { "item": "minecraft:book" },
+        "P": { "item": "minecraft:blaze_rod" }
+    },
+    "result": {
+        "item": "apotheosis:helmet_tome",
+        "count": 5
+    }
+}

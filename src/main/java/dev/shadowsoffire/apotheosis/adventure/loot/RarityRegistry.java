@@ -61,6 +61,7 @@ public class RarityRegistry extends WeightedDynamicRegistry<LootRarity> {
      * Guaranted to be {@linkplain DynamicHolder#isBound() bound}.
      */
     public static DynamicHolder<LootRarity> getMinRarity() {
+        if (!Apotheosis.enableAdventure) return null;
         return INSTANCE.ordered.get(0);
     }
 
@@ -104,6 +105,7 @@ public class RarityRegistry extends WeightedDynamicRegistry<LootRarity> {
 
     @Override
     protected void beginReload() {
+        if (!Apotheosis.enableAdventure) return;
         super.beginReload();
         this.ordered = new ArrayList<>();
         this.materialMap = HashBiMap.create();
@@ -111,6 +113,7 @@ public class RarityRegistry extends WeightedDynamicRegistry<LootRarity> {
 
     @Override
     protected void onReload() {
+        if (!Apotheosis.enableAdventure) return;
         super.onReload();
         this.ordered = this.registry.values().stream().sorted(Comparator.comparing(LootRarity::ordinal)).map(r -> this.holder(r.getId())).toList();
 

@@ -1,11 +1,18 @@
 package dev.shadowsoffire.apotheosis.adventure;
 
+import com.google.common.collect.ImmutableSet;
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.adventure.affix.AffixRegistry;
+import dev.shadowsoffire.apotheosis.adventure.affix.effect.*;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingMenu;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingTableBlock;
+import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingTableTile;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvageItem;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingMenu;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingTableBlock;
+import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingTableTile;
+import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketAffix;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingBlock;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingMenu;
@@ -16,9 +23,12 @@ import dev.shadowsoffire.apotheosis.adventure.gen.BossDungeonFeature2;
 import dev.shadowsoffire.apotheosis.adventure.gen.ItemFrameGemsProcessor;
 import dev.shadowsoffire.apotheosis.adventure.gen.RogueSpawnerFeature;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
+import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.ench.objects.GlowyBlockItem.GlowyItem;
+import dev.shadowsoffire.placebo.block_entity.TickingBlockEntityType;
 import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.registry.DeferredHelper;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.core.registries.Registries;
@@ -28,6 +38,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 
@@ -136,6 +147,23 @@ public class Adventure {
         private static void bootstrap() {}
     }
 
+    public static final class Affixes {
+        // Implicit affixes
+        public static final DynamicHolder<SocketAffix> SOCKET = AffixRegistry.INSTANCE.holder(Apotheosis.loc("socket"));
+        public static final DynamicHolder<DurableAffix> DURABLE = AffixRegistry.INSTANCE.holder(Apotheosis.loc("durable"));
+        // Real affixes
+        public static final DynamicHolder<MagicalArrowAffix> MAGICAL = AffixRegistry.INSTANCE.holder(Apotheosis.loc("ranged/special/magical"));
+        public static final DynamicHolder<FestiveAffix> FESTIVE = AffixRegistry.INSTANCE.holder(Apotheosis.loc("sword/special/festive"));
+        public static final DynamicHolder<TelepathicAffix> TELEPATHIC = AffixRegistry.INSTANCE.holder(Apotheosis.loc("telepathic"));
+        public static final DynamicHolder<OmneticAffix> OMNETIC = AffixRegistry.INSTANCE.holder(Apotheosis.loc("breaker/special/omnetic"));
+        public static final DynamicHolder<RadialAffix> RADIAL = AffixRegistry.INSTANCE.holder(Apotheosis.loc("breaker/special/radial"));
+    }
+
+    public static class Tiles{
+        public static final BlockEntityType<BossSpawnerBlock.BossSpawnerTile> BOSS_SPAWNER = Apoth.registerBEType("boss_spawner", new BlockEntityType<>(BossSpawnerBlock.BossSpawnerTile::new, ImmutableSet.of(Ench.Blocks.ENDER_LIBRARY), null));
+        public static final BlockEntityType<ReforgingTableTile> REFORGING_TABLE = Apoth.registerBEType("reforging_table", new TickingBlockEntityType<>(ReforgingTableTile::new, ImmutableSet.of(Adventure.Blocks.SIMPLE_REFORGING_TABLE, Adventure.Blocks.REFORGING_TABLE), true, false));
+        public static final BlockEntityType<SalvagingTableTile> SALVAGING_TABLE = Apoth.registerBEType("salvaging_table", new BlockEntityType<>(SalvagingTableTile::new, ImmutableSet.of(Adventure.Blocks.SALVAGING_TABLE), null));
+    }
     public static void bootstrap() {
         Blocks.bootstrap();
         Items.bootstrap();

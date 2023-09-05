@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.adventure;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import dev.architectury.event.events.common.InteractionEvent;
 import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.adventure.Adventure.Affixes;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
@@ -172,7 +173,7 @@ public class AdventureEvents {
 
     public static void onDamage() {
         LivingEntityDamageEvents.HURT.register(e -> {
-            Apoth.Affixes.MAGICAL.getOptional().ifPresent(afx -> afx.onHurt(e));
+            Adventure.Affixes.MAGICAL.getOptional().ifPresent(afx -> afx.onHurt(e));
             DamageSource src = e.damageSource;
             LivingEntity ent = e.damaged;
             float amount = e.damageAmount;
@@ -242,9 +243,10 @@ public class AdventureEvents {
 
     public static void drops() {
         LivingEntityLootEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
-            Apoth.Affixes.FESTIVE.getOptional().ifPresent(afx -> afx.drops(target, source, drops));
+            AdventureModule.LOGGER.info("present: {}", Adventure.Affixes.FESTIVE.getOptional().isPresent());
+            Adventure.Affixes.FESTIVE.getOptional().ifPresent(afx -> afx.drops(target, source, drops));
             TelepathicAffix.drops(source, drops);
-            Apoth.Affixes.FESTIVE.getOptional().ifPresent(afx -> afx.removeMarker(drops));
+            Adventure.Affixes.FESTIVE.getOptional().ifPresent(afx -> afx.removeMarker(drops));
             return false;
         });
 
@@ -252,7 +254,7 @@ public class AdventureEvents {
 
     public static void deathMark() {
         Events.onEntityDeath.LIVING_DEATH.register((entity, source) -> {
-            Apoth.Affixes.FESTIVE.getOptional().ifPresent(afx -> afx.markEquipment(entity, source));
+            Adventure.Affixes.FESTIVE.getOptional().ifPresent(afx -> afx.markEquipment(entity, source));
             return false;
         });
 
@@ -261,7 +263,7 @@ public class AdventureEvents {
     public static void harvest() {
         Events.HarvestCheck.ATTEMPT_HARVEST.register((player, state) -> {
             AtomicBoolean canharvest = new AtomicBoolean(false);
-            Apoth.Affixes.OMNETIC.getOptional().ifPresent(afx -> canharvest.set(afx.harvest(player, state)));
+            Adventure.Affixes.OMNETIC.getOptional().ifPresent(afx -> canharvest.set(afx.harvest(player, state)));
             return canharvest.get();
         });
 
@@ -270,7 +272,7 @@ public class AdventureEvents {
     public static void speed() {
         PlayerEvents.BREAK_SPEED.register((player, state, pos, speed) -> {
             AtomicReference<Float> finalSpeed = new AtomicReference<>(speed);
-            Apoth.Affixes.OMNETIC.getOptional().ifPresent(afx -> finalSpeed.set(afx.speed(player, state, pos, speed)));
+            Adventure.Affixes.OMNETIC.getOptional().ifPresent(afx -> finalSpeed.set(afx.speed(player, state, pos, speed)));
             return finalSpeed.get();
         });
 
@@ -278,7 +280,7 @@ public class AdventureEvents {
 
     public static void onBreak() {
         PlayerBlockBreakEvents.AFTER.register((world, player, pos, state, blockEntity) -> {
-            Apoth.Affixes.RADIAL.getOptional().ifPresent(afx -> afx.onBreak(world, player, pos, state, blockEntity));
+            Adventure.Affixes.RADIAL.getOptional().ifPresent(afx -> afx.onBreak(world, player, pos, state, blockEntity));
         });
     }
 

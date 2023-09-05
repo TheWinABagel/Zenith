@@ -9,7 +9,6 @@ import vazkii.patchouli.api.PatchouliAPI;
 
 public class PatchouliCompat {
     public static void registerPatchouli() {
-        Registry.register(BuiltInRegistries.ITEM, Apotheosis.loc("book"), new ApothChronicleItem(new Item.Properties().stacksTo(1)));
         PatchouliAPI.IPatchouliAPI api = PatchouliAPI.get();
         if (!api.isStub()) {
             api.setConfigFlag("apotheosis:enchanting", Apotheosis.enableEnch);

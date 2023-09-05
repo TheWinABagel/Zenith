@@ -5,12 +5,13 @@
   "plugin": "dev.shadowsoffire.apotheosis.mixin.compat.Plugin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "adventure.PlayerMixin",
     "adventure.BlockMixin",
+    "adventure.EnchantmentHelperMixinAdventure",
     "adventure.ItemStackMixin",
     "adventure.LivingEntityInvoker",
     "adventure.LivingEntityMixin",
     "adventure.MHFMixinLivingEntity",
+    "adventure.PlayerMixin",
     "adventure.SmithingMenuMixin",
     "ench.BlockMixin",
     "ench.CreativeModeTabsMixin",
@@ -21,9 +22,11 @@
     "ench.anvil.AnvilBlockMixin",
     "ench.anvil.AnvilMenuMixin",
     "ench.anvil.FallingBlockEntityMixin",
+    "ench.enchantment.BowItemMixin",
     "ench.enchantment.DamageEnchantmentMixin",
     "ench.enchantment.EnchantCommandMixin",
     "ench.enchantment.EnchantRandomlyFunctionMixin",
+    "ench.enchantment.ProtectionEnchantmentMixin",
     "ench.enchantment.ShearsItemMixin",
     "ench.enchantment.SheepMixin",
     "ench.enchantment.TemptGoalMixin",
@@ -46,6 +49,9 @@
   "client": [
     "client.AnvilScreenMixin",
     "client.EnchantmentScreenMixin",
-    "client.GuiMixin"
+    "client.GuiMixin",
+    "util.events.GuiGraphicsMixin",
+    "util.events.ModelBakeryMixin",
+    "util.events.ModelManagerMixin"
   ]
 }

@@ -3,8 +3,9 @@ package dev.shadowsoffire.apotheosis.adventure.affix;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import dev.shadowsoffire.apotheosis.Apoth.Affixes;
+import dev.shadowsoffire.apotheosis.adventure.Adventure.Affixes;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.effect.*;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketAffix;
@@ -27,12 +28,14 @@ public class AffixRegistry extends DynamicRegistry<Affix> {
 
     @Override
     protected void beginReload() {
+        if (!Apotheosis.enableAdventure) return;
         super.beginReload();
         this.byType = ImmutableMultimap.of();
     }
 
     @Override
     protected void onReload() {
+        if (!Apotheosis.enableAdventure) return;
         super.onReload();
         ImmutableMultimap.Builder<AffixType, DynamicHolder<Affix>> builder = ImmutableMultimap.builder();
         this.registry.values().forEach(a -> builder.put(a.type, this.holder(a.getId())));

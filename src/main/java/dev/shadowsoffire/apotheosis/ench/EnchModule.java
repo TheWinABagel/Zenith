@@ -1,47 +1,29 @@
 package dev.shadowsoffire.apotheosis.ench;
 
 import com.chocohead.mm.api.ClassTinkerers;
-import com.google.common.collect.ImmutableSet;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.EnchantmentInfo.PowerFunc;
 import dev.shadowsoffire.apotheosis.ench.Ench.*;
-import dev.shadowsoffire.apotheosis.ench.anvil.AnvilTile;
-import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryTile.BasicLibraryTile;
 import dev.shadowsoffire.apotheosis.ench.objects.TypedShelfBlock.SculkShelfBlock;
-import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
-import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryContainer;
 import dev.shadowsoffire.apotheosis.ench.objects.TomeItem;
 import dev.shadowsoffire.apotheosis.ench.objects.TypedShelfBlock;
-import dev.shadowsoffire.apotheosis.ench.replacements.BaneEnchant;
+import dev.shadowsoffire.apotheosis.ench.enchantments.BaneEnchant;
 import dev.shadowsoffire.apotheosis.ench.table.*;
 import dev.shadowsoffire.placebo.config.Configuration;
-import dev.shadowsoffire.placebo.menu.MenuUtil;
-import dev.shadowsoffire.placebo.tabs.ITabFiller;
-import dev.shadowsoffire.placebo.tabs.TabFillingRegistry;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
-import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.MappingResolver;
 import net.minecraft.core.Registry;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.CreativeModeTab.TabVisibility;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -50,7 +32,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.util.*;
-import java.util.function.Supplier;
 
 public class EnchModule {
 

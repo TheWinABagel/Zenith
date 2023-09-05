@@ -2,6 +2,7 @@ package dev.shadowsoffire.apotheosis.adventure.affix.reforging;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
+import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
@@ -42,7 +43,7 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
     };
 
     public ReforgingTableTile(BlockPos pWorldPosition, BlockState pBlockState) {
-        super(Apoth.Tiles.REFORGING_TABLE, pWorldPosition, pBlockState);
+        super(Adventure.Tiles.REFORGING_TABLE, pWorldPosition, pBlockState);
     }
 
     public LootRarity getMaxRarity() {

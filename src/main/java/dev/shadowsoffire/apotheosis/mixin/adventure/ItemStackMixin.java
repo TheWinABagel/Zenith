@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.mixin.adventure;
 
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -21,20 +22,20 @@ public class ItemStackMixin {
 
     @Inject(method = "getHoverName", at = @At("RETURN"), cancellable = true)
     public void apoth_affixItemName(CallbackInfoReturnable<Component> ci) {
-        ItemStack ths = (ItemStack) (Object) this;
-        CompoundTag afxData = ths.getTagElement(AffixHelper.AFFIX_DATA);
-        if (afxData != null && afxData.contains(AffixHelper.NAME, 8)) {
-            try {
-                Component component = AffixHelper.getName(ths);
-                if (component.getContents() instanceof TranslatableContents tContents) {
-                    int idx = "misc.apotheosis.affix_name.four".equals(tContents.getKey()) ? 2 : 1;
-                    tContents.getArgs()[idx] = ci.getReturnValue();
-                    ci.setReturnValue(component);
+        if (Apotheosis.enableAdventure) {
+            ItemStack ths = (ItemStack) (Object) this;
+            CompoundTag afxData = ths.getTagElement(AffixHelper.AFFIX_DATA);
+            if (afxData != null && afxData.contains(AffixHelper.NAME, 8)) {
+                try {
+                    Component component = AffixHelper.getName(ths);
+                    if (component.getContents() instanceof TranslatableContents tContents) {
+                        int idx = "misc.apotheosis.affix_name.four".equals(tContents.getKey()) ? 2 : 1;
+                        tContents.getArgs()[idx] = ci.getReturnValue();
+                        ci.setReturnValue(component);
+                    } else afxData.remove(AffixHelper.NAME);
+                } catch (Exception exception) {
+                    afxData.remove(AffixHelper.NAME);
                 }
-                else afxData.remove(AffixHelper.NAME);
-            }
-            catch (Exception exception) {
-                afxData.remove(AffixHelper.NAME);
             }
         }
     }
@@ -46,20 +47,23 @@ public class ItemStackMixin {
      */
     @ModifyVariable(at = @At(value = "INVOKE", target = "net/minecraft/world/item/ItemStack.getDamageValue()I"), method = "hurt", argsOnly = true, ordinal = 0)
     public int swapDura(int amount, int amountCopy, RandomSource pRandom, @Nullable ServerPlayer pUser) {
-        int blocked = 0;
-        DoubleStream chances = AffixHelper.getAffixes((ItemStack) (Object) this).values().stream().mapToDouble(inst -> inst.getDurabilityBonusPercentage(pUser));
-        double chance = chances.reduce(0, (res, ele) -> res + (1 - res) * ele);
-        int delta = 1;
-        if (chance < 0) {
-            delta = -1;
-            chance = -chance;
-        }
-
-        if (chance > 0) {
-            for (int i = 0; i < amount; i++) {
-                if (pRandom.nextFloat() <= chance) blocked += delta;
+        if (Apotheosis.enableAdventure) {
+            int blocked = 0;
+            DoubleStream chances = AffixHelper.getAffixes((ItemStack) (Object) this).values().stream().mapToDouble(inst -> inst.getDurabilityBonusPercentage(pUser));
+            double chance = chances.reduce(0, (res, ele) -> res + (1 - res) * ele);
+            int delta = 1;
+            if (chance < 0) {
+                delta = -1;
+                chance = -chance;
             }
+
+            if (chance > 0) {
+                for (int i = 0; i < amount; i++) {
+                    if (pRandom.nextFloat() <= chance) blocked += delta;
+                }
+            }
+            return amount - blocked;
         }
-        return amount - blocked;
+        return amount;
     }
 }

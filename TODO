@@ -1,35 +1,33 @@
 Adventure module:
 rendering
 some affixes(on hit, loot, etc)
-advancements
-shield has no loot category, tools gets weapon affixes
+advancements broken
 all blocks are very very broken
+cant socket things
+breaks rei items somehow???
+loot pinata breaks
 
 Enchanting module:
-REI support for ench recipes
-tags require restart to load properly, might be a fabric limitation?
-add prot enchantment changes
+tags require restart to load properly, might be a fabric limitation based on when new tags are sent?
 sheep mixin
 
 Potion module:
-potion charms arent all showing up in rei or creative (fix with placebo)
-potion charm
+fix potion charm rei stuff (not sure how though)
+breaks when disabled
 
 Spawner module:
-Reimplement spawner with mixins
+Reimplement spawner with mixins (so like the whole module lmaoo)
 REI support for Spawner Recipes
 
 Village module:
 REI support for Fletching table
-Fix wandering trader trades
+fix breaking when disabled
 
 Garden module:
-Add info to REI
+done afaik
 
 General stuff
-figure out patchouli book
-figure out what breaks if modules are disabled, as some mixins dont check if modules are loaded
-crafting recipes
+might be missing some crafting recipes?
 Change modid+class names (last step)
 
 Mod support

@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.salvaging;
 
 import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import io.github.fabricators_of_create.porting_lib.util.LazyOptional;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
@@ -17,7 +18,7 @@ import java.util.List;
 public class SalvagingTableTile extends BlockEntity {
 
     public SalvagingTableTile(BlockPos pPos, BlockState pBlockState) {
-        super(Apoth.Tiles.SALVAGING_TABLE, pPos, pBlockState);
+        super(Adventure.Tiles.SALVAGING_TABLE, pPos, pBlockState);
     }
 
     /**

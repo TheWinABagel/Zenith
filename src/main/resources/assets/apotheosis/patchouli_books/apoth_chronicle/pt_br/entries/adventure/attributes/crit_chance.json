@@ -1,0 +1,17 @@
+{
+    "name": "Chance de crítico",
+    "icon": "minecraft:netherite_sword",
+    "category": "apotheosis:adventure/attributes",
+	"flag": "apotheosis:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Chance de crítico$() é a chance de que qualquer dano que você cause se tornar um acerto crítico. Valores acima de 100% permitem realizar críticos multiplas vezes.$(p)Found on weapons."
+        },
+		{
+			"type": "patchouli:text",
+			"text": "A quantidade de dano que seus ataques críticos causam depende do seu $(l:apotheosis:adventure/attributes/crit_damage)dano crítico$()."
+		}
+	]
+}

@@ -2,7 +2,9 @@ package dev.shadowsoffire.apotheosis.adventure.affix.effect;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import dev.shadowsoffire.apotheosis.Apoth.Affixes;
+import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.adventure.Adventure.Affixes;
+import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
@@ -72,8 +74,8 @@ public class FestiveAffix extends Affix {
         });
     }
 
-    // EventPriority.LOW
     public void drops(LivingEntity target, DamageSource source, Collection<ItemEntity> drops) {
+        if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Festive affix triggered");
         if (target instanceof Player || target.getCustomData().getBoolean("apoth.no_pinata")) return;
         if (source.getEntity() instanceof Player player && !drops.isEmpty()) {
             AffixInstance inst = AffixHelper.getAffixes(player.getMainHandItem()).get(Affixes.FESTIVE);
@@ -81,12 +83,15 @@ public class FestiveAffix extends Affix {
                 player.level().playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 4.0F,
                     (1.0F + (player.level().random.nextFloat() - player.level().random.nextFloat()) * 0.2F) * 0.7F);
                 ((ServerLevel) player.level()).sendParticles(ParticleTypes.EXPLOSION_EMITTER, target.getX(), target.getY(), target.getZ(), 2, 1.0D, 0.0D, 0.0D, 0);
-                for (ItemEntity item : drops) {
+
+                List<ItemEntity> dropsList = new ArrayList<>(drops);
+                for (ItemEntity item : dropsList) {
                     if (item.getItem().hasTag() && item.getItem().getTag().contains(MARKER)) continue;
                     for (int i = 0; i < 20; i++) {
                         drops.add(new ItemEntity(player.level(), item.getX(), item.getY(), item.getZ(), item.getItem().copy()));
                     }
                 }
+
                 for (ItemEntity item : drops) {
                     if (!item.getItem().getItem().canBeDepleted()) {
                         item.setPos(target.getX(), target.getY(), target.getZ());
@@ -95,6 +100,7 @@ public class FestiveAffix extends Affix {
                 }
             }
         }
+
     }
 
     // Lowest prio + receive cancelled

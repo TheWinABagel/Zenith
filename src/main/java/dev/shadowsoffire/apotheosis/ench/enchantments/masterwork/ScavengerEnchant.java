@@ -39,15 +39,15 @@ public class ScavengerEnchant extends Enchantment {
 
     public void drops()  {
         LivingEntityLootEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
-            if (!(source.getEntity() instanceof Player p)) return recentlyHit;
-            if (source.getEntity().level().isClientSide) return recentlyHit;
+            if (!(source.getEntity() instanceof Player p)) return false;
+            if (source.getEntity().level().isClientSide) return false;
             int scavenger = EnchantmentHelper.getItemEnchantmentLevel(this, p.getMainHandItem());
             if (scavenger > 0 && p.level().random.nextInt(100) < scavenger * 2.5F) {
                 target.startCapturingDrops();
                 target.dropFromLootTable(source, true);
                 drops.addAll(target.finishCapturingDrops());
             }
-            return recentlyHit;
+            return false;
         });
 
     }

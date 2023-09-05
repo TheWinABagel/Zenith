@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.socket.gem;
 
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
@@ -24,6 +25,7 @@ public class GemRegistry extends WeightedDynamicRegistry<Gem> {
 
     @Override
     protected void registerBuiltinSerializers() {
+        if (!Apotheosis.enableAdventure) return;
         this.registerSerializer(DEFAULT, Gem.SERIALIZER);
     }
 

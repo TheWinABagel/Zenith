@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "zenith",
+  "id": "apotheosis",
   "version": "${version}",
   "name": "Zenith",
-  "description": "Unofficial fabric port of Apotheosis",
+  "description": "Unofficial Fabric port of Apotheosis.",
   "authors": [
     "Safro (original port)",
     "ShadowsOfFire (Forge)",
@@ -29,6 +29,8 @@
       "dev.shadowsoffire.apotheosis.ench.compat.EnchHwylaPlugin"
     ],
     "rei_client": [
+      "dev.shadowsoffire.apotheosis.garden.compat.GardenREIPlugin",
+      "dev.shadowsoffire.apotheosis.ench.compat.EnchantingREIPlugin"
     ],
     "mm:early_risers": [
       "dev.shadowsoffire.apotheosis.util.PreInit"

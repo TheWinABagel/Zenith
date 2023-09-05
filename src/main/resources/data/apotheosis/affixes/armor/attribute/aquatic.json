@@ -1,6 +1,6 @@
 {
 	"type": "apotheosis:attribute",
-	"attribute": "forge:swim_speed",
+	"attribute": "porting_lib:swim_speed",
 	"operation": "MULTIPLY_TOTAL",
 	"values": {
 		"common": {

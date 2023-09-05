@@ -1,6 +1,6 @@
 {
 	"type": "apotheosis:attribute",
-	"attribute": "forge:entity_reach",
+	"attribute": "reach-entity-attributes:attack_range",
 	"operation": "ADDITION",
 	"values": {
 		"common": {

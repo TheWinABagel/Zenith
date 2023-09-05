@@ -3,15 +3,26 @@ package dev.shadowsoffire.apotheosis.util;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.village.util.WandererTradeEvent;
 import io.github.fabricators_of_create.porting_lib.core.event.object.CancellableEvent;
+import io.github.fabricators_of_create.porting_lib.event.client.ModelLoadCallback;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.minecraft.client.color.block.BlockColors;
+import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class Events {
     public static void init(){
@@ -105,7 +116,7 @@ public class Events {
 
         public static final Event<onLivingDeath> LIVING_DEATH = EventFactory.createArrayBacked(onLivingDeath.class, callbacks -> (entity, source) -> {
             for (onLivingDeath callback : callbacks) {
-                return !callback.onDeath(entity, source);
+                return callback.onDeath(entity, source);
             }
             return false;
         });
@@ -129,5 +140,23 @@ public class Events {
         public interface onHarvestAttempt {
             boolean harvestAttempt(Player player, BlockState state);
         }
+    }
+    public interface AddModelCallback {
+        Event<AddModelCallback> EVENT = EventFactory.createArrayBacked(AddModelCallback.class, callbacks -> addedModels -> {
+            for (AddModelCallback e : callbacks)
+                e.onModelsStartLoading(addedModels);
+        });
+
+
+        void onModelsStartLoading(Set<ResourceLocation> models);
+    }
+
+    public interface ModifyBakedModelCallback {
+        Event<ModifyBakedModelCallback> EVENT = EventFactory.createArrayBacked(ModifyBakedModelCallback.class, callbacks -> (bakery, topModels) -> {
+            for (ModifyBakedModelCallback e : callbacks)
+                e.modifyBakedModels(bakery, topModels);
+        });
+
+        void modifyBakedModels(ModelBakery bakery, Map<ResourceLocation, BakedModel> topModels);
     }
 }

@@ -2,6 +2,6 @@
   "values": [
     "#is_forest",
     "#is_mountain",
-    "#forge:is_plains"
+    "#c:is_plains"
   ]
 }

@@ -1,6 +1,6 @@
 {
 	"type": "apotheosis:attribute",
-	"attribute": "forge:step_height_addition",
+	"attribute": "porting_lib:step_height_addition",
 	"operation": "ADDITION",
 	"values": {
 		"common": {

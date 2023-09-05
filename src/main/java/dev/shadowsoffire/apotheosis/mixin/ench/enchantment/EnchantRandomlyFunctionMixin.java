@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mixin(value = EnchantRandomlyFunction.class, priority = 1100)// Patches vanilla loot to include possiblity of config set level enchants
+@Mixin(value = EnchantRandomlyFunction.class, priority = 1100)// Patches vanilla loot to include possibility of config set level enchants
 public class EnchantRandomlyFunctionMixin {
     @Final
     @Shadow

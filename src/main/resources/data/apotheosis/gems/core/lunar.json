@@ -32,7 +32,7 @@
 					"chestplate", "leggings"
 				]
 			},
-			"attribute": "forge:entity_gravity",
+			"attribute": "porting_lib:entity_gravity",
 			"operation": "MULTIPLY_TOTAL",
 			"values": {
 				"common": -0.10,
@@ -51,7 +51,7 @@
 					"boots"
 				]
 			},
-			"attribute": "forge:swim_speed",
+			"attribute": "porting_lib:swim_speed",
 			"operation": "MULTIPLY_BASE",
 			"values": {
 				"common": 0.10,

@@ -8,8 +8,9 @@ import java.util.stream.Stream;
 
 import com.google.common.collect.ImmutableList;
 
-import dev.shadowsoffire.apotheosis.Apoth.Affixes;
+import dev.shadowsoffire.apotheosis.adventure.Adventure.Affixes;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
@@ -27,6 +28,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
 
 /**
  * Utility class for the manipulation of Sockets on items.
@@ -121,10 +123,10 @@ public class SocketHelper {
      */
     public static int getSockets(ItemStack stack) {
         CompoundTag afxData = stack.getTagElement(AFFIX_DATA);
-        int sockets = afxData != null ? afxData.getInt(SOCKETS) : 0;
+        int sockets = afxData != null ? afxData.getInt(SOCKETS) : 2;
         var event = new GetItemSocketsEvent(stack, sockets);
         //MinecraftForge.EVENT_BUS.post(event);
-        return event.getSockets();
+        return sockets;
     }
 
     /**

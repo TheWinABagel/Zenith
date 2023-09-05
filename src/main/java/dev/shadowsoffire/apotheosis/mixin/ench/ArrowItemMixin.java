@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ArrowItem.class)
 public class ArrowItemMixin {
-/*
+/* //TODO redo in bow class?
     @Inject(method = "isInfinite", at = @At(value = "RETURN"), remap = false, cancellable = true)
     public void apoth_isInfinite(ItemStack stack, ItemStack bow, Player player, CallbackInfoReturnable<Boolean> ci) {
         if (!ci.getReturnValueZ() && Apotheosis.enableEnch) {

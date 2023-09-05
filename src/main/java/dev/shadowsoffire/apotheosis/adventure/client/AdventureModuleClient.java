@@ -22,26 +22,39 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingScreen;
 import dev.shadowsoffire.apotheosis.adventure.client.BossSpawnMessage.BossSpawnData;
 import dev.shadowsoffire.apotheosis.adventure.client.SocketTooltipRenderer.SocketComponent;
+import dev.shadowsoffire.apotheosis.util.Events;
+import dev.shadowsoffire.apotheosis.util.events.ModifyComponents;
 import dev.shadowsoffire.attributeslib.api.client.AddAttributeTooltipsEvent;
+import dev.shadowsoffire.attributeslib.api.client.GatherEffectScreenTooltipsEvent;
 import dev.shadowsoffire.attributeslib.api.client.GatherSkippedAttributeTooltipsEvent;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
+import io.github.fabricators_of_create.porting_lib.event.client.ModelLoadCallback;
+import io.github.fabricators_of_create.porting_lib.event.client.PreRenderTooltipCallback;
+import io.github.fabricators_of_create.porting_lib.util.client.ClientHooks;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
+import net.fabricmc.fabric.impl.client.model.loading.ModelLoaderHooks;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
+import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.contents.LiteralContents;
@@ -58,6 +71,8 @@ import java.io.IOException;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AdventureModuleClient {
 
@@ -75,6 +90,10 @@ public class AdventureModuleClient {
         ignoreSocketUUIDS();
         affixTooltips();
         comps(); // implement event
+        ModBusSub.addGemModels();
+        ModBusSub.hammer();
+        ModBusSub.replaceGemModel();
+        ModBusSub.tooltipComps();
     }
 
     public static void onBossSpawn(BlockPos pos, float[] color) {
@@ -82,35 +101,63 @@ public class AdventureModuleClient {
         Minecraft.getInstance().getSoundManager()
             .play(new SimpleSoundInstance(SoundEvents.END_PORTAL_SPAWN, SoundSource.HOSTILE, AdventureConfig.bossAnnounceVolume, 1.25F, Minecraft.getInstance().player.random, Minecraft.getInstance().player.blockPosition()));
     }
-/* // TODO completely redo models...
+ // TODO completely redo models...
     public static class ModBusSub {
-        @SubscribeEvent
-        public static void models(ModelEvent.RegisterAdditional e) {
-            e.register(new ResourceLocation(Apotheosis.MODID, "item/hammer"));
+        public static void hammer(){
+            Events.AddModelCallback.EVENT.register(addedModels -> {
+                addedModels.add((new ResourceLocation(Apotheosis.MODID, "item/hammer")));
+            });
         }
 
-        @SubscribeEvent
+     public static void addGemModels() {
+         Events.AddModelCallback.EVENT.register(addedModels -> {
+             Set<ResourceLocation> locs = Minecraft.getInstance().getResourceManager().listResources("models", loc -> Apotheosis.MODID.equals(loc.getNamespace()) && loc.getPath().contains("/gems/") && loc.getPath().endsWith(".json"))
+                     .keySet();
+             for (ResourceLocation s : locs) {
+                 String path = s.getPath().substring("models/".length(), s.getPath().length() - ".json".length());
+                 addedModels.add(Apotheosis.loc(path));
+             }
+         });
+     }
+
+     public static void replaceGemModel() {
+         Events.ModifyBakedModelCallback.EVENT.register((bakery, topModels) -> {
+             ModelResourceLocation key = new ModelResourceLocation(Apotheosis.loc("gem"), "inventory");
+             BakedModel oldModel = topModels.get(key);
+             if (oldModel != null) {
+                 topModels.put(key, new GemModel(oldModel, bakery));
+             }
+         });
+
+     }
+
+     public static void tooltipComps() {
+
+     }
+
+    /*
+
+    public static void comps(RenderTooltipEvent.GatherComponents e) {
+        int sockets = SocketHelper.getSockets(e.getItemStack());
+        if (sockets == 0) return;
+        List<Either<FormattedText, TooltipComponent>> list = e.getTooltipElements();
+        int rmvIdx = -1;
+        for (int i = 0; i < list.size(); i++) {
+            Optional<FormattedText> o = list.get(i).left();
+            if (o.isPresent() && o.get() instanceof Component comp && comp.getContents() instanceof LiteralContents tc) {
+                if ("APOTH_REMOVE_MARKER".equals(tc.text())) {
+                    rmvIdx = i;
+                    list.remove(i);
+                    break;
+                }
+            }
+        }
+        if (rmvIdx == -1) return;
+        e.getTooltipElements().add(rmvIdx, Either.right(new SocketComponent(e.getItemStack(), SocketHelper.getGems(e.getItemStack()))));
+    }
+
         public static void tooltipComps(RegisterClientTooltipComponentFactoriesEvent e) {
             e.register(SocketComponent.class, SocketTooltipRenderer::new);
-        }
-
-        @SubscribeEvent
-        public static void addGemModels(ModelEvent.RegisterAdditional e) {
-            Set<ResourceLocation> locs = Minecraft.getInstance().getResourceManager().listResources("models", loc -> Apotheosis.MODID.equals(loc.getNamespace()) && loc.getPath().contains("/gems/") && loc.getPath().endsWith(".json"))
-                .keySet();
-            for (ResourceLocation s : locs) {
-                String path = s.getPath().substring("models/".length(), s.getPath().length() - ".json".length());
-                e.register(new ResourceLocation(Apotheosis.MODID, path));
-            }
-        }
-
-        @SubscribeEvent
-        public static void replaceGemModel(ModelEvent.ModifyBakingResult e) {
-            ModelResourceLocation key = new ModelResourceLocation(Apotheosis.loc("gem"), "inventory");
-            BakedModel oldModel = e.getModels().get(key);
-            if (oldModel != null) {
-                e.getModels().put(key, new GemModel(oldModel, e.getModelBakery()));
-            }
         }
 
         @SubscribeEvent
@@ -119,8 +166,8 @@ public class AdventureModuleClient {
             event.registerShader(new ShaderInstance(event.getResourceProvider(), new ResourceLocation("apotheosis:gray"), DefaultVertexFormat.NEW_ENTITY), shaderInstance -> {
                 CustomRenderTypes.grayShader = shaderInstance;
             });
-        }
-    }*/
+        }*/
+    }
 
     // This renders a beacon beam when a boss spawns
 /*
@@ -172,12 +219,16 @@ public class AdventureModuleClient {
     }
 
     public static void comps() {
-
-   /* RenderTooltipEvent.GatherComponents e
-        ItemTooltipCallback.EVENT.register((stack, context, lines) -> { //This isnt the right event
-            int sockets = SocketHelper.getSockets(stack);
+        TooltipComponentCallback.EVENT.register(data -> {
+            if (data instanceof SocketComponent comp){
+                return new SocketTooltipRenderer(comp);
+            }
+            return null;
+        });
+        ModifyComponents.MODIFY_COMPONENTS.register(e -> {
+            int sockets = SocketHelper.getSockets(e.stack);
             if (sockets == 0) return;
-            List<Either<FormattedText, TooltipComponent>> list = lines;
+            List<Either<FormattedText, TooltipComponent>> list = e.tooltipElements;
             int rmvIdx = -1;
             for (int i = 0; i < list.size(); i++) {
                 Optional<FormattedText> o = list.get(i).left();
@@ -190,9 +241,9 @@ public class AdventureModuleClient {
                 }
             }
             if (rmvIdx == -1) return;
-            lines.add(rmvIdx, Either.right(new SocketComponent(stack, SocketHelper.getGems(stack))));
+            e.tooltipElements.add(rmvIdx, Either.right(new SocketComponent(e.stack, SocketHelper.getGems(e.stack))));
         });
-*/
+
     }
 
     public static void affixTooltips() {
@@ -208,6 +259,70 @@ public class AdventureModuleClient {
             }
         });
 
+    }
+    // there has to be a better way to do this...
+    public static List<ClientTooltipComponent> gatherTooltipComponents(ItemStack stack, List<? extends FormattedText> textElements, Optional<TooltipComponent> itemComponent, int mouseX, int screenWidth, int screenHeight, Font font) {
+
+        List<Either<FormattedText, TooltipComponent>> elements = textElements.stream()
+                .map((Function<FormattedText, Either<FormattedText, TooltipComponent>>) Either::left)
+                .collect(Collectors.toCollection(ArrayList::new));
+        itemComponent.ifPresent(c -> elements.add(1, Either.right(c)));
+
+        var event = new ModifyComponents.ModifyComponentsEvent(stack, screenWidth, screenHeight, elements, -1);
+        ModifyComponents.MODIFY_COMPONENTS.invoker().modifyComponents(event);
+        if (event.isCanceled()) return List.of();
+
+        // text wrapping
+        int tooltipTextWidth = event.tooltipElements.stream()
+                .mapToInt(either -> either.map(font::width, component -> 0))
+                .max()
+                .orElse(0);
+
+        boolean needsWrap = false;
+
+        int tooltipX = mouseX + 12;
+        if (tooltipX + tooltipTextWidth + 4 > screenWidth)
+        {
+            tooltipX = mouseX - 16 - tooltipTextWidth;
+            if (tooltipX < 4) // if the tooltip doesn't fit on the screen
+            {
+                if (mouseX > screenWidth / 2)
+                    tooltipTextWidth = mouseX - 12 - 8;
+                else
+                    tooltipTextWidth = screenWidth - 16 - mouseX;
+                needsWrap = true;
+            }
+        }
+
+        if (event.maxWidth > 0 && tooltipTextWidth > event.maxWidth)
+        {
+            tooltipTextWidth = event.maxWidth;
+            needsWrap = true;
+        }
+
+        int tooltipTextWidthF = tooltipTextWidth;
+        if (needsWrap)
+        {
+            return event.tooltipElements.stream()
+                    .flatMap(either -> either.map(
+                            text -> splitLine(text, font, tooltipTextWidthF),
+                            component -> Stream.of(ClientTooltipComponent.create(component))
+                    ))
+                    .toList();
+        }
+        return event.tooltipElements.stream()
+                .map(either -> either.map(
+                        text -> ClientTooltipComponent.create(text instanceof Component ? ((Component) text).getVisualOrderText() : Language.getInstance().getVisualOrder(text)),
+                        ClientTooltipComponent::create
+                ))
+                .toList();
+    }
+
+    private static Stream<ClientTooltipComponent> splitLine(FormattedText text, Font font, int maxWidth) {
+        if (text instanceof Component component && component.getString().isEmpty()) {
+            return Stream.of(component.getVisualOrderText()).map(ClientTooltipComponent::create);
+        }
+        return font.split(text, maxWidth).stream().map(ClientTooltipComponent::create);
     }
 
     // Accessor functon, ensures that you don't use the raw methods below unintentionally.
