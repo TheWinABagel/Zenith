@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis.adventure.boss;
 
 import com.google.common.base.Preconditions;
-import com.google.gson.annotations.SerializedName;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.Apotheosis;
@@ -14,16 +13,12 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityClamp;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
-import dev.shadowsoffire.apotheosis.util.ChancedEffectInstance;
-import dev.shadowsoffire.apotheosis.util.GearSet;
-import dev.shadowsoffire.apotheosis.util.GearSet.SetPredicate;
 import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.apotheosis.util.SupportingEntity;
+import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
-import dev.shadowsoffire.placebo.json.NBTAdapter;
-import dev.shadowsoffire.placebo.json.PSerializer;
-import dev.shadowsoffire.placebo.json.RandomAttributeModifier;
-import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
+import dev.shadowsoffire.placebo.json.*;
+import dev.shadowsoffire.placebo.json.GearSet.SetPredicate;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.ILuckyWeighted;
 import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingTableBehaviorEnchantment;
@@ -60,7 +55,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public final class ApothBoss extends TypeKeyedBase<ApothBoss> implements ILuckyWeighted, IDimensional, RarityClamp, IStaged {
+public final class ApothBoss implements CodecProvider<ApothBoss>, ILuckyWeighted, IDimensional, RarityClamp, IStaged {
 
     public static final Codec<AABB> AABB_CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
@@ -71,20 +66,18 @@ public final class ApothBoss extends TypeKeyedBase<ApothBoss> implements ILuckyW
     public static final Codec<ApothBoss> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
-            Codec.floatRange(0, Float.MAX_VALUE).optionalFieldOf("quality", 0F).forGetter(ILuckyWeighted::getQuality),
+            PlaceboCodecs.nullableField(Codec.floatRange(0, Float.MAX_VALUE), "quality", 0F).forGetter(ILuckyWeighted::getQuality),
             BuiltInRegistries.ENTITY_TYPE.byNameCodec().fieldOf("entity").forGetter(a -> a.entity),
             AABB_CODEC.fieldOf("size").forGetter(a -> a.size),
             LootRarity.mapCodec(BossStats.CODEC).fieldOf("stats").forGetter(a -> a.stats),
             PlaceboCodecs.setOf(Codec.STRING).optionalFieldOf("stages").forGetter(a -> Optional.ofNullable(a.stages)),
             SetPredicate.CODEC.listOf().fieldOf("valid_gear_sets").forGetter(a -> a.gearSets),
-            NBTAdapter.EITHER_CODEC.optionalFieldOf("nbt").forGetter(a -> Optional.ofNullable(a.nbt)),
+                PlaceboCodecs.nullableField(NBTAdapter.EITHER_CODEC, "nbt").forGetter(a -> Optional.ofNullable(a.nbt)),
             PlaceboCodecs.setOf(ResourceLocation.CODEC).fieldOf("dimensions").forGetter(a -> a.dimensions),
             LootRarity.CODEC.fieldOf("min_rarity").forGetter(a -> a.minRarity),
             LootRarity.CODEC.fieldOf("max_rarity").forGetter(a -> a.maxRarity),
-            SupportingEntity.CODEC.optionalFieldOf("mount").forGetter(a -> Optional.ofNullable(a.mount)))
+            PlaceboCodecs.nullableField(SupportingEntity.CODEC, "mount").forGetter(a -> Optional.ofNullable(a.mount)))
         .apply(inst, ApothBoss::new));
-
-    public static final PSerializer<ApothBoss> SERIALIZER = PSerializer.fromCodec("Apotheotic Boss", CODEC);
 
     public static final Predicate<Goal> IS_VILLAGER_ATTACK = a -> a instanceof NearestAttackableTargetGoal && ((NearestAttackableTargetGoal<?>) a).targetType == Villager.class;
 
@@ -93,24 +86,17 @@ public final class ApothBoss extends TypeKeyedBase<ApothBoss> implements ILuckyW
     protected final EntityType<?> entity;
     protected final AABB size;
     protected final Map<LootRarity, BossStats> stats;
-
     @Nullable
     protected final Set<String> stages;
 
-    @SerializedName("valid_gear_sets")
     protected final List<SetPredicate> gearSets;
-
     @Nullable
     protected final CompoundTag nbt;
-
     protected final Set<ResourceLocation> dimensions;
 
-    @SerializedName("min_rarity")
     protected final LootRarity minRarity;
 
-    @SerializedName("max_rarity")
     protected final LootRarity maxRarity;
-
     @Nullable
     protected final SupportingEntity mount;
 
@@ -233,7 +219,7 @@ public final class ApothBoss extends TypeKeyedBase<ApothBoss> implements ILuckyW
             }
         }
 
-        if (!anyValid) throw new RuntimeException("Attempted to apply boss gear set " + set.getId() + " but it had no valid affix loot items generated.");
+        if (!anyValid) throw new RuntimeException("Attempted to apply boss gear set " + GearSetRegistry.INSTANCE.getKey(set) + " but it had no valid affix loot items generated.");
 
         int guaranteed = rand.nextInt(6);
 
@@ -257,7 +243,7 @@ public final class ApothBoss extends TypeKeyedBase<ApothBoss> implements ILuckyW
             }
         }
         entity.getCustomData().putBoolean("apoth.boss", true);
-        entity.getCustomData().putString("apoth.rarity", rarity.getId().toString());
+        entity.getCustomData().putString("apoth.rarity", RarityRegistry.INSTANCE.getKey(rarity).toString());
         entity.setHealth(entity.getMaxHealth());
         if (AdventureConfig.bossGlowOnSpawn) entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 3600));
     }
@@ -312,11 +298,11 @@ public final class ApothBoss extends TypeKeyedBase<ApothBoss> implements ILuckyW
      *
      * @return this
      */
-    public ApothBoss validate() {
-        Preconditions.checkArgument(this.weight >= 0, "Boss Item " + this.id + " has a negative weight!");
-        Preconditions.checkArgument(this.quality >= 0, "Boss Item " + this.id + " has a negative quality!");
-        Preconditions.checkNotNull(this.entity, "Boss Item " + this.id + " has null entity type!");
-        Preconditions.checkNotNull(this.size, "Boss Item " + this.id + " has no size!");
+    public ApothBoss validate(ResourceLocation key) {
+        Preconditions.checkArgument(this.weight >= 0, "Boss Item " + key + " has a negative weight!");
+        Preconditions.checkArgument(this.quality >= 0, "Boss Item " + key + " has a negative quality!");
+        Preconditions.checkNotNull(this.entity, "Boss Item " + key + " has null entity type!");
+        Preconditions.checkNotNull(this.size, "Boss Item " + key + " has no size!");
         if (this.minRarity != null) {
             Preconditions.checkArgument(this.maxRarity == null || this.maxRarity.isAtLeast(this.minRarity));
         }
@@ -324,12 +310,12 @@ public final class ApothBoss extends TypeKeyedBase<ApothBoss> implements ILuckyW
             Preconditions.checkArgument(this.minRarity == null || this.maxRarity.isAtLeast(this.minRarity));
         }
         if (this.mount != null) {
-            Preconditions.checkNotNull(this.mount.entity, "Boss Item " + this.id + " has an invalid mount");
+            Preconditions.checkNotNull(this.mount.entity, "Boss Item " + key + " has an invalid mount");
         }
         LootRarity r = this.minRarity;
         while (r != this.maxRarity) {
             Preconditions.checkNotNull(this.stats.get(r));
-            r = RarityRegistry.next(RarityRegistry.INSTANCE.holder(r)).get();
+            r = r.next();
         }
         return this;
     }
@@ -345,8 +331,8 @@ public final class ApothBoss extends TypeKeyedBase<ApothBoss> implements ILuckyW
     }
 
     @Override
-    public PSerializer<? extends ApothBoss> getSerializer() {
-        return SERIALIZER;
+    public Codec<? extends ApothBoss> getCodec() {
+        return CODEC;
     }
 
 }

@@ -1,13 +1,13 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.socket;
 
 import com.google.common.base.Predicates;
+import com.mojang.serialization.Codec;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
-import dev.shadowsoffire.placebo.json.PSerializer;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -38,7 +38,7 @@ import java.util.stream.Stream;
 
 public final class SocketAffix extends Affix {
 
-    public static final PSerializer<SocketAffix> SERIALIZER = PSerializer.builtin("Socket Affix", SocketAffix::new);
+    public static final Codec<SocketAffix> CODEC = Codec.unit(SocketAffix::new);
 
     public SocketAffix() {
         super(AffixType.SOCKET);
@@ -129,8 +129,8 @@ public final class SocketAffix extends Affix {
     }
 
     @Override
-    public PSerializer<? extends Affix> getSerializer() {
-        return SERIALIZER;
+    public Codec<? extends Affix> getCodec() {
+        return CODEC;
     }
 
     private static Stream<GemInstance> gems(AbstractArrow arrow) {

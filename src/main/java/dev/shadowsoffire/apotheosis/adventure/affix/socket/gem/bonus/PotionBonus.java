@@ -8,6 +8,7 @@ import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.effect.PotionAffix.Target;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -39,7 +40,7 @@ public class PotionBonus extends GemBonus {
             BuiltInRegistries.MOB_EFFECT.byNameCodec().fieldOf("mob_effect").forGetter(a -> a.effect),
             Target.CODEC.fieldOf("target").forGetter(a -> a.target),
             LootRarity.mapCodec(EffectData.CODEC).fieldOf("values").forGetter(a -> a.values),
-            Codec.BOOL.optionalFieldOf("stack_on_reapply", false).forGetter(a -> a.stackOnReapply))
+            PlaceboCodecs.nullableField(Codec.BOOL, "stack_on_reapply", false).forGetter(a -> a.stackOnReapply))
         .apply(inst, PotionBonus::new));
 
     protected final MobEffect effect;
@@ -180,7 +181,7 @@ public class PotionBonus extends GemBonus {
             .group(
                 Codec.INT.fieldOf("duration").forGetter(EffectData::duration),
                 Codec.INT.fieldOf("amplifier").forGetter(EffectData::amplifier),
-                Codec.INT.optionalFieldOf("cooldown", 0).forGetter(EffectData::cooldown))
+                PlaceboCodecs.nullableField(Codec.INT, "cooldown", 0).forGetter(EffectData::cooldown))
             .apply(inst, EffectData::new));
 
         public MobEffectInstance build(MobEffect effect) {

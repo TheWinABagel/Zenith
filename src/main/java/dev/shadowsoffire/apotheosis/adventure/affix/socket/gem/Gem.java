@@ -11,10 +11,9 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityClamp;
+import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
-import dev.shadowsoffire.placebo.json.PSerializer;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
-import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.ILuckyWeighted;
 import net.minecraft.ChatFormatting;
@@ -30,20 +29,18 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensional, RarityClamp, IStaged {
+public class Gem implements CodecProvider<Gem>, ILuckyWeighted, IDimensional, RarityClamp, IStaged {
 
     public static final Codec<Gem> CODEC = RecordCodecBuilder.create(inst -> inst.group(
         Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
-        Codec.floatRange(0, Float.MAX_VALUE).optionalFieldOf("quality", 0F).forGetter(ILuckyWeighted::getQuality),
-        PlaceboCodecs.setOf(ResourceLocation.CODEC).optionalFieldOf("dimensions", Collections.emptySet()).forGetter(IDimensional::getDimensions),
-        LootRarity.CODEC.optionalFieldOf("min_rarity").forGetter(g -> Optional.of(g.getMinRarity())),
-        LootRarity.CODEC.optionalFieldOf("max_rarity").forGetter(g -> Optional.of(g.getMaxRarity())),
+        PlaceboCodecs.nullableField(Codec.floatRange(0, Float.MAX_VALUE), "quality", 0F).forGetter(ILuckyWeighted::getQuality),
+        PlaceboCodecs.nullableField(PlaceboCodecs.setOf(ResourceLocation.CODEC), "dimensions", Collections.emptySet()).forGetter(IDimensional::getDimensions),
+        PlaceboCodecs.nullableField(LootRarity.CODEC, "min_rarity").forGetter(g -> Optional.of(g.getMinRarity())),
+        PlaceboCodecs.nullableField(LootRarity.CODEC, "max_rarity").forGetter(g -> Optional.of(g.getMaxRarity())),
         GemBonus.CODEC.listOf().fieldOf("bonuses").forGetter(Gem::getBonuses),
-        Codec.BOOL.optionalFieldOf("unique", false).forGetter(Gem::isUnique),
-        PlaceboCodecs.setOf(Codec.STRING).optionalFieldOf("stages").forGetter(gem -> Optional.ofNullable(gem.getStages())))
+        PlaceboCodecs.nullableField(Codec.BOOL, "unique", false).forGetter(Gem::isUnique),
+        PlaceboCodecs.nullableField(PlaceboCodecs.setOf(Codec.STRING), "stages").forGetter(gem -> Optional.ofNullable(gem.getStages())))
         .apply(inst, Gem::new));
-
-    public static final PSerializer<Gem> SERIALIZER = PSerializer.fromCodec("Gem", CODEC);
 
     protected final int weight;
     protected final float quality;
@@ -168,16 +165,6 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return obj instanceof Gem gem && gem.getId().equals(this.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return this.getId().hashCode();
-    }
-
-    @Override
     public float getQuality() {
         return this.quality;
     }
@@ -210,7 +197,7 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
         return this.unique;
     }
 
-    public Gem validate() {
+    public Gem validate(ResourceLocation key) {
         Preconditions.checkArgument(this.weight >= 0, "Gem " + this.getId() + " has a negative weight");
         Preconditions.checkArgument(this.quality >= 0, "Gem " + this.getId() + " has a negative quality");
         Preconditions.checkNotNull(this.dimensions);
@@ -227,8 +214,8 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
     }
 
     @Override
-    public PSerializer<? extends Gem> getSerializer() {
-        return SERIALIZER;
+    public Codec<? extends Gem> getCodec() {
+        return CODEC;
     }
 
     public static void addTypeInfo(Consumer<Component> list, Object... types) {
@@ -252,6 +239,10 @@ public class Gem extends TypeKeyedBase<Gem> implements ILuckyWeighted, IDimensio
         else {
             list.accept(Component.translatable("text.apotheosis.dot_prefix", Component.translatable("text.apotheosis.anything")).withStyle(style));
         }
+    }
+
+    public final ResourceLocation getId() {
+        return GemRegistry.INSTANCE.getKey(this);
     }
 
 }

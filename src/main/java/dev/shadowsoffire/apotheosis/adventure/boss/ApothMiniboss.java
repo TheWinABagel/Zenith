@@ -11,16 +11,12 @@ import dev.shadowsoffire.apotheosis.adventure.boss.MinibossRegistry.IEntityMatch
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
-import dev.shadowsoffire.apotheosis.util.ChancedEffectInstance;
-import dev.shadowsoffire.apotheosis.util.GearSet;
-import dev.shadowsoffire.apotheosis.util.GearSet.SetPredicate;
 import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.apotheosis.util.SupportingEntity;
+import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
-import dev.shadowsoffire.placebo.json.NBTAdapter;
-import dev.shadowsoffire.placebo.json.PSerializer;
-import dev.shadowsoffire.placebo.json.RandomAttributeModifier;
-import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
+import dev.shadowsoffire.placebo.json.*;
+import dev.shadowsoffire.placebo.json.GearSet.SetPredicate;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.ILuckyWeighted;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -44,30 +40,29 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
-public final class ApothMiniboss extends TypeKeyedBase<ApothMiniboss> implements ILuckyWeighted, IDimensional, IStaged, IEntityMatch {
+public final class ApothMiniboss implements CodecProvider<ApothMiniboss>, ILuckyWeighted, IDimensional, IStaged, IEntityMatch {
 
     public static final String NAME_GEN = "use_name_generation";
 
     public static final Codec<ApothMiniboss> CODEC = RecordCodecBuilder.create(inst -> inst
         .group(
             Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
-            Codec.floatRange(0, Float.MAX_VALUE).optionalFieldOf("quality", 0F).forGetter(ILuckyWeighted::getQuality),
+            PlaceboCodecs.nullableField(Codec.floatRange(0, Float.MAX_VALUE), "quality", 0F).forGetter(ILuckyWeighted::getQuality),
             ExtraCodecs.POSITIVE_FLOAT.fieldOf("chance").forGetter(a -> a.chance),
-            Codec.STRING.optionalFieldOf("name", "").forGetter(a -> a.name),
+            PlaceboCodecs.nullableField(Codec.STRING, "name", "").forGetter(a -> a.name),
             PlaceboCodecs.setOf(BuiltInRegistries.ENTITY_TYPE.byNameCodec()).fieldOf("entities").forGetter(a -> a.entities),
             BossStats.CODEC.fieldOf("stats").forGetter(a -> a.stats),
-            PlaceboCodecs.setOf(Codec.STRING).optionalFieldOf("stages").forGetter(a -> Optional.ofNullable(a.stages)),
+            PlaceboCodecs.nullableField(PlaceboCodecs.setOf(Codec.STRING), "stages").forGetter(a -> Optional.ofNullable(a.stages)),
             PlaceboCodecs.setOf(ResourceLocation.CODEC).fieldOf("dimensions").forGetter(a -> a.dimensions),
-            Codec.BOOL.optionalFieldOf("affixed", false).forGetter(a -> a.affixed),
-            SetPredicate.CODEC.listOf().optionalFieldOf("valid_gear_sets", Collections.emptyList()).forGetter(a -> a.gearSets),
-            NBTAdapter.EITHER_CODEC.optionalFieldOf("nbt").forGetter(a -> Optional.ofNullable(a.nbt)),
-            SupportingEntity.CODEC.listOf().optionalFieldOf("supporting_entities", Collections.emptyList()).forGetter(a -> a.support),
-            SupportingEntity.CODEC.optionalFieldOf("mount").forGetter(a -> Optional.ofNullable(a.mount)),
-            Exclusion.CODEC.listOf().optionalFieldOf("exclusions", Collections.emptyList()).forGetter(a -> a.exclusions),
-            Codec.BOOL.optionalFieldOf("finalize", false).forGetter(a -> a.finalize))
+            PlaceboCodecs.nullableField(Codec.BOOL, "affixed", false).forGetter(a -> a.affixed),
+            PlaceboCodecs.nullableField(SetPredicate.CODEC.listOf(), "valid_gear_sets", Collections.emptyList()).forGetter(a -> a.gearSets),
+            PlaceboCodecs.nullableField(NBTAdapter.EITHER_CODEC, "nbt").forGetter(a -> Optional.ofNullable(a.nbt)),
+            PlaceboCodecs.nullableField(SupportingEntity.CODEC.listOf(), "supporting_entities", Collections.emptyList()).forGetter(a -> a.support),
+            PlaceboCodecs.nullableField(SupportingEntity.CODEC, "mount").forGetter(a -> Optional.ofNullable(a.mount)),
+            PlaceboCodecs.nullableField(Exclusion.CODEC.listOf(), "exclusions", Collections.emptyList()).forGetter(a -> a.exclusions),
+            PlaceboCodecs.nullableField(Codec.BOOL, "finalize", false).forGetter(a -> a.finalize))
         .apply(inst, ApothMiniboss::new));
 
-    public static final PSerializer<ApothMiniboss> SERIALIZER = PSerializer.fromCodec("Apotheotic Miniboss", CODEC);
 
     /**
      * Weight relative to other minibosses that may apply to the same entity.
@@ -266,7 +261,7 @@ public final class ApothMiniboss extends TypeKeyedBase<ApothMiniboss> implements
 
         if (!this.gearSets.isEmpty()) {
             GearSet set = GearSetRegistry.INSTANCE.getRandomSet(rand, luck, this.gearSets);
-            Preconditions.checkNotNull(set, String.format("Failed to find a valid gear set for the miniboss %s.", this.getId()));
+            Preconditions.checkNotNull(set, String.format("Failed to find a valid gear set for the miniboss %s.", MinibossRegistry.INSTANCE.getKey(this)));
             set.apply(mob);
         }
 
@@ -283,7 +278,7 @@ public final class ApothMiniboss extends TypeKeyedBase<ApothMiniboss> implements
             }
 
             if (!anyValid) {
-                AdventureModule.LOGGER.error("Attempted to affix a miniboss with ID " + this.getId() + " but it is not wearing any affixable items!");
+                AdventureModule.LOGGER.error("Attempted to affix a miniboss with ID " + MinibossRegistry.INSTANCE.getKey(this) + " but it is not wearing any affixable items!");
                 return;
             }
 
@@ -316,11 +311,11 @@ public final class ApothMiniboss extends TypeKeyedBase<ApothMiniboss> implements
      *
      * @return this
      */
-    public ApothMiniboss validate() {
-        Preconditions.checkArgument(this.weight >= 0, "Miniboss Item " + this.id + " has a negative weight!");
-        Preconditions.checkArgument(this.quality >= 0, "Miniboss Item " + this.id + " has a negative quality!");
-        Preconditions.checkNotNull(this.entities, "Miniboss Item " + this.id + " has null entity match list!");
-        Preconditions.checkNotNull(this.stats, "Miniboss Item " + this.id + " has no stats!");
+    public ApothMiniboss validate(ResourceLocation key) {
+        Preconditions.checkArgument(this.weight >= 0, "Miniboss Item " + key + " has a negative weight!");
+        Preconditions.checkArgument(this.quality >= 0, "Miniboss Item " + key + " has a negative quality!");
+        Preconditions.checkNotNull(this.entities, "Miniboss Item " + key + " has null entity match list!");
+        Preconditions.checkNotNull(this.stats, "Miniboss Item " + key + " has no stats!");
         return this;
     }
 
@@ -335,8 +330,8 @@ public final class ApothMiniboss extends TypeKeyedBase<ApothMiniboss> implements
     }
 
     @Override
-    public PSerializer<? extends ApothMiniboss> getSerializer() {
-        return SERIALIZER;
+    public Codec<? extends ApothMiniboss> getCodec() {
+        return CODEC;
     }
 
     public boolean requiresNbtAccess() {

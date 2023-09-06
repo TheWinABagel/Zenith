@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.adventure.boss;
 
 import com.google.gson.JsonElement;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry;
 import net.minecraft.resources.ResourceLocation;
@@ -26,14 +27,14 @@ public class BossRegistry extends WeightedDynamicRegistry<ApothBoss> {
     }
 
     @Override
-    protected void validateItem(ApothBoss item) {
-        super.validateItem(item);
-        item.validate();
+    protected void validateItem(ResourceLocation key, ApothBoss item) {
+        super.validateItem(key, item);
+        item.validate(key);
     }
 
     @Override
-    protected void registerBuiltinSerializers() {
-        this.registerSerializer(DEFAULT, ApothBoss.SERIALIZER);
+    protected void registerBuiltinCodecs() {
+        this.registerDefaultCodec(Apotheosis.loc("boss"), ApothBoss.CODEC);
     }
 
 }

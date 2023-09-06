@@ -1,7 +1,9 @@
 package dev.shadowsoffire.apotheosis.adventure.boss;
 
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 
@@ -18,14 +20,14 @@ public class MinibossRegistry extends WeightedDynamicRegistry<ApothMiniboss> {
     }
 
     @Override
-    protected void validateItem(ApothMiniboss item) {
-        super.validateItem(item);
-        item.validate();
+    protected void validateItem(ResourceLocation key, ApothMiniboss item) {
+        super.validateItem(key, item);
+        item.validate(key);
     }
 
     @Override
-    protected void registerBuiltinSerializers() {
-        this.registerSerializer(DEFAULT, ApothMiniboss.SERIALIZER);
+    protected void registerBuiltinCodecs() {
+        this.registerDefaultCodec(Apotheosis.loc("miniboss"), ApothMiniboss.CODEC);
     }
 
     /**

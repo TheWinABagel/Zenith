@@ -75,7 +75,6 @@ public class AdventureModule {
         RarityRegistry.INSTANCE.register();
         AffixRegistry.INSTANCE.register();
         GemRegistry.INSTANCE.register();
-        GearSetRegistry.INSTANCE.register();
         AffixLootRegistry.INSTANCE.register();
         BossRegistry.INSTANCE.register();
         RogueSpawnerRegistry.INSTANCE.register();
@@ -182,10 +181,8 @@ public class AdventureModule {
         if (!e && nameConfig.hasChanged()) nameConfig.save();
     }
 
-    public static final boolean DEBUG = false;
-
     public static void debugLog(BlockPos pos, String name) {
-        if (DEBUG) AdventureModule.LOGGER.info("Generated a {} at {} {} {}", name, pos.getX(), pos.getY(), pos.getZ());
+        if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Generated a {} at {} {} {}", name, pos.getX(), pos.getY(), pos.getZ());
     }
 
     public static class ApothSmithingRecipe extends SmithingTransformRecipe {

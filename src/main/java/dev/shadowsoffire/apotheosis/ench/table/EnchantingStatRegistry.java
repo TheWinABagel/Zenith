@@ -4,11 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.api.IEnchantingBlock;
-import dev.shadowsoffire.placebo.json.PSerializer;
+import dev.shadowsoffire.placebo.codec.CodecProvider;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.reload.DynamicRegistry;
-import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
 import io.github.fabricators_of_create.porting_lib.enchant.EnchantmentBonusBlock;
 import io.github.fabricators_of_create.porting_lib.tags.TagHelper;
 import io.github.fabricators_of_create.porting_lib.tags.Tags;
@@ -40,8 +41,8 @@ public class EnchantingStatRegistry extends DynamicRegistry<EnchantingStatRegist
     }
 
     @Override
-    protected void registerBuiltinSerializers() {
-        this.registerSerializer(DEFAULT, BlockStats.SERIALIZER);
+    protected void registerBuiltinCodecs() {
+        this.registerDefaultCodec(Apotheosis.loc("enchanting_stats"), BlockStats.CODEC);
     }
 
     @Override
@@ -153,12 +154,12 @@ public class EnchantingStatRegistry extends DynamicRegistry<EnchantingStatRegist
 
         public static Codec<Stats> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
-                Codec.FLOAT.optionalFieldOf("maxEterna", 15F).forGetter(Stats::maxEterna),
-                Codec.FLOAT.optionalFieldOf("eterna", 0F).forGetter(Stats::eterna),
-                Codec.FLOAT.optionalFieldOf("quanta", 0F).forGetter(Stats::quanta),
-                Codec.FLOAT.optionalFieldOf("arcana", 0F).forGetter(Stats::arcana),
-                Codec.FLOAT.optionalFieldOf("rectification", 0F).forGetter(Stats::rectification),
-                Codec.INT.optionalFieldOf("clues", 0).forGetter(Stats::clues))
+                PlaceboCodecs.nullableField(Codec.FLOAT, "maxEterna", 15F).forGetter(Stats::maxEterna),
+                PlaceboCodecs.nullableField(Codec.FLOAT, "eterna", 0F).forGetter(Stats::eterna),
+                PlaceboCodecs.nullableField(Codec.FLOAT, "quanta", 0F).forGetter(Stats::quanta),
+                PlaceboCodecs.nullableField(Codec.FLOAT, "arcana", 0F).forGetter(Stats::arcana),
+                PlaceboCodecs.nullableField(Codec.FLOAT, "rectification", 0F).forGetter(Stats::rectification),
+                PlaceboCodecs.nullableField(Codec.INT, "clues", 0).forGetter(Stats::clues))
             .apply(inst, Stats::new));
 
         public void write(FriendlyByteBuf buf) {
@@ -175,17 +176,15 @@ public class EnchantingStatRegistry extends DynamicRegistry<EnchantingStatRegist
         }
     }
 
-    public static class BlockStats extends TypeKeyedBase<BlockStats> {
+    public static class BlockStats implements CodecProvider<BlockStats> {
 
         public static Codec<BlockStats> CODEC = RecordCodecBuilder.create(inst -> inst
             .group(
-                Codec.list(BuiltInRegistries.BLOCK.byNameCodec()).optionalFieldOf("blocks", Collections.emptyList()).forGetter(bs -> bs.blocks),
-                TagKey.codec(Registries.BLOCK).optionalFieldOf("tag").forGetter(bs -> Optional.empty()),
-                BuiltInRegistries.BLOCK.byNameCodec().optionalFieldOf("block").forGetter(bs -> Optional.empty()),
+                PlaceboCodecs.nullableField(Codec.list(BuiltInRegistries.BLOCK.byNameCodec()), "blocks", Collections.emptyList()).forGetter(bs -> bs.blocks),
+                PlaceboCodecs.nullableField(TagKey.codec(Registries.BLOCK), "tag").forGetter(bs -> Optional.empty()),
+                PlaceboCodecs.nullableField(BuiltInRegistries.BLOCK.byNameCodec(), "block").forGetter(bs -> Optional.empty()),
                 Stats.CODEC.fieldOf("stats").forGetter(bs -> bs.stats))
             .apply(inst, BlockStats::new));
-
-        public static final PSerializer<BlockStats> SERIALIZER = PSerializer.fromCodec("Enchanting Stats", CODEC);
 
         public final List<Block> blocks;
         public final Stats stats;
@@ -193,15 +192,15 @@ public class EnchantingStatRegistry extends DynamicRegistry<EnchantingStatRegist
         public BlockStats(List<Block> blocks, Optional<TagKey<Block>> tag, Optional<Block> block, Stats stats) {
             this.blocks = new ArrayList<>();
             if (!blocks.isEmpty()) this.blocks.addAll(blocks);
-            // TODO figure out tag registration for this
+            // TODO figure out tag registration for this, as it requires a reload to load properly rn
             if (tag.isPresent()) this.blocks.addAll(TagHelper.getContents(BuiltInRegistries.BLOCK, tag.get()));// EnchantingStatRegistry.INSTANCE.getContext().getTag(tag.get()).stream().map(Holder::value).toList());
             if (block.isPresent()) this.blocks.add(block.get());
             this.stats = stats;
         }
 
         @Override
-        public PSerializer<? extends BlockStats> getSerializer() {
-            return SERIALIZER;
+        public Codec<? extends BlockStats> getCodec() {
+            return CODEC;
         }
 
     }

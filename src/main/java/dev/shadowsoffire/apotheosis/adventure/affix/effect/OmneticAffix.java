@@ -10,7 +10,6 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.placebo.json.ItemAdapter;
-import dev.shadowsoffire.placebo.json.PSerializer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.FluidTags;
@@ -32,8 +31,6 @@ public class OmneticAffix extends Affix {
         .group(
             LootRarity.mapCodec(OmneticData.CODEC).fieldOf("values").forGetter(a -> a.values))
         .apply(inst, OmneticAffix::new));
-
-    public static final PSerializer<OmneticAffix> SERIALIZER = PSerializer.fromCodec("Omnetic Affix", CODEC);
 
     protected final Map<LootRarity, OmneticData> values;
 
@@ -83,8 +80,8 @@ public class OmneticAffix extends Affix {
     }
 
     @Override
-    public PSerializer<? extends Affix> getSerializer() {
-        return SERIALIZER;
+    public Codec<? extends Affix> getCodec() {
+        return CODEC;
     }
 
     static record OmneticData(String name, ItemStack[] items) {

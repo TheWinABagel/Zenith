@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.adventure.spawner;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.mojang.serialization.JsonOps;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.placebo.json.NBTAdapter;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry;
@@ -29,8 +30,8 @@ public class RogueSpawnerRegistry extends WeightedDynamicRegistry<RogueSpawner> 
     }
 
     @Override
-    protected void registerBuiltinSerializers() {
-        this.registerSerializer(DEFAULT, RogueSpawner.SERIALIZER);
+    protected void registerBuiltinCodecs() {
+        this.registerDefaultCodec(Apotheosis.loc("rogue_spawner"), RogueSpawner.CODEC);
     }
 
     private static class SpawnDataListAdapter implements JsonDeserializer<SimpleWeightedRandomList<SpawnData>>, JsonSerializer<SimpleWeightedRandomList<SpawnData>> {

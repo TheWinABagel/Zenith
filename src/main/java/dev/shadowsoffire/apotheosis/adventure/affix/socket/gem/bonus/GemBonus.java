@@ -9,8 +9,9 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.special.*;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.placebo.codec.CodecMap;
+import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
-import dev.shadowsoffire.placebo.codec.PlaceboCodecs.CodecProvider;
 import dev.shadowsoffire.placebo.events.GetEnchantmentLevelEvent;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -44,8 +45,8 @@ import java.util.function.BiConsumer;
 public abstract class GemBonus implements CodecProvider<GemBonus> {
 
     public static final Codec<Map<LootRarity, StepFunction>> VALUES_CODEC = LootRarity.mapCodec(StepFunction.CODEC);
-    public static final BiMap<ResourceLocation, Codec<? extends GemBonus>> CODECS = HashBiMap.create();
-    public static final Codec<GemBonus> CODEC = PlaceboCodecs.mapBacked("Gem Bonus", CODECS);
+
+    public static final CodecMap<GemBonus> CODEC = new CodecMap<>("Gem Bonus");
 
     protected final ResourceLocation id;
     protected final GemClass gemClass;
@@ -262,7 +263,7 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
     }
 
     private static void register(String id, Codec<? extends GemBonus> codec) {
-        CODECS.put(Apotheosis.loc(id), codec);
+        CODEC.register(Apotheosis.loc(id), codec);
     }
 
 }

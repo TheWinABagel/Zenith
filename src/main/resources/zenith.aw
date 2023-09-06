@@ -70,3 +70,5 @@ accessible field net/minecraft/world/entity/Mob goalSelector Lnet/minecraft/worl
 accessible method net/minecraft/client/renderer/entity/ItemRenderer renderModelLists (Lnet/minecraft/client/resources/model/BakedModel;Lnet/minecraft/world/item/ItemStack;IILcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;)V
 accessible field net/minecraft/world/entity/ai/goal/GoalSelector availableGoals Ljava/util/Set;
 accessible method net/minecraft/world/level/BaseSpawner setNextSpawnData (Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/SpawnData;)V
+accessible field net/minecraft/network/chat/TextColor NAMED_COLORS Ljava/util/Map;
+mutable field net/minecraft/network/chat/TextColor NAMED_COLORS Ljava/util/Map;

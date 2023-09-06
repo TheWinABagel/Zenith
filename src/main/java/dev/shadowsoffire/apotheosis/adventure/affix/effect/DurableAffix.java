@@ -1,10 +1,10 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.effect;
 
+import com.mojang.serialization.Codec;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
-import dev.shadowsoffire.placebo.json.PSerializer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 
 public class DurableAffix extends Affix {
 
-    public static final PSerializer<DurableAffix> SERIALIZER = PSerializer.builtin("Durability Affix", DurableAffix::new);
+    public static final Codec<DurableAffix> CODEC = Codec.unit(DurableAffix::new);
 
     public DurableAffix() {
         super(AffixType.DURABILITY);
@@ -36,8 +36,8 @@ public class DurableAffix extends Affix {
     }
 
     @Override
-    public PSerializer<? extends Affix> getSerializer() {
-        return SERIALIZER;
+    public Codec<? extends Affix> getCodec() {
+        return CODEC;
     }
 
     /**

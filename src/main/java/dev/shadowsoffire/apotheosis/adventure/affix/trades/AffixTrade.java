@@ -9,10 +9,9 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityClamp;
 import dev.shadowsoffire.apotheosis.village.wanderer.JsonTrade;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.json.ItemAdapter;
-import dev.shadowsoffire.placebo.json.PSerializer;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
-import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.RandomSource;
@@ -28,18 +27,16 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 
-public class AffixTrade extends TypeKeyedBase<JsonTrade> implements JsonTrade {
+public class AffixTrade implements JsonTrade {
 
     public static final Codec<AffixTrade> CODEC = ExtraCodecs.lazyInitializedCodec(() -> RecordCodecBuilder.create(inst -> inst
             .group(
                     ItemAdapter.CODEC.fieldOf("input_1").forGetter(a -> a.price),
-                    ItemAdapter.CODEC.optionalFieldOf("input_2", ItemStack.EMPTY).forGetter(a -> a.price2),
-                    RarityClamp.Simple.CODEC.optionalFieldOf("rarities", RarityClamp.UNCLAMPED).forGetter(a -> a.rarities),
+                    PlaceboCodecs.nullableField(ItemAdapter.CODEC, "input_2", ItemStack.EMPTY).forGetter(a -> a.price2),
+                    PlaceboCodecs.nullableField(RarityClamp.Simple.CODEC, "rarities", RarityClamp.UNCLAMPED).forGetter(a -> a.rarities),
                     AffixLootRegistry.INSTANCE.holderCodec().listOf().fieldOf("entries").forGetter(a -> a.entries),
-                    Codec.BOOL.optionalFieldOf("rare", false).forGetter(a -> a.rare))
+                    PlaceboCodecs.nullableField(Codec.BOOL, "rare", false).forGetter(a -> a.rare))
             .apply(inst, AffixTrade::new)));
-
-    public static final PSerializer<AffixTrade> SERIALIZER = PSerializer.fromCodec("Affix Trade", CODEC);
 
     /**
      * Input items
@@ -100,8 +97,8 @@ public class AffixTrade extends TypeKeyedBase<JsonTrade> implements JsonTrade {
     }
 
     @Override
-    public PSerializer<? extends JsonTrade> getSerializer() {
-        return SERIALIZER;
+    public Codec<? extends JsonTrade> getCodec() {
+        return CODEC;
     }
 
     /**

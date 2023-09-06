@@ -24,9 +24,9 @@ public class GemRegistry extends WeightedDynamicRegistry<Gem> {
     }
 
     @Override
-    protected void registerBuiltinSerializers() {
+    protected void registerBuiltinCodecs() {
         if (!Apotheosis.enableAdventure) return;
-        this.registerSerializer(DEFAULT, Gem.SERIALIZER);
+        this.registerDefaultCodec(Apotheosis.loc("gem"), Gem.CODEC);
     }
 
     /**

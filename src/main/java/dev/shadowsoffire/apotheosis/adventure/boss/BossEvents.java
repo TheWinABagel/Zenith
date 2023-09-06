@@ -107,7 +107,7 @@ public class BossEvents {
                 if (player == null) return TriState.DEFAULT; // Spawns require player context
                 ApothMiniboss item = MinibossRegistry.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(sLevel.getLevel()), IStaged.matches(player), IEntityMatch.matches(entity));
                 if (item != null && !item.isExcluded(mob, sLevel, type) && sLevel.getRandom().nextFloat() <= item.getChance()) {
-                    mob.getCustomData().putString("apoth.miniboss", item.getId().toString());
+                    mob.getCustomData().putString("apoth.miniboss", MinibossRegistry.INSTANCE.getKey(item).toString());
                     mob.getCustomData().putFloat("apoth.miniboss.luck", player.getLuck());
                     if (!item.shouldFinalize()) return TriState.FALSE;
                 }

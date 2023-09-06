@@ -6,6 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -25,8 +26,8 @@ public class EnchantmentBonus extends GemBonus {
         .group(
             gemClass(),
                 BuiltInRegistries.ENCHANTMENT.byNameCodec().fieldOf("enchantment").forGetter(a -> a.ench),
-            Codec.BOOL.optionalFieldOf("must_exist", false).forGetter(a -> a.mustExist),
-            Codec.BOOL.optionalFieldOf("global", false).forGetter(a -> a.global),
+                PlaceboCodecs.nullableField(Codec.BOOL, "must_exist", false).forGetter(a -> a.mustExist),
+                PlaceboCodecs.nullableField(Codec.BOOL, "global", false).forGetter(a -> a.global),
             LootRarity.mapCodec(Codec.intRange(1, 127)).fieldOf("values").forGetter(a -> a.values))
         .apply(inst, EnchantmentBonus::new));
 

@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Core loot registry. Handles the management of all Affixes, LootEntries, and generation of loot items.
@@ -17,16 +18,16 @@ public class AffixLootRegistry extends WeightedDynamicRegistry<AffixLootEntry> {
     }
 
     @Override
-    protected void registerBuiltinSerializers() {
-        this.registerSerializer(DEFAULT, AffixLootEntry.SERIALIZER);
+    protected void registerBuiltinCodecs() {
+        this.registerDefaultCodec(Apotheosis.loc("affix_loot_entry"), AffixLootEntry.CODEC);
     }
 
     @Override
-    protected void validateItem(AffixLootEntry item) {
-        super.validateItem(item);
-        if (!Apotheosis.enableAdventure) return;
-        Preconditions.checkArgument(!item.stack.isEmpty());
-        Preconditions.checkArgument(!item.getType().isNone());
+    protected void validateItem(ResourceLocation key, AffixLootEntry item) {
+        super.validateItem(key, item);
+        Preconditions.checkArgument(!item.stack.isEmpty(), "Empty itemstacks are not permitted.");
+        Preconditions.checkArgument(!item.getType().isNone(), "Items without a valid loot category are not permitted.");
+        Preconditions.checkArgument(item.getMinRarity().ordinal() <= item.getMaxRarity().ordinal(), "The minimum rarity must be lower or equal to the max rarity.");
     }
 
 }

@@ -1,38 +1,27 @@
 package dev.shadowsoffire.apotheosis.util;
 
 import com.google.gson.annotations.SerializedName;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 
-public class SpawnerStats {
+public record SpawnerStats(int spawnDelay, int minDelay, int maxDelay, int spawnCount, int maxNearbyEntities, int spawnRange, int playerRange) {
 
-    @SerializedName("spawn_delay")
-    protected final int spawnDelay;
-    @SerializedName("min_delay")
-    protected final int minDelay;
-    @SerializedName("max_delay")
-    protected final int maxDelay;
-    @SerializedName("spawn_count")
-    protected final int spawnCount;
-    @SerializedName("max_nearby_entities")
-    protected final int maxNearbyEntities;
-    @SerializedName("spawn_range")
-    protected final int spawnRange;
-    @SerializedName("player_activation_range")
-    protected final int playerRange;
+    public static final Codec<SpawnerStats> CODEC = RecordCodecBuilder.create(inst -> inst
+            .group(
+                PlaceboCodecs.nullableField(Codec.INT, "spawn_delay", 20).forGetter(SpawnerStats::spawnDelay),
+                PlaceboCodecs.nullableField(Codec.INT, "min_delay", 200).forGetter(SpawnerStats::minDelay),
+                PlaceboCodecs.nullableField(Codec.INT, "max_delay", 800).forGetter(SpawnerStats::maxDelay),
+                PlaceboCodecs.nullableField(Codec.INT, "spawn_count", 4).forGetter(SpawnerStats::spawnCount),
+                PlaceboCodecs.nullableField(Codec.INT, "max_nearby_entities", 6).forGetter(SpawnerStats::maxNearbyEntities),
+                PlaceboCodecs.nullableField(Codec.INT, "spawn_range", 4).forGetter(SpawnerStats::spawnRange),
+                PlaceboCodecs.nullableField(Codec.INT, "player_activation_range", 16).forGetter(SpawnerStats::playerRange))
+            .apply(inst, SpawnerStats::new));
 
     public SpawnerStats() {
         this(20, 200, 800, 4, 6, 4, 16);
-    }
-
-    public SpawnerStats(int delay, int min, int max, int count, int nearby, int range, int playerRange) {
-        this.spawnDelay = delay;
-        this.minDelay = min;
-        this.maxDelay = max;
-        this.spawnCount = count;
-        this.maxNearbyEntities = nearby;
-        this.spawnRange = range;
-        this.playerRange = playerRange;
     }
 
     public void apply(SpawnerBlockEntity entity) {

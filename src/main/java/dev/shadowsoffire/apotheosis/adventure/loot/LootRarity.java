@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
+import dev.shadowsoffire.placebo.codec.CodecProvider;
 import net.minecraft.core.registries.BuiltInRegistries;
 import org.apache.commons.lang3.mutable.MutableInt;
 
@@ -22,9 +23,7 @@ import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
-import dev.shadowsoffire.placebo.json.PSerializer;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
-import dev.shadowsoffire.placebo.reload.TypeKeyed.TypeKeyedBase;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.ILuckyWeighted;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -35,18 +34,16 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-public class LootRarity extends TypeKeyedBase<LootRarity> implements ILuckyWeighted, Comparable<LootRarity> {
+public class LootRarity implements CodecProvider<LootRarity>, ILuckyWeighted, Comparable<LootRarity> {
 
     public static final Codec<LootRarity> LOAD_CODEC = RecordCodecBuilder.create(inst -> inst.group(
                     TextColor.CODEC.fieldOf("color").forGetter(LootRarity::getColor),
                     BuiltInRegistries.ITEM.byNameCodec().fieldOf("material").forGetter(LootRarity::getMaterial),
                     Codec.INT.fieldOf("ordinal").forGetter(LootRarity::ordinal),
                     Codec.intRange(0, Integer.MAX_VALUE).fieldOf("weight").forGetter(ILuckyWeighted::getWeight),
-                    Codec.floatRange(0, Float.MAX_VALUE).optionalFieldOf("quality", 0F).forGetter(ILuckyWeighted::getQuality),
+                    PlaceboCodecs.nullableField(Codec.floatRange(0, Float.MAX_VALUE), "quality", 0F).forGetter(ILuckyWeighted::getQuality),
                     new ListCodec<>(LootRule.CODEC).fieldOf("rules").forGetter(LootRarity::getRules))
             .apply(inst, LootRarity::new));
-
-    public static final PSerializer<LootRarity> SERIALIZER = PSerializer.fromCodec("Loot Rarity", LOAD_CODEC);
 
     @Deprecated // TODO: RarityRegistry.INSTANCE.holderCodec() - requires updating all data files to use namespaced rarities.
     public static final Codec<DynamicHolder<LootRarity>> HOLDER_CODEC = ExtraCodecs.lazyInitializedCodec(() -> Codec.STRING.xmap(RarityRegistry::convertId, ResourceLocation::toString).xmap(RarityRegistry.INSTANCE::holder,
@@ -149,12 +146,12 @@ public class LootRarity extends TypeKeyedBase<LootRarity> implements ILuckyWeigh
     }
 
     public Component toComponent() {
-        return Component.translatable("rarity." + this.getId()).withStyle(Style.EMPTY.withColor(this.color));
+        return Component.translatable("rarity." + RarityRegistry.INSTANCE.getKey(this)).withStyle(Style.EMPTY.withColor(this.color));
     }
 
     @Override
     public String toString() {
-        return "LootRarity{" + this.id + "}";
+        return "LootRarity{" + RarityRegistry.INSTANCE.getKey(this) + "}";
     }
 
     @Override
@@ -163,8 +160,8 @@ public class LootRarity extends TypeKeyedBase<LootRarity> implements ILuckyWeigh
     }
 
     @Override
-    public PSerializer<? extends LootRarity> getSerializer() {
-        return SERIALIZER;
+    public Codec<? extends LootRarity> getCodec() {
+        return LOAD_CODEC;
     }
 
     public static LootRarity random(RandomSource rand, float luck) {
@@ -185,7 +182,7 @@ public class LootRarity extends TypeKeyedBase<LootRarity> implements ILuckyWeigh
         public static final Codec<LootRule> CODEC = RecordCodecBuilder.create(inst -> inst.group(
                         PlaceboCodecs.enumCodec(AffixType.class).fieldOf("type").forGetter(LootRule::type),
                         Codec.FLOAT.fieldOf("chance").forGetter(LootRule::chance),
-                        ExtraCodecs.lazyInitializedCodec(() -> LootRule.CODEC).optionalFieldOf("backup").forGetter(rule -> Optional.ofNullable(rule.backup())))
+                        PlaceboCodecs.nullableField(ExtraCodecs.lazyInitializedCodec(() -> LootRule.CODEC), "backup").forGetter(rule -> Optional.ofNullable(rule.backup())))
                 .apply(inst, LootRule::new));
 
         private static Random jRand = new Random();
@@ -208,7 +205,7 @@ public class LootRarity extends TypeKeyedBase<LootRarity> implements ILuckyWeigh
                 List<DynamicHolder<Affix>> available = AffixHelper.byType(this.type).stream().filter(a -> a.get().canApplyTo(stack, LootCategory.forItem(stack), rarity) && !currentAffixes.contains(a)).collect(Collectors.toList());
                 if (available.size() == 0) {
                     if (this.backup != null) this.backup.execute(stack, rarity, currentAffixes, sockets, rand);
-                    else AdventureModule.LOGGER.error("Failed to execute LootRule {}/{}/{}/{}!", BuiltInRegistries.ITEM.getKey(stack.getItem()), rarity.getId(), this.type, this.chance);
+                    else AdventureModule.LOGGER.error("Failed to execute LootRule {}/{}/{}/{}!", BuiltInRegistries.ITEM.getKey(stack.getItem()), RarityRegistry.INSTANCE.getKey(rarity), this.type, this.chance);
                     return;
                 }
                 jRand.setSeed(rand.nextLong());
