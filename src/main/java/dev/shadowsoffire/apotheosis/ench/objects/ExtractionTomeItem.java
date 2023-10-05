@@ -80,10 +80,11 @@ public class ExtractionTomeItem extends BookItem {
         Events.ANVIL_REPAIR.register((ev) -> {
             ItemStack weapon = ev.left;
             ItemStack book = ev.right;
-            if (!(book.getItem() instanceof ExtractionTomeItem) || book.isEnchanted() || !weapon.isEnchanted()) return;
+            if (!(book.getItem() instanceof ExtractionTomeItem) || book.isEnchanted() || !weapon.isEnchanted()) return false;
             EnchModule.LOGGER.error("test2");
             EnchantmentHelper.setEnchantments(Collections.emptyMap(), weapon);
             giveItem(ev.player, weapon);
+            return false;
         });
     }
 

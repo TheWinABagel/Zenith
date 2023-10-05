@@ -21,9 +21,12 @@
       "item": "minecraft:blaze_rod"
     },
 	"P": {
-	  "type": "forge:partial_nbt",
-      "item": "minecraft:potion",
-	  "nbt": "{Potion: \"minecraft:thick\"}"
+      "fabric:type": "fabric:nbt",
+      "base": {
+        "item": "minecraft:potion"
+      },
+	  "nbt": "{Potion: \"minecraft:thick\"}",
+      "strict": "false"
     },
 	"L": {
       "item": "minecraft:lava_bucket"

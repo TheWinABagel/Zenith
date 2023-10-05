@@ -1,6 +1,6 @@
 {
 	"type": "apotheosis:attribute",
-	"attribute": "attributeslib:experience_gained",
+	"attribute": "additionalentityattributes:dropped_experience",
 	"operation": "ADDITION",
 	"values": {
 		"common": {

@@ -38,7 +38,7 @@
 					"pickaxe"
 				]
 			},
-			"attribute": "attributeslib:experience_gained",
+			"attribute": "additionalentityattributes:dropped_experience",
 			"operation": "MULTIPLY_TOTAL",
 			"values": {
 				"common": 0.075,

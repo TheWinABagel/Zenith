@@ -8,9 +8,8 @@ import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
 import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerTile;
 import dev.shadowsoffire.placebo.config.Configuration;
 import dev.shadowsoffire.placebo.tabs.TabFillingRegistry;
-import io.github.fabricators_of_create.porting_lib.entity.events.EntityMoveEvents;
-import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityEvents;
-import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityLootEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.EntityEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
@@ -64,7 +63,7 @@ public class SpawnerModule {
     }
 
     public static void dropsEvent() {
-        LivingEntityLootEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
+        LivingEntityEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
             CapturingEnchant.handleCapturing(target, source, drops);
             return false;
         });
@@ -108,8 +107,8 @@ public class SpawnerModule {
     }
 
     public static void dumbMobsCantTeleport() {
-        EntityMoveEvents.TELEPORT.register(e -> {
-            if (e.entity.getCustomData().getBoolean("apotheosis:movable")) {
+        EntityEvents.TELEPORT.register(e -> {
+            if (e.getEntity().getCustomData().getBoolean("apotheosis:movable")) {
                 e.setCanceled(true);
             }
         });

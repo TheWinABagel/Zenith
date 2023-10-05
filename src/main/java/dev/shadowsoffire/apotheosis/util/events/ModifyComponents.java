@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis.util.events;
 
 import com.mojang.datafixers.util.Either;
-import io.github.fabricators_of_create.porting_lib.core.event.object.CancellableEvent;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.network.chat.FormattedText;
@@ -15,18 +14,17 @@ public class ModifyComponents {
 
     public static final Event<modifyComponentsCallback> MODIFY_COMPONENTS = EventFactory.createArrayBacked(modifyComponentsCallback.class, callbacks -> event -> {
         for (modifyComponentsCallback callback : callbacks) {
-            callback.modifyComponents(event);
-            if (event.isCancelled())
-                return;
+            if (!callback.modifyComponents(event)) return true;
         }
+        return false;
     });
 
     @FunctionalInterface
     public interface modifyComponentsCallback {
-        void modifyComponents(ModifyComponentsEvent event);
+        boolean modifyComponents(ModifyComponentsEvent event);
     }
 
-    public static class ModifyComponentsEvent extends CancellableEvent {
+    public static class ModifyComponentsEvent {
         public final ItemStack stack;
         public final int screenWidth;
         public final int screenHeight;

@@ -10,7 +10,7 @@ import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.network.PacketDistro;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
-import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -45,20 +45,22 @@ public class BossEvents {
     public Object2IntMap<ResourceLocation> bossCooldowns = new Object2IntOpenHashMap<>();
 
     public static void init() {
-
+        //naturalBosses();
+        minibosses();
+        delayedMinibosses();
     }
 
     public void naturalBosses() {
-        LivingEntityEvents.NATURAL_SPAWN.register((mob, x, y, z, level, spawner, type) -> {
+        LivingEntityEvents.CHECK_SPAWN.register((mob, level, x, y, z, spawner, type) -> {
             if (type == MobSpawnType.NATURAL || type == MobSpawnType.CHUNK_GENERATION) {
                 RandomSource rand = level.getRandom();
                 if (this.bossCooldowns.getInt(mob.level().dimension().location()) <= 0 && !level.isClientSide() && mob instanceof Monster/* && e.getResult() != Result.DENY*/) {
                     ServerLevelAccessor sLevel = (ServerLevelAccessor) level;
                     Pair<Float, BossSpawnRules> rules = AdventureConfig.BOSS_SPAWN_RULES.get(sLevel.getLevel().dimension().location());
-                    if (rules == null) return TriState.DEFAULT;
+                    if (rules == null) return false;
                     if (rand.nextFloat() <= rules.getLeft() && rules.getRight().test(sLevel, BlockPos.containing(x, y, z))) {
                         Player player = sLevel.getNearestPlayer(x, y, z, -1, false);
-                        if (player == null) return TriState.DEFAULT; // Spawns require player context
+                        if (player == null) return false; // Spawns require player context
                         ApothBoss item = BossRegistry.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(sLevel.getLevel()), IStaged.matches(player));
                         Mob boss = item.createBoss(sLevel, BlockPos.containing(x - 0.5, y, z - 0.5), rand, player.getLuck());
                         if (AdventureConfig.bossAutoAggro && !player.isCreative()) {
@@ -82,12 +84,12 @@ public class BossEvents {
                                 });
                             }
                             this.bossCooldowns.put(mob.level().dimension().location(), AdventureConfig.bossSpawnCooldown);
-                            return TriState.FALSE;
+                            return false;
                         }
                     }
                 }
             }
-            return TriState.DEFAULT;
+            return false;
         });
 
     }
@@ -97,28 +99,28 @@ public class BossEvents {
         return boss.getSelfAndPassengers().filter(e -> e.getCustomData().contains("apoth.boss")).findFirst().map(Entity::getCustomName).orElse(null);
     }
 
-    public void minibosses() {
-        LivingEntityEvents.NATURAL_SPAWN.register((mob, x, y, z, level, spawner, type) -> {
+    public static void minibosses() {
+        LivingEntityEvents.CHECK_SPAWN.register((mob, level, x, y, z, spawner, type) -> {
             LivingEntity entity = mob;
             RandomSource rand = level.getRandom();
             if (!level.isClientSide() && entity != null) {
                 ServerLevelAccessor sLevel = (ServerLevelAccessor) level;
                 Player player = sLevel.getNearestPlayer(x, y, z, -1, false);
-                if (player == null) return TriState.DEFAULT; // Spawns require player context
+                if (player == null) return false; // Spawns require player context
                 ApothMiniboss item = MinibossRegistry.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(sLevel.getLevel()), IStaged.matches(player), IEntityMatch.matches(entity));
                 if (item != null && !item.isExcluded(mob, sLevel, type) && sLevel.getRandom().nextFloat() <= item.getChance()) {
                     mob.getCustomData().putString("apoth.miniboss", MinibossRegistry.INSTANCE.getKey(item).toString());
                     mob.getCustomData().putFloat("apoth.miniboss.luck", player.getLuck());
-                    if (!item.shouldFinalize()) return TriState.FALSE;
+                    if (!item.shouldFinalize()) return false;
                 }
             }
-            return TriState.DEFAULT;
+            return false;
         });
 
     }
 
-    public void delayedMinibosses() {
-        LivingEntityEvents.NATURAL_SPAWN.register((mob, x, y, z, level, spawner, type) -> {
+    public static void delayedMinibosses() {
+        LivingEntityEvents.CHECK_SPAWN.register((mob, level, x, y, z, spawner, type) -> {
             if (!level.isClientSide()) {
                 String key = mob.getCustomData().getString("apoth.miniboss");
                 if (key != null) {
@@ -128,7 +130,7 @@ public class BossEvents {
                     }
                 }
             }
-            return null;
+            return false;
         });
 
     }

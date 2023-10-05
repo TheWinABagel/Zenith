@@ -59,9 +59,6 @@ public class AdventureModule {
 
     public static final StructureProcessorType<ItemFrameGemsProcessor> ITEM_FRAME_LOOT = () -> ItemFrameGemsProcessor.CODEC;
 
-    public AdventureModule() {
-        Adventure.bootstrap();
-    }
 
     public void preInit() {
     //    ObfuscationReflectionHelper.setPrivateValue(RangedAttribute.class, (RangedAttribute) Attributes.ARMOR, 200D, "f_22308_");
@@ -71,6 +68,7 @@ public class AdventureModule {
     public static void init() {
         reload(false);
         AdventureEvents.init();
+        Adventure.bootstrap();
         BossEvents.init();
         RarityRegistry.INSTANCE.register();
         AffixRegistry.INSTANCE.register();
@@ -108,6 +106,7 @@ public class AdventureModule {
         serializers();
         blocks();
         items();
+        miscRegistration();
     }
 
     public static void blocks() {
@@ -159,14 +158,15 @@ public class AdventureModule {
 
     public static void miscRegistration() {
 
-            Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), Apotheosis.loc("gems"), GemLootModifier.CODEC);
-            Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), Apotheosis.loc("affix_loot"), AffixLootModifier.CODEC);
-            Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), Apotheosis.loc("affix_conversion"), AffixConvertLootModifier.CODEC);
-            Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), Apotheosis.loc("affix_hook"), AffixHookLootModifier.CODEC);
+            //Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), Apotheosis.loc("gems"), GemLootModifier.CODEC);
+            //Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), Apotheosis.loc("affix_loot"), AffixLootModifier.CODEC);
+            //Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), Apotheosis.loc("affix_conversion"), AffixConvertLootModifier.CODEC);
+            //Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), Apotheosis.loc("affix_hook"), AffixHookLootModifier.CODEC);
 
     /*    if (e.getForgeRegistry() == (Object) ForgeRegistries.BIOME_MODIFIER_SERIALIZERS.get()) {
             e.getForgeRegistry().register("blacklist", BlacklistModifier.CODEC);
         }*/
+
     }
 
     /**

@@ -20,11 +20,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Sheep.class)
-public class SheepMixin {
+public class SheepMixin { //TODO Sheep enchants mixin
 
     @Unique private Player player;
     @Unique private InteractionHand hand;
-    @Inject(method = "mobInteract", at = @At(value = "INVOKE", target = "net/minecraft/world/entity/animal/Sheep.shear (Lnet/minecraft/sounds/SoundSource;)V", shift = At.Shift.BEFORE), remap = false, cancellable = true)
+ /*   @Inject(method = "Lnet/minecraft/world/entity/animal/Sheep;mobInteract(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;",
+            at = @At(value = "INVOKE", target = "net/minecraft/world/entity/animal/Sheep.shear (Lnet/minecraft/sounds/SoundSource;)V", shift = At.Shift.BEFORE), remap = false, cancellable = true)
     public void onSheared(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         if (Apotheosis.enableEnch) {
             this.player = player;
@@ -48,6 +49,6 @@ public class SheepMixin {
     public int onSheared(int oldVal) {
         if (Apotheosis.enableEnch) return oldVal + (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player.getItemInHand(hand))) * 2;
         return oldVal;
-    }
+    }*/
 
 }

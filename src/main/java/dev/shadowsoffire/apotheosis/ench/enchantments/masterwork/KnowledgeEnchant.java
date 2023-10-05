@@ -1,6 +1,6 @@
 package dev.shadowsoffire.apotheosis.ench.enchantments.masterwork;
 
-import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityLootEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -40,7 +40,7 @@ public class KnowledgeEnchant extends Enchantment {
     }
 
     public void drops() {
-        LivingEntityLootEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
+        LivingEntityEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
             if (!(source.getEntity() instanceof Player p)) return false;
             int knowledge = EnchantmentHelper.getItemEnchantmentLevel(this, p.getMainHandItem());
             if (knowledge > 0 && !(target instanceof Player)) {

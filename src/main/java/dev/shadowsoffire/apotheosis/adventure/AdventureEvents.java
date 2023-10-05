@@ -16,15 +16,14 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
 import dev.shadowsoffire.apotheosis.util.Events;
 import dev.shadowsoffire.apotheosis.util.ItemAccess;
 import dev.shadowsoffire.attributeslib.api.ItemAttributeModifierEvent;
+import dev.shadowsoffire.attributeslib.api.ProjectileImpactCallback;
 import dev.shadowsoffire.placebo.events.AnvilLandCallback;
 import dev.shadowsoffire.placebo.events.GetEnchantmentLevelEvent;
 import dev.shadowsoffire.placebo.events.ItemUseEvent;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
 import io.github.fabricators_of_create.porting_lib.entity.events.EntityEvents;
-import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityDamageEvents;
-import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityEvents;
-import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityLootEvents;
-import io.github.fabricators_of_create.porting_lib.entity.events.player.PlayerEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.PlayerEvents;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.FakePlayer;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
@@ -122,10 +121,11 @@ public class AdventureEvents {
     }
 
     public static void preventBossSuffocate() {
-        LivingEntityDamageEvents.HURT.register(e -> {
-            if (e.damageSource.is(DamageTypes.IN_WALL) && e.damaged.getCustomData().contains("apoth.boss")) {
-                e.setCanceled(true);
+        LivingEntityEvents.HURT.register((source, damaged, amount) -> {
+            if (source.is(DamageTypes.IN_WALL) && damaged.getCustomData().contains("apoth.boss")) {
+                return 0;
             }
+            return amount;
         });
 
     }
@@ -161,7 +161,7 @@ public class AdventureEvents {
      * This event handler allows affixes to react to arrows hitting something.
      */
     public static void impact() {
-        EntityEvents.PROJECTILE_IMPACT.register((projectile, hitResult) -> {
+        ProjectileImpactCallback.PROJECTILE_IMPACT.register((projectile, hitResult) -> {
             if (projectile instanceof AbstractArrow arrow) {
                 var affixes = AffixHelper.getAffixes(arrow);
                 affixes.values().forEach(inst -> inst.onArrowImpact(arrow, hitResult, hitResult.getType()));
@@ -172,18 +172,15 @@ public class AdventureEvents {
     }
 
     public static void onDamage() {
-        LivingEntityDamageEvents.HURT.register(e -> {
-            Adventure.Affixes.MAGICAL.getOptional().ifPresent(afx -> afx.onHurt(e));
-            DamageSource src = e.damageSource;
-            LivingEntity ent = e.damaged;
-            float amount = e.damageAmount;
+        LivingEntityEvents.HURT.register((src, ent, amount) -> {
+            Adventure.Affixes.MAGICAL.getOptional().ifPresent(afx -> afx.onHurt(src));
             for (ItemStack s : ent.getAllSlots()) {
                 var affixes = AffixHelper.getAffixes(s);
                 for (AffixInstance inst : affixes.values()) {
                     amount = inst.onHurt(src, ent, amount);
                 }
             }
-            e.damageAmount = amount;
+            return amount;
         });
     }
 
@@ -203,6 +200,7 @@ public class AdventureEvents {
     }
 
     public static void shieldBlock() {
+    /*    //TODO reenable
         EntityEvents.SHIELD_BLOCK.register(e -> {
             ItemStack stack = e.blocker.getUseItem();
             var affixes = AffixHelper.getAffixes(stack);
@@ -212,7 +210,7 @@ public class AdventureEvents {
             }
             if (blocked != e.damageBlocked) e.damageBlocked = blocked;
         });
-
+*/
     }
 
     public static void blockBreak() {
@@ -227,7 +225,7 @@ public class AdventureEvents {
     }
 
     public static void dropsHigh() {
-        LivingEntityLootEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
+        LivingEntityEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
             if (source.getEntity() instanceof ServerPlayer p && target instanceof Monster) {
                 if (p instanceof FakePlayer) return false;
                 float chance = AdventureConfig.gemDropChance + (target.getCustomData().contains("apoth.boss") ? AdventureConfig.gemBossBonus : 0);
@@ -242,7 +240,7 @@ public class AdventureEvents {
     }
 
     public static void drops() {
-        LivingEntityLootEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
+        LivingEntityEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
             AdventureModule.LOGGER.info("present: {}", Adventure.Affixes.FESTIVE.getOptional().isPresent());
             Adventure.Affixes.FESTIVE.getOptional().ifPresent(afx -> afx.drops(target, source, drops));
             TelepathicAffix.drops(source, drops);
@@ -270,10 +268,8 @@ public class AdventureEvents {
     }
 
     public static void speed() {
-        PlayerEvents.BREAK_SPEED.register((player, state, pos, speed) -> {
-            AtomicReference<Float> finalSpeed = new AtomicReference<>(speed);
-            Adventure.Affixes.OMNETIC.getOptional().ifPresent(afx -> finalSpeed.set(afx.speed(player, state, pos, speed)));
-            return finalSpeed.get();
+        PlayerEvents.BREAK_SPEED.register(e -> {
+            Adventure.Affixes.OMNETIC.getOptional().ifPresent(afx -> afx.speed(e));
         });
 
     }
@@ -285,19 +281,19 @@ public class AdventureEvents {
     }
 
     public static void special() {
-        LivingEntityEvents.NATURAL_SPAWN.register((mob, x, y, z, level, spawner, type) -> {
+        LivingEntityEvents.CHECK_SPAWN.register((mob, level, x, y, z, spawner, spawnReason) -> {
             if (level.getRandom().nextFloat() <= AdventureConfig.randomAffixItem && mob instanceof Monster) {
                 Player player = level.getNearestPlayer(x, y, z, -1, false);
-                if (player == null) return TriState.DEFAULT;
+                if (player == null) return false;
                 ItemStack affixItem = LootController.createRandomLootItem(level.getRandom(), null, player, (ServerLevel) mob.level());
-                if (affixItem.isEmpty()) return TriState.DEFAULT;
+                if (affixItem.isEmpty()) return false;
                 affixItem.getOrCreateTag().putBoolean("apoth_rspawn", true);
                 LootCategory cat = LootCategory.forItem(affixItem);
                 EquipmentSlot slot = cat.getSlots()[0];
                 mob.setItemSlot(slot, affixItem);
                 mob.setGuaranteedDrop(slot);
             }
-            return TriState.DEFAULT;
+            return false;
         });
 
     }
