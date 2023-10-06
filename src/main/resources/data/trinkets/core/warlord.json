@@ -15,7 +15,7 @@
 					"crossbow"
 				]
 			},
-			"attribute": "additionalentityattributes:critical_bonus_damage",
+			"attribute": "attributeslib:crit_damage",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.05,

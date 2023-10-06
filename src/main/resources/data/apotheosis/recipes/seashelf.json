@@ -18,12 +18,9 @@
       "item": "minecraft:prismarine_bricks"
     },
     "P": {
-      "fabric:type": "fabric:nbt",
-      "base": {
-        "item": "minecraft:potion"
-      },
-      "nbt": "{\"Potion\": \"minecraft:water\"}",
-      "strict": "true"
+      "type": "forge:nbt",
+      "item": "minecraft:potion",
+      "nbt": "{\"Potion\": \"minecraft:water\"}"
     },
     "S": {
       "tag": "c:bookshelves"

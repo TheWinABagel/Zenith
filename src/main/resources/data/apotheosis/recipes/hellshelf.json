@@ -18,12 +18,9 @@
       "item": "minecraft:nether_bricks"
     },
     "P": {
-      "fabric:type": "fabric:nbt",
-      "base": {
-        "item": "minecraft:potion"
-      },
-      "nbt": "{\"Potion\": \"minecraft:regeneration\"}",
-      "strict": "true"
+      "type": "forge:nbt",
+      "item": "minecraft:potion",
+      "nbt": "{\"Potion\": \"minecraft:regeneration\"}"
     },
     "S": {
       "tag": "c:bookshelves"

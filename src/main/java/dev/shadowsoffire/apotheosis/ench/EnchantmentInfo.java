@@ -6,7 +6,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.math.BigDecimal;
-import dev.s_com.udojava.evalex.Expression;
+import java.s_com.udojava.evalex.Expression;
 
 public class EnchantmentInfo {
 

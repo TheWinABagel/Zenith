@@ -51,7 +51,7 @@
 					}
 				},
 				{
-					"attribute": "projectile_damage:generic",
+					"attribute": "attributeslib:arrow_damage",
 					"operation": "MULTIPLY_BASE",
 					"value": {
 						"min": 0.25,

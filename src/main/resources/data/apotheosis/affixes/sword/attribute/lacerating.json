@@ -1,6 +1,6 @@
 {
 	"type": "apotheosis:attribute",
-	"attribute": "additionalentityattributes:critical_bonus_damage",
+	"attribute": "attributeslib:crit_damage",
 	"operation": "ADDITION",
 	"values": {
 		"common": {
