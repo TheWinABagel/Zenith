@@ -15,7 +15,7 @@
 					"crossbow"
 				]
 			},
-			"attribute": "attributeslib:arrow_damage",
+			"attribute": "projectile_damage:generic",
 			"operation": "MULTIPLY_BASE",
 			"values": {
 				"common": 0.05,

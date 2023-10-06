@@ -14,15 +14,18 @@
     "G": {
       "item": "minecraft:emerald_block"
     },
-	"H": {
-      "tag": "forge:ingots/netherite"
+    "H": {
+      "tag": "c:netherite_ingots"
     },
-	"P": {
-	  "type": "forge:nbt",
-      "item": "minecraft:potion",
-	  "nbt": "{\"Potion\": \"minecraft:long_night_vision\"}"
+    "P": {
+      "fabric:type": "fabric:nbt",
+      "base": {
+        "item": "minecraft:potion"
+      },
+      "nbt": "{\"Potion\": \"minecraft:long_night_vision\"}",
+      "strict": "true"
     },
-	"E": {
+    "E": {
       "item": "apotheosis:sightshelf"
     }
   },

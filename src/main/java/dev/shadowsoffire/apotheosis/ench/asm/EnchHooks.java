@@ -68,15 +68,4 @@ public class EnchHooks {
         return EnchModule.getEnchInfo(ench).isTradeable();
     }
 
-    /**
-     * Calculates the delay for catching a fish. Ensures that the value never returns <= 0, so that it doesn't get infinitely locked.
-     * Called at the end of {link FishingBobberEntity#catchingFish(BlockPos)}
-     * Injected by coremods/ench/fishing_hook.js
-     */
-    public static int getTicksCaughtDelay(FishingHook bobber) {
-        int lowBound = Math.max(1, 100 - bobber.lureSpeed * 10);
-        int highBound = Math.max(lowBound, 600 - bobber.lureSpeed * 60);
-        return Mth.nextInt(bobber.random, lowBound, highBound);
-    }
-
 }

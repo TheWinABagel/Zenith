@@ -14,18 +14,21 @@
     "G": {
       "item": "minecraft:gold_block"
     },
-	"H": {
+    "H": {
       "item": "apotheosis:infused_hellshelf"
     },
-	"S": {
+    "S": {
       "item": "minecraft:spyglass"
     },
-	"P": {
-	  "type": "forge:nbt",
-      "item": "minecraft:potion",
-	  "nbt": "{\"Potion\": \"minecraft:night_vision\"}"
+    "P": {
+      "fabric:type": "fabric:nbt",
+      "base": {
+        "item": "minecraft:potion"
+      },
+      "nbt": "{\"Potion\": \"minecraft:night_vision\"}",
+      "strict": "true"
     },
-	"E": {
+    "E": {
       "item": "minecraft:ender_eye"
     }
   },

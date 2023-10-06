@@ -14,18 +14,21 @@
     "G": {
       "item": "apotheosis:gem_dust"
     },
-	"M": {
+    "M": {
       "item": "minecraft:amethyst_shard"
     },
-	"B": {
+    "B": {
       "item": "minecraft:ender_pearl"
     },
-	"P": {
-	  "type": "forge:partial_nbt",
-      "item": "minecraft:potion",
-	  "nbt": "{Potion: \"minecraft:thick\"}"
+    "P": {
+      "fabric:type": "fabric:nbt",
+      "base": {
+        "item": "minecraft:potion"
+      },
+      "nbt": "{Potion: \"minecraft:thick\"}",
+      "strict": "false"
     },
-	"L": {
+    "L": {
       "item": "minecraft:water_bucket"
     }
   },
