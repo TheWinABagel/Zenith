@@ -227,7 +227,7 @@ public class AdventureModuleClient {
         });
         ModifyComponents.MODIFY_COMPONENTS.register(e -> {
             int sockets = SocketHelper.getSockets(e.stack);
-            if (sockets == 0) return;
+            if (sockets == 0) return false;
             List<Either<FormattedText, TooltipComponent>> list = e.tooltipElements;
             int rmvIdx = -1;
             for (int i = 0; i < list.size(); i++) {
@@ -240,8 +240,9 @@ public class AdventureModuleClient {
                     }
                 }
             }
-            if (rmvIdx == -1) return;
+            if (rmvIdx == -1) return false;
             e.tooltipElements.add(rmvIdx, Either.right(new SocketComponent(e.stack, SocketHelper.getGems(e.stack))));
+            return false;
         });
 
     }
@@ -269,8 +270,7 @@ public class AdventureModuleClient {
         itemComponent.ifPresent(c -> elements.add(1, Either.right(c)));
 
         var event = new ModifyComponents.ModifyComponentsEvent(stack, screenWidth, screenHeight, elements, -1);
-        ModifyComponents.MODIFY_COMPONENTS.invoker().modifyComponents(event);
-        if (event.isCanceled()) return List.of();
+        if (ModifyComponents.MODIFY_COMPONENTS.invoker().modifyComponents(event)) return List.of();
 
         // text wrapping
         int tooltipTextWidth = event.tooltipElements.stream()

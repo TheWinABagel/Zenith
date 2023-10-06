@@ -44,7 +44,6 @@ public class EnchModule {
     public static final String ENCH_HARD_CAP_IMC = "set_ench_hard_cap";
     public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Enchantment");
     public static final List<TomeItem> TYPED_BOOKS = new ArrayList<>();
-    public static final EquipmentSlot[] ARMOR = { EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET };
     public static final EnchantmentCategory HOE = ClassTinkerers.getEnum(EnchantmentCategory.class, "HOE");
     public static final EnchantmentCategory SHIELD = ClassTinkerers.getEnum(EnchantmentCategory.class, "SHIELD");
     public static final EnchantmentCategory ANVIL = ClassTinkerers.getEnum(EnchantmentCategory.class, "ANVIL");

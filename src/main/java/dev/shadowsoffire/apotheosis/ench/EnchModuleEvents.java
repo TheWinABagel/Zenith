@@ -6,7 +6,7 @@ import dev.shadowsoffire.apotheosis.ench.objects.ExtractionTomeItem;
 import dev.shadowsoffire.apotheosis.ench.objects.ImprovedScrappingTomeItem;
 import dev.shadowsoffire.apotheosis.ench.objects.ScrappingTomeItem;
 import dev.shadowsoffire.apotheosis.util.Events;
-import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityLootEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
 import io.github.fabricators_of_create.porting_lib.tags.Tags;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -40,6 +40,7 @@ public class EnchModuleEvents {
         applyUnbreaking();
     }
 
+
     public static void anvilEvent() {
         Events.AnvilUpdate.UPDATE_ANVIL.register((e) -> {
             if (e.left.isEnchanted()) {
@@ -56,11 +57,11 @@ public class EnchModuleEvents {
                     e.setCost(30);
                     e.setMaterialCost(1);
                     e.setOutput(stack);
-                    return;
+                    return false;
                 }
             }
             if ((e.left.getItem() == Items.CHIPPED_ANVIL || e.left.getItem() == Items.DAMAGED_ANVIL) && e.right.is(Tags.Items.STORAGE_BLOCKS_IRON)) {
-                if (e.left.getCount() != 1) return;
+                if (e.left.getCount() != 1) return false;
                 int dmg = e.left.getItem() == Items.DAMAGED_ANVIL ? 2 : 1;
                 ItemStack out = new ItemStack(dmg == 1 ? Items.ANVIL : Items.CHIPPED_ANVIL);
                 EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(e.left), out);
@@ -68,11 +69,12 @@ public class EnchModuleEvents {
                 e.setOutput(out);
                 e.setCost(5 + EnchantmentHelper.getEnchantments(e.left).entrySet().stream().mapToInt(ent -> ent.getValue() * (ent.getKey().getRarity().ordinal() + 1)).sum());
                 e.setMaterialCost(1);
-                return;
+                return false;
             }
-            if (ScrappingTomeItem.updateAnvil(e)) return;
-            if (ImprovedScrappingTomeItem.updateAnvil(e)) return;
-            if (ExtractionTomeItem.updateAnvil(e)) return;
+            if (ScrappingTomeItem.updateAnvil(e)) return true;
+            if (ImprovedScrappingTomeItem.updateAnvil(e)) return true;
+            if (ExtractionTomeItem.updateAnvil(e)) return true;
+            return false;
         });
 
     }
@@ -91,7 +93,7 @@ public class EnchModuleEvents {
     }
 
     public static void dropsWarden() {
-        LivingEntityLootEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
+        LivingEntityEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
             if (Apotheosis.enableEnch && target instanceof Warden warden) {
                 int amount = 1;
                 if (warden.random.nextFloat() <= 0.10F + lootingLevel * 0.10F) {
@@ -113,7 +115,7 @@ public class EnchModuleEvents {
     }
 
     public static void tridentLooting() {
-        LivingEntityLootEvents.LOOTING_LEVEL.register((src, target, currentLevel, recentlyHit) -> {
+        LivingEntityEvents.LOOTING_LEVEL.register((src, target, currentLevel, recentlyHit) -> {
             if (src != null && src.getDirectEntity() instanceof ThrownTrident trident) {
                 ItemStack triStack = ((TridentGetter) trident).getTridentItem();
                 return (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, triStack));
@@ -162,6 +164,7 @@ public class EnchModuleEvents {
                     }
                 });
             }
+            return false;
         });
 
     }

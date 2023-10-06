@@ -15,24 +15,36 @@
       "item": "minecraft:golden_apple"
     },
     "F": {
-      "type": "forge:nbt",
-      "item": "minecraft:potion",
-      "nbt": "{\"Potion\": \"minecraft:fire_resistance\"}"
+      "fabric:type": "fabric:nbt",
+      "base": {
+        "item": "minecraft:potion"
+      },
+      "nbt": "{\"Potion\": \"minecraft:fire_resistance\"}",
+      "strict": "true"
     },
     "H": {
-      "type": "forge:nbt",
-      "item": "minecraft:potion",
-      "nbt": "{\"Potion\": \"minecraft:strong_regeneration\"}"
+      "fabric:type": "fabric:nbt",
+      "base": {
+        "item": "minecraft:potion"
+      },
+      "nbt": "{\"Potion\": \"minecraft:strong_regeneration\"}",
+      "strict": "true"
     },
     "A": {
-      "type": "forge:nbt",
-      "item": "minecraft:potion",
-      "nbt": "{\"Potion\": \"apotheosis:strong_absorption\"}"
+      "fabric:type": "fabric:nbt",
+      "base": {
+        "item": "minecraft:potion"
+      },
+      "nbt": "{\"Potion\": \"apotheosis:strong_absorption\"}",
+      "strict": "true"
     },
     "R": {
-      "type": "forge:nbt",
-      "item": "minecraft:potion",
-      "nbt": "{\"Potion\": \"apotheosis:resistance\"}"
+      "fabric:type": "fabric:nbt",
+      "base": {
+        "item": "minecraft:potion"
+      },
+      "nbt": "{\"Potion\": \"apotheosis:resistance\"}",
+      "strict": "true"
     }
   },
   "result": {

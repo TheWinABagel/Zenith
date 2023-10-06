@@ -27,12 +27,14 @@ import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.ench.objects.GlowyBlockItem.GlowyItem;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntityType;
 import dev.shadowsoffire.placebo.menu.MenuUtil;
-import dev.shadowsoffire.placebo.registry.DeferredHelper;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -114,15 +116,26 @@ public class Adventure {
 
     public static class Features {
 
-    //    public static final RegistryObject<BossDungeonFeature> BOSS_DUNGEON = R.feature("boss_dungeon", BossDungeonFeature::new);
+        public static final ResourceLocation BOSS_DUNGEON_ID = Apotheosis.loc("boss_dungeon");
 
-    //    public static final RegistryObject<BossDungeonFeature2> BOSS_DUNGEON_2 = R.feature("boss_dungeon_2", BossDungeonFeature2::new);
+        public static final ResourceLocation BOSS_DUNGEON_2_ID = Apotheosis.loc("boss_dungeon_2");
 
-    //    public static final RegistryObject<RogueSpawnerFeature> ROGUE_SPAWNER = R.feature("rogue_spawner", RogueSpawnerFeature::new);
+        public static final ResourceLocation ROGUE_SPAWNER_ID = Apotheosis.loc("rogue_spawner");
 
-    //    public static final RegistryObject<StructureProcessorType<ItemFrameGemsProcessor>> ITEM_FRAME_GEMS = R.custom("item_frame_gems", Registries.STRUCTURE_PROCESSOR, () -> () -> ItemFrameGemsProcessor.CODEC);
+        public static final BossDungeonFeature BOSS_DUNGEON = new BossDungeonFeature();
 
-        private static void bootstrap() {};
+        public static final BossDungeonFeature2 BOSS_DUNGEON_2 = new BossDungeonFeature2();
+
+        public static final RogueSpawnerFeature ROGUE_SPAWNER = new RogueSpawnerFeature();
+
+    //    public static final StructureProcessorType<ItemFrameGemsProcessor> ITEM_FRAME_GEMS = R.custom("item_frame_gems", Registries.STRUCTURE_PROCESSOR, () -> () -> ItemFrameGemsProcessor.CODEC);
+
+        private static void bootstrap() {
+            AdventureModule.LOGGER.info("Registering Features!");
+            Registry.register(BuiltInRegistries.FEATURE, BOSS_DUNGEON_ID, BOSS_DUNGEON);
+            Registry.register(BuiltInRegistries.FEATURE, BOSS_DUNGEON_2_ID, BOSS_DUNGEON_2);
+            Registry.register(BuiltInRegistries.FEATURE, ROGUE_SPAWNER_ID, ROGUE_SPAWNER);
+        };
 
     }
 

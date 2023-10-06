@@ -15,7 +15,7 @@
 					"crossbow"
 				]
 			},
-			"attribute": "attributeslib:crit_damage",
+			"attribute": "additionalentityattributes:critical_bonus_damage",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.05,
@@ -33,7 +33,7 @@
 					"heavy_weapon"
 				]
 			},
-			"attribute": "attributeslib:crit_damage",
+			"attribute": "additionalentityattributes:critical_bonus_damage",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.075,

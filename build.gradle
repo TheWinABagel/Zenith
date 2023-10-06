@@ -23,7 +23,13 @@ repositories {
 		name = "CCA"
 		url = 'https://maven.ladysnake.org/releases'
 	}
-
+	maven {
+		name = "Modrinth (Projectile Damage Attribute)"
+		url = "https://api.modrinth.com/maven"
+		content {
+			includeGroup "maven.modrinth"
+		}
+	}
 	maven { url "https://jitpack.io/" }
 	maven { url "https://maven.jamieswhiteshirt.com/libs-release" }
 	maven { url 'https://maven.blamejared.com' }
@@ -63,6 +69,7 @@ dependencies {
 	// CCA + PAL
 	modImplementation(include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components_version}"))
 	modImplementation("io.github.ladysnake:PlayerAbilityLib:${project.pal_version}")
+	modImplementation("maven.modrinth:projectile-damage-attribute:${project.projectile_damage}-fabric")
 
 	// ModMenu
 	modCompileOnly modRuntimeOnly("com.terraformersmc:modmenu:${project.modmenu_version}"), {
@@ -114,7 +121,7 @@ jar {
 	from("LICENSE") {
 		rename { "${it}_${project.archivesBaseName}"}
 	}
-	exclude "dev/shadowsoffire/apotheosis/**"
+	//exclude "dev/shadowsoffire/apotheosis/**"
 }
 
 publishing {

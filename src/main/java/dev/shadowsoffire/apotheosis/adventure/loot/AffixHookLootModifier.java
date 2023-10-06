@@ -1,5 +1,5 @@
 package dev.shadowsoffire.apotheosis.adventure.loot;
-
+/*
 import com.mojang.serialization.Codec;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
@@ -35,3 +35,4 @@ public class AffixHookLootModifier extends LootModifier {
     }
 
 }
+*/

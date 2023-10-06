@@ -2,7 +2,7 @@ package dev.shadowsoffire.apotheosis.ench.enchantments.corrupted;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
-import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityDamageEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -52,20 +52,20 @@ public class BerserkersFuryEnchant extends Enchantment {
      */
     @SuppressWarnings("deprecation")
     public void livingHurt() {
-        LivingEntityDamageEvents.HURT.register(e -> {
-            LivingEntity user = e.damaged;
-            if (e.damageSource.getEntity() instanceof Entity && user.getEffect(MobEffects.DAMAGE_RESISTANCE) == null) {
-                int level = EnchantmentHelper.getEnchantmentLevel(this, user);
+        LivingEntityEvents.HURT.register((source, damaged, amount) -> {
+            if (source.getEntity() != null && damaged.getEffect(MobEffects.DAMAGE_RESISTANCE) == null) {
+                int level = EnchantmentHelper.getEnchantmentLevel(this, damaged);
                 if (level > 0) {
-                    if (Affix.isOnCooldown(BuiltInRegistries.ENCHANTMENT.getKey(this), 900, user)) return;
-                    user.invulnerableTime = 0;
-                    user.hurt(user.damageSources().source(Apoth.DamageTypes.CORRUPTED), (float) Math.pow(2.5, level));
-                    user.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 500, level - 1));
-                    user.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 500, level - 1));
-                    user.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 500, level - 1));
-                    Affix.startCooldown(BuiltInRegistries.ENCHANTMENT.getKey(this), user);
+                    if (Affix.isOnCooldown(BuiltInRegistries.ENCHANTMENT.getKey(this), 900, damaged)) return amount;
+                    damaged.invulnerableTime = 0;
+                    damaged.hurt(damaged.damageSources().source(Apoth.DamageTypes.CORRUPTED), (float) Math.pow(2.5, level));
+                    damaged.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 500, level - 1));
+                    damaged.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 500, level - 1));
+                    damaged.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 500, level - 1));
+                    Affix.startCooldown(BuiltInRegistries.ENCHANTMENT.getKey(this), damaged);
                 }
             }
+            return amount;
         });
 
     }

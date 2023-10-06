@@ -123,7 +123,7 @@ public class SocketHelper {
      */
     public static int getSockets(ItemStack stack) {
         CompoundTag afxData = stack.getTagElement(AFFIX_DATA);
-        int sockets = afxData != null ? afxData.getInt(SOCKETS) : 2;
+        int sockets = afxData != null ? afxData.getInt(SOCKETS) : 0;
         var event = new GetItemSocketsEvent(stack, sockets);
         //MinecraftForge.EVENT_BUS.post(event);
         return sockets;

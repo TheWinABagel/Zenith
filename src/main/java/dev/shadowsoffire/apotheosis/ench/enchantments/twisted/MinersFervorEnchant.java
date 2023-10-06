@@ -1,6 +1,6 @@
 package dev.shadowsoffire.apotheosis.ench.enchantments.twisted;
 
-import io.github.fabricators_of_create.porting_lib.entity.events.player.PlayerEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.PlayerEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -45,17 +45,16 @@ public class MinersFervorEnchant extends DiggingEnchantment {
     }
 
     public void breakSpeed() {
-        PlayerEvents.BREAK_SPEED.register((p, state, pos, speed) -> {
-            ItemStack stack = p.getMainHandItem();
-            if (stack.isEmpty()) return speed;
+        PlayerEvents.BREAK_SPEED.register(e -> {
+            ItemStack stack = e.getPlayer().getMainHandItem();
+            if (stack.isEmpty()) return;
             int level = EnchantmentHelper.getItemEnchantmentLevel(this, stack);
             if (level > 0) {
-                if (stack.getDestroySpeed(state) > 1.0F) {
-                    float hardness = state.getDestroySpeed(p.level(), pos);
-                    return (Math.min(29.9999F, 7.5F + 4.5F * level) * hardness);
+                if (stack.getDestroySpeed(e.getState()) > 1.0F) {
+                    float hardness = e.getState().getDestroySpeed(e.getPlayer().level(), e.getPos());
+                    e.setNewSpeed(Math.min(29.9999F, 7.5F + 4.5F * level) * hardness);
                 }
             }
-            return speed;
         });
 
     }

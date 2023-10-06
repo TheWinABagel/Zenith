@@ -1,6 +1,6 @@
 package dev.shadowsoffire.apotheosis.ench.enchantments.masterwork;
 
-import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityLootEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -9,6 +9,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+
+import java.util.ArrayList;
 
 public class ScavengerEnchant extends Enchantment {
 
@@ -36,16 +38,15 @@ public class ScavengerEnchant extends Enchantment {
         return ((MutableComponent) super.getFullname(level)).withStyle(ChatFormatting.DARK_GREEN);
     }
 
-
     public void drops()  {
-        LivingEntityLootEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
+        LivingEntityEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
             if (!(source.getEntity() instanceof Player p)) return false;
             if (source.getEntity().level().isClientSide) return false;
             int scavenger = EnchantmentHelper.getItemEnchantmentLevel(this, p.getMainHandItem());
             if (scavenger > 0 && p.level().random.nextInt(100) < scavenger * 2.5F) {
-                target.startCapturingDrops();
+                target.captureDrops(new ArrayList<>());
                 target.dropFromLootTable(source, true);
-                drops.addAll(target.finishCapturingDrops());
+                drops.addAll(target.captureDrops(null));
             }
             return false;
         });

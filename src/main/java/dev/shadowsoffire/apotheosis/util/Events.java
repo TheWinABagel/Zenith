@@ -2,7 +2,6 @@ package dev.shadowsoffire.apotheosis.util;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.village.util.WandererTradeEvent;
-import io.github.fabricators_of_create.porting_lib.core.event.object.CancellableEvent;
 import io.github.fabricators_of_create.porting_lib.event.client.ModelLoadCallback;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
@@ -34,18 +33,17 @@ public class Events {
     }
     public static final Event<AnvilRepair> ANVIL_REPAIR = EventFactory.createArrayBacked(AnvilRepair.class, callbacks -> event -> {
         for (AnvilRepair callback : callbacks) {
-            callback.onRepair(event);
-            if (event.isCancelled())
-                return;
+            if (callback.onRepair(event)) return true;
         }
+        return false;
     });
 
     @FunctionalInterface
     public interface AnvilRepair {
-        void onRepair(RepairEvent event);
+        boolean onRepair(RepairEvent event);
     }
 
-    public static class RepairEvent extends CancellableEvent {
+    public static class RepairEvent  {
         public final Player player;
         public final ItemStack output;
         public final ItemStack left;
@@ -68,18 +66,17 @@ public class Events {
 
         public static final Event<UpdateAnvil> UPDATE_ANVIL = EventFactory.createArrayBacked(UpdateAnvil.class, callbacks -> event -> {
             for (UpdateAnvil callback : callbacks) {
-                callback.onUpdate(event);
-                if (event.isCancelled())
-                    return;
+                if (callback.onUpdate(event)) return true;
             }
+            return false;
         });
 
         @FunctionalInterface
         public interface UpdateAnvil {
-            void onUpdate(UpdateAnvilEvent event);
+            boolean onUpdate(UpdateAnvilEvent event);
         }
 
-        public static class UpdateAnvilEvent extends CancellableEvent {
+        public static class UpdateAnvilEvent {
             public final ItemStack left;
             public final ItemStack right;
             public final String name;
