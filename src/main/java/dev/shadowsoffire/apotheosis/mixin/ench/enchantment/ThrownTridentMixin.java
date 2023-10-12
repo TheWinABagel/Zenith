@@ -13,6 +13,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -24,7 +25,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ThrownTrident.class)
 public abstract class ThrownTridentMixin extends AbstractArrow implements TridentGetter {
 
+    @Unique
     int pierces = 0;
+    @Unique
     Vec3 oldVel = null;
 
     @Shadow
@@ -38,7 +41,7 @@ public abstract class ThrownTridentMixin extends AbstractArrow implements Triden
     @Accessor
     public abstract ItemStack getTridentItem();
 
-    @Inject(method = "<init>(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;)V", at = @At("TAIL"), require = 1, remap = false)
+    @Inject(method = "<init>*", at = @At("TAIL"), require = 1, remap = false)
     private void init(CallbackInfo ci) {
         this.setPierceLevel((byte) EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, this.getTridentItem()));
     }

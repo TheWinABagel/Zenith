@@ -8,7 +8,9 @@ import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerTile;
 import dev.shadowsoffire.placebo.config.Configuration;
 import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import io.github.fabricators_of_create.porting_lib.entity.events.EntityEvents;
-import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.EntityMoveEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityLootEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.ChatFormatting;
 import net.minecraft.ResourceLocationException;
@@ -56,7 +58,7 @@ public class SpawnerModule {
     }
 
     public static void dropsEvent() {
-        LivingEntityEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
+        LivingEntityLootEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
             CapturingEnchant.handleCapturing(target, source, drops);
             return false;
         });
@@ -100,8 +102,8 @@ public class SpawnerModule {
     }
 
     public static void dumbMobsCantTeleport() {
-        EntityEvents.TELEPORT.register(e -> {
-            if (e.getEntity().getCustomData().getBoolean("zenith:movable")) {
+        EntityMoveEvents.TELEPORT.register(e -> {
+            if (e.entity.getCustomData().getBoolean("zenith:movable")) {
                 e.setCanceled(true);
             }
         });

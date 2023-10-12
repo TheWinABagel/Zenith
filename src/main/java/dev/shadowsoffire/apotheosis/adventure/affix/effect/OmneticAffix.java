@@ -10,7 +10,6 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.placebo.json.ItemAdapter;
-import io.github.fabricators_of_create.porting_lib.entity.events.PlayerEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.FluidTags;
@@ -65,20 +64,19 @@ public class OmneticAffix extends Affix {
         }
         return true;
     }
-    public void speed(PlayerEvents.BreakSpeed e) {
-        ItemStack stack = e.getEntity().getMainHandItem();
+    public float speed(Player player, BlockState state, BlockPos pos, float speed) {
+
+        ItemStack stack = player.getMainHandItem();
         if (!stack.isEmpty()) {
             AffixInstance inst = AffixHelper.getAffixes(stack).get(Affixes.OMNETIC);
             if (inst != null && inst.isValid()) {
-                float speed = e.getOriginalSpeed();
                 OmneticData data = this.values.get(inst.rarity().get());
                 for (ItemStack item : data.items()) {
-                    speed = Math.max(getBaseSpeed(e.getEntity(), item, e.getState(), e.getPos()), speed);
+                    speed = Math.max(getBaseSpeed(player, item, state, pos), speed);
                 }
-                e.setNewSpeed(speed);
             }
         }
-
+        return speed;
     }
 
     @Override

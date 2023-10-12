@@ -49,8 +49,8 @@ public class EarthsBoonEnchant extends Enchantment {
             ItemStack stack = player.getMainHandItem();
             int level = EnchantmentHelper.getItemEnchantmentLevel(this, stack);
             if (player.level().isClientSide) return;
-            if (state.is(Tags.Blocks.STONE) && level > 0 && player.random.nextFloat() <= 0.01F * level) {
-                ItemStack newDrop = new ItemStack(TagHelper.getRandomElement(BuiltInRegistries.ITEM, Apoth.Tags.BOON_DROPS, player.random).orElse(Items.AIR));
+            if (state.is(Tags.Blocks.STONE) && level > 0 && player.getRandom().nextFloat() <= 0.01F * level) {
+                ItemStack newDrop = new ItemStack(TagHelper.getRandomElement(BuiltInRegistries.ITEM, Apoth.Tags.BOON_DROPS, player.getRandom()).orElse(Items.AIR));
                 Block.popResource(player.level(), pos, newDrop);
             }
         });

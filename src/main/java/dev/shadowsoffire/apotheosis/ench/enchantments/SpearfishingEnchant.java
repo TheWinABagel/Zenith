@@ -1,8 +1,9 @@
 package dev.shadowsoffire.apotheosis.ench.enchantments;
 
 import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.EnchModuleEvents.TridentGetter;
-import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityLootEvents;
 import io.github.fabricators_of_create.porting_lib.tags.TagHelper;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.damagesource.DamageSource;
@@ -45,18 +46,17 @@ public class SpearfishingEnchant extends Enchantment {
     }
 
     public void addFishes() {
-        LivingEntityEvents.DROPS.register((target, src, drops, lootingLevel, recentlyHit) -> {
-            if (!(src.getEntity() instanceof Player)){
-            if (src.getDirectEntity() instanceof ThrownTrident trident) {
-                if (trident.level().isClientSide) return false;
-                ItemStack triStack = ((TridentGetter) trident).getTridentItem();
-                int level = EnchantmentHelper.getItemEnchantmentLevel(this, triStack);
-                if (trident.random.nextFloat() < 3.5F * level) {
-                    drops.add(new ItemEntity(trident.level(), target.getX(), target.getY(), target.getZ(),
-                            new ItemStack(TagHelper.getRandomElement(BuiltInRegistries.ITEM, Apoth.Tags.SPEARFISHING_DROPS, target.random).orElse(Items.AIR), 1 + trident.random.nextInt(3))));
+        LivingEntityLootEvents.DROPS.register((target, src, drops, lootingLevel, recentlyHit) -> {
+                if (src.getDirectEntity() instanceof ThrownTrident trident) {
+                    if (trident.level().isClientSide) return false;
+                    ItemStack triStack = ((TridentGetter) trident).getTridentItem();
+                    int level = EnchantmentHelper.getItemEnchantmentLevel(this, triStack);
+                    if (trident.random.nextFloat() < 3.5F * level) {
+                        drops.add(new ItemEntity(trident.level(), target.getX(), target.getY(), target.getZ(),
+                                new ItemStack(TagHelper.getRandomElement(BuiltInRegistries.ITEM, Apoth.Tags.SPEARFISHING_DROPS, target.random).orElse(Items.AIR), 1 + trident.random.nextInt(3))));
+                    }
                 }
-            }
-            }
+
             return false;
         });
 

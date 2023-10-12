@@ -7,7 +7,8 @@ import dev.shadowsoffire.apotheosis.ench.objects.GlowyBlockItem;
 import dev.shadowsoffire.apotheosis.spawn.enchantment.CapturingEnchant;
 import dev.shadowsoffire.attributeslib.api.ALObjects;
 import dev.shadowsoffire.placebo.config.Configuration;
-import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityLootEvents;
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.loader.api.FabricLoader;
@@ -75,11 +76,11 @@ public class PotionModule {
     }
 
     public static void drops() {
-        LivingEntityEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
+        LivingEntityLootEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
             if (target instanceof Rabbit rabbit) {
                 if (rabbit.level().random.nextFloat() < 0.045F + 0.045F * lootingLevel) {
                     drops.clear();
-                    drops.add(new ItemEntity(rabbit.level(), rabbit.getX(), rabbit.getY(), rabbit.getZ(), new ItemStack(LUCKY_FOOT)));
+                    drops.add(new ItemEntity(rabbit.level(), rabbit.getX(), rabbit.getY(), rabbit.getZ(), new ItemStack(PotionModule.LUCKY_FOOT)));
                 }
             }
             return false;

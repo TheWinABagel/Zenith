@@ -6,7 +6,6 @@ import dev.shadowsoffire.apotheosis.advancements.AdvancementTriggers;
 import dev.shadowsoffire.apotheosis.advancements.EnchantedTrigger;
 import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.util.FloatReferenceHolder;
-import dev.shadowsoffire.placebo.network.PacketDistro;
 import io.github.fabricators_of_create.porting_lib.tags.Tags;
 import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandler;
 import io.github.fabricators_of_create.porting_lib.transfer.item.SlotItemHandler;

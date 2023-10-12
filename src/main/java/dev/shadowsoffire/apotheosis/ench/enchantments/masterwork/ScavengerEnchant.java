@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.ench.enchantments.masterwork;
 
-import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
+import dev.shadowsoffire.apotheosis.ench.EnchModule;
+import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityLootEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -39,14 +40,14 @@ public class ScavengerEnchant extends Enchantment {
     }
 
     public void drops()  {
-        LivingEntityEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
+        LivingEntityLootEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
             if (!(source.getEntity() instanceof Player p)) return false;
             if (source.getEntity().level().isClientSide) return false;
             int scavenger = EnchantmentHelper.getItemEnchantmentLevel(this, p.getMainHandItem());
             if (scavenger > 0 && p.level().random.nextInt(100) < scavenger * 2.5F) {
-                target.captureDrops(new ArrayList<>());
+                target.startCapturingDrops();
                 target.dropFromLootTable(source, true);
-                drops.addAll(target.captureDrops(null));
+                drops.addAll(target.finishCapturingDrops());
             }
             return false;
         });

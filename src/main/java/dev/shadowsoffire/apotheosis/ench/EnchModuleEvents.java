@@ -6,7 +6,7 @@ import dev.shadowsoffire.apotheosis.ench.objects.ExtractionTomeItem;
 import dev.shadowsoffire.apotheosis.ench.objects.ImprovedScrappingTomeItem;
 import dev.shadowsoffire.apotheosis.ench.objects.ScrappingTomeItem;
 import dev.shadowsoffire.apotheosis.util.Events;
-import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityLootEvents;
 import io.github.fabricators_of_create.porting_lib.tags.Tags;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -92,8 +92,8 @@ public class EnchModuleEvents {
         Ench.Enchantments.KNOWLEDGE.drops();
     }
 
-    public static void dropsWarden() {
-        LivingEntityEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
+    public static void dropsWarden() { //TODO modify warden loot table
+        LivingEntityLootEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
             if (Apotheosis.enableEnch && target instanceof Warden warden) {
                 int amount = 1;
                 if (warden.random.nextFloat() <= 0.10F + lootingLevel * 0.10F) {
@@ -115,7 +115,7 @@ public class EnchModuleEvents {
     }
 
     public static void tridentLooting() {
-        LivingEntityEvents.LOOTING_LEVEL.register((src, target, currentLevel, recentlyHit) -> {
+        LivingEntityLootEvents.LOOTING_LEVEL.register((src, target, currentLevel, recentlyHit) -> {
             if (src != null && src.getDirectEntity() instanceof ThrownTrident trident) {
                 ItemStack triStack = ((TridentGetter) trident).getTridentItem();
                 return (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, triStack));

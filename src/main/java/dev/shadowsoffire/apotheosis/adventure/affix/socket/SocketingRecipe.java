@@ -10,7 +10,6 @@ import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothSmithingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.adventure.event.ItemSocketingEvent;
-import io.github.fabricators_of_create.porting_lib.core.event.BaseEvent;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -44,7 +43,7 @@ public class SocketingRecipe extends ApothSmithingRecipe {
         //MinecraftForge.EVENT_BUS.post(event);
         //BaseEvent.Result res = event.getResult();
         //return res == BaseEvent.Result.ALLOW ? true : res == BaseEvent.Result.DEFAULT && gem.canApplyTo(input);
-        return true && gem.canApplyTo(input); //TODO add socketing event
+        return gem.canApplyTo(input); //TODO add socketing event
     }
 
     /**

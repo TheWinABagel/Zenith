@@ -115,7 +115,7 @@ public class EnchModule {
         EnchantmentInfo info = ENCHANTMENT_INFO.get(ench);
 
         if (enchInfoConfig == null) { // Legitimate occurances can now happen, such as when vanilla calls fillItemGroup
-            // LOGGER.error("A mod has attempted to access enchantment information before Apotheosis init, this should not happen.");
+            // LOGGER.error("A mod has attempted to access enchantment information before Zenith init, this should not happen.");
             // Thread.dumpStack();
             return new EnchantmentInfo(ench);
         }
