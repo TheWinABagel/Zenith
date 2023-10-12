@@ -33,7 +33,7 @@ import java.util.function.Function;
 
 public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> implements DrawsOnLeft {
 
-    public static final Component TITLE = Component.translatable("container.apotheosis.salvage");
+    public static final Component TITLE = Component.translatable("container.zenith.salvage");
     public static final ResourceLocation TEXTURE = new ResourceLocation(Apotheosis.MODID, "textures/gui/salvage.png");
 
     protected List<OutputData> results = new ArrayList<>();
@@ -56,8 +56,8 @@ public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> imple
         this.salvageBtn = this.addRenderableWidget(
             new SimpleTexButton(left + 105, top + 33, 20, 20, 196, 0, TEXTURE, 256, 256,
                 btn -> this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, 0),
-                Component.translatable("button.apotheosis.salvage"))
-                .setInactiveMessage(Component.translatable("button.apotheosis.no_salvage").withStyle(ChatFormatting.RED)));
+                Component.translatable("button.zenith.salvage"))
+                .setInactiveMessage(Component.translatable("button.zenith.no_salvage").withStyle(ChatFormatting.RED)));
 
         this.computeResults();
     }
@@ -156,7 +156,7 @@ public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> imple
         }
 
         MultiBufferSource.BufferSource buffer = Minecraft.getInstance().renderBuffers().bufferSource();
-        Minecraft.getInstance().getItemRenderer().render(pStack, ItemDisplayContext.GUI, false, posestack, wrapper.apply(buffer), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, model);
+        mc.getItemRenderer().render(pStack, ItemDisplayContext.GUI, false, posestack, wrapper.apply(buffer), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, model);
         buffer.endBatch();
         RenderSystem.enableDepthTest();
         if (flag) {
@@ -177,7 +177,7 @@ public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> imple
         stack.pushPose();
         stack.translate(0, 0, -100);
         List<Component> tooltip = new ArrayList<>();
-        tooltip.add(Component.translatable("text.apotheosis.salvage_results").withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
+        tooltip.add(Component.translatable("text.zenith.salvage_results").withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
 
         for (OutputData data : this.results) {
             tooltip.add(Component.translatable("%s-%s %s", data.min, data.max, data.stack.getHoverName()));
@@ -191,7 +191,7 @@ public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> imple
 
     @Override
     protected void renderLabels(GuiGraphics gfx, int mouseX, int mouseY) {
-        gfx.drawString(font, Component.translatable("text.apotheosis.results"), 133, this.titleLabelY, 4210752, false);
+        gfx.drawString(font, Component.translatable("text.zenith.results"), 133, this.titleLabelY, 4210752, false);
         super.renderLabels(gfx, mouseX, mouseY);
     }
 

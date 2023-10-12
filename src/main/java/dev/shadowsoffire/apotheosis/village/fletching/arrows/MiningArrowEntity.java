@@ -1,14 +1,11 @@
 package dev.shadowsoffire.apotheosis.village.fletching.arrows;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.util.BlockUtil;
+import dev.shadowsoffire.apotheosis.village.VillageModule;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -42,11 +39,11 @@ public class MiningArrowEntity extends AbstractArrow/* implements IEntityAdditio
     }
 
     public MiningArrowEntity(Level world) {
-        this(Apoth.Entities.MINING_ARROW, world);
+        this(VillageModule.MINING_ARROW_ENTITY, world);
     }
 
     public MiningArrowEntity(LivingEntity shooter, Level world, ItemStack breakerItem, Type type) {
-        super(Apoth.Entities.MINING_ARROW, shooter, world);
+        super(VillageModule.MINING_ARROW_ENTITY, shooter, world);
         this.breakerItem = breakerItem;
         this.pickup = Pickup.DISALLOWED;
         this.type = type;
@@ -54,7 +51,7 @@ public class MiningArrowEntity extends AbstractArrow/* implements IEntityAdditio
     }
 
     public MiningArrowEntity(Level world, double x, double y, double z, ItemStack breakerItem, Type type) {
-        super(Apoth.Entities.MINING_ARROW, x, y, z, world);
+        super(VillageModule.MINING_ARROW_ENTITY, x, y, z, world);
         this.pickup = Pickup.DISALLOWED;
         this.breakerItem = breakerItem;
         this.type = type;

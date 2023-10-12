@@ -48,7 +48,7 @@ public class DamageReductionAffix extends Affix {
 
     @Override
     public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-        var comp = Component.translatable("affix.apotheosis:damage_reduction.desc", Component.translatable("misc.apotheosis." + this.type.id), fmt(100 * this.getTrueLevel(rarity, level)));
+        var comp = Component.translatable("affix.zenith:damage_reduction.desc", Component.translatable("misc.zenith." + this.type.id), fmt(100 * this.getTrueLevel(rarity, level)));
         list.accept(comp);
     }
 

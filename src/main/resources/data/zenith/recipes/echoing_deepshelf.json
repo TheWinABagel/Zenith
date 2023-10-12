@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "fabric:load_conditions": [{
+    "condition": "zenith:module",
+    "module": "enchantment"
+  }],
+  "group": "lemons",
+  "pattern": [
+    " E ",
+    " B ",
+    "CCC"
+  ],
+  "key": {
+    "E": {
+      "item": "minecraft:echo_shard"
+    },
+	"B": {
+      "item": "zenith:deepshelf"
+    },
+	"C": {
+      "tag": "minecraft:candles"
+    }
+  },
+  "result": {
+    "item": "zenith:echoing_deepshelf",
+    "count": 1
+  }
+}

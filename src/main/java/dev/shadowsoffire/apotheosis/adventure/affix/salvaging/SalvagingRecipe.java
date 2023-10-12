@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
+import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.placebo.json.ItemAdapter;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
@@ -60,7 +60,7 @@ public class SalvagingRecipe implements Recipe<Container> {
 
     @Override
     public RecipeType<?> getType() {
-        return RecipeTypes.SALVAGING;
+        return Adventure.RecipeTypes.SALVAGING;
     }
 
     @Override

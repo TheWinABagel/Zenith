@@ -2,7 +2,7 @@
 	"replace": false,
 	"values": [
 	{
-		"id": "apotheosis:potion_charm",
+		"id": "zenith:potion_charm",
 		"required": false
 	}
 	]

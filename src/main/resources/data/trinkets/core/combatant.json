@@ -6,7 +6,7 @@
 	],
 	"unique": true,
 	"bonuses": [{
-			"type": "apotheosis:attribute",
+			"type": "zenith:attribute",
 			"gem_class": {
 				"key": "ranged_weapon",
 				"types": [
@@ -26,7 +26,7 @@
 			}
 		},
 		{
-			"type": "apotheosis:damage_reduction",
+			"type": "zenith:damage_reduction",
 			"gem_class": {
 				"key": "core_armor",
 				"types": [
@@ -44,7 +44,7 @@
 			}
 		},
 		{
-			"type": "apotheosis:durability",
+			"type": "zenith:durability",
 			"gem_class": {
 				"key": "melee_weapon",
 				"types": [

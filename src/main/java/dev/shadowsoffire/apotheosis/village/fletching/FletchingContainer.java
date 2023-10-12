@@ -1,7 +1,7 @@
 package dev.shadowsoffire.apotheosis.village.fletching;
 
 import dev.shadowsoffire.apotheosis.Apoth;
-import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
+import dev.shadowsoffire.apotheosis.village.VillageModule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -59,7 +59,7 @@ public class FletchingContainer extends AbstractContainerMenu {
         if (!this.world.isClientSide) {
             ServerPlayer serverplayerentity = (ServerPlayer) this.player;
             ItemStack itemstack = ItemStack.EMPTY;
-            Optional<FletchingRecipe> optional = this.player.getServer().getRecipeManager().getRecipeFor(RecipeTypes.FLETCHING, this.craftMatrix, this.world);
+            Optional<FletchingRecipe> optional = this.player.getServer().getRecipeManager().getRecipeFor(VillageModule.FLETCHING, this.craftMatrix, this.world);
             if (optional.isPresent()) {
                 FletchingRecipe icraftingrecipe = optional.get();
                 itemstack = icraftingrecipe.assemble(this.craftMatrix, player.level().registryAccess());
@@ -143,9 +143,7 @@ public class FletchingContainer extends AbstractContainerMenu {
         @Override
         public void onTake(Player thePlayer, ItemStack stack) {
             this.checkTakeAchievements(stack);
-            //net.minecraftforge.common.ForgeHooks.setCraftingPlayer(thePlayer);
-            NonNullList<ItemStack> nonnulllist = thePlayer.level().getRecipeManager().getRemainingItemsFor(RecipeTypes.FLETCHING, FletchingContainer.this.craftMatrix, thePlayer.level());
-            //net.minecraftforge.common.ForgeHooks.setCraftingPlayer(null);
+            NonNullList<ItemStack> nonnulllist = thePlayer.level().getRecipeManager().getRemainingItemsFor(VillageModule.FLETCHING, FletchingContainer.this.craftMatrix, thePlayer.level());
             for (int i = 0; i < nonnulllist.size(); ++i) {
                 ItemStack itemstack = FletchingContainer.this.craftMatrix.getItem(i);
                 ItemStack itemstack1 = nonnulllist.get(i);
@@ -171,4 +169,5 @@ public class FletchingContainer extends AbstractContainerMenu {
         }
 
     }
+
 }

@@ -1,0 +1,8 @@
+{
+  "type": "zenith:expulsion",
+  "fabric:load_conditions": [{
+    "condition": "zenith:module",
+    "module": "adventure"
+  }],
+  "group": "something"
+}

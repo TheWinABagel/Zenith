@@ -1,0 +1,28 @@
+{
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "adventure"
+	}],
+	"type": "zenith:affix",
+	"rare": false,
+	"input_1": {
+		"item": "minecraft:iron_ingot",
+		"count": 5
+	},
+	"input_2": {
+		"item": "minecraft:emerald",
+		"count": 10
+	},
+	"rarities": "zenith:rare",
+	"entries": [
+		"zenith:overworld/bow",
+		"zenith:overworld/iron_axe",
+		"zenith:overworld/iron_boots",
+		"zenith:overworld/iron_chestplate",
+		"zenith:overworld/iron_helmet",
+		"zenith:overworld/iron_leggings",
+		"zenith:overworld/iron_pickaxe",
+		"zenith:overworld/iron_shovel",
+		"zenith:overworld/iron_sword"
+	]
+}

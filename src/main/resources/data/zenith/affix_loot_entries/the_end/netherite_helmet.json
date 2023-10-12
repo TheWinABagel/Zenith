@@ -1,0 +1,16 @@
+{
+    "dimensions": [
+        "minecraft:the_end"
+    ],
+    "min_rarity": "zenith:rare",
+    "max_rarity": "zenith:mythic",
+    "weight": 70,
+    "quality": 10.0,
+    "stack": {
+        "item": "minecraft:netherite_helmet",
+        "count": 1,
+        "nbt": {
+            "Damage": 0
+        }
+    }
+}

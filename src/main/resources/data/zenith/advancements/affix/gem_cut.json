@@ -1,0 +1,31 @@
+{
+	"parent": "zenith:affix/socket",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "adventure"
+	}],
+	"display": {
+		"icon": {
+			"item": "zenith:gem_cutting_table"
+		},
+		"title": {
+			"translate": "advancements.zenith.gem_cut"
+		},
+		"description": {
+			"translate": "advancements.zenith.gem_cut.desc"
+		},
+		"frame": "task",
+		"background": "zenith:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"cut": {
+			"trigger": "zenith:gem_cutting",
+			"conditions": {}
+		}
+	},
+	"requirements": [
+		[
+			"cut"
+		]
+	]
+}

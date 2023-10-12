@@ -1,0 +1,37 @@
+{
+	"parent": "zenith:affix/root",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "adventure"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:skeleton_skull"
+		},
+		"title": {
+			"translate": "advancements.zenith.random"
+		},
+		"description": {
+			"translate": "advancements.zenith.random.desc"
+		},
+		"frame": "task",
+		"hidden": false,
+		"background": "zenith:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"sword": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"zenith": {
+					"type": "nbt",
+					"nbt": "{apoth_rspawn:true}"
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"sword"
+		]
+	]
+}

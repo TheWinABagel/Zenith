@@ -30,9 +30,9 @@ public class CommonTooltipUtil {
     public static void appendBossData(Level level, LivingEntity entity, Consumer<Component> tooltip) {
         DynamicHolder<LootRarity> rarity = RarityRegistry.byLegacyId(entity.getCustomData().getString("apoth.rarity"));
         if (!rarity.isBound()) return;
-        tooltip.accept(Component.translatable("info.apotheosis.boss", rarity.get().toComponent()).withStyle(ChatFormatting.GRAY));
+        tooltip.accept(Component.translatable("info.zenith.boss", rarity.get().toComponent()).withStyle(ChatFormatting.GRAY));
         tooltip.accept(CommonComponents.EMPTY);
-        tooltip.accept(Component.translatable("info.apotheosis.boss_modifiers").withStyle(ChatFormatting.GRAY));
+        tooltip.accept(Component.translatable("info.zenith.boss_modifiers").withStyle(ChatFormatting.GRAY));
         AttributeMap map = entity.getAttributes();
         BuiltInRegistries.ATTRIBUTE.stream().map(map::getInstance).filter(Predicates.notNull()).forEach(inst -> {
             for (AttributeModifier modif : inst.getModifiers()) {
@@ -51,35 +51,35 @@ public class CommonTooltipUtil {
         float rectification = EnchantingStatRegistry.getQuantaRectification(state, world, BlockPos.ZERO);
         int clues = EnchantingStatRegistry.getBonusClues(state, world, BlockPos.ZERO);
         if (eterna != 0 || quanta != 0 || arcana != 0 || rectification != 0 || clues != 0) {
-            tooltip.accept(Component.translatable("info.apotheosis.ench_stats").withStyle(ChatFormatting.GOLD));
+            tooltip.accept(Component.translatable("info.zenith.ench_stats").withStyle(ChatFormatting.GOLD));
         }
         if (eterna != 0) {
             if (eterna > 0) {
-                tooltip.accept(Component.translatable("info.apotheosis.eterna.p", String.format("%.2f", eterna), String.format("%.2f", maxEterna)).withStyle(ChatFormatting.GREEN));
+                tooltip.accept(Component.translatable("info.zenith.eterna.p", String.format("%.2f", eterna), String.format("%.2f", maxEterna)).withStyle(ChatFormatting.GREEN));
             }
-            else tooltip.accept(Component.translatable("info.apotheosis.eterna", String.format("%.2f", eterna)).withStyle(ChatFormatting.GREEN));
+            else tooltip.accept(Component.translatable("info.zenith.eterna", String.format("%.2f", eterna)).withStyle(ChatFormatting.GREEN));
         }
         if (quanta != 0) {
-            tooltip.accept(Component.translatable("info.apotheosis.quanta" + (quanta > 0 ? ".p" : ""), String.format("%.2f", quanta)).withStyle(ChatFormatting.RED));
+            tooltip.accept(Component.translatable("info.zenith.quanta" + (quanta > 0 ? ".p" : ""), String.format("%.2f", quanta)).withStyle(ChatFormatting.RED));
         }
         if (arcana != 0) {
-            tooltip.accept(Component.translatable("info.apotheosis.arcana" + (arcana > 0 ? ".p" : ""), String.format("%.2f", arcana)).withStyle(ChatFormatting.DARK_PURPLE));
+            tooltip.accept(Component.translatable("info.zenith.arcana" + (arcana > 0 ? ".p" : ""), String.format("%.2f", arcana)).withStyle(ChatFormatting.DARK_PURPLE));
         }
         if (rectification != 0) {
-            tooltip.accept(Component.translatable("info.apotheosis.rectification" + (rectification > 0 ? ".p" : ""), String.format("%.2f", rectification)).withStyle(ChatFormatting.YELLOW));
+            tooltip.accept(Component.translatable("info.zenith.rectification" + (rectification > 0 ? ".p" : ""), String.format("%.2f", rectification)).withStyle(ChatFormatting.YELLOW));
         }
         if (clues != 0) {
-            tooltip.accept(Component.translatable("info.apotheosis.clues" + (clues > 0 ? ".p" : ""), String.format("%d", clues)).withStyle(ChatFormatting.DARK_AQUA));
+            tooltip.accept(Component.translatable("info.zenith.clues" + (clues > 0 ? ".p" : ""), String.format("%d", clues)).withStyle(ChatFormatting.DARK_AQUA));
         }
     }
 
     public static void appendTableStats(Level world, BlockPos pos, Consumer<Component> tooltip) {
         ApothEnchantmentMenu.TableStats stats = ApothEnchantmentMenu.gatherStats(world, pos);
-        tooltip.accept(Component.translatable("info.apotheosis.eterna.t", String.format("%.2f", stats.eterna()), String.format("%.2f", EnchantingStatRegistry.getAbsoluteMaxEterna())).withStyle(ChatFormatting.GREEN));
-        tooltip.accept(Component.translatable("info.apotheosis.quanta.t", String.format("%.2f", Math.min(100, stats.quanta()))).withStyle(ChatFormatting.RED));
-        tooltip.accept(Component.translatable("info.apotheosis.arcana.t", String.format("%.2f", Math.min(100, stats.arcana()))).withStyle(ChatFormatting.DARK_PURPLE));
-        tooltip.accept(Component.translatable("info.apotheosis.rectification.t", String.format("%.2f", Mth.clamp(stats.rectification(), -100, 100))).withStyle(ChatFormatting.YELLOW));
-        tooltip.accept(Component.translatable("info.apotheosis.clues.t", String.format("%d", stats.clues())).withStyle(ChatFormatting.DARK_AQUA));
+        tooltip.accept(Component.translatable("info.zenith.eterna.t", String.format("%.2f", stats.eterna()), String.format("%.2f", EnchantingStatRegistry.getAbsoluteMaxEterna())).withStyle(ChatFormatting.GREEN));
+        tooltip.accept(Component.translatable("info.zenith.quanta.t", String.format("%.2f", Math.min(100, stats.quanta()))).withStyle(ChatFormatting.RED));
+        tooltip.accept(Component.translatable("info.zenith.arcana.t", String.format("%.2f", Math.min(100, stats.arcana()))).withStyle(ChatFormatting.DARK_PURPLE));
+        tooltip.accept(Component.translatable("info.zenith.rectification.t", String.format("%.2f", Mth.clamp(stats.rectification(), -100, 100))).withStyle(ChatFormatting.YELLOW));
+        tooltip.accept(Component.translatable("info.zenith.clues.t", String.format("%d", stats.clues())).withStyle(ChatFormatting.DARK_AQUA));
     }
 
 }

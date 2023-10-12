@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.socket;
 
 import com.google.gson.JsonObject;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothSmithingRecipe;
 import net.minecraft.core.RegistryAccess;
@@ -17,7 +18,7 @@ import java.util.Collections;
 
 public class ExpulsionRecipe extends ApothSmithingRecipe {
 
-    private static final ResourceLocation ID = new ResourceLocation("apotheosis:expulsion");
+    private static final ResourceLocation ID = Apotheosis.loc("expulsion");
 
     public ExpulsionRecipe() {
         super(ID, Ingredient.EMPTY, Ingredient.of(Items.VIAL_OF_EXPULSION), ItemStack.EMPTY);

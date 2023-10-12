@@ -19,9 +19,9 @@ public class GardenREIPlugin implements REIClientPlugin {
     @Override
     public void registerDisplays(DisplayRegistry registry) {
         if (!Apotheosis.enableGarden) return;
-        EntryStack<ItemStack> enderLead = EntryStacks.of(Apoth.Items.ENDER_LEAD);
-        Component name = Component.translatable("item.apotheosis.ender_lead");
-        Component line = Component.translatable("info.apotheosis.ender_lead");
+        EntryStack<ItemStack> enderLead = EntryStacks.of(GardenModule.ENDER_LEAD);
+        Component name = Component.translatable("item.zenith.ender_lead");
+        Component line = Component.translatable("info.zenith.ender_lead");
         DefaultInformationDisplay info = DefaultInformationDisplay.createFromEntry(enderLead, name);
         info.line(line);
         registry.add(info);

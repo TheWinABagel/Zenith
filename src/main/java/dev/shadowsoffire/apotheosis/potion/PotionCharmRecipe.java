@@ -3,7 +3,6 @@ package dev.shadowsoffire.apotheosis.potion;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.placebo.recipe.RecipeHelper;
 import io.github.fabricators_of_create.porting_lib.util.CraftingHelper;
@@ -35,7 +34,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
     protected final Ingredient potion = makePotionIngredient();
 
     public PotionCharmRecipe(List<Object> ingredients, int width, int height) {
-        super(new ResourceLocation(Apotheosis.MODID, "potion_charm"), "", CraftingBookCategory.MISC, width, height, makeIngredients(ingredients), new ItemStack(Apoth.Items.POTION_CHARM));
+        super(new ResourceLocation(Apotheosis.MODID, "potion_charm"), "", CraftingBookCategory.MISC, width, height, makeIngredients(ingredients), new ItemStack(PotionModule.POTION_CHARM));
         for (int i = 0; i < ingredients.size(); i++) {
             if ("potion".equals(ingredients.get(i))) this.potionSlots.add(i);
         }

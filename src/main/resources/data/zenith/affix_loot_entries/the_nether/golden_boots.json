@@ -1,0 +1,16 @@
+{
+    "dimensions": [
+        "minecraft:the_nether"
+    ],
+    "min_rarity": "zenith:uncommon",
+    "max_rarity": "zenith:epic",
+    "weight": 85,
+    "quality": 3.0,
+    "stack": {
+        "item": "minecraft:golden_boots",
+        "count": 1,
+        "nbt": {
+            "Damage": 0
+        }
+    }
+}

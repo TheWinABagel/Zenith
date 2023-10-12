@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "zenith:blocks/salvaging_table_front",
+    "north": "zenith:blocks/salvaging_table_front",
+    "south": "zenith:blocks/salvaging_table_front",
+    "east": "zenith:blocks/salvaging_table_side",
+    "west": "zenith:blocks/salvaging_table_side",
+    "up": "zenith:blocks/salvaging_table_top",
+    "down": "zenith:blocks/salvaging_table_bottom"
+  }
+}

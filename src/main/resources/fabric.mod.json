@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "apotheosis",
+  "id": "zenith",
   "version": "${version}",
   "name": "Zenith",
   "description": "Unofficial Fabric port of Apotheosis.",
@@ -15,7 +15,7 @@
     "issues": "https://github.com/thewinabagel/Zenith/issues"
   },
   "license": "MIT License",
-  "icon": "assets/apotheosis/icon.png",
+  "icon": "assets/zenith/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -44,7 +44,9 @@
     "fabricloader": ">=0.14.22",
     "fabric": "*",
     "minecraft": "1.20.1",
-    "java": ">=17"
+    "java": ">=17",
+    "fakerlib": ">=0.0.1",
+    "zenith_attributes": ">=0.0.1"
   },
   "suggests": {
     "roughlyenoughitems": "*"

@@ -41,26 +41,28 @@ import javax.annotation.Nullable;
 import java.util.function.BiPredicate;
 
 public class BossEvents {
-
-    public Object2IntMap<ResourceLocation> bossCooldowns = new Object2IntOpenHashMap<>();
+//TODO made static, probably not a good idea?
+    public static Object2IntMap<ResourceLocation> bossCooldowns = new Object2IntOpenHashMap<>();
 
     public static void init() {
-        //naturalBosses();
+        naturalBosses();
         minibosses();
         delayedMinibosses();
+        BossSpawnMessage.init();
     }
 
-    public void naturalBosses() {
+    public static void naturalBosses() {
         LivingEntityEvents.CHECK_SPAWN.register((mob, level, x, y, z, spawner, type) -> {
+            AdventureModule.LOGGER.info("Generated a {} at {}, {}, {}, spawnType: {}, spawner: {}", mob.getName().getString(), x, y, z, type.name(), spawner);
             if (type == MobSpawnType.NATURAL || type == MobSpawnType.CHUNK_GENERATION) {
                 RandomSource rand = level.getRandom();
-                if (this.bossCooldowns.getInt(mob.level().dimension().location()) <= 0 && !level.isClientSide() && mob instanceof Monster/* && e.getResult() != Result.DENY*/) {
+                if (bossCooldowns.getInt(mob.level().dimension().location()) <= 0 && !level.isClientSide() && mob instanceof Monster/* && e.getResult() != Result.DENY*/) {
                     ServerLevelAccessor sLevel = (ServerLevelAccessor) level;
                     Pair<Float, BossSpawnRules> rules = AdventureConfig.BOSS_SPAWN_RULES.get(sLevel.getLevel().dimension().location());
-                    if (rules == null) return false;
+                    if (rules == null) return true;
                     if (rand.nextFloat() <= rules.getLeft() && rules.getRight().test(sLevel, BlockPos.containing(x, y, z))) {
                         Player player = sLevel.getNearestPlayer(x, y, z, -1, false);
-                        if (player == null) return false; // Spawns require player context
+                        if (player == null) return true; // Spawns require player context
                         ApothBoss item = BossRegistry.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(sLevel.getLevel()), IStaged.matches(player));
                         Mob boss = item.createBoss(sLevel, BlockPos.containing(x - 0.5, y, z - 0.5), rand, player.getLuck());
                         if (AdventureConfig.bossAutoAggro && !player.isCreative()) {
@@ -70,32 +72,32 @@ public class BossEvents {
                             sLevel.addFreshEntityWithPassengers(boss);
                             //e.setResult(Result.DENY);
                             AdventureModule.debugLog(boss.blockPosition(), "Surface Boss - " + boss.getName().getString());
-                            Component name = this.getName(boss);
+                            Component name = getName(boss);
                             if (name == null || name.getStyle().getColor() == null) AdventureModule.LOGGER.warn("A Boss {} ({}) has spawned without a custom name!", boss.getName().getString(), EntityType.getKey(boss.getType()));
                             else {
                                 sLevel.players().forEach(p -> {
                                     Vec3 tPos = new Vec3(boss.getX(), AdventureConfig.bossAnnounceIgnoreY ? p.getY() : boss.getY(), boss.getZ());
                                     if (p.distanceToSqr(tPos) <= AdventureConfig.bossAnnounceRange * AdventureConfig.bossAnnounceRange) {
-                                        ((ServerPlayer) p).connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("info.apotheosis.boss_spawn", name, (int) boss.getX(), (int) boss.getY())));
+                                        ((ServerPlayer) p).connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("info.zenith.boss_spawn", name, (int) boss.getX(), (int) boss.getY())));
                                         TextColor color = name.getStyle().getColor();
-                                        //PacketDistro.sendTo(Apotheosis.CHANNEL, new BossSpawnMessage(boss.blockPosition(), color == null ? 0xFFFFFF : color.getValue()), player);
-                                        //TODO bossspawnmessage packet handler
+                                        BossSpawnMessage.sendTo(boss.blockPosition(), color == null ? 0xFFFFFF : color.getValue()/*, player*/);
+                                        //TODO Player might be needed for this?
                                     }
                                 });
                             }
-                            this.bossCooldowns.put(mob.level().dimension().location(), AdventureConfig.bossSpawnCooldown);
-                            return false;
+                            bossCooldowns.put(mob.level().dimension().location(), AdventureConfig.bossSpawnCooldown);
+                            return true;
                         }
                     }
                 }
             }
-            return false;
+            return true;
         });
 
     }
 
     @Nullable
-    private Component getName(Mob boss) {
+    private static Component getName(Mob boss) {
         return boss.getSelfAndPassengers().filter(e -> e.getCustomData().contains("apoth.boss")).findFirst().map(Entity::getCustomName).orElse(null);
     }
 
@@ -106,15 +108,15 @@ public class BossEvents {
             if (!level.isClientSide() && entity != null) {
                 ServerLevelAccessor sLevel = (ServerLevelAccessor) level;
                 Player player = sLevel.getNearestPlayer(x, y, z, -1, false);
-                if (player == null) return false; // Spawns require player context
+                if (player == null) return true; // Spawns require player context
                 ApothMiniboss item = MinibossRegistry.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(sLevel.getLevel()), IStaged.matches(player), IEntityMatch.matches(entity));
                 if (item != null && !item.isExcluded(mob, sLevel, type) && sLevel.getRandom().nextFloat() <= item.getChance()) {
                     mob.getCustomData().putString("apoth.miniboss", MinibossRegistry.INSTANCE.getKey(item).toString());
                     mob.getCustomData().putFloat("apoth.miniboss.luck", player.getLuck());
-                    if (!item.shouldFinalize()) return false;
+                    if (!item.shouldFinalize()) return true;
                 }
             }
-            return false;
+            return true;
         });
 
     }
@@ -130,7 +132,7 @@ public class BossEvents {
                     }
                 }
             }
-            return false;
+            return true;
         });
 
     }
@@ -144,7 +146,7 @@ public class BossEvents {
 
     public void load() {
         ServerLifecycleEvents.SERVER_STARTED.register(server -> {
-            server.getLevel(Level.OVERWORLD).getDataStorage().computeIfAbsent(this::loadTimes, TimerPersistData::new, "apotheosis_boss_times");
+            server.getLevel(Level.OVERWORLD).getDataStorage().computeIfAbsent(this::loadTimes, TimerPersistData::new, "zenith_boss_times");
         });
 
     }

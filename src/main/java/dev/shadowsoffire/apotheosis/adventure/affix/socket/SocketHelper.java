@@ -51,6 +51,7 @@ public class SocketHelper {
      * @return An immutable list of all gems socketed in this item. This list is cached.
      */
     public static List<ItemStack> getGems(ItemStack stack) {
+        //AdventureModule.LOGGER.error("GetGems: for stack {}, list: {}",stack, CachedObjectSource.getOrCreate(stack, GEMS_CACHED_OBJECT, SocketHelper::getGemsImpl, CachedObject.hashSubkey(AFFIX_DATA)));
         return CachedObjectSource.getOrCreate(stack, GEMS_CACHED_OBJECT, SocketHelper::getGemsImpl, CachedObject.hashSubkey(AFFIX_DATA));
     }
 
@@ -126,6 +127,7 @@ public class SocketHelper {
         int sockets = afxData != null ? afxData.getInt(SOCKETS) : 0;
         var event = new GetItemSocketsEvent(stack, sockets);
         //MinecraftForge.EVENT_BUS.post(event);
+        //AdventureModule.LOGGER.info("Stack {}, getInt {}", stack, sockets);
         return sockets;
     }
 

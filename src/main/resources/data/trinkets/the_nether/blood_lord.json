@@ -5,7 +5,7 @@
 	"unique": true,
 	"min_rarity": "rare",
 	"bonuses": [{
-			"type": "apotheosis:attribute",
+			"type": "zenith:attribute",
 			"gem_class": {
 				"key": "light_weapon",
 				"types": [
@@ -24,8 +24,8 @@
 			}
 		},
 		{
-			"type": "apotheosis:multi_attribute",
-			"desc": "bonus.apotheosis:multi_attr.desc.and",
+			"type": "zenith:multi_attribute",
+			"desc": "bonus.zenith:multi_attr.desc.and",
 			"gem_class": {
 				"key": "heavy_weapon",
 				"types": [
@@ -55,7 +55,7 @@
 			]
 		},
 		{
-			"type": "apotheosis:attribute",
+			"type": "zenith:attribute",
 			"gem_class": {
 				"key": "chestplate",
 				"types": [
@@ -72,7 +72,7 @@
 			}
 		},
 		{
-			"type": "apotheosis:bloody_arrow",
+			"type": "zenith:bloody_arrow",
 			"values": {
 				"uncommon": {
 					"health_cost": 0.10,
@@ -97,7 +97,7 @@
 			}
 		},
 		{
-			"type": "apotheosis:leech_block",
+			"type": "zenith:leech_block",
 			"values": {
 				"uncommon": {
 					"heal_factor": 0.15,

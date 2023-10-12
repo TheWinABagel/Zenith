@@ -62,11 +62,11 @@ public class PotionBonus extends GemBonus {
         MutableComponent comp = this.target.toComponent(toComponent(inst)).withStyle(ChatFormatting.YELLOW);
         int cooldown = this.getCooldown(rarity);
         if (cooldown != 0) {
-            Component cd = Component.translatable("affix.apotheosis.cooldown", StringUtil.formatTickDuration(cooldown));
+            Component cd = Component.translatable("affix.zenith.cooldown", StringUtil.formatTickDuration(cooldown));
             comp = comp.append(" ").append(cd);
         }
         if (this.stackOnReapply) {
-            comp = comp.append(" ").append(Component.translatable("affix.apotheosis.stacking"));
+            comp = comp.append(" ").append(Component.translatable("affix.zenith.stacking"));
         }
         return comp;
     }

@@ -1,0 +1,39 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "fabric:load_conditions": [{
+    "condition": "zenith:module",
+    "module": "enchantment"
+  }],
+  "group": "wooden_door",
+  "pattern": [
+    "GHG",
+    "PES",
+    "GHG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gold_block"
+    },
+    "H": {
+      "item": "zenith:infused_hellshelf"
+    },
+    "S": {
+      "item": "minecraft:spyglass"
+    },
+    "P": {
+      "fabric:type": "fabric:nbt",
+      "base": {
+        "item": "minecraft:potion"
+      },
+      "nbt": "{\"Potion\": \"minecraft:night_vision\"}",
+      "strict": "true"
+    },
+    "E": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "result": {
+    "item": "zenith:sightshelf",
+    "count": 1
+  }
+}

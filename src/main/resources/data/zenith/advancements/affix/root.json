@@ -1,0 +1,35 @@
+{
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "adventure"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:iron_sword"
+		},
+		"title": {
+			"translate": "advancements.zenith.affix"
+		},
+		"description": {
+			"translate": "advancements.zenith.affix.desc"
+		},
+		"frame": "task",
+		"hidden": false,
+		"background": "zenith:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"sword": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"zenith": {
+					"type": "affix"
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"sword"
+		]
+	]
+}

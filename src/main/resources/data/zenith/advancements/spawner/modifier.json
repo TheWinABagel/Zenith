@@ -1,0 +1,30 @@
+{
+	"parent": "zenith:spawner/root",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "spawner"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:sugar"
+		},
+		"title": {
+			"translate": "advancements.zenith.modifier"
+		},
+		"description": {
+			"translate": "advancements.zenith.modifier.desc"
+		},
+		"frame": "task"
+	},
+	"criteria": {
+		"modifier": {
+			"trigger": "zenith:spawner_modifier",
+			"conditions": {}
+		}
+	},
+	"requirements": [
+		[
+			"modifier"
+		]
+	]
+}

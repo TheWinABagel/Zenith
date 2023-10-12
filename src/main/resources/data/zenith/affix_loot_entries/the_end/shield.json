@@ -1,0 +1,12 @@
+{
+	"weight": 50,
+	"quality": 2.5,
+	"stack": {
+		"item": "minecraft:shield"
+	},
+	"min_rarity": "zenith:rare",
+	"max_rarity": "zenith:mythic",
+	"dimensions": [
+		"minecraft:the_end"
+	]
+}

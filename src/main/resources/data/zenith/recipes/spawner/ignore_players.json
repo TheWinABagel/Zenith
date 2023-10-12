@@ -1,0 +1,14 @@
+{
+	"type": "zenith:spawner_modifier",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "spawner"
+	}],
+	"mainhand": {
+		"item": "minecraft:nether_star"
+	},
+	"stat_changes": [{
+		"id": "ignore_players",
+		"value": true
+	}]
+}

@@ -1,7 +1,7 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.reforging;
 
 import com.google.gson.JsonObject;
-import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
+import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
@@ -30,7 +30,7 @@ public record ReforgingRecipe(ResourceLocation id, DynamicHolder<LootRarity> rar
 
     @Override
     public RecipeType<?> getType() {
-        return RecipeTypes.REFORGING;
+        return Adventure.RecipeTypes.REFORGING;
     }
 
     public static class Serializer implements RecipeSerializer<ReforgingRecipe> {

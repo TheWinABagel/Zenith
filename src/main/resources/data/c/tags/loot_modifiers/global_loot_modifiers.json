@@ -1,10 +1,10 @@
 {
   "replace": false,
   "entries": [
-	"apotheosis:affix_conversion",
-    "apotheosis:affix_loot",
-	"apotheosis:gems",
-	"apotheosis:affix_hook",
-	"apotheosis:warden_tendril"
+	"zenith:affix_conversion",
+    "zenith:affix_loot",
+	"zenith:gems",
+	"zenith:affix_hook",
+	"zenith:warden_tendril"
   ]
 }

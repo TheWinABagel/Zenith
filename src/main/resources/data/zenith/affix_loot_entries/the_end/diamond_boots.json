@@ -1,0 +1,16 @@
+{
+    "dimensions": [
+        "minecraft:the_end"
+    ],
+    "min_rarity": "zenith:rare",
+    "max_rarity": "zenith:mythic",
+    "weight": 100,
+    "quality": 5.0,
+    "stack": {
+        "item": "minecraft:diamond_boots",
+        "count": 1,
+        "nbt": {
+            "Damage": 0
+        }
+    }
+}

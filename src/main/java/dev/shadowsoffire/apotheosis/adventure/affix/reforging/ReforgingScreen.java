@@ -37,7 +37,7 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> impl
         super(menu, inv, title);
         this.titleLabelY = 5;
         Arrays.fill(this.choices, ItemStack.EMPTY);
-        this.title = Component.translatable("container.apotheosis.reforge");
+        this.title = Component.translatable("container.zenith.reforge");
     }
 
     public boolean shouldRecompute() {
@@ -88,7 +88,7 @@ public class ReforgingScreen extends AbstractContainerScreen<ReforgingMenu> impl
             int matCost = this.menu.getMatCost(slot);
             int levelCost = this.menu.getLevelCost(slot);
 
-            tooltips.add(Component.translatable("text.apotheosis.reforge_cost").withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
+            tooltips.add(Component.translatable("text.zenith.reforge_cost").withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
             tooltips.add(CommonComponents.EMPTY);
             if (dustCost > 0) {
                 tooltips.add(Component.translatable("%s %s", dustCost, Items.GEM_DUST.getName(ItemStack.EMPTY)).withStyle(dust < dustCost ? ChatFormatting.RED : ChatFormatting.GRAY));

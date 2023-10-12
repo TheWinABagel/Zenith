@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "fabric:load_conditions": [{
+    "condition": "zenith:module",
+    "module": "adventure"
+  }],
+  "group": "something",
+  "pattern": [
+    " N ",
+    "GEG",
+    "BBB"
+  ],
+  "key": {
+    "N": {
+      "tag": "forge:ingots/iron"
+    },
+	"G": {
+      "item": "zenith:gem_dust"
+    },
+	"E": {
+      "item": "minecraft:enchanting_table"
+    },
+	"B": {
+      "item": "minecraft:smooth_stone"
+    }
+  },
+  "result": {
+    "item": "zenith:simple_reforging_table",
+    "count": 1
+  }
+}

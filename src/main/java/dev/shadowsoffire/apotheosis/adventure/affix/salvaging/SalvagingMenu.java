@@ -1,7 +1,7 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.salvaging;
 
 import com.google.common.base.Predicates;
-import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
+import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Blocks;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Menus;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe.OutputData;
@@ -151,7 +151,7 @@ public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
 
     @Nullable
     public static SalvagingRecipe findMatch(Level level, ItemStack stack) {
-        for (var recipe : level.getRecipeManager().getAllRecipesFor(RecipeTypes.SALVAGING)) {
+        for (var recipe : level.getRecipeManager().getAllRecipesFor(Adventure.RecipeTypes.SALVAGING)) {
             if (recipe.matches(stack)) return recipe;
         }
         return null;

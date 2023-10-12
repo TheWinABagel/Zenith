@@ -1,7 +1,0 @@
-{
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "apotheosis:items/vial/bottle",
-		"layer1": "apotheosis:items/vial/extraction"
-    }
-}

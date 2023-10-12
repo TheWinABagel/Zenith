@@ -1,34 +1,26 @@
 package dev.shadowsoffire.apotheosis.spawn;
 
-import com.google.common.collect.ImmutableSet;
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.potion.PotionModule;
 import dev.shadowsoffire.apotheosis.spawn.enchantment.CapturingEnchant;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
 import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerTile;
 import dev.shadowsoffire.placebo.config.Configuration;
-import dev.shadowsoffire.placebo.tabs.TabFillingRegistry;
+import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import io.github.fabricators_of_create.porting_lib.entity.events.EntityEvents;
 import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.ChatFormatting;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -41,7 +33,8 @@ import static dev.shadowsoffire.apotheosis.Apotheosis.enableDebug;
 
 public class SpawnerModule {
 
-    public static final Logger LOG = LogManager.getLogger("Apotheosis : Spawner");
+    public static final Logger LOG = LogManager.getLogger("Zenith : Spawner");
+    public static final RecipeType<SpawnerModifier> MODIFIER = PlaceboUtil.makeRecipeType("zenith:spawner_modifier");
     public static int spawnerSilkLevel = 1;
     public static int spawnerSilkDamage = 100;
     public static Set<ResourceLocation> bannedMobs = new HashSet<>();
@@ -59,7 +52,7 @@ public class SpawnerModule {
 // not all data is saved when block is broken
     public static void register() {
         Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, Apotheosis.loc("spawner_modifier"), SpawnerModifier.SERIALIZER);
-        Registry.register(BuiltInRegistries.ENCHANTMENT, Apotheosis.loc("capturing"), Apoth.Enchantments.CAPTURING);
+        Registry.register(BuiltInRegistries.ENCHANTMENT, Apotheosis.loc("capturing"), PotionModule.CAPTURING);
     }
 
     public static void dropsEvent() {
@@ -96,7 +89,7 @@ public class SpawnerModule {
     public static void tickDumbMobs() {
         LivingEntityEvents.TICK.register(entity -> {
             if (entity instanceof Mob mob){
-                if (!mob.level().isClientSide && mob.isNoAi() && mob.getCustomData().getBoolean("apotheosis:movable")) {
+                if (!mob.level().isClientSide && mob.isNoAi() && mob.getCustomData().getBoolean("zenith:movable")) {
                     mob.setNoAi(false);
                     mob.travel(new Vec3(mob.xxa, mob.zza, mob.yya));
                     mob.setNoAi(true);
@@ -108,7 +101,7 @@ public class SpawnerModule {
 
     public static void dumbMobsCantTeleport() {
         EntityEvents.TELEPORT.register(e -> {
-            if (e.getEntity().getCustomData().getBoolean("apotheosis:movable")) {
+            if (e.getEntity().getCustomData().getBoolean("zenith:movable")) {
                 e.setCanceled(true);
             }
         });
@@ -116,7 +109,7 @@ public class SpawnerModule {
 
     public static void reload(boolean e) {
         Configuration config = new Configuration(new File(Apotheosis.configDir, "spawner.cfg"));
-        config.setTitle("Apotheosis Spawner Module Configuration");
+        config.setTitle("Zenith Spawner Module Configuration");
         spawnerSilkLevel = config.getInt("Spawner Silk Level", "general", 1, -1, 127,
             "The level of silk touch needed to harvest a spawner.  Set to -1 to disable, 0 to always drop.  The enchantment module can increase the max level of silk touch.\nFunctionally server-authoritative, but should match on client for information.");
         spawnerSilkDamage = config.getInt("Spawner Silk Damage", "general", 100, 0, 100000, "The durability damage dealt to an item that silk touches a spawner.\nServer-authoritative.");
@@ -134,7 +127,7 @@ public class SpawnerModule {
     }
 
     public static Component concat(Object... args) {
-        return Component.translatable("misc.apotheosis.value_concat", args[0], Component.literal(args[1].toString()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GREEN);
+        return Component.translatable("misc.zenith.value_concat", args[0], Component.literal(args[1].toString()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GREEN);
     }
 
 }

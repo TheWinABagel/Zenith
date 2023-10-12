@@ -36,8 +36,8 @@ public class ExtractionTomeItem extends BookItem {
     @Environment(EnvType.CLIENT)
     public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flagIn) {
         if (stack.isEnchanted()) return;
-        tooltip.add(Component.translatable("info.apotheosis.extraction_tome").withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("info.apotheosis.extraction_tome2").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("info.zenith.extraction_tome").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("info.zenith.extraction_tome2").withStyle(ChatFormatting.GRAY));
     }
 
     @Override

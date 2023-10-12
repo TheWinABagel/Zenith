@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "fabric:load_conditions": [{
+    "condition": "zenith:module",
+    "module": "enchantment"
+  }],
+  "group": "wooden_door",
+  "pattern": [
+    "NNN",
+    "BSP",
+    "NNN"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:blaze_rod"
+    },
+    "N": {
+      "item": "minecraft:nether_bricks"
+    },
+    "P": {
+      "fabric:type": "fabric:nbt",
+      "base": {
+        "item": "minecraft:potion"
+      },
+      "nbt": "{\"Potion\": \"minecraft:regeneration\"}",
+      "strict": "true"
+    },
+      "S": {
+        "tag": "c:bookshelves"
+      }
+  },
+  "result": {
+    "item": "zenith:hellshelf",
+    "count": 1
+  }
+}

@@ -1,0 +1,17 @@
+{
+	"replace": false,
+	"values": [
+		{
+			"id": "zenith:infused_hellshelf",
+			"required": false
+		},
+		{
+			"id": "zenith:infused_seashelf",
+			"required": false
+		},
+		{
+			"id": "zenith:deepshelf",
+			"required": false
+		}
+	]
+}

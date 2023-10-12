@@ -3,7 +3,6 @@ package dev.shadowsoffire.apotheosis.potion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingRecipe;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry.Stats;
@@ -29,7 +28,7 @@ public class PotionEnchantingRecipe extends EnchantingRecipe {
     }
 
     private static ItemStack charm() {
-        ItemStack out = new ItemStack(Apoth.Items.POTION_CHARM);
+        ItemStack out = new ItemStack(PotionModule.POTION_CHARM);
         out.getOrCreateTag().putBoolean("Unbreakable", true);
         return out;
     }
@@ -38,7 +37,7 @@ public class PotionEnchantingRecipe extends EnchantingRecipe {
         List<ItemStack> potionStacks = new ArrayList<>();
         for (Potion p : BuiltInRegistries.POTION) {
             if (p.getEffects().size() != 1 || p.getEffects().get(0).getEffect().isInstantenous()) continue;
-            ItemStack potion = new ItemStack(Apoth.Items.POTION_CHARM);
+            ItemStack potion = new ItemStack(PotionModule.POTION_CHARM);
             PotionUtils.setPotion(potion, p);
             potionStacks.add(potion);
         }

@@ -8,7 +8,7 @@
 	"unique": true,
 	"bonuses": [
 		{
-			"type": "apotheosis:enchantment",
+			"type": "zenith:enchantment",
 			"gem_class": {
 				"key": "anything",
 				"types": [

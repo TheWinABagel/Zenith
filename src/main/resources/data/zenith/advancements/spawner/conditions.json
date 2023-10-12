@@ -1,0 +1,32 @@
+{
+	"parent": "zenith:spawner/light",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "spawner"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:dragon_egg"
+		},
+		"title": {
+			"translate": "advancements.zenith.conditions"
+		},
+		"description": {
+			"translate": "advancements.zenith.conditions.desc"
+		},
+		"frame": "challenge"
+	},
+	"criteria": {
+		"modifier": {
+			"trigger": "zenith:spawner_modifier",
+			"conditions": {
+				"ignore_conditions": true
+			}
+		}
+	},
+	"requirements": [
+		[
+			"modifier"
+		]
+	]
+}

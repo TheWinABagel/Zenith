@@ -1,0 +1,37 @@
+{
+	"parent": "zenith:affix/rare",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "adventure"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:diamond_sword"
+		},
+		"title": {
+			"translate": "advancements.zenith.epic"
+		},
+		"description": {
+			"translate": "advancements.zenith.epic.desc"
+		},
+		"frame": "task",
+		"hidden": true,
+		"background": "zenith:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"sword": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"zenith": {
+					"type": "rarity",
+					"rarity": "EPIC"
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"sword"
+		]
+	]
+}

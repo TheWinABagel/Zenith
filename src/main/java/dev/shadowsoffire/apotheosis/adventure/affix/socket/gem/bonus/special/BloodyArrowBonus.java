@@ -51,7 +51,7 @@ public class BloodyArrowBonus extends GemBonus {
     @Override
     public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
         Data d = this.values.get(rarity);
-        Component cooldown = Component.translatable("affix.apotheosis.cooldown", StringUtil.formatTickDuration(d.cooldown));
+        Component cooldown = Component.translatable("affix.zenith.cooldown", StringUtil.formatTickDuration(d.cooldown));
         return Component.translatable("bonus." + this.getId() + ".desc", Affix.fmt(d.healthCost * 100), Affix.fmt(100 * d.dmgMultiplier), cooldown).withStyle(ChatFormatting.YELLOW);
     }
 

@@ -1,0 +1,12 @@
+{
+	"weight": 50,
+	"quality": 2.5,
+	"stack": {
+		"item": "minecraft:bow"
+	},
+	"min_rarity": "zenith:common",
+	"max_rarity": "zenith:rare",
+	"dimensions": [
+		"minecraft:overworld"
+	]
+}

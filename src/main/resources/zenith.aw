@@ -72,3 +72,6 @@ accessible field net/minecraft/world/entity/ai/goal/GoalSelector availableGoals 
 accessible method net/minecraft/world/level/BaseSpawner setNextSpawnData (Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/SpawnData;)V
 accessible field net/minecraft/network/chat/TextColor NAMED_COLORS Ljava/util/Map;
 mutable field net/minecraft/network/chat/TextColor NAMED_COLORS Ljava/util/Map;
+
+accessible field net/minecraft/client/Minecraft timer Lnet/minecraft/client/Timer;
+accessible field net/minecraft/client/Minecraft pausePartialTick F

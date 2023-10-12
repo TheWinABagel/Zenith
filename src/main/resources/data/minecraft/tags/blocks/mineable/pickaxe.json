@@ -1,123 +1,123 @@
 {
 	"replace": false,
 	"values": [{
-			"id": "apotheosis:endshelf",
+			"id": "zenith:endshelf",
 			"required": false
 		},
 		{
-			"id": "apotheosis:pearl_endshelf",
+			"id": "zenith:pearl_endshelf",
 			"required": false
 		},
 		{
-			"id": "apotheosis:draconic_endshelf",
+			"id": "zenith:draconic_endshelf",
 			"required": false
 		},
 		{
-			"id": "apotheosis:hellshelf",
+			"id": "zenith:hellshelf",
 			"required": false
 		},
 		{
-			"id": "apotheosis:infused_hellshelf",
+			"id": "zenith:infused_hellshelf",
 			"required": false
 		},
 		{
-			"id": "apotheosis:blazing_hellshelf",
+			"id": "zenith:blazing_hellshelf",
 			"required": false
 		},
 		{
-			"id": "apotheosis:glowing_hellshelf",
+			"id": "zenith:glowing_hellshelf",
 			"required": false
 		},
 		{
-			"id": "apotheosis:seashelf",
+			"id": "zenith:seashelf",
 			"required": false
 		},
 		{
-			"id": "apotheosis:infused_seashelf",
+			"id": "zenith:infused_seashelf",
 			"required": false
 		},
 		{
-			"id": "apotheosis:crystal_seashelf",
+			"id": "zenith:crystal_seashelf",
 			"required": false
 		},
 		{
-			"id": "apotheosis:heart_seashelf",
+			"id": "zenith:heart_seashelf",
 			"required": false
 		},
 		{
-			"id": "apotheosis:dormant_deepshelf",
+			"id": "zenith:dormant_deepshelf",
 			"required": false
 		},
 		{
-			"id": "apotheosis:deepshelf",
+			"id": "zenith:deepshelf",
 			"required": false
 		},
 		{
-			"id": "apotheosis:echoing_deepshelf",
+			"id": "zenith:echoing_deepshelf",
 			"required": false
 		},
 		{
-			"id": "apotheosis:soul_touched_deepshelf",
+			"id": "zenith:soul_touched_deepshelf",
 			"required": false
 		},
 		{
-			"id": "apotheosis:echoing_sculkshelf",
+			"id": "zenith:echoing_sculkshelf",
 			"required": false
 		},
 		{
-			"id": "apotheosis:soul_touched_sculkshelf",
+			"id": "zenith:soul_touched_sculkshelf",
 			"required": false
 		},
 		{
-			"id": "apotheosis:endshelf",
+			"id": "zenith:endshelf",
 			"required": false
 		},
 		{
-			"id": "apotheosis:draconic_endshelf",
+			"id": "zenith:draconic_endshelf",
 			"required": false
 		},
 		{
-			"id": "apotheosis:pearl_endshelf",
+			"id": "zenith:pearl_endshelf",
 			"required": false
 		},
 		{
-			"id": "apotheosis:stoneshelf",
+			"id": "zenith:stoneshelf",
 			"required": false
 		},
 		{
-			"id": "apotheosis:library",
+			"id": "zenith:library",
 			"required": false
 		},
 		{
-			"id": "apotheosis:rectifier",
+			"id": "zenith:rectifier",
 			"required": false
 		},
 		{
-			"id": "apotheosis:rectifier_t2",
+			"id": "zenith:rectifier_t2",
 			"required": false
 		},
 		{
-			"id": "apotheosis:rectifier_t3",
+			"id": "zenith:rectifier_t3",
 			"required": false
 		},
 		{
-			"id": "apotheosis:sightshelf",
+			"id": "zenith:sightshelf",
 			"required": false
 		},
 		{
-			"id": "apotheosis:sightshelf_t2",
+			"id": "zenith:sightshelf_t2",
 			"required": false
 		},
 		{
-			"id": "apotheosis:ender_library",
+			"id": "zenith:ender_library",
 			"required": false
 		},
 		{
-			"id": "apotheosis:reforging_table",
+			"id": "zenith:reforging_table",
 			"required": false
 		},
 		{
-			"id": "apotheosis:simple_reforging_table",
+			"id": "zenith:simple_reforging_table",
 			"required": false
 		}
 	]

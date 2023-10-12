@@ -5,7 +5,7 @@
 	"dimensions": [
 	],
 	"bonuses": [{
-			"type": "apotheosis:attribute",
+			"type": "zenith:attribute",
 			"gem_class": {
 				"key": "ranged_weapon",
 				"types": [
@@ -24,7 +24,7 @@
 			}
 		},
 		{
-			"type": "apotheosis:attribute",
+			"type": "zenith:attribute",
 			"gem_class": {
 				"key": "breaker",
 				"types": [
@@ -43,7 +43,7 @@
 			}
 		},
 		{
-			"type": "apotheosis:attribute",
+			"type": "zenith:attribute",
 			"gem_class": {
 				"key": "lower_armor",
 				"types": [

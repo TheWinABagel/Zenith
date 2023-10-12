@@ -20,7 +20,7 @@ public class SpawnerModuleClient {
         ItemTooltipCallback.EVENT.register((stack, context, lines) -> {
             if (stack.getItem() instanceof SpawnEggItem egg) {
                 EntityType<?> type = egg.getType(stack.getTag());
-                if (bannedMobs.contains(EntityType.getKey(type))) lines.add(Component.translatable("misc.apotheosis.banned").withStyle(ChatFormatting.GRAY));
+                if (bannedMobs.contains(EntityType.getKey(type))) lines.add(Component.translatable("misc.zenith.banned").withStyle(ChatFormatting.GRAY));
             }
         });
     }

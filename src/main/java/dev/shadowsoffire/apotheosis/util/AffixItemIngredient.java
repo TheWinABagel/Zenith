@@ -99,7 +99,7 @@ public class AffixItemIngredient implements CustomIngredient {
         List<ItemStack> out = Arrays.asList(Items.DIAMOND_SWORD, Items.DIAMOND_PICKAXE, Items.DIAMOND_HELMET, Items.DIAMOND_CHESTPLATE, Items.DIAMOND_LEGGINGS, Items.DIAMOND_BOOTS).stream().map(ItemStack::new).toList();
         out.forEach(stack -> {
             LootController.createLootItem(stack, rarity, src);
-            AffixHelper.setName(stack, Component.translatable("text.apotheosis.any_x_item", rarity.toComponent(), "").withStyle(Style.EMPTY.withColor(rarity.getColor())));
+            AffixHelper.setName(stack, Component.translatable("text.zenith.any_x_item", rarity.toComponent(), "").withStyle(Style.EMPTY.withColor(rarity.getColor())));
         });
         return out;
     }

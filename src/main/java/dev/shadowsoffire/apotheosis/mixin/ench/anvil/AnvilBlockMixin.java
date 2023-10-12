@@ -62,11 +62,14 @@ public class AnvilBlockMixin  extends FallingBlock implements INBTSensitiveFalli
 
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable BlockGetter blockGetter, List<Component> list, TooltipFlag tooltipFlag) {
-        if (itemStack.is(Items.ANVIL) || itemStack.is(Items.CHIPPED_ANVIL) || itemStack.is(Items.DAMAGED_ANVIL) && Apotheosis.enableEnch) {
-            if (FabricLoader.getInstance().isModLoaded("easyanvils")) {
-                list.add(Component.translatable("apotheosis.easy_anvils"));
+        if (Apotheosis.enableEnch) {
+            if (itemStack.is(Items.ANVIL) || itemStack.is(Items.CHIPPED_ANVIL) || itemStack.is(Items.DAMAGED_ANVIL)) {
+                if (FabricLoader.getInstance().isModLoaded("easyanvils")) {
+                    list.add(Component.translatable("zenith.easy_anvils"));
+                }
+                if (!itemStack.hasFoil())
+                    list.add(Component.translatable("info.zenith.anvil").withStyle(ChatFormatting.GRAY));
             }
-            if (!itemStack.hasFoil()) list.add(Component.translatable("info.apotheosis.anvil").withStyle(ChatFormatting.GRAY));
         }
     }
 

@@ -47,7 +47,7 @@ public class OmneticAffix extends Affix {
 
     @Override
     public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-        list.accept(Component.translatable("affix." + this.getId() + ".desc", Component.translatable("misc.apotheosis." + this.values.get(rarity).name)));
+        list.accept(Component.translatable("affix." + this.getId() + ".desc", Component.translatable("misc.zenith." + this.values.get(rarity).name)));
     }
 
     public boolean harvest(Player player, BlockState state) {

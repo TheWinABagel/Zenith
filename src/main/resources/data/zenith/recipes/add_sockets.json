@@ -1,0 +1,12 @@
+{
+  "type": "zenith:add_sockets",
+  "fabric:load_conditions": [{
+    "condition": "zenith:module",
+    "module": "adventure"
+  }],
+  "group": "something",
+  "input": {
+	"item": "zenith:sigil_of_socketing"
+  },
+  "max_sockets": 3
+}

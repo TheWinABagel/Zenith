@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.ench.library;
 
 import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.placebo.recipe.VanillaPacketDispatcher;
 import io.github.fabricators_of_create.porting_lib.block.CustomDataPacketHandlingBlockEntity;
 import io.github.fabricators_of_create.porting_lib.util.LazyOptional;
@@ -278,7 +279,7 @@ public abstract class EnchLibraryTile extends BlockEntity implements CustomDataP
     public static class BasicLibraryTile extends EnchLibraryTile {
 
         public BasicLibraryTile(BlockPos pos, BlockState state) {
-            super(Apoth.Tiles.LIBRARY, pos, state, 16);
+            super(Ench.Tiles.LIBRARY, pos, state, 16);
         }
 
     }
@@ -286,7 +287,7 @@ public abstract class EnchLibraryTile extends BlockEntity implements CustomDataP
     public static class EnderLibraryTile extends EnchLibraryTile {
 
         public EnderLibraryTile(BlockPos pos, BlockState state) {
-            super(Apoth.Tiles.ENDER_LIBRARY, pos, state, 31);
+            super(Ench.Tiles.ENDER_LIBRARY, pos, state, 31);
         }
 
     }

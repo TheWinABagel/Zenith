@@ -15,9 +15,9 @@ public class SlimeMixin {
     @Inject(at = @At(value = "INVOKE", target = "net/minecraft/world/level/Level.addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z"), method = "remove(Lnet/minecraft/world/entity/Entity$RemovalReason;)V", locals = LocalCapture.CAPTURE_FAILHARD, require = 1)
     public void apoth_markMovable(RemovalReason reason, CallbackInfo ci, int size, Component name, boolean noAI, float f, int j, int k, int l, float f1, float f2, Slime slime) {
         if (noAI) {
-            boolean isMoveable = ((Slime) (Object) this).getCustomData().getBoolean("apotheosis:movable");
+            boolean isMoveable = ((Slime) (Object) this).getCustomData().getBoolean("zenith:movable");
             if (isMoveable) {
-                slime.getCustomData().putBoolean("apotheosis:movable", true);
+                slime.getCustomData().putBoolean("zenith:movable", true);
             }
         }
     }

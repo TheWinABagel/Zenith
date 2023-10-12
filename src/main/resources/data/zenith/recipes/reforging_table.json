@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "fabric:load_conditions": [{
+    "condition": "zenith:module",
+    "module": "adventure"
+  }],
+  "group": "something",
+  "pattern": [
+    " N ",
+    "GEG",
+    "BBB"
+  ],
+  "key": {
+    "N": {
+      "tag": "forge:ingots/netherite"
+    },
+	"G": {
+      "item": "zenith:epic_material"
+    },
+	"E": {
+      "item": "zenith:simple_reforging_table"
+    },
+	"B": {
+      "item": "minecraft:nether_bricks"
+    }
+  },
+  "result": {
+    "item": "zenith:reforging_table",
+    "count": 1
+  }
+}

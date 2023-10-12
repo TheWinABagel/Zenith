@@ -65,7 +65,7 @@ public class AdventureConfig {
 
 
     public static void load(Configuration c) {
-        c.setTitle("Apotheosis Adventure Module Config");
+        c.setTitle("Zenith Adventure Module Config");
 
         TYPE_OVERRIDES.clear();
         String[] overrides = c.getStringList("Equipment Type Overrides", "affixes", new String[] { "minecraft:iron_sword|sword", "minecraft:shulker_shell|none" },

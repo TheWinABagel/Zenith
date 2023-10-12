@@ -5,7 +5,7 @@
 	"dimensions": [
 	],
 	"bonuses": [{
-			"type": "apotheosis:attribute",
+			"type": "zenith:attribute",
 			"gem_class": {
 				"key": "core_armor",
 				"types": [
@@ -24,7 +24,7 @@
 			}
 		},
 		{
-			"type": "apotheosis:attribute",
+			"type": "zenith:attribute",
 			"gem_class": {
 				"key": "light_weapon",
 				"types": [
@@ -43,7 +43,7 @@
 			}
 		},
 		{
-			"type": "apotheosis:attribute",
+			"type": "zenith:attribute",
 			"gem_class": {
 				"key": "heavy_weapon",
 				"types": [
@@ -61,7 +61,7 @@
 			}
 		},
 		{
-			"type": "apotheosis:attribute",
+			"type": "zenith:attribute",
 			"gem_class": {
 				"key": "shield",
 				"types": [

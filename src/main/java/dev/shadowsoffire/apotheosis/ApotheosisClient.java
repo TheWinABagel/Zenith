@@ -15,6 +15,5 @@ public class ApotheosisClient implements ClientModInitializer {
         if (Apotheosis.enableEnch) EnchModuleClient.init();
         if (Apotheosis.enablePotion) PotionModuleClient.init();;
         if (Apotheosis.enableAdventure) AdventureModuleClient.init();
-
     }
 }

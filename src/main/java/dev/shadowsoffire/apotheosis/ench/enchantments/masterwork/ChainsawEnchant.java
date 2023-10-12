@@ -59,7 +59,7 @@ public class ChainsawEnchant extends Enchantment {
             ItemStack stack = player.getMainHandItem();
             int enchLevel = EnchantmentHelper.getItemEnchantmentLevel(this, stack);
             if (player.getClass() == ServerPlayer.class && enchLevel > 0 && !level.isClientSide && this.isTree(level, pos, state)) {
-                if (!player.getAbilities().instabuild) PlaceboTaskQueue.submitTask("apotheosis:chainsaw_task", new ChainsawTask(player.getUUID(), stack, level, pos));
+                if (!player.getAbilities().instabuild) PlaceboTaskQueue.submitTask("zenith:chainsaw_task", new ChainsawTask(player.getUUID(), stack, level, pos));
             }
         });
 

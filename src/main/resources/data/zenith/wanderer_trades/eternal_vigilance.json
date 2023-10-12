@@ -1,0 +1,51 @@
+{
+  "fabric:load_conditions": [{
+    "condition": "zenith:module",
+    "module": "village"
+  }],
+  "type": "zenith:basic_trade",
+  "rare": true,
+  "input_1": {
+    "item": "minecraft:diamond",
+    "count": 64
+  },
+  "input_2": {
+    "item": "minecraft:phantom_membrane",
+    "count": 32
+  },
+  "output": {
+    "item": "minecraft:diamond_sword",
+    "count": 1,
+        "nbt": {
+        "Enchantments": [
+            {
+                "lvl": 10,
+                "id": "minecraft:sharpness"
+            },
+            {
+                "lvl": 5,
+                "id": "zenith:life_mending"
+            },
+            {
+                "lvl": 5,
+                "id": "minecraft:looting"
+            },
+            {
+                "lvl": 5,
+                "id": "minecraft:unbreaking"
+            },
+            {
+                "lvl": 5,
+                "id": "zenith:scavenger"
+            }
+        ],
+        "display": {
+            "Name": "{\"translate\":\"name.zenith.vigilance\", \"italic\": false, \"color\": \"#1ABBE0\"}"
+        },
+        "Damage": 0
+    }
+  },
+  "max_trades": 1,
+  "xp": 1000,
+  "price_mult": 0.0
+}

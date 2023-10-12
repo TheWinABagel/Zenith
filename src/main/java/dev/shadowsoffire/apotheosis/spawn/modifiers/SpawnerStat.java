@@ -31,10 +31,10 @@ public interface SpawnerStat<T> {
     Class<T> getTypeClass();
 
     default MutableComponent name() {
-        return Component.translatable("stat.apotheosis." + this.getId());
+        return Component.translatable("stat.zenith." + this.getId());
     }
 
     default MutableComponent desc() {
-        return Component.translatable("stat.apotheosis." + this.getId() + ".desc");
+        return Component.translatable("stat.zenith." + this.getId() + ".desc");
     }
 }

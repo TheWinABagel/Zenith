@@ -89,7 +89,7 @@ public class AdventureEvents {
             GemCommand.register(root);
             SocketCommand.register(root);
             BossCommand.register(root);
-
+            AddGemCommand.register(root);
             dispatcher.register(root);
         });
 

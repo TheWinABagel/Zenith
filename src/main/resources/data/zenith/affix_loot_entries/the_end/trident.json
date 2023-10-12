@@ -1,0 +1,12 @@
+{
+	"weight": 75,
+	"quality": 2.5,
+	"stack": {
+		"item": "minecraft:trident"
+	},
+	"min_rarity": "zenith:rare",
+	"max_rarity": "zenith:mythic",
+	"dimensions": [
+		"minecraft:the_end"
+	]
+}

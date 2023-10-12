@@ -21,13 +21,13 @@ import java.io.File;
 
 public class Apotheosis implements ModInitializer {
 
-    public static final String MODID = "apotheosis";
+    public static final String MODID = "zenith";
 
     public static File configDir;
     public static Configuration config;
     public static boolean enableEnch = true;
-    public static boolean enableAdventure = true;
-    public static boolean enableSpawner = true;
+    public static boolean enableAdventure = false;
+    public static boolean enableSpawner = false;
     public static boolean enablePotion = true;
     public static boolean enableVillage = true;
     public static boolean enableGarden = true;
@@ -43,24 +43,27 @@ public class Apotheosis implements ModInitializer {
         if (enableGarden) GardenModule.init();
         if (enableAdventure) AdventureModule.init();
         if (enablePotion) PotionModule.init();
-        if (enableVillage) VillageModule.init();
+        if (enableVillage) {
+            VillageModule.init();
+            VillageModule.FLETCHING.getClass(); // Static init wew
+        }
 
         if (config.hasChanged()) config.save();
 
         AdvancementTriggers.init();
         Events.init();
         ResourceConditions.register(ModuleCondition.ID, ModuleCondition::test);
-        Apoth.RecipeTypes.FLETCHING.getClass(); // Static init wew
         if (FabricLoader.getInstance().isModLoaded("patchouli")) PatchouliCompat.registerPatchouli();
 
+        Apoth.Tiles.bootstrap();
     }
 
     static {
         configDir = new File(FabricLoader.getInstance().getConfigDir().toFile(), MODID);
         config = new Configuration(new File(configDir, MODID + ".cfg"));
         enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
-        enableAdventure = config.getBoolean("Enable Adventure Module", "general", false, "If the adventure module is loaded. WARNING! BARELY WORKS, enable at your own risk! YOU WILL ENCOUNTER GAME BREAKING BUGS!");
-        enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If the spawner module is enabled.");
+        //enableAdventure = config.getBoolean("Enable Adventure Module", "general", false, "If the adventure module is loaded. WARNING! BARELY WORKS, enable at your own risk! YOU WILL ENCOUNTER GAME BREAKING BUGS!");
+        //enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If the spawner module is enabled.");
         enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
         enableVillage = config.getBoolean("Enable Village Module", "general", true, "If the village module is loaded.");
         enableGarden = config.getBoolean("Enable Garden Module", "general", true, "If the garden module is loaded.");

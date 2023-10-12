@@ -1,0 +1,12 @@
+{
+	"weight": 50,
+	"quality": 2.5,
+	"stack": {
+		"item": "minecraft:shield"
+	},
+	"min_rarity": "zenith:uncommon",
+	"max_rarity": "zenith:epic",
+	"dimensions": [
+		"minecraft:the_nether"
+	]
+}

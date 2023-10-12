@@ -1,0 +1,28 @@
+{
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "adventure"
+	}],
+	"type": "zenith:affix",
+	"rare": true,
+	"input_1": {
+		"item": "minecraft:diamond",
+		"count": 5
+	},
+	"input_2": {
+		"item": "minecraft:emerald",
+		"count": 30
+	},
+	"rarities": "zenith:epic",
+	"entries": [
+		"zenith:overworld/bow",
+		"zenith:the_nether/diamond_axe",
+		"zenith:the_nether/diamond_boots",
+		"zenith:the_nether/diamond_chestplate",
+		"zenith:the_nether/diamond_helmet",
+		"zenith:the_nether/diamond_leggings",
+		"zenith:the_nether/diamond_pickaxe",
+		"zenith:the_nether/diamond_shovel",
+		"zenith:the_nether/diamond_sword"
+	]
+}

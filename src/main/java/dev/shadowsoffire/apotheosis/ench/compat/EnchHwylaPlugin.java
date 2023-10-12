@@ -3,7 +3,6 @@ package dev.shadowsoffire.apotheosis.ench.compat;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.util.CommonTooltipUtil;
 import dev.shadowsoffire.apotheosis.ench.anvil.AnvilTile;
-import dev.shadowsoffire.apotheosis.ench.anvil.ApothAnvilBlock;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
@@ -34,6 +33,7 @@ public class EnchHwylaPlugin implements IWailaPlugin, IBlockComponentProvider, I
 
     @Override
     public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
+        if (!Apotheosis.enableEnch) return;
         if (accessor.getBlock() instanceof AnvilBlock) {
             CompoundTag tag = accessor.getServerData();
             Map<Enchantment, Integer> enchants = EnchantmentHelper.deserializeEnchantments(tag.getList("enchantments", Tag.TAG_COMPOUND));
@@ -47,6 +47,7 @@ public class EnchHwylaPlugin implements IWailaPlugin, IBlockComponentProvider, I
 
     @Override
     public void appendServerData(CompoundTag tag, BlockAccessor access) {
+        if (!Apotheosis.enableEnch) return;
         if (access.getBlockEntity() instanceof AnvilTile te) {
             ItemStack stack = new ItemStack(Items.ANVIL);
             EnchantmentHelper.setEnchantments(te.getEnchantments(), stack);

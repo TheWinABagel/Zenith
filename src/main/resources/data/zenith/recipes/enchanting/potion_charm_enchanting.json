@@ -1,0 +1,21 @@
+{
+	"type": "zenith:potion_charm_enchanting",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "enchantment"
+	},
+	{
+		"condition": "zenith:module",
+		"module": "potion"
+	}],
+	"requirements": {
+		"eterna": 50,
+		"quanta": 8.5,
+		"arcana": 32.5
+	},
+	"max_requirements": {
+		"eterna": 50,
+		"quanta": 13.5,
+		"arcana": 37.5
+	}
+}

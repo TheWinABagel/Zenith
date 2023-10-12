@@ -13,7 +13,6 @@
     "adventure.MHFMixinLivingEntity",
     "adventure.PlayerMixin",
     "adventure.SmithingMenuMixin",
-    "PortLibMixinSquared",
     "ench.BlockMixin",
     "ench.CreativeModeTabsMixin",
     "ench.EnchantmentHelperMixin",
@@ -48,9 +47,11 @@
     "defaultRequire": 1
   },
   "client": [
+    "adventure.LevelRendererMixin",
     "client.AnvilScreenMixin",
     "client.EnchantmentScreenMixin",
     "client.GuiMixin",
+    "util.events.AbstractContainerScreenMixin",
     "util.events.GuiGraphicsMixin",
     "util.events.ModelBakeryMixin",
     "util.events.ModelManagerMixin"

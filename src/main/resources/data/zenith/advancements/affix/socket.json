@@ -1,0 +1,36 @@
+{
+	"parent": "zenith:affix/gem",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "adventure"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:smithing_table"
+		},
+		"title": {
+			"translate": "advancements.zenith.socket"
+		},
+		"description": {
+			"translate": "advancements.zenith.socket.desc"
+		},
+		"frame": "task",
+		"hidden": false,
+		"background": "zenith:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"socket": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"zenith": {
+					"type": "socket"
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"socket"
+		]
+	]
+}

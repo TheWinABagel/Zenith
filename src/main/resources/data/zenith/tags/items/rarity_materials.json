@@ -1,0 +1,10 @@
+{
+	"values": [
+		"zenith:common_material",
+		"zenith:uncommon_material",
+		"zenith:rare_material",
+		"zenith:epic_material",
+		"zenith:mythic_material",
+		"zenith:ancient_material"
+	]
+}

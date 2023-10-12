@@ -1,0 +1,16 @@
+{
+    "dimensions": [
+        "minecraft:overworld"
+    ],
+    "min_rarity": "zenith:common",
+    "max_rarity": "zenith:rare",
+    "weight": 85,
+    "quality": 4.0,
+    "stack": {
+        "item": "minecraft:iron_axe",
+        "count": 1,
+        "nbt": {
+            "Damage": 0
+        }
+    }
+}

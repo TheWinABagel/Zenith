@@ -1,0 +1,12 @@
+{
+	"type": "zenith:attribute",
+	"attribute": "attributeslib:elytra_flight",
+	"operation": "ADDITION",
+	"values": {
+		"mythic": 1,
+		"ancient": 1
+	},
+	"types": [
+		"chestplate"
+	]
+}

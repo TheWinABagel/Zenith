@@ -74,7 +74,7 @@ public class LootController {
 
         jRand.setSeed(rand.nextLong());
         Collections.shuffle(nameList, jRand);
-        String key = nameList.size() > 1 ? "misc.apotheosis.affix_name.three" : "misc.apotheosis.affix_name.two";
+        String key = nameList.size() > 1 ? "misc.zenith.affix_name.three" : "misc.zenith.affix_name.two";
         MutableComponent name = Component.translatable(key, nameList.get(0).getName(true), "", nameList.size() > 1 ? nameList.get(1).getName(false) : "").withStyle(Style.EMPTY.withColor(rarity.getColor()));
 
         AffixHelper.setRarity(stack, rarity);

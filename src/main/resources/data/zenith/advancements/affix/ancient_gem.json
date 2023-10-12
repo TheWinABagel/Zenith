@@ -1,0 +1,38 @@
+{
+	"parent": "zenith:affix/mythic_gem",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "adventure"
+	}],
+	"display": {
+		"icon": {
+			"item": "zenith:gem",
+			"nbt": "{gem:\"zenith:the_end/endersurge\"}"
+		},
+		"title": {
+			"translate": "advancements.zenith.ancient_gem"
+		},
+		"description": {
+			"translate": "advancements.zenith.ancient_gem.desc"
+		},
+		"frame": "challenge",
+		"hidden": true,
+		"background": "zenith:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"gem": {
+			"trigger": "zenith:gem_cutting",
+			"conditions": {
+				"trigger": "zenith:gem_cutting",
+				"conditions": {
+					"rarity": "ancient"
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"gem"
+		]
+	]
+}

@@ -3,7 +3,6 @@ package dev.shadowsoffire.apotheosis.village.fletching;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.village.VillageModule;
 import net.minecraft.core.NonNullList;
@@ -67,7 +66,7 @@ public class FletchingRecipe implements Recipe<CraftingContainer> {
 
     @Override
     public RecipeType<?> getType() {
-        return RecipeTypes.FLETCHING;
+        return VillageModule.FLETCHING;
     }
 
     @Override

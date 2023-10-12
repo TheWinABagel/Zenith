@@ -1,0 +1,37 @@
+{
+	"parent": "zenith:affix/root",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "adventure"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:golden_sword"
+		},
+		"title": {
+			"translate": "advancements.zenith.rare"
+		},
+		"description": {
+			"translate": "advancements.zenith.rare.desc"
+		},
+		"frame": "goal",
+		"hidden": true,
+		"background": "zenith:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"sword": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"zenith": {
+					"type": "rarity",
+					"rarity": "RARE"
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"sword"
+		]
+	]
+}

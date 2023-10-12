@@ -101,10 +101,10 @@ public class Gem implements CodecProvider<Gem>, ILuckyWeighted, IDimensional, Ra
      * @param list     The destination for tooltips.
      */
     public void addInformation(ItemStack gem, LootRarity rarity, Consumer<Component> list) {
-        if (this.isUnique()) list.accept(Component.translatable("text.apotheosis.unique").withStyle(Style.EMPTY.withColor(0xC73912)));
+        if (this.isUnique()) list.accept(Component.translatable("text.zenith.unique").withStyle(Style.EMPTY.withColor(0xC73912)));
         list.accept(CommonComponents.EMPTY);
         Style style = Style.EMPTY.withColor(0x0AFF0A);
-        list.accept(Component.translatable("text.apotheosis.socketable_into").withStyle(style));
+        list.accept(Component.translatable("text.zenith.socketable_into").withStyle(style));
         addTypeInfo(list, this.bonusMap.keySet().toArray());
         list.accept(CommonComponents.EMPTY);
         if (this.bonuses.size() == 1) {
@@ -116,7 +116,7 @@ public class Gem implements CodecProvider<Gem>, ILuckyWeighted, IDimensional, Ra
             for (GemBonus bonus : this.bonuses) {
                 if (!bonus.supports(rarity)) continue;
                 Component modifComp = bonus.getSocketBonusTooltip(gem, rarity);
-                Component sum = Component.translatable("text.apotheosis.dot_prefix", Component.translatable("%s: %s", Component.translatable("gem_class." + bonus.getGemClass().key()), modifComp)).withStyle(ChatFormatting.GOLD);
+                Component sum = Component.translatable("text.zenith.dot_prefix", Component.translatable("%s: %s", Component.translatable("gem_class." + bonus.getGemClass().key()), modifComp)).withStyle(ChatFormatting.GOLD);
                 list.accept(sum);
             }
         }
@@ -231,13 +231,13 @@ public class Gem implements CodecProvider<Gem>, ILuckyWeighted, IDimensional, Ra
                     sb.append("%s, ");
                     args[r] = Component.translatable(((LootCategory) types[i + r]).getDescIdPlural());
                 }
-                list.accept(Component.translatable("text.apotheosis.dot_prefix", Component.translatable(sb.substring(0, sb.length() - 2), args)).withStyle(style));
+                list.accept(Component.translatable("text.zenith.dot_prefix", Component.translatable(sb.substring(0, sb.length() - 2), args)).withStyle(style));
                 sb.setLength(0);
                 i += rem;
             }
         }
         else {
-            list.accept(Component.translatable("text.apotheosis.dot_prefix", Component.translatable("text.apotheosis.anything")).withStyle(style));
+            list.accept(Component.translatable("text.zenith.dot_prefix", Component.translatable("text.zenith.anything")).withStyle(style));
         }
     }
 

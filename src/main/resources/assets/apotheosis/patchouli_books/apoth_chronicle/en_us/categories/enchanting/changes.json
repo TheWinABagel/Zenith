@@ -1,7 +1,0 @@
-{
-    "name": "Vanilla Changes",
-    "description": "This section covers new enchantable items, and mechanical changes.$(p)If any minor content changes occur, they'll be noted here.",
-    "icon": "minecraft:trident",
-	"flag": "apotheosis:enchanting",
-	"parent": "apotheosis:enchanting/enchanting"
-}

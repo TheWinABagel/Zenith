@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "fabric:load_conditions": [{
+    "condition": "zenith:module",
+    "module": "adventure"
+  }],
+  "group": "something",
+  "pattern": [
+    "GDG",
+    "GLG",
+    "GAG"
+  ],
+  "key": {
+    "D": {
+      "item": "minecraft:dragon_breath"
+    },
+	"G": {
+      "item": "zenith:gem_dust"
+    },
+	"L": {
+      "item": "minecraft:lodestone"
+    },
+	"A": {
+      "item": "minecraft:amethyst_shard"
+    }
+  },
+  "result": {
+    "item": "zenith:sigil_of_socketing",
+    "count": 1
+  }
+}

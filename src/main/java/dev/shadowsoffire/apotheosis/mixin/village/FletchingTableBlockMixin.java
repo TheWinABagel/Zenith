@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(FletchingTableBlock.class)
 public class FletchingTableBlockMixin extends CraftingTableBlock {
 
-    private static final Component NAME = Component.translatable("apotheosis.recipes.fletching");
+    private static final Component NAME = Component.translatable("zenith.recipes.fletching");
 
     public FletchingTableBlockMixin(Properties properties) {
         super(properties);
@@ -30,11 +30,12 @@ public class FletchingTableBlockMixin extends CraftingTableBlock {
 
     @Inject(method = "use",at = @At("RETURN"), cancellable = true)
     public void use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
-        if (!Apotheosis.enableSpawner) return;
+        if (!Apotheosis.enableVillage) return;
         if (level.isClientSide) cir.setReturnValue(InteractionResult.SUCCESS);
         player.openMenu(this.getMenuProvider(state, level, pos));
         cir.setReturnValue(InteractionResult.CONSUME);
     }
+
     @Override
     public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
         return new SimpleMenuProvider((id, inv, player) -> new FletchingContainer(id, inv, level, pos), NAME);

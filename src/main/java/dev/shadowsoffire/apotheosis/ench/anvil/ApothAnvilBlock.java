@@ -2,6 +2,7 @@ package dev.shadowsoffire.apotheosis.ench.anvil;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.advancements.AdvancementTriggers;
+import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.util.INBTSensitiveFallingBlock;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -94,12 +95,12 @@ public class ApothAnvilBlock extends AnvilBlock implements INBTSensitiveFallingB
     @Override
     @Environment(EnvType.CLIENT)
     public void appendHoverText(ItemStack stack, BlockGetter world, List<Component> tooltip, TooltipFlag flagIn) {
-        if (!stack.hasFoil()) tooltip.add(Component.translatable("info.apotheosis.anvil").withStyle(ChatFormatting.GRAY));
+        if (!stack.hasFoil()) tooltip.add(Component.translatable("info.zenith.anvil").withStyle(ChatFormatting.GRAY));
     }
 
     @Override
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!Apoth.Tiles.ENDER_LIBRARY.isValid(newState)) {
+        if (!Apoth.Tiles.ANVIL_TILE.isValid(newState)) {
             world.removeBlockEntity(pos);
         }
     }

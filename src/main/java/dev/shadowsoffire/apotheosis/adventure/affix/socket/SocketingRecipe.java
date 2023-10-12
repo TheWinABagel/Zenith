@@ -5,10 +5,12 @@ import java.util.List;
 
 import com.google.gson.JsonObject;
 
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothSmithingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.adventure.event.ItemSocketingEvent;
+import io.github.fabricators_of_create.porting_lib.core.event.BaseEvent;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -22,7 +24,7 @@ import net.minecraft.world.level.block.Blocks;
 
 public class SocketingRecipe extends ApothSmithingRecipe {
 
-    private static final ResourceLocation ID = new ResourceLocation("apotheosis:socketing");
+    private static final ResourceLocation ID = Apotheosis.loc("socketing");
 
     public SocketingRecipe() {
         super(ID, Ingredient.EMPTY, Ingredient.of(Adventure.Items.GEM), ItemStack.EMPTY);
@@ -40,9 +42,9 @@ public class SocketingRecipe extends ApothSmithingRecipe {
         if (!SocketHelper.hasEmptySockets(input)) return false;
         var event = new ItemSocketingEvent.CanSocket(input, gemStack);
         //MinecraftForge.EVENT_BUS.post(event);
-       // Result res = event.getResult();
-        //return res == Result.ALLOW ? true : res == Result.DEFAULT && gem.canApplyTo(input);
-        return true;
+        //BaseEvent.Result res = event.getResult();
+        //return res == BaseEvent.Result.ALLOW ? true : res == BaseEvent.Result.DEFAULT && gem.canApplyTo(input);
+        return true && gem.canApplyTo(input); //TODO add socketing event
     }
 
     /**
@@ -65,7 +67,7 @@ public class SocketingRecipe extends ApothSmithingRecipe {
 
         var event = new ItemSocketingEvent.ModifyResult(input, gemToInsert, result);
         //MinecraftForge.EVENT_BUS.post(event);
-        result = event.getOutput();
+        //result = event.getOutput();
         if (result.isEmpty()) throw new IllegalArgumentException("ItemSocketingEvent$ModifyResult produced an empty output stack.");
         return result;
     }

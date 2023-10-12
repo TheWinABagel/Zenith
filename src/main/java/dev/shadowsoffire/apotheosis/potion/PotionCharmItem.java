@@ -1,7 +1,5 @@
 package dev.shadowsoffire.apotheosis.potion;
 
-import dev.shadowsoffire.apotheosis.Apoth;
-import dev.shadowsoffire.placebo.tabs.ITabFiller;
 import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingBehaviorItem;
 import io.github.fabricators_of_create.porting_lib.item.DamageableItem;
 import net.fabricmc.api.EnvType;
@@ -136,14 +134,14 @@ public class PotionCharmItem extends Item implements CustomEnchantingBehaviorIte
 
     @Override
     public Component getName(ItemStack stack) {
-        if (!hasPotion(stack)) return Component.translatable("item.apotheosis.potion_charm_broke");
+        if (!hasPotion(stack)) return Component.translatable("item.zenith.potion_charm_broke");
         Potion p = PotionUtils.getPotion(stack);
         MobEffectInstance effect = p.getEffects().get(0);
         MutableComponent potionCmp = Component.translatable(effect.getDescriptionId());
         if (effect.getAmplifier() > 0) {
             potionCmp = Component.translatable("potion.withAmplifier", potionCmp, Component.translatable("potion.potency." + effect.getAmplifier()));
         }
-        return Component.translatable("item.apotheosis.potion_charm", potionCmp);
+        return Component.translatable("item.zenith.potion_charm", potionCmp);
     }
 
     public static boolean hasPotion(ItemStack stack) {
@@ -153,7 +151,7 @@ public class PotionCharmItem extends Item implements CustomEnchantingBehaviorIte
     public static void fillItemCategory(CreativeModeTab.Output out) {
         for (Potion potion : BuiltInRegistries.POTION) {
             if (potion.getEffects().size() == 1 && !potion.getEffects().get(0).getEffect().isInstantenous()) {
-                out.accept(PotionUtils.setPotion(new ItemStack(Apoth.Items.POTION_CHARM), potion));
+                out.accept(PotionUtils.setPotion(new ItemStack(PotionModule.POTION_CHARM), potion));
             }
         }
     }

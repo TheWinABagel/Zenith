@@ -6,7 +6,7 @@
 	],
 	"unique": true,
 	"bonuses": [{
-			"type": "apotheosis:attribute",
+			"type": "zenith:attribute",
 			"gem_class": {
 				"key": "light_ranged",
 				"types": [
@@ -27,7 +27,7 @@
 			}
 		},
 		{
-			"type": "apotheosis:attribute",
+			"type": "zenith:attribute",
 			"gem_class": {
 				"key": "heavy_weapon",
 				"types": [
@@ -45,7 +45,7 @@
 			}
 		},
 		{
-			"type": "apotheosis:attribute",
+			"type": "zenith:attribute",
 			"gem_class": {
 				"key": "lower_armor",
 				"types": [
@@ -64,7 +64,7 @@
 			}
 		},
 		{
-			"type": "apotheosis:attribute",
+			"type": "zenith:attribute",
 			"gem_class": {
 				"key": "helmet",
 				"types": [
@@ -82,7 +82,7 @@
 			}
 		},
 		{
-			"type": "apotheosis:attribute",
+			"type": "zenith:attribute",
 			"gem_class": {
 				"key": "shield",
 				"types": [

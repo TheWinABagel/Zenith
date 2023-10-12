@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
+import dev.shadowsoffire.apotheosis.spawn.SpawnerModule;
 import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerTile;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
@@ -124,12 +124,12 @@ public class SpawnerModifier implements Recipe<Container> {
 
     @Override
     public RecipeType<?> getType() {
-        return RecipeTypes.MODIFIER;
+        return SpawnerModule.MODIFIER;
     }
 
     @Nullable
     public static SpawnerModifier findMatch(ApothSpawnerTile tile, ItemStack mainhand, ItemStack offhand) {
-        List<SpawnerModifier> recipes = new ArrayList<>(tile.getLevel().getRecipeManager().getAllRecipesFor(RecipeTypes.MODIFIER));
+        List<SpawnerModifier> recipes = new ArrayList<>(tile.getLevel().getRecipeManager().getAllRecipesFor(SpawnerModule.MODIFIER));
         recipes.sort((r1, r2) -> r1.offHand == Ingredient.EMPTY ? r2.offHand == Ingredient.EMPTY ? 0 : 1 : -1);
         for (SpawnerModifier r : recipes)
             if (r.matches(tile, mainhand, offhand)) return r;

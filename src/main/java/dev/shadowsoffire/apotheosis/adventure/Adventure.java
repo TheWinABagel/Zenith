@@ -6,12 +6,10 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixRegistry;
 import dev.shadowsoffire.apotheosis.adventure.affix.effect.*;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingMenu;
+import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingTableBlock;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingTableTile;
-import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvageItem;
-import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingMenu;
-import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingTableBlock;
-import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingTableTile;
+import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.*;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketAffix;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingBlock;
@@ -28,17 +26,22 @@ import dev.shadowsoffire.apotheosis.ench.objects.GlowyBlockItem.GlowyItem;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntityType;
 import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
+import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -139,25 +142,41 @@ public class Adventure {
 
     }
 
-    public static class Menus {
+    public static class Menus { //TODO rewrite ;)
 
     //    public static final MenuType<ReforgingMenu> REFORGING = ScreenHandlerRegistry.registerSimple(Apotheosis.loc("reforging"), ReforgingMenu::new);
 
     //    public static final MenuType<SalvagingMenu> SALVAGE = ScreenHandlerRegistry.registerSimple(Apotheosis.loc("salvage"), SalvagingMenu::new);
 
         public static final MenuType<GemCuttingMenu> GEM_CUTTING = ScreenHandlerRegistry.registerSimple(Apotheosis.loc("gem_cutting"), GemCuttingMenu::new);
-        public static final MenuType<GemCuttingMenu> SALVAGE = ScreenHandlerRegistry.registerSimple(Apotheosis.loc("salvage"), GemCuttingMenu::new);
+        public static final MenuType<SalvagingMenu> SALVAGE = Registry.register(BuiltInRegistries.MENU, Apotheosis.loc("salvage"), MenuUtil.posType(SalvagingMenu::new));
         public static final MenuType<GemCuttingMenu> REFORGING = ScreenHandlerRegistry.registerSimple(Apotheosis.loc("reforging"), GemCuttingMenu::new);
 
         private static void bootstrap() {};
     }
 
+    public static class RecipeTypes {
+        public static final RecipeType<SalvagingRecipe> SALVAGING = PlaceboUtil.makeRecipeType("zenith:salvaging");
+        public static final RecipeType<ReforgingRecipe> REFORGING = PlaceboUtil.makeRecipeType("zenith:reforging");
+    }
+
     public static class Tabs {
-/*
-        public static final RegistryObject<CreativeModeTab> ADVENTURE = R.tab("adventure",
-            () -> CreativeModeTab.builder().title(Component.translatable("itemGroup.apotheosis.adventure")).icon(Items.GEM::getDefaultInstance).build());
-*/
-        private static void bootstrap() {}
+
+        public static final ResourceKey<CreativeModeTab> ADVENTURE = ResourceKey.create(Registries.CREATIVE_MODE_TAB, Apotheosis.loc("adventure"));
+        public static final CreativeModeTab ADVENTURETAB = FabricItemGroup.builder()
+                .title(Component.translatable("itemGroup.zenith.adventure"))
+                .icon(Items.GEM::getDefaultInstance)
+                .displayItems((a,b) -> {
+                    Apoth.fill(b, Items.COMMON_MATERIAL, Items.UNCOMMON_MATERIAL, Items.RARE_MATERIAL, Items.EPIC_MATERIAL, Items.MYTHIC_MATERIAL, Items.GEM_DUST, Items.VIAL_OF_EXPULSION,
+                            Items.VIAL_OF_EXTRACTION, Items.VIAL_OF_UNNAMING, Items.SIGIL_OF_SOCKETING, Items.SIGIL_OF_ENHANCEMENT, Items.SUPERIOR_SIGIL_OF_SOCKETING, Items.SUPERIOR_SIGIL_OF_ENHANCEMENT, Items.BOSS_SUMMONER,
+                            Items.SIMPLE_REFORGING_TABLE, Items.REFORGING_TABLE, Items.SALVAGING_TABLE, Items.GEM_CUTTING_TABLE);
+
+                    GemItem.fillItemCategory(b);
+                })
+                .build();
+        private static void bootstrap() {
+            Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ADVENTURE, ADVENTURETAB);
+        }
     }
 
     public static final class Affixes {

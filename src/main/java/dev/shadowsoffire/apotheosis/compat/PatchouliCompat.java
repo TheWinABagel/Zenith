@@ -11,14 +11,14 @@ public class PatchouliCompat {
     public static void registerPatchouli() {
         PatchouliAPI.IPatchouliAPI api = PatchouliAPI.get();
         if (!api.isStub()) {
-            api.setConfigFlag("apotheosis:enchanting", Apotheosis.enableEnch);
-            api.setConfigFlag("apotheosis:adventure", Apotheosis.enableAdventure);
-            api.setConfigFlag("apotheosis:spawner", Apotheosis.enableSpawner);
-            api.setConfigFlag("apotheosis:garden", Apotheosis.enableGarden);
-            api.setConfigFlag("apotheosis:potion", Apotheosis.enablePotion);
-            api.setConfigFlag("apotheosis:village", Apotheosis.enableVillage);
-            api.setConfigFlag("apotheosis:wstloaded", FabricLoader.getInstance().isModLoaded("wstweaks"));
-            api.setConfigFlag("apotheosis:curiosloaded", FabricLoader.getInstance().isModLoaded("trinkets"));
+            api.setConfigFlag("zenith:enchanting", Apotheosis.enableEnch);
+            api.setConfigFlag("zenith:adventure", Apotheosis.enableAdventure);
+            api.setConfigFlag("zenith:spawner", Apotheosis.enableSpawner);
+            api.setConfigFlag("zenith:garden", Apotheosis.enableGarden);
+            api.setConfigFlag("zenith:potion", Apotheosis.enablePotion);
+            api.setConfigFlag("zenith:village", Apotheosis.enableVillage);
+            api.setConfigFlag("zenith:wstloaded", FabricLoader.getInstance().isModLoaded("wstweaks"));
+            api.setConfigFlag("zenith:curiosloaded", FabricLoader.getInstance().isModLoaded("trinkets"));
         }
     }
 }

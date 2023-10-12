@@ -1,8 +1,10 @@
 package dev.shadowsoffire.apotheosis.ench;
 
+import com.google.common.collect.ImmutableSet;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
+import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryTile;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryTile.BasicLibraryTile;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryTile.EnderLibraryTile;
 import dev.shadowsoffire.apotheosis.ench.objects.TypedShelfBlock.SculkShelfBlock;
@@ -16,6 +18,8 @@ import dev.shadowsoffire.apotheosis.ench.enchantments.twisted.ExploitationEnchan
 import dev.shadowsoffire.apotheosis.ench.enchantments.twisted.MinersFervorEnchant;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryBlock;
 import dev.shadowsoffire.apotheosis.ench.objects.*;
+import dev.shadowsoffire.apotheosis.ench.table.EnchantingRecipe;
+import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.core.Registry;
@@ -28,12 +32,14 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 
@@ -42,6 +48,8 @@ import java.util.Arrays;
 import java.util.function.Supplier;
 
 public class Ench {
+
+    public static final RecipeType<EnchantingRecipe> INFUSION = PlaceboUtil.makeRecipeType("zenith:enchanting");
 
     public static final class Blocks {
 
@@ -369,42 +377,30 @@ public class Ench {
 
         public static final ResourceKey<CreativeModeTab> ENCH = ResourceKey.create(Registries.CREATIVE_MODE_TAB, Apotheosis.loc("ench"));
         public static final CreativeModeTab ENCHTAB = FabricItemGroup.builder()
-                .title(Component.translatable("itemGroup.apotheosis.ench"))
+                .title(Component.translatable("itemGroup.zenith.ench"))
                 .icon(Items.HELLSHELF::getDefaultInstance)
                 .displayItems((a,b) -> {
-                    fill(b, Items.HELLSHELF, Items.INFUSED_HELLSHELF, Items.BLAZING_HELLSHELF, Items.GLOWING_HELLSHELF, Items.SEASHELF, Items.INFUSED_SEASHELF,
+                    Apoth.fill(b, Items.HELLSHELF, Items.INFUSED_HELLSHELF, Items.BLAZING_HELLSHELF, Items.GLOWING_HELLSHELF, Items.SEASHELF, Items.INFUSED_SEASHELF,
                             Items.CRYSTAL_SEASHELF, Items.HEART_SEASHELF, Items.DORMANT_DEEPSHELF, Items.DEEPSHELF, Items.ECHOING_DEEPSHELF, Items.SOUL_TOUCHED_DEEPSHELF, Items.ECHOING_SCULKSHELF,
                             Items.SOUL_TOUCHED_SCULKSHELF, Items.ENDSHELF, Items.PEARL_ENDSHELF, Items.DRACONIC_ENDSHELF, Items.BEESHELF, Items.MELONSHELF, Items.STONESHELF, Items.RECTIFIER,
                             Items.RECTIFIER_T2, Items.RECTIFIER_T3, Items.SIGHTSHELF, Items.SIGHTSHELF_T2, Items.LIBRARY, Items.ENDER_LIBRARY);
 
-                    fill(b, Items.HELMET_TOME, Items.CHESTPLATE_TOME, Items.LEGGINGS_TOME, Items.BOOTS_TOME, Items.WEAPON_TOME, Items.BOW_TOME, Items.PICKAXE_TOME,
+                    Apoth.fill(b, Items.HELMET_TOME, Items.CHESTPLATE_TOME, Items.LEGGINGS_TOME, Items.BOOTS_TOME, Items.WEAPON_TOME, Items.BOW_TOME, Items.PICKAXE_TOME,
                             Items.FISHING_TOME, Items.OTHER_TOME, Items.SCRAP_TOME, Items.IMPROVED_SCRAP_TOME, Items.EXTRACTION_TOME);
 
-                    fill(b, Items.PRISMATIC_WEB, Items.INERT_TRIDENT, Items.WARDEN_TENDRIL, Items.INFUSED_BREATH);
+                    Apoth.fill(b, Items.PRISMATIC_WEB, Items.INERT_TRIDENT, Items.WARDEN_TENDRIL, Items.INFUSED_BREATH);
 
-                    fill(b, Enchantments.BERSERKERS_FURY, Enchantments.CHAINSAW, Enchantments.CHROMATIC, Enchantments.CRESCENDO, Enchantments.EARTHS_BOON, Enchantments.ENDLESS_QUIVER, Enchantments.EXPLOITATION,
+                    Apoth.fill(b, Enchantments.BERSERKERS_FURY, Enchantments.CHAINSAW, Enchantments.CHROMATIC, Enchantments.CRESCENDO, Enchantments.EARTHS_BOON, Enchantments.ENDLESS_QUIVER, Enchantments.EXPLOITATION,
                             Enchantments.GROWTH_SERUM, Enchantments.ICY_THORNS, Enchantments.KNOWLEDGE, Enchantments.LIFE_MENDING, Enchantments.MINERS_FERVOR, Enchantments.NATURES_BLESSING, Enchantments.OBLITERATION, Enchantments.REBOUNDING,
                             Enchantments.REFLECTIVE, Enchantments.SCAVENGER, Enchantments.SHIELD_BASH, Enchantments.SPEARFISHING, Enchantments.SPLITTING, Enchantments.STABLE_FOOTING, Enchantments.TEMPTING);
                 })
                 .build();
 
-        public static void fill(CreativeModeTab.Output output, Item... items) {
-            Arrays.stream(items).forEach(output::accept);
+
+
+        private static void bootstrap() {
+            Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ENCH, ENCHTAB);
         }
-
-        public static void fill(CreativeModeTab.Output output, Enchantment... enchants) {
-            Arrays.stream(enchants).map(Tabs::enchFiller).forEach(books -> books.stream().toList().forEach(output::accept));
-
-        }
-
-        public static ArrayList<ItemStack> enchFiller(Enchantment ench) {
-            ArrayList<ItemStack> out = new ArrayList<>();
-            int maxLevel = EnchHooks.getMaxLevel(ench);
-            out.add(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(ench, maxLevel)));
-            return out;
-        }
-
-        private static void bootstrap() {}
 
     }
 
@@ -415,12 +411,21 @@ public class Ench {
         public static final SimpleParticleType ENCHANT_END = FabricParticleTypes.simple();
     }
 
+    public static final class Tiles {
+        public static final BlockEntityType<BasicLibraryTile> LIBRARY = Apoth.registerBEType("library", new BlockEntityType<>(EnchLibraryTile.BasicLibraryTile::new, ImmutableSet.of(Ench.Blocks.LIBRARY), null));
+        public static final BlockEntityType<EnchLibraryTile.EnderLibraryTile> ENDER_LIBRARY = Apoth.registerBEType("ender_library", new BlockEntityType<>(EnchLibraryTile.EnderLibraryTile::new, ImmutableSet.of(Ench.Blocks.ENDER_LIBRARY), null));
+
+    }
+
+    public static final class RecipeTypes {
+
+    }
+
     public static void bootstrap() {
         Blocks.init();
         Items.init();
         Enchantments.init();
         Tabs.bootstrap();
-        Apoth.Tiles.bootstrap();
         Apoth.Menus.bootstrap();
     }
 

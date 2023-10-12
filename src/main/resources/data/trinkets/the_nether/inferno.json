@@ -1,6 +1,6 @@
 {
 	"conditions": [{
-		"type": "apotheosis:module",
+		"type": "zenith:module",
 		"module": "enchantment"
 	}],
 	"weight": 5,
@@ -11,7 +11,7 @@
 	"unique": true,
 	"min_rarity": "rare",
 	"bonuses": [{
-			"type": "apotheosis:attribute",
+			"type": "zenith:attribute",
 			"gem_class": {
 				"key": "heavy_weapon",
 				"types": [
@@ -27,7 +27,7 @@
 			}
 		},
 		{
-			"type": "apotheosis:mob_effect",
+			"type": "zenith:mob_effect",
 			"gem_class": {
 				"key": "light_weapon",
 				"types": [
@@ -46,14 +46,14 @@
 			}
 		},
 		{
-			"type": "apotheosis:enchantment",
+			"type": "zenith:enchantment",
 			"gem_class": {
 				"key": "chestplate",
 				"types": [
 					"chestplate"
 				]
 			},
-			"enchantment": "apotheosis:berserkers_fury",
+			"enchantment": "zenith:berserkers_fury",
 			"values": {
 				"rare": 1,
 				"epic": 1,
@@ -61,7 +61,7 @@
 			}
 		},
 		{
-			"type": "apotheosis:enchantment",
+			"type": "zenith:enchantment",
 			"gem_class": {
 				"key": "breaker",
 				"types": [
@@ -77,7 +77,7 @@
 			}
 		},
 		{
-			"type": "apotheosis:attribute",
+			"type": "zenith:attribute",
 			"gem_class": {
 				"key": "helmet",
 				"types": [

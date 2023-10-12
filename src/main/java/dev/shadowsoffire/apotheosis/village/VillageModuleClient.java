@@ -12,9 +12,9 @@ import net.minecraft.client.renderer.entity.EntityRenderers;
 public class VillageModuleClient {
     public static void init() {
         MenuScreens.register(Apoth.Menus.FLETCHING, FletchingScreen::new);
-        EntityRenderers.register(Apoth.Entities.OBSIDIAN_ARROW, ObsidianArrowRenderer::new);
-        EntityRenderers.register(Apoth.Entities.BROADHEAD_ARROW, BroadheadArrowRenderer::new);
-        EntityRenderers.register(Apoth.Entities.EXPLOSIVE_ARROW, ExplosiveArrowRenderer::new);
-        EntityRenderers.register(Apoth.Entities.MINING_ARROW, MiningArrowRenderer::new);
+        EntityRenderers.register(VillageModule.OBSIDIAN_ARROW_ENTITY, ObsidianArrowRenderer::new);
+        EntityRenderers.register(VillageModule.BROADHEAD_ARROW_ENTITY, BroadheadArrowRenderer::new);
+        EntityRenderers.register(VillageModule.EXPLOSIVE_ARROW_ENTITY, ExplosiveArrowRenderer::new);
+        EntityRenderers.register(VillageModule.MINING_ARROW_ENTITY, MiningArrowRenderer::new);
     }
 }

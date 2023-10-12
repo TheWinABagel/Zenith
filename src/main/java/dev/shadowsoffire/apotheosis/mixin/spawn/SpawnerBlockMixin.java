@@ -104,7 +104,7 @@ public class SpawnerBlockMixin extends BaseEntityBlock {
                 if (tag.getBoolean("silent")) tooltip.add(SpawnerStats.SILENT.name().withStyle(ChatFormatting.DARK_GREEN));
             }
             else {
-                tooltip.add(Component.translatable("misc.apotheosis.shift_stats").withStyle(ChatFormatting.GRAY));
+                tooltip.add(Component.translatable("misc.zenith.shift_stats").withStyle(ChatFormatting.GRAY));
             }
         }
     }

@@ -2,6 +2,10 @@ package dev.shadowsoffire.apotheosis.advancements;
 
 import com.google.gson.JsonObject;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import dev.shadowsoffire.apotheosis.adventure.Adventure;
+import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
+import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketHelper;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
@@ -30,11 +34,11 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
         Ints full = Ints.fromJson(slots.get("full"));
         Ints empty = Ints.fromJson(slots.get("empty"));
         ItemPredicate[] predicate = ItemPredicate.fromJsonArray(json.get("items"));
-        if (json.has("apoth")) predicate = this.deserializeApoth(json.getAsJsonObject("apoth"));
+        if (json.has("zenith")) predicate = this.deserializeZenith(json.getAsJsonObject("zenith"));
         return new TriggerInstance(andPred, occupied, full, empty, predicate);
     }
 
-    ItemPredicate[] deserializeApoth(JsonObject json) {
+    ItemPredicate[] deserializeZenith(JsonObject json) {
         String type = json.get("type").getAsString();
         if ("spawn_egg".equals(type)) return new ItemPredicate[] { new TrueItemPredicate(s -> s.getItem() instanceof SpawnEggItem) };
         if ("enchanted".equals(type)) {
@@ -46,7 +50,7 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
                 return enchMap.values().stream().anyMatch(bound::matches);
             }) };
         }
-    /*    if ("affix".equals(type)) {
+        if ("affix".equals(type)) {
             return new ItemPredicate[] { new TrueItemPredicate(s -> !AffixHelper.getAffixes(s).isEmpty()) };
         }
         if ("rarity".equals(type)) {
@@ -55,11 +59,11 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
         }
         if ("gem_rarity".equals(type)) {
             var rarity = RarityRegistry.byLegacyId(json.get("rarity").getAsString().toLowerCase(Locale.ROOT));
-            return new ItemPredicate[] { new TrueItemPredicate(s -> s.getItem() == Adventure.Items.GEM.get() && rarity.isBound() && AffixHelper.getRarity(s) == rarity) };
+            return new ItemPredicate[] { new TrueItemPredicate(s -> s.getItem() == Adventure.Items.GEM && rarity.isBound() && AffixHelper.getRarity(s) == rarity) };
         }
         if ("socket".equals(type)) {
             return new ItemPredicate[] { new TrueItemPredicate(s -> SocketHelper.getGems(s).stream().anyMatch(gem -> !gem.isEmpty())) };
-        }*/
+        }
         if ("nbt".equals(type)) {
             CompoundTag tag;
             try {

@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.reforging;
 
 import dev.shadowsoffire.apotheosis.Apoth;
-import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
@@ -57,7 +56,7 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
 
     @Nullable
     public ReforgingRecipe getRecipeFor(LootRarity rarity) {
-        return this.level.getRecipeManager().getAllRecipesFor(RecipeTypes.REFORGING).stream().filter(r -> r.rarity().get() == rarity).findFirst().orElse(null);
+        return this.level.getRecipeManager().getAllRecipesFor(Adventure.RecipeTypes.REFORGING).stream().filter(r -> r.rarity().get() == rarity).findFirst().orElse(null);
     }
 
     @Override

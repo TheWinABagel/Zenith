@@ -45,13 +45,7 @@ abstract class EnchantmentTableBlockMixin extends BaseEntityBlock {
     public void newBlockEntity(BlockPos pos, BlockState state, CallbackInfoReturnable<BlockEntity> cir) {
         if (Apotheosis.enableEnch) cir.setReturnValue(new ApothEnchantTile(pos, state));
     }
-    /*
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        if (Apotheosis.enableEnch) return new ApothEnchantTile(pos, state);
-        return new EnchantmentTableBlockEntity(pos, state);
-    }*/
+
 
     @Inject(method = "getMenuProvider", at = @At("HEAD"), cancellable = true)
     private void zenithEnchMenu(BlockState state, Level world, BlockPos pos, CallbackInfoReturnable<MenuProvider> cir) {

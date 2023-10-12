@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "fabric:load_conditions": [{
+    "condition": "zenith:module",
+    "module": "enchantment"
+  }],
+  "group": "lemons",
+  "pattern": [
+    "CSC",
+    "STS",
+    "CSC"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:ender_chest"
+    },
+	"S": {
+      "tag": "zenith:infused_shelves"
+    },
+	"T": {
+      "item": "minecraft:enchanting_table"
+    }
+  },
+  "result": {
+    "item": "zenith:library",
+    "count": 1
+  }
+}

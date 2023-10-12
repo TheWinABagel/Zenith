@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.util.events;
 
 import com.mojang.datafixers.util.Either;
+import io.github.fabricators_of_create.porting_lib.core.event.BaseEvent;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.network.chat.FormattedText;
@@ -14,17 +15,17 @@ public class ModifyComponents {
 
     public static final Event<modifyComponentsCallback> MODIFY_COMPONENTS = EventFactory.createArrayBacked(modifyComponentsCallback.class, callbacks -> event -> {
         for (modifyComponentsCallback callback : callbacks) {
-            if (!callback.modifyComponents(event)) return true;
+            callback.modifyComponents(event);
+            if (event.isCanceled()) return;
         }
-        return false;
     });
 
     @FunctionalInterface
     public interface modifyComponentsCallback {
-        boolean modifyComponents(ModifyComponentsEvent event);
+        void modifyComponents(ModifyComponentsEvent event);
     }
 
-    public static class ModifyComponentsEvent {
+    public static class ModifyComponentsEvent extends BaseEvent {
         public final ItemStack stack;
         public final int screenWidth;
         public final int screenHeight;
@@ -39,5 +40,9 @@ public class ModifyComponents {
             this.maxWidth = maxWidth;
         }
 
+        @Override
+        public void sendEvent() {
+            MODIFY_COMPONENTS.invoker().modifyComponents(this);
+        }
     }
 }

@@ -34,7 +34,7 @@ public class SalvageItem extends Item {
     @Override
     public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> list, TooltipFlag pIsAdvanced) {
         if (rarity.isBound()) {
-            list.add(Component.translatable("info.apotheosis.rarity_material", this.rarity.get().toComponent()).withStyle(ChatFormatting.GRAY));
+            list.add(Component.translatable("info.zenith.rarity_material", this.rarity.get().toComponent()).withStyle(ChatFormatting.GRAY));
         }
     }
 

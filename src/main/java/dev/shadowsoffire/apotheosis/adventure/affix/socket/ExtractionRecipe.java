@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.socket;
 
 import com.google.gson.JsonObject;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothSmithingRecipe;
 import net.minecraft.core.RegistryAccess;
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class ExtractionRecipe extends ApothSmithingRecipe implements ReactiveSmithingRecipe {
 
-    private static final ResourceLocation ID = new ResourceLocation("apotheosis:extraction");
+    private static final ResourceLocation ID = Apotheosis.loc("extraction");
 
     public ExtractionRecipe() {
         super(ID, Ingredient.EMPTY, Ingredient.of(Items.VIAL_OF_EXTRACTION), ItemStack.EMPTY);

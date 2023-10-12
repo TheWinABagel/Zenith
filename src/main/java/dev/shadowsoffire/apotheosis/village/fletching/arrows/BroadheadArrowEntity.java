@@ -1,8 +1,6 @@
 package dev.shadowsoffire.apotheosis.village.fletching.arrows;
 
-import dev.shadowsoffire.apotheosis.Apoth;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import dev.shadowsoffire.apotheosis.village.VillageModule;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -19,7 +17,7 @@ public class BroadheadArrowEntity extends Arrow {
     }
 
     public BroadheadArrowEntity(Level world) {
-        super(Apoth.Entities.BROADHEAD_ARROW, world);
+        super(VillageModule.BROADHEAD_ARROW_ENTITY, world);
     }
 
     public BroadheadArrowEntity(LivingEntity shooter, Level world) {
@@ -32,7 +30,7 @@ public class BroadheadArrowEntity extends Arrow {
 
     @Override
     protected ItemStack getPickupItem() {
-        return new ItemStack(Apoth.Items.BROADHEAD_ARROW);
+        return new ItemStack(VillageModule.BROADHEAD_ARROW);
     }
 /*
     @Override
@@ -42,7 +40,7 @@ public class BroadheadArrowEntity extends Arrow {
 
     @Override
     public EntityType<?> getType() {
-        return Apoth.Entities.BROADHEAD_ARROW;
+        return VillageModule.BROADHEAD_ARROW_ENTITY;
     }
 
     @Override

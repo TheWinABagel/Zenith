@@ -51,8 +51,8 @@ public class EnchantingREIPlugin implements REIClientPlugin {
 
         registry.registerFiller(EnchantingRecipe.class, EnchantingREIDisplay::new);
 
-        REIUtil.addInfo(registry, Ench.Items.LIBRARY, "info.apotheosis.library");
-        REIUtil.addInfo(registry, Blocks.ENCHANTING_TABLE, "info.apotheosis.enchanting");
+        REIUtil.addInfo(registry, Ench.Items.LIBRARY, "info.zenith.library");
+        REIUtil.addInfo(registry, Blocks.ENCHANTING_TABLE, "info.zenith.enchanting");
     }
 
     public static List<ItemStack> stackOf(ItemLike item) {

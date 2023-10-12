@@ -53,8 +53,8 @@ public class EnchJEIPlugin implements IModPlugin {
                 ImmutableList.of(new ItemStack(Blocks.IRON_BLOCK)),
                 ImmutableList.of(new ItemStack(Blocks.ANVIL)))));
 
-        reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.enchanting"));
-        reg.addIngredientInfo(new ItemStack(Ench.Blocks.LIBRARY.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.library"));
+        reg.addIngredientInfo(new ItemStack(Blocks.ENCHANTING_TABLE), VanillaTypes.ITEM_STACK, Component.translatable("info.zenith.enchanting"));
+        reg.addIngredientInfo(new ItemStack(Ench.Blocks.LIBRARY.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.zenith.library"));
         List<EnchantingRecipe> recipes = new ArrayList<>(Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(dev.shadowsoffire.apotheosis.Apoth.RecipeTypes.INFUSION));
         recipes.sort((r1, r2) -> Float.compare(r1.getRequirements().eterna(), r2.getRequirements().eterna()));
         reg.addRecipes(EnchantingCategory.TYPE, recipes);

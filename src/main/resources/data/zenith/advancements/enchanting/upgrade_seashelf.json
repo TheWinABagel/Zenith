@@ -1,0 +1,42 @@
+{
+	"parent": "zenith:enchanting/seashelf",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "zenith:heart_seashelf"
+		},
+		"title": {
+			"translate": "advancements.zenith.upgrade_seashelf"
+		},
+		"description": {
+			"translate": "advancements.zenith.upgrade_seashelf.desc"
+		},
+		"frame": "task"
+	},
+	"criteria": {
+		"heart": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"items": ["zenith:heart_seashelf"]
+				}]
+			}
+		},
+		"crystal": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"items": ["zenith:crystal_seashelf"]
+				}]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"heart", "crystal"
+		]
+	]
+}

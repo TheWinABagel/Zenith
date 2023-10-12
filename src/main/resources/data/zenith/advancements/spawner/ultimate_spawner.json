@@ -1,0 +1,44 @@
+{
+	"parent": "zenith:spawner/conditions",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "spawner"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:spawner",
+			"nbt": "{Enchantments:[{id:\"zenith:hell_infusion\",lvl:1s}]}"
+		},
+		"title": {
+			"translate": "advancements.zenith.ultimate_spawner"
+		},
+		"description": {
+			"translate": "advancements.zenith.ultimate_spawner.desc"
+		},
+		"frame": "challenge"
+	},
+	"criteria": {
+		"modifier": {
+			"trigger": "zenith:spawner_modifier",
+			"conditions": {
+				"min_delay": {
+					"max": 20,
+					"min": 0
+				},
+				"max_delay": {
+					"max": 20,
+					"min": 0
+				},
+				"ignore_players": true,
+				"ignore_conditions": true,
+				"no_ai": true,
+				"redstone_control": true
+			}
+		}
+	},
+	"requirements": [
+		[
+			"modifier"
+		]
+	]
+}

@@ -1,0 +1,31 @@
+{
+	"weight": 5,
+	"quality": 1.5,
+	"min_rarity": "epic",
+	"dimensions": [
+		"the_end"
+	],
+	"unique": true,
+	"bonuses": [
+		{
+			"type": "zenith:enchantment",
+			"gem_class": {
+				"key": "anything",
+				"types": [
+					"bow", "crossbow", "pickaxe", "shovel",
+					"heavy_weapon", "helmet", "chestplate",
+					"leggings", "boots", "shield",
+					"trident", "sword"
+				]
+			},
+			"enchantment": "sharpness",
+			"_comment": "The enchantment field is unused when global=true, but still must be a valid name",
+			"global": true,
+			"values": {
+				"epic": 1,
+				"mythic": 1,
+				"ancient": 2
+			}
+		}
+	]
+}

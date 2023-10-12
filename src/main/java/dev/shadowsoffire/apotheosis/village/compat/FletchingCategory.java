@@ -32,7 +32,7 @@ public class FletchingCategory implements IRecipeCategory<FletchingRecipe> {
         ResourceLocation location = FletchingScreen.TEXTURES;
         this.background = guiHelper.createDrawable(location, 6, 16, 139, 54);
         this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Blocks.FLETCHING_TABLE));
-        this.localizedName = Component.translatable("apotheosis.recipes.fletching");
+        this.localizedName = Component.translatable("zenith.recipes.fletching");
     }
 
     @Override

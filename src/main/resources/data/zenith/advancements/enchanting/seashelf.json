@@ -1,0 +1,34 @@
+{
+	"parent": "zenith:enchanting/bookshelf",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "zenith:seashelf"
+		},
+		"title": {
+			"translate": "advancements.zenith.seashelf"
+		},
+		"description": {
+			"translate": "advancements.zenith.seashelf.desc"
+		},
+		"frame": "task"
+	},
+	"criteria": {
+		"seashelf": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"items": ["zenith:seashelf"]
+				}]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"seashelf"
+		]
+	]
+}

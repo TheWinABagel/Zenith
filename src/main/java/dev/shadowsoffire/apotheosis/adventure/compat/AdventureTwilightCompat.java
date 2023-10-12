@@ -136,7 +136,7 @@ public class AdventureTwilightCompat {
             if (user.random.nextFloat() <= d.chance) {
                 Redcap goblin = REDCAP.get().create(user.level());
                 CompoundTag tag = new CompoundTag();
-                tag.putString("DeathLootTable", "apotheosis:entity/treasure_goblin");
+                tag.putString("DeathLootTable", "zenith:entity/treasure_goblin");
                 goblin.readAdditionalSaveData(tag);
                 goblin.getPersistentData().putBoolean("apoth.treasure_goblin", true);
                 goblin.setCustomName(Component.translatable("name.apotheosis.treasure_goblin").withStyle(s -> s.withColor(GradientColor.RAINBOW)));

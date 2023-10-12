@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "fabric:load_conditions": [{
+        "condition": "zenith:module",
+        "module": "enchantment"
+    }],
+    "pattern": ["BBB", "BPB", "B B"],
+    "key": {
+        "B": { "item": "minecraft:book" },
+        "P": { "item": "minecraft:blaze_rod" }
+    },
+    "result": {
+        "item": "zenith:leggings_tome",
+        "count": 7
+    }
+}

@@ -118,7 +118,7 @@ public class AffixHelper {
         CompoundTag afxData = stack.getOrCreateTagElement(AFFIX_DATA);
         afxData.putString(NAME, Component.Serializer.toJson(comp));
         // if (!stack.getOrCreateTagElement(DISPLAY).contains(LORE)) AffixHelper.addLore(stack,
-        // Component.translatable("info.apotheosis.affix_item").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_GRAY).withItalic(false)));
+        // Component.translatable("info.zenith.affix_item").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_GRAY).withItalic(false)));
         afxData.putString(RARITY, RarityRegistry.INSTANCE.getKey(rarity).toString());
     }
 

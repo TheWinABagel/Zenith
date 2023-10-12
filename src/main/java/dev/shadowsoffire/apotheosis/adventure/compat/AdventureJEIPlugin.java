@@ -68,12 +68,12 @@ public class AdventureJEIPlugin implements IModPlugin {
         Gem gemObj = GemRegistry.INSTANCE.getRandomItem(new LegacyRandomSource(1854));
         GemItem.setGem(gem, gemObj);
         AffixHelper.setRarity(gem, gemObj.getMaxRarity());
-        reg.addIngredientInfo(gem, VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.socketing"));
+        reg.addIngredientInfo(gem, VanillaTypes.ITEM_STACK, Component.translatable("info.zenith.socketing"));
 
-        reg.addIngredientInfo(new ItemStack(Adventure.Items.GEM_DUST.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.gem_crushing"));
-        reg.addIngredientInfo(new ItemStack(Adventure.Items.VIAL_OF_EXTRACTION.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.gem_extraction"));
-        reg.addIngredientInfo(new ItemStack(Adventure.Items.VIAL_OF_EXPULSION.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.gem_expulsion"));
-        reg.addIngredientInfo(new ItemStack(Adventure.Items.VIAL_OF_UNNAMING.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.unnaming"));
+        reg.addIngredientInfo(new ItemStack(Adventure.Items.GEM_DUST.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.zenith.gem_crushing"));
+        reg.addIngredientInfo(new ItemStack(Adventure.Items.VIAL_OF_EXTRACTION.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.zenith.gem_extraction"));
+        reg.addIngredientInfo(new ItemStack(Adventure.Items.VIAL_OF_EXPULSION.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.zenith.gem_expulsion"));
+        reg.addIngredientInfo(new ItemStack(Adventure.Items.VIAL_OF_UNNAMING.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.zenith.unnaming"));
         ApothSmithingCategory.registerExtension(AddSocketsRecipe.class, new AddSocketsExtension());
         reg.addRecipes(APO_SMITHING, Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(net.minecraft.world.item.crafting.RecipeType.SMITHING).stream().filter(r -> r instanceof ReactiveSmithingRecipe).toList());
         List<SalvagingRecipe> salvagingRecipes = new ArrayList<>(Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(RecipeTypes.SALVAGING));

@@ -1,0 +1,38 @@
+{
+	"parent": "zenith:affix/gem",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "adventure"
+	}],
+	"display": {
+		"icon": {
+			"item": "zenith:gem",
+			"nbt": "{gem:\"zenith:core/splendor\"}"
+		},
+		"title": {
+			"translate": "advancements.zenith.rare_gem"
+		},
+		"description": {
+			"translate": "advancements.zenith.rare_gem.desc"
+		},
+		"frame": "task",
+		"hidden": true,
+		"background": "zenith:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"gem": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"zenith": {
+					"type": "gem_rarity",
+					"rarity": "rare"
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"gem"
+		]
+	]
+}

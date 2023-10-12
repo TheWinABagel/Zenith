@@ -87,9 +87,9 @@ public class EnderLeadItem extends Item {
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         if (stack.hasTag()) {
             CompoundTag tag = stack.getOrCreateTagElement("entity_data");
-            if (tag.isEmpty()) tooltip.add(Component.translatable("info.apotheosis.noentity").withStyle(ChatFormatting.GRAY));
+            if (tag.isEmpty()) tooltip.add(Component.translatable("info.zenith.noentity").withStyle(ChatFormatting.GRAY));
             else {
-                tooltip.add(Component.translatable("info.apotheosis.containedentity", stack.getTag().getString("name")).withStyle(ChatFormatting.GRAY));
+                tooltip.add(Component.translatable("info.zenith.containedentity", stack.getTag().getString("name")).withStyle(ChatFormatting.GRAY));
             }
         }
     }

@@ -1,0 +1,36 @@
+{
+	"parent": "zenith:spawner/modifier",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "spawner"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:sugar"
+		},
+		"title": {
+			"translate": "advancements.zenith.mindelay"
+		},
+		"description": {
+			"translate": "advancements.zenith.mindelay.desc"
+		},
+		"frame": "goal"
+	},
+	"criteria": {
+		"modifier": {
+			"trigger": "zenith:spawner_modifier",
+			"conditions": {
+				"modifier": "min_delay",
+				"min_delay": {
+					"max": 20,
+					"min": 0
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"modifier"
+		]
+	]
+}

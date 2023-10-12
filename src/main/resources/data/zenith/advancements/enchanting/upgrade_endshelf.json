@@ -1,0 +1,34 @@
+{
+	"parent": "zenith:enchanting/endshelf",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "zenith:draconic_endshelf"
+		},
+		"title": {
+			"translate": "advancements.zenith.upgrade_endshelf"
+		},
+		"description": {
+			"translate": "advancements.zenith.upgrade_endshelf.desc"
+		},
+		"frame": "challenge"
+	},
+	"criteria": {
+		"draconic": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"items": ["zenith:draconic_endshelf"]
+				}]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"draconic"
+		]
+	]
+}

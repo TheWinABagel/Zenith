@@ -36,8 +36,8 @@ public class EnchModuleClient {
     public static void tooltips() {
         ItemTooltipCallback.EVENT.register((stack, context, tooltip) -> {
             Item i = stack.getItem();
-            if (i == Items.COBWEB) tooltip.add(Component.translatable("info.apotheosis.cobweb").withStyle(ChatFormatting.GRAY));
-            else if (i == Ench.Items.PRISMATIC_WEB) tooltip.add(Component.translatable("info.apotheosis.prismatic_cobweb").withStyle(ChatFormatting.GRAY));
+            if (i == Items.COBWEB) tooltip.add(Component.translatable("info.zenith.cobweb").withStyle(ChatFormatting.GRAY));
+            else if (i == Ench.Items.PRISMATIC_WEB) tooltip.add(Component.translatable("info.zenith.prismatic_cobweb").withStyle(ChatFormatting.GRAY));
             else if (i instanceof BlockItem) {
                 Block block = ((BlockItem) i).getBlock();
                 Level world = Minecraft.getInstance().level;
@@ -62,25 +62,25 @@ public class EnchModuleClient {
                 float rectification = EnchantingStatRegistry.getQuantaRectification(state, world, BlockPos.ZERO);
                 int clues = EnchantingStatRegistry.getBonusClues(state, world, BlockPos.ZERO);
                 if (eterna != 0 || quanta != 0 || arcana != 0 || rectification != 0 || clues != 0) {
-                    tooltip.add(Component.translatable("info.apotheosis.ench_stats").withStyle(ChatFormatting.GOLD));
+                    tooltip.add(Component.translatable("info.zenith.ench_stats").withStyle(ChatFormatting.GOLD));
                 }
                 if (eterna != 0) {
                     if (eterna > 0) {
-                        tooltip.add(Component.translatable("info.apotheosis.eterna.p", String.format("%.2f", eterna), String.format("%.2f", maxEterna)).withStyle(ChatFormatting.GREEN));
+                        tooltip.add(Component.translatable("info.zenith.eterna.p", String.format("%.2f", eterna), String.format("%.2f", maxEterna)).withStyle(ChatFormatting.GREEN));
                     }
-                    else tooltip.add(Component.translatable("info.apotheosis.eterna", String.format("%.2f", eterna)).withStyle(ChatFormatting.GREEN));
+                    else tooltip.add(Component.translatable("info.zenith.eterna", String.format("%.2f", eterna)).withStyle(ChatFormatting.GREEN));
                 }
                 if (quanta != 0) {
-                    tooltip.add(Component.translatable("info.apotheosis.quanta" + (quanta > 0 ? ".p" : ""), String.format("%.2f", quanta)).withStyle(ChatFormatting.RED));
+                    tooltip.add(Component.translatable("info.zenith.quanta" + (quanta > 0 ? ".p" : ""), String.format("%.2f", quanta)).withStyle(ChatFormatting.RED));
                 }
                 if (arcana != 0) {
-                    tooltip.add(Component.translatable("info.apotheosis.arcana" + (arcana > 0 ? ".p" : ""), String.format("%.2f", arcana)).withStyle(ChatFormatting.DARK_PURPLE));
+                    tooltip.add(Component.translatable("info.zenith.arcana" + (arcana > 0 ? ".p" : ""), String.format("%.2f", arcana)).withStyle(ChatFormatting.DARK_PURPLE));
                 }
                 if (rectification != 0) {
-                    tooltip.add(Component.translatable("info.apotheosis.rectification" + (rectification > 0 ? ".p" : ""), String.format("%.2f", rectification)).withStyle(ChatFormatting.YELLOW));
+                    tooltip.add(Component.translatable("info.zenith.rectification" + (rectification > 0 ? ".p" : ""), String.format("%.2f", rectification)).withStyle(ChatFormatting.YELLOW));
                 }
                 if (clues != 0) {
-                    tooltip.add(Component.translatable("info.apotheosis.clues" + (clues > 0 ? ".p" : ""), String.format("%d", clues)).withStyle(ChatFormatting.DARK_AQUA));
+                    tooltip.add(Component.translatable("info.zenith.clues" + (clues > 0 ? ".p" : ""), String.format("%d", clues)).withStyle(ChatFormatting.DARK_AQUA));
                 }
             }
             else if (i == Items.ENCHANTED_BOOK) {
@@ -95,13 +95,13 @@ public class EnchModuleClient {
                     }
                     var info = EnchModule.getEnchInfo(ench);
                     Object[] args = new Object[4];
-                    args[0] = boolComp("info.apotheosis.discoverable", info.isDiscoverable());
-                    args[1] = boolComp("info.apotheosis.lootable", info.isLootable());
-                    args[2] = boolComp("info.apotheosis.tradeable", info.isTradeable());
-                    args[3] = boolComp("info.apotheosis.treasure", info.isTreasure());
+                    args[0] = boolComp("info.zenith.discoverable", info.isDiscoverable());
+                    args[1] = boolComp("info.zenith.lootable", info.isLootable());
+                    args[2] = boolComp("info.zenith.tradeable", info.isTradeable());
+                    args[3] = boolComp("info.zenith.treasure", info.isTreasure());
                     if (context.isAdvanced()) {
                         tooltip.add(Component.translatable("%s \u2507 %s \u2507 %s \u2507 %s", args[0], args[1], args[2], args[3]).withStyle(ChatFormatting.DARK_GRAY));
-                        tooltip.add(Component.translatable("info.apotheosis.book_range", info.getMinPower(lvl), info.getMaxPower(lvl)).withStyle(ChatFormatting.GREEN));
+                        tooltip.add(Component.translatable("info.zenith.book_range", info.getMinPower(lvl), info.getMaxPower(lvl)).withStyle(ChatFormatting.GREEN));
                     }
                     else {
                         tooltip.add(Component.translatable("%s \u2507 %s", args[2], args[3]).withStyle(ChatFormatting.DARK_GRAY));

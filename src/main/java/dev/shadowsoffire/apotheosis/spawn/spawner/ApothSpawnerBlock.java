@@ -118,13 +118,13 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
                 if (tag.getBoolean("silent")) tooltip.add(SpawnerStats.SILENT.name().withStyle(ChatFormatting.DARK_GREEN));
             }
             else {
-                tooltip.add(Component.translatable("misc.apotheosis.shift_stats").withStyle(ChatFormatting.GRAY));
+                tooltip.add(Component.translatable("misc.zenith.shift_stats").withStyle(ChatFormatting.GRAY));
             }
         }
     }
 
     public static Component concat(Object... args) {
-        return Component.translatable("misc.apotheosis.value_concat", args[0], Component.literal(args[1].toString()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GREEN);
+        return Component.translatable("misc.zenith.value_concat", args[0], Component.literal(args[1].toString()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GREEN);
     }
 
     @Override

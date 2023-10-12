@@ -1,6 +1,5 @@
 package dev.shadowsoffire.apotheosis.spawn.compat;
 
-import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.spawn.SpawnerModule;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
@@ -30,15 +29,15 @@ public class SpawnerJEIPlugin implements IModPlugin {
 
         reg.addRecipes(SpawnerCategory.TYPE, recipes);
         if (SpawnerModule.spawnerSilkLevel == -1) {
-            reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.spawner.no_silk"));
+            reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM_STACK, Component.translatable("info.zenith.spawner.no_silk"));
         }
         else if (SpawnerModule.spawnerSilkLevel == 0) {
-            reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.spawner.always_drop"));
+            reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM_STACK, Component.translatable("info.zenith.spawner.always_drop"));
         }
         else reg.addIngredientInfo(new ItemStack(Blocks.SPAWNER), VanillaTypes.ITEM_STACK,
-            Component.translatable("info.apotheosis.spawner", ((MutableComponent) Enchantments.SILK_TOUCH.getFullname(SpawnerModule.spawnerSilkLevel)).withStyle(ChatFormatting.DARK_BLUE).getString()));
+            Component.translatable("info.zenith.spawner", ((MutableComponent) Enchantments.SILK_TOUCH.getFullname(SpawnerModule.spawnerSilkLevel)).withStyle(ChatFormatting.DARK_BLUE).getString()));
         for (Item i : ForgeRegistries.ITEMS) {
-            if (i instanceof SpawnEggItem) reg.addIngredientInfo(new ItemStack(i), VanillaTypes.ITEM_STACK, Component.translatable("info.apotheosis.capturing"));
+            if (i instanceof SpawnEggItem) reg.addIngredientInfo(new ItemStack(i), VanillaTypes.ITEM_STACK, Component.translatable("info.zenith.capturing"));
         }
     }
 

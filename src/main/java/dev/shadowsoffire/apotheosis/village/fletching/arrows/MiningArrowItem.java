@@ -35,7 +35,7 @@ public class MiningArrowItem extends ArrowItem implements IApothArrowItem {
     @Override
     @Environment(EnvType.CLIENT)
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        tooltip.add(Component.translatable("info.apotheosis.mining_arrow." + this.arrowType.name().toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD));
+        tooltip.add(Component.translatable("info.zenith.mining_arrow." + this.arrowType.name().toLowerCase(Locale.ROOT)).withStyle(ChatFormatting.GOLD));
     }
 
     @Override

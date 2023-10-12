@@ -264,7 +264,7 @@ public final class ApothBoss implements CodecProvider<ApothBoss>, ILuckyWeighted
         Component name = AffixHelper.getName(stack);
         if (!bossName.isEmpty() && name.getContents() instanceof TranslatableContents tc) {
             String oldKey = tc.getKey();
-            String newKey = "misc.apotheosis.affix_name.two".equals(oldKey) ? "misc.apotheosis.affix_name.three" : "misc.apotheosis.affix_name.four";
+            String newKey = "misc.zenith.affix_name.two".equals(oldKey) ? "misc.zenith.affix_name.three" : "misc.zenith.affix_name.four";
             Object[] newArgs = new Object[tc.getArgs().length + 1];
             newArgs[0] = bossOwnerName;
             for (int i = 1; i < newArgs.length; i++) {

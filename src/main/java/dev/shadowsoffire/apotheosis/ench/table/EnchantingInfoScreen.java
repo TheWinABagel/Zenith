@@ -45,7 +45,7 @@ public class EnchantingInfoScreen extends Screen {
     Map<Enchantment, List<Enchantment>> exclusions = new HashMap<>();
 
     public EnchantingInfoScreen(ApothEnchScreen parent) {
-        super(Component.translatable("info.apotheosis.enchinfo_title"));
+        super(Component.translatable("info.zenith.enchinfo_title"));
         this.parent = parent;
         this.imageWidth = 240;
         this.imageHeight = 170;
@@ -114,11 +114,11 @@ public class EnchantingInfoScreen extends Screen {
 
         List<Component> list = new ArrayList<>();
         Arcana a = Arcana.getForThreshold(this.parent.getMenu().arcana.get());
-        list.add(Component.translatable("info.apotheosis.weights").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.YELLOW));
-        list.add(Component.translatable("info.apotheosis.weight", I18n.get("rarity.enchantment.common"), a.rarities[0]).withStyle(ChatFormatting.GRAY));
-        list.add(Component.translatable("info.apotheosis.weight", I18n.get("rarity.enchantment.uncommon"), a.rarities[1]).withStyle(ChatFormatting.GREEN));
-        list.add(Component.translatable("info.apotheosis.weight", I18n.get("rarity.enchantment.rare"), a.rarities[2]).withStyle(ChatFormatting.BLUE));
-        list.add(Component.translatable("info.apotheosis.weight", I18n.get("rarity.enchantment.very_rare"), a.rarities[3]).withStyle(ChatFormatting.GOLD));
+        list.add(Component.translatable("info.zenith.weights").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.YELLOW));
+        list.add(Component.translatable("info.zenith.weight", I18n.get("rarity.enchantment.common"), a.rarities[0]).withStyle(ChatFormatting.GRAY));
+        list.add(Component.translatable("info.zenith.weight", I18n.get("rarity.enchantment.uncommon"), a.rarities[1]).withStyle(ChatFormatting.GREEN));
+        list.add(Component.translatable("info.zenith.weight", I18n.get("rarity.enchantment.rare"), a.rarities[2]).withStyle(ChatFormatting.BLUE));
+        list.add(Component.translatable("info.zenith.weight", I18n.get("rarity.enchantment.very_rare"), a.rarities[3]).withStyle(ChatFormatting.GOLD));
         gfx.renderComponentTooltip(font, list, a == Arcana.MAX ? -2 : 1, 120);
 
         gfx.drawString(font, this.title, 7, 4, 4210752, false);
@@ -128,10 +128,10 @@ public class EnchantingInfoScreen extends Screen {
         for (int i = 0; i < 3; i++) {
             if (this.isHovering(8, 18 + 19 * i, 18, 18, pMouseX, pMouseY)) {
                 list.clear();
-                list.add(Component.translatable("info.apotheosis.enchinfo_slot", i + 1).withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE));
-                list.add(Component.translatable("info.apotheosis.enchinfo_level", this.costs[i]).withStyle(ChatFormatting.GREEN));
-                list.add(Component.translatable("info.apotheosis.enchinfo_minpow", this.powers[i][0]).withStyle(ChatFormatting.DARK_RED));
-                list.add(Component.translatable("info.apotheosis.enchinfo_maxpow", this.powers[i][1]).withStyle(ChatFormatting.BLUE));
+                list.add(Component.translatable("info.zenith.enchinfo_slot", i + 1).withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE));
+                list.add(Component.translatable("info.zenith.enchinfo_level", this.costs[i]).withStyle(ChatFormatting.GREEN));
+                list.add(Component.translatable("info.zenith.enchinfo_minpow", this.powers[i][0]).withStyle(ChatFormatting.DARK_RED));
+                list.add(Component.translatable("info.zenith.enchinfo_maxpow", this.powers[i][1]).withStyle(ChatFormatting.BLUE));
                 gfx.renderComponentTooltip(font, list, pMouseX, pMouseY);
             }
         }
@@ -139,10 +139,10 @@ public class EnchantingInfoScreen extends Screen {
         if (hover != null) {
             list.clear();
             list.add(Component.translatable(hover.data.enchantment.getDescriptionId()).withStyle(ChatFormatting.GREEN, ChatFormatting.UNDERLINE));
-            list.add(Component.translatable("info.apotheosis.enchinfo_level", Component.translatable("enchantment.level." + hover.data.level)).withStyle(ChatFormatting.DARK_AQUA));
+            list.add(Component.translatable("info.zenith.enchinfo_level", Component.translatable("enchantment.level." + hover.data.level)).withStyle(ChatFormatting.DARK_AQUA));
             Component rarity = Component.translatable("rarity.enchantment." + hover.data.enchantment.getRarity().name().toLowerCase(Locale.ROOT)).withStyle(colors[hover.data.enchantment.getRarity().ordinal()]);
-            list.add(Component.translatable("info.apotheosis.enchinfo_rarity", rarity).withStyle(ChatFormatting.DARK_AQUA));
-            list.add(Component.translatable("info.apotheosis.enchinfo_chance", String.format("%.2f", 100F * hover.getWeight().asInt() / WeightedRandom.getTotalWeight(this.enchantments)) + "%").withStyle(ChatFormatting.DARK_AQUA));
+            list.add(Component.translatable("info.zenith.enchinfo_rarity", rarity).withStyle(ChatFormatting.DARK_AQUA));
+            list.add(Component.translatable("info.zenith.enchinfo_chance", String.format("%.2f", 100F * hover.getWeight().asInt() / WeightedRandom.getTotalWeight(this.enchantments)) + "%").withStyle(ChatFormatting.DARK_AQUA));
             if (I18n.exists(hover.data.enchantment.getDescriptionId() + ".desc")) {
                 list.add(Component.translatable(hover.data.enchantment.getDescriptionId() + ".desc").withStyle(ChatFormatting.DARK_AQUA));
             }
@@ -273,7 +273,7 @@ public class EnchantingInfoScreen extends Screen {
 
         @Override
         protected void updateMessage() {
-            this.setMessage(Component.translatable("info.apotheosis.slider_power", EnchantingInfoScreen.this.currentPower));
+            this.setMessage(Component.translatable("info.zenith.slider_power", EnchantingInfoScreen.this.currentPower));
         }
 
         @Override

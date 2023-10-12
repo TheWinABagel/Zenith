@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.socket.gem;
 
+import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
@@ -47,12 +48,6 @@ public class GemItem extends Item  {
         }
         gem.get().addInformation(pStack, rarity.get(), tooltip::add);
     }
-/*
-    @Override
-    public Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
-        List<ItemStack> gems = SocketHelper.getGems(stack);
-        return Optional.of(new SocketTooltipRenderer.SocketComponent(stack, gems));
-    }*/
 
     @Override
     public Component getName(ItemStack pStack) {
@@ -60,7 +55,7 @@ public class GemItem extends Item  {
         DynamicHolder<LootRarity> rarity = AffixHelper.getRarity(pStack);
         if (!gem.isBound() || !rarity.isBound()) return super.getName(pStack);
         MutableComponent comp = Component.translatable(this.getDescriptionId(pStack));
-        comp = Component.translatable("item.apotheosis.gem." + rarity.getId(), comp);
+        comp = Component.translatable("item.zenith.gem." + rarity.getId(), comp);
         return comp.withStyle(Style.EMPTY.withColor(rarity.get().getColor()));
     }
 
@@ -85,11 +80,11 @@ public class GemItem extends Item  {
     }
 
 
-    public void fillItemCategory(CreativeModeTab.Output out) {
+    public static void fillItemCategory(CreativeModeTab.Output out) {
         GemRegistry.INSTANCE.getValues().stream().sorted(Comparator.comparing(Gem::getId)).forEach(gem -> {
             for (LootRarity rarity : RarityRegistry.INSTANCE.getValues()) {
                 if (gem.clamp(rarity) != rarity) continue;
-                ItemStack stack = new ItemStack(this);
+                ItemStack stack = new ItemStack(Items.GEM);
                 setGem(stack, gem);
                 AffixHelper.setRarity(stack, rarity);
                 out.accept(stack);

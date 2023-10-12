@@ -27,7 +27,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.List;
 
 public class ReforgingTableBlock extends Block implements TickingEntityBlock {
-    public static final Component TITLE = Component.translatable("container.apotheosis.reforge");
+    public static final Component TITLE = Component.translatable("container.zenith.reforge");
     public static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D);
 
     protected final int maxRarity;

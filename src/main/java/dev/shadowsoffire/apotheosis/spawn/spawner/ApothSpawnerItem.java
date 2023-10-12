@@ -52,7 +52,7 @@ public class ApothSpawnerItem extends BlockItem {
                 catch (Exception ex) {
 
                 }
-                return Component.translatable("item.apotheosis.spawner", Component.translatable(key)).withStyle(color);
+                return Component.translatable("item.zenith.spawner", Component.translatable(key)).withStyle(color);
             }
         }
         return super.getName(stack);

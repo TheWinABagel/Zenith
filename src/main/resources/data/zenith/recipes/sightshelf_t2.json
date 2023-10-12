@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "fabric:load_conditions": [{
+    "condition": "zenith:module",
+    "module": "enchantment"
+  }],
+  "group": "wooden_door",
+  "pattern": [
+    "GHG",
+    "PEP",
+    "GHG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:emerald_block"
+    },
+    "H": {
+      "tag": "c:netherite_ingots"
+    },
+    "P": {
+      "fabric:type": "fabric:nbt",
+      "base": {
+        "item": "minecraft:potion"
+      },
+      "nbt": "{\"Potion\": \"minecraft:long_night_vision\"}",
+      "strict": "true"
+    },
+    "E": {
+      "item": "zenith:sightshelf"
+    }
+  },
+  "result": {
+    "item": "zenith:sightshelf_t2",
+    "count": 1
+  }
+}

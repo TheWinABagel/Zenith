@@ -54,7 +54,7 @@ import java.io.File;
 
 public class AdventureModule {
 
-    public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Adventure");
+    public static final Logger LOGGER = LogManager.getLogger("Zenith : Adventure");
     public static final boolean STAGES_LOADED = FabricLoader.getInstance().isModLoaded("gamestages");
 
     public static final StructureProcessorType<ItemFrameGemsProcessor> ITEM_FRAME_LOOT = () -> ItemFrameGemsProcessor.CODEC;
@@ -80,12 +80,6 @@ public class AdventureModule {
         BossRegistry.INSTANCE.register();
         RogueSpawnerRegistry.INSTANCE.register();
         MinibossRegistry.INSTANCE.register();
-    /*    Apotheosis.HELPER.registerProvider(f -> {
-            f.addRecipe(new SocketingRecipe());
-            f.addRecipe(new ExpulsionRecipe());
-            f.addRecipe(new ExtractionRecipe());
-            f.addRecipe(new UnnamingRecipe());
-        });*/
 
         //    if (FabricLoader.getInstance().isModLoaded("gateways")) GatewaysCompat.register();
         //    if (FabricLoader.getInstance().isModLoaded("theoneprobe")) AdventureTOPPlugin.register();
@@ -98,7 +92,7 @@ public class AdventureModule {
             Registry.register(BuiltInRegistries.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "random_gem"), GemLootPoolEntry.TYPE);
             Exclusion.initSerializers();
             GemBonus.initCodecs();
-        //    CraftingHelper.register(Apotheosis.loc("affix_item"), AffixItemIngredient.Serializer.INSTANCE);
+            //CraftingHelper.register(Apotheosis.loc("affix_item"), AffixItemIngredient.Serializer.INSTANCE);
         //    CraftingHelper.register(Apotheosis.loc("gem"), GemIngredient.Serializer.INSTANCE);
 /*
             TabFillingRegistry.register(Adventure.Tabs.ADVENTURE.getKey(), Items.COMMON_MATERIAL, Items.UNCOMMON_MATERIAL, Items.RARE_MATERIAL, Items.EPIC_MATERIAL, Items.MYTHIC_MATERIAL, Items.GEM_DUST, Items.VIAL_OF_EXPULSION,

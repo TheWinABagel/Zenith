@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.socket;
 
 import com.google.gson.JsonObject;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothSmithingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
@@ -21,7 +22,7 @@ import net.minecraft.world.level.Level;
 
 public class UnnamingRecipe extends ApothSmithingRecipe {
 
-    private static final ResourceLocation ID = new ResourceLocation("apotheosis:unnaming");
+    private static final ResourceLocation ID = Apotheosis.loc("unnaming");
 
     public UnnamingRecipe() {
         super(ID, Ingredient.EMPTY, Ingredient.of(Items.VIAL_OF_UNNAMING), ItemStack.EMPTY);

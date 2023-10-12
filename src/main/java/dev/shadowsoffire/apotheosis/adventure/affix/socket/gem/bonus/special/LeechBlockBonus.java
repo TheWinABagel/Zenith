@@ -50,7 +50,7 @@ public class LeechBlockBonus extends GemBonus {
     @Override
     public Component getSocketBonusTooltip(ItemStack gem, LootRarity rarity) {
         Data d = this.values.get(rarity);
-        Component cooldown = Component.translatable("affix.apotheosis.cooldown", StringUtil.formatTickDuration(d.cooldown));
+        Component cooldown = Component.translatable("affix.zenith.cooldown", StringUtil.formatTickDuration(d.cooldown));
         return Component.translatable("bonus." + this.getId() + ".desc", Affix.fmt(d.healFactor * 100), cooldown).withStyle(ChatFormatting.YELLOW);
     }
 

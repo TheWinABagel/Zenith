@@ -1,0 +1,32 @@
+{
+	"parent": "zenith:spawner/modifier",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "spawner"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:comparator"
+		},
+		"title": {
+			"translate": "advancements.zenith.redstone"
+		},
+		"description": {
+			"translate": "advancements.zenith.redstone.desc"
+		},
+		"frame": "goal"
+	},
+	"criteria": {
+		"modifier": {
+			"trigger": "zenith:spawner_modifier",
+			"conditions": {
+				"redstone_control": true
+			}
+		}
+	},
+	"requirements": [
+		[
+			"modifier"
+		]
+	]
+}

@@ -1,0 +1,38 @@
+{
+	"parent": "zenith:affix/rare_gem",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "adventure"
+	}],
+	"display": {
+		"icon": {
+			"item": "zenith:gem",
+			"nbt": "{gem:\"zenith:the_nether/blood_lord\"}"
+		},
+		"title": {
+			"translate": "advancements.zenith.mythic_gem"
+		},
+		"description": {
+			"translate": "advancements.zenith.mythic_gem.desc"
+		},
+		"frame": "goal",
+		"hidden": true,
+		"background": "zenith:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"gem": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"zenith": {
+					"type": "gem_rarity",
+					"rarity": "mythic"
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"gem"
+		]
+	]
+}

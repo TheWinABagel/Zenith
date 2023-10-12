@@ -28,7 +28,7 @@ import java.util.List;
 
 public class GemCuttingBlock extends HorizontalDirectionalBlock {
 
-    public static final Component NAME = Component.translatable("menu.apotheosis.gem_cutting");
+    public static final Component NAME = Component.translatable("menu.zenith.gem_cutting");
     public static final VoxelShape SHAPE = Shapes.or(box(0, 12, 0, 16, 16, 16), box(0, 0, 0, 2, 16, 2), box(0, 0, 14, 2, 16, 16), box(14, 0, 0, 16, 16, 2), box(14, 0, 14, 16, 16, 16));
 
     public GemCuttingBlock(Properties props) {

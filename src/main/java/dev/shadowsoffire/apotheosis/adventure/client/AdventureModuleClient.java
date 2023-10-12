@@ -1,12 +1,11 @@
 package dev.shadowsoffire.apotheosis.adventure.client;
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.datafixers.util.Either;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Menus;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
@@ -14,7 +13,6 @@ import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixRegistry;
-import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingScreen;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingTableTileRenderer;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingScreen;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketHelper;
@@ -25,32 +23,23 @@ import dev.shadowsoffire.apotheosis.adventure.client.SocketTooltipRenderer.Socke
 import dev.shadowsoffire.apotheosis.util.Events;
 import dev.shadowsoffire.apotheosis.util.events.ModifyComponents;
 import dev.shadowsoffire.attributeslib.api.client.AddAttributeTooltipsEvent;
-import dev.shadowsoffire.attributeslib.api.client.GatherEffectScreenTooltipsEvent;
 import dev.shadowsoffire.attributeslib.api.client.GatherSkippedAttributeTooltipsEvent;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
-import io.github.fabricators_of_create.porting_lib.event.client.ModelLoadCallback;
-import io.github.fabricators_of_create.porting_lib.event.client.PreRenderTooltipCallback;
-import io.github.fabricators_of_create.porting_lib.util.client.ClientHooks;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
-import net.fabricmc.fabric.impl.client.model.loading.ModelLoaderHooks;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
-import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
@@ -61,13 +50,10 @@ import net.minecraft.network.chat.contents.LiteralContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.mutable.MutableInt;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -82,18 +68,18 @@ public class AdventureModuleClient {
     //    MenuScreens.register(Menus.REFORGING, ReforgingScreen::new);
     //    MenuScreens.register(Menus.SALVAGE, SalvagingScreen::new);
         MenuScreens.register(Menus.REFORGING, GemCuttingScreen::new);
-        MenuScreens.register(Menus.SALVAGE, GemCuttingScreen::new);
+        MenuScreens.register(Menus.SALVAGE, SalvagingScreen::new);
         MenuScreens.register(Menus.GEM_CUTTING, GemCuttingScreen::new);
-        //BlockEntityRenderers.register(Apoth.Tiles.REFORGING_TABLE, new ReforgingTableTileRenderer()); // Also model
+
+        BlockEntityRenderers.register(Adventure.Tiles.REFORGING_TABLE, k -> new ReforgingTableTileRenderer());
         time();
         tooltips();
         ignoreSocketUUIDS();
         affixTooltips();
-        comps(); // implement event
+        comps();
         ModBusSub.addGemModels();
         ModBusSub.hammer();
         ModBusSub.replaceGemModel();
-        ModBusSub.tooltipComps();
     }
 
     public static void onBossSpawn(BlockPos pos, float[] color) {
@@ -101,7 +87,7 @@ public class AdventureModuleClient {
         Minecraft.getInstance().getSoundManager()
             .play(new SimpleSoundInstance(SoundEvents.END_PORTAL_SPAWN, SoundSource.HOSTILE, AdventureConfig.bossAnnounceVolume, 1.25F, Minecraft.getInstance().player.random, Minecraft.getInstance().player.blockPosition()));
     }
- // TODO completely redo models...
+
     public static class ModBusSub {
         public static void hammer(){
             Events.AddModelCallback.EVENT.register(addedModels -> {
@@ -135,38 +121,7 @@ public class AdventureModuleClient {
 
      }
 
-    /*
 
-    public static void comps(RenderTooltipEvent.GatherComponents e) {
-        int sockets = SocketHelper.getSockets(e.getItemStack());
-        if (sockets == 0) return;
-        List<Either<FormattedText, TooltipComponent>> list = e.getTooltipElements();
-        int rmvIdx = -1;
-        for (int i = 0; i < list.size(); i++) {
-            Optional<FormattedText> o = list.get(i).left();
-            if (o.isPresent() && o.get() instanceof Component comp && comp.getContents() instanceof LiteralContents tc) {
-                if ("APOTH_REMOVE_MARKER".equals(tc.text())) {
-                    rmvIdx = i;
-                    list.remove(i);
-                    break;
-                }
-            }
-        }
-        if (rmvIdx == -1) return;
-        e.getTooltipElements().add(rmvIdx, Either.right(new SocketComponent(e.getItemStack(), SocketHelper.getGems(e.getItemStack()))));
-    }
-
-        public static void tooltipComps(RegisterClientTooltipComponentFactoriesEvent e) {
-            e.register(SocketComponent.class, SocketTooltipRenderer::new);
-        }
-
-        @SubscribeEvent
-        public static void shaderRegistry(RegisterShadersEvent event) throws IOException {
-            // Adds a shader to the list, the callback runs when loading is complete.
-            event.registerShader(new ShaderInstance(event.getResourceProvider(), new ResourceLocation("apotheosis:gray"), DefaultVertexFormat.NEW_ENTITY), shaderInstance -> {
-                CustomRenderTypes.grayShader = shaderInstance;
-            });
-        }*/
     }
 
     // This renders a beacon beam when a boss spawns
@@ -226,8 +181,9 @@ public class AdventureModuleClient {
             return null;
         });
         ModifyComponents.MODIFY_COMPONENTS.register(e -> {
+
             int sockets = SocketHelper.getSockets(e.stack);
-            if (sockets == 0) return false;
+            if (sockets == 0) return;
             List<Either<FormattedText, TooltipComponent>> list = e.tooltipElements;
             int rmvIdx = -1;
             for (int i = 0; i < list.size(); i++) {
@@ -240,9 +196,8 @@ public class AdventureModuleClient {
                     }
                 }
             }
-            if (rmvIdx == -1) return false;
+            if (rmvIdx == -1) return;
             e.tooltipElements.add(rmvIdx, Either.right(new SocketComponent(e.stack, SocketHelper.getGems(e.stack))));
-            return false;
         });
 
     }
@@ -253,7 +208,7 @@ public class AdventureModuleClient {
                 Map<DynamicHolder<? extends Affix>, AffixInstance> affixes = AffixHelper.getAffixes(stack);
                 List<Component> components = new ArrayList<>();
                 Consumer<Component> dotPrefixer = afxComp -> {
-                    components.add(Component.translatable("text.apotheosis.dot_prefix", afxComp).withStyle(ChatFormatting.YELLOW));
+                    components.add(Component.translatable("text.zenith.dot_prefix", afxComp).withStyle(ChatFormatting.YELLOW));
                 };
                 affixes.values().stream().sorted(Comparator.comparingInt(a -> a.affix().get().getType().ordinal())).forEach(inst -> inst.addInformation(dotPrefixer));
                 lines.addAll(1, components);
@@ -261,17 +216,17 @@ public class AdventureModuleClient {
         });
 
     }
+
     // there has to be a better way to do this...
     public static List<ClientTooltipComponent> gatherTooltipComponents(ItemStack stack, List<? extends FormattedText> textElements, Optional<TooltipComponent> itemComponent, int mouseX, int screenWidth, int screenHeight, Font font) {
-
         List<Either<FormattedText, TooltipComponent>> elements = textElements.stream()
                 .map((Function<FormattedText, Either<FormattedText, TooltipComponent>>) Either::left)
                 .collect(Collectors.toCollection(ArrayList::new));
         itemComponent.ifPresent(c -> elements.add(1, Either.right(c)));
 
         var event = new ModifyComponents.ModifyComponentsEvent(stack, screenWidth, screenHeight, elements, -1);
-        if (ModifyComponents.MODIFY_COMPONENTS.invoker().modifyComponents(event)) return List.of();
-
+        ModifyComponents.MODIFY_COMPONENTS.invoker().modifyComponents(event);
+        if (event.isCanceled()) return List.of();
         // text wrapping
         int tooltipTextWidth = event.tooltipElements.stream()
                 .mapToInt(either -> either.map(font::width, component -> 0))
@@ -293,7 +248,6 @@ public class AdventureModuleClient {
                 needsWrap = true;
             }
         }
-
         if (event.maxWidth > 0 && tooltipTextWidth > event.maxWidth)
         {
             tooltipTextWidth = event.maxWidth;
@@ -381,4 +335,7 @@ public class AdventureModuleClient {
         if (any) AdventureModule.LOGGER.error(sb.toString());
     }
 
+    public static class StackStorage { // Need a place to keep this saved
+        public static ItemStack hoveredItem = ItemStack.EMPTY;
+    }
 }

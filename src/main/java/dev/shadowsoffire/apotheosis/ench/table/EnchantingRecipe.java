@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.mojang.serialization.JsonOps;
-import dev.shadowsoffire.apotheosis.Apoth.RecipeTypes;
+import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry.Stats;
 import io.github.fabricators_of_create.porting_lib.util.CraftingHelper;
 import net.minecraft.core.RegistryAccess;
@@ -113,7 +113,7 @@ public class EnchantingRecipe implements Recipe<Container> {
 
     @Override
     public RecipeType<?> getType() {
-        return RecipeTypes.INFUSION;
+        return Ench.INFUSION;
     }
 
     protected static Pair<Stats, Stats> readStats(ResourceLocation id, JsonObject obj) {
@@ -161,7 +161,7 @@ public class EnchantingRecipe implements Recipe<Container> {
 
     @Nullable
     public static EnchantingRecipe findMatch(Level level, ItemStack input, float eterna, float quanta, float arcana) {
-        List<EnchantingRecipe> recipes = new ArrayList<>(level.getRecipeManager().getAllRecipesFor(RecipeTypes.INFUSION));
+        List<EnchantingRecipe> recipes = new ArrayList<>(level.getRecipeManager().getAllRecipesFor(Ench.INFUSION));
         recipes.sort((r1, r2) -> -Float.compare(r1.requirements.eterna(), r2.requirements.eterna()));
         for (EnchantingRecipe r : recipes)
             if (r.matches(input, eterna, quanta, arcana)) return r;
@@ -169,7 +169,7 @@ public class EnchantingRecipe implements Recipe<Container> {
     }
 
     public static EnchantingRecipe findItemMatch(Level level, ItemStack toEnchant) {
-        return level.getRecipeManager().getAllRecipesFor(RecipeTypes.INFUSION).stream().filter(r -> r.getInput().test(toEnchant)).findFirst().orElse(null);
+        return level.getRecipeManager().getAllRecipesFor(Ench.INFUSION).stream().filter(r -> r.getInput().test(toEnchant)).findFirst().orElse(null);
     }
 
 }

@@ -1,0 +1,38 @@
+{
+	"parent": "zenith:affix/mythic",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "adventure"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:netherite_sword",
+			"nbt": "{Enchantments:[{id:\"zenith:hell_infusion\",lvl:1s}]}"
+		},
+		"title": {
+			"translate": "advancements.zenith.ancient"
+		},
+		"description": {
+			"translate": "advancements.zenith.ancient.desc"
+		},
+		"frame": "challenge",
+		"hidden": true,
+		"background": "zenith:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"sword": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"zenith": {
+					"type": "rarity",
+					"rarity": "ANCIENT"
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"sword"
+		]
+	]
+}

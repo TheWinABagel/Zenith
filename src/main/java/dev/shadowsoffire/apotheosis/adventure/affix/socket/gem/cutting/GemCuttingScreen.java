@@ -60,8 +60,8 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> imp
         this.upgradeBtn = this.addRenderableWidget(
             new SimpleTexButton(left + 125, top + 30, 40, 40, 216, 0, TEXTURE, 256, 256,
                 this::clickUpgradeBtn,
-                Component.translatable("button.apotheosis.upgrade"))
-                .setInactiveMessage(Component.translatable("button.apotheosis.upgrade.no").withStyle(ChatFormatting.RED)));
+                Component.translatable("button.zenith.upgrade"))
+                .setInactiveMessage(Component.translatable("button.zenith.upgrade.no").withStyle(ChatFormatting.RED)));
 
         this.updateBtnStatus();
     }
@@ -122,18 +122,18 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> imp
             int dust = this.menu.getSlot(1).getItem().getCount();
             DynamicHolder<LootRarity> rarity = gem.rarity();
             if (rarity == RarityRegistry.getMaxRarity()) {
-                list.add(Component.translatable("text.apotheosis.no_upgrade").withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE));
+                list.add(Component.translatable("text.zenith.no_upgrade").withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE));
             }
             else {
-                list.add(Component.translatable("text.apotheosis.cut_cost").withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE));
+                list.add(Component.translatable("text.zenith.cut_cost").withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE));
                 list.add(CommonComponents.EMPTY);
                 int dustCost = GemCuttingMenu.getDustCost(rarity.get());
                 boolean hasDust = dust > dustCost;
-                list.add(Component.translatable("text.apotheosis.cost", dustCost, Adventure.Items.GEM_DUST.getName(ItemStack.EMPTY))
+                list.add(Component.translatable("text.zenith.cost", dustCost, Adventure.Items.GEM_DUST.getName(ItemStack.EMPTY))
                     .withStyle(hasDust ? ChatFormatting.GREEN : ChatFormatting.RED));
                 boolean hasGem2 = secondary.isValidUnsocketed() && gem.gem() == secondary.gem() && rarity == secondary.rarity();
-                list.add(Component.translatable("text.apotheosis.cost", 1, gemStack.getHoverName().getString()).withStyle(hasGem2 ? ChatFormatting.GREEN : ChatFormatting.RED));
-                list.add(Component.translatable("text.apotheosis.one_rarity_mat").withStyle(ChatFormatting.GRAY));
+                list.add(Component.translatable("text.zenith.cost", 1, gemStack.getHoverName().getString()).withStyle(hasGem2 ? ChatFormatting.GREEN : ChatFormatting.RED));
+                list.add(Component.translatable("text.zenith.one_rarity_mat").withStyle(ChatFormatting.GRAY));
                 this.addMatTooltip(RarityRegistry.next(rarity), GemCuttingMenu.NEXT_MAT_COST, list);
                 this.addMatTooltip(rarity, GemCuttingMenu.STD_MAT_COST, list);
                 if (rarity != RarityRegistry.getMinRarity()) {
@@ -149,7 +149,7 @@ public class GemCuttingScreen extends PlaceboContainerScreen<GemCuttingMenu> imp
         Item rarityMat = rarity.get().getMaterial();
         ItemStack slotMat = this.menu.getSlot(3).getItem();
         boolean hasMats = slotMat.getItem() == rarityMat && slotMat.getCount() >= cost;
-        list.add(AttributeHelper.list().append(Component.translatable("text.apotheosis.cost", cost, rarityMat.getName(ItemStack.EMPTY)).withStyle(!hasMats ? ChatFormatting.RED : ChatFormatting.YELLOW)));
+        list.add(AttributeHelper.list().append(Component.translatable("text.zenith.cost", cost, rarityMat.getName(ItemStack.EMPTY)).withStyle(!hasMats ? ChatFormatting.RED : ChatFormatting.YELLOW)));
 
     }
 

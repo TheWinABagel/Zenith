@@ -42,7 +42,7 @@ public class EnchModule {
     public static final Map<Enchantment, EnchantmentInfo> ENCHANTMENT_INFO = new HashMap<>();
     public static final Object2IntMap<Enchantment> ENCH_HARD_CAPS = new Object2IntOpenHashMap<>();
     public static final String ENCH_HARD_CAP_IMC = "set_ench_hard_cap";
-    public static final Logger LOGGER = LogManager.getLogger("Apotheosis : Enchantment");
+    public static final Logger LOGGER = LogManager.getLogger("Zenith : Enchantment");
     public static final List<TomeItem> TYPED_BOOKS = new ArrayList<>();
     public static final EnchantmentCategory HOE = ClassTinkerers.getEnum(EnchantmentCategory.class, "HOE");
     public static final EnchantmentCategory SHIELD = ClassTinkerers.getEnum(EnchantmentCategory.class, "SHIELD");
@@ -61,9 +61,6 @@ public class EnchModule {
         particles();
         recipeSerializers();
 
-
-
-        registerTab();
         EnchModuleEvents.registerEvents();
         enchants();
 
@@ -155,16 +152,10 @@ public class EnchModule {
         return level;
     }
 
-    public static void registerTab(){
-        Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, Tabs.ENCH, Tabs.ENCHTAB);
-    }
-
-
-
 
     public static void reload(boolean e) {
         enchInfoConfig = new Configuration(new File(Apotheosis.configDir, "enchantments.cfg"));
-        enchInfoConfig.setTitle("Apotheosis Enchantment Information");
+        enchInfoConfig.setTitle("Zenith Enchantment Information");
         enchInfoConfig.setComment("This file contains configurable data for each enchantment.\nThe names of each category correspond to the registry names of every loaded enchantment.");
         ENCHANTMENT_INFO.clear();
 

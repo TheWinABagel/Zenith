@@ -1,0 +1,55 @@
+{
+  "fabric:load_conditions": [{
+    "condition": "zenith:module",
+    "module": "village"
+  }],
+  "type": "zenith:basic_trade",
+  "rare": true,
+  "input_1": {
+    "item": "minecraft:diamond_axe",
+    "count": 1
+  },
+  "input_2": {
+    "item": "minecraft:emerald",
+    "count": 64
+  },
+  "output": {
+    "item": "minecraft:diamond_axe",
+    "count": 1,
+    "nbt": {
+        "Enchantments": [
+            {
+                "lvl": 10,
+                "id": "minecraft:sharpness"
+            },
+            {
+                "lvl": 1,
+                "id": "minecraft:mending"
+            },
+            {
+                "lvl": 2,
+                "id": "zenith:scavenger"
+            },
+            {
+                "lvl": 2,
+                "id": "zenith:capturing"
+            },
+            {
+                "lvl": 5,
+                "id": "minecraft:looting"
+            },
+            {
+                "lvl": 3,
+                "id": "minecraft:unbreaking"
+            }
+        ],
+        "display": {
+            "Name": "{\"translate\":\"name.zenith.merch_axe2\", \"italic\": false, \"color\": \"#9AB091\"}"
+        },
+        "Damage": 0
+    }
+  },
+  "max_trades": 1,
+  "xp": 500,
+  "price_mult": 1.0
+}

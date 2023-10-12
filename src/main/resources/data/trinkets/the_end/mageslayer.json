@@ -5,8 +5,8 @@
 	"unique": true,
 	"min_rarity": "epic",
 	"bonuses": [{
-			"type": "apotheosis:multi_attribute",
-			"desc": "bonus.apotheosis:multi_attr.desc.and",
+			"type": "zenith:multi_attribute",
+			"desc": "bonus.zenith:multi_attr.desc.and",
 			"gem_class": {
 				"key": "light_weapon",
 				"types": [
@@ -32,8 +32,8 @@
 			]
 		},
 		{
-			"type": "apotheosis:multi_attribute",
-			"desc": "bonus.apotheosis:multi_attr.desc.and",
+			"type": "zenith:multi_attribute",
+			"desc": "bonus.zenith:multi_attr.desc.and",
 			"gem_class": {
 				"key": "heavy_weapon",
 				"types": [
@@ -59,14 +59,14 @@
 			]
 		},
 		{
-			"type": "apotheosis:mageslayer",
+			"type": "zenith:mageslayer",
 			"values": {
 				"epic": 0.15,
 				"mythic": 0.22
 			}
 		},
 		{
-			"type": "apotheosis:mob_effect",
+			"type": "zenith:mob_effect",
 			"gem_class": {
 				"key": "shield",
 				"types": [

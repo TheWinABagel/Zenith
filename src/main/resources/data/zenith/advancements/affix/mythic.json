@@ -1,0 +1,38 @@
+{
+	"parent": "zenith:affix/epic",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "adventure"
+	}],
+	"display": {
+		"icon": {
+			"item": "minecraft:diamond_sword",
+			"nbt": "{Enchantments:[{id:\"zenith:hell_infusion\",lvl:1s}]}"
+		},
+		"title": {
+			"translate": "advancements.zenith.mythic"
+		},
+		"description": {
+			"translate": "advancements.zenith.mythic.desc"
+		},
+		"frame": "challenge",
+		"hidden": true,
+		"background": "zenith:textures/advancements/bg/apoth.png"
+	},
+	"criteria": {
+		"sword": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"zenith": {
+					"type": "rarity",
+					"rarity": "MYTHIC"
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"sword"
+		]
+	]
+}

@@ -1,9 +1,6 @@
 package dev.shadowsoffire.apotheosis.village.fletching.arrows;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.village.VillageModule;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -19,20 +16,20 @@ public class ExplosiveArrowEntity extends AbstractArrow {
     }
 
     public ExplosiveArrowEntity(Level world) {
-        super(Apoth.Entities.EXPLOSIVE_ARROW, world);
+        super(VillageModule.EXPLOSIVE_ARROW_ENTITY, world);
     }
 
     public ExplosiveArrowEntity(LivingEntity shooter, Level world) {
-        super(Apoth.Entities.EXPLOSIVE_ARROW, shooter, world);
+        super(VillageModule.EXPLOSIVE_ARROW_ENTITY, shooter, world);
     }
 
     public ExplosiveArrowEntity(Level world, double x, double y, double z) {
-        super(Apoth.Entities.EXPLOSIVE_ARROW, x, y, z, world);
+        super(VillageModule.EXPLOSIVE_ARROW_ENTITY, x, y, z, world);
     }
 
     @Override
     protected ItemStack getPickupItem() {
-        return new ItemStack(Apoth.Items.EXPLOSIVE_ARROW);
+        return new ItemStack(VillageModule.EXPLOSIVE_ARROW);
     }
 
     @Override

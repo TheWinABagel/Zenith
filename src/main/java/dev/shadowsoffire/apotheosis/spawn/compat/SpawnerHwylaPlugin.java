@@ -46,7 +46,7 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IBlockComponentProvider
             if (stats[10] == 1) tooltip.add(SpawnerStats.NO_AI.name().withStyle(ChatFormatting.DARK_GREEN));
             if (stats[11] == 1) tooltip.add(SpawnerStats.SILENT.name().withStyle(ChatFormatting.DARK_GREEN));
         }
-        else tooltip.add(Component.translatable("misc.apotheosis.ctrl_stats"));
+        else tooltip.add(Component.translatable("misc.zenith.ctrl_stats"));
     }
 
     @Override

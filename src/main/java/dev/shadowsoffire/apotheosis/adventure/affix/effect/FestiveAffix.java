@@ -63,7 +63,6 @@ public class FestiveAffix extends Affix {
 
     private static String MARKER = "apoth.equipment";
 
-    // EventPriority.LOW
     public void markEquipment(LivingEntity entity, DamageSource source) {
         if (entity instanceof Player || entity.getCustomData().getBoolean("apoth.no_pinata")) return;
         entity.getAllSlots().forEach(i -> {
@@ -72,7 +71,6 @@ public class FestiveAffix extends Affix {
     }
 
     public void drops(LivingEntity target, DamageSource source, Collection<ItemEntity> drops) {
-        if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Festive affix triggered");
         if (target instanceof Player || target.getCustomData().getBoolean("apoth.no_pinata")) return;
         if (source.getEntity() instanceof Player player && !drops.isEmpty()) {
             AffixInstance inst = AffixHelper.getAffixes(player.getMainHandItem()).get(Affixes.FESTIVE);

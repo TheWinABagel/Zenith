@@ -1,0 +1,43 @@
+{
+	"parent": "zenith:enchanting/deepshelf",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "enchantment"
+	}],
+	"display": {
+		"icon": {
+			"item": "zenith:echoing_sculkshelf"
+		},
+		"title": {
+			"translate": "advancements.zenith.sculkshelf"
+		},
+		"description": {
+			"translate": "advancements.zenith.sculkshelf.desc"
+		},
+		"frame": "task"
+	},
+	"criteria": {
+		"echoing": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"items": ["zenith:echoing_sculkshelf"]
+				}]
+			}
+		},
+		"soul_touched": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"items": ["zenith:soul_touched_sculkshelf"]
+				}]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"echoing",
+			"soul_touched"
+		]
+	]
+}

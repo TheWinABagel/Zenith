@@ -185,7 +185,7 @@ public class ApothSpawnerTile extends SpawnerBlockEntity {
 
                             if (ApothSpawnerTile.this.hasNoAI && entity instanceof Mob mob) {
                                 mob.setNoAi(true);
-                                entity.getCustomData().putBoolean("apotheosis:movable", true);
+                                entity.getCustomData().putBoolean("zenith:movable", true);
                             }
 
                             if (ApothSpawnerTile.this.silent) entity.setSilent(true);

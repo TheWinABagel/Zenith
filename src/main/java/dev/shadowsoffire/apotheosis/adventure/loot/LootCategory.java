@@ -59,7 +59,7 @@ public final class LootCategory {
     }
 
     public String getDescId() {
-        return "text.apotheosis.category." + this.name;
+        return "text.zenith.category." + this.name;
     }
 
     public String getDescIdPlural() {

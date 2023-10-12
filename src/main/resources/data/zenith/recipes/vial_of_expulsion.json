@@ -1,0 +1,40 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "fabric:load_conditions": [{
+    "condition": "zenith:module",
+    "module": "adventure"
+  }],
+  "group": "what",
+  "pattern": [
+    "GMG",
+    "BPB",
+    "GLG"
+  ],
+  "key": {
+    "G": {
+      "item": "zenith:gem_dust"
+    },
+    "M": {
+      "item": "minecraft:magma_cream"
+    },
+    "B": {
+      "item": "minecraft:blaze_rod"
+    },
+    "P": {
+      "fabric:type": "fabric:nbt",
+      "base": {
+        "item": "minecraft:potion"
+      },
+      "nbt": "{Potion: \"minecraft:thick\"}",
+
+      "strict": "false"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    }
+  },
+  "result": {
+    "item": "zenith:vial_of_expulsion",
+    "count": 2
+  }
+}
