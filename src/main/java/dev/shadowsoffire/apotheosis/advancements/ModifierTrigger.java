@@ -7,14 +7,13 @@ import com.google.gson.JsonObject;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerStats;
-import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerTile;
-import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerTile.SpawnerLogicExt;
 import dev.shadowsoffire.apotheosis.spawn.spawner.IBaseSpawner;
 import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 
 import java.util.List;
@@ -117,7 +116,7 @@ public class ModifierTrigger implements CriterionTrigger<ModifierTrigger.Instanc
         }
 
         public boolean test(SpawnerBlockEntity tile, SpawnerModifier modif) {
-            SpawnerLogicExt logic = (SpawnerLogicExt) tile.spawner;
+            BaseSpawner logic = tile.spawner;
             IBaseSpawner spwn = (IBaseSpawner) tile;
             if (!this.minDelay.matches(logic.minSpawnDelay) || !this.maxDelay.matches(logic.maxSpawnDelay) || !this.spawnCount.matches(logic.spawnCount) || !this.nearbyEnts.matches(logic.maxNearbyEntities)) return false;
             if (!this.playerRange.matches(logic.requiredPlayerRange)) return false;

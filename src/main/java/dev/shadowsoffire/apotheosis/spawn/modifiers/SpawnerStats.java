@@ -1,8 +1,6 @@
 package dev.shadowsoffire.apotheosis.spawn.modifiers;
 
 import com.google.gson.JsonElement;
-import dev.shadowsoffire.apotheosis.mixin.spawn.SpawnerBlockMixin;
-import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerTile;
 import dev.shadowsoffire.apotheosis.spawn.spawner.IBaseSpawner;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;

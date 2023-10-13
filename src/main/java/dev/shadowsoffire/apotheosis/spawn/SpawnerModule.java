@@ -4,10 +4,8 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.potion.PotionModule;
 import dev.shadowsoffire.apotheosis.spawn.enchantment.CapturingEnchant;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
-import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerTile;
 import dev.shadowsoffire.placebo.config.Configuration;
 import dev.shadowsoffire.placebo.util.PlaceboUtil;
-import io.github.fabricators_of_create.porting_lib.entity.events.EntityEvents;
 import io.github.fabricators_of_create.porting_lib.entity.events.EntityMoveEvents;
 import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityEvents;
 import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityLootEvents;
@@ -23,6 +21,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -68,7 +67,7 @@ public class SpawnerModule {
     public static void handleUseItem() {
         UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
             if (!player.isSpectator()) {
-                if (world.getBlockEntity(hitResult.getBlockPos()) instanceof ApothSpawnerTile) {
+                if (world.getBlockEntity(hitResult.getBlockPos()) instanceof SpawnerBlockEntity) {
                     ItemStack s = player.getItemInHand(hand);
                     if (enableDebug) SpawnerModule.LOG.info("BlockEntity is spawner");
                     if (s.getItem() instanceof SpawnEggItem egg) {

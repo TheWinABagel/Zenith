@@ -49,7 +49,8 @@
     "zenith_attributes": ">=0.0.1"
   },
   "suggests": {
-    "roughlyenoughitems": "*"
+    "roughlyenoughitems": "*",
+    "patchouli": "*"
   },
   "breaks": {
     "easymagic": "*"

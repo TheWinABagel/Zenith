@@ -2,8 +2,6 @@ package dev.shadowsoffire.apotheosis.spawn.compat;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerStats;
-import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerBlock;
-import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerTile;
 import dev.shadowsoffire.apotheosis.spawn.spawner.IBaseSpawner;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;

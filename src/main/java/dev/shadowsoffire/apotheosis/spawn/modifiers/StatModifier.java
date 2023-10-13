@@ -2,7 +2,6 @@ package dev.shadowsoffire.apotheosis.spawn.modifiers;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerTile;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 
 public class StatModifier<T> {

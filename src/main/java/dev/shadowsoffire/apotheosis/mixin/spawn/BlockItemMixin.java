@@ -11,7 +11,6 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(BlockItem.class)
@@ -28,6 +27,7 @@ public class BlockItemMixin extends Item {
             if (tag.contains("SpawnData")) {
                 String name = tag.getCompound("SpawnData").getCompound("entity").getString("id");
                 String key = "entity." + name.replace(':', '.');
+                if (name.length() == 0) key = "Empty";
                 ChatFormatting color = ChatFormatting.WHITE;
                 try {
                     EntityType<?> t = BuiltInRegistries.ENTITY_TYPE.get(new ResourceLocation(name));

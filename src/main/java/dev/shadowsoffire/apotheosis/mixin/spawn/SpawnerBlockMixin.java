@@ -5,7 +5,6 @@ import dev.shadowsoffire.apotheosis.advancements.AdvancementTriggers;
 import dev.shadowsoffire.apotheosis.spawn.SpawnerModule;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerStats;
-import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerTile;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
@@ -43,16 +42,11 @@ import java.util.List;
 import static dev.shadowsoffire.apotheosis.spawn.SpawnerModule.concat;
 
 @Mixin(SpawnerBlock.class)
-public class SpawnerBlockMixin extends BaseEntityBlock {
+public abstract class SpawnerBlockMixin extends BaseEntityBlock {
 
 
     protected SpawnerBlockMixin(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new ApothSpawnerTile(pos, state);
     }
 
     @Override
