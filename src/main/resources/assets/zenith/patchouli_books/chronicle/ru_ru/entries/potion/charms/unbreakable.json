@@ -1,0 +1,17 @@
+{
+    "name": "Нерушимые Талисманы",
+    "icon": "minecraft:enchanting_table",
+    "category": "zenith:potion/charms",
+	"flag": "&zenith:potion,zenith:enchanting",
+	"sortnum": -1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Через $(l:zenith:enchanting/table/infusion)Зачарование Настоя$(), чары можно сделать нерушимыми.$(p)Благодаря этому у вас может быть неограниченная продолжительность действия любого зелья."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "Рецепт инфузии для нерушимых талисманов довольно сложен.$(p)Вам потребуется четкое представление о $(l:zenith:enchanting/table/stats)Статы Зачарований$(), чтобы иметь возможность завершить ее."
+        }
+	]
+}

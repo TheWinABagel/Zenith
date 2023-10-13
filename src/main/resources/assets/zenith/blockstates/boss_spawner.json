@@ -1,0 +1,5 @@
+{
+    "variants": {
+		"": { "model": "zenith:block/boss_spawner" }
+    }
+}

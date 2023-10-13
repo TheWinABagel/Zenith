@@ -1,0 +1,21 @@
+{
+    "name": "宝石粉",
+    "icon": "zenith:gem_dust",
+    "category": "zenith:adventure/affix_loot",
+	"flag": "zenith:adventure",
+	"sortnum": 2,
+    "pages": [
+		{
+            "type": "patchouli:spotlight",
+			"item": "zenith:gem_dust",
+			"link_recipe": true,
+            "text": "所有的神化宝石都可以通过粉碎而被还原成$(9)宝石粉$()。$(p)有一种方法是在外面用铁砧砸碎。"
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "zenith:salvaging_table",
+			"title": "回收宝石",
+            "text": "一旦你用铁砧砸碎了一些宝石，你就可以制作并使用$(9)回收台$()了。"
+        }
+	]
+}

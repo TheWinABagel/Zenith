@@ -1,0 +1,8 @@
+{
+    "name": "Чародейский Стол",
+    "description": "В этом разделе рассматриваются изменения, внесенные в Чародейский Стол.",
+    "icon": "minecraft:enchanting_table",
+	"flag": "zenith:enchanting",
+	"parent": "zenith:enchanting/enchanting",
+	"sortnum": -2
+}

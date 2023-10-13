@@ -1,0 +1,41 @@
+{
+    "name": "Фолианты(Томы)",
+    "icon": "zenith:other_tome",
+    "category": "zenith:enchanting/utility",
+	"flag": "zenith:enchanting",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Томы - это особый тип книг.$(p)Том может быть зачарован точно так же, как и книга, но может получать только определенные чары.$(p)Исключением является $(l:zenith:enchanting/utility/scrapping)Том Утилизации$(), который имеет другую цель."
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "zenith:other_tome",
+			"text": "Как только вы зачаруете том, он превратится в заколдованную книгу."
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "zenith:helmet_tome",
+			"recipe2": "zenith:chestplate_tome",
+			"text": ""
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "zenith:leggings_tome",
+			"recipe2": "zenith:boots_tome",
+			"text": ""
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "zenith:weapon_tome",
+			"recipe2": "zenith:pickaxe_tome",
+			"text": ""
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "zenith:fishing_tome",
+			"recipe2": "zenith:bow_tome",
+			"text": ""
+		}
+	]
+}

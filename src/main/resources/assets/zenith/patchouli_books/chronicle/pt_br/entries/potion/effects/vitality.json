@@ -1,0 +1,17 @@
+{
+    "name": "Estouro de vitalidade",
+    "icon": "zenith:textures/mob_effect/vitality.png",
+    "category": "zenith:potion/effects",
+	"flag": "zenith:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "A poção de $(9)estouro de vitalidade$() é um efeito benéfico.$(p)Enquanto estiver sob seus efeitos, toda a cura recebida é aumentada."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "O aumento de cura é igual a 20% por nível."
+        }
+	]
+}

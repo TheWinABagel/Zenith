@@ -1,0 +1,17 @@
+{
+    "name": "Feridas dolorosas",
+    "icon": "zenith:textures/mob_effect/grievous.png",
+    "category": "zenith:potion/effects",
+	"flag": "zenith:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "A poção de $(c)feridas dolorosas$() é um efeito negativo.$(p)Enquanto estiver sob seus efeitos, toda cura recebida é reduzida."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "A redução de cura é igual a 40% por nível.$(p)Enquanto estiver no nível III ou acima, toda cura é impedida."
+        }
+	]
+}

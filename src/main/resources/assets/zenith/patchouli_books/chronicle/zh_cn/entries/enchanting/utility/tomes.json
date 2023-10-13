@@ -1,0 +1,41 @@
+{
+    "name": "宝典",
+    "icon": "zenith:other_tome",
+    "category": "zenith:enchanting/utility",
+	"flag": "zenith:enchanting",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "宝典是书的一种特殊类型。$(p)宝典可以像书一样被附魔，但只能接受特定的魔咒。$(p)例外的是$(l:zenith:enchanting/utility/scrapping)拆解宝典$()，它有另外的用途。"
+        },
+		{
+            "type": "patchouli:crafting",
+			"recipe": "zenith:other_tome",
+			"text": "一旦你附魔一本宝典，它就会变成一本附魔书。"
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "zenith:helmet_tome",
+			"recipe2": "zenith:chestplate_tome",
+			"text": ""
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "zenith:leggings_tome",
+			"recipe2": "zenith:boots_tome",
+			"text": ""
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "zenith:weapon_tome",
+			"recipe2": "zenith:pickaxe_tome",
+			"text": ""
+		},
+		{
+            "type": "patchouli:crafting",
+			"recipe": "zenith:fishing_tome",
+			"recipe2": "zenith:bow_tome",
+			"text": ""
+		}
+	]
+}

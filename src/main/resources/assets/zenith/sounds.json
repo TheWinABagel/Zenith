@@ -1,0 +1,6 @@
+{
+	"dodge": {
+		"subtitle": "zenith.subtitle.dodge",
+		"sounds": ["zenith:dodge"]
+	}
+}

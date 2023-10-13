@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "fabric:load_conditions": [{
+        "condition": "zenith:module",
+        "module": "enchantment"
+    }],
+    "pattern": [" P ", " S ", "P P"],
+    "key": {
+        "P": { "item": "minecraft:prismarine_crystals" },
+        "S": { "item": "zenith:infused_seashelf" }
+    },
+    "result": {
+        "item": "zenith:crystal_seashelf",
+        "count": 1
+    }
+}

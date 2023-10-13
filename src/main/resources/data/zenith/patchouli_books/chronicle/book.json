@@ -1,0 +1,27 @@
+{
+	"name": "book.zenith.name",
+	"landing_text": "book.zenith.landing",
+	"subtitle": "book.zenith.subtitle",
+	"book_texture": "patchouli:textures/gui/book_blue.png",
+	"model": "zenith:book",
+	"show_progress": false,
+	"creative_tab": "tools_and_utilities",
+	"use_blocky_font": true,
+	"use_resource_pack": true,
+	"macros": {
+		"$(вечность)": "$(#3DB53D)Вечность$()",
+		"$(eterna)": "$(#3DB53D)Eterna$()",
+		"$(кванты)": "$(#FC5454)Кванты$()",
+		"$(quanta)": "$(#FC5454)Quanta$()",
+		"$(таинство)": "$(#A800A8)Таинство$()",
+		"$(arcana)": "$(#A800A8)Arcana$()",
+		"$(исправление)": "$(#CCCC33)Исправление$()",
+		"$(rectification)": "$(#CCCC33)Rectification$()",
+		"$(подсказки)": "$(#00AAAA)Подсказки$()",
+		"$(clues)": "$(#00AAAA)Enchanting Clues$()",
+		"$(фмощность)": "$(#CC00CC)Финальная мощность$()",
+		"$(fpower)": "$(#CC00CC)Final Power$()",
+		"$(нмощность)": "$(6)Начальная мощность$()",
+		"$(bpower)": "$(6)Base Power$()"
+	}
+}

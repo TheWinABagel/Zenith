@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "zenith:block/gem_cutting_table",
+      "y": 180
+    },
+    "facing=north": {
+      "model": "zenith:block/gem_cutting_table",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "zenith:block/gem_cutting_table",
+      "y": 270
+    },
+    "facing=west": {
+      "model": "zenith:block/gem_cutting_table",
+      "y": 0
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+    "name": "Bosses",
+    "description": "A $(9)Boss$() is an enemy that has tapped into the power of affixes.$(p)You can usually identify one by their unique name and powerful gear.",
+    "icon": "zenith:boss_summoner",
+	"flag": "zenith:adventure",
+	"parent": "zenith:adventure/adventure"
+}

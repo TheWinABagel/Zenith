@@ -1,0 +1,13 @@
+{
+    "name": "Доля Пробивания",
+    "icon": "zenith:textures/mob_effect/sundering.png",
+    "category": "zenith:adventure/attributes",
+	"flag": "zenith:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)Доля Пробивания$() позволяет вам игнорировать определенный процент очков защиты вашей цели при атаке.$(p)$(9)Доля Пробивания$() применяется перед $(9)Доля Пронзания$()."
+        }
+	]
+}

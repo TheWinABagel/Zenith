@@ -1,0 +1,22 @@
+{
+    "name": "Pó de gema",
+    "icon": "zenith:gem_dust",
+    "category": "zenith:adventure/affix_loot",
+	"flag": "zenith:adventure",
+	"sortnum": 2,
+    "pages": [
+		{
+            "type": "patchouli:spotlight",
+			"item": "zenith:gem_dust",
+			"link_recipe": true,
+            "text": "Todas as gemas apoteóticas podem ser reduzidas a $(br)$(9)pó de gema$() pelo esmagamento.$(p)Especificamente, elas devem ser esmagadas com uma bigorna $(br)no mundo."
+            
+        },
+        {
+            "type": "patchouli:crafting",
+			"recipe": "zenith:salvaging_table",
+			"title": "Gemas de desmontagem",
+            "text": "Depois de esmagar algumas joias com uma bigorna, você pode criar e usar a $(9)bancada de desmontagem$()."
+        }
+	]
+}

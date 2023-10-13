@@ -1,0 +1,13 @@
+{
+    "name": "盔甲撕裂",
+    "icon": "zenith:textures/mob_effect/sundering.png",
+    "category": "zenith:adventure/attributes",
+	"flag": "zenith:adventure",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "$(9)盔甲撕裂$()允许你在攻击时无视目标百分比的护甲值。$(p)$(9)盔甲撕裂$()在$(9)盔甲穿透$()之前施加。"
+        }
+	]
+}

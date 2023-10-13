@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "fabric:load_conditions": [{
+        "condition": "zenith:module",
+        "module": "enchantment"
+    }],
+    "pattern": [" F ", "FSF", "BBB"],
+    "key": {
+        "F": { "item": "minecraft:fire_charge" },
+        "S": { "item": "zenith:infused_hellshelf" },
+        "B": { "item": "minecraft:blaze_powder" }
+    },
+    "result": {
+        "item": "zenith:blazing_hellshelf",
+        "count": 1
+    }
+}

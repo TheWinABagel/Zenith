@@ -1,0 +1,7 @@
+{
+    "name": "New Effects",
+	"parent": "zenith:potion/potion",
+    "description": "This section details the new potion effects added by .zenith..",
+    "icon": "minecraft:experience_bottle",
+	"flag": "zenith:potion"
+}

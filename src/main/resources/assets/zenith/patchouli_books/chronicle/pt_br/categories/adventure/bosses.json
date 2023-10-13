@@ -1,0 +1,7 @@
+{
+    "name": "Chefes",
+    "description": "Um $(9)chefe$() é um inimigo que aproveitou dos poderes dos afixos.$(p)Você pode identificar um por seu nome especial e pelo equipamento poderoso.",
+    "icon": "zenith:boss_summoner",
+	"flag": "zenith:adventure",
+	"parent": "zenith:adventure/adventure"
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Бурлящая жизненная сила",
+    "icon": "zenith:textures/mob_effect/vitality.png",
+    "category": "zenith:potion/effects",
+	"flag": "zenith:potion",
+	"sortnum": 0,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Зелье $(9)Бурлящая жизненная сила$() обладает благотворным эффектом.$(p)Находясь под его воздействием, все получаемое исцеление увеличивается.."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "Увеличение исцеления равно 20% за уровень."
+        }
+	]
+}

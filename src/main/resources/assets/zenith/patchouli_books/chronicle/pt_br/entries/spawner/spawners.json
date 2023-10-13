@@ -1,0 +1,17 @@
+{
+    "name": "Geradores",
+    "icon": "minecraft:spawner",
+    "category": "zenith:spawner/spawner",
+	"flag": "zenith:spawner",
+	"sortnum": -1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Os $(9)geradores$() são blocos mágicos que podem extrair criaturas do vazio profundo em entidades normalmente físicas.$(p)Mas você já sabia disso, então vamos para as novidades.$(p)No Zenith, Geradores podem ser pegos com $(9)toque suave$()."
+        },
+		{
+            "type": "patchouli:text",
+            "text": "Pegar um gerador dessa forma incorrerá em um custo adicional de durabilidade.$(p)Os geradores têm uma série de $(l:zenith:spawner/stats)status de gerador$() que controlam sua funcionalidade.$(p)Esses status podem ser alterado usando $(l:zenith:spawner/modifiers)modificadores de gerador$()."
+        }
+	]
+}

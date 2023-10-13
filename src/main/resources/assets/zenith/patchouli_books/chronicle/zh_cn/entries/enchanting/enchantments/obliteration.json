@@ -1,0 +1,13 @@
+{
+    "name": "分裂",
+    "icon": "minecraft:enchanted_book",
+    "category": "zenith:enchanting/enchantments",
+	"flag": "zenith:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "查看$(l:zenith:enchanting/anvil/obliteration)分裂$()词条。"
+        }
+	]
+}

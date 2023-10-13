@@ -1,0 +1,13 @@
+{
+    "name": "Ножницы",
+    "icon": "minecraft:shears",
+    "category": "zenith:enchanting/changes",
+	"flag": "zenith:enchanting",
+	"sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "Наряду с новыми чарами, Ножницы теперь также могут получать $(9)Неразрушимость$(), $(9)Эффективность$(), и $(9)Удача$()."
+        }
+	]
+}
