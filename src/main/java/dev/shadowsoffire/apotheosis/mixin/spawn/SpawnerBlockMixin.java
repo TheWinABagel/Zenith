@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.mixin.spawn;
 
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.advancements.AdvancementTriggers;
 import dev.shadowsoffire.apotheosis.spawn.SpawnerModule;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
@@ -31,7 +32,11 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
@@ -52,7 +57,7 @@ public class SpawnerBlockMixin extends BaseEntityBlock {
 
     @Override
     public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity te, ItemStack stack) {
-        if (SpawnerModule.spawnerSilkLevel != -1 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, stack) >= SpawnerModule.spawnerSilkLevel) {
+        if (Apotheosis.enableSpawner && SpawnerModule.spawnerSilkLevel != -1 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, stack) >= SpawnerModule.spawnerSilkLevel) {
             ItemStack s = new ItemStack(this);
             if (te != null) s.getOrCreateTag().put("BlockEntityTag", te.saveWithoutMetadata());
             popResource(world, pos, s);
@@ -65,10 +70,11 @@ public class SpawnerBlockMixin extends BaseEntityBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (!Apotheosis.enableSpawner) return InteractionResult.PASS;;
         BlockEntity te = world.getBlockEntity(pos);
         ItemStack stack = player.getItemInHand(hand);
         ItemStack otherStack = player.getItemInHand(hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
-        if (te instanceof ApothSpawnerTile tile) {
+        if (te instanceof SpawnerBlockEntity tile) {
             SpawnerModifier match = SpawnerModifier.findMatch(tile, stack, otherStack);
             if (match != null && match.apply(tile)) {
                 if (world.isClientSide) return InteractionResult.SUCCESS;
@@ -84,10 +90,9 @@ public class SpawnerBlockMixin extends BaseEntityBlock {
         return InteractionResult.PASS;
     }
 
-    @Override
-    @Environment(EnvType.CLIENT)
-    public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        if (stack.hasTag() && stack.getTag().contains("BlockEntityTag", Tag.TAG_COMPOUND)) {
+    @Inject(method = "appendHoverText", at = @At("HEAD"))
+    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag, CallbackInfo ci) {
+        if (Apotheosis.enableSpawner && stack.hasTag() && stack.getTag().contains("BlockEntityTag", Tag.TAG_COMPOUND)) {
             if (Screen.hasShiftDown()) {
                 CompoundTag tag = stack.getTag().getCompound("BlockEntityTag");
                 if (tag.contains("MinSpawnDelay")) tooltip.add(concat(SpawnerStats.MIN_DELAY.name(), tag.getShort("MinSpawnDelay")));

@@ -45,14 +45,14 @@ public class ApothSpawnerBlock extends SpawnerBlock implements IReplacementBlock
     public ApothSpawnerBlock() {
         super(Properties.of().mapColor(MapColor.STONE).requiresCorrectToolForDrops().strength(5.0F).sound(SoundType.METAL).noOcclusion());
     }
-/*
+
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(BlockGetter world, BlockPos pos, BlockState state) {
         ItemStack s = new ItemStack(this);
         BlockEntity te = world.getBlockEntity(pos);
         if (te != null) s.getOrCreateTag().put("BlockEntityTag", te.saveWithoutMetadata());
         return s;
-    }*/
+    }
 
     @Override
     public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {

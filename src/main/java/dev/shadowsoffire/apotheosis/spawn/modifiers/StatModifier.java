@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.spawn.modifiers;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerTile;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 
 public class StatModifier<T> {
 
@@ -17,7 +18,7 @@ public class StatModifier<T> {
         this.max = max.equals(-1) ? (T) Integer.valueOf(Integer.MAX_VALUE) : max;
     }
 
-    public boolean apply(ApothSpawnerTile tile) {
+    public boolean apply(SpawnerBlockEntity tile) {
         return this.stat.apply(this.value, this.min, this.max, tile);
     }
 

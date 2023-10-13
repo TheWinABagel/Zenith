@@ -4,12 +4,15 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerStats;
 import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerBlock;
 import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerTile;
+import dev.shadowsoffire.apotheosis.spawn.spawner.IBaseSpawner;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.BaseSpawner;
+import net.minecraft.world.level.block.SpawnerBlock;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import snownee.jade.api.*;
 import snownee.jade.api.config.IPluginConfig;
 
@@ -20,25 +23,26 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IBlockComponentProvider
 
     @Override
     public void register(IWailaCommonRegistration reg) {
-        reg.registerBlockDataProvider(this, ApothSpawnerTile.class);
+        reg.registerBlockDataProvider(this, SpawnerBlockEntity.class);
     }
 
     @Override
     public void registerClient(IWailaClientRegistration reg) {
-        reg.registerBlockComponent(this, ApothSpawnerBlock.class);
+        reg.registerBlockComponent(this, SpawnerBlock.class);
     }
 
     @Override
     public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
+        if (!Apotheosis.enableSpawner) return;
         if (Screen.hasControlDown()) {
             int[] stats = accessor.getServerData().getIntArray(STATS);
             if (stats.length != 12) return;
-            tooltip.add(ApothSpawnerBlock.concat(SpawnerStats.MIN_DELAY.name(), stats[0]));
-            tooltip.add(ApothSpawnerBlock.concat(SpawnerStats.MAX_DELAY.name(), stats[1]));
-            tooltip.add(ApothSpawnerBlock.concat(SpawnerStats.SPAWN_COUNT.name(), stats[2]));
-            tooltip.add(ApothSpawnerBlock.concat(SpawnerStats.MAX_NEARBY_ENTITIES.name(), stats[3]));
-            tooltip.add(ApothSpawnerBlock.concat(SpawnerStats.REQ_PLAYER_RANGE.name(), stats[4]));
-            tooltip.add(ApothSpawnerBlock.concat(SpawnerStats.SPAWN_RANGE.name(), stats[5]));
+            tooltip.add(concat(SpawnerStats.MIN_DELAY.name(), stats[0]));
+            tooltip.add(concat(SpawnerStats.MAX_DELAY.name(), stats[1]));
+            tooltip.add(concat(SpawnerStats.SPAWN_COUNT.name(), stats[2]));
+            tooltip.add(concat(SpawnerStats.MAX_NEARBY_ENTITIES.name(), stats[3]));
+            tooltip.add(concat(SpawnerStats.REQ_PLAYER_RANGE.name(), stats[4]));
+            tooltip.add(concat(SpawnerStats.SPAWN_RANGE.name(), stats[5]));
             if (stats[6] == 1) tooltip.add(SpawnerStats.IGNORE_PLAYERS.name().withStyle(ChatFormatting.DARK_GREEN));
             if (stats[7] == 1) tooltip.add(SpawnerStats.IGNORE_CONDITIONS.name().withStyle(ChatFormatting.DARK_GREEN));
             if (stats[8] == 1) tooltip.add(SpawnerStats.REDSTONE_CONTROL.name().withStyle(ChatFormatting.DARK_GREEN));
@@ -51,9 +55,10 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IBlockComponentProvider
 
     @Override
     public void appendServerData(CompoundTag tag, BlockAccessor access) {
-        if (access.getBlockEntity() instanceof ApothSpawnerTile spw) {
+        if (!Apotheosis.enableSpawner) return;
+        if (access.getBlockEntity() instanceof SpawnerBlockEntity spw) {
             BaseSpawner logic = spw.getSpawner();
-
+            IBaseSpawner spawner = (IBaseSpawner) spw;
             tag.putIntArray(STATS,
                 new int[] {
                     logic.minSpawnDelay,
@@ -62,12 +67,12 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IBlockComponentProvider
                     logic.maxNearbyEntities,
                     logic.requiredPlayerRange,
                     logic.spawnRange,
-                    spw.ignoresPlayers ? 1 : 0,
-                    spw.ignoresConditions ? 1 : 0,
-                    spw.redstoneControl ? 1 : 0,
-                    spw.ignoresLight ? 1 : 0,
-                    spw.hasNoAI ? 1 : 0,
-                    spw.silent ? 1 : 0
+                        ((IBaseSpawner) spw).getIgnorePlayers() ? 1 : 0,
+                        ((IBaseSpawner) spw).getIgnoresConditions() ? 1 : 0,
+                        ((IBaseSpawner) spw).getRedstoneControl() ? 1 : 0,
+                        ((IBaseSpawner) spw).getIgnoreLight() ? 1 : 0,
+                        ((IBaseSpawner) spw).getNoAi() ? 1 : 0,
+                        ((IBaseSpawner) spw).getSilent() ? 1 : 0
                 });
 
         }
@@ -78,4 +83,7 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IBlockComponentProvider
         return Apotheosis.loc("spawner");
     }
 
+    public static Component concat(Object... args) {
+        return Component.translatable("misc.zenith.value_concat", args[0], Component.literal(args[1].toString()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GREEN);
+    }
 }

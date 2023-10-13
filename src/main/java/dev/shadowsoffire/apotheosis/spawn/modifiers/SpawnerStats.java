@@ -1,8 +1,11 @@
 package dev.shadowsoffire.apotheosis.spawn.modifiers;
 
 import com.google.gson.JsonElement;
+import dev.shadowsoffire.apotheosis.mixin.spawn.SpawnerBlockMixin;
 import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerTile;
+import dev.shadowsoffire.apotheosis.spawn.spawner.IBaseSpawner;
 import net.minecraft.util.Mth;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,17 +28,17 @@ public class SpawnerStats {
 
     public static final SpawnerStat<Integer> SPAWN_RANGE = register(new IntStat("spawn_range", s -> s.spawner.spawnRange, (s, v) -> s.spawner.spawnRange = v));
 
-    public static final SpawnerStat<Boolean> IGNORE_PLAYERS = register(new BoolStat("ignore_players", s -> s.ignoresPlayers, (s, v) -> s.ignoresPlayers = v));
+    public static final SpawnerStat<Boolean> IGNORE_PLAYERS = register(new BoolStat("ignore_players", s -> ((IBaseSpawner) s).getIgnorePlayers(), (s, v) -> ((IBaseSpawner) s).setIgnoresPlayers(v)));
 
-    public static final SpawnerStat<Boolean> IGNORE_CONDITIONS = register(new BoolStat("ignore_conditions", s -> s.ignoresConditions, (s, v) -> s.ignoresConditions = v));
+    public static final SpawnerStat<Boolean> IGNORE_CONDITIONS = register(new BoolStat("ignore_conditions", s -> ((IBaseSpawner) s).getIgnoresConditions(), (s, v) -> ((IBaseSpawner) s).setIgnoresConditions(v)));
 
-    public static final SpawnerStat<Boolean> REDSTONE_CONTROL = register(new BoolStat("redstone_control", s -> s.redstoneControl, (s, v) -> s.redstoneControl = v));
+    public static final SpawnerStat<Boolean> REDSTONE_CONTROL = register(new BoolStat("redstone_control", s -> ((IBaseSpawner) s).getRedstoneControl(), (s, v) -> ((IBaseSpawner) s).setRedstoneControl(v)));
 
-    public static final SpawnerStat<Boolean> IGNORE_LIGHT = register(new BoolStat("ignore_light", s -> s.ignoresLight, (s, v) -> s.ignoresLight = v));
+    public static final SpawnerStat<Boolean> IGNORE_LIGHT = register(new BoolStat("ignore_light", s -> ((IBaseSpawner) s).getIgnoreLight(), (s, v) -> ((IBaseSpawner) s).setIgnoreLight(v)));
 
-    public static final SpawnerStat<Boolean> NO_AI = register(new BoolStat("no_ai", s -> s.hasNoAI, (s, v) -> s.hasNoAI = v));
+    public static final SpawnerStat<Boolean> NO_AI = register(new BoolStat("no_ai", s -> ((IBaseSpawner) s).getNoAi(), (s, v) -> ((IBaseSpawner) s).setNoAi(v)));
 
-    public static final SpawnerStat<Boolean> SILENT = register(new BoolStat("silent", s -> s.silent, (s, v) -> s.silent = v));
+    public static final SpawnerStat<Boolean> SILENT = register(new BoolStat("silent", s -> ((IBaseSpawner) s).getSilent(), (s, v) -> ((IBaseSpawner) s).setSilent(v)));
 
     private static <T extends SpawnerStat<?>> T register(T t) {
         REGISTRY.put(t.getId(), t);
@@ -45,10 +48,10 @@ public class SpawnerStats {
     private static abstract class Base<T> implements SpawnerStat<T> {
 
         protected final String id;
-        protected final Function<ApothSpawnerTile, T> getter;
-        protected final BiConsumer<ApothSpawnerTile, T> setter;
+        protected final Function<SpawnerBlockEntity, T> getter;
+        protected final BiConsumer<SpawnerBlockEntity, T> setter;
 
-        private Base(String id, Function<ApothSpawnerTile, T> getter, BiConsumer<ApothSpawnerTile, T> setter) {
+        private Base(String id, Function<SpawnerBlockEntity, T> getter, BiConsumer<SpawnerBlockEntity, T> setter) {
             this.id = id;
             this.getter = getter;
             this.setter = setter;
@@ -63,7 +66,7 @@ public class SpawnerStats {
 
     private static class BoolStat extends Base<Boolean> {
 
-        private BoolStat(String id, Function<ApothSpawnerTile, Boolean> getter, BiConsumer<ApothSpawnerTile, Boolean> setter) {
+        private BoolStat(String id, Function<SpawnerBlockEntity, Boolean> getter, BiConsumer<SpawnerBlockEntity, Boolean> setter) {
             super(id, getter, setter);
         }
 
@@ -73,7 +76,7 @@ public class SpawnerStats {
         }
 
         @Override
-        public boolean apply(Boolean value, Boolean min, Boolean max, ApothSpawnerTile spawner) {
+        public boolean apply(Boolean value, Boolean min, Boolean max, SpawnerBlockEntity spawner) {
             boolean old = this.getter.apply(spawner);
             this.setter.accept(spawner, value);
             return old != this.getter.apply(spawner);
@@ -87,7 +90,7 @@ public class SpawnerStats {
 
     private static class IntStat extends Base<Integer> {
 
-        private IntStat(String id, Function<ApothSpawnerTile, Integer> getter, BiConsumer<ApothSpawnerTile, Integer> setter) {
+        private IntStat(String id, Function<SpawnerBlockEntity, Integer> getter, BiConsumer<SpawnerBlockEntity, Integer> setter) {
             super(id, getter, setter);
         }
 
@@ -97,7 +100,7 @@ public class SpawnerStats {
         }
 
         @Override
-        public boolean apply(Integer value, Integer min, Integer max, ApothSpawnerTile spawner) {
+        public boolean apply(Integer value, Integer min, Integer max, SpawnerBlockEntity spawner) {
             int old = this.getter.apply(spawner);
             this.setter.accept(spawner, Mth.clamp(old + value, min, max));
             return old != this.getter.apply(spawner);

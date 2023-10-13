@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerTile;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 
 public interface SpawnerStat<T> {
 
@@ -26,7 +27,7 @@ public interface SpawnerStat<T> {
      * @param spawner The spawner tile entity.
      * @return If the application was successful (was a spawner stat changed).
      */
-    boolean apply(T value, T min, T max, ApothSpawnerTile spawner);
+    boolean apply(T value, T min, T max, SpawnerBlockEntity spawner);
 
     Class<T> getTypeClass();
 

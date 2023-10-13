@@ -16,6 +16,7 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class SpawnerModifier implements Recipe<Container> {
      *
      * @return If this modifier matches the given items.
      */
-    public boolean matches(ApothSpawnerTile tile, ItemStack mainhand, ItemStack offhand) {
+    public boolean matches(SpawnerBlockEntity tile, ItemStack mainhand, ItemStack offhand) {
         if (this.mainHand.test(mainhand)) {
             if (this.offHand == Ingredient.EMPTY) return true;
             return this.offHand.test(offhand);
@@ -61,7 +62,7 @@ public class SpawnerModifier implements Recipe<Container> {
      *
      * @return If any part of the modification was successful, and items should be consumed.
      */
-    public boolean apply(ApothSpawnerTile tile) {
+    public boolean apply(SpawnerBlockEntity tile) {
         boolean success = false;
         for (StatModifier<?> m : this.statChanges) {
             if (m.apply(tile)) {
@@ -128,7 +129,7 @@ public class SpawnerModifier implements Recipe<Container> {
     }
 
     @Nullable
-    public static SpawnerModifier findMatch(ApothSpawnerTile tile, ItemStack mainhand, ItemStack offhand) {
+    public static SpawnerModifier findMatch(SpawnerBlockEntity tile, ItemStack mainhand, ItemStack offhand) {
         List<SpawnerModifier> recipes = new ArrayList<>(tile.getLevel().getRecipeManager().getAllRecipesFor(SpawnerModule.MODIFIER));
         recipes.sort((r1, r2) -> r1.offHand == Ingredient.EMPTY ? r2.offHand == Ingredient.EMPTY ? 0 : 1 : -1);
         for (SpawnerModifier r : recipes)

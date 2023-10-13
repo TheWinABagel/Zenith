@@ -9,11 +9,13 @@ import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerStats;
 import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerTile;
 import dev.shadowsoffire.apotheosis.spawn.spawner.ApothSpawnerTile.SpawnerLogicExt;
+import dev.shadowsoffire.apotheosis.spawn.spawner.IBaseSpawner;
 import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -72,7 +74,7 @@ public class ModifierTrigger implements CriterionTrigger<ModifierTrigger.Instanc
         return new Instance(minDelay, maxDelay, spawnCount, nearbyEnts, playerRange, spawnRange, ignorePlayers, ignoreConditions, redstone, ignoreLight, noAI);
     }
 
-    public void trigger(ServerPlayer player, ApothSpawnerTile tile, SpawnerModifier modif) {
+    public void trigger(ServerPlayer player, SpawnerBlockEntity tile, SpawnerModifier modif) {
         Listeners ModifierTrigger$listeners = this.listeners.get(player.getAdvancements());
         if (ModifierTrigger$listeners != null) {
             ModifierTrigger$listeners.trigger(tile, modif);
@@ -114,16 +116,17 @@ public class ModifierTrigger implements CriterionTrigger<ModifierTrigger.Instanc
             return new JsonObject();
         }
 
-        public boolean test(ApothSpawnerTile tile, SpawnerModifier modif) {
+        public boolean test(SpawnerBlockEntity tile, SpawnerModifier modif) {
             SpawnerLogicExt logic = (SpawnerLogicExt) tile.spawner;
+            IBaseSpawner spwn = (IBaseSpawner) tile;
             if (!this.minDelay.matches(logic.minSpawnDelay) || !this.maxDelay.matches(logic.maxSpawnDelay) || !this.spawnCount.matches(logic.spawnCount) || !this.nearbyEnts.matches(logic.maxNearbyEntities)) return false;
             if (!this.playerRange.matches(logic.requiredPlayerRange)) return false;
             if (!this.spawnRange.matches(logic.spawnRange)) return false;
-            if (this.ignorePlayers != null && tile.ignoresPlayers != this.ignorePlayers) return false;
-            if (this.ignoreConditions != null && tile.ignoresConditions != this.ignoreConditions) return false;
-            if (this.redstone != null && tile.redstoneControl != this.redstone) return false;
-            if (this.ignoreLight != null && tile.ignoresLight != this.ignoreLight) return false;
-            if (this.noAI != null && tile.hasNoAI != this.noAI) return false;
+            if (this.ignorePlayers != null && spwn.getIgnorePlayers() != this.ignorePlayers) return false;
+            if (this.ignoreConditions != null && spwn.getIgnoresConditions() != this.ignoreConditions) return false;
+            if (this.redstone != null && spwn.getRedstoneControl() != this.redstone) return false;
+            if (this.ignoreLight != null && spwn.getIgnoreLight() != this.ignoreLight) return false;
+            if (this.noAI != null && spwn.getNoAi() != this.noAI) return false;
             return true;
         }
     }
@@ -148,7 +151,7 @@ public class ModifierTrigger implements CriterionTrigger<ModifierTrigger.Instanc
             this.listeners.remove(listener);
         }
 
-        public void trigger(ApothSpawnerTile tile, SpawnerModifier modif) {
+        public void trigger(SpawnerBlockEntity tile, SpawnerModifier modif) {
             List<Listener<Instance>> list = null;
 
             for (Listener<Instance> listener : this.listeners) {
