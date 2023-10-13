@@ -53,7 +53,7 @@
 				]
 			},
 			"modifiers": [{
-					"attribute": "attributeslib:prot_shred",
+					"attribute": "zenith_attributes:prot_shred",
 					"operation": "ADDITION",
 					"values": {
 						"rare": 0.25,
@@ -63,7 +63,7 @@
 					}
 				},
 				{
-					"attribute": "attributeslib:draw_speed",
+					"attribute": "zenith_attributes:draw_speed",
 					"operation": "MULTIPLY_TOTAL",
 					"values": {
 						"rare": -0.35,

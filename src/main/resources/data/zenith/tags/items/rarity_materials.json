@@ -1,10 +1,28 @@
 {
 	"values": [
-		"zenith:common_material",
-		"zenith:uncommon_material",
-		"zenith:rare_material",
-		"zenith:epic_material",
-		"zenith:mythic_material",
-		"zenith:ancient_material"
+		{
+			"id":"zenith:common_material",
+			"required": false
+		},
+		{
+			"id":"zenith:uncommon_material",
+			"required": false
+		},
+		{
+			"id":"zenith:rare_material",
+			"required": false
+		},
+		{
+			"id":"zenith:epic_material",
+			"required": false
+		},
+		{
+			"id":"zenith:mythic_material",
+			"required": false
+		},
+		{
+			"id":"zenith:ancient_material",
+			"required": false
+		}
 	]
 }

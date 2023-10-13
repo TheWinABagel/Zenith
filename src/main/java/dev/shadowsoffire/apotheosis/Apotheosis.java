@@ -26,7 +26,7 @@ public class Apotheosis implements ModInitializer {
     public static File configDir;
     public static Configuration config;
     public static boolean enableEnch = true;
-    public static boolean enableAdventure = false;
+    public static boolean enableAdventure = FabricLoader.getInstance().isDevelopmentEnvironment(); //For now ;)
     public static boolean enableSpawner = true;
     public static boolean enablePotion = true;
     public static boolean enableVillage = true;

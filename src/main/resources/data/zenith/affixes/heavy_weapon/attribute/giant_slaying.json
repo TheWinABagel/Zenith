@@ -1,6 +1,6 @@
 {
 	"type": "zenith:attribute",
-	"attribute": "attributeslib:current_hp_damage",
+	"attribute": "zenith_attributes:current_hp_damage",
 	"operation": "ADDITION",
 	"values": {
 		"common": {

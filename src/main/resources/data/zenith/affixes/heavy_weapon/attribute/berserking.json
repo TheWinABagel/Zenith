@@ -1,6 +1,6 @@
 {
 	"type": "zenith:attribute",
-	"attribute": "attributeslib:overheal",
+	"attribute": "zenith_attributes:overheal",
 	"operation": "ADDITION",
 	"values": {
 		"common": {

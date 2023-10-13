@@ -1,6 +1,6 @@
 {
 	"type": "zenith:attribute",
-	"attribute": "attributeslib:cold_damage",
+	"attribute": "zenith_attributes:cold_damage",
 	"operation": "ADDITION",
 	"values": {
 		"uncommon": {

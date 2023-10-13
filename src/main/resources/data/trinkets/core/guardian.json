@@ -32,7 +32,7 @@
 					"trident"
 				]
 			},
-			"attribute": "attributeslib:life_steal",
+			"attribute": "zenith_attributes:life_steal",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.05,
@@ -50,7 +50,7 @@
 					"heavy_weapon"
 				]
 			},
-			"attribute": "attributeslib:overheal",
+			"attribute": "zenith_attributes:overheal",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.05,

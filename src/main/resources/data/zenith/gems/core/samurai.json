@@ -16,7 +16,7 @@
 					"crossbow"
 				]
 			},
-			"attribute": "attributeslib:crit_chance",
+			"attribute": "zenith_attributes:crit_chance",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.05,
@@ -35,7 +35,7 @@
 					"heavy_weapon"
 				]
 			},
-			"attribute": "attributeslib:crit_chance",
+			"attribute": "zenith_attributes:crit_chance",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.10,
@@ -74,7 +74,7 @@
 					"helmet"
 				]
 			},
-			"attribute": "attributeslib:arrow_velocity",
+			"attribute": "zenith_attributes:arrow_velocity",
 			"operation": "MULTIPLY_TOTAL",
 			"values": {
 				"common": 0.075,
@@ -93,7 +93,7 @@
 					"shield"
 				]
 			},
-			"attribute": "attributeslib:dodge_chance",
+			"attribute": "zenith_attributes:dodge_chance",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.01,

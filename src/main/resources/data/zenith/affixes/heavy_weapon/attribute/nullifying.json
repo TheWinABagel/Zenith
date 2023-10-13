@@ -1,6 +1,6 @@
 {
 	"type": "zenith:attribute",
-	"attribute": "attributeslib:prot_shred",
+	"attribute": "zenith_attributes:prot_shred",
 	"operation": "ADDITION",
 	"values": {
 		"rare": {

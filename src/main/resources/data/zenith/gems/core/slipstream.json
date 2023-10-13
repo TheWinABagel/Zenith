@@ -14,7 +14,7 @@
 					"crossbow"
 				]
 			},
-			"attribute": "attributeslib:draw_speed",
+			"attribute": "zenith_attributes:draw_speed",
 			"operation": "MULTIPLY_BASE",
 			"values": {
 				"common": 0.10,
@@ -34,7 +34,7 @@
 					"pickaxe"
 				]
 			},
-			"attribute": "attributeslib:mining_speed",
+			"attribute": "zenith_attributes:mining_speed",
 			"operation": "MULTIPLY_BASE",
 			"values": {
 				"common": 0.05,
@@ -53,7 +53,7 @@
 					"boots"
 				]
 			},
-			"attribute": "attributeslib:dodge_chance",
+			"attribute": "zenith_attributes:dodge_chance",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.025,

@@ -1,6 +1,6 @@
 {
 	"type": "zenith:attribute",
-	"attribute": "attributeslib:life_steal",
+	"attribute": "zenith_attributes:life_steal",
 	"operation": "ADDITION",
 	"values": {
 		"common": {

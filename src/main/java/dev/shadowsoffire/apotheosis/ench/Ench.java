@@ -415,6 +415,7 @@ public class Ench {
         public static final BlockEntityType<BasicLibraryTile> LIBRARY = Apoth.registerBEType("library", new BlockEntityType<>(EnchLibraryTile.BasicLibraryTile::new, ImmutableSet.of(Ench.Blocks.LIBRARY), null));
         public static final BlockEntityType<EnchLibraryTile.EnderLibraryTile> ENDER_LIBRARY = Apoth.registerBEType("ender_library", new BlockEntityType<>(EnchLibraryTile.EnderLibraryTile::new, ImmutableSet.of(Ench.Blocks.ENDER_LIBRARY), null));
 
+        private static void bootstrap() {}
     }
 
     public static final class RecipeTypes {
@@ -427,6 +428,7 @@ public class Ench {
         Enchantments.init();
         Tabs.bootstrap();
         Apoth.Menus.bootstrap();
+        Tiles.bootstrap();
     }
 
 }

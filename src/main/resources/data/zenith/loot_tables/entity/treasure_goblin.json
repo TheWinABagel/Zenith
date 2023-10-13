@@ -2,7 +2,11 @@
   "fabric:load_conditions": [{
     "condition": "zenith:module",
     "module": "adventure"
-  }],
+  },
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": ["disabled for now"]
+    }],
   "pools": [
     {
       "name": "fakerlib_code_pool_20",

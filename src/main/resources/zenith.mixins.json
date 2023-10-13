@@ -42,6 +42,7 @@
     "garden.CactusBlockMixin",
     "garden.SugarCaneBlockMixin",
     "spawn.BlockItemMixin",
+    "spawn.SlimeMixin",
     "spawn.SpawnerBlockEntityMixin",
     "spawn.SpawnerBlockMixin",
     "village.FletchingTableBlockMixin",

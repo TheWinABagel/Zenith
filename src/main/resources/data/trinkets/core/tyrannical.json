@@ -13,7 +13,7 @@
 					"heavy_weapon"
 				]
 			},
-			"attribute": "attributeslib:current_hp_damage",
+			"attribute": "zenith_attributes:current_hp_damage",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.025,

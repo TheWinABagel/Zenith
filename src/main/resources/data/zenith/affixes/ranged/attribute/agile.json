@@ -1,6 +1,6 @@
 {
 	"type": "zenith:attribute",
-	"attribute": "attributeslib:draw_speed",
+	"attribute": "zenith_attributes:draw_speed",
 	"operation": "ADDITION",
 	"values": {
 		"common": {

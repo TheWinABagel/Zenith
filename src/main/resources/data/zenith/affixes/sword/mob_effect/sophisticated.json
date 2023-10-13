@@ -1,6 +1,6 @@
 {
 	"type": "zenith:mob_effect",
-	"mob_effect": "attributeslib:knowledge",
+	"mob_effect": "zenith_attributes:knowledge",
 	"target": "ATTACK_SELF",
 	"values": {
 		"epic": {

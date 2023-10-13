@@ -1,6 +1,6 @@
 {
 	"type": "zenith:mob_effect",
-	"mob_effect": "attributeslib:sundering",
+	"mob_effect": "zenith_attributes:sundering",
 	"target": "ARROW_TARGET",
 	"values": {
 		"mythic": {

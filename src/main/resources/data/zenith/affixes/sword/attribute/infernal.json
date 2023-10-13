@@ -1,6 +1,6 @@
 {
 	"type": "zenith:attribute",
-	"attribute": "attributeslib:fire_damage",
+	"attribute": "zenith_attributes:fire_damage",
 	"operation": "ADDITION",
 	"values": {
 		"uncommon": {

@@ -52,7 +52,6 @@ public class BossEvents {
 
     public static void naturalBosses() {
         LivingEntityEvents.NATURAL_SPAWN.register((mob, x, y, z, level, spawner, type) -> {
-            AdventureModule.LOGGER.info("Generated a {} at {}, {}, {}, spawnType: {}, spawner: {}", mob.getName().getString(), x, y, z, type.name(), spawner);
             if (type == MobSpawnType.NATURAL || type == MobSpawnType.CHUNK_GENERATION) {
                 RandomSource rand = level.getRandom();
                 if (bossCooldowns.getInt(mob.level().dimension().location()) <= 0 && !level.isClientSide() && mob instanceof Monster/* && e.getResult() != Result.DENY*/) {

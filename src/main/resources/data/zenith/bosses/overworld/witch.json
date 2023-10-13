@@ -55,7 +55,7 @@
 					"value": 0.4
 				},
 				{
-					"attribute": "attributeslib:healing_received",
+					"attribute": "zenith_attributes:healing_received",
 					"operation": "MULTIPLY_TOTAL",
 					"value": -0.5
 				}
@@ -111,7 +111,7 @@
 					"value": 3
 				},
 				{
-					"attribute": "attributeslib:healing_received",
+					"attribute": "zenith_attributes:healing_received",
 					"operation": "MULTIPLY_TOTAL",
 					"value": -0.5
 				}

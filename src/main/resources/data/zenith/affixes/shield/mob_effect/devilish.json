@@ -1,6 +1,6 @@
 {
 	"type": "zenith:mob_effect",
-	"mob_effect": "attributeslib:bleeding",
+	"mob_effect": "zenith_attributes:bleeding",
 	"target": "BLOCK_ATTACKER",
 	"stack_on_reapply": true,
 	"values": {

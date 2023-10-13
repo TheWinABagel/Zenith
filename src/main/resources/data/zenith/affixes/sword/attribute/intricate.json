@@ -1,6 +1,6 @@
 {
 	"type": "zenith:attribute",
-	"attribute": "attributeslib:crit_chance",
+	"attribute": "zenith_attributes:crit_chance",
 	"operation": "ADDITION",
 	"values": {
 		"common": {

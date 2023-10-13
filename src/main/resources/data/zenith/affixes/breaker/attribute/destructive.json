@@ -1,6 +1,6 @@
 {
 	"type": "zenith:attribute",
-	"attribute": "attributeslib:mining_speed",
+	"attribute": "zenith_attributes:mining_speed",
 	"operation": "ADDITION",
 	"values": {
 		"common": {

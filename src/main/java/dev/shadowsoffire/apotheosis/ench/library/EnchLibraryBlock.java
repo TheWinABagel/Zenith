@@ -73,10 +73,10 @@ public class EnchLibraryBlock extends HorizontalDirectionalBlock implements Enti
         return this.tileSupplier.create(pPos, pState);
     }
 
-    //@Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
+    @Override
+    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
         ItemStack s = new ItemStack(this);
-        BlockEntity te = world.getBlockEntity(pos);
+        BlockEntity te = level.getBlockEntity(pos);
         if (te != null) s.getOrCreateTag().put("BlockEntityTag", te.saveWithoutMetadata());
         return s;
     }

@@ -13,7 +13,7 @@
 					"trident"
 				]
 			},
-			"attribute": "attributeslib:armor_pierce",
+			"attribute": "zenith_attributes:armor_pierce",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.5,
@@ -31,7 +31,7 @@
 					"heavy_weapon"
 				]
 			},
-			"attribute": "attributeslib:armor_shred",
+			"attribute": "zenith_attributes:armor_shred",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.05,
@@ -69,7 +69,7 @@
 					"crossbow"
 				]
 			},
-			"attribute": "attributeslib:prot_pierce",
+			"attribute": "zenith_attributes:prot_pierce",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.5,

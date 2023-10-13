@@ -1,6 +1,6 @@
 {
 	"type": "zenith:mob_effect",
-	"mob_effect": "attributeslib:vitality",
+	"mob_effect": "zenith_attributes:vitality",
 	"target": "HURT_SELF",
 	"values": {
 		"epic": {

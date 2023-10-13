@@ -1,6 +1,6 @@
 {
 	"type": "zenith:attribute",
-	"attribute": "attributeslib:armor_shred",
+	"attribute": "zenith_attributes:armor_shred",
 	"operation": "ADDITION",
 	"values": {
 		"common": {

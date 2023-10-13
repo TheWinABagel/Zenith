@@ -52,7 +52,7 @@
 					"heavy_weapon"
 				]
 			},
-			"attribute": "attributeslib:armor_pierce",
+			"attribute": "zenith_attributes:armor_pierce",
 			"operation": "ADDITION",
 			"values": {
 				"common": 1,

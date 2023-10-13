@@ -1,6 +1,6 @@
 {
 	"type": "zenith:attribute",
-	"attribute": "attributeslib:arrow_velocity",
+	"attribute": "zenith_attributes:arrow_velocity",
 	"operation": "ADDITION",
 	"values": {
 		"common": {

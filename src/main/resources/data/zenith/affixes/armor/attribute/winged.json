@@ -1,6 +1,6 @@
 {
 	"type": "zenith:attribute",
-	"attribute": "attributeslib:elytra_flight",
+	"attribute": "zenith_attributes:elytra_flight",
 	"operation": "ADDITION",
 	"values": {
 		"mythic": 1,

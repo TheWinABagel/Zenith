@@ -1,6 +1,6 @@
 {
 	"type": "zenith:attribute",
-	"attribute": "attributeslib:prot_pierce",
+	"attribute": "zenith_attributes:prot_pierce",
 	"operation": "ADDITION",
 	"values": {
 		"rare": {
