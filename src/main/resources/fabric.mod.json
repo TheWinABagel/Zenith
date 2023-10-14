@@ -30,7 +30,9 @@
     ],
     "rei_client": [
       "dev.shadowsoffire.apotheosis.garden.compat.GardenREIPlugin",
-      "dev.shadowsoffire.apotheosis.ench.compat.EnchantingREIPlugin"
+      "dev.shadowsoffire.apotheosis.ench.compat.EnchantingREIPlugin",
+      "dev.shadowsoffire.apotheosis.spawn.compat.SpawnerREIPlugin",
+      "dev.shadowsoffire.apotheosis.adventure.compat.AdventureREIPlugin"
     ],
     "mm:early_risers": [
       "dev.shadowsoffire.apotheosis.util.PreInit"

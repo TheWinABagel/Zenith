@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
+import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
@@ -69,7 +70,7 @@ public class GemIngredient implements CustomIngredient {
 
         @Override
         public ResourceLocation getIdentifier() {
-            return Apotheosis.loc("gem_serializer");
+            return Apotheosis.loc("gem");
         }
 
         @Override

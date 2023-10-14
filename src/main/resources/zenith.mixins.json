@@ -13,6 +13,7 @@
     "adventure.MHFMixinLivingEntity",
     "adventure.PlayerMixin",
     "adventure.SmithingMenuMixin",
+    "compat.roughlyenoughitems.present.DefaultSmithingDisplayMixin",
     "ench.BlockMixin",
     "ench.CreativeModeTabsMixin",
     "ench.EnchantmentHelperMixin",

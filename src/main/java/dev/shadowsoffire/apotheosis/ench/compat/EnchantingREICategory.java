@@ -2,9 +2,8 @@ package dev.shadowsoffire.apotheosis.ench.compat;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.compat.ApotheosisREICatgeory;
+import dev.shadowsoffire.apotheosis.compat.ZenithREICatgeory;
 import dev.shadowsoffire.apotheosis.ench.Ench;
-import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingRecipe;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
 import me.shedaniel.math.Point;
@@ -12,9 +11,7 @@ import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.Renderer;
 import me.shedaniel.rei.api.client.gui.widgets.Widget;
 import me.shedaniel.rei.api.client.gui.widgets.Widgets;
-import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
-import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -32,7 +29,7 @@ import net.minecraft.world.level.block.Blocks;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnchantingREICategory extends ApotheosisREICatgeory<EnchantingREIDisplay> {
+public class EnchantingREICategory extends ZenithREICatgeory<EnchantingREIDisplay> {
 
     public static final ResourceLocation TEXTURES = Apotheosis.loc( "textures/gui/enchanting_jei.png");
 
@@ -61,8 +58,6 @@ public class EnchantingREICategory extends ApotheosisREICatgeory<EnchantingREIDi
     public Widget getBackground(Rectangle bounds) {
         return Widgets.createTexturedWidget(TEXTURES, bounds.getX() + this.getXOffset(), bounds.getY(), 0, 0, 170, 56);
     }
-
-
 
     @Override
     public void draw(EnchantingREIDisplay display, Point origin, double mouseX, double mouseY, GuiGraphics gfx) {

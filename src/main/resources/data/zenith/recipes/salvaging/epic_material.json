@@ -1,0 +1,18 @@
+{
+	"type": "zenith:salvaging",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "adventure"
+	}],
+	"input": {
+		"fabric:type": "zenith:affix_item",
+		"rarity": "zenith:epic"
+	},
+	"outputs": [{
+		"min_count": 1,
+		"max_count": 4,
+		"stack": {
+			"item": "zenith:epic_material"
+		}
+	}]
+}

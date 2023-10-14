@@ -1,0 +1,18 @@
+{
+	"type": "zenith:salvaging",
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "adventure"
+	}],
+	"input": {
+		"fabric:type": "zenith:gem",
+		"rarity": "zenith:common"
+	},
+	"outputs": [{
+		"min_count": 1,
+		"max_count": 2,
+		"stack": {
+			"item": "zenith:gem_dust"
+		}
+	}]
+}

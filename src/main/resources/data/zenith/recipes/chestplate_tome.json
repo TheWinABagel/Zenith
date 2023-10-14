@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "fabric:load_conditions": [{
+        "condition": "zenith:module",
+        "module": "enchantment"
+    }],
+    "pattern": ["BPB", "BBB", "BBB"],
+    "key": {
+        "B": { "item": "minecraft:book" },
+        "P": { "item": "minecraft:blaze_rod" }
+    },
+    "result": {
+        "item": "zenith:chestplate_tome",
+        "count": 8
+    }
+}
