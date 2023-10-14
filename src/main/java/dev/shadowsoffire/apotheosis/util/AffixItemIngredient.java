@@ -68,7 +68,7 @@ public class AffixItemIngredient implements CustomIngredient {
 
         @Override
         public ResourceLocation getIdentifier() {
-            return Apotheosis.loc("affix_serializer");
+            return Apotheosis.loc("affix_item");
         }
 
         @Override

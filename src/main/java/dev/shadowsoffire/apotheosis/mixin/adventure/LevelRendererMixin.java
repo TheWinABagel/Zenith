@@ -35,8 +35,8 @@ public class LevelRendererMixin {
             MultiBufferSource.BufferSource buf = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
             Player p = Minecraft.getInstance().player;
             for (int i = 0; i < BOSS_SPAWNS.size(); i++) {
-                AdventureModule.LOGGER.info("BOSS SPAWNS NUMBER {}", i);
                 BossSpawnMessage.BossSpawnData data = BOSS_SPAWNS.get(i);
+                AdventureModule.LOGGER.info("BOSS SPAWN DATA: pos: {}, ticks: {}", data.pos(), data.ticks());
                 stack.pushPose();
                 float partials = mc.isPaused() ? mc.pausePartialTick : mc.timer.partialTick;
                 Vec3 vec = mc.getCameraEntity().getEyePosition(partials);

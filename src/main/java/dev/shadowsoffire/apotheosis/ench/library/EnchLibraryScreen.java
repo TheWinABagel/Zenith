@@ -7,6 +7,7 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.placebo.Placebo;
 import dev.shadowsoffire.placebo.packets.ButtonClickMessage;
 import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
@@ -27,6 +28,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.spell_power.api.enchantment.EnchantmentRestriction;
 import org.lwjgl.glfw.GLFW;
 
 import javax.annotation.Nullable;
@@ -229,6 +231,11 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 
     private boolean isAllowedByItem(Entry<Enchantment> e) {
         ItemStack stack = this.menu.ioInv.getItem(2);
+
+        if (FabricLoader.getInstance().isModLoaded("spell_power")){
+            if (EnchantmentRestriction.isPermitted(e.getKey(), stack)) return true;
+            if (EnchantmentRestriction.isProhibited(e.getKey(), stack)) return false;
+        }
         return stack.isEmpty() || e.getKey().canEnchant(stack);
     }
 

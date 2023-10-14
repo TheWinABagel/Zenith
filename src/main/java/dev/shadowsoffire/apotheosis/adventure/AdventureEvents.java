@@ -244,7 +244,6 @@ public class AdventureEvents {
 
     public static void drops() {
         LivingEntityLootEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
-            AdventureModule.LOGGER.info("present: {}", Adventure.Affixes.FESTIVE.getOptional().isPresent());
             Adventure.Affixes.FESTIVE.getOptional().ifPresent(afx -> afx.drops(target, source, drops));
             TelepathicAffix.drops(source, drops);
             Adventure.Affixes.FESTIVE.getOptional().ifPresent(afx -> afx.removeMarker(drops));

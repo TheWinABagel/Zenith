@@ -1,6 +1,5 @@
 package dev.shadowsoffire.apotheosis.compat;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.widgets.Slot;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public abstract class ApotheosisREICatgeory<T extends Display> implements DisplayCategory<T> {
+public abstract class ZenithREICatgeory<T extends Display> implements DisplayCategory<T> {
 
     @Override
     public List<Widget> setupDisplay(T display, Rectangle bounds) {

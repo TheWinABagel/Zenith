@@ -409,6 +409,7 @@
 	"container.zenith.salvage": "Salvage",
 	"container.zenith.reforge": "Reforge",
 	"text.zenith.cost": "%sx %s",
+	"text.zenith.range": "%d-%d",
 	"text.zenith.reforge_cost": "Reforge Cost",
 	"text.zenith.salvage_results": "Salvage Results",
 	"text.zenith.unique": "Unique",

@@ -20,7 +20,7 @@
 		"egg": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
-				"apoth": {
+				"zenith": {
 					"type": "spawn_egg"
 				}
 			}

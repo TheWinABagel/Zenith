@@ -58,10 +58,30 @@ dependencies {
 	implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.0.2"))
 
 	modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${project.reach_lib_version}")
-	modImplementation("io.github.fabricators_of_create.Porting-Lib:Porting-Lib:${project.port_lib_version}") { //not included as it is already included with fakerlib
-		exclude(group: "io.github.fabricators_of_create.Porting-Lib", module: "networking")
-		exclude(group: "io.github.fabricators_of_create.Porting-Lib", module: "loot")
-	}
+	//modImplementation("io.github.fabricators_of_create.Porting-Lib:Porting-Lib:${project.port_lib_version}") { //not included as it is already included with fakerlib
+	//	exclude(group: "io.github.fabricators_of_create.Porting-Lib", module: "networking")
+	//	exclude(group: "io.github.fabricators_of_create.Porting-Lib", module: "loot")
+	//}
+
+	//idk how to opt out :(
+	modImplementation("io.github.fabricators_of_create.Porting-Lib:accessors:${project.port_lib_version}")
+	modImplementation("io.github.fabricators_of_create.Porting-Lib:attributes:${project.port_lib_version}")
+	modImplementation("io.github.fabricators_of_create.Porting-Lib:base:${project.port_lib_version}")
+	modImplementation("io.github.fabricators_of_create.Porting-Lib:client_events:${project.port_lib_version}")
+	modImplementation("io.github.fabricators_of_create.Porting-Lib:common:${project.port_lib_version}")
+	modImplementation("io.github.fabricators_of_create.Porting-Lib:core:${project.port_lib_version}")
+	modImplementation("io.github.fabricators_of_create.Porting-Lib:entity:${project.port_lib_version}")
+	modImplementation("io.github.fabricators_of_create.Porting-Lib:extensions:${project.port_lib_version}")
+	modImplementation("io.github.fabricators_of_create.Porting-Lib:lazy_registration:${project.port_lib_version}")
+	//modImplementation("io.github.fabricators_of_create.Porting-Lib:loot:${project.port_lib_version}")
+	modImplementation("io.github.fabricators_of_create.Porting-Lib:mixin_extensions:${project.port_lib_version}")
+	modImplementation("io.github.fabricators_of_create.Porting-Lib:models:${project.port_lib_version}")
+	modImplementation("io.github.fabricators_of_create.Porting-Lib:registries:${project.port_lib_version}")
+	modImplementation("io.github.fabricators_of_create.Porting-Lib:tags:${project.port_lib_version}")
+	modImplementation("io.github.fabricators_of_create.Porting-Lib:tool_actions:${project.port_lib_version}")
+	modImplementation("io.github.fabricators_of_create.Porting-Lib:transfer:${project.port_lib_version}")
+	modImplementation("io.github.fabricators_of_create.Porting-Lib:utility:${project.port_lib_version}")
+
 	modCompileOnly modRuntimeOnly("vazkii.patchouli:Patchouli:${project.patchouli_version}"), {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
@@ -96,7 +116,8 @@ dependencies {
 	modImplementation "curse.maven:jade-324717:${jade_id}"
 
 	//Other Mods for Testing
-	//modCompileOnly "com.mrcrayfish:goblintraders-fabric:1.8.1-1.19.2"
+	//modCompileOnly
+	modImplementation"maven.modrinth:spell-power:${project.spell_power_version}-fabric"
 
 }
 loom {

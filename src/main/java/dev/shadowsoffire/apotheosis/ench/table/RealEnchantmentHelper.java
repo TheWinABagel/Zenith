@@ -6,13 +6,16 @@ import dev.shadowsoffire.apotheosis.ench.EnchantmentInfo;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu.Arcana;
 import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingBehaviorItem;
 import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingTableBehaviorEnchantment;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.Util;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedEntry.IntrusiveBase;
 import net.minecraft.util.random.WeightedRandom;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
@@ -141,7 +144,27 @@ public class RealEnchantmentHelper {
                 }
             }
         }
+        if (FabricLoader.getInstance().isModLoaded("spell_power")){
+            checkSpellEngine(stack, list);
+        }
+
         return list;
+    }
+    /**
+     * This code is taken from SpellPowerAttributes and is liscensed under GNU Lesser General Public License v3.0
+     * Written by ZsoltMolnarrr
+     */
+    private static void checkSpellEngine(ItemStack stack, List<EnchantmentInstance> currentEntries) {
+
+        // 1. REMOVING ENCHANT ENTRIES ADDED INCORRECTLY
+
+        var toRemove = new ArrayList<EnchantmentInstance>();
+        for (var entry: currentEntries) {
+            if (!entry.enchantment.canEnchant(stack)) {
+                toRemove.add(entry);
+            }
+        }
+        currentEntries.removeAll(toRemove);
     }
 
     public static class ArcanaEnchantmentData extends IntrusiveBase {

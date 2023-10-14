@@ -44,7 +44,7 @@ public class EnchModuleClient {
                 if (world == null || Minecraft.getInstance().player == null) return;
                 BlockPlaceContext ctx = new BlockPlaceContext(world, Minecraft.getInstance().player, InteractionHand.MAIN_HAND, stack, res){};
                 BlockState state = null;
-                try {
+            /*    try {
                     state = block.getStateForPlacement(ctx);
                 }
                 catch (Exception ex) {
@@ -52,7 +52,7 @@ public class EnchModuleClient {
                     StackTraceElement[] trace = ex.getStackTrace();
                     for (StackTraceElement traceElement : trace)
                         EnchModule.LOGGER.debug("\tat " + traceElement);
-                }
+                }*/
 
                 if (state == null) state = block.defaultBlockState();
                 float maxEterna = EnchantingStatRegistry.getMaxEterna(state, world, BlockPos.ZERO);

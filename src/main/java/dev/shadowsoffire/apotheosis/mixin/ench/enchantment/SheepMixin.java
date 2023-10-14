@@ -39,7 +39,8 @@ public abstract class SheepMixin {
 
     @Redirect(method = "shear", at = @At(value = "INVOKE", target = "net/minecraft/world/entity/animal/Sheep.setSheared (Z)V"))
     private void bleh(Sheep instance, boolean sheared){
-        if (Apotheosis.enableEnch && EnchantmentHelper.getItemEnchantmentLevel(Ench.Enchantments.GROWTH_SERUM, shears) > 0 && ((Sheep)(Object) this).getRandom().nextBoolean()){
+        if (!Apotheosis.enableEnch) return;
+        if (EnchantmentHelper.getItemEnchantmentLevel(Ench.Enchantments.GROWTH_SERUM, shears) > 0 && ((Sheep)(Object) this).getRandom().nextBoolean()){
             if (Apotheosis.enableDebug) EnchModule.LOGGER.info("Growth serum resetting wool");
             instance.setSheared(false);
             return;
@@ -50,7 +51,8 @@ public abstract class SheepMixin {
     @Inject(method = "shear", at = @At(value = "INVOKE", target = "net/minecraft/world/entity/item/ItemEntity.setDeltaMovement (Lnet/minecraft/world/phys/Vec3;)V"),
             locals = LocalCapture.CAPTURE_FAILSOFT)
     public void testsetsts(SoundSource source, CallbackInfo ci, int i, int j, ItemEntity itemEntity) {
-        if (Apotheosis.enableEnch && EnchantmentHelper.getItemEnchantmentLevel(Ench.Enchantments.EXPLOITATION, shears) > 0) {
+        if (!Apotheosis.enableEnch) return;
+        if (EnchantmentHelper.getItemEnchantmentLevel(Ench.Enchantments.EXPLOITATION, shears) > 0) {
             itemList.add(itemEntity);
             EnchModule.LOGGER.info("Added {} to extra wool list", itemEntity.getItem());
         }
@@ -60,7 +62,8 @@ public abstract class SheepMixin {
     //Chromatic
     @Redirect(method = "shear", at = @At(value = "INVOKE", target = "net/minecraft/world/entity/animal/Sheep.getColor ()Lnet/minecraft/world/item/DyeColor;"))
     private DyeColor chromatic(Sheep instance){
-        if (Apotheosis.enableEnch && EnchantmentHelper.getItemEnchantmentLevel(Ench.Enchantments.CHROMATIC, shears) > 0) {
+        if (!Apotheosis.enableEnch) return instance.getColor();
+        if (EnchantmentHelper.getItemEnchantmentLevel(Ench.Enchantments.CHROMATIC, shears) > 0) {
             return DyeColor.byId(instance.getRandom().nextInt(16));
         }
         return instance.getColor();
@@ -69,8 +72,6 @@ public abstract class SheepMixin {
     //Fortune
     @ModifyConstant(method = "shear", constant = @Constant(intValue = 3), remap = false)
     private int fortune(int oldVal) {
-        int newval =oldVal + (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, shears)) * 2;
-        EnchModule.LOGGER.info(newval);
         if (Apotheosis.enableEnch) return oldVal + (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, shears)) * 2;
         return oldVal;
     }
@@ -80,7 +81,8 @@ public abstract class SheepMixin {
             target = "net/minecraft/world/entity/item/ItemEntity.setDeltaMovement (Lnet/minecraft/world/phys/Vec3;)V",
             shift = At.Shift.AFTER))
     public void molestSheepItems(SoundSource source, CallbackInfo ci) {
-        if (Apotheosis.enableEnch && EnchantmentHelper.getItemEnchantmentLevel(Ench.Enchantments.EXPLOITATION, shears) > 0) {
+        if (!Apotheosis.enableEnch) return;
+        if (EnchantmentHelper.getItemEnchantmentLevel(Ench.Enchantments.EXPLOITATION, shears) > 0) {
             for (ItemEntity item : itemList){
                 ((Sheep)(Object)this).spawnAtLocation(item.getItem(), 1);
                 EnchModule.LOGGER.info("Worker Exploitation spawning extra wool: {}", item.getItem());

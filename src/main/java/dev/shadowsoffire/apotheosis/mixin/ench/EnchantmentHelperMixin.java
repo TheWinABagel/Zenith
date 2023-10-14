@@ -24,12 +24,13 @@ public class EnchantmentHelperMixin {
      * @param stack         The ItemStack being enchanted.
      * @param allowTreasure If treasure enchantments are allowed.
      * @author Shadows
-     * @reason Enables apotheosis special handling of enchanting rules. More lenient injection is not possible.
+     * @reason Enables Zenith special handling of enchanting rules. More lenient injection is not possible.
      */
     @Inject(method = "getAvailableEnchantmentResults", at = @At("HEAD"), cancellable = true)
     private static void getAvailableEnchantmentResults(int level, ItemStack stack, boolean allowTreasure, CallbackInfoReturnable<List<EnchantmentInstance>> cir) {
-        if (!Apotheosis.enableEnch) return;
-        cir.setReturnValue(RealEnchantmentHelper.getAvailableEnchantmentResults(level, stack, allowTreasure));
+        if (Apotheosis.enableEnch) {
+            cir.setReturnValue(RealEnchantmentHelper.getAvailableEnchantmentResults(level, stack, allowTreasure));
+        }
     }
 
     /**
@@ -38,11 +39,13 @@ public class EnchantmentHelperMixin {
      * @param level         The enchanting level
      * @param allowTreasure If treasure enchantments are allowed.
      * @author Shadows
-     * @reason Enables global consistency with the apotheosis enchanting system, even outside the table.
+     * @reason Enables global consistency with the Zenith enchanting system, even outside the table.
      */
     @Inject(method = "selectEnchantment", at = @At("HEAD"), cancellable = true)
     private static void selectEnchantment(RandomSource random, ItemStack itemStack, int level, boolean allowTreasure, CallbackInfoReturnable<List<EnchantmentInstance>> cir) {
-        cir.setReturnValue(RealEnchantmentHelper.selectEnchantment(random, itemStack, level, 15F, 0, 0, allowTreasure));
+        if (Apotheosis.enableEnch) {
+            cir.setReturnValue(RealEnchantmentHelper.selectEnchantment(random, itemStack, level, 15F, 0, 0, allowTreasure));
+        }
     }
 
 }

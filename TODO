@@ -1,19 +1,16 @@
 Adventure module:
-check all affixes
-all blocks are very very broken
-cant socket things
-breaks rei items somehow???
+fix menus
+structures
 
 Enchanting module:
 tags require restart to load properly, might be a fabric limitation based on when new tags are sent?
+breaks rei items somehow??? but just in dev??????
 
 Potion module:
-fix potion charm rei stuff (not sure how though)
-breaks when disabled
+fix potion charm rei stuff
 
 Spawner module:
-Reimplement spawner with mixins (so like the whole module lmaoo)
-REI support for Spawner Recipes
+done
 
 Village module:
 REI support for Fletching table

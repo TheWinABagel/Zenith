@@ -1,0 +1,11 @@
+{
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "adventure"
+	}],
+	"type": "zenith:reforging",
+	"rarity": "zenith:uncommon",
+    "material_cost": 2,
+    "dust_cost": 1,
+    "level_cost": 5
+}

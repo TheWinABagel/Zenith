@@ -30,6 +30,7 @@ import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntityType;
 import dev.shadowsoffire.placebo.config.Configuration;
 import dev.shadowsoffire.placebo.tabs.TabFillingRegistry;
+import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -90,6 +91,8 @@ public class AdventureModule {
             Registry.register(BuiltInRegistries.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "random_gem"), GemLootPoolEntry.TYPE);
             Exclusion.initSerializers();
             GemBonus.initCodecs();
+        CustomIngredientSerializer.register(GemIngredient.Serializer.INSTANCE);
+        CustomIngredientSerializer.register(AffixItemIngredient.Serializer.INSTANCE);
             //CraftingHelper.register(Apotheosis.loc("affix_item"), AffixItemIngredient.Serializer.INSTANCE);
         //    CraftingHelper.register(Apotheosis.loc("gem"), GemIngredient.Serializer.INSTANCE);
 /*
