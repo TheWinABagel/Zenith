@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.adventure.compat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
+import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
 import dev.shadowsoffire.apotheosis.compat.ZenithREICatgeory;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
@@ -63,13 +64,13 @@ public class SalvagingREICategory extends ZenithREICatgeory<SalvagingREIDisplay>
         PoseStack pose = gfx.pose();
 
         int idx = 0;
-        for (var d : outputs) {
+        for (var data : outputs) {
             pose.pushPose();
             pose.translate(0, 0, 200);
-            String text = String.format("%d-%d", d.getMin(), d.getMax());
+            String text = String.format("%d-%d", data.getMin(), data.getMax());
 
-            float x = 59 + 18 * (idx % 2) + (16 - font.width(text) * 0.5F);
-            float y = 23F + 18 * (idx / 2);
+            float x = 59 + 18 * (idx % 2) + (16 - font.width(text) * 0.5F) + originX;
+            float y = 23F + 18 * (idx / 2) + originY;
 
             float scale = 0.5F;
 
@@ -87,16 +88,13 @@ public class SalvagingREICategory extends ZenithREICatgeory<SalvagingREIDisplay>
         int x = origin.getX();
         int y = origin.getY();
         List<ItemStack> input = Arrays.asList(recipe.getInput().getItems());
-        widgets.add(slot(5, 29, origin, EntryIngredient.of(EntryStacks.of(input.get(0))), false));
+        widgets.add(slot(5, 29, origin, EntryIngredient.of((input.stream().map(EntryStacks::of).toList())), false));
         List<SalvagingRecipe.OutputData> outputs = recipe.getOutputs();
         int idx = 0;
-        for (var d : outputs) {
+        for (var data : outputs) {
             int pX = 59 + 18 * (idx % 2);
             int pY = 11 + 18 * (idx / 2);
-            //widgets.add(Widgets.createSlot(new Point(pX + x, pY + y)));
-
-            widgets.add(Widgets.createSlot(new Point(pX + x, pY + y)).entry(EntryStacks.of(d.getStack())));
-            //widgets.add(slot(59 + 18 * (idx % 2), 11 + 18 * (idx / 2), origin, EntryIngredient.of(EntryStacks.of(d.getStack())), false));
+            widgets.add(Widgets.createSlot(new Point(pX + x, pY + y)).entry(EntryStacks.of(data.getStack())));
             idx++;
         }
     }

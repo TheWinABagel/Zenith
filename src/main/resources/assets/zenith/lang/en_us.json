@@ -1,7 +1,7 @@
 {
 	"comment_id": "/Adventure Module",
 
-    "info.zenith.affix_item": "Apothic Affix Item",
+    "info.zenith.affix_item": "Zenith Affix Item",
 	
 	"death.attack.zenith.execute": "%s was executed by %s",
 	"death.attack.zenith.execute.item": "%s was executed by %s using %s",
@@ -366,7 +366,7 @@
 	"item.zenith.gem.zenith:twilight/forest": "Gem of the Twilight Forest",
 	"item.zenith.gem.zenith:twilight/queen": "Gem of the Frozen Queen",
 
-	"item.zenith.boss_summoner": "Apothic Boss Summoner",
+	"item.zenith.boss_summoner": "Zenith Boss Summoner",
 	"item.zenith.gem.zenith:common": "Cracked %s",
 	"item.zenith.gem.zenith:uncommon": "Chipped %s",
 	"item.zenith.gem.zenith:rare": "Flawed %s",
@@ -377,7 +377,7 @@
 	"item.zenith.vial_of_expulsion": "Vial of Searing Expulsion",
 	"item.zenith.vial_of_unnaming": "Vial of Unnaming",
 	"item.zenith.gem_dust": "Gem Dust",
-	"item.zenith.gem_dust.desc": "A Crushed Apothic Gemstone",
+	"item.zenith.gem_dust.desc": "A Crushed Zenith Gemstone",
 	"item.zenith.common_material": "Mysterious Scrap Metal",
 	"item.zenith.uncommon_material": "Timeworn Fabric",
 	"item.zenith.rare_material": "Luminous Crystal Shard",
@@ -421,7 +421,7 @@
 	"text.zenith.no_upgrade": "Max Upgrade Reached",
 	"text.zenith.cut_cost": "Gem Cutting Cost",
 	"text.zenith.one_rarity_mat": "Rarity Materials (1)",
-	"title.zenith.smithing": "Apothic Smithing",
+	"title.zenith.smithing": "Zenith Smithing",
 	"title.zenith.salvaging": "Salvaging",
 
 	"text.zenith.anything": "Anything",
@@ -458,13 +458,13 @@
 	"text.zenith.any_x_item": "Any %s Affix Item",
 
 	"info.zenith.boss_spawn": "%s has awoken nearby!",
-	"info.zenith.boss": "%s Apothic Boss",
+	"info.zenith.boss": "%s Zenith Boss",
 	"info.zenith.boss_item": "Will Drop: %s",
 	"info.zenith.boss_modifiers": "Boss Modifiers:",
 	"info.zenith.rarity_material": "Rarity Material (%s)",
-	"info.zenith.gem_crushing": "Gem Dust is obtained by dropping any Apothic Gem the in world, and making an Anvil block fall onto it.",
-	"info.zenith.gem_extraction": "Used in a Smithing Table to unsocket Apothic Gems.\n\nThe item will be destroyed in the process.",
-	"info.zenith.gem_expulsion": "Used in a Smithing Table to unsocket Apothic Gems.\n\nThe gems will be destroyed in the process.",
+	"info.zenith.gem_crushing": "Gem Dust is obtained by dropping any Zenith Gem the in world, and making an Anvil block fall onto it.",
+	"info.zenith.gem_extraction": "Used in a Smithing Table to unsocket Zenith Gems.\n\nThe item will be destroyed in the process.",
+	"info.zenith.gem_expulsion": "Used in a Smithing Table to unsocket Zenith Gems.\n\nThe gems will be destroyed in the process.",
 	"info.zenith.unnaming": "Used in a Smithing Table to remove the affix components from an item's name.",
 	"info.zenith.salvaging": "Rarity Materials are obtained by salvaging Affix Items in a Salvaging Table.",
 	
@@ -482,11 +482,11 @@
 
 	"comment_id": "/Adventure + Gateways Compat",
 
-	"misc.zenith.boss": "%s Apothic Boss",
+	"misc.zenith.boss": "%s Zenith Boss",
 	"misc.zenith.random": "Random",
 	"reward.zenith.affix": "%s Affix Item",
 	"reward.zenith.random_affix": "Random Affix Item",
-	"zenith.boss_gate_small": "Small Apothic Boss Gate",
+	"zenith.boss_gate_small": "Small Zenith Boss Gate",
 
     "comment_id": "/Advancements",
 
@@ -569,8 +569,8 @@
     "advancements.zenith.max_rectified": "Only the Best",
     "advancements.zenith.max_rectified.desc": "Enchant an item with max stats and max rectification.",
     
-    "advancements.zenith.affix": "Apothic Affixes",
-    "advancements.zenith.affix.desc": "Find an item with an Apothic Affix.",
+    "advancements.zenith.affix": "Zenith Affixes",
+    "advancements.zenith.affix.desc": "Find an item with an Zenith Affix.",
 
     "advancements.zenith.rare": "Worthy Equipment",
     "advancements.zenith.rare.desc": "Find a rare affix item.",
@@ -585,7 +585,7 @@
     "advancements.zenith.ancient.desc": "Find an Ancient item.",
 
     "advancements.zenith.boss": "He Wasn't So Strong",
-    "advancements.zenith.boss.desc": "Slay an Apothic Boss, and retrieve their affix item.",
+    "advancements.zenith.boss.desc": "Slay an Zenith Boss, and retrieve their affix item.",
     "advancements.zenith.chests": "I Found It Underground",
     "advancements.zenith.chests.desc": "Find an affix item in a chest.",
     "advancements.zenith.merchant": "I Got Deals",
@@ -594,7 +594,7 @@
     "advancements.zenith.random.desc": "Retrieve an affix item from a random monster.",
 	
 	"advancements.zenith.gem": "Not a Diamond",
-    "advancements.zenith.gem.desc": "Find a Apothic Gem, which can be socketed into Affix Items.",
+    "advancements.zenith.gem.desc": "Find a Zenith Gem, which can be socketed into Affix Items.",
 	
 	"advancements.zenith.rare_gem": "Far From Perfect",
     "advancements.zenith.rare_gem.desc": "Acquire a Flawed Gem.",
@@ -609,11 +609,11 @@
     "advancements.zenith.socket.desc": "Using a Smithing Table, socket a Gem into an item.",
 
    	"advancements.zenith.gem_cut": "The Lapidary",
-    "advancements.zenith.gem_cut.desc": "Use the Gem Cutting Table to upgrade an Apothic Gem.",
+    "advancements.zenith.gem_cut.desc": "Use the Gem Cutting Table to upgrade an Zenith Gem.",
 	
     "advancements.zenith.spawner.root": "Zenith Spawners",
     "advancements.zenith.spawner.root.desc": "Spawners can be collected and modified, see JEI for info.",
-    "advancements.zenith.spawner": "Apothic Spawners",
+    "advancements.zenith.spawner": "Zenith Spawners",
     "advancements.zenith.spawner.desc": "Collect a mob spawner using Silk Touch.",
     "advancements.zenith.capturing": "Captured!",
     "advancements.zenith.capturing.desc": "Get a spawn egg from a mob using the Capturing enchantment",

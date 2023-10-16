@@ -3,6 +3,8 @@ package dev.shadowsoffire.apotheosis.adventure.affix.salvaging;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.placebo.color.GradientColor;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -31,6 +33,7 @@ public class SalvageItem extends Item {
         return Component.translatable(this.getDescriptionId(pStack)).withStyle(Style.EMPTY.withColor(this.rarity.get().getColor()));
     }
 
+    @Environment(EnvType.CLIENT)
     @Override
     public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> list, TooltipFlag pIsAdvanced) {
         if (rarity.isBound()) {

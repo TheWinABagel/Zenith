@@ -2,12 +2,19 @@ package dev.shadowsoffire.apotheosis.ench;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryContainer;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryScreen;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchScreen;
+import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu;
 import dev.shadowsoffire.apotheosis.ench.table.ClueMessage;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
+import dev.shadowsoffire.apotheosis.village.fletching.FletchingContainer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
+import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -19,6 +26,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -28,9 +36,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
+@Environment(EnvType.CLIENT)
 @SuppressWarnings("deprecation")
 public class EnchModuleClient {
 
+    public static final MenuType<FletchingContainer> FLETCHING = ScreenHandlerRegistry.registerSimple(Apotheosis.loc("fletching"), FletchingContainer::new);
+    public static final MenuType<EnchLibraryContainer> LIBRARY = Apoth.registerMenu("library", new ExtendedScreenHandlerType<>(EnchLibraryContainer::new));
+    public static final MenuType<ApothEnchantmentMenu> ENCHANTING_TABLE = ScreenHandlerRegistry.registerSimple(Apotheosis.loc("enchanting_table"), ApothEnchantmentMenu::new);
     static BlockHitResult res = BlockHitResult.miss(Vec3.ZERO, Direction.NORTH, BlockPos.ZERO);
 
     public static void tooltips() {
@@ -119,8 +131,8 @@ public class EnchModuleClient {
     public static void init() {
         tooltips();
         ClueMessage.init();
-        MenuScreens.register(Apoth.Menus.ENCHANTING_TABLE, ApothEnchScreen::new);
-        MenuScreens.register(Apoth.Menus.LIBRARY, EnchLibraryScreen::new);
+        MenuScreens.register(ENCHANTING_TABLE, ApothEnchScreen::new);
+        MenuScreens.register(LIBRARY, EnchLibraryScreen::new);
         particles();
     }
 

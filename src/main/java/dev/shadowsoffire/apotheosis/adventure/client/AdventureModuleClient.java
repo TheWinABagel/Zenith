@@ -1,6 +1,8 @@
 package dev.shadowsoffire.apotheosis.adventure.client;
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.datafixers.util.Either;
 import dev.shadowsoffire.apotheosis.Apoth;
@@ -27,16 +29,20 @@ import dev.shadowsoffire.attributeslib.api.client.GatherSkippedAttributeTooltips
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ShaderInstance;
+import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.model.BakedModel;
@@ -50,8 +56,10 @@ import net.minecraft.network.chat.contents.LiteralContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import java.util.*;
@@ -80,6 +88,17 @@ public class AdventureModuleClient {
         ModBusSub.addGemModels();
         ModBusSub.hammer();
         ModBusSub.replaceGemModel();
+        registerPackets();
+        renderBossBeam();
+    }
+
+    public static void registerPackets() {
+        ClientPlayNetworking.registerGlobalReceiver(BossSpawnMessage.ID, (client, handler, buf, responseSender) -> {
+            int color = buf.readInt();
+            BlockPos pos = buf.readBlockPos();
+            AdventureModule.LOGGER.warn("Message recieved Pos {}", pos);
+            AdventureModuleClient.onBossSpawn(pos, BossSpawnMessage.toFloats(color));
+        });
     }
 
     public static void onBossSpawn(BlockPos pos, float[] color) {
@@ -125,24 +144,35 @@ public class AdventureModuleClient {
     }
 
     // This renders a beacon beam when a boss spawns
-/*
-    public static void render(RenderLevelStageEvent e) {
-        if (e.getStage() != Stage.AFTER_TRIPWIRE_BLOCKS) return;
-        PoseStack stack = e.getPoseStack();
-        MultiBufferSource.BufferSource buf = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
-        Player p = Minecraft.getInstance().player;
-        for (int i = 0; i < BOSS_SPAWNS.size(); i++) {
-            BossSpawnData data = BOSS_SPAWNS.get(i);
-            stack.pushPose();
-            float partials = e.getPartialTick();
-            Vec3 vec = Minecraft.getInstance().getCameraEntity().getEyePosition(partials);
-            stack.translate(-vec.x, -vec.y, -vec.z);
-            stack.translate(data.pos().getX(), data.pos().getY(), data.pos().getZ());
-            BeaconRenderer.renderBeaconBeam(stack, buf, BeaconRenderer.BEAM_LOCATION, partials, 1, p.level().getGameTime(), 0, 64, data.color(), 0.166F, 0.33F);
-            stack.popPose();
-        }
-        buf.endBatch();
-    }*/
+    public static boolean has = false;
+    public static void renderBossBeam() {
+        WorldRenderEvents.AFTER_ENTITIES.register((context) -> {
+            PoseStack stack = context.matrixStack();
+
+            MultiBufferSource.BufferSource buf = Minecraft.getInstance().renderBuffers().bufferSource(); //(MultiBufferSource.BufferSource) context.consumers(); // MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
+            Player p = Minecraft.getInstance().player;
+            for (int i = 0; i < BOSS_SPAWNS.size(); i++) {
+                BossSpawnData data = BOSS_SPAWNS.get(i);
+
+                stack.pushPose();
+                float partials = context.tickDelta();
+
+                Vec3 vec = context.camera().getPosition();
+                if (!has){
+                    AdventureModule.LOGGER.info("vec1 {}, x {}, y {}, z {}", vec, data.pos().getX(), data.pos().getY(), data.pos().getZ());
+                    has = true;
+                }
+                //stack.translate(vec.x, vec.y, vec.z);
+                stack.translate(-vec.x, -vec.y, -vec.z);
+                stack.translate(data.pos().getX(), data.pos().getY(), data.pos().getZ());
+                BeaconRenderer.renderBeaconBeam(stack, buf, BeaconRenderer.BEAM_LOCATION, partials, 1, p.level().getGameTime(), 0, 512, data.color(), 0.166F, 0.33F);
+                stack.popPose();
+            }
+            buf.endLastBatch();
+        });
+        //if (e.getStage() != Stage.AFTER_TRIPWIRE_BLOCKS) return;
+
+    }
 
     public static void time() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
@@ -159,7 +189,7 @@ public class AdventureModuleClient {
     public static void tooltips() {
         AddAttributeTooltipsEvent.EVENT.register((stack, player, tooltip, attributeTooltipIterator, flag) -> {
             int sockets = SocketHelper.getSockets(stack);
-            if (sockets > 0) attributeTooltipIterator.add(Component.literal("APOTH_REMOVE_MARKER"));
+            if (sockets > 0) attributeTooltipIterator.add(Component.literal("ZENITH_REMOVE_MARKER"));
         });
 
     }
@@ -189,7 +219,7 @@ public class AdventureModuleClient {
             for (int i = 0; i < list.size(); i++) {
                 Optional<FormattedText> o = list.get(i).left();
                 if (o.isPresent() && o.get() instanceof Component comp && comp.getContents() instanceof LiteralContents tc) {
-                    if ("APOTH_REMOVE_MARKER".equals(tc.text())) {
+                    if ("ZENITH_REMOVE_MARKER".equals(tc.text())) {
                         rmvIdx = i;
                         list.remove(i);
                         break;

@@ -1,6 +1,6 @@
 package dev.shadowsoffire.apotheosis.village.fletching;
 
-import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.ench.EnchModuleClient;
 import dev.shadowsoffire.apotheosis.village.VillageModule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -26,7 +26,7 @@ public class FletchingContainer extends AbstractContainerMenu {
     protected final Player player;
 
     public FletchingContainer(int id, Inventory inv, Level world, BlockPos pos) {
-        super(Apoth.Menus.FLETCHING, id);
+        super(EnchModuleClient.FLETCHING, id);
         this.world = world;
         this.pos = pos;
         this.player = inv.player;

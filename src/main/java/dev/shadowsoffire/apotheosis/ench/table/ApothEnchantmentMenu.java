@@ -1,18 +1,13 @@
 package dev.shadowsoffire.apotheosis.ench.table;
 
-import dev.shadowsoffire.apotheosis.Apoth;
-import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.advancements.AdvancementTriggers;
-import dev.shadowsoffire.apotheosis.advancements.EnchantedTrigger;
 import dev.shadowsoffire.apotheosis.ench.Ench;
+import dev.shadowsoffire.apotheosis.ench.EnchModuleClient;
 import dev.shadowsoffire.apotheosis.util.FloatReferenceHolder;
 import io.github.fabricators_of_create.porting_lib.tags.Tags;
-import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandler;
 import io.github.fabricators_of_create.porting_lib.transfer.item.SlotItemHandler;
 import it.unimi.dsi.fastutil.floats.Float2FloatMap;
 import it.unimi.dsi.fastutil.floats.Float2FloatOpenHashMap;
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerPlayer;
@@ -25,13 +20,11 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EnchantmentTableBlock;
-import net.minecraft.world.level.block.entity.EnchantmentTableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.*;
@@ -310,7 +303,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
 
     @Override
     public MenuType<?> getType() {
-        return Apoth.Menus.ENCHANTING_TABLE;
+        return EnchModuleClient.ENCHANTING_TABLE;
     }
 
     /**

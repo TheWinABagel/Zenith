@@ -10,6 +10,8 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.tabs.ITabFiller;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -38,6 +40,7 @@ public class GemItem extends Item  {
         super(pProperties);
     }
 
+    @Environment(EnvType.CLIENT)
     @Override
     public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> tooltip, TooltipFlag pIsAdvanced) {
         DynamicHolder<Gem> gem = getGem(pStack);

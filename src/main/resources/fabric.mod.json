@@ -26,13 +26,15 @@
     ],
     "jade": [
       "dev.shadowsoffire.apotheosis.spawn.compat.SpawnerHwylaPlugin",
-      "dev.shadowsoffire.apotheosis.ench.compat.EnchHwylaPlugin"
+      "dev.shadowsoffire.apotheosis.ench.compat.EnchHwylaPlugin",
+      "dev.shadowsoffire.apotheosis.adventure.compat.AdventureHwylaPlugin"
     ],
     "rei_client": [
       "dev.shadowsoffire.apotheosis.garden.compat.GardenREIPlugin",
       "dev.shadowsoffire.apotheosis.ench.compat.EnchantingREIPlugin",
       "dev.shadowsoffire.apotheosis.spawn.compat.SpawnerREIPlugin",
-      "dev.shadowsoffire.apotheosis.adventure.compat.AdventureREIPlugin"
+      "dev.shadowsoffire.apotheosis.adventure.compat.AdventureREIPlugin",
+      "dev.shadowsoffire.apotheosis.village.compat.VillageREIPlugin"
     ],
     "mm:early_risers": [
       "dev.shadowsoffire.apotheosis.util.PreInit"

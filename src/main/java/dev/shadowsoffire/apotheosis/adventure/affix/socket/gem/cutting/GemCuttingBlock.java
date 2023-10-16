@@ -1,5 +1,7 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -58,6 +60,7 @@ public class GemCuttingBlock extends HorizontalDirectionalBlock {
         return SHAPE;
     }
 
+    @Environment(EnvType.CLIENT)
     @Override
     public void appendHoverText(ItemStack pStack, BlockGetter pLevel, List<Component> list, TooltipFlag pFlag) {
         list.add(Component.translatable(this.getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));

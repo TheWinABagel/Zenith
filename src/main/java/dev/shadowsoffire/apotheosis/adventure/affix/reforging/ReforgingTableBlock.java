@@ -6,6 +6,8 @@ import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.block_entity.TickingEntityBlock;
 import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.menu.SimplerMenuProvider;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -61,6 +63,7 @@ public class ReforgingTableBlock extends Block implements TickingEntityBlock {
         return new SimplerMenuProvider<>(world, pos, ReforgingMenu::new);
     }
 
+    @Environment(EnvType.CLIENT)
     @Override
     public void appendHoverText(ItemStack pStack, BlockGetter pLevel, List<Component> list, TooltipFlag pFlag) {
         list.add(Component.translatable(Blocks.REFORGING_TABLE.getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));

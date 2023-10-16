@@ -4,6 +4,8 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.advancements.AdvancementTriggers;
 import dev.shadowsoffire.apotheosis.ench.anvil.AnvilTile;
 import dev.shadowsoffire.apotheosis.util.INBTSensitiveFallingBlock;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -60,6 +62,7 @@ public class AnvilBlockMixin  extends FallingBlock implements INBTSensitiveFalli
         return new AnvilTile(pos, state);
     }
 
+    @Environment(EnvType.CLIENT)
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable BlockGetter blockGetter, List<Component> list, TooltipFlag tooltipFlag) {
         if (Apotheosis.enableEnch) {

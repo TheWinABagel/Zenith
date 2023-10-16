@@ -1,6 +1,6 @@
 package dev.shadowsoffire.apotheosis.ench.library;
 
-import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.ench.EnchModuleClient;
 import dev.shadowsoffire.placebo.menu.BlockEntityMenu;
 import dev.shadowsoffire.placebo.packets.ButtonClickMessage.IButtonContainer;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
@@ -27,13 +27,13 @@ public class EnchLibraryContainer extends BlockEntityMenu<EnchLibraryTile> imple
     protected Runnable notifier = null;
 
     public EnchLibraryContainer(int id, Inventory inv, FriendlyByteBuf buf) {
-        super(Apoth.Menus.LIBRARY, id, inv, buf.readBlockPos());
+        super(EnchModuleClient.LIBRARY, id, inv, buf.readBlockPos());
         this.tile.addListener(this);
         this.initCommon(inv);
     }
 
     public EnchLibraryContainer(int id, Inventory inv, BlockPos pos) {
-        super(Apoth.Menus.LIBRARY, id, inv, pos);
+        super(EnchModuleClient.LIBRARY, id, inv, pos);
         this.tile.addListener(this);
         this.initCommon(inv);
     }

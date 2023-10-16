@@ -4,13 +4,8 @@ package dev.shadowsoffire.apotheosis;
 import com.google.common.collect.ImmutableSet;
 import dev.shadowsoffire.apotheosis.ench.anvil.AnvilTile;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
-import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryContainer;
-import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu;
 
 //import dev.shadowsoffire.apotheosis.village.fletching.arrows.*;
-import dev.shadowsoffire.apotheosis.village.fletching.FletchingContainer;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
-import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -45,9 +40,6 @@ public class Apoth {
 
     public static final class Menus {
         public static void bootstrap(){}
-        public static final MenuType<FletchingContainer> FLETCHING = ScreenHandlerRegistry.registerSimple(Apotheosis.loc("fletching"), FletchingContainer::new);
-        public static final MenuType<EnchLibraryContainer> LIBRARY = Apoth.registerMenu("library", new ExtendedScreenHandlerType<>(EnchLibraryContainer::new));
-        public static final MenuType<ApothEnchantmentMenu> ENCHANTING_TABLE = ScreenHandlerRegistry.registerSimple(Apotheosis.loc("enchanting_table"), ApothEnchantmentMenu::new);
     }
 
     public static final class Tiles {

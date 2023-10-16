@@ -2,6 +2,8 @@ package dev.shadowsoffire.apotheosis.adventure.affix.salvaging;
 
 import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.menu.SimplerMenuProvider;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -37,6 +39,7 @@ public class SalvagingTableBlock extends Block implements EntityBlock {
         return MenuUtil.openGui(player, pos, SalvagingMenu::new);
     }
 
+    @Environment(EnvType.CLIENT)
     @Override
     public void appendHoverText(ItemStack pStack, BlockGetter pLevel, List<Component> list, TooltipFlag pFlag) {
         list.add(Component.translatable(this.getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));

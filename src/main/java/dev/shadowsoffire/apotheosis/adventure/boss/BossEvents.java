@@ -15,6 +15,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.util.TriState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -28,6 +29,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.CustomSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -48,19 +50,23 @@ public class BossEvents {
         minibosses();
         delayedMinibosses();
         BossSpawnMessage.init();
+
     }
 
+    public void naturalBoss(Mob mob, double x, double y, double z, LevelAccessor level, CustomSpawner spawner, MobSpawnType type){
+
+    }
     public static void naturalBosses() {
         LivingEntityEvents.NATURAL_SPAWN.register((mob, x, y, z, level, spawner, type) -> {
             if (type == MobSpawnType.NATURAL || type == MobSpawnType.CHUNK_GENERATION) {
                 RandomSource rand = level.getRandom();
-                if (bossCooldowns.getInt(mob.level().dimension().location()) <= 0 && !level.isClientSide() && mob instanceof Monster/* && e.getResult() != Result.DENY*/) {
+                if (/*bossCooldowns.getInt(mob.level().dimension().location()) <= 0 && */ !level.isClientSide() && mob instanceof Monster) {
                     ServerLevelAccessor sLevel = (ServerLevelAccessor) level;
                     Pair<Float, BossSpawnRules> rules = AdventureConfig.BOSS_SPAWN_RULES.get(sLevel.getLevel().dimension().location());
-                    if (rules == null) return TriState.of(true);
+                    if (rules == null) return TriState.DEFAULT;
                     if (rand.nextFloat() <= rules.getLeft() && rules.getRight().test(sLevel, BlockPos.containing(x, y, z))) {
                         Player player = sLevel.getNearestPlayer(x, y, z, -1, false);
-                        if (player == null) TriState.of(true); // Spawns require player context
+                        if (player == null) return TriState.DEFAULT; // Spawns require player context
                         ApothBoss item = BossRegistry.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(sLevel.getLevel()), IStaged.matches(player));
                         Mob boss = item.createBoss(sLevel, BlockPos.containing(x - 0.5, y, z - 0.5), rand, player.getLuck());
                         if (AdventureConfig.bossAutoAggro && !player.isCreative()) {
@@ -79,18 +85,18 @@ public class BossEvents {
                                     if (p.distanceToSqr(tPos) <= AdventureConfig.bossAnnounceRange * AdventureConfig.bossAnnounceRange) {
                                         ((ServerPlayer) p).connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("info.zenith.boss_spawn", name, (int) boss.getX(), (int) boss.getY())));
                                         TextColor color = name.getStyle().getColor();
-                                        BossSpawnMessage.sendTo(boss.blockPosition(), color == null ? 0xFFFFFF : color.getValue()/*, player*/);
-                                        //TODO Player might be needed for this?
+                                        AdventureModule.LOGGER.warn(boss.blockPosition());
+                                        if (p.getServer() != null) BossSpawnMessage.sendTo((ServerPlayer) p, new BossSpawnMessage(boss.blockPosition(), color == null ? 0xFFFFFF : color.getValue()) /*, player*/);
                                     }
                                 });
                             }
                             bossCooldowns.put(mob.level().dimension().location(), AdventureConfig.bossSpawnCooldown);
-                            return TriState.of(true);
+                            return TriState.TRUE;
                         }
                     }
                 }
             }
-            return TriState.of(true);
+            return TriState.DEFAULT;
         });
 
     }
@@ -131,7 +137,7 @@ public class BossEvents {
                     }
                 }
             }
-            return TriState.of(true);
+            return TriState.DEFAULT;
         });
 
     }

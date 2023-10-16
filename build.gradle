@@ -1,6 +1,7 @@
 plugins {
 	id 'fabric-loom' version '0.12-SNAPSHOT'
 	id 'maven-publish'
+	id "com.modrinth.minotaur" version "2.+"
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
@@ -157,5 +158,23 @@ publishing {
 
 	repositories {
 
+	}
+}
+
+modrinth {
+	token = System.getenv("MODRINTH_TOKEN")
+	projectId = "zenith"
+	versionType = "beta"
+	versionName = "Zenith " + project.version
+	uploadFile = remapJar
+	gameVersions = ["1.20.1"]
+	loaders = ["fabric"]
+	changelog = "[Changelog](https://github.com/TheWinABagel/Zenith/blob/1.20/changelog.md)"
+	//debugMode = true
+	dependencies {
+		required.project "fabric-api"
+		required.project("fakerlib")
+		required.project("zenith-attributes")
+		embedded.project("porting_lib")
 	}
 }
