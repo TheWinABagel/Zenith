@@ -1,0 +1,8 @@
+{
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "adventure"
+	}],
+	"type": "zenith:boss_dungeon_2",
+	"config": {}
+}

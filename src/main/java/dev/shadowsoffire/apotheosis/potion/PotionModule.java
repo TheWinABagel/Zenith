@@ -34,7 +34,7 @@ import java.io.File;
 
 public class PotionModule {
 
-    public static final Logger LOG = LogManager.getLogger("Zenith : Potion");
+    public static final Logger LOGGER = LogManager.getLogger("Zenith : Potion");
     public static final ResourceLocation POTION_TEX = Apotheosis.loc("textures/potions.png");
     public static final PotionCharmItem POTION_CHARM = new PotionCharmItem();
     public static final Item LUCKY_FOOT = new GlowyBlockItem.GlowyItem(new Item.Properties());
@@ -103,7 +103,7 @@ public class PotionModule {
                 PotionCharmItem.EXTENDED_POTIONS.add(new ResourceLocation(s));
             }
             catch (ResourceLocationException ex) {
-                LOG.error("Invalid extended potion charm entry {} will be ignored.", s);
+                LOGGER.error("Invalid extended potion charm entry {} will be ignored.", s);
             }
         }
 

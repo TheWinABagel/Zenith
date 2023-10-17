@@ -1,0 +1,16 @@
+{
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "adventure"
+	}],
+	"structures": [{
+		"structure": "zenith:tower_main",
+		"weight": 1
+	}],
+	"placement": {
+		"type": "minecraft:random_spread",
+		"spacing": 26,
+		"separation": 15,
+		"salt": 12121818
+	}
+}

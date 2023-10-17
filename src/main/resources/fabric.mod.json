@@ -34,7 +34,8 @@
       "dev.shadowsoffire.apotheosis.ench.compat.EnchantingREIPlugin",
       "dev.shadowsoffire.apotheosis.spawn.compat.SpawnerREIPlugin",
       "dev.shadowsoffire.apotheosis.adventure.compat.AdventureREIPlugin",
-      "dev.shadowsoffire.apotheosis.village.compat.VillageREIPlugin"
+      "dev.shadowsoffire.apotheosis.village.compat.VillageREIPlugin",
+      "dev.shadowsoffire.apotheosis.potion.compat.PotionREIPlugin"
     ],
     "mm:early_risers": [
       "dev.shadowsoffire.apotheosis.util.PreInit"

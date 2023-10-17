@@ -1,0 +1,17 @@
+{
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "adventure"
+	}],
+	"name": "zenith:tower_spruce",
+	"fallback": "minecraft:empty",
+	"elements": [{
+		"weight": 1,
+		"element": {
+			"element_type": "minecraft:single_pool_element",
+			"location": "zenith:tower_spruce",
+			"projection": "rigid",
+			"processors": "zenith:item_frame_gems"
+		}
+	}]
+}

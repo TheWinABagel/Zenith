@@ -34,7 +34,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
     protected final Ingredient potion = makePotionIngredient();
 
     public PotionCharmRecipe(List<Object> ingredients, int width, int height) {
-        super(new ResourceLocation(Apotheosis.MODID, "potion_charm"), "", CraftingBookCategory.MISC, width, height, makeIngredients(ingredients), new ItemStack(PotionModule.POTION_CHARM));
+        super(Apotheosis.loc("potion_charm"), "", CraftingBookCategory.MISC, width, height, makeIngredients(ingredients), new ItemStack(PotionModule.POTION_CHARM));
         for (int i = 0; i < ingredients.size(); i++) {
             if ("potion".equals(ingredients.get(i))) this.potionSlots.add(i);
         }

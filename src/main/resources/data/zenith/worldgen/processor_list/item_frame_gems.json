@@ -1,0 +1,9 @@
+{
+	"fabric:load_conditions": [{
+		"condition": "zenith:module",
+		"module": "adventure"
+	}],
+	"processors": [{
+		"processor_type": "zenith:item_frame_gems"
+	}]
+}

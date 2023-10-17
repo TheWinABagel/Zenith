@@ -28,6 +28,8 @@ import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
@@ -45,6 +47,9 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 
 public class Adventure {
@@ -119,26 +124,15 @@ public class Adventure {
 
     public static class Features {
 
-        public static final ResourceLocation BOSS_DUNGEON_ID = Apotheosis.loc("boss_dungeon");
+        public static final Feature<NoneFeatureConfiguration> BOSS_DUNGEON = Registry.register(BuiltInRegistries.FEATURE, Apotheosis.loc("boss_dungeon"), new  BossDungeonFeature());
 
-        public static final ResourceLocation BOSS_DUNGEON_2_ID = Apotheosis.loc("boss_dungeon_2");
+        public static final Feature<NoneFeatureConfiguration> BOSS_DUNGEON_2 = Registry.register(BuiltInRegistries.FEATURE, Apotheosis.loc("boss_dungeon_2"), new BossDungeonFeature2());
 
-        public static final ResourceLocation ROGUE_SPAWNER_ID = Apotheosis.loc("rogue_spawner");
+        public static final Feature<NoneFeatureConfiguration> ROGUE_SPAWNER = Registry.register(BuiltInRegistries.FEATURE, Apotheosis.loc("rogue_spawner"), new RogueSpawnerFeature());;
 
-        public static final BossDungeonFeature BOSS_DUNGEON = new BossDungeonFeature();
+        public static final StructureProcessorType<ItemFrameGemsProcessor> ITEM_FRAME_GEMS = Registry.register(BuiltInRegistries.STRUCTURE_PROCESSOR, Apotheosis.loc("item_frame_gems"), AdventureModule.ITEM_FRAME_LOOT);
 
-        public static final BossDungeonFeature2 BOSS_DUNGEON_2 = new BossDungeonFeature2();
-
-        public static final RogueSpawnerFeature ROGUE_SPAWNER = new RogueSpawnerFeature();
-
-    //    public static final StructureProcessorType<ItemFrameGemsProcessor> ITEM_FRAME_GEMS = R.custom("item_frame_gems", Registries.STRUCTURE_PROCESSOR, () -> () -> ItemFrameGemsProcessor.CODEC);
-
-        private static void bootstrap() {
-            AdventureModule.LOGGER.info("Registering Features!");
-            Registry.register(BuiltInRegistries.FEATURE, BOSS_DUNGEON_ID, BOSS_DUNGEON);
-            Registry.register(BuiltInRegistries.FEATURE, BOSS_DUNGEON_2_ID, BOSS_DUNGEON_2);
-            Registry.register(BuiltInRegistries.FEATURE, ROGUE_SPAWNER_ID, ROGUE_SPAWNER);
-        };
+        private static void bootstrap() {}
 
     }
 
