@@ -9,6 +9,8 @@ import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
+import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingMenu;
+import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.util.GemIngredient;
 import dev.shadowsoffire.apotheosis.util.REIUtil;
@@ -63,9 +65,8 @@ public class AdventureREIPlugin implements REIClientPlugin {
         if (!Apotheosis.enableAdventure) return;
         registry.add(new SalvagingREICategory());
         registry.addWorkstations(SalvagingREIDisplay.ID, EntryIngredients.of(new ItemStack(Adventure.Blocks.SALVAGING_TABLE)));
-
-
-
+        registry.add(new GemCuttingCategory());
+        registry.addWorkstations(GemCuttingDisplay.ID, EntryIngredients.of(new ItemStack(Adventure.Blocks.GEM_CUTTING_TABLE)));
     }
 
     @Override
@@ -80,11 +81,7 @@ public class AdventureREIPlugin implements REIClientPlugin {
     public void registerDisplays(DisplayRegistry registry) {
         if (!Apotheosis.enableAdventure) return;
         registry.registerFiller(SalvagingRecipe.class, SalvagingREIDisplay::new);
-
-    //    ItemStack gem = new ItemStack(dev.shadowsoffire.apotheosis.adventure.Adventure.Items.GEM);
-    //    Gem gemObj = GemRegistry.INSTANCE.getRandomItem(new LegacyRandomSource(1854));
-    //    GemItem.setGem(gem, gemObj);
-    //    AffixHelper.setRarity(gem, gemObj.getMaxRarity());
+        registry.registerFiller(GemCuttingDisplay.GemCuttingRecipe.class, GemCuttingDisplay::new);
 
         List<Ingredient> gemlist = new ArrayList<>();
         RarityRegistry.INSTANCE.getValues().forEach(lootRarity -> gemlist.add(new GemIngredient(RarityRegistry.INSTANCE.holder(lootRarity)).toVanilla()));
@@ -97,6 +94,19 @@ public class AdventureREIPlugin implements REIClientPlugin {
         REIUtil.addInfo(registry, Adventure.Items.VIAL_OF_EXTRACTION, "info.zenith.gem_extraction");
         REIUtil.addInfo(registry, Adventure.Items.VIAL_OF_EXPULSION, "info.zenith.gem_expulsion");
         REIUtil.addInfo(registry, Adventure.Items.VIAL_OF_UNNAMING, "info.zenith.unnaming");
+
+        //List<GemCuttingDisplay.GemCuttingRecipe> gemCutRecipes = new ArrayList<>();
+
+        for (Gem g : GemRegistry.INSTANCE.getValues()) {
+            LootRarity r = RarityRegistry.getMinRarity().get();
+            LootRarity max = RarityRegistry.getMaxRarity().get();
+            while (r != max) {
+                if (g.clamp(r) == r) registry.add(new GemCuttingDisplay.GemCuttingRecipe(g, r));
+                r = r.next();
+            }
+        }
+        //registry.add();
+
 
         registry.registerVisibilityPredicate(new HideSmithingRecipes());
     }
