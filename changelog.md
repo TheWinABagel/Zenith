@@ -1,4 +1,6 @@
 
+## 0.1.1
+* Fix the game not running with the adventure module disabled (structures will still generate, to be fixed)
 
 ## 0.1.0
 * Adventure module arrives (with no doubt many bugs)!

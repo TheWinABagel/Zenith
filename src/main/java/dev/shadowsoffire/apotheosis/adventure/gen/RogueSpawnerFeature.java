@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.adventure.gen;
 
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.spawner.RogueSpawner;
@@ -26,6 +27,7 @@ public class RogueSpawnerFeature extends Feature<NoneFeatureConfiguration> {
     @SuppressWarnings("deprecation")
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
+        if (!Apotheosis.enableAdventure) return false;
         WorldGenLevel world = ctx.level();
         if (!AdventureConfig.canGenerateIn(world)) return false;
         BlockPos pos = ctx.origin();

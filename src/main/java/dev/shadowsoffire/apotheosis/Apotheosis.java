@@ -56,13 +56,14 @@ public class Apotheosis implements ModInitializer {
         if (FabricLoader.getInstance().isModLoaded("patchouli")) PatchouliCompat.registerPatchouli();
 
         Apoth.Tiles.bootstrap();
+        Apoth.Features.bootstrap();
     }
 
     static {
         configDir = new File(FabricLoader.getInstance().getConfigDir().toFile(), MODID);
         config = new Configuration(new File(configDir, MODID + ".cfg"));
         enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
-        enableAdventure = config.getBoolean("Enable Adventure Module", "general", false, "If the adventure module is loaded.");
+        enableAdventure = config.getBoolean("Enable Adventure Module", "general", true, "If the adventure module is loaded.");
         enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If the spawner module is enabled.");
         enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
         enableVillage = config.getBoolean("Enable Village Module", "general", true, "If the village module is loaded.");

@@ -1,7 +1,8 @@
 package dev.shadowsoffire.apotheosis.adventure.gen;
 
 import com.mojang.serialization.Codec;
-import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
+import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
 import net.minecraft.core.BlockPos;
@@ -34,12 +35,13 @@ public class ItemFrameGemsProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return AdventureModule.ITEM_FRAME_LOOT;
+        return Apoth.Features.ITEM_FRAME_LOOT;
     }
 
     @Override
     public StructureEntityInfo processEntity(LevelReader world, BlockPos seedPos, StructureEntityInfo rawEntityInfo, StructureEntityInfo entityInfo, StructurePlaceSettings placementSettings, StructureTemplate template) {
         CompoundTag entityNBT = entityInfo.nbt;
+        if (!Apotheosis.enableAdventure) return entityInfo;
 
         String id = entityNBT.getString("id"); // entity type ID
         if (world instanceof ServerLevelAccessor sla && "minecraft:item_frame".equals(id)) {
@@ -50,6 +52,7 @@ public class ItemFrameGemsProcessor extends StructureProcessor {
     }
 
     protected void writeEntityNBT(ServerLevel world, BlockPos pos, RandomSource rand, CompoundTag nbt, StructurePlaceSettings settings) {
+        if (!Apotheosis.enableAdventure) return;
         ItemStack stack = GemRegistry.createRandomGemStack(rand, world, 0, IDimensional.matches(world));
         nbt.put("Item", stack.serializeNBT());
         nbt.putInt("TileX", pos.getX());

@@ -56,7 +56,7 @@ public class AdventureModule {
     public static final Logger LOGGER = LogManager.getLogger("Zenith : Adventure");
     public static final boolean STAGES_LOADED = FabricLoader.getInstance().isModLoaded("gamestages");
 
-    public static final StructureProcessorType<ItemFrameGemsProcessor> ITEM_FRAME_LOOT = () -> ItemFrameGemsProcessor.CODEC;
+
 
     public AdventureModule() {
         Adventure.bootstrap();

@@ -39,6 +39,7 @@ public class BossDungeonFeature2 extends Feature<NoneFeatureConfiguration> {
     @SuppressWarnings("deprecation")
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
+        if (!Apotheosis.enableAdventure) return false;
         WorldGenLevel world = ctx.level();
         if (!AdventureConfig.canGenerateIn(world)) return false;
         BlockPos pos = ctx.origin();

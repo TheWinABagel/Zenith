@@ -16,20 +16,11 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttin
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingMenu;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossSpawnerBlock;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossSummonerItem;
-import dev.shadowsoffire.apotheosis.adventure.gen.BossDungeonFeature;
-import dev.shadowsoffire.apotheosis.adventure.gen.BossDungeonFeature2;
-import dev.shadowsoffire.apotheosis.adventure.gen.ItemFrameGemsProcessor;
-import dev.shadowsoffire.apotheosis.adventure.gen.RogueSpawnerFeature;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
-import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.ench.objects.GlowyBlockItem.GlowyItem;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntityType;
-import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.util.PlaceboUtil;
-import io.github.fabricators_of_create.porting_lib.util.RegistryObject;
-import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
@@ -39,7 +30,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
@@ -50,10 +40,6 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 
 public class Adventure {
 
@@ -125,20 +111,6 @@ public class Adventure {
 
     }
 
-    public static class Features {
-
-        public static final Feature<NoneFeatureConfiguration> BOSS_DUNGEON = Registry.register(BuiltInRegistries.FEATURE, Apotheosis.loc("boss_dungeon"), new  BossDungeonFeature());
-
-        public static final Feature<NoneFeatureConfiguration> BOSS_DUNGEON_2 = Registry.register(BuiltInRegistries.FEATURE, Apotheosis.loc("boss_dungeon_2"), new BossDungeonFeature2());
-
-        public static final Feature<NoneFeatureConfiguration> ROGUE_SPAWNER = Registry.register(BuiltInRegistries.FEATURE, Apotheosis.loc("rogue_spawner"), new RogueSpawnerFeature());;
-
-        public static final StructureProcessorType<ItemFrameGemsProcessor> ITEM_FRAME_GEMS = Registry.register(BuiltInRegistries.STRUCTURE_PROCESSOR, Apotheosis.loc("item_frame_gems"), AdventureModule.ITEM_FRAME_LOOT);
-
-        private static void bootstrap() {}
-
-    }
-
     public static class Menus {
 
         public static final MenuType<ReforgingMenu> REFORGING = Registry.register(BuiltInRegistries.MENU, Apotheosis.loc("reforging"), new ExtendedScreenHandlerType<>(ReforgingMenu::new));
@@ -192,7 +164,7 @@ public class Adventure {
     public static void bootstrap() {
         Blocks.bootstrap();
         Items.bootstrap();
-        Features.bootstrap();
+        Apoth.Features.bootstrap();
         Menus.bootstrap();
         Tabs.bootstrap();
     };

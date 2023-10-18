@@ -2,6 +2,10 @@ package dev.shadowsoffire.apotheosis;
 
 
 import com.google.common.collect.ImmutableSet;
+import dev.shadowsoffire.apotheosis.adventure.gen.BossDungeonFeature;
+import dev.shadowsoffire.apotheosis.adventure.gen.BossDungeonFeature2;
+import dev.shadowsoffire.apotheosis.adventure.gen.ItemFrameGemsProcessor;
+import dev.shadowsoffire.apotheosis.adventure.gen.RogueSpawnerFeature;
 import dev.shadowsoffire.apotheosis.ench.anvil.AnvilTile;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
 
@@ -28,6 +32,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -71,6 +78,20 @@ public class Apoth {
         public static final ResourceKey<DamageType> EXECUTE = ResourceKey.create(Registries.DAMAGE_TYPE, Apotheosis.loc("execute"));
         public static final ResourceKey<DamageType> PSYCHIC = ResourceKey.create(Registries.DAMAGE_TYPE, Apotheosis.loc("psychic"));
         public static final ResourceKey<DamageType> CORRUPTED = ResourceKey.create(Registries.DAMAGE_TYPE, Apotheosis.loc("corrupted"));
+    }
+
+    public static class Features {
+
+        public static final Feature<NoneFeatureConfiguration> BOSS_DUNGEON = Registry.register(BuiltInRegistries.FEATURE, Apotheosis.loc("boss_dungeon"), new BossDungeonFeature());
+
+        public static final Feature<NoneFeatureConfiguration> BOSS_DUNGEON_2 = Registry.register(BuiltInRegistries.FEATURE, Apotheosis.loc("boss_dungeon_2"), new BossDungeonFeature2());
+
+        public static final Feature<NoneFeatureConfiguration> ROGUE_SPAWNER = Registry.register(BuiltInRegistries.FEATURE, Apotheosis.loc("rogue_spawner"), new RogueSpawnerFeature());;
+        public static final StructureProcessorType<ItemFrameGemsProcessor> ITEM_FRAME_LOOT = () -> ItemFrameGemsProcessor.CODEC;
+        public static final StructureProcessorType<ItemFrameGemsProcessor> ITEM_FRAME_GEMS = Registry.register(BuiltInRegistries.STRUCTURE_PROCESSOR, Apotheosis.loc("item_frame_gems"), ITEM_FRAME_LOOT);
+
+        public static void bootstrap() {}
+
     }
 
     public static Item registerItem(Item item, String path){
@@ -119,4 +140,6 @@ public class Apoth {
         out.add(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(ench, maxLevel)));
         return out;
     }
+
+
 }
