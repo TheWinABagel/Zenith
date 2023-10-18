@@ -70,7 +70,7 @@ public class DamageReductionAffix extends Affix {
 
     public static enum DamageType implements Predicate<DamageSource> {
         PHYSICAL("physical", AttributesUtil::isPhysicalDamage),
-        MAGIC("magic", d -> d.is(DamageTypeTags.BYPASSES_ARMOR)), // TODO: Forge IS_MAGIC tag
+        MAGIC("magic", d -> d.is(DamageTypeTags.BYPASSES_ARMOR)),
         FIRE("fire", d -> d.is(DamageTypeTags.IS_FIRE)),
         FALL("fall", d -> d.is(DamageTypeTags.IS_FALL)),
         EXPLOSION("explosion", d -> d.is(DamageTypeTags.IS_EXPLOSION));

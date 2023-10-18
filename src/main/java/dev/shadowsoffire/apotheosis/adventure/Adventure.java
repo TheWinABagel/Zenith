@@ -139,16 +139,11 @@ public class Adventure {
 
     }
 
-    public static class Menus { //TODO rewrite ;)
+    public static class Menus {
 
         public static final MenuType<ReforgingMenu> REFORGING = Registry.register(BuiltInRegistries.MENU, Apotheosis.loc("reforging"), new ExtendedScreenHandlerType<>(ReforgingMenu::new));
-
-    //    public static final MenuType<SalvagingMenu> SALVAGE = ScreenHandlerRegistry.registerSimple(Apotheosis.loc("salvage"), SalvagingMenu::new);
-
         public static final MenuType<GemCuttingMenu> GEM_CUTTING = ScreenHandlerRegistry.registerSimple(Apotheosis.loc("gem_cutting"), GemCuttingMenu::new);
         public static final MenuType<SalvagingMenu> SALVAGE = Registry.register(BuiltInRegistries.MENU, Apotheosis.loc("salvage"), new ExtendedScreenHandlerType<>(SalvagingMenu::new)); //Registry.register(BuiltInRegistries.MENU, Apotheosis.loc("salvage"),new ExtendedScreenHandlerType<>(SalvagingMenu::new));
-    //    public static final MenuType<GemCuttingMenu> REFORGING = ScreenHandlerRegistry.registerSimple(Apotheosis.loc("reforging"), GemCuttingMenu::new);
-
 
         private static void bootstrap() {};
     }

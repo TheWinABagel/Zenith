@@ -43,7 +43,7 @@ public class SocketingRecipe extends ApothSmithingRecipe {
         //MinecraftForge.EVENT_BUS.post(event);
         //BaseEvent.Result res = event.getResult();
         //return res == BaseEvent.Result.ALLOW ? true : res == BaseEvent.Result.DEFAULT && gem.canApplyTo(input);
-        return gem.canApplyTo(input); //TODO add socketing event
+        return gem.canApplyTo(input); //TODO add socketing events
     }
 
     /**

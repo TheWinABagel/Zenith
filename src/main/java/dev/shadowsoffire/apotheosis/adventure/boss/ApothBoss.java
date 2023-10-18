@@ -282,7 +282,7 @@ public final class ApothBoss implements CodecProvider<ApothBoss>, ILuckyWeighted
         if (AdventureConfig.curseBossItems) {
             final ItemStack stk = stack; // Lambda rules require this instead of a direct reference to stack
             List<Enchantment> curses = BuiltInRegistries.ENCHANTMENT.stream().filter(e -> ((CustomEnchantingTableBehaviorEnchantment) e).canApplyAtEnchantingTable(stk) && e.isCurse()).collect(Collectors.toList());
-            if (!curses.isEmpty()) {                                                        //TODO this cast may fail
+            if (!curses.isEmpty()) {
                 Enchantment curse = curses.get(rand.nextInt(curses.size()));
                 enchMap.put(curse, Mth.nextInt(rand, 1, EnchHooks.getMaxLevel(curse)));
             }

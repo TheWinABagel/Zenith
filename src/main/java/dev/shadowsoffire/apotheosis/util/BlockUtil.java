@@ -54,7 +54,7 @@ public class BlockUtil {
             return false;
         }
         GameType type = player.getAbilities().instabuild ? GameType.CREATIVE : GameType.SURVIVAL;
-        int exp = getXpForBlock(blockstate, world); //TODO This might not check properly if the player should get bonus xp from knowledge for instance
+        int exp = getXpForBlock(blockstate, world);
 
             BlockEntity tileentity = world.getBlockEntity(pos);
             Block block = blockstate.getBlock();

@@ -65,7 +65,7 @@ public class AdventureEvents {
         fireArrow(); // need to create event
         impact();
         onDamage();
-        onItemUse(); // need to create event (placebo)
+        onItemUse();
         shieldBlock();
         blockBreak();
         dropsHigh();
@@ -187,19 +187,22 @@ public class AdventureEvents {
         });
     }
 
-    public static void onItemUse() { //TODO Item use Event from placebo
-  /*      ItemUseEvent
-            ItemStack s = player.getItemInHand(hand);
+    public static void onItemUse() {
+        ItemUseEvent.ItemUse.ITEM_USE_EVENT.register(event -> {
+            ItemStack s = event.stack;
             var affixes = AffixHelper.getAffixes(s);
             for (AffixInstance inst : affixes.values()) {
-                InteractionResult type = inst.onItemUse(e.getContext());
+                InteractionResult type = inst.onItemUse(event.ctx);
                 if (type != null) {
-                    return type;
+                    event.cancellationResult = type;
+                    return true;
                 }
             }
-            return InteractionResult.PASS;
+            return false;
+        });
 
-*/
+
+
     }
 
     public static void shieldBlock() {

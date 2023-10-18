@@ -45,7 +45,7 @@ public class LootRarity implements CodecProvider<LootRarity>, ILuckyWeighted, Co
                     new ListCodec<>(LootRule.CODEC).fieldOf("rules").forGetter(LootRarity::getRules))
             .apply(inst, LootRarity::new));
 
-    @Deprecated // TODO: RarityRegistry.INSTANCE.holderCodec() - requires updating all data files to use namespaced rarities.
+    @Deprecated
     public static final Codec<DynamicHolder<LootRarity>> HOLDER_CODEC = ExtraCodecs.lazyInitializedCodec(() -> Codec.STRING.xmap(RarityRegistry::convertId, ResourceLocation::toString).xmap(RarityRegistry.INSTANCE::holder,
             DynamicHolder::getId));
 

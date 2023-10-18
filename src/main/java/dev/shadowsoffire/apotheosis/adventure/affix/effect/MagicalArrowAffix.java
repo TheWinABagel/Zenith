@@ -37,7 +37,7 @@ public class MagicalArrowAffix extends Affix {
     public void onHurt(LivingEntityDamageEvents.HurtEvent e) {
         if (e.damageSource.getDirectEntity() instanceof AbstractArrow arrow) {
             if (AffixHelper.getAffixes(arrow).containsKey(Affixes.MAGICAL)) {
-                // e.damageSource.setMagic(); TODO: Forge event needs updating with a setDamageSource method.
+                // e.damageSource.setMagic();
             }
         }
     }

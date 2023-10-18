@@ -12,6 +12,7 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
@@ -45,7 +46,8 @@ public class AllStatsBonus extends GemBonus {
         super(Apotheosis.loc("all_stats"), gemClass);
         this.operation = op;
         this.values = values;
-        // TODO figure out how to get all player attributes
+        //Minecraft.getInstance().player.getAttributes() maybe?
+        // TODO figure out how to get all player attributes, NYI
     //    BuiltInRegistries.ATTRIBUTE.stream().filter(ForgeHooks.getAttributesView().get(EntityType.PLAYER)::hasAttribute).forEach(this.attributes::add);
     }
 
