@@ -32,8 +32,8 @@ public abstract class LivingEntityMixin extends Entity {
         return color;
     }
 
-    @Inject(method = "die", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "die", at = @At("HEAD"))
     private void onDeath(DamageSource damageSource, CallbackInfo ci){
-        if (Events.onEntityDeath.LIVING_DEATH.invoker().onDeath(((LivingEntity) (Object) this), damageSource)) ci.cancel();
+        Events.onEntityDeath.LIVING_DEATH.invoker().onDeath(((LivingEntity) (Object) this), damageSource);
     }
 }

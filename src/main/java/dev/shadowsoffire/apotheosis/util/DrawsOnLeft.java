@@ -1,10 +1,10 @@
 package dev.shadowsoffire.apotheosis.util;
 
+import dev.shadowsoffire.apotheosis.util.events.IComponentTooltip;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
-import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public interface DrawsOnLeft {
         int lambdastupid = maxWidth;
         list.forEach(comp -> split.addAll(ths().font.getSplitter().splitLines(comp, lambdastupid, comp.getStyle())));
 
-        gfx.renderComponentTooltip(ths().font, split.stream().map(formatted -> (Component) Component.literal(formatted.getString())).toList(), xPos, y);
+        ((IComponentTooltip) gfx).zenithRenderComponentTooltip(ths().font, split, xPos, y); // copying forge methods is my passion
     }
 
     default AbstractContainerScreen<?> ths() {

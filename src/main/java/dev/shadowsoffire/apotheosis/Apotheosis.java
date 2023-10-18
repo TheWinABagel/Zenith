@@ -26,7 +26,7 @@ public class Apotheosis implements ModInitializer {
     public static File configDir;
     public static Configuration config;
     public static boolean enableEnch = true;
-    public static boolean enableAdventure = FabricLoader.getInstance().isDevelopmentEnvironment(); //For now ;)
+    public static boolean enableAdventure = true;
     public static boolean enableSpawner = true;
     public static boolean enablePotion = true;
     public static boolean enableVillage = true;
@@ -62,7 +62,7 @@ public class Apotheosis implements ModInitializer {
         configDir = new File(FabricLoader.getInstance().getConfigDir().toFile(), MODID);
         config = new Configuration(new File(configDir, MODID + ".cfg"));
         enableEnch = config.getBoolean("Enable Enchantment Module", "general", true, "If the enchantment module is enabled.");
-        //enableAdventure = config.getBoolean("Enable Adventure Module", "general", false, "If the adventure module is loaded. WARNING! BARELY WORKS, enable at your own risk! YOU WILL ENCOUNTER GAME BREAKING BUGS!");
+        enableAdventure = config.getBoolean("Enable Adventure Module", "general", false, "If the adventure module is loaded.");
         enableSpawner = config.getBoolean("Enable Spawner Module", "general", true, "If the spawner module is enabled.");
         enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
         enableVillage = config.getBoolean("Enable Village Module", "general", true, "If the village module is loaded.");
@@ -71,6 +71,7 @@ public class Apotheosis implements ModInitializer {
         giveBook = config.getBoolean("Give Book on First Join", "general", true, "If the Chronicle of Shadows is given to new players.");
         config.setTitle("Zenith Module Control");
         config.setComment("This file allows individual modules of Zenith to be enabled or disabled.\nChanges will have no effect until the next game restart.\nThis file must match on client and server.");
+        config.setComment("Report any issues found to https://github.com/TheWinABagel/Zenith/issues, not to Apotheosis!");
         if (config.hasChanged()) config.save();
 
     }

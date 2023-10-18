@@ -1,6 +1,5 @@
 Adventure module:
 fix menus
-structures
 
 Enchanting module:
 tags require restart to load properly, might be a fabric limitation based on when new tags are sent?

@@ -203,7 +203,6 @@ public class AdventureEvents {
     }
 
     public static void shieldBlock() {
-    /*    //TODO reenable
         EntityEvents.SHIELD_BLOCK.register(e -> {
             ItemStack stack = e.blocker.getUseItem();
             var affixes = AffixHelper.getAffixes(stack);
@@ -213,7 +212,6 @@ public class AdventureEvents {
             }
             if (blocked != e.damageBlocked) e.damageBlocked = blocked;
         });
-*/
     }
 
     public static void blockBreak() {
@@ -255,16 +253,15 @@ public class AdventureEvents {
     public static void deathMark() {
         Events.onEntityDeath.LIVING_DEATH.register((entity, source) -> {
             Adventure.Affixes.FESTIVE.getOptional().ifPresent(afx -> afx.markEquipment(entity, source));
-            return false;
         });
 
     }
 
     public static void harvest() {
         Events.HarvestCheck.ATTEMPT_HARVEST.register((player, state) -> {
-            AtomicBoolean canharvest = new AtomicBoolean(false);
-            Adventure.Affixes.OMNETIC.getOptional().ifPresent(afx -> canharvest.set(afx.harvest(player, state)));
-            return canharvest.get();
+            AtomicBoolean lambdaDumb = new AtomicBoolean(false);
+            Adventure.Affixes.OMNETIC.getOptional().ifPresent(afx -> lambdaDumb.set(afx.harvest(player, state)));
+            return lambdaDumb.get();
         });
 
     }

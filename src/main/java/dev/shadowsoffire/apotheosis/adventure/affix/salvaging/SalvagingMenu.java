@@ -4,12 +4,18 @@ import com.google.common.base.Predicates;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Blocks;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Menus;
+import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe.OutputData;
 import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import dev.shadowsoffire.placebo.menu.BlockEntityMenu;
 import dev.shadowsoffire.placebo.menu.FilteredSlot;
+import dev.shadowsoffire.placebo.menu.PlaceboContainerMenu;
 import io.github.fabricators_of_create.porting_lib.transfer.item.RecipeWrapper;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
+import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
+import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -25,14 +31,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
+public class SalvagingMenu extends PlaceboContainerMenu {
 
     protected final Player player;
+    protected final BlockPos pos;
+    protected final SalvagingTableTile tile;
     protected final InternalItemHandler inputInv = new InternalItemHandler(15);
 
+    public SalvagingMenu(int id, Inventory inv, FriendlyByteBuf buf) {
+        this(id, inv, buf.readBlockPos());
+    }
+
     public SalvagingMenu(int id, Inventory inv, BlockPos pos) {
-        super(Menus.SALVAGE, id, inv, pos);
+        super(Menus.SALVAGE, id, inv);
         this.player = inv.player;
+        this.pos = pos;
+        this.tile = (SalvagingTableTile) this.level.getBlockEntity(pos);
         for (int i = 0; i < 15; i++) {
             this.addSlot(new UpdatingSlot(this.inputInv, i, 8 + i % 5 * 18, 17 + i / 5 * 18, s -> findMatch(this.level, s) != null){
 
@@ -102,10 +116,13 @@ public class SalvagingMenu extends BlockEntityMenu<SalvagingTableTile> {
             ItemStack stack = s.getItem();
             List<ItemStack> outputs = salvageItem(this.level, stack);
             s.set(ItemStack.EMPTY);
+            long transfered;
             for (ItemStack out : outputs) {
                 for (int outSlot = 0; outSlot < 6; outSlot++) {
-                    if (out.isEmpty()) break;
-                //    out = this.tile.output.insertSlot(outSlot, out, false); TODO figure out salvaging inserting
+                    if (out.isEmpty()) break; // TODO figure out salvaging inserting; transfer api gives me a headache
+                //    this.tile.output.setStackInSlot(outSlot, out.copy());
+                //    out.setCount(0);
+                //    transfered = this.tile.output.insertSlot(outSlot, ItemVariant.of(out), out.getCount(), Transaction.openOuter());
                 }
                 if (!out.isEmpty()) this.giveItem(this.player, out);
             }

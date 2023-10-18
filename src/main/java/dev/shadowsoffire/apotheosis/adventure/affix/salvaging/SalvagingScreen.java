@@ -156,7 +156,8 @@ public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> imple
         }
 
         MultiBufferSource.BufferSource buffer = Minecraft.getInstance().renderBuffers().bufferSource();
-        mc.getItemRenderer().render(pStack, ItemDisplayContext.GUI, false, posestack, wrapper.apply(buffer), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, model);
+
+    //    mc.getItemRenderer().render(pStack, ItemDisplayContext.GUI, false, posestack, wrapper.apply(buffer), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, model);
         buffer.endBatch();
         RenderSystem.enableDepthTest();
         if (flag) {

@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.reforging;
 
+import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Menus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
@@ -9,9 +10,11 @@ import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import dev.shadowsoffire.placebo.menu.BlockEntityMenu;
 import dev.shadowsoffire.placebo.menu.MenuUtil;
+import dev.shadowsoffire.placebo.menu.PlaceboContainerMenu;
 import io.github.fabricators_of_create.porting_lib.transfer.item.RecipeWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
@@ -23,10 +26,11 @@ import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 
 import javax.annotation.Nullable;
 
-public class ReforgingMenu extends BlockEntityMenu<ReforgingTableTile> {
+public class ReforgingMenu extends PlaceboContainerMenu {
 
     public static final String REFORGE_SEED = "apoth_reforge_seed";
-
+    protected final BlockPos pos;
+    protected final ReforgingTableTile tile;
     protected final Player player;
     protected InternalItemHandler itemInv = new InternalItemHandler(1);
     protected final RandomSource random = new XoroshiroRandomSource(0);
@@ -34,9 +38,15 @@ public class ReforgingMenu extends BlockEntityMenu<ReforgingTableTile> {
     protected final int[] costs = new int[3];
     protected DataSlot needsReset = DataSlot.standalone();
 
+    public ReforgingMenu(int id, Inventory inv, FriendlyByteBuf buf) {
+        this(id, inv, buf.readBlockPos());
+    }
+
     public ReforgingMenu(int id, Inventory inv, BlockPos pos) {
-        super(Menus.REFORGING, id, inv, pos);
+        super(Menus.REFORGING, id, inv);
         this.player = inv.player;
+        this.pos = pos;
+        this.tile = (ReforgingTableTile) this.level.getBlockEntity(pos);
         this.addSlot(new UpdatingSlot(this.itemInv, 0, 25, 24, stack -> !LootCategory.forItem(stack).isNone()){
             @Override
             public int getMaxStackSize() {
@@ -179,6 +189,12 @@ public class ReforgingMenu extends BlockEntityMenu<ReforgingTableTile> {
             ReforgingMenu.this.needsReset.set(0);
         }
         super.slotsChanged(pContainer);
+    }
+
+    @Override
+    public boolean stillValid(Player player) {
+        if (this.level.isClientSide) return true;
+        return this.level.getBlockState(this.pos).getBlock() == Adventure.Blocks.REFORGING_TABLE || this.level.getBlockState(this.pos).getBlock() == Adventure.Blocks.SIMPLE_REFORGING_TABLE;
     }
 
 }

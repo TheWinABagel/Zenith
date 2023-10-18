@@ -2,11 +2,8 @@ package dev.shadowsoffire.apotheosis.adventure.client;
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.datafixers.util.Either;
-import dev.shadowsoffire.apotheosis.Apoth;
-import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Menus;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
@@ -15,6 +12,7 @@ import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixRegistry;
+import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingScreen;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingTableTileRenderer;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingScreen;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketHelper;
@@ -22,7 +20,6 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingScreen;
 import dev.shadowsoffire.apotheosis.adventure.client.BossSpawnMessage.BossSpawnData;
 import dev.shadowsoffire.apotheosis.adventure.client.SocketTooltipRenderer.SocketComponent;
-import dev.shadowsoffire.apotheosis.util.Events;
 import dev.shadowsoffire.apotheosis.util.events.ModifyComponents;
 import dev.shadowsoffire.attributeslib.api.client.AddAttributeTooltipsEvent;
 import dev.shadowsoffire.attributeslib.api.client.GatherSkippedAttributeTooltipsEvent;
@@ -45,8 +42,6 @@ import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.locale.Language;
@@ -75,7 +70,7 @@ public class AdventureModuleClient {
     public static void init() {
     //    MenuScreens.register(Menus.REFORGING, ReforgingScreen::new);
     //    MenuScreens.register(Menus.SALVAGE, SalvagingScreen::new);
-        MenuScreens.register(Menus.REFORGING, GemCuttingScreen::new);
+        MenuScreens.register(Menus.REFORGING, ReforgingScreen::new);
         MenuScreens.register(Menus.SALVAGE, SalvagingScreen::new);
         MenuScreens.register(Menus.GEM_CUTTING, GemCuttingScreen::new);
 
@@ -85,9 +80,6 @@ public class AdventureModuleClient {
         ignoreSocketUUIDS();
         affixTooltips();
         comps();
-        ModBusSub.addGemModels();
-        ModBusSub.hammer();
-        ModBusSub.replaceGemModel();
         registerPackets();
         renderBossBeam();
     }
@@ -107,42 +99,6 @@ public class AdventureModuleClient {
             .play(new SimpleSoundInstance(SoundEvents.END_PORTAL_SPAWN, SoundSource.HOSTILE, AdventureConfig.bossAnnounceVolume, 1.25F, Minecraft.getInstance().player.random, Minecraft.getInstance().player.blockPosition()));
     }
 
-    public static class ModBusSub {
-        public static void hammer(){
-            Events.AddModelCallback.EVENT.register(addedModels -> {
-                addedModels.add((new ResourceLocation(Apotheosis.MODID, "item/hammer")));
-            });
-        }
-
-     public static void addGemModels() {
-         Events.AddModelCallback.EVENT.register(addedModels -> {
-             Set<ResourceLocation> locs = Minecraft.getInstance().getResourceManager().listResources("models", loc -> Apotheosis.MODID.equals(loc.getNamespace()) && loc.getPath().contains("/gems/") && loc.getPath().endsWith(".json"))
-                     .keySet();
-             for (ResourceLocation s : locs) {
-                 String path = s.getPath().substring("models/".length(), s.getPath().length() - ".json".length());
-                 addedModels.add(Apotheosis.loc(path));
-             }
-         });
-     }
-
-     public static void replaceGemModel() {
-         Events.ModifyBakedModelCallback.EVENT.register((bakery, topModels) -> {
-             ModelResourceLocation key = new ModelResourceLocation(Apotheosis.loc("gem"), "inventory");
-             BakedModel oldModel = topModels.get(key);
-             if (oldModel != null) {
-                 topModels.put(key, new GemModel(oldModel, bakery));
-             }
-         });
-
-     }
-
-     public static void tooltipComps() {
-
-     }
-
-
-    }
-
     // This renders a beacon beam when a boss spawns
     public static boolean has = false;
     public static void renderBossBeam() {
@@ -158,10 +114,7 @@ public class AdventureModuleClient {
                 float partials = context.tickDelta();
 
                 Vec3 vec = context.camera().getPosition();
-                if (!has){
-                    AdventureModule.LOGGER.info("vec1 {}, x {}, y {}, z {}", vec, data.pos().getX(), data.pos().getY(), data.pos().getZ());
-                    has = true;
-                }
+                if (!has) has = true;
                 //stack.translate(vec.x, vec.y, vec.z);
                 stack.translate(-vec.x, -vec.y, -vec.z);
                 stack.translate(data.pos().getX(), data.pos().getY(), data.pos().getZ());
@@ -210,8 +163,8 @@ public class AdventureModuleClient {
             }
             return null;
         });
-        ModifyComponents.MODIFY_COMPONENTS.register(e -> {
 
+        ModifyComponents.MODIFY_COMPONENTS.register(e -> {
             int sockets = SocketHelper.getSockets(e.stack);
             if (sockets == 0) return;
             List<Either<FormattedText, TooltipComponent>> list = e.tooltipElements;
@@ -247,7 +200,7 @@ public class AdventureModuleClient {
 
     }
 
-    // there has to be a better way to do this...
+    // bleh
     public static List<ClientTooltipComponent> gatherTooltipComponents(ItemStack stack, List<? extends FormattedText> textElements, Optional<TooltipComponent> itemComponent, int mouseX, int screenWidth, int screenHeight, Font font) {
         List<Either<FormattedText, TooltipComponent>> elements = textElements.stream()
                 .map((Function<FormattedText, Either<FormattedText, TooltipComponent>>) Either::left)

@@ -44,7 +44,6 @@ public class SocketTooltipRenderer implements ClientTooltipComponent {
 
     @Override
     public void renderImage(Font font, int x, int y, GuiGraphics gfx) {
-        gfx.blit(SOCKET, x, y + this.spacing, 0, 0, 0, 9, 9, 9, 9);
         for (int i = 0; i < this.comp.gems.size(); i++) {
             gfx.blit(SOCKET, x, y + this.spacing * i, 0, 0, 0, 9, 9, 9, 9);
         }

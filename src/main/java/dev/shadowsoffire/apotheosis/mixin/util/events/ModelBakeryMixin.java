@@ -1,7 +1,9 @@
 package dev.shadowsoffire.apotheosis.mixin.util.events;
 
 import com.google.common.collect.Sets;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.util.Events;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.UnbakedModel;
@@ -26,7 +28,16 @@ public class ModelBakeryMixin {
     @Inject(method = "<init>", at = @At(value = "INVOKE", target = "net/minecraft/client/resources/model/ModelBakery.loadTopLevel (Lnet/minecraft/client/resources/model/ModelResourceLocation;)V", ordinal = 3))
     private void initModels(BlockColors blockColors, ProfilerFiller profilerFiller, Map map, Map map2, CallbackInfo ci){
         Set<ResourceLocation> extraModels = Sets.newHashSet();
-        Events.AddModelCallback.EVENT.invoker().onModelsStartLoading(extraModels);
+
+        Set<ResourceLocation> locs = Minecraft.getInstance().getResourceManager().listResources("models", loc -> Apotheosis.MODID.equals(loc.getNamespace()) && loc.getPath().contains("/gems/") && loc.getPath().endsWith(".json"))
+                .keySet();
+        for (ResourceLocation s : locs) {
+            String path = s.getPath().substring("models/".length(), s.getPath().length() - ".json".length());
+            extraModels.add(Apotheosis.loc(path));
+        }
+
+        extraModels.add((new ResourceLocation(Apotheosis.MODID, "item/hammer")));
+
         for (ResourceLocation resourceLocation : extraModels) {
             UnbakedModel unbakedmodel = ((ModelBakery) (Object) this).getModel(resourceLocation);
             unbakedCache.put(resourceLocation, unbakedmodel);

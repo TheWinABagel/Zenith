@@ -8,25 +8,32 @@ import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntity;
 import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class ReforgingTableTile extends BlockEntity implements TickingBlockEntity {
+public class ReforgingTableTile extends BlockEntity implements ExtendedScreenHandlerFactory, TickingBlockEntity {
 
     public int time = 0;
     public boolean step1 = true;
+    protected final BlockPos pos;
 
     protected InternalItemHandler inv = new InternalItemHandler(2){
         @Override
@@ -41,8 +48,9 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
         };
     };
 
-    public ReforgingTableTile(BlockPos pWorldPosition, BlockState pBlockState) {
-        super(Adventure.Tiles.REFORGING_TABLE, pWorldPosition, pBlockState);
+    public ReforgingTableTile(BlockPos pPos, BlockState pBlockState) {
+        super(Adventure.Tiles.REFORGING_TABLE, pPos, pBlockState);
+        this.pos = pPos;
     }
 
     public LootRarity getMaxRarity() {
@@ -98,4 +106,18 @@ public class ReforgingTableTile extends BlockEntity implements TickingBlockEntit
         this.inv.deserializeNBT(tag.getCompound("inventory"));
     }
 
+    public void writeScreenOpeningData(ServerPlayer player, FriendlyByteBuf buf) {
+        buf.writeBlockPos(pos);
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("block.zenith.reforging_table");
+    }
+
+    @Nullable
+    @Override
+    public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
+        return null;
+    }
 }

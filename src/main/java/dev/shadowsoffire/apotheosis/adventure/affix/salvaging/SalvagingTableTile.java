@@ -59,7 +59,7 @@ public class SalvagingTableTile extends BlockEntity implements ExtendedScreenHan
 
     @Override
     public void writeScreenOpeningData(ServerPlayer player, FriendlyByteBuf buf) {
-
+        buf.writeBlockPos(pos);
     }
 
     @Override

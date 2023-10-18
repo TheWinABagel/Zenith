@@ -112,15 +112,13 @@ public class Events {
     public class onEntityDeath{
 
         public static final Event<onLivingDeath> LIVING_DEATH = EventFactory.createArrayBacked(onLivingDeath.class, callbacks -> (entity, source) -> {
-            for (onLivingDeath callback : callbacks) {
-                return callback.onDeath(entity, source);
-            }
-            return false;
+            for (onLivingDeath callback : callbacks)
+                callback.onDeath(entity, source);
         });
 
         @FunctionalInterface
         public interface onLivingDeath {
-            boolean onDeath(LivingEntity entity, DamageSource source);
+            void onDeath(LivingEntity entity, DamageSource source);
         }
     }
 
@@ -138,22 +136,5 @@ public class Events {
             boolean harvestAttempt(Player player, BlockState state);
         }
     }
-    public interface AddModelCallback {
-        Event<AddModelCallback> EVENT = EventFactory.createArrayBacked(AddModelCallback.class, callbacks -> addedModels -> {
-            for (AddModelCallback e : callbacks)
-                e.onModelsStartLoading(addedModels);
-        });
 
-
-        void onModelsStartLoading(Set<ResourceLocation> models);
-    }
-
-    public interface ModifyBakedModelCallback {
-        Event<ModifyBakedModelCallback> EVENT = EventFactory.createArrayBacked(ModifyBakedModelCallback.class, callbacks -> (bakery, topModels) -> {
-            for (ModifyBakedModelCallback e : callbacks)
-                e.modifyBakedModels(bakery, topModels);
-        });
-
-        void modifyBakedModels(ModelBakery bakery, Map<ResourceLocation, BakedModel> topModels);
-    }
 }

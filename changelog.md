@@ -1,5 +1,8 @@
-## TODO
-* Complete port of Adventure module
+
+
+## 0.1.0
+* Adventure module arrives (with no doubt many bugs)!
+* Not everything is 100% yet, still need to double check everything
 
 ## 0.0.3
 * Added fletching REI support
