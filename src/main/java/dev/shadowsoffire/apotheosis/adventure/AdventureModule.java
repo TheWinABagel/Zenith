@@ -1,51 +1,34 @@
 package dev.shadowsoffire.apotheosis.adventure;
 
-import com.google.common.collect.ImmutableSet;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Blocks;
-import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixRegistry;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingRecipe;
-import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingTableTile;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
-import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingTableTile;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.*;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.boss.*;
-import dev.shadowsoffire.apotheosis.adventure.boss.BossSpawnerBlock.BossSpawnerTile;
-import dev.shadowsoffire.apotheosis.adventure.gen.BlacklistModifier;
-import dev.shadowsoffire.apotheosis.adventure.gen.ItemFrameGemsProcessor;
 import dev.shadowsoffire.apotheosis.adventure.loot.*;
 import dev.shadowsoffire.apotheosis.adventure.spawner.RogueSpawnerRegistry;
-import dev.shadowsoffire.apotheosis.ench.Ench;
-import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryTile;
-import dev.shadowsoffire.apotheosis.ench.objects.GlowyBlockItem;
-import dev.shadowsoffire.apotheosis.ench.table.KeepNBTEnchantingRecipe;
 import dev.shadowsoffire.apotheosis.util.AffixItemIngredient;
 import dev.shadowsoffire.apotheosis.util.GemIngredient;
 import dev.shadowsoffire.apotheosis.util.NameHelper;
-import dev.shadowsoffire.placebo.block_entity.TickingBlockEntityType;
 import dev.shadowsoffire.placebo.config.Configuration;
-import dev.shadowsoffire.placebo.tabs.TabFillingRegistry;
+import io.github.fabricators_of_create.porting_lib.loot.PortingLibLoot;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.attributes.RangedAttribute;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SmithingTransformRecipe;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -79,6 +62,7 @@ public class AdventureModule {
         BossRegistry.INSTANCE.register();
         RogueSpawnerRegistry.INSTANCE.register();
         MinibossRegistry.INSTANCE.register();
+        structureDatapack();
 
         //    if (FabricLoader.getInstance().isModLoaded("gateways")) GatewaysCompat.register();
         //    if (FabricLoader.getInstance().isModLoaded("theoneprobe")) AdventureTOPPlugin.register();
@@ -104,6 +88,7 @@ public class AdventureModule {
         serializers();
         blocks();
         items();
+        miscRegistration();
     }
 
     public static void blocks() {
@@ -154,16 +139,35 @@ public class AdventureModule {
     }
 
     public static void miscRegistration() {
+        LOGGER.info("Registering Zenith loot modifiers");
 
-        //Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), Apotheosis.loc("gems"), GemLootModifier.CODEC);
-        //Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), Apotheosis.loc("affix_loot"), AffixLootModifier.CODEC);
-        //Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), Apotheosis.loc("affix_conversion"), AffixConvertLootModifier.CODEC);
-        //Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), Apotheosis.loc("affix_hook"), AffixHookLootModifier.CODEC);
+        Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), Apotheosis.loc("gems"), GemLootModifier.CODEC);
+        Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), Apotheosis.loc("affix_loot"), AffixLootModifier.CODEC);
+        Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), Apotheosis.loc("affix_conversion"), AffixConvertLootModifier.CODEC);
+        Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), Apotheosis.loc("affix_hook"), AffixHookLootModifier.CODEC);
 
     /*    if (e.getForgeRegistry() == (Object) ForgeRegistries.BIOME_MODIFIER_SERIALIZERS.get()) {
             e.getForgeRegistry().register("blacklist", BlacklistModifier.CODEC);
         }*/
 
+    }
+
+    public static void structureDatapack() {
+        ResourceLocation id = Apotheosis.loc("structures");
+        ModContainer container = getModContainer(id);
+        ResourceManagerHelper.registerBuiltinResourcePack(id, container,  ResourcePackActivationType.DEFAULT_ENABLED);
+    }
+
+    private static ModContainer getModContainer(ResourceLocation pack) {
+        if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
+            for (ModContainer mod : FabricLoader.getInstance().getAllMods()) {
+                if (mod.findPath("resourcepacks/" + pack.getPath()).isPresent()) {
+                    LOGGER.info("LOADING DEV ENVIRONMENT DATAPACK");
+                    return mod;
+                }
+            }
+        }
+        return FabricLoader.getInstance().getModContainer(pack.getNamespace()).orElseThrow();
     }
 
     /**
@@ -181,6 +185,7 @@ public class AdventureModule {
     public static void debugLog(BlockPos pos, String name) {
         if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Generated a {} at {} {} {}", name, pos.getX(), pos.getY(), pos.getZ());
     }
+
 
     public static class ApothSmithingRecipe extends SmithingTransformRecipe {
 

@@ -75,3 +75,4 @@ mutable field net/minecraft/network/chat/TextColor NAMED_COLORS Ljava/util/Map;
 
 accessible field net/minecraft/client/Minecraft timer Lnet/minecraft/client/Timer;
 accessible field net/minecraft/client/Minecraft pausePartialTick F
+accessible field net/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder builder Ljava/util/Map;

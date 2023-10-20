@@ -15,6 +15,9 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.Map;
 
+/**
+ * Reduces durability damage by a certain percent.
+ */
 public class DurabilityBonus extends GemBonus {
 
     public static Codec<DurabilityBonus> CODEC = RecordCodecBuilder.create(inst -> inst

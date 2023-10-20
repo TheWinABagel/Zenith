@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "entries": [
+	"zenith:affix_conversion",
+    "zenith:affix_loot",
+	"zenith:gems",
+	"zenith:affix_hook"
+  ]
+}

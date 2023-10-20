@@ -23,10 +23,11 @@ import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Mixin(value = GuiGraphics.class, priority = 2000)
+@Mixin(value = GuiGraphics.class, priority = 1000)
 public abstract class GuiGraphicsMixin implements IComponentTooltip {
 
     @Shadow
@@ -36,9 +37,7 @@ public abstract class GuiGraphicsMixin implements IComponentTooltip {
     public abstract int guiHeight();
 
     @Shadow
-    private void renderTooltipInternal(Font font, List<ClientTooltipComponent> components, int mouseX, int mouseY, ClientTooltipPositioner tooltipPositioner) {
-
-    }
+    private void renderTooltipInternal(Font font, List<ClientTooltipComponent> components, int mouseX, int mouseY, ClientTooltipPositioner tooltipPositioner) {}
 
     @Inject(method = "renderTooltip(Lnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;II)V", at = @At(value = "INVOKE", target = "net/minecraft/client/gui/GuiGraphics.renderTooltip (Lnet/minecraft/client/gui/Font;Ljava/util/List;Ljava/util/Optional;II)V", shift = At.Shift.BEFORE))
     private void cacheItemStack(Font font, ItemStack itemStack, int i, int j, CallbackInfo ci) {
@@ -53,7 +52,8 @@ public abstract class GuiGraphicsMixin implements IComponentTooltip {
     @ModifyArgs(method = "renderTooltip(Lnet/minecraft/client/gui/Font;Ljava/util/List;Ljava/util/Optional;II)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;renderTooltipInternal(Lnet/minecraft/client/gui/Font;Ljava/util/List;IILnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipPositioner;)V"))
     private void gatherComponents(Args args, Font font, List<Component> lines, Optional<TooltipComponent> data, int x, int y) {
         if (Apotheosis.enableAdventure && SocketHelper.getSockets(AdventureModuleClient.StackStorage.hoveredItem) != 0) {
-            args.set(1, AdventureModuleClient.gatherTooltipComponents(AdventureModuleClient.StackStorage.hoveredItem, lines, data, x, guiWidth(), guiHeight(), font));
+            var list = new ArrayList<>(AdventureModuleClient.gatherTooltipComponents(AdventureModuleClient.StackStorage.hoveredItem, lines, data, x, guiWidth(), guiHeight(), font));
+            args.set(1, list);
         }
     }
 

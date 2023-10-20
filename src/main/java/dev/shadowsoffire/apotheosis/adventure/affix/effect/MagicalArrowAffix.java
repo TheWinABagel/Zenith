@@ -14,6 +14,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 
+/**
+ * Should set arrow damage type to magic, currently not implemented
+ */
 public class MagicalArrowAffix extends Affix {
 
     public static final Codec<MagicalArrowAffix> CODEC = RecordCodecBuilder.create(inst -> inst
@@ -37,6 +40,7 @@ public class MagicalArrowAffix extends Affix {
     public void onHurt(LivingEntityDamageEvents.HurtEvent e) {
         if (e.damageSource.getDirectEntity() instanceof AbstractArrow arrow) {
             if (AffixHelper.getAffixes(arrow).containsKey(Affixes.MAGICAL)) {
+                // Doesn't do anything rn :P, also doesn't in apoth
                 // e.damageSource.setMagic();
             }
         }

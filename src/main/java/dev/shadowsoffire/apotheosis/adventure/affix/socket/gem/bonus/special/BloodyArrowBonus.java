@@ -6,6 +6,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
@@ -20,6 +21,9 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.Map;
 
+/**
+ * When an arrow is fired, damage user and increase arrow damage.
+ */
 public class BloodyArrowBonus extends GemBonus {
 
     public static Codec<BloodyArrowBonus> CODEC = RecordCodecBuilder.create(inst -> inst
@@ -37,9 +41,11 @@ public class BloodyArrowBonus extends GemBonus {
     @Override
     public void onArrowFired(ItemStack gem, LootRarity rarity, LivingEntity user, AbstractArrow arrow) {
         Data d = this.values.get(rarity);
+        if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Is Bloody arrow on cooldown: {}, current damage: {}", Affix.isOnCooldown(this.getId(), d.cooldown, user), arrow.getBaseDamage());
         if (Affix.isOnCooldown(this.getId(), d.cooldown, user)) return;
         user.hurt(user.damageSources().source(Apoth.DamageTypes.CORRUPTED), user.getMaxHealth() * d.healthCost);
         arrow.setBaseDamage(arrow.getBaseDamage() * d.dmgMultiplier);
+        if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Base damage after: {}", arrow.getBaseDamage());
         Affix.startCooldown(this.getId(), user);
     }
 

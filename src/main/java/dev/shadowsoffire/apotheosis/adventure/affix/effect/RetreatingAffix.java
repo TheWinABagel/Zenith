@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Disengage
+ * When blocking with a shield, jump backwards
  */
 public class RetreatingAffix extends Affix {
 

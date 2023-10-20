@@ -3,7 +3,9 @@ package dev.shadowsoffire.apotheosis.adventure.affix.effect;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Affixes;
+import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
@@ -34,6 +36,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.function.Consumer;
 
+/**
+ * Enables AOE mining.
+ */
 public class RadialAffix extends Affix {
 
     public static final Codec<RadialAffix> CODEC = RecordCodecBuilder.create(inst -> inst
@@ -64,9 +69,12 @@ public class RadialAffix extends Affix {
     // EventPriority.LOW
     public void onBreak(Level world, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity) {
         ItemStack tool = player.getMainHandItem();
+        //if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Radial affix breaking");
         if (!world.isClientSide && tool.hasTag()) {
+        //    if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("World is not client side, Tool has tag");
             AffixInstance inst = AffixHelper.getAffixes(tool).get(Affixes.RADIAL);
             if (inst != null && inst.isValid()) {
+                if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Affix instance is valid");
                 float hardness = state.getDestroySpeed(world, pos);
                 breakExtraBlocks((ServerPlayer) player, pos, tool, this.getTrueLevel(inst.rarity().get(), inst.level()), hardness);
             }
@@ -104,30 +112,45 @@ public class RadialAffix extends Affix {
      * @param level  The level of this affix, in this case, the mode of operation.
      */
     public static void breakExtraBlocks(ServerPlayer player, BlockPos pos, ItemStack tool, RadialData level, float hardness) {
-        if (!breakers.add(player.getUUID())) return; // Prevent multiple break operations from cascading, and don't execute when sneaking.
+        if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("BreakExtraBlocks initialised");
+        if (!breakers.add(player.getUUID())) {
+            if (Apotheosis.enableDebug) AdventureModule.LOGGER.warn("Multiple break attempts by the same player");
+            return; // Prevent multiple break operations from cascading, and don't execute when sneaking.
+        }
         if (!player.isShiftKeyDown()) try {
+            if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Shift key is not down, attempting to break in a radius");
             breakBlockRadius(player, pos, level.x, level.y, level.xOff, level.yOff, hardness);
         }
         catch (Exception e) {
             e.printStackTrace();
         }
+        if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Removing player {} from break list", player);
         breakers.remove(player.getUUID());
     }
 
     @SuppressWarnings("deprecation")
     public static void breakBlockRadius(ServerPlayer player, BlockPos pos, int x, int y, int xOff, int yOff, float hardness) {
         Level world = player.level();
-        if (x < 2 && y < 2) return;
+        if (x < 2 && y < 2) {
+            if (Apotheosis.enableDebug) AdventureModule.LOGGER.warn("Area is not large enough, aborting");
+            return;
+        }
         int lowerY = (int) Math.ceil(-y / 2D), upperY = (int) Math.round(y / 2D);
         int lowerX = (int) Math.ceil(-x / 2D), upperX = (int) Math.round(x / 2D);
 
         Vec3 base = player.getEyePosition(0);
         Vec3 look = player.getLookAngle();
         double reach = player.getAttributeValue(ReachEntityAttributes.REACH);
+
+        reach = player.isCreative() ? reach + 5D : reach + 4.5D;
+        if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Reach distance: {}", reach);
         Vec3 target = base.add(look.x * reach, look.y * reach, look.z * reach);
         HitResult trace = world.clip(new ClipContext(base, target, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player));
 
-        if (trace == null || trace.getType() != Type.BLOCK) return;
+        if (trace == null || trace.getType() != Type.BLOCK){
+            if (Apotheosis.enableDebug) AdventureModule.LOGGER.warn("Trace is null, or trace type isnt block!");
+            return;
+        }
         BlockHitResult res = (BlockHitResult) trace;
 
         Direction face = res.getDirection(); // Face of the block currently being looked at by the player.

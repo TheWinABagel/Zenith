@@ -39,6 +39,9 @@
     ],
     "mm:early_risers": [
       "dev.shadowsoffire.apotheosis.util.PreInit"
+    ],
+    "mixinsquared": [
+      "dev.shadowsoffire.apotheosis.compat.MixinCanceller"
     ]
   },
   "mixins": [
@@ -50,8 +53,8 @@
     "fabric": "*",
     "minecraft": "1.20.1",
     "java": ">=17",
-    "fakerlib": ">=0.0.5",
-    "zenith_attributes": ">=0.0.2"
+    "fakerlib": ">=0.0.6",
+    "zenith_attributes": ">=0.0.3"
   },
   "suggests": {
     "roughlyenoughitems": "*",

@@ -45,7 +45,7 @@ public final class LootCategory {
     public static final LootCategory BOOTS = register("boots", armorSlot(EquipmentSlot.FEET), arr(EquipmentSlot.FEET));
     public static final LootCategory SHIELD = register("shield", s -> s.getItem() instanceof ShieldItem, arr(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND));
     public static final LootCategory TRIDENT = register("trident", s -> s.getItem() instanceof TridentItem, arr(EquipmentSlot.MAINHAND));
-    public static final LootCategory SWORD = register("sword", s -> s.canPerformAction(ToolActions.SWORD_DIG) || s.getItem().getAttributeModifiers(s, EquipmentSlot.MAINHAND).get(Attributes.ATTACK_DAMAGE).stream().anyMatch(m -> m.getAmount() > 0), arr(EquipmentSlot.MAINHAND));
+    public static final LootCategory SWORD = register("sword", s -> s.canPerformAction(ToolActions.SWORD_SWEEP) || s.getItem() instanceof SwordItem || s.getItem().getAttributeModifiers(s, EquipmentSlot.MAINHAND).get(Attributes.ATTACK_DAMAGE).stream().anyMatch(m -> m.getAmount() > 0), arr(EquipmentSlot.MAINHAND));
     public static final LootCategory NONE = register("none", Predicates.alwaysFalse(), new EquipmentSlot[0]);
 
     private final String name;

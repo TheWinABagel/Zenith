@@ -18,6 +18,9 @@ import net.minecraft.world.item.context.UseOnContext;
 import java.util.Map;
 import java.util.function.Consumer;
 
+/**
+ * Places torches on right click.
+ */
 public class EnlightenedAffix extends Affix {
 
     public static final Codec<EnlightenedAffix> CODEC = RecordCodecBuilder.create(inst -> inst

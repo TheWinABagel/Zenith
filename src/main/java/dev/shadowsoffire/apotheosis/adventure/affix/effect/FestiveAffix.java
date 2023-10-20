@@ -31,7 +31,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 /**
- * Loot Pinata
+ * Loot Pinata, drops extra items
  */
 public class FestiveAffix extends Affix {
 
@@ -61,20 +61,22 @@ public class FestiveAffix extends Affix {
         return this.values.get(rarity).get(level);
     }
 
-    private static String MARKER = "apoth.equipment";
+    private static String MARKER = "zenith.equipment";
 
     public void markEquipment(LivingEntity entity, DamageSource source) {
-        if (entity instanceof Player || entity.getCustomData().getBoolean("apoth.no_pinata")) return;
+        if (entity instanceof Player || entity.getCustomData().getBoolean("zenith.no_pinata")) return;
         entity.getAllSlots().forEach(i -> {
             if (!i.isEmpty()) i.getOrCreateTag().putBoolean(MARKER, true);
         });
     }
 
     public void drops(LivingEntity target, DamageSource source, Collection<ItemEntity> drops) {
-        if (target instanceof Player || target.getCustomData().getBoolean("apoth.no_pinata")) return;
+        if (target instanceof Player || target.getCustomData().getBoolean("zenith.no_pinata")) return;
+
         if (source.getEntity() instanceof Player player && !drops.isEmpty()) {
             AffixInstance inst = AffixHelper.getAffixes(player.getMainHandItem()).get(Affixes.FESTIVE);
             if (inst != null && inst.isValid() && player.level().random.nextFloat() < this.getTrueLevel(inst.rarity().get(), inst.level())) {
+                if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Drops PRE loot pinata: {}", drops);
                 player.level().playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 4.0F,
                     (1.0F + (player.level().random.nextFloat() - player.level().random.nextFloat()) * 0.2F) * 0.7F);
                 ((ServerLevel) player.level()).sendParticles(ParticleTypes.EXPLOSION_EMITTER, target.getX(), target.getY(), target.getZ(), 2, 1.0D, 0.0D, 0.0D, 0);
@@ -93,6 +95,7 @@ public class FestiveAffix extends Affix {
                         item.setDeltaMovement(-0.3 + target.level().random.nextDouble() * 0.6, 0.3 + target.level().random.nextDouble() * 0.3, -0.3 + target.level().random.nextDouble() * 0.6);
                     }
                 }
+                if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Drops POST loot pinata: {}", drops);
             }
         }
 

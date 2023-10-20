@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 /**
- * Damage Chain
+ * Damages all enemies in a chain.
  */
 public class ThunderstruckAffix extends Affix {
 

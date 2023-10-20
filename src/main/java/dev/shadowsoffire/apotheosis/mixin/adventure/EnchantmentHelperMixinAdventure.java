@@ -49,7 +49,7 @@ public class EnchantmentHelperMixinAdventure {
      * Injection to {@link EnchantmentHelper#doPostDamageEffects(LivingEntity, Entity)}
      */
     @Inject(at = @At("TAIL"), method = "doPostDamageEffects(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;)V")
-    private static void apoth_doPostDamageEffects(LivingEntity user, Entity target, CallbackInfo ci) {
+    private static void zenith_doPostDamageEffects(LivingEntity user, Entity target, CallbackInfo ci) {
         if (user == null) return;
         for (ItemStack s : user.getAllSlots()) {
             var affixes = AffixHelper.getAffixes(s);
@@ -66,7 +66,7 @@ public class EnchantmentHelperMixinAdventure {
      * Injection to {@link EnchantmentHelper#doPostHurtEffects(LivingEntity, Entity)}
      */
     @Inject(at = @At("TAIL"), method = "doPostHurtEffects(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;)V")
-    private static void apoth_doPostHurtEffects(LivingEntity user, Entity attacker, CallbackInfo ci) {
+    private static void zenith_doPostHurtEffects(LivingEntity user, Entity attacker, CallbackInfo ci) {
         if (user == null) return;
         for (ItemStack s : user.getAllSlots()) {
             var affixes = AffixHelper.getAffixes(s);

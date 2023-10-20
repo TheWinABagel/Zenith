@@ -113,9 +113,9 @@ public final class SocketAffix extends Affix {
 
     @Override
     public float onHurt(ItemStack socketed, LootRarity rarity, float level, DamageSource src, LivingEntity ent, float amount) {
-        MutableFloat mFloat = new MutableFloat(amount);
-        SocketHelper.getGemInstances(socketed).forEachOrdered(inst -> mFloat.setValue(inst.onHurt(src, ent, mFloat.getValue())));
-        return mFloat.getValue();
+        MutableFloat lambdaSilly = new MutableFloat(amount);
+        SocketHelper.getGemInstances(socketed).forEachOrdered(inst -> lambdaSilly.setValue(inst.onHurt(src, ent, amount)));
+        return lambdaSilly.getValue();
     }
 
     @Override
@@ -133,7 +133,7 @@ public final class SocketAffix extends Affix {
         return CODEC;
     }
 
-    private static Stream<GemInstance> gems(AbstractArrow arrow) {
+    private static Stream<GemInstance> gems(AbstractArrow arrow) { // NYI, apoth
         return Stream.empty();
     }
 

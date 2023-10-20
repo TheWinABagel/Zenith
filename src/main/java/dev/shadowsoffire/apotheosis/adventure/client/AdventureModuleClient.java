@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.datafixers.util.Either;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Menus;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
@@ -23,10 +24,12 @@ import dev.shadowsoffire.apotheosis.adventure.client.SocketTooltipRenderer.Socke
 import dev.shadowsoffire.apotheosis.util.events.ModifyComponents;
 import dev.shadowsoffire.attributeslib.api.client.AddAttributeTooltipsEvent;
 import dev.shadowsoffire.attributeslib.api.client.GatherSkippedAttributeTooltipsEvent;
+import dev.shadowsoffire.attributeslib.api.client.ItemTooltipCallbackWithPlayer;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.rendering.v1.CoreShaderRegistrationCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.ChatFormatting;
@@ -68,8 +71,6 @@ public class AdventureModuleClient {
     public static List<BossSpawnData> BOSS_SPAWNS = new ArrayList<>();
 
     public static void init() {
-    //    MenuScreens.register(Menus.REFORGING, ReforgingScreen::new);
-    //    MenuScreens.register(Menus.SALVAGE, SalvagingScreen::new);
         MenuScreens.register(Menus.REFORGING, ReforgingScreen::new);
         MenuScreens.register(Menus.SALVAGE, SalvagingScreen::new);
         MenuScreens.register(Menus.GEM_CUTTING, GemCuttingScreen::new);
@@ -82,6 +83,12 @@ public class AdventureModuleClient {
         comps();
         registerPackets();
         renderBossBeam();
+
+        CoreShaderRegistrationCallback.EVENT.register(context -> {
+            context.register(Apotheosis.loc("gray"), DefaultVertexFormat.NEW_ENTITY, shaderInstance -> {
+
+            });
+        });
     }
 
     public static void registerPackets() {
@@ -100,7 +107,6 @@ public class AdventureModuleClient {
     }
 
     // This renders a beacon beam when a boss spawns
-    public static boolean has = false;
     public static void renderBossBeam() {
         WorldRenderEvents.AFTER_ENTITIES.register((context) -> {
             PoseStack stack = context.matrixStack();
@@ -114,8 +120,6 @@ public class AdventureModuleClient {
                 float partials = context.tickDelta();
 
                 Vec3 vec = context.camera().getPosition();
-                if (!has) has = true;
-                //stack.translate(vec.x, vec.y, vec.z);
                 stack.translate(-vec.x, -vec.y, -vec.z);
                 stack.translate(data.pos().getX(), data.pos().getY(), data.pos().getZ());
                 BeaconRenderer.renderBeaconBeam(stack, buf, BeaconRenderer.BEAM_LOCATION, partials, 1, p.level().getGameTime(), 0, 512, data.color(), 0.166F, 0.33F);
@@ -123,7 +127,6 @@ public class AdventureModuleClient {
             }
             buf.endLastBatch();
         });
-        //if (e.getStage() != Stage.AFTER_TRIPWIRE_BLOCKS) return;
 
     }
 
@@ -185,8 +188,8 @@ public class AdventureModuleClient {
 
     }
 
-    public static void affixTooltips() {
-        ItemTooltipCallback.EVENT.register((stack, context, lines) -> {
+    public static void affixTooltips() { // Player isnt needed but it's fired later than the fapi event so it's compatible
+        ItemTooltipCallbackWithPlayer.EVENT.register((stack, context, lines, player) -> {
             if (stack.hasTag()) {
                 Map<DynamicHolder<? extends Affix>, AffixInstance> affixes = AffixHelper.getAffixes(stack);
                 List<Component> components = new ArrayList<>();

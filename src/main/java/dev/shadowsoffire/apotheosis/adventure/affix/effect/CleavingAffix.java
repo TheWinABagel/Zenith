@@ -25,6 +25,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
+/**
+ * Damage mobs in an area when attacking.
+ */
 public class CleavingAffix extends Affix {
 
     public static final Codec<CleavingAffix> CODEC = RecordCodecBuilder.create(inst -> inst

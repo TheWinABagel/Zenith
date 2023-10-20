@@ -30,7 +30,7 @@
 			},
 			"blocks": "minecraft:iron_ore",
 			"inputs": {
-				"tag": "c:iron_ores"
+				"tag": "c:raw_iron_ores"
 			},
 			"output": {
 				"item": "minecraft:raw_gold"

@@ -22,6 +22,9 @@ import net.minecraft.world.item.ItemStack;
 import java.util.Map;
 import java.util.function.Consumer;
 
+/**
+ * Instantly kills the mob if below a certain health threshold.
+ */
 public class ExecutingAffix extends Affix {
 
     public static final Codec<ExecutingAffix> CODEC = RecordCodecBuilder.create(inst -> inst

@@ -32,6 +32,9 @@ import net.minecraft.world.phys.HitResult.Type;
 
 import java.util.Map;
 
+/**
+ * Increases a certain attribute by a certain amount.
+ */
 public class PotionBonus extends GemBonus {
 
     public static final Codec<PotionBonus> CODEC = RecordCodecBuilder.create(inst -> inst

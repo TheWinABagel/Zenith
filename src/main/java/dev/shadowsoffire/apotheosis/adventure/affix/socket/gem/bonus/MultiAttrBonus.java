@@ -22,6 +22,9 @@ import net.minecraft.world.item.ItemStack;
 import java.util.*;
 import java.util.function.BiConsumer;
 
+/**
+ * Increases or decreases certain attributes by a certain amount.
+ */
 public class MultiAttrBonus extends GemBonus {
 
     public static Codec<MultiAttrBonus> CODEC = RecordCodecBuilder.create(inst -> inst

@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
@@ -27,6 +28,9 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 
+/**
+ * Increases all attributes by a percentage.
+ */
 public class AllStatsBonus extends GemBonus {
 
     public static Codec<AllStatsBonus> CODEC = RecordCodecBuilder.create(inst -> inst
@@ -38,23 +42,23 @@ public class AllStatsBonus extends GemBonus {
 
     protected final Operation operation;
     protected final Map<LootRarity, StepFunction> values;
+    public static List<Attribute> playerAttributes = new ArrayList<>(); //Obtained via mixin
+    protected transient final List<Attribute> attributes = new ArrayList<>(playerAttributes);
 
-    protected transient final List<Attribute> attributes = new ArrayList<>();
 
     @SuppressWarnings("deprecation")
     public AllStatsBonus(GemClass gemClass, Operation op, Map<LootRarity, StepFunction> values) {
         super(Apotheosis.loc("all_stats"), gemClass);
         this.operation = op;
         this.values = values;
-        //Minecraft.getInstance().player.getAttributes() maybe?
-        // TODO figure out how to get all player attributes, NYI
-    //    BuiltInRegistries.ATTRIBUTE.stream().filter(ForgeHooks.getAttributesView().get(EntityType.PLAYER)::hasAttribute).forEach(this.attributes::add);
     }
 
     @Override
     public void addModifiers(ItemStack gem, LootRarity rarity, BiConsumer<Attribute, AttributeModifier> map) {
         UUID id = GemItem.getUUIDs(gem).get(0);
+    //    if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("List of attributes being increased: {}", this.attributes);
         for (Attribute attr : this.attributes) {
+            //TODO add a blocklist to attributes that should not be able to be increased, add config ala ench config to attributeslib?
             var modif = new AttributeModifier(id, "apoth.gem_modifier.all_stats_buff", this.values.get(rarity).min(), this.operation);
             map.accept(attr, modif);
         }

@@ -22,6 +22,9 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 
+/**
+ * Increases a certain attribute by a certain amount.
+ */
 public class AttributeBonus extends GemBonus {
 
     public static Codec<AttributeBonus> CODEC = RecordCodecBuilder.create(inst -> inst

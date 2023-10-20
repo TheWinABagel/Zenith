@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.adventure;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import dev.architectury.event.events.common.InteractionEvent;
 import dev.shadowsoffire.apotheosis.Apoth;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Affixes;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
@@ -62,7 +63,7 @@ public class AdventureEvents {
         cmds();
         affixModifiers();
         preventBossSuffocate();
-        fireArrow(); // need to create event
+        //fireArrow(); // need to create event
         impact();
         onDamage();
         onItemUse();
@@ -82,7 +83,7 @@ public class AdventureEvents {
 
     public static void cmds() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-            LiteralArgumentBuilder<CommandSourceStack> root = Commands.literal("apoth");
+            LiteralArgumentBuilder<CommandSourceStack> root = Commands.literal("zenith");
             RarityCommand.register(root);
             CategoryCheckCommand.register(root);
             LootifyCommand.register(root);
@@ -132,12 +133,11 @@ public class AdventureEvents {
 
     /**
      * This event handler allows affixes to react to arrows being fired to trigger additional actions.
-     * Arrows marked as "apoth.generated" will not trigger the affix hook, so affixes can fire arrows without recursion.
+     * Arrows marked as "zenith.generated" will not trigger the affix hook, so affixes can fire arrows without recursion.
      */
 
-    public static void fireArrow() {
-    /*    EntityJoinLevelEvent e
-        if (e.getEntity() instanceof AbstractArrow arrow && !arrow.getCustomData().getBoolean("apoth.generated")) {
+    public static void fireArrow(AbstractArrow arrow) {
+        if (!arrow.getCustomData().getBoolean("apoth.generated")) {
             Entity shooter = arrow.getOwner();
             if (shooter instanceof LivingEntity living) {
                 ItemStack bow = living.getUseItem();
@@ -148,13 +148,14 @@ public class AdventureEvents {
                     }
                 }
                 if (bow.isEmpty()) return;
+
                 var affixes = AffixHelper.getAffixes(bow);
                 affixes.values().forEach(a -> {
                     a.onArrowFired(living, arrow);
                 });
                 AffixHelper.copyFrom(bow, arrow);
             }
-        }*/
+        }
     }
 
     /**
@@ -323,11 +324,15 @@ public class AdventureEvents {
     private static ThreadLocal<AtomicBoolean> reentrantLock = ThreadLocal.withInitial(() -> new AtomicBoolean(false));
 
     public static void enchLevels() {
-    /*    GetEnchantmentLevelEvent e
-        boolean isReentrant = reentrantLock.get().getAndSet(true);
-        if (isReentrant) return;
-        AffixHelper.streamAffixes(e.getStack()).forEach(inst -> inst.getEnchantmentLevels(e.getEnchantments()));
-        reentrantLock.get().set(false);*/
+
+        GetEnchantmentLevelEvent.GET_ENCHANTMENT_LEVEL.register(((enchantments, stack) -> {
+            boolean isReentrant = reentrantLock.get().getAndSet(true);
+            if (isReentrant) return enchantments;
+            AffixHelper.streamAffixes(stack).forEach(inst -> inst.getEnchantmentLevels(enchantments));
+            reentrantLock.get().set(false);
+            return enchantments;
+        }));
+
     }
 
     @SuppressWarnings("deprecation")

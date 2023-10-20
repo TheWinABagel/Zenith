@@ -42,6 +42,9 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
+/**
+ * The base class for all gem bonuses, needs to be extended by the class that adds the bonus.
+ */
 public abstract class GemBonus implements CodecProvider<GemBonus> {
 
     public static final Codec<Map<LootRarity, StepFunction>> VALUES_CODEC = LootRarity.mapCodec(StepFunction.CODEC);

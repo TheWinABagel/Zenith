@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.util.Events;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,7 +25,7 @@ public abstract class PlayerMixin {
     }
 
     @ModifyReturnValue(method = "hasCorrectToolForDrops", at = @At("RETURN"))
-    private boolean addHarvestCheckEvent(boolean result, BlockState state){
+    private boolean addHarvestCheckEvent(boolean result, BlockState state) {
         return result || Events.HarvestCheck.ATTEMPT_HARVEST.invoker().harvestAttempt(((Player) (Object) this), state);
     }
 }

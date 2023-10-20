@@ -1,4 +1,4 @@
-package dev.shadowsoffire.apotheosis.mixin.compat;
+package dev.shadowsoffire.apotheosis.mixin.compat.config;
 
 import com.llamalad7.mixinextras.MixinExtrasBootstrap;
 import net.fabricmc.loader.api.FabricLoader;

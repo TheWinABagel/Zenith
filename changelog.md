@@ -1,4 +1,9 @@
 
+## 0.1.2
+* All affixes are working now (except magical arrow, as it doesn't do anything atm)
+* All gems are working now
+* Adventure structures are properly disabled when module is disabled
+
 ## 0.1.1
 * Fix the game not running with the adventure module disabled (structures will still generate, to be fixed)
 

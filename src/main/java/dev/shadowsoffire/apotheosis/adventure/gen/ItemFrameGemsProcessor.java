@@ -1,8 +1,8 @@
 package dev.shadowsoffire.apotheosis.adventure.gen;
 
 import com.mojang.serialization.Codec;
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
 import net.minecraft.core.BlockPos;
@@ -35,7 +35,7 @@ public class ItemFrameGemsProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return Apoth.Features.ITEM_FRAME_LOOT;
+        return Adventure.Features.ITEM_FRAME_LOOT;
     }
 
     @Override

@@ -16,6 +16,10 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttin
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingMenu;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossSpawnerBlock;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossSummonerItem;
+import dev.shadowsoffire.apotheosis.adventure.gen.BossDungeonFeature;
+import dev.shadowsoffire.apotheosis.adventure.gen.BossDungeonFeature2;
+import dev.shadowsoffire.apotheosis.adventure.gen.ItemFrameGemsProcessor;
+import dev.shadowsoffire.apotheosis.adventure.gen.RogueSpawnerFeature;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.ench.objects.GlowyBlockItem.GlowyItem;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntityType;
@@ -40,10 +44,11 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 
 public class Adventure {
-
-    //private static final DeferredHelper R = ModularDeferredHelper.create(() -> Apotheosis.enableAdventure);
 
     public static class Blocks {
 
@@ -135,7 +140,6 @@ public class Adventure {
                     Apoth.fill(b, Items.COMMON_MATERIAL, Items.UNCOMMON_MATERIAL, Items.RARE_MATERIAL, Items.EPIC_MATERIAL, Items.MYTHIC_MATERIAL, Items.GEM_DUST, Items.VIAL_OF_EXPULSION,
                             Items.VIAL_OF_EXTRACTION, Items.VIAL_OF_UNNAMING, Items.SIGIL_OF_SOCKETING, Items.SIGIL_OF_ENHANCEMENT, Items.SUPERIOR_SIGIL_OF_SOCKETING, Items.SUPERIOR_SIGIL_OF_ENHANCEMENT, Items.BOSS_SUMMONER,
                             Items.SIMPLE_REFORGING_TABLE, Items.REFORGING_TABLE, Items.SALVAGING_TABLE, Items.GEM_CUTTING_TABLE);
-
                     GemItem.fillItemCategory(b);
                 })
                 .build();
@@ -161,10 +165,24 @@ public class Adventure {
         public static final BlockEntityType<ReforgingTableTile> REFORGING_TABLE = Apoth.registerBEType("reforging_table", new TickingBlockEntityType<>(ReforgingTableTile::new, ImmutableSet.of(Adventure.Blocks.SIMPLE_REFORGING_TABLE, Adventure.Blocks.REFORGING_TABLE), true, false));
         public static final BlockEntityType<SalvagingTableTile> SALVAGING_TABLE = Apoth.registerBEType("salvaging_table", new BlockEntityType<>(SalvagingTableTile::new, ImmutableSet.of(Adventure.Blocks.SALVAGING_TABLE), null));
     }
+
+    public static class Features {
+
+        public static final Feature<NoneFeatureConfiguration> BOSS_DUNGEON = Registry.register(BuiltInRegistries.FEATURE, Apotheosis.loc("boss_dungeon"), new BossDungeonFeature());
+
+        public static final Feature<NoneFeatureConfiguration> BOSS_DUNGEON_2 = Registry.register(BuiltInRegistries.FEATURE, Apotheosis.loc("boss_dungeon_2"), new BossDungeonFeature2());
+
+        public static final Feature<NoneFeatureConfiguration> ROGUE_SPAWNER = Registry.register(BuiltInRegistries.FEATURE, Apotheosis.loc("rogue_spawner"), new RogueSpawnerFeature());;
+        public static final StructureProcessorType<ItemFrameGemsProcessor> ITEM_FRAME_LOOT = () -> ItemFrameGemsProcessor.CODEC;
+        public static final StructureProcessorType<ItemFrameGemsProcessor> ITEM_FRAME_GEMS = Registry.register(BuiltInRegistries.STRUCTURE_PROCESSOR, Apotheosis.loc("item_frame_gems"), ITEM_FRAME_LOOT);
+
+        public static void bootstrap() {}
+    }
+
     public static void bootstrap() {
         Blocks.bootstrap();
         Items.bootstrap();
-        Apoth.Features.bootstrap();
+        Features.bootstrap();
         Menus.bootstrap();
         Tabs.bootstrap();
     };
@@ -179,5 +197,6 @@ public class Adventure {
 
         T create(int syncId, Inventory inventory, FriendlyByteBuf buf);
     }
+
 
 }

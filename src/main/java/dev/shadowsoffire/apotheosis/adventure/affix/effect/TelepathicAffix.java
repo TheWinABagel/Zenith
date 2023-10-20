@@ -20,7 +20,7 @@ import java.util.Collection;
 import java.util.function.Consumer;
 
 /**
- * Teleport Drops
+ * Teleport drops to the player
  */
 public class TelepathicAffix extends Affix {
 

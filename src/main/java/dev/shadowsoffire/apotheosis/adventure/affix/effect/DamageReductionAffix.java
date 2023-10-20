@@ -21,6 +21,9 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+/**
+ * Reduces damage taken of the type specified.
+ */
 public class DamageReductionAffix extends Affix {
 
     public static final Codec<DamageReductionAffix> CODEC = RecordCodecBuilder.create(inst -> inst

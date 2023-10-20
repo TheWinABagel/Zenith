@@ -57,7 +57,7 @@ dependencies {
 
 	// Mixin Extras + Mixin^2 for mod compat
 	implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.2.0-beta.10"))
-	implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.0.2"))
+	implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.1.1"))
 
 	modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${project.reach_lib_version}")
 	//modImplementation("io.github.fabricators_of_create.Porting-Lib:Porting-Lib:${project.port_lib_version}") { //not included as it is already included with fakerlib
@@ -75,7 +75,7 @@ dependencies {
 	modImplementation("io.github.fabricators_of_create.Porting-Lib:entity:${project.port_lib_version}")
 	modImplementation("io.github.fabricators_of_create.Porting-Lib:extensions:${project.port_lib_version}")
 	modImplementation("io.github.fabricators_of_create.Porting-Lib:lazy_registration:${project.port_lib_version}")
-	//modImplementation("io.github.fabricators_of_create.Porting-Lib:loot:${project.port_lib_version}")
+	modImplementation("io.github.fabricators_of_create.Porting-Lib:loot:2.1.1102+1.20-entity-refactor") //Using a more recent version... hopefully fine?
 	modImplementation("io.github.fabricators_of_create.Porting-Lib:mixin_extensions:${project.port_lib_version}")
 	modImplementation("io.github.fabricators_of_create.Porting-Lib:models:${project.port_lib_version}")
 	modImplementation("io.github.fabricators_of_create.Porting-Lib:registries:${project.port_lib_version}")
@@ -119,7 +119,15 @@ dependencies {
 
 	//Other Mods for Testing
 	//modCompileOnly
-	modImplementation"maven.modrinth:spell-power:${project.spell_power_version}-fabric"
+	modCompileOnly"maven.modrinth:spell-power:${project.spell_power_version}-fabric"
+
+	modImplementation "curse.maven:forge-config-api-port-fabric-547434:4583000"
+	modImplementation "curse.maven:iceberg-fabric-539382:4706535"
+	modImplementation "curse.maven:prism-fabric-665526:4650327"
+	modImplementation "curse.maven:legendary-tooltips-fabric-542478:4650438"
+
+	modImplementation "maven.modrinth:obscure-api:16"
+	modImplementation "maven.modrinth:aquamirae:ouUaC54p"
 
 }
 loom {

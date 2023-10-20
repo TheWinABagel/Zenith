@@ -15,6 +15,9 @@ import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.Map;
 
+/**
+ * Increases enchantment levels by a certain amount.
+ */
 public class EnchantmentBonus extends GemBonus {
 
     protected final Enchantment ench;

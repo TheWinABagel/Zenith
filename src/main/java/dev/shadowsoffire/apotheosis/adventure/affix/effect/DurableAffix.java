@@ -12,6 +12,9 @@ import net.minecraft.world.item.ItemStack;
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
+/**
+ * Reduces damage to durability.
+ */
 public class DurableAffix extends Affix {
 
     public static final Codec<DurableAffix> CODEC = Codec.unit(DurableAffix::new);

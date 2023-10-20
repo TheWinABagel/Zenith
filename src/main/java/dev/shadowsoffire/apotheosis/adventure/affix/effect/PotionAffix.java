@@ -32,6 +32,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
+/**
+ * Applies a potion effect, with a cooldown, on either the user or a target
+ */
 public class PotionAffix extends Affix {
 
     public static final Codec<PotionAffix> CODEC = RecordCodecBuilder.create(inst -> inst

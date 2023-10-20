@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableSet;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
@@ -20,6 +21,9 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.Map;
 
+/**
+ * Reduces magic damage by a certain percentage.
+ */
 public class MageSlayerBonus extends GemBonus {
 
     public static Codec<MageSlayerBonus> CODEC = RecordCodecBuilder.create(inst -> inst
@@ -37,9 +41,10 @@ public class MageSlayerBonus extends GemBonus {
     @Override
     public float onHurt(ItemStack gem, LootRarity rarity, DamageSource src, LivingEntity user, float amount) {
         float value = this.values.get(rarity).min();
-        if (src.is(DamageTypeTags.BYPASSES_ARMOR)) {
+        if (src.is(DamageTypeTags.BYPASSES_ARMOR)) { //No MAGIC tag
             user.heal(amount * (1 - value));
-            return amount * (1 - value);
+            if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Mage slayer triggered, healing for {}, value is {}, total taken is {}", (amount * (1 - value)), amount, amount - (amount * (1 - value)));
+            return amount;
         }
         return super.onHurt(gem, rarity, src, user, amount);
     }

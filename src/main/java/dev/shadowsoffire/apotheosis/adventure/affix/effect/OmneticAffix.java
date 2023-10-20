@@ -25,6 +25,9 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Consumer;
 
+/**
+ * Increases mining level of tools to a level set by the affix.
+ */
 public class OmneticAffix extends Affix {
 
     public static final Codec<OmneticAffix> CODEC = RecordCodecBuilder.create(inst -> inst
@@ -64,6 +67,7 @@ public class OmneticAffix extends Affix {
         }
         return true;
     }
+
     public float speed(Player player, BlockState state, BlockPos pos, float speed) {
 
         ItemStack stack = player.getMainHandItem();

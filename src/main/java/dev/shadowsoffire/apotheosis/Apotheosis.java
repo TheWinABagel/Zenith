@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis;
 
 import dev.shadowsoffire.apotheosis.advancements.AdvancementTriggers;
+import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.compat.PatchouliCompat;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
@@ -56,7 +57,6 @@ public class Apotheosis implements ModInitializer {
         if (FabricLoader.getInstance().isModLoaded("patchouli")) PatchouliCompat.registerPatchouli();
 
         Apoth.Tiles.bootstrap();
-        Apoth.Features.bootstrap();
     }
 
     static {

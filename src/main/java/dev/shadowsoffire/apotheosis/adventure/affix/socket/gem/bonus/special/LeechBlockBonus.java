@@ -18,7 +18,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.Map;
-
+/**
+ * Heal a percentage of damage blocked by shield.
+ */
 public class LeechBlockBonus extends GemBonus {
 
     public static Codec<LeechBlockBonus> CODEC = RecordCodecBuilder.create(inst -> inst

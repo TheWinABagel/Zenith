@@ -85,7 +85,7 @@ public class BossEvents {
                                     if (p.distanceToSqr(tPos) <= AdventureConfig.bossAnnounceRange * AdventureConfig.bossAnnounceRange) {
                                         ((ServerPlayer) p).connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("info.zenith.boss_spawn", name, (int) boss.getX(), (int) boss.getY())));
                                         TextColor color = name.getStyle().getColor();
-                                        AdventureModule.LOGGER.warn(boss.blockPosition());
+                                        if (Apotheosis.enableDebug) AdventureModule.LOGGER.warn("Boss spawn position: {}", boss.blockPosition());
                                         if (p.getServer() != null) BossSpawnMessage.sendTo((ServerPlayer) p, new BossSpawnMessage(boss.blockPosition(), color == null ? 0xFFFFFF : color.getValue()) /*, player*/);
                                     }
                                 });
