@@ -10,6 +10,8 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.attributeslib.AttributesLib;
+import dev.shadowsoffire.attributeslib.util.AttributeInfo;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.ChatFormatting;
@@ -42,8 +44,8 @@ public class AllStatsBonus extends GemBonus {
 
     protected final Operation operation;
     protected final Map<LootRarity, StepFunction> values;
-    public static List<Attribute> playerAttributes = new ArrayList<>(); //Obtained via mixin
-    protected transient final List<Attribute> attributes = new ArrayList<>(playerAttributes);
+
+    protected transient final List<Attribute> attributes = new ArrayList<>(AttributesLib.playerAttributes);
 
 
     @SuppressWarnings("deprecation")
@@ -56,9 +58,9 @@ public class AllStatsBonus extends GemBonus {
     @Override
     public void addModifiers(ItemStack gem, LootRarity rarity, BiConsumer<Attribute, AttributeModifier> map) {
         UUID id = GemItem.getUUIDs(gem).get(0);
-    //    if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("List of attributes being increased: {}", this.attributes);
         for (Attribute attr : this.attributes) {
-            //TODO add a blocklist to attributes that should not be able to be increased, add config ala ench config to attributeslib?
+            AttributeInfo info = AttributesLib.getAttrInfo(attr);
+            if (!info.getIsModfiable()) continue;
             var modif = new AttributeModifier(id, "apoth.gem_modifier.all_stats_buff", this.values.get(rarity).min(), this.operation);
             map.accept(attr, modif);
         }

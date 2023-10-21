@@ -17,7 +17,7 @@ import snownee.jade.api.*;
 import snownee.jade.api.config.IPluginConfig;
 
 @WailaPlugin
-public class AdventureHwylaPlugin implements IWailaPlugin, IEntityComponentProvider, IServerDataProvider<EntityAccessor> {
+public class AdventureJadePlugin implements IWailaPlugin, IEntityComponentProvider, IServerDataProvider<EntityAccessor> {
 
     @Override
     public void register(IWailaCommonRegistration reg) {

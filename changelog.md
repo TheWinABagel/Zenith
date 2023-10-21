@@ -1,4 +1,7 @@
 
+## 0.1.3
+* Add attribute config
+
 ## 0.1.2
 * All affixes are working now (except magical arrow, as it doesn't do anything atm)
 * All gems are working now

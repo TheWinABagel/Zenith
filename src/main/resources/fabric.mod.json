@@ -27,7 +27,7 @@
     "jade": [
       "dev.shadowsoffire.apotheosis.spawn.compat.SpawnerHwylaPlugin",
       "dev.shadowsoffire.apotheosis.ench.compat.EnchHwylaPlugin",
-      "dev.shadowsoffire.apotheosis.adventure.compat.AdventureHwylaPlugin"
+      "dev.shadowsoffire.apotheosis.adventure.compat.AdventureJadePlugin"
     ],
     "rei_client": [
       "dev.shadowsoffire.apotheosis.garden.compat.GardenREIPlugin",
@@ -54,7 +54,7 @@
     "minecraft": "1.20.1",
     "java": ">=17",
     "fakerlib": ">=0.0.6",
-    "zenith_attributes": ">=0.0.3"
+    "zenith_attributes": ">=0.0.4"
   },
   "suggests": {
     "roughlyenoughitems": "*",

@@ -7,7 +7,6 @@
   "mixins": [
     "adventure.BlockMixin",
     "adventure.BowItemMixin",
-    "adventure.CollectAttributesPlayerMixin",
     "adventure.EnchantmentHelperMixinAdventure",
     "adventure.ItemStackMixin",
     "adventure.LivingEntityInvoker",
