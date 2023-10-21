@@ -1,4 +1,10 @@
 
+## 0.1.4
+* Fix custom menus not opening on servers
+* Fixed adventure block entities crashing when opened on servers
+* Fix books not being enchantable
+* Add WTHIT support, if preferred over Jade
+
 ## 0.1.3
 * Add attribute config
 
@@ -12,7 +18,7 @@
 
 ## 0.1.0
 * Adventure module arrives (with no doubt many bugs)!
-* Not everything is 100% yet, still need to double check everything
+* Not everything is 100% yet, still need to double-check everything
 
 ## 0.0.3
 * Added fletching REI support

@@ -1,6 +1,5 @@
 package dev.shadowsoffire.apotheosis.village;
 
-import dev.shadowsoffire.apotheosis.ench.EnchModuleClient;
 import dev.shadowsoffire.apotheosis.village.fletching.FletchingScreen;
 import dev.shadowsoffire.apotheosis.village.fletching.arrows.BroadheadArrowRenderer;
 import dev.shadowsoffire.apotheosis.village.fletching.arrows.ExplosiveArrowRenderer;
@@ -10,8 +9,9 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 
 public class VillageModuleClient {
+
     public static void init() {
-        MenuScreens.register(EnchModuleClient.FLETCHING, FletchingScreen::new);
+        MenuScreens.register(VillageModule.FLETCHING_MENU, FletchingScreen::new);
         EntityRenderers.register(VillageModule.OBSIDIAN_ARROW_ENTITY, ObsidianArrowRenderer::new);
         EntityRenderers.register(VillageModule.BROADHEAD_ARROW_ENTITY, BroadheadArrowRenderer::new);
         EntityRenderers.register(VillageModule.EXPLOSIVE_ARROW_ENTITY, ExplosiveArrowRenderer::new);

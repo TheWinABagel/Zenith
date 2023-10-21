@@ -19,7 +19,7 @@ import snownee.jade.api.config.IPluginConfig;
 import java.util.Map;
 
 @WailaPlugin
-public class EnchHwylaPlugin implements IWailaPlugin, IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
+public class EnchJadePlugin implements IWailaPlugin, IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
 
     @Override
     public void register(IWailaCommonRegistration reg) {

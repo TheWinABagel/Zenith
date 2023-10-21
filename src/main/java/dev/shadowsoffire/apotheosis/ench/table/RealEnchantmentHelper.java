@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.ench.table;
 
 import com.google.common.collect.Lists;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.EnchantmentInfo;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu.Arcana;
@@ -64,6 +65,7 @@ public class RealEnchantmentHelper {
         List<EnchantmentInstance> chosenEnchants = Lists.newArrayList();
         int enchantability = stack.getItem().getEnchantmentValue();
         int srcLevel = level;
+        if (Apotheosis.enableDebug) EnchModule.LOGGER.info("enchantability {}, level {}", enchantability, level);
         if (enchantability > 0) {
             float quantaFactor = 1 + Mth.nextFloat(rand, -1F + rectification / 100F, 1F) * quanta / 100F; // The randomly selected value to multiply the level by, within range [-Q+Q*QR, +Q]
             level = Mth.clamp(Math.round(level * quantaFactor), 1, (int) (EnchantingStatRegistry.getAbsoluteMaxEterna() * 4));
@@ -135,9 +137,12 @@ public class RealEnchantmentHelper {
             boolean special = false;
             if (enchantment instanceof CustomEnchantingTableBehaviorEnchantment customEnch) special = customEnch.canApplyAtEnchantingTable(stack);
             if (stack.getItem() instanceof CustomEnchantingBehaviorItem customItem) special = customItem.canApplyAtEnchantingTable(stack, enchantment);
+            if (Apotheosis.enableDebug) EnchModule.LOGGER.info("Before check, {} {} {}, stack: {}", special, enchantment.category.canEnchant(stack.getItem()), enchi.forciblyAllowsTableEnchantment(stack, enchantment), stack);
             if (special || enchantment.category.canEnchant(stack.getItem()) || enchi.forciblyAllowsTableEnchantment(stack, enchantment) ) {
+                if (Apotheosis.enableDebug) EnchModule.LOGGER.info("allows table enchantment");
                 for (int level = info.getMaxLevel(); level > enchantment.getMinLevel() - 1; --level) {
                     if (power >= info.getMinPower(level) && power <= info.getMaxPower(level)) {
+                        if (Apotheosis.enableDebug) EnchModule.LOGGER.info("Adding ench to list");
                         list.add(new EnchantmentInstance(enchantment, level));
                         break;
                     }
@@ -157,13 +162,14 @@ public class RealEnchantmentHelper {
     private static void checkSpellEngine(ItemStack stack, List<EnchantmentInstance> currentEntries) {
 
         // 1. REMOVING ENCHANT ENTRIES ADDED INCORRECTLY
-
+        if (stack.is(Items.BOOK)) return;
         var toRemove = new ArrayList<EnchantmentInstance>();
         for (var entry: currentEntries) {
             if (!entry.enchantment.canEnchant(stack)) {
                 toRemove.add(entry);
             }
         }
+        if (Apotheosis.enableDebug) EnchModule.LOGGER.info("removing for spell power {}", toRemove);
         currentEntries.removeAll(toRemove);
     }
 

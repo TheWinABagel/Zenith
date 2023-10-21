@@ -164,6 +164,7 @@ public class Adventure {
         public static final BlockEntityType<BossSpawnerBlock.BossSpawnerTile> BOSS_SPAWNER = Apoth.registerBEType("boss_spawner", new TickingBlockEntityType<>(BossSpawnerBlock.BossSpawnerTile::new, ImmutableSet.of(Blocks.BOSS_SPAWNER), false, true));
         public static final BlockEntityType<ReforgingTableTile> REFORGING_TABLE = Apoth.registerBEType("reforging_table", new TickingBlockEntityType<>(ReforgingTableTile::new, ImmutableSet.of(Adventure.Blocks.SIMPLE_REFORGING_TABLE, Adventure.Blocks.REFORGING_TABLE), true, false));
         public static final BlockEntityType<SalvagingTableTile> SALVAGING_TABLE = Apoth.registerBEType("salvaging_table", new BlockEntityType<>(SalvagingTableTile::new, ImmutableSet.of(Adventure.Blocks.SALVAGING_TABLE), null));
+        public static void bootstrap() {}
     }
 
     public static class Features {
@@ -185,6 +186,7 @@ public class Adventure {
         Features.bootstrap();
         Menus.bootstrap();
         Tabs.bootstrap();
+        Tiles.bootstrap();
     };
 
 

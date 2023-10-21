@@ -1,8 +1,9 @@
 package dev.shadowsoffire.apotheosis.ench.table;
 
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.advancements.AdvancementTriggers;
 import dev.shadowsoffire.apotheosis.ench.Ench;
-import dev.shadowsoffire.apotheosis.ench.EnchModuleClient;
+import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.util.FloatReferenceHolder;
 import io.github.fabricators_of_create.porting_lib.tags.Tags;
 import io.github.fabricators_of_create.porting_lib.transfer.item.SlotItemHandler;
@@ -187,8 +188,8 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
                     for (int slot = 0; slot < 3; ++slot) {
                         if (this.costs[slot] > 0) {
                             List<EnchantmentInstance> list = this.getEnchantmentList(toEnchant, slot, this.costs[slot]);
-
                             if (list != null && !list.isEmpty()) {
+
                                 EnchantmentInstance enchantmentdata = list.remove(this.random.nextInt(list.size()));
                                 this.enchantClue[slot] = BuiltInRegistries.ENCHANTMENT.getId(enchantmentdata.enchantment);
                                 this.levelClue[slot] = enchantmentdata.level;
@@ -198,6 +199,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
                                 while (clues-- > 0 && !list.isEmpty()) {
                                     clueList.add(list.remove(this.random.nextInt(list.size())));
                                 }
+
                                 ClueMessage.sendTo(slot, clueList, list.isEmpty(), this.player);
                             }
                         }
@@ -303,7 +305,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
 
     @Override
     public MenuType<?> getType() {
-        return EnchModuleClient.ENCHANTING_TABLE;
+        return Ench.Menus.ENCHANTING_TABLE;
     }
 
     /**

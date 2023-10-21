@@ -15,7 +15,7 @@ import snownee.jade.api.*;
 import snownee.jade.api.config.IPluginConfig;
 
 @WailaPlugin
-public class SpawnerHwylaPlugin implements IWailaPlugin, IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
+public class SpawnerJadePlugin implements IWailaPlugin, IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
 
     public static final String STATS = "spw_stats";
 
@@ -65,12 +65,12 @@ public class SpawnerHwylaPlugin implements IWailaPlugin, IBlockComponentProvider
                     logic.maxNearbyEntities,
                     logic.requiredPlayerRange,
                     logic.spawnRange,
-                        ((IBaseSpawner) spw).getIgnorePlayers() ? 1 : 0,
-                        ((IBaseSpawner) spw).getIgnoresConditions() ? 1 : 0,
-                        ((IBaseSpawner) spw).getRedstoneControl() ? 1 : 0,
-                        ((IBaseSpawner) spw).getIgnoreLight() ? 1 : 0,
-                        ((IBaseSpawner) spw).getNoAi() ? 1 : 0,
-                        ((IBaseSpawner) spw).getSilent() ? 1 : 0
+                        spawner.getIgnorePlayers() ? 1 : 0,
+                        spawner.getIgnoresConditions() ? 1 : 0,
+                        spawner.getRedstoneControl() ? 1 : 0,
+                        spawner.getIgnoreLight() ? 1 : 0,
+                        spawner.getNoAi() ? 1 : 0,
+                        spawner.getSilent() ? 1 : 0
                 });
 
         }

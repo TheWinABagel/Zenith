@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.mixin.ench.table;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.api.IEnchantingBlock;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantTile;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu;

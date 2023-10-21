@@ -10,6 +10,7 @@ import dev.shadowsoffire.placebo.config.Configuration;
 import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.core.Position;
 import net.minecraft.core.Registry;
 import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
@@ -19,6 +20,7 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -32,9 +34,10 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 
 public class VillageModule {
-    public static final RecipeSerializer<FletchingRecipe> FLETCHING_SERIALIZER = new FletchingRecipe.Serializer();
     public static final Logger LOGGER = LogManager.getLogger("Zenith : Village");
+    public static final RecipeSerializer<FletchingRecipe> FLETCHING_SERIALIZER = new FletchingRecipe.Serializer();
     public static final RecipeType<FletchingRecipe> FLETCHING = PlaceboUtil.makeRecipeType("zenith:fletching");
+    public static final MenuType<FletchingContainer> FLETCHING_MENU = ScreenHandlerRegistry.registerSimple(Apotheosis.loc("fletching"), FletchingContainer::new);
 
 
     public static Configuration config;

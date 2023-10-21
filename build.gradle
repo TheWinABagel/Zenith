@@ -106,7 +106,7 @@ dependencies {
 
 	// WTHIT
 	modCompileOnly "mcp.mobius.waila:wthit-api:fabric-${project.wthit_version}"
-	//modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${project.wthit_version}"
+	modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${project.wthit_version}"
 
 	// REI + Arch
 	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
@@ -115,11 +115,12 @@ dependencies {
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
 
 	//Jade
-	modImplementation "curse.maven:jade-324717:${jade_id}"
+	modCompileOnly "curse.maven:jade-324717:${jade_id}"
+	//modImplementation "curse.maven:jade-324717:${jade_id}"
 
 	//Other Mods for Testing
 	//modCompileOnly
-	modCompileOnly"maven.modrinth:spell-power:${project.spell_power_version}-fabric"
+	modImplementation "maven.modrinth:spell-power:${project.spell_power_version}-fabric"
 
 	modImplementation "curse.maven:forge-config-api-port-fabric-547434:4583000"
 	modImplementation "curse.maven:iceberg-fabric-539382:4706535"

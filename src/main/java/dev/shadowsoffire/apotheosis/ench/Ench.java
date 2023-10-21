@@ -3,7 +3,7 @@ package dev.shadowsoffire.apotheosis.ench;
 import com.google.common.collect.ImmutableSet;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
+import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryContainer;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryTile;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryTile.BasicLibraryTile;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryTile.EnderLibraryTile;
@@ -18,24 +18,26 @@ import dev.shadowsoffire.apotheosis.ench.enchantments.twisted.ExploitationEnchan
 import dev.shadowsoffire.apotheosis.ench.enchantments.twisted.MinersFervorEnchant;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryBlock;
 import dev.shadowsoffire.apotheosis.ench.objects.*;
+import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingRecipe;
 import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
+import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.dispenser.ShearsDispenseItemBehavior;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -43,13 +45,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.function.Supplier;
-
 public class Ench {
-
-    public static final RecipeType<EnchantingRecipe> INFUSION = PlaceboUtil.makeRecipeType("zenith:enchanting");
 
     public static final class Blocks {
 
@@ -419,9 +415,17 @@ public class Ench {
     }
 
     public static final class RecipeTypes {
-
+        public static final RecipeType<EnchantingRecipe> INFUSION = PlaceboUtil.makeRecipeType("zenith:enchanting");
+        private static void bootstrap() {}
     }
 
+    public static final class Menus {
+
+        public static final MenuType<EnchLibraryContainer> LIBRARY = Apoth.registerMenu("library", new ExtendedScreenHandlerType<>(EnchLibraryContainer::new));
+        public static final MenuType<ApothEnchantmentMenu> ENCHANTING_TABLE = ScreenHandlerRegistry.registerSimple(Apotheosis.loc("enchanting_table"), ApothEnchantmentMenu::new);
+
+        private static void bootstrap() {}
+    }
     public static void bootstrap() {
         Blocks.init();
         Items.init();
@@ -429,6 +433,8 @@ public class Ench {
         Tabs.bootstrap();
         Apoth.Menus.bootstrap();
         Tiles.bootstrap();
+        RecipeTypes.bootstrap();
+        Menus.bootstrap();
     }
 
 }

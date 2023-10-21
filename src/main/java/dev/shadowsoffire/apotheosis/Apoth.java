@@ -6,6 +6,8 @@ import dev.shadowsoffire.apotheosis.ench.anvil.AnvilTile;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
 
 //import dev.shadowsoffire.apotheosis.village.fletching.arrows.*;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -31,6 +33,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.Callable;
+import java.util.function.Supplier;
 
 /**
  * Object Holder Class. For the main mod class, see {@link Apotheosis}
@@ -120,5 +124,20 @@ public class Apoth {
         return out;
     }
 
+    public static <T> T callWhenOn(EnvType env, Supplier<Callable<T>> toRun) {
+        return unsafeCallWhenOn(env, toRun);
+    }
+
+    public static <T> T unsafeCallWhenOn(EnvType env, Supplier<Callable<T>> toRun) {
+        if (FabricLoader.getInstance().getEnvironmentType() == env) {
+            try {
+                return toRun.get().call();
+            }
+            catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return null;
+    }
 
 }

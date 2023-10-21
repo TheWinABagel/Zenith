@@ -32,7 +32,7 @@ public class Apotheosis implements ModInitializer {
     public static boolean enablePotion = true;
     public static boolean enableVillage = true;
     public static boolean enableGarden = true;
-    public static boolean enableDebug = false;
+    public static boolean enableDebug = FabricLoader.getInstance().isDevelopmentEnvironment();
     public static boolean giveBook = true;
 
     public static float localAtkStrength = 1;
@@ -68,7 +68,7 @@ public class Apotheosis implements ModInitializer {
         enablePotion = config.getBoolean("Enable Potion Module", "general", true, "If the potion module is loaded.");
         enableVillage = config.getBoolean("Enable Village Module", "general", true, "If the village module is loaded.");
         enableGarden = config.getBoolean("Enable Garden Module", "general", true, "If the garden module is loaded.");
-        enableDebug = config.getBoolean("Enable Debug mode", "general", false, "If a lot of random debug info is added to the console. Not recommended for normal play.");
+        enableDebug = config.getBoolean("Enable Debug mode", "general", FabricLoader.getInstance().isDevelopmentEnvironment(), "If a lot of random debug info is added to the console. Not recommended for normal play.");
         giveBook = config.getBoolean("Give Book on First Join", "general", true, "If the Chronicle of Shadows is given to new players.");
         config.setTitle("Zenith Module Control");
         config.setComment("This file allows individual modules of Zenith to be enabled or disabled.\nChanges will have no effect until the next game restart.\nThis file must match on client and server.");

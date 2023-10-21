@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.ench.table;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -32,8 +33,9 @@ public class ClueMessage {
             }
             int slot = buf.readByte();
             boolean all = buf.readBoolean();
-
+            if (Apotheosis.enableDebug) EnchModule.LOGGER.info("Ench clue packet recieved with size: {}, clues: {}, slot: {}, all: {}", size, clues, slot, all);
             if (Minecraft.getInstance().screen instanceof ApothEnchScreen es) {
+                if (Apotheosis.enableDebug) EnchModule.LOGGER.info("Accepting clues");
                 es.acceptClues(slot, clues, all);
             }
         }));
@@ -49,6 +51,7 @@ public class ClueMessage {
         buf.writeByte(slot);
         buf.writeBoolean(all);
         ServerPlayNetworking.send((ServerPlayer) p, ID, buf);
+        if (Apotheosis.enableDebug) EnchModule.LOGGER.info("Sending packet with size: {}, clues: {}, slot: {}, all: {}, to player {}", clues.size(), clues, slot, all, p);
     }
 
 /*

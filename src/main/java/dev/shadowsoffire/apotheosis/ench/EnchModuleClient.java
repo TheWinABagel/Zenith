@@ -1,20 +1,14 @@
 package dev.shadowsoffire.apotheosis.ench;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryContainer;
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryScreen;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchScreen;
-import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu;
 import dev.shadowsoffire.apotheosis.ench.table.ClueMessage;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
-import dev.shadowsoffire.apotheosis.village.fletching.FletchingContainer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
-import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -25,10 +19,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -40,21 +31,17 @@ import net.minecraft.world.phys.Vec3;
 @SuppressWarnings("deprecation")
 public class EnchModuleClient {
 
-    public static final MenuType<FletchingContainer> FLETCHING = ScreenHandlerRegistry.registerSimple(Apotheosis.loc("fletching"), FletchingContainer::new);
-    public static final MenuType<EnchLibraryContainer> LIBRARY = Apoth.registerMenu("library", new ExtendedScreenHandlerType<>(EnchLibraryContainer::new));
-    public static final MenuType<ApothEnchantmentMenu> ENCHANTING_TABLE = ScreenHandlerRegistry.registerSimple(Apotheosis.loc("enchanting_table"), ApothEnchantmentMenu::new);
     static BlockHitResult res = BlockHitResult.miss(Vec3.ZERO, Direction.NORTH, BlockPos.ZERO);
 
     public static void tooltips() {
         ItemTooltipCallback.EVENT.register((stack, context, tooltip) -> {
-            Item i = stack.getItem();
-            if (i == Items.COBWEB) tooltip.add(Component.translatable("info.zenith.cobweb").withStyle(ChatFormatting.GRAY));
-            else if (i == Ench.Items.PRISMATIC_WEB) tooltip.add(Component.translatable("info.zenith.prismatic_cobweb").withStyle(ChatFormatting.GRAY));
-            else if (i instanceof BlockItem) {
-                Block block = ((BlockItem) i).getBlock();
+            if (stack.is(Items.COBWEB)) tooltip.add(Component.translatable("info.zenith.cobweb").withStyle(ChatFormatting.GRAY));
+            else if (stack.is(Ench.Items.PRISMATIC_WEB)) tooltip.add(Component.translatable("info.zenith.prismatic_cobweb").withStyle(ChatFormatting.GRAY));
+            else if (stack.getItem() instanceof BlockItem blockItem) {
+                Block block = blockItem.getBlock();
                 Level world = Minecraft.getInstance().level;
                 if (world == null || Minecraft.getInstance().player == null) return;
-                BlockPlaceContext ctx = new BlockPlaceContext(world, Minecraft.getInstance().player, InteractionHand.MAIN_HAND, stack, res){};
+            //    BlockPlaceContext ctx = new BlockPlaceContext(world, Minecraft.getInstance().player, InteractionHand.MAIN_HAND, stack, res){};
                 BlockState state = null;
             /*    try {
                     state = block.getStateForPlacement(ctx);
@@ -73,6 +60,7 @@ public class EnchModuleClient {
                 float arcana = EnchantingStatRegistry.getArcana(state, world, BlockPos.ZERO);
                 float rectification = EnchantingStatRegistry.getQuantaRectification(state, world, BlockPos.ZERO);
                 int clues = EnchantingStatRegistry.getBonusClues(state, world, BlockPos.ZERO);
+            //    if (Apotheosis.enableDebug) EnchModule.LOGGER.info("max {}, eterna {}, quanta {}, arcana {}, rect {}, clues {}", maxEterna, eterna, quanta, arcana, rectification, clues);
                 if (eterna != 0 || quanta != 0 || arcana != 0 || rectification != 0 || clues != 0) {
                     tooltip.add(Component.translatable("info.zenith.ench_stats").withStyle(ChatFormatting.GOLD));
                 }
@@ -95,7 +83,7 @@ public class EnchModuleClient {
                     tooltip.add(Component.translatable("info.zenith.clues" + (clues > 0 ? ".p" : ""), String.format("%d", clues)).withStyle(ChatFormatting.DARK_AQUA));
                 }
             }
-            else if (i == Items.ENCHANTED_BOOK) {
+            else if (stack.is(Items.ENCHANTED_BOOK)) {
                 var enchMap = EnchantmentHelper.getEnchantments(stack);
                 if (enchMap.size() == 1) {
                     var ench = enchMap.keySet().iterator().next();
@@ -131,8 +119,8 @@ public class EnchModuleClient {
     public static void init() {
         tooltips();
         ClueMessage.init();
-        MenuScreens.register(ENCHANTING_TABLE, ApothEnchScreen::new);
-        MenuScreens.register(LIBRARY, EnchLibraryScreen::new);
+        MenuScreens.register(Ench.Menus.ENCHANTING_TABLE, ApothEnchScreen::new);
+        MenuScreens.register(Ench.Menus.LIBRARY, EnchLibraryScreen::new);
         particles();
     }
 

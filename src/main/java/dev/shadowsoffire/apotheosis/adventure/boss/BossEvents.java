@@ -118,6 +118,7 @@ public class BossEvents {
                 if (item != null && !item.isExcluded(mob, sLevel, type) && sLevel.getRandom().nextFloat() <= item.getChance()) {
                     mob.getCustomData().putString("apoth.miniboss", MinibossRegistry.INSTANCE.getKey(item).toString());
                     mob.getCustomData().putFloat("apoth.miniboss.luck", player.getLuck());
+                    AdventureModule.debugLog(mob.blockPosition(), "Miniboss - " + mob.getName().getString());
                     if (!item.shouldFinalize()) return TriState.FALSE;
                 }
             }

@@ -1,0 +1,14 @@
+{
+  "zenith:ench": {
+    "initializer": "dev.shadowsoffire.apotheosis.ench.compat.EnchWTHITPlugin",
+    "side": "*"
+  },
+  "zenith:spawner": {
+    "initializer": "dev.shadowsoffire.apotheosis.spawn.compat.SpawnerWTHITPlugin",
+    "side": "*"
+  },
+  "zenith:adventure": {
+    "initializer": "dev.shadowsoffire.apotheosis.adventure.compat.AdventureWTHITPlugin",
+    "side": "*"
+  }
+}

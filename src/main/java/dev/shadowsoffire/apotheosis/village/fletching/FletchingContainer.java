@@ -1,7 +1,9 @@
 package dev.shadowsoffire.apotheosis.village.fletching;
 
-import dev.shadowsoffire.apotheosis.ench.EnchModuleClient;
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.village.VillageModule;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -26,7 +28,7 @@ public class FletchingContainer extends AbstractContainerMenu {
     protected final Player player;
 
     public FletchingContainer(int id, Inventory inv, Level world, BlockPos pos) {
-        super(EnchModuleClient.FLETCHING, id);
+        super(VillageModule.FLETCHING_MENU, id);
         this.world = world;
         this.pos = pos;
         this.player = inv.player;
@@ -48,11 +50,11 @@ public class FletchingContainer extends AbstractContainerMenu {
 
     }
 
-    @SuppressWarnings("deprecation")
+
     public FletchingContainer(int id, Inventory inv) {
-        this(id, inv, Minecraft.getInstance().level, BlockPos.ZERO);
-        //this(id, inv, DistExecutor.callWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().level), BlockPos.ZERO);
+        this(id, inv, Apoth.callWhenOn(EnvType.CLIENT, () -> () -> Minecraft.getInstance().level), BlockPos.ZERO);
     }
+
 
     @Override
     public void slotsChanged(Container inventory) {
