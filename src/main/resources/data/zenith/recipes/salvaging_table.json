@@ -12,7 +12,7 @@
   ],
   "key": {
     "C": {
-      "tag": "forge:ingots/copper"
+      "tag": "c:copper_ingots"
     },
 	"G": {
       "item": "zenith:gem_dust"

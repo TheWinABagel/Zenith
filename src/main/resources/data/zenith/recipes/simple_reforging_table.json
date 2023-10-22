@@ -12,7 +12,7 @@
   ],
   "key": {
     "N": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:iron_ingots"
     },
 	"G": {
       "item": "zenith:gem_dust"

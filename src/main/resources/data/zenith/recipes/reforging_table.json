@@ -12,7 +12,7 @@
   ],
   "key": {
     "N": {
-      "tag": "forge:ingots/netherite"
+      "tag": "c:netherite_ingots"
     },
 	"G": {
       "item": "zenith:epic_material"

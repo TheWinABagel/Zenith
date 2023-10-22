@@ -1,4 +1,7 @@
 
+## 0.1.5
+* Fix crafting recipes not working due to incorrect tags
+
 ## 0.1.4
 * Fix custom menus not opening on servers
 * Fixed adventure block entities crashing when opened on servers
