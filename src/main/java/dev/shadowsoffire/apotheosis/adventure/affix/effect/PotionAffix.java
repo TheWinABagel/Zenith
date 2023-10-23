@@ -33,7 +33,8 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 /**
- * Applies a potion effect, with a cooldown, on either the user or a target
+ * Applies a potion effect, with a cooldown, to a certain target.
+ * @see Target for the types of targets.
  */
 public class PotionAffix extends Affix {
 
@@ -50,7 +51,7 @@ public class PotionAffix extends Affix {
     protected final MobEffect effect;
     protected final Target target;
     protected final Map<LootRarity, EffectData> values;
-    @Deprecated(forRemoval = true, since = "6.3.0")
+    @Deprecated(forRemoval = true, since = "apoth 6.3.0")
     protected final int cooldown;
     protected final Set<LootCategory> types;
     protected final boolean stackOnReapply;
@@ -207,7 +208,8 @@ public class PotionAffix extends Affix {
         ARROW_SELF("arrow_self"),
         ARROW_TARGET("arrow_target"),
         BLOCK_SELF("block_self"),
-        BLOCK_ATTACKER("block_attacker");
+        BLOCK_ATTACKER("block_attacker"),
+        SPELL_CAST("spell_cast");
 
         public static final Codec<Target> CODEC = PlaceboCodecs.enumCodec(Target.class);
 

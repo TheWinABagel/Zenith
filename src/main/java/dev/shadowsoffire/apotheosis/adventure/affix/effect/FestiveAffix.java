@@ -31,7 +31,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 /**
- * Loot Pinata, drops extra items
+ * Loot Pinata, drops extra items.
  */
 public class FestiveAffix extends Affix {
 
@@ -95,7 +95,7 @@ public class FestiveAffix extends Affix {
                         item.setDeltaMovement(-0.3 + target.level().random.nextDouble() * 0.6, 0.3 + target.level().random.nextDouble() * 0.3, -0.3 + target.level().random.nextDouble() * 0.6);
                     }
                 }
-                if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Drops POST loot pinata: {}", drops);
+                if (Apotheosis.enableDebug && !drops.isEmpty()) AdventureModule.LOGGER.info("Drops POST loot pinata: {}", drops);
             }
         }
 

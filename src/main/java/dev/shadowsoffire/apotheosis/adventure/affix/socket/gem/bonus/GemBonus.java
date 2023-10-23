@@ -36,6 +36,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.HitResult;
+import net.spell_engine.api.spell.SpellEvents;
 
 
 import javax.annotation.Nullable;
@@ -238,6 +239,15 @@ public abstract class GemBonus implements CodecProvider<GemBonus> {
      * @param ctx    The loot context.
      */
     public void modifyLoot(ItemStack gem, LootRarity rarity, ObjectArrayList<ItemStack> loot, LootContext ctx) {}
+
+    /**
+     * Fires from {link LootModifier#apply(ObjectArrayList, LootContext)} when this bonus is active on the tool given by the context.
+     *
+     * @param gem    The gem itemstack.
+     * @param rarity The rarity of the gem.
+     * @param event  Projectile launch event, has context for spell engine casting
+     */
+    public void onCast(ItemStack gem, LootRarity rarity, SpellEvents.ProjectileLaunchEvent event) {}
 
     public ResourceLocation getId() {
         return this.id;

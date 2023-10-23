@@ -23,6 +23,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.HitResult;
+import net.spell_engine.api.spell.SpellEvents;
 
 import javax.annotation.Nullable;
 import java.util.Map;
@@ -165,5 +166,12 @@ public record AffixInstance(DynamicHolder<? extends Affix> affix, ItemStack stac
      */
     public void modifyLoot(ObjectArrayList<ItemStack> loot, LootContext ctx) {
         this.afx().modifyLoot(this.stack, this.rty(), this.level, loot, ctx);
+    }
+
+    /**
+     * @see Affix#onCast(ItemStack, LootRarity, float, SpellEvents.ProjectileLaunchEvent)
+     */
+    public void onCast(SpellEvents.ProjectileLaunchEvent event) {
+        this.afx().onCast(this.stack, this.rty(), this.level, event);
     }
 }

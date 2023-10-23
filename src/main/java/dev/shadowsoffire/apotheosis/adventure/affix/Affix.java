@@ -29,6 +29,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.HitResult;
+import net.spell_engine.api.spell.SpellEvents;
 
 import javax.annotation.Nullable;
 import java.util.Map;
@@ -218,6 +219,17 @@ public abstract class Affix implements CodecProvider<Affix> {
      * @param ctx    The loot context.
      */
     public void modifyLoot(ItemStack stack, LootRarity rarity, float level, ObjectArrayList<ItemStack> loot, LootContext ctx) {}
+
+    /**
+     * Fires from {link LootModifier#apply(ObjectArrayList, LootContext)} when this affix is on the tool given by the context.
+     * Only fired when Spell Engine is installed, allows for
+     *
+     * @param stack  The stack with the affix.
+     * @param rarity The rarity of the item.
+     * @param level  The level of the affix.
+     * @param event  Projectile launch information
+     */
+    public void onCast(ItemStack stack, LootRarity rarity, float level, SpellEvents.ProjectileLaunchEvent event) {}
 
     @Override
     public String toString() {

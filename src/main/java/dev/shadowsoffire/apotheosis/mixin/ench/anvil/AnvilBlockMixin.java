@@ -110,7 +110,7 @@ public class AnvilBlockMixin  extends FallingBlock implements INBTSensitiveFalli
                     }
                     if (handled) {
                         if (world.random.nextInt(1 + ub) == 0) {
-                            BlockState dmg = AnvilBlock.damage(fallState);
+                            BlockState dmg = damage(fallState);
                             if (dmg == null) {
                                 world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
                                 world.levelEvent(LevelEvent.SOUND_ANVIL_BROKEN, pos, 0);
@@ -188,5 +188,17 @@ public class AnvilBlockMixin  extends FallingBlock implements INBTSensitiveFalli
         Block.popResource(world, pos.above(), book);
         Block.popResource(world, pos.above(), book.copy());
         return true;
+    }
+
+    @Unique
+    @Nullable //TODO make block entity keep ench
+    private static BlockState damage(BlockState state) {
+        if (state.is(Blocks.ANVIL)) {
+            return (BlockState)Blocks.CHIPPED_ANVIL.defaultBlockState().setValue(AnvilBlock.FACING, state.getValue(AnvilBlock.FACING));
+        }
+        if (state.is(Blocks.CHIPPED_ANVIL)) {
+            return (BlockState)Blocks.DAMAGED_ANVIL.defaultBlockState().setValue(AnvilBlock.FACING, state.getValue(AnvilBlock.FACING));
+        }
+        return null;
     }
 }

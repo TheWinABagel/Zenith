@@ -31,6 +31,7 @@ import net.fabricmc.fabric.api.entity.FakePlayer;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.util.TriState;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
@@ -51,6 +52,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
+import net.spell_engine.api.spell.SpellEvents;
 
 import java.util.List;
 import java.util.UUID;
@@ -63,7 +65,7 @@ public class AdventureEvents {
         cmds();
         affixModifiers();
         preventBossSuffocate();
-        //fireArrow(); // need to create event
+        //fireArrow; called via mixin
         impact();
         onDamage();
         onItemUse();
@@ -77,8 +79,10 @@ public class AdventureEvents {
         onBreak();
         special();
         gemSmashing();
-        enchLevels(); // create event (placebo)
+        enchLevels();
         update();
+        if (FabricLoader.getInstance().isModLoaded("spell_engine")) onSpellCast();
+
     }
 
     public static void cmds() {
@@ -201,9 +205,13 @@ public class AdventureEvents {
             }
             return false;
         });
+    }
 
-
-
+    public static void onSpellCast() {
+            SpellEvents.PROJECTILE_SHOOT.register(projectileLaunchEvent -> {
+                var affixes = AffixHelper.getAffixes(projectileLaunchEvent.caster().getMainHandItem());
+                affixes.values().forEach(inst -> inst.onCast(projectileLaunchEvent));
+            });
     }
 
     public static void shieldBlock() {

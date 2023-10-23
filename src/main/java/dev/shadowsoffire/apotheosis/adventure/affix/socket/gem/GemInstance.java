@@ -27,6 +27,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.HitResult;
+import net.spell_engine.api.spell.SpellEvents;
 
 import javax.annotation.Nullable;
 import java.util.Map;
@@ -196,6 +197,10 @@ public record GemInstance(DynamicHolder<Gem> gem, LootCategory cat, ItemStack ge
 
     private <T> Optional<T> map(Function<GemBonus, T> function) {
         return this.gem.get().getBonus(this.cat).map(function);
+    }
+
+    public void onCast(SpellEvents.ProjectileLaunchEvent event) {
+        this.ifPresent(b -> b.onCast(this.gemStack, this.rarity.get(), event));
     }
 
     private void ifPresent(Consumer<GemBonus> function) {

@@ -1,4 +1,7 @@
 
+## 0.1.6
+* Add support for spell engine casting for gems and affixes, has to be implemented by a 3rd party with the api
+
 ## 0.1.5
 * Fix crafting recipes not working due to incorrect tags
 

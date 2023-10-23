@@ -29,6 +29,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.HitResult.Type;
+import net.spell_engine.api.spell.SpellEvents;
 import org.apache.commons.lang3.mutable.MutableFloat;
 
 import javax.annotation.Nullable;
@@ -126,6 +127,11 @@ public final class SocketAffix extends Affix {
     @Override
     public void modifyLoot(ItemStack socketed, LootRarity rarity, float level, ObjectArrayList<ItemStack> loot, LootContext ctx) {
         SocketHelper.getGemInstances(socketed).forEach(inst -> inst.modifyLoot(loot, ctx));
+    }
+
+    @Override
+    public void onCast(ItemStack socketed, LootRarity rarity, float level, SpellEvents.ProjectileLaunchEvent event) {
+        SocketHelper.getGemInstances(socketed).forEach(inst -> inst.onCast(event));
     }
 
     @Override
