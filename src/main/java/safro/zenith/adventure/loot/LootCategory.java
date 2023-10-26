@@ -86,7 +86,7 @@ public final class LootCategory {
 	}
 
 	public boolean isBreaker() {
-		return this == PICKAXE || this == SHOVEL;
+		return this == PICKAXE || this == SHOVEL || this == HOE || this == SHEARS;
 	}
 
 	public boolean isRanged() {
