@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.AnvilBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
-public class NullCategory extends EnchantmentCategoryMixin {
+public class NullCategory extends EnchantmentCategoryMixin4 {
     @Override
     public boolean canEnchant(Item item) {
         return false;

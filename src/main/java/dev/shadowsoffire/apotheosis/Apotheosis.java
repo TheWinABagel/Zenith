@@ -8,14 +8,17 @@ import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.garden.GardenModule;
 import dev.shadowsoffire.apotheosis.potion.PotionModule;
 import dev.shadowsoffire.apotheosis.spawn.SpawnerModule;
+import dev.shadowsoffire.apotheosis.util.DummyLootModifier;
 import dev.shadowsoffire.apotheosis.util.Events;
 import dev.shadowsoffire.apotheosis.util.ModuleCondition;
 import dev.shadowsoffire.apotheosis.village.VillageModule;
 import dev.shadowsoffire.placebo.config.Configuration;
 
+import io.github.fabricators_of_create.porting_lib.loot.PortingLibLoot;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 
 import java.io.File;
@@ -57,6 +60,8 @@ public class Apotheosis implements ModInitializer {
         if (FabricLoader.getInstance().isModLoaded("patchouli")) PatchouliCompat.registerPatchouli();
 
         Apoth.Tiles.bootstrap();
+        //This is to prevent potential issues with this registry not being registered for some reason, will be removed when fixed
+        Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), new ResourceLocation(MODID, "dummy"), DummyLootModifier.CODEC);
     }
 
     static {

@@ -1,4 +1,9 @@
 
+
+## 0.1.7
+* Fix anvils not dropping with their enchantments
+* Add extra spell engine support
+
 ## 0.1.6
 * Add support for spell engine casting for gems and affixes, has to be implemented by a 3rd party with the api
 

@@ -27,6 +27,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.HitResult.Type;
+import net.spell_engine.api.spell.SpellEvents;
 
 import java.util.Map;
 import java.util.Set;
@@ -138,6 +139,16 @@ public class PotionAffix extends Affix {
         return amount;
     }
 
+    @Override
+    public void onCast(ItemStack stack, LootRarity rarity, float level, SpellEvents.ProjectileLaunchEvent event) {
+        if (this.target == Target.SPELL_CAST_SELF) {
+            this.applyEffect(event.caster(), rarity, level);
+        }
+        else if (this.target == Target.SPELL_CAST_TARGET && event.target() instanceof LivingEntity target) {
+            this.applyEffect(target, rarity, level);
+        }
+    }
+
     protected int getCooldown(LootRarity rarity) {
         EffectData data = this.values.get(rarity);
         if (data.cooldown != -1) return data.cooldown;
@@ -209,7 +220,8 @@ public class PotionAffix extends Affix {
         ARROW_TARGET("arrow_target"),
         BLOCK_SELF("block_self"),
         BLOCK_ATTACKER("block_attacker"),
-        SPELL_CAST("spell_cast");
+        SPELL_CAST_SELF("spell_cast_self"),
+        SPELL_CAST_TARGET("spell_cast_target");
 
         public static final Codec<Target> CODEC = PlaceboCodecs.enumCodec(Target.class);
 

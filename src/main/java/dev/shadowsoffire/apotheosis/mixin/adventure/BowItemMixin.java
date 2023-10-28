@@ -16,7 +16,8 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public class BowItemMixin {
 
     @WrapWithCondition(method = "releaseUsing", at = @At(value = "INVOKE",target = "net/minecraft/world/level/Level.addFreshEntity (Lnet/minecraft/world/entity/Entity;)Z"))
-    private boolean arrowEvent(Level instance, Entity entity){
+    private boolean arrowEvent(Level instance, Entity entity) {
+        if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Current arrow base damage pre event: {}", ((AbstractArrow) entity).getBaseDamage());
         AdventureEvents.fireArrow((AbstractArrow) entity);
         return true;
     }

@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.village.fletching.arrows;
 
 import dev.shadowsoffire.apotheosis.village.VillageModule;
+import dev.shadowsoffire.attributeslib.api.ALObjects;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -50,8 +51,7 @@ public class BroadheadArrowEntity extends Arrow {
 
     @Override
     protected void doPostHurtEffects(LivingEntity living) {
-        MobEffect bleeding = MobEffects.ABSORPTION;
-        //MobEffect bleeding = ALObjects.MobEffects.BLEEDING.get();
+        MobEffect bleeding = ALObjects.MobEffects.BLEEDING;
         MobEffectInstance bleed = living.getEffect(bleeding);
         if (bleed != null) {
             living.addEffect(new MobEffectInstance(bleeding, bleed.getDuration() + 60, bleed.getAmplifier() + 1));

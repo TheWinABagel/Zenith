@@ -6,7 +6,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
-public class HoeCategory extends EnchantmentCategoryMixin {
+public class HoeCategory extends EnchantmentCategoryMixin3 {
     @Override
     public boolean canEnchant(Item item) {
         return item instanceof HoeItem;

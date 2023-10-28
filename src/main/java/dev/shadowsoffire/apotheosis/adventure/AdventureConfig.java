@@ -59,7 +59,6 @@ public class AdventureConfig {
     public static float randomAffixItem = 0.075F;
     public static float gemDropChance = 0.045F;
     public static float gemBossBonus = 0.33F;
-    public static boolean disableQuarkOnAffixItems = true;
     public static Supplier<Item> torchItem = () -> Items.TORCH;
     public static boolean cleaveHitsPlayers = false;
 
@@ -166,8 +165,6 @@ public class AdventureConfig {
                 e.printStackTrace();
             }
         }
-
-        disableQuarkOnAffixItems = c.getBoolean("Disable Quark Tooltips for Affix Items", "affixes", true, "If Quark's Attribute Tooltip handling is disabled for affix items");
 
         String torch = c.getString("Torch Placement Item", "affixes", "minecraft:torch",
             "The item that will be used when attempting to place torches with the torch placer affix.  Must be a valid item that places a block on right click.");

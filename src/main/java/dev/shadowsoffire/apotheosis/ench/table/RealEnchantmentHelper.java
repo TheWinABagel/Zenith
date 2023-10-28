@@ -138,6 +138,8 @@ public class RealEnchantmentHelper {
             if (enchantment instanceof CustomEnchantingTableBehaviorEnchantment customEnch) special = customEnch.canApplyAtEnchantingTable(stack);
             if (stack.getItem() instanceof CustomEnchantingBehaviorItem customItem) special = customItem.canApplyAtEnchantingTable(stack, enchantment);
             if (Apotheosis.enableDebug) EnchModule.LOGGER.info("Before check, {} {} {}, stack: {}", special, enchantment.category.canEnchant(stack.getItem()), enchi.forciblyAllowsTableEnchantment(stack, enchantment), stack);
+            boolean categoryEnchant = enchantment.category.canEnchant(stack.getItem());
+
             if (special || enchantment.category.canEnchant(stack.getItem()) || enchi.forciblyAllowsTableEnchantment(stack, enchantment) ) {
                 if (Apotheosis.enableDebug) EnchModule.LOGGER.info("allows table enchantment");
                 for (int level = info.getMaxLevel(); level > enchantment.getMinLevel() - 1; --level) {

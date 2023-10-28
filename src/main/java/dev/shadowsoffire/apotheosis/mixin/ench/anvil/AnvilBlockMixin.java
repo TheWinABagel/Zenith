@@ -36,6 +36,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -147,6 +149,16 @@ public class AnvilBlockMixin  extends FallingBlock implements INBTSensitiveFalli
         return anvil;
     }
 
+    @Override
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
+        ItemStack anvil = new ItemStack((AnvilBlock) (Object) this);
+        if (builder.getParameter(LootContextParams.BLOCK_ENTITY) instanceof AnvilTile te) {
+            Map<Enchantment, Integer> ench = te.getEnchantments();
+            ench = ench.entrySet().stream().filter(e -> e.getValue() > 0).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+            EnchantmentHelper.setEnchantments(ench, anvil);
+        }
+        return List.of(anvil);
+    }
 
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {

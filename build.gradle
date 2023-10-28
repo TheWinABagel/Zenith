@@ -128,8 +128,8 @@ dependencies {
 	modImplementation "curse.maven:prism-fabric-665526:4650327"
 	modImplementation "curse.maven:legendary-tooltips-fabric-542478:4650438"
 
-	modImplementation "maven.modrinth:obscure-api:16"
-	modImplementation "maven.modrinth:aquamirae:ouUaC54p"
+	//modImplementation "maven.modrinth:obscure-api:16"
+	//modImplementation "maven.modrinth:aquamirae:ouUaC54p"
 
 }
 loom {
@@ -200,4 +200,10 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
 	mainFile.addGameVersion("1.20.1")
 	mainFile.addModLoader("fabric")
 	mainFile.displayName = project.archives_base_name + "-" + project.version
+	mainFile.addRequirement("853197") //Fakerlib
+	mainFile.addRequirement("910078") //ZenithAttributes
+	mainFile.addRequirement("306612") //FAPI
+	mainFile.addRequirement("393236") //Patchouli
+	mainFile.addOptional("310111") //REI
+	mainFile.addOptional("250419") //Enchantment Descriptions
 }
