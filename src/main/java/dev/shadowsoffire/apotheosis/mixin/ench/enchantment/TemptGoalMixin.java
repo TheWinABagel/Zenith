@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class TemptGoalMixin {
 
     @Inject(method = "shouldFollow", at = @At(value = "RETURN"), cancellable = true)
-    public void apoth_tempting(LivingEntity entity, CallbackInfoReturnable<Boolean> ci) {
+    public void zenith_tempting(LivingEntity entity, CallbackInfoReturnable<Boolean> ci) {
         if (Apotheosis.enableEnch && !ci.getReturnValueZ() && Ench.Enchantments.TEMPTING.shouldFollow(entity)) ci.setReturnValue(true);
     }
 

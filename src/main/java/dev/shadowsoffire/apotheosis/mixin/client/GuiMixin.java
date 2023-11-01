@@ -12,7 +12,7 @@ public class GuiMixin {
      * @reason Extends the time the action bar message is set on the screen from 3 seconds to 8 seconds.
      */
     @ModifyConstant(method = "setOverlayMessage")
-    public int apoth_extendTime(int old) {
+    public int zenith_extendTime(int old) {
         if (Apotheosis.enableAdventure) return 160;
         return old;
     }

@@ -55,7 +55,6 @@
     "defaultRequire": 1
   },
   "client": [
-    "adventure.LevelRendererMixin",
     "client.AnvilScreenMixin",
     "client.EnchantmentScreenMixin",
     "client.GuiMixin",

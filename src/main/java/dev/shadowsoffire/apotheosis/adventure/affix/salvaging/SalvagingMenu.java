@@ -59,6 +59,7 @@ public class SalvagingMenu extends PlaceboContainerMenu {
                 public int getMaxStackSize(ItemStack stack) {
                     return 1;
                 }
+
             });
         }
 

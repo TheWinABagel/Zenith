@@ -182,7 +182,7 @@ public class ApothEnchScreen extends EnchantmentScreen implements DrawsOnLeft {
     public void render(GuiGraphics gfx, int mouseX, int mouseY, float partialTicks) {
         partialTicks = this.minecraft.getFrameTime();
         this.renderBackground(gfx);
-        ((SuperRender) this).apoth_superRender(gfx, mouseX, mouseY, partialTicks);
+        ((SuperRender) this).zenith_superRender(gfx, mouseX, mouseY, partialTicks);
         this.renderTooltip(gfx, mouseX, mouseY);
         boolean creative = this.minecraft.player.getAbilities().instabuild;
         int lapis = this.menu.getGoldCount();
@@ -378,6 +378,6 @@ public class ApothEnchScreen extends EnchantmentScreen implements DrawsOnLeft {
     }
 
     public static interface SuperRender {
-        public void apoth_superRender(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick);
+        public void zenith_superRender(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick);
     }
 }

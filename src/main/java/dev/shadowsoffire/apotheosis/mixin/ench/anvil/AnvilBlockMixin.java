@@ -203,7 +203,7 @@ public class AnvilBlockMixin  extends FallingBlock implements INBTSensitiveFalli
     }
 
     @Unique
-    @Nullable //TODO make block entity keep ench
+    @Nullable //TODO make block entity keep enchs when damaged
     private static BlockState damage(BlockState state) {
         if (state.is(Blocks.ANVIL)) {
             return (BlockState)Blocks.CHIPPED_ANVIL.defaultBlockState().setValue(AnvilBlock.FACING, state.getValue(AnvilBlock.FACING));

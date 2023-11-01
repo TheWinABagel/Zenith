@@ -120,13 +120,13 @@ dependencies {
 
 	//Other Mods for Testing
 	//modCompileOnly
-	modImplementation "maven.modrinth:spell-power:${project.spell_power_version}-fabric"
+	modImplementation("maven.modrinth:spell-power:${project.spell_power_version}-fabric")
 	modCompileOnly ("maven.modrinth:spell-engine:${project.spell_engine_version}-fabric")
 
-	modImplementation "curse.maven:forge-config-api-port-fabric-547434:4583000"
-	modImplementation "curse.maven:iceberg-fabric-539382:4706535"
-	modImplementation "curse.maven:prism-fabric-665526:4650327"
-	modImplementation "curse.maven:legendary-tooltips-fabric-542478:4650438"
+	//modImplementation "curse.maven:forge-config-api-port-fabric-547434:4583000"
+	//modImplementation "curse.maven:iceberg-fabric-539382:4706535"
+	//modImplementation "curse.maven:prism-fabric-665526:4650327"
+	//modImplementation "curse.maven:legendary-tooltips-fabric-542478:4650438"
 
 	//modImplementation "maven.modrinth:obscure-api:16"
 	//modImplementation "maven.modrinth:aquamirae:ouUaC54p"
@@ -200,10 +200,10 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
 	mainFile.addGameVersion("1.20.1")
 	mainFile.addModLoader("fabric")
 	mainFile.displayName = project.archives_base_name + "-" + project.version
-	mainFile.addRequirement("853197") //Fakerlib
-	mainFile.addRequirement("910078") //ZenithAttributes
-	mainFile.addRequirement("306612") //FAPI
-	mainFile.addRequirement("393236") //Patchouli
-	mainFile.addOptional("310111") //REI
-	mainFile.addOptional("250419") //Enchantment Descriptions
+	mainFile.addRequirement("fakerlib") //Fakerlib
+	mainFile.addRequirement("zenith-attributes") //ZenithAttributes
+	mainFile.addRequirement("fabric-api") //FAPI
+	mainFile.addRequirement("patchouli-fabric") //Patchouli
+	mainFile.addOptional("roughly-enough-items") //REI
+	mainFile.addOptional("enchantment-descriptions") //Enchantment Descriptions
 }

@@ -17,7 +17,7 @@ public abstract class EnchantmentScreenMixin extends AbstractContainerScreen<Enc
     }
 
     @Override
-    public void apoth_superRender(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+    public void zenith_superRender(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
     }
 

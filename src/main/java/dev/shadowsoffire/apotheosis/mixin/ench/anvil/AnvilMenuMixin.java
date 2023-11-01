@@ -39,7 +39,8 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
     }
 
     @ModifyConstant(method = "createResult()V", constant = @Constant(intValue = 40))
-    public int apoth_removeLevelCap(int old) {
+    public int zenith_removeLevelCap(int old) {
+        if (!Apotheosis.enableEnch) return old;
         return Integer.MAX_VALUE;
     }
 
@@ -55,7 +56,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
     }
 
     @Inject(method = "onTake", at = @At("HEAD"))
-    private void initRepairEvent(Player player, ItemStack stack, CallbackInfo ci){
+    private void initRepairEvent(Player player, ItemStack stack, CallbackInfo ci) {
         event = new Events.RepairEvent(p, output, left, right);
     }
 

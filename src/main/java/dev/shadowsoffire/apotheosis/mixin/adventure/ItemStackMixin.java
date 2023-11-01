@@ -21,7 +21,7 @@ import java.util.stream.DoubleStream;
 public class ItemStackMixin {
 
     @Inject(method = "getHoverName", at = @At("RETURN"), cancellable = true)
-    public void apoth_affixItemName(CallbackInfoReturnable<Component> ci) {
+    public void zenith_affixItemName(CallbackInfoReturnable<Component> ci) {
         if (Apotheosis.enableAdventure) {
             ItemStack ths = (ItemStack) (Object) this;
             CompoundTag afxData = ths.getTagElement(AffixHelper.AFFIX_DATA);

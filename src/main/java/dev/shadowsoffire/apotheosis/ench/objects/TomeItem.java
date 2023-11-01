@@ -2,6 +2,7 @@ package dev.shadowsoffire.apotheosis.ench.objects;
 
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.table.IEnchantableItem;
+import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingBehaviorItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
@@ -20,7 +21,7 @@ import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-public class TomeItem extends BookItem implements IEnchantableItem {
+public class TomeItem extends BookItem implements IEnchantableItem, CustomEnchantingBehaviorItem {
 
     final ItemStack rep;
     final EnchantmentCategory type;
@@ -32,7 +33,7 @@ public class TomeItem extends BookItem implements IEnchantableItem {
         EnchModule.TYPED_BOOKS.add(this);
     }
 
-    //@Override
+    @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         if (this.type == null) return EnchModule.TYPED_BOOKS.stream().filter(b -> b != this).allMatch(b -> !enchantment.canEnchant(new ItemStack(b)));
         return enchantment.category == this.type || enchantment.category.canEnchant(this.rep.getItem());

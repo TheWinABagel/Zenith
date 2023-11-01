@@ -1,4 +1,12 @@
+### TODO
+* EMI support
+* Add ability to enchant mining arrows
+* Fix salvaging non single stacks of items not giving the proper amount of items in return
 
+
+## 0.1.8
+* Fix tomes being unenchantable when spell power is installed
+* Fix mobs crashing the game when adventure module is disabled
 
 ## 0.1.7
 * Fix anvils not dropping with their enchantments

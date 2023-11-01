@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.EnchantmentInfo;
+import dev.shadowsoffire.apotheosis.ench.objects.TomeItem;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu.Arcana;
 import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingBehaviorItem;
 import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingTableBehaviorEnchantment;
@@ -138,13 +139,12 @@ public class RealEnchantmentHelper {
             if (enchantment instanceof CustomEnchantingTableBehaviorEnchantment customEnch) special = customEnch.canApplyAtEnchantingTable(stack);
             if (stack.getItem() instanceof CustomEnchantingBehaviorItem customItem) special = customItem.canApplyAtEnchantingTable(stack, enchantment);
             if (Apotheosis.enableDebug) EnchModule.LOGGER.info("Before check, {} {} {}, stack: {}", special, enchantment.category.canEnchant(stack.getItem()), enchi.forciblyAllowsTableEnchantment(stack, enchantment), stack);
-            boolean categoryEnchant = enchantment.category.canEnchant(stack.getItem());
 
             if (special || enchantment.category.canEnchant(stack.getItem()) || enchi.forciblyAllowsTableEnchantment(stack, enchantment) ) {
                 if (Apotheosis.enableDebug) EnchModule.LOGGER.info("allows table enchantment");
                 for (int level = info.getMaxLevel(); level > enchantment.getMinLevel() - 1; --level) {
                     if (power >= info.getMinPower(level) && power <= info.getMaxPower(level)) {
-                        if (Apotheosis.enableDebug) EnchModule.LOGGER.info("Adding ench to list");
+                        if (Apotheosis.enableDebug) EnchModule.LOGGER.info("Adding ench {} to list", enchantment);
                         list.add(new EnchantmentInstance(enchantment, level));
                         break;
                     }
@@ -171,7 +171,7 @@ public class RealEnchantmentHelper {
                 toRemove.add(entry);
             }
         }
-        if (Apotheosis.enableDebug) EnchModule.LOGGER.info("removing for spell power {}", toRemove);
+        if (Apotheosis.enableDebug) toRemove.forEach(ench -> EnchModule.LOGGER.info("removing for spell power {}", ench.enchantment.toString()));
         currentEntries.removeAll(toRemove);
     }
 
