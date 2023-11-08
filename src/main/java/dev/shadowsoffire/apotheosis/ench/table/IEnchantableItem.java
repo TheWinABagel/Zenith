@@ -69,7 +69,7 @@ public interface IEnchantableItem {
      * @return If the enchantment is allowed on this itemstack, overriding standard rules.
      */
     default boolean forciblyAllowsTableEnchantment(ItemStack stack, Enchantment enchantment) {
-        return stack.is(Items.BOOK) && !enchantment.equals(Ench.Enchantments.INFUSION) && enchantment.category.canEnchant(stack.getItem());
+        return stack.is(Items.BOOK) && !enchantment.equals(Ench.Enchantments.INFUSION);
     }
 
     /**

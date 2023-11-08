@@ -17,19 +17,15 @@ public class ItemMixin implements IEnchantableItem {
     /**
      * @author Shadows
      * @reason Enables all items to be enchantable by default.
-     * @return
      */
-    @Overwrite
-    public int getEnchantmentValue() {
-        return Apotheosis.enableEnch ? 1 : 0;
+    @Inject(method = "getEnchantmentValue", at = @At(value = "HEAD"), cancellable = true)
+    public void zenith_getEnchantmentValue(CallbackInfoReturnable<Integer> cir) {
+        if (Apotheosis.enableEnch) cir.setReturnValue(1);
     }
 
     @Inject(method = "isEnchantable",at = @At("RETURN"), cancellable = true)
-    private void addCustomEnchantableItems(ItemStack stack, CallbackInfoReturnable<Boolean> cir){
-        if (Apotheosis.enableEnch){
-            boolean old = cir.getReturnValue();
-            cir.setReturnValue(old || stack.is(Apoth.Tags.CUSTOM_ENCHANTABLES));
-        }
+    private void zenith_addCustomEnchantableItems(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+        if (Apotheosis.enableEnch) cir.setReturnValue(cir.getReturnValue() || stack.is(Apoth.Tags.CUSTOM_ENCHANTABLES));
     }
 
 }
