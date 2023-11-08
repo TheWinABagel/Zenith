@@ -2,7 +2,6 @@ package dev.shadowsoffire.apotheosis.adventure.affix.salvaging;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
-import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandler;
 import io.github.fabricators_of_create.porting_lib.util.LazyOptional;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
@@ -38,7 +37,7 @@ public class SalvagingTableTile extends BlockEntity implements ExtendedScreenHan
     /**
      * "Real" output inventory, as reflected in the container menu.
      */
-    protected final InternalItemHandler output = new InternalItemHandler(6);
+    protected final ItemStackHandler output = new ItemStackHandler(6);
 
     /**
      * External-facing inventory handler, which automatically salvages input items.

@@ -6,10 +6,10 @@ import dev.shadowsoffire.apotheosis.adventure.Adventure.Blocks;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Menus;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe.OutputData;
-import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import dev.shadowsoffire.placebo.menu.BlockEntityMenu;
 import dev.shadowsoffire.placebo.menu.FilteredSlot;
 import dev.shadowsoffire.placebo.menu.PlaceboContainerMenu;
+import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandler;
 import io.github.fabricators_of_create.porting_lib.transfer.item.RecipeWrapper;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
@@ -36,7 +36,7 @@ public class SalvagingMenu extends PlaceboContainerMenu {
     protected final Player player;
     protected final BlockPos pos;
     protected final SalvagingTableTile tile;
-    protected final InternalItemHandler inputInv = new InternalItemHandler(15);
+    protected final ItemStackHandler inputInv = new ItemStackHandler(15);
 
     public SalvagingMenu(int id, Inventory inv, FriendlyByteBuf buf) {
         this(id, inv, buf.readBlockPos());

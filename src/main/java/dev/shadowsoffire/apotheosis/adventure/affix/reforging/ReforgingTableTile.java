@@ -6,8 +6,8 @@ import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntity;
-import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
+import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.minecraft.core.BlockPos;
@@ -35,7 +35,7 @@ public class ReforgingTableTile extends BlockEntity implements ExtendedScreenHan
     public boolean step1 = true;
     protected final BlockPos pos;
 
-    protected InternalItemHandler inv = new InternalItemHandler(2){
+    protected ItemStackHandler inv = new ItemStackHandler(2){
         @Override
         public boolean isItemValid(int slot, ItemVariant resource) {
             if (slot == 0) return ReforgingTableTile.this.isValidRarityMat(resource.toStack());

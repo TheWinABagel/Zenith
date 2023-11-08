@@ -4,6 +4,12 @@
 * Fix salvaging non single stacks of items not giving the proper amount of items in return
 
 
+## 0.1.10
+* Update to fakerlib 0.0.8
+
+## 0.1.9
+* Fix books not being enchantable in the table, as well as them generating unenchanted
+
 ## 0.1.8
 * Fix tomes being unenchantable when spell power is installed
 * Fix mobs crashing the game when adventure module is disabled

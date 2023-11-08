@@ -10,9 +10,9 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
-import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import dev.shadowsoffire.placebo.menu.PlaceboContainerMenu;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
+import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandler;
 import io.github.fabricators_of_create.porting_lib.transfer.item.RecipeWrapper;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -39,7 +39,7 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 
     protected final Player player;
     protected final ContainerLevelAccess access;
-    protected final InternalItemHandler inv = new InternalItemHandler(4){
+    protected final ItemStackHandler inv = new ItemStackHandler(4){
         @Override
         public int getSlotLimit(int slot) {
             return slot == 0 ? 1 : super.getSlotLimit(slot);
