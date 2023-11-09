@@ -53,7 +53,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	modImplementation( "dev.shadowsoffire.placebo:placebo-fabric-1.20.1:${project.fakerlib_version}")
-	modImplementation( "dev.shadowsoffire:attributeslib-template-1.20.1:${project.zenith_attributes_version}")
+	modImplementation( "dev.bagel:ZenithAttributes:${project.zenith_attributes_version}")
 
 	// Mixin Extras + Mixin^2 for mod compat
 	implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.2.0-beta.10"))

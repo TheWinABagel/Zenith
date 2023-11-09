@@ -2,12 +2,14 @@ package dev.shadowsoffire.apotheosis.ench.library;
 
 import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.menu.SimplerMenuProvider;
+import io.github.fabricators_of_create.porting_lib.util.NetworkHooks;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -50,8 +52,11 @@ public class EnchLibraryBlock extends HorizontalDirectionalBlock implements Enti
 
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        return MenuUtil.openGui(player, pos, EnchLibraryContainer::new);
+        if (player.level().isClientSide) return InteractionResult.SUCCESS;
+        NetworkHooks.openScreen((ServerPlayer) player, new SimplerMenuProvider<>(player.level(), pos, EnchLibraryContainer::new), pos);
+        return InteractionResult.CONSUME;
     }
+
 
     @Override
     public MenuProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {

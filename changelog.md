@@ -4,6 +4,9 @@
 * Fix salvaging non single stacks of items not giving the proper amount of items in return
 
 
+## 0.1.11
+* Fix enchanting library not being openable
+
 ## 0.1.10
 * Update to fakerlib 0.0.8
 
