@@ -51,7 +51,6 @@ public class Apotheosis implements ModInitializer {
             VillageModule.init();
             VillageModule.FLETCHING.getClass(); // Static init wew
         }
-
         if (config.hasChanged()) config.save();
 
         AdvancementTriggers.init();
@@ -60,8 +59,6 @@ public class Apotheosis implements ModInitializer {
         if (FabricLoader.getInstance().isModLoaded("patchouli")) PatchouliCompat.registerPatchouli();
 
         Apoth.Tiles.bootstrap();
-        //This is to prevent potential issues with this registry not being registered for some reason, will be removed when fixed
-        Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), new ResourceLocation(MODID, "dummy"), DummyLootModifier.CODEC);
     }
 
     static {
@@ -76,10 +73,8 @@ public class Apotheosis implements ModInitializer {
         enableDebug = config.getBoolean("Enable Debug mode", "general", FabricLoader.getInstance().isDevelopmentEnvironment(), "If a lot of random debug info is added to the console. Not recommended for normal play.");
         giveBook = config.getBoolean("Give Book on First Join", "general", true, "If the Chronicle of Shadows is given to new players.");
         config.setTitle("Zenith Module Control");
-        config.setComment("This file allows individual modules of Zenith to be enabled or disabled.\nChanges will have no effect until the next game restart.\nThis file must match on client and server.");
-        config.setComment("Report any issues found to https://github.com/TheWinABagel/Zenith/issues, not to Apotheosis!");
+        config.setComment("This file allows individual modules of Zenith to be enabled or disabled.\nChanges will have no effect until the next game restart.\nThis file must match on client and server.\nReport any issues found to https://github.com/TheWinABagel/Zenith/issues, not to Apotheosis!");
         if (config.hasChanged()) config.save();
-
     }
     public static ResourceLocation loc(String id) {
         return new ResourceLocation(MODID, id);

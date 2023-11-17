@@ -6,9 +6,10 @@ import dev.shadowsoffire.apotheosis.ench.objects.ExtractionTomeItem;
 import dev.shadowsoffire.apotheosis.ench.objects.ImprovedScrappingTomeItem;
 import dev.shadowsoffire.apotheosis.ench.objects.ScrappingTomeItem;
 import dev.shadowsoffire.apotheosis.util.Events;
+import fuzs.puzzleslib.api.event.v1.FabricPlayerEvents;
 import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityLootEvents;
 import io.github.fabricators_of_create.porting_lib.tags.Tags;
-import net.minecraft.world.entity.ExperienceOrb;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
@@ -47,17 +48,17 @@ public class EnchModuleEvents {
                 if (e.right.getItem() == Items.COBWEB) {
                     ItemStack stack = e.left.copy();
                     EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack).entrySet().stream().filter(ent -> ent.getKey().isCurse()).collect(Collectors.toMap(Entry::getKey, Entry::getValue)), stack);
-                    e.setCost(1);
-                    e.setMaterialCost(1);
-                    e.setOutput(stack);
+                    e.cost = 1;
+                    e.materialCost = 1;
+                    e.output = stack;
+                    return false;
                 }
                 else if (e.right.getItem() == dev.shadowsoffire.apotheosis.ench.Ench.Items.PRISMATIC_WEB) {
                     ItemStack stack = e.left.copy();
                     EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack).entrySet().stream().filter(ent -> !ent.getKey().isCurse()).collect(Collectors.toMap(Entry::getKey, Entry::getValue)), stack);
-                    e.setCost(30);
-                    e.setMaterialCost(1);
-                    e.setOutput(stack);
-                    return false;
+                    e.cost = 30;
+                    e.materialCost = 1;
+                    e.output = stack;
                 }
             }
             if ((e.left.getItem() == Items.CHIPPED_ANVIL || e.left.getItem() == Items.DAMAGED_ANVIL) && e.right.is(Tags.Items.STORAGE_BLOCKS_IRON)) {
@@ -66,10 +67,9 @@ public class EnchModuleEvents {
                 ItemStack out = new ItemStack(dmg == 1 ? Items.ANVIL : Items.CHIPPED_ANVIL);
                 EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(e.left), out);
                 out.setCount(1);
-                e.setOutput(out);
-                e.setCost(5 + EnchantmentHelper.getEnchantments(e.left).entrySet().stream().mapToInt(ent -> ent.getValue() * (ent.getKey().getRarity().ordinal() + 1)).sum());
-                e.setMaterialCost(1);
-                return false;
+                e.output = out;
+                e.cost = (5 + EnchantmentHelper.getEnchantments(e.left).entrySet().stream().mapToInt(ent -> ent.getValue() * (ent.getKey().getRarity().ordinal() + 1)).sum());
+                e.materialCost = 1;
             }
             if (ScrappingTomeItem.updateAnvil(e)) return true;
             if (ImprovedScrappingTomeItem.updateAnvil(e)) return true;
@@ -155,18 +155,29 @@ public class EnchModuleEvents {
      * Event handler for Anvil Unbreaking.
      */
     public static void applyUnbreaking() {
-        Events.ANVIL_REPAIR.register((event) -> {
-            Player player = event.player;
-            if (player.containerMenu instanceof AnvilMenu anvMenu) {
-                anvMenu.access.execute((level, pos) -> {
-                    if (level.getBlockEntity(pos) instanceof AnvilTile anvil) {
-                        event.setBreakChance(event.breakChance / (anvil.getEnchantments().getInt(Enchantments.UNBREAKING) + 1));
-                    }
-                });
-            }
-            return false;
-        });
-
+        if (FabricLoader.getInstance().isModLoaded("puzzleslib")) {
+            FabricPlayerEvents.ANVIL_REPAIR.register((player, itemStack, itemStack1, itemStack2, mutableFloat) -> {
+                if (player.containerMenu instanceof AnvilMenu anvMenu) {
+                    anvMenu.access.execute((level, pos) -> {
+                        if (level.getBlockEntity(pos) instanceof AnvilTile anvil) {
+                            float old = mutableFloat.getAsFloat();
+                            mutableFloat.accept((old / (anvil.getEnchantments().getInt(Enchantments.UNBREAKING) + 1)));
+                        }
+                    });
+                }
+            });
+        } else {
+            Events.AnvilRepair.ANVIL_REPAIR.register((event) -> {
+                Player player = event.player;
+                if (player.containerMenu instanceof AnvilMenu anvMenu) {
+                    anvMenu.access.execute((level, pos) -> {
+                        if (level.getBlockEntity(pos) instanceof AnvilTile anvil) {
+                            event.breakChance = (event.breakChance / (anvil.getEnchantments().getInt(Enchantments.UNBREAKING) + 1));
+                        }
+                    });
+                }
+            });
+        }
     }
 
 

@@ -4,6 +4,15 @@
 * Fix salvaging non single stacks of items not giving the proper amount of items in return
 
 
+## 0.2.0
+* Make anvil repair event fire when in creative mode
+* Fix Tome of Extraction not giving item back due to incompatibility with puzzleslib
+* Fix modded bookshelves not having eterna
+* Fix gem of royal family breaking elytra attribute
+* Remove testing mixin that was left in by mistake, causing a crash with newer versions of porting lib
+* Fix extraction recipe not working (from upstream)
+* Remove random debug code + code cleanup
+
 ## 0.1.11
 * Fix enchanting library not being openable
 

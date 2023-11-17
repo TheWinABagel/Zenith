@@ -49,8 +49,7 @@ public class SpawnerModule {
 
         reload(false);
     }
-// Broken: spawner needs to be redone as mixin? probably still, Jade support, advancements, REI
-// not all data is saved when block is broken
+
     public static void register() {
         Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, Apotheosis.loc("spawner_modifier"), SpawnerModifier.SERIALIZER);
         Registry.register(BuiltInRegistries.ENCHANTMENT, Apotheosis.loc("capturing"), PotionModule.CAPTURING);

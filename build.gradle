@@ -39,6 +39,11 @@ repositories {
 	maven { url "https://maven.terraformersmc.com" }
 	maven { url "https://cursemaven.com" }
 	maven { url "https://maven.bai.lol" }
+	maven { url 'https://maven.wispforest.io' } //owo lib
+	maven {
+		name = "Fuzs Mod Resources"
+		url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+	}
 
 	mavenLocal()
 }
@@ -118,18 +123,24 @@ dependencies {
 	modCompileOnly "curse.maven:jade-324717:${jade_id}"
 	modImplementation "curse.maven:jade-324717:${jade_id}"
 
-	//Other Mods for Testing
+	//Fixes for other mods
 	//modCompileOnly
 	modImplementation("maven.modrinth:spell-power:${project.spell_power_version}-fabric")
 	modCompileOnly ("maven.modrinth:spell-engine:${project.spell_engine_version}-fabric")
 
-	//modImplementation "curse.maven:forge-config-api-port-fabric-547434:4583000"
+	modCompileOnly("io.wispforest:lavender:0.1.0-pre.6+1.20")
+
+	modCompileOnly("io.wispforest:owo-lib:0.11.0+1.20")
+	modCompileOnly "curse.maven:conjuring-422310:4580578"
 	//modImplementation "curse.maven:iceberg-fabric-539382:4706535"
 	//modImplementation "curse.maven:prism-fabric-665526:4650327"
 	//modImplementation "curse.maven:legendary-tooltips-fabric-542478:4650438"
 
 	//modImplementation "maven.modrinth:obscure-api:16"
 	//modImplementation "maven.modrinth:aquamirae:ouUaC54p"
+
+	modCompileOnly "curse.maven:puzzles-lib-495476:4847147"
+	modCompileOnly "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:8.0.0"
 
 }
 loom {

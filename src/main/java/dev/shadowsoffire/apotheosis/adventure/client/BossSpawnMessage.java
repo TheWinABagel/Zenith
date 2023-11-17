@@ -30,15 +30,17 @@ public class BossSpawnMessage {
     }
 
     public static void init() {
-
+        ClientPlayNetworking.registerGlobalReceiver(BossSpawnMessage.ID, (client, handler, buf, responseSender) -> {
+            int color = buf.readInt();
+            BlockPos pos = buf.readBlockPos();
+            AdventureModuleClient.onBossSpawn(pos, BossSpawnMessage.toFloats(color));
+        });
     }
 
     public static void sendTo(ServerPlayer player, BossSpawnMessage msg) {
         FriendlyByteBuf buf = PacketByteBufs.create();
         buf.writeInt(msg.color);
         buf.writeBlockPos(msg.pos);
-        AdventureModule.LOGGER.warn("Message SENT Pos {}", msg.pos);
-        //ClientPlayNetworking.send(ID, buf);
         ServerPlayNetworking.send(player, ID, buf);
     }
 

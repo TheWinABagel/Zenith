@@ -65,9 +65,9 @@ public class ScrappingTomeItem extends BookItem {
         }
         ItemStack out = new ItemStack(Items.ENCHANTED_BOOK);
         EnchantmentHelper.setEnchantments(wepEnch, out);
-        ev.setMaterialCost(1);
-        ev.setCost(wepEnch.size() * 6);
-        ev.setOutput(out);
+        ev.materialCost = 1;
+        ev.cost = (wepEnch.size() * 6);
+        ev.output = out;
         return true;
     }
 }

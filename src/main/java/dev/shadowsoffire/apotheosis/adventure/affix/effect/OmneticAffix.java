@@ -60,12 +60,12 @@ public class OmneticAffix extends Affix {
                 OmneticData data = this.values.get(inst.rarity().get());
                 for (ItemStack item : data.items()) {
                     if (item.isCorrectToolForDrops(state)) {
-                        return false;
+                        return true;
                     }
                 }
             }
         }
-        return true;
+        return false;
     }
 
     public float speed(Player player, BlockState state, BlockPos pos, float speed) {

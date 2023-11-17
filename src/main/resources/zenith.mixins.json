@@ -14,7 +14,6 @@
     "adventure.MHFMixinLivingEntity",
     "adventure.PlayerMixin",
     "adventure.SmithingMenuMixin",
-    "compat.PortLibLootPoolMixin",
     "compat.config.roughlyenoughitems.present.DefaultSmithingDisplayMixin",
     "ench.BlockMixin",
     "ench.CreativeModeTabsMixin",

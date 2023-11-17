@@ -1,17 +1,22 @@
 package dev.shadowsoffire.apotheosis.ench.objects;
 
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
+import dev.shadowsoffire.apotheosis.ench.anvil.AnvilTile;
 import dev.shadowsoffire.apotheosis.util.Events;
+import fuzs.puzzleslib.api.event.v1.FabricPlayerEvents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AnvilMenu;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 
 import java.util.Collections;
@@ -58,9 +63,9 @@ public class ExtractionTomeItem extends BookItem {
         Map<Enchantment, Integer> wepEnch = EnchantmentHelper.getEnchantments(weapon);
         ItemStack out = new ItemStack(Items.ENCHANTED_BOOK);
         EnchantmentHelper.setEnchantments(wepEnch, out);
-        ev.setMaterialCost(1);
-        ev.setCost(wepEnch.size() * 16);
-        ev.setOutput(out);
+        ev.materialCost = 1;
+        ev.cost = (wepEnch.size() * 16);
+        ev.output = out;
         return true;
     }
 
@@ -72,20 +77,30 @@ public class ExtractionTomeItem extends BookItem {
             Inventory inventory = player.getInventory();
             if (inventory.player instanceof ServerPlayer) {
                 inventory.placeItemBackInInventory(stack);
+            } else {
+                EnchModule.LOGGER.info("Player not found to give items to!");
             }
         }
     }
 
     public static void updateRepair() {
-        Events.ANVIL_REPAIR.register((ev) -> {
-            ItemStack weapon = ev.left;
-            ItemStack book = ev.right;
-            if (!(book.getItem() instanceof ExtractionTomeItem) || book.isEnchanted() || !weapon.isEnchanted()) return false;
-            EnchModule.LOGGER.error("test2");
-            EnchantmentHelper.setEnchantments(Collections.emptyMap(), weapon);
-            giveItem(ev.player, weapon);
-            return false;
-        });
+        if (FabricLoader.getInstance().isModLoaded("puzzleslib")) {
+            FabricPlayerEvents.ANVIL_REPAIR.register((player, left, right, out, mutableFloat) -> {
+                if (!(right.getItem() instanceof ExtractionTomeItem) || right.isEnchanted() || !left.isEnchanted())
+                    return;
+                EnchantmentHelper.setEnchantments(Collections.emptyMap(), left);
+                giveItem(player, left);
+            });
+        } else {
+            Events.AnvilRepair.ANVIL_REPAIR.register((ev) -> {
+                ItemStack weapon = ev.left;
+                ItemStack book = ev.right;
+                if (!(book.getItem() instanceof ExtractionTomeItem) || book.isEnchanted() || !weapon.isEnchanted())
+                    return;
+                EnchantmentHelper.setEnchantments(Collections.emptyMap(), weapon);
+                giveItem(ev.player, weapon);
+            });
+        }
     }
 
 }

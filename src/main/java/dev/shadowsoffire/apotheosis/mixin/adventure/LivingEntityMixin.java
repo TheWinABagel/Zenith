@@ -34,6 +34,6 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "die", at = @At("HEAD"))
     private void onDeath(DamageSource damageSource, CallbackInfo ci){
-        Events.onEntityDeath.LIVING_DEATH.invoker().onDeath(((LivingEntity) (Object) this), damageSource);
+        Events.OnEntityDeath.LIVING_DEATH.invoker().onDeath(((LivingEntity) (Object) this), damageSource);
     }
 }

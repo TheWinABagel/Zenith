@@ -49,15 +49,12 @@ public class Apoth {
     public static final class Tiles {
         public static void bootstrap(){}
         public static final BlockEntityType<AnvilTile> ANVIL_TILE = Apoth.registerBEType("anvil", new BlockEntityType<>(AnvilTile::new, ImmutableSet.of(Blocks.ANVIL, Blocks.CHIPPED_ANVIL, Blocks.DAMAGED_ANVIL), null));
-        //public static final BlockEntityType<ApothEnchantTile> ENCHANT_TILE = Apoth.registerBEType("enchanting_table", new BlockEntityType<>(ApothEnchantTile::new, ImmutableSet.of(Blocks.ENCHANTING_TABLE), null));
-
     }
 
     public static final class Tags {
         public static final TagKey<Item> CUSTOM_ENCHANTABLES = registerItemTag(Apotheosis.loc("custom_enchantables"));
         public static final TagKey<Item> BOON_DROPS = registerItemTag(Apotheosis.loc("boon_drops"));
         public static final TagKey<Item> SPEARFISHING_DROPS = registerItemTag(Apotheosis.loc("spearfishing_drops"));
-
     }
 
 

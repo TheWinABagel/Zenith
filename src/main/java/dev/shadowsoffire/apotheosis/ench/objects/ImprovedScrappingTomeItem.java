@@ -49,9 +49,9 @@ public class ImprovedScrappingTomeItem extends BookItem {
         Map<Enchantment, Integer> wepEnch = EnchantmentHelper.getEnchantments(weapon);
         ItemStack out = new ItemStack(Items.ENCHANTED_BOOK);
         EnchantmentHelper.setEnchantments(wepEnch, out);
-        ev.setMaterialCost(1);
-        ev.setCost(wepEnch.size() * 10);
-        ev.setOutput(out);
+        ev.materialCost = 1;
+        ev.cost = (wepEnch.size() * 10);
+        ev.output = out;
         return true;
     }
 }

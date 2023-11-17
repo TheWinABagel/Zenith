@@ -11,6 +11,8 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.attributeslib.AttributesLib;
+import dev.shadowsoffire.attributeslib.api.ALObjects;
+import dev.shadowsoffire.attributeslib.impl.BooleanAttribute;
 import dev.shadowsoffire.attributeslib.util.AttributeInfo;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.util.StepFunction;
@@ -61,6 +63,7 @@ public class AllStatsBonus extends GemBonus {
         for (Attribute attr : this.attributes) {
             AttributeInfo info = AttributesLib.getAttrInfo(attr);
             if (!info.getIsModfiable()) continue;
+            if (attr instanceof BooleanAttribute) continue;
             var modif = new AttributeModifier(id, "apoth.gem_modifier.all_stats_buff", this.values.get(rarity).min(), this.operation);
             map.accept(attr, modif);
         }

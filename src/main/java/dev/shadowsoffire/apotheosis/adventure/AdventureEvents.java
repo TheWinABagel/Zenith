@@ -1,10 +1,6 @@
 package dev.shadowsoffire.apotheosis.adventure;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import dev.architectury.event.events.common.InteractionEvent;
-import dev.shadowsoffire.apotheosis.Apoth;
-import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.adventure.Adventure.Affixes;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
@@ -29,7 +25,6 @@ import io.github.fabricators_of_create.porting_lib.entity.events.player.PlayerEv
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.FakePlayer;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
-import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.util.TriState;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.commands.CommandSourceStack;
@@ -65,7 +60,6 @@ public class AdventureEvents {
         cmds();
         affixModifiers();
         preventBossSuffocate();
-        //fireArrow; called via mixin
         impact();
         onDamage();
         onItemUse();
@@ -74,7 +68,6 @@ public class AdventureEvents {
         dropsHigh();
         drops();
         deathMark();
-        harvest();
         speed();
         onBreak();
         special();
@@ -82,7 +75,6 @@ public class AdventureEvents {
         enchLevels();
         update();
         if (FabricLoader.getInstance().isModLoaded("spell_engine")) onSpellCast();
-
     }
 
     public static void cmds() {
@@ -98,7 +90,6 @@ public class AdventureEvents {
             AddGemCommand.register(root);
             dispatcher.register(root);
         });
-
     }
 
     private static final UUID HEAVY_WEAPON_AS = UUID.fromString("f8c3de3d-1fea-4d7c-a8b0-29f63c4c3454");
@@ -112,6 +103,7 @@ public class AdventureEvents {
                 if (!affixes.isEmpty() && LootCategory.forItem(stack) == LootCategory.HEAVY_WEAPON && e.slot == EquipmentSlot.MAINHAND) {
                     double amt = -0.15 - 0.10 * affixes.values().stream().findAny().get().rarity().get().ordinal();
                     AttributeModifier baseAS = e.originalModifiers.get(Attributes.ATTACK_SPEED).stream().filter(a -> ItemAccess.getBaseAS() == a.getId()).findFirst().orElse(null);
+
                     if (baseAS != null) {
                         // Try to not reduce attack speed below 0.4 if possible.
                         double value = 4 + baseAS.getAmount();
@@ -123,7 +115,6 @@ public class AdventureEvents {
                 }
             }
         });
-
     }
 
     public static void preventBossSuffocate() {
@@ -132,7 +123,6 @@ public class AdventureEvents {
                 e.setCanceled(true);
             }
         });
-
     }
 
     /**
@@ -173,7 +163,6 @@ public class AdventureEvents {
             }
             return false;
         });
-
     }
 
     public static void onDamage() {
@@ -208,10 +197,10 @@ public class AdventureEvents {
     }
 
     public static void onSpellCast() {
-            SpellEvents.PROJECTILE_SHOOT.register(projectileLaunchEvent -> {
-                var affixes = AffixHelper.getAffixes(projectileLaunchEvent.caster().getMainHandItem());
-                affixes.values().forEach(inst -> inst.onCast(projectileLaunchEvent));
-            });
+        SpellEvents.PROJECTILE_SHOOT.register(projectileLaunchEvent -> {
+            var affixes = AffixHelper.getAffixes(projectileLaunchEvent.caster().getMainHandItem());
+            affixes.values().forEach(inst -> inst.onCast(projectileLaunchEvent));
+        });
     }
 
     public static void shieldBlock() {
@@ -234,7 +223,6 @@ public class AdventureEvents {
                 inst.onBlockBreak(player, world, pos, state);
             }
         });
-
     }
 
     public static void dropsHigh() {
@@ -249,7 +237,6 @@ public class AdventureEvents {
             }
             return false;
         });
-
     }
 
     public static void drops() {
@@ -259,23 +246,12 @@ public class AdventureEvents {
             Adventure.Affixes.FESTIVE.getOptional().ifPresent(afx -> afx.removeMarker(drops));
             return false;
         });
-
     }
 
     public static void deathMark() {
-        Events.onEntityDeath.LIVING_DEATH.register((entity, source) -> {
+        Events.OnEntityDeath.LIVING_DEATH.register((entity, source) -> {
             Adventure.Affixes.FESTIVE.getOptional().ifPresent(afx -> afx.markEquipment(entity, source));
         });
-
-    }
-
-    public static void harvest() {
-        Events.HarvestCheck.ATTEMPT_HARVEST.register((player, state) -> {
-            AtomicBoolean lambdaDumb = new AtomicBoolean(false);
-            Adventure.Affixes.OMNETIC.getOptional().ifPresent(afx -> lambdaDumb.set(afx.harvest(player, state)));
-            return lambdaDumb.get();
-        });
-
     }
 
     public static void speed() {
@@ -308,7 +284,6 @@ public class AdventureEvents {
             }
             return TriState.DEFAULT;
         });
-
     }
 
     public static void gemSmashing() {
@@ -322,7 +297,6 @@ public class AdventureEvents {
             }
             return false;
         });
-
     }
 
     /**
@@ -340,7 +314,6 @@ public class AdventureEvents {
             reentrantLock.get().set(false);
             return enchantments;
         }));
-
     }
 
     @SuppressWarnings("deprecation")
@@ -358,7 +331,6 @@ public class AdventureEvents {
                 }
             }
         });
-
     }
 
 }

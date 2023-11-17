@@ -75,29 +75,15 @@ public class AdventureModuleClient {
         MenuScreens.register(Menus.SALVAGE, SalvagingScreen::new);
         MenuScreens.register(Menus.GEM_CUTTING, GemCuttingScreen::new);
 
-        BlockEntityRenderers.register(Adventure.Tiles.REFORGING_TABLE, k -> new ReforgingTableTileRenderer());
+        BlockEntityRenderers.register(Adventure.Tiles.REFORGING_TABLE, context -> new ReforgingTableTileRenderer());
         time();
         tooltips();
         ignoreSocketUUIDS();
         affixTooltips();
         comps();
-        registerPackets();
         renderBossBeam();
-
-        CoreShaderRegistrationCallback.EVENT.register(context -> {
-            context.register(Apotheosis.loc("gray"), DefaultVertexFormat.NEW_ENTITY, shaderInstance -> {
-
-            });
-        });
-    }
-
-    public static void registerPackets() {
-        ClientPlayNetworking.registerGlobalReceiver(BossSpawnMessage.ID, (client, handler, buf, responseSender) -> {
-            int color = buf.readInt();
-            BlockPos pos = buf.readBlockPos();
-            AdventureModule.LOGGER.warn("Message recieved Pos {}", pos);
-            AdventureModuleClient.onBossSpawn(pos, BossSpawnMessage.toFloats(color));
-        });
+        BossSpawnMessage.init();
+        CoreShaderRegistrationCallback.EVENT.register(context -> context.register(Apotheosis.loc("gray"), DefaultVertexFormat.NEW_ENTITY, shaderInstance -> {}));
     }
 
     public static void onBossSpawn(BlockPos pos, float[] color) {
@@ -111,7 +97,7 @@ public class AdventureModuleClient {
         WorldRenderEvents.AFTER_ENTITIES.register((context) -> {
             PoseStack stack = context.matrixStack();
 
-            MultiBufferSource.BufferSource buf = Minecraft.getInstance().renderBuffers().bufferSource(); //(MultiBufferSource.BufferSource) context.consumers(); // MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
+            MultiBufferSource.BufferSource buf = Minecraft.getInstance().renderBuffers().bufferSource();
             Player p = Minecraft.getInstance().player;
             for (int i = 0; i < BOSS_SPAWNS.size(); i++) {
                 BossSpawnData data = BOSS_SPAWNS.get(i);
@@ -127,7 +113,6 @@ public class AdventureModuleClient {
             }
             buf.endLastBatch();
         });
-
     }
 
     public static void time() {
@@ -139,7 +124,6 @@ public class AdventureModuleClient {
                 }
             }
         });
-
     }
 
     public static void tooltips() {
@@ -147,7 +131,6 @@ public class AdventureModuleClient {
             int sockets = SocketHelper.getSockets(stack);
             if (sockets > 0) attributeTooltipIterator.add(Component.literal("ZENITH_REMOVE_MARKER"));
         });
-
     }
 
     public static void ignoreSocketUUIDS() {
@@ -156,7 +139,6 @@ public class AdventureModuleClient {
                 skips.addAll(GemItem.getUUIDs(gem));
             }
         });
-
     }
 
     public static void comps() {
@@ -185,10 +167,9 @@ public class AdventureModuleClient {
             if (rmvIdx == -1) return;
             e.tooltipElements.add(rmvIdx, Either.right(new SocketComponent(e.stack, SocketHelper.getGems(e.stack))));
         });
-
     }
 
-    public static void affixTooltips() { // Player isnt needed but it's fired later than the fapi event so it's compatible
+    public static void affixTooltips() {
         ItemTooltipCallbackWithPlayer.EVENT.register((stack, context, lines, player) -> {
             if (stack.hasTag()) {
                 Map<DynamicHolder<? extends Affix>, AffixInstance> affixes = AffixHelper.getAffixes(stack);
@@ -200,7 +181,6 @@ public class AdventureModuleClient {
                 lines.addAll(1, components);
             }
         });
-
     }
 
     // bleh

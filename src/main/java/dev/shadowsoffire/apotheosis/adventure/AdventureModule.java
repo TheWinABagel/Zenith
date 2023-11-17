@@ -162,7 +162,6 @@ public class AdventureModule {
         if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
             for (ModContainer mod : FabricLoader.getInstance().getAllMods()) {
                 if (mod.findPath("resourcepacks/" + pack.getPath()).isPresent()) {
-                    LOGGER.info("LOADING DEV ENVIRONMENT DATAPACK");
                     return mod;
                 }
             }

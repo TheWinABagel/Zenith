@@ -42,25 +42,19 @@ import javax.annotation.Nullable;
 import java.util.function.BiPredicate;
 
 public class BossEvents {
-//TODO made static, probably not a good idea?
     public static Object2IntMap<ResourceLocation> bossCooldowns = new Object2IntOpenHashMap<>();
 
     public static void init() {
         naturalBosses();
         minibosses();
         delayedMinibosses();
-        BossSpawnMessage.init();
-
     }
 
-    public void naturalBoss(Mob mob, double x, double y, double z, LevelAccessor level, CustomSpawner spawner, MobSpawnType type){
-
-    }
     public static void naturalBosses() {
         LivingEntityEvents.NATURAL_SPAWN.register((mob, x, y, z, level, spawner, type) -> {
             if (type == MobSpawnType.NATURAL || type == MobSpawnType.CHUNK_GENERATION) {
                 RandomSource rand = level.getRandom();
-                if (/*bossCooldowns.getInt(mob.level().dimension().location()) <= 0 && */ !level.isClientSide() && mob instanceof Monster) {
+                if (bossCooldowns.getInt(mob.level().dimension().location()) <= 0 && !level.isClientSide() && mob instanceof Monster) {
                     ServerLevelAccessor sLevel = (ServerLevelAccessor) level;
                     Pair<Float, BossSpawnRules> rules = AdventureConfig.BOSS_SPAWN_RULES.get(sLevel.getLevel().dimension().location());
                     if (rules == null) return TriState.DEFAULT;
@@ -91,7 +85,7 @@ public class BossEvents {
                                 });
                             }
                             bossCooldowns.put(mob.level().dimension().location(), AdventureConfig.bossSpawnCooldown);
-                            return TriState.TRUE;
+                            return TriState.FALSE;
                         }
                     }
                 }

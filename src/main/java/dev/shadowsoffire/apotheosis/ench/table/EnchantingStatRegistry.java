@@ -14,12 +14,14 @@ import io.github.fabricators_of_create.porting_lib.enchant.EnchantmentBonusBlock
 import io.github.fabricators_of_create.porting_lib.tags.TagHelper;
 import io.github.fabricators_of_create.porting_lib.tags.Tags;
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBlockTags;
 import net.fabricmc.fabric.impl.resource.conditions.ResourceConditionsImpl;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -69,7 +71,7 @@ public class EnchantingStatRegistry extends DynamicRegistry<EnchantingStatRegist
         Block block = state.getBlock();
         if (INSTANCE.statsPerBlock.containsKey(block)) return INSTANCE.statsPerBlock.get(block).eterna;
         if (state instanceof EnchantmentBonusBlock enchantingBlock) return enchantingBlock.getEnchantPowerBonus(state, world, pos);
-        if (state.is(Blocks.BOOKSHELF)) return 1;
+        if (state.is(Blocks.BOOKSHELF) || state.is(BlockTags.ENCHANTMENT_POWER_PROVIDER) || state.is(ConventionalBlockTags.BOOKSHELVES)) return 1;
         return 0;
     }
 
@@ -82,7 +84,7 @@ public class EnchantingStatRegistry extends DynamicRegistry<EnchantingStatRegist
         Block block = state.getBlock();
         if (INSTANCE.statsPerBlock.containsKey(block)) return INSTANCE.statsPerBlock.get(block).maxEterna;
         if (block instanceof IEnchantingBlock enchantingBlock) return enchantingBlock.getMaxEnchantingPower(state, world, pos);
-        if (state.is(Blocks.BOOKSHELF)) return 15;
+        if (state.is(Blocks.BOOKSHELF) || state.is(BlockTags.ENCHANTMENT_POWER_PROVIDER) || state.is(ConventionalBlockTags.BOOKSHELVES)) return 15;
         return 0;
     }
 
