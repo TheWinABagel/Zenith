@@ -676,6 +676,7 @@
     "stat.zenith.ignore_light": "Ignores Light",
     "stat.zenith.no_ai": "No AI",
 	"stat.zenith.silent": "Silent",
+	"stat.zenith.baby": "Youthful",
 
     "stat.zenith.min_delay.desc": "The minimum number of ticks between spawns",
     "stat.zenith.max_delay.desc": "The maximum number of ticks between spawns",
@@ -689,8 +690,9 @@
     "stat.zenith.ignore_light.desc": "The spawner ignores light levels",
     "stat.zenith.no_ai.desc": "Spawned entities will have no AI",
 	"stat.zenith.silent.desc": "Spawned entities will make no noise",
+	"stat.zenith.baby.desc": "The spawner will always spawn a baby entity when possible",
 
-    "title.zenith.spawner": "Spawner Modification",
+	"title.zenith.spawner": "Spawner Modification",
     "info.zenith.spawner": "Spawners can be collected with %s and may be modified with various items.",
     "info.zenith.spawner.no_silk": "Spawners may be modified with various items, but collection with Silk Touch is currently disabled.",
     "info.zenith.spawner.always_drop": "Spawners may be modified with various items, and will always drop when broken.",

@@ -42,7 +42,7 @@ public class AffixRegistry extends DynamicRegistry<Affix> {
         this.byType = builder.build();
         Preconditions.checkArgument(Affixes.SOCKET.get() instanceof SocketAffix, "Socket Affix not registered!");
         Preconditions.checkArgument(Affixes.DURABLE.get() instanceof DurableAffix, "Durable Affix not registered!");
-        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT && Apotheosis.enableDebug) {
             AdventureModuleClient.checkAffixLangKeys();
         }
         RarityRegistry.INSTANCE.validateLootRules();

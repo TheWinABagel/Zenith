@@ -52,6 +52,8 @@ public abstract class SpawnerBlockEntityMixin extends BlockEntity implements IBa
     public boolean hasNoAI = false;
     @Unique
     public boolean silent = false;
+    @Unique
+    public boolean baby = false;
     @Shadow
     public BaseSpawner spawner;
 
@@ -113,7 +115,17 @@ public abstract class SpawnerBlockEntityMixin extends BlockEntity implements IBa
     public void setSilent(boolean bool) {
         silent = bool;
     }
-    
+
+    @Override
+    public boolean getBaby() {
+        return baby;
+    }
+
+    @Override
+    public void setBaby(boolean bool) {
+        baby = bool;
+    }
+
     @Override
     public BaseSpawner getSpawner() {
         return spawner;
@@ -127,6 +139,7 @@ public abstract class SpawnerBlockEntityMixin extends BlockEntity implements IBa
         this.ignoresLight = tag.getBoolean("ignore_light");
         this.hasNoAI = tag.getBoolean("no_ai");
         this.silent = tag.getBoolean("silent");
+        this.baby = tag.getBoolean("baby");
     }
 
     @Inject(method = "saveAdditional", at = @At("TAIL"))
@@ -137,10 +150,11 @@ public abstract class SpawnerBlockEntityMixin extends BlockEntity implements IBa
         tag.putBoolean("ignore_light", this.ignoresLight);
         tag.putBoolean("no_ai", this.hasNoAI);
         tag.putBoolean("silent", this.silent);
+        tag.putBoolean("baby", this.baby);
     }
 
     // Spawner logic override
-    @Inject(method = "<init>", at = @At("RETURN"))
+    @Inject(method = "<init>", at = @At("TAIL"))
     private void zenithOverrideSpawnerLogic(BlockPos blockPos, BlockState blockState, CallbackInfo ci) {
         this.spawner = new BaseSpawner() {
             @Override
@@ -263,9 +277,16 @@ public abstract class SpawnerBlockEntityMixin extends BlockEntity implements IBa
                                     return;
                                 }
 
-                                if (SpawnerBlockEntityMixin.this.hasNoAI && entity instanceof Mob mob) {
-                                    mob.setNoAi(true);
-                                    entity.getCustomData().putBoolean("zenith:movable", true);
+                                // Raise the NoAI Flag and set the zenith:movable flag for the main mob and all mob passengers.
+                                if (SpawnerBlockEntityMixin.this.hasNoAI) {
+                                    entity.getSelfAndPassengers().filter(t -> t instanceof Mob).map(Mob.class::cast).forEach(mob -> {
+                                        mob.setNoAi(true);
+                                        mob.getCustomData().putBoolean("zenith:movable", true);
+                                    });
+                                }
+
+                                if (SpawnerBlockEntityMixin.this.baby && entity instanceof Mob mob) {
+                                    mob.setBaby(true);
                                 }
 
                                 if (SpawnerBlockEntityMixin.this.silent) entity.setSilent(true);
@@ -310,17 +331,6 @@ public abstract class SpawnerBlockEntityMixin extends BlockEntity implements IBa
                     }
                 }
             }
-        /*
-        public boolean checkSpawnPositionSpawner(Mob mob, ServerLevelAccessor level, MobSpawnType spawnType, SpawnData spawnData, BaseSpawner spawner) {
-            var event = new PositionCheck(mob, level, spawnType, null);
-            MinecraftForge.EVENT_BUS.post(event);
-            if (event.getResult() == Result.DEFAULT) {
-                return SpawnerBlockEntityMixin.this.ignoresConditions
-                    || (spawnData.getCustomSpawnRules().isPresent()
-                        || mob.checkSpawnRules(level, MobSpawnType.SPAWNER) && mob.checkSpawnObstruction(level));
-            }
-            return event.getResult() == Result.ALLOW;
-        }*/
 
             /**
              * Checks if the requested entity passes spawn rule checks or not.

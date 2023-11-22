@@ -17,14 +17,19 @@ import java.util.stream.Collectors;
 public class VillagerTradesMixin {
 
     @Redirect(method = "getOffer", at = @At(value = "INVOKE", target = "net/minecraft/world/item/enchantment/Enchantment.isTreasureOnly ()Z"))
-    private boolean test(Enchantment ench){
+    private boolean zenith_redirectIsTradable(Enchantment ench) {
         return EnchHooks.isTreasureOnly(ench);
     }
 
     @ModifyVariable(method = "getOffer", at = @At(value = "STORE"), ordinal = 0)
-    private List zenithIsTradable(List value) {
+    private List zenith_modifyIsTradable(List value) {
         if (!Apotheosis.enableEnch) return value;
         return BuiltInRegistries.ENCHANTMENT.stream().filter(EnchHooks::isTradeable).collect(Collectors.toList());
+    }
+
+    @Redirect(method = "getOffer", at = @At(value = "INVOKE", target = "net/minecraft/world/item/enchantment/Enchantment.getMaxLevel ()I"))
+    private int zenith_redirectLootableLevel(Enchantment ench) {
+        return EnchHooks.getMaxLootLevel(ench);
     }
 
 }

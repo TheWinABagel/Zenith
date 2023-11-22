@@ -4,7 +4,6 @@ import dev.emi.trinkets.api.TrinketsApi;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.objects.GlowyBlockItem;
-import dev.shadowsoffire.apotheosis.spawn.enchantment.CapturingEnchant;
 import dev.shadowsoffire.attributeslib.api.ALObjects;
 import dev.shadowsoffire.placebo.config.Configuration;
 import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityEvents;
@@ -26,7 +25,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.item.enchantment.Enchantment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,7 +39,6 @@ public class PotionModule {
     public static final RegistryObject<Item> SKULL_FRAGMENT = new RegistryObject(new ResourceLocation("wstweaks", "fragment"), Registries.ITEM);
 
     public static int knowledgeMult = 4;
-    public static Enchantment CAPTURING = new CapturingEnchant();
     static boolean charmsInTrinketsOnly = false;
 
     public static void init() {

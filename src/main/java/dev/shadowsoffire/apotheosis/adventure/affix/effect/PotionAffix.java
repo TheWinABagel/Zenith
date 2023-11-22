@@ -44,9 +44,9 @@ public class PotionAffix extends Affix {
             BuiltInRegistries.MOB_EFFECT.byNameCodec().fieldOf("mob_effect").forGetter(a -> a.effect),
             Target.CODEC.fieldOf("target").forGetter(a -> a.target),
             LootRarity.mapCodec(EffectData.CODEC).fieldOf("values").forGetter(a -> a.values),
-            Codec.INT.optionalFieldOf("cooldown", 0).forGetter(a -> a.cooldown),
+            PlaceboCodecs.nullableField(Codec.INT, "cooldown", 0).forGetter(a -> a.cooldown),
             LootCategory.SET_CODEC.fieldOf("types").forGetter(a -> a.types),
-            Codec.BOOL.optionalFieldOf("stack_on_reapply", false).forGetter(a -> a.stackOnReapply))
+                PlaceboCodecs.nullableField(Codec.BOOL, "stack_on_reapply", false).forGetter(a -> a.stackOnReapply))
         .apply(inst, PotionAffix::new));
 
     protected final MobEffect effect;
@@ -156,6 +156,8 @@ public class PotionAffix extends Affix {
     }
 
     private void applyEffect(LivingEntity target, LootRarity rarity, float level) {
+        if (target.level().isClientSide()) return;
+
         int cooldown = this.getCooldown(rarity);
         if (cooldown != 0 && isOnCooldown(this.getId(), cooldown, target)) return;
         EffectData data = this.values.get(rarity);
@@ -198,7 +200,7 @@ public class PotionAffix extends Affix {
             .group(
                 StepFunction.CODEC.fieldOf("duration").forGetter(EffectData::duration),
                 StepFunction.CODEC.fieldOf("amplifier").forGetter(EffectData::amplifier),
-                Codec.INT.optionalFieldOf("cooldown", -1).forGetter(EffectData::cooldown))
+                PlaceboCodecs.nullableField(Codec.INT, "cooldown", -1).forGetter(EffectData::cooldown))
             .apply(inst, EffectData::new));
 
         public MobEffectInstance build(MobEffect effect, float level) {
