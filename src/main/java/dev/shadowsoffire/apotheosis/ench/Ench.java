@@ -131,7 +131,7 @@ public class Ench {
             reg(SOUL_TOUCHED_DEEPSHELF, "soul_touched_deepshelf");
             reg(SOUL_TOUCHED_SCULKSHELF, "soul_touched_sculkshelf");
             reg(STONESHELF, "stoneshelf");
-            DispenserBlock.registerBehavior(net.minecraft.world.item.Items.SHEARS, new ShearsDispenseItemBehavior());
+        //    DispenserBlock.registerBehavior(net.minecraft.world.item.Items.SHEARS, new ShearsDispenseItemBehavior());
         }
 
         private static Block sculkShelf(String id) {

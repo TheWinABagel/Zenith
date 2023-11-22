@@ -18,7 +18,6 @@ public class EnchantmentUtilsMixin {
      */
     @Redirect(method = "addAllBooks", at = @At(value = "INVOKE", target = "net/minecraft/world/item/enchantment/Enchantment.getMaxLevel ()I"))
     private static int apothModifyMaxLevel(Enchantment enchantment) {
-        if (Apotheosis.enableEnch) return EnchHooks.getMaxLevel(enchantment);
-        return enchantment.getMaxLevel();
+        return EnchHooks.getMaxLevel(enchantment);
     }
 }

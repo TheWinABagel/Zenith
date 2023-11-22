@@ -53,15 +53,12 @@
     "fabric": "*",
     "minecraft": "1.20.1",
     "java": ">=17",
-    "fakerlib": ">=0.0.8",
-    "zenith_attributes": ">=0.0.6"
+    "fakerlib": ">=0.0.9",
+    "zenith_attributes": ">=0.1.0"
   },
   "suggests": {
     "roughlyenoughitems": "*",
     "patchouli": "*"
-  },
-  "breaks": {
-    "easymagic": "*"
   },
     "accessWidener": "zenith.aw"
 }

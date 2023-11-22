@@ -81,11 +81,11 @@ public class SpawnerREICategory extends ZenithREICatgeory<SpawnerREIDisplay> {
         int top = 75 / 2 - recipe.getStatModifiers().size() * (font.lineHeight + 2) / 2 + 2;
         int left = 168;
         for (StatModifier<?> s : recipe.getStatModifiers()) {
-            String value = s.value.toString();
+            String value = s.value().toString();
             if ("true".equals(value)) value = "+";
             else if ("false".equals(value)) value = "-";
-            else if (s.value instanceof Number num && num.intValue() > 0) value = "+" + value;
-            Component msg = Component.translatable("misc.zenith.concat", value, s.stat.name());
+            else if (s.value() instanceof Number num && num.intValue() > 0) value = "+" + value;
+            Component msg = Component.translatable("misc.zenith.concat", value, s.stat().name());
             int width = font.width(msg);
             boolean hover = mouseX >= left - width + x && mouseX < left + x && mouseY >= top + y && mouseY < top + y + font.lineHeight + 1;
             gfx.drawString(font, msg, left - font.width(msg) + x, top + y, hover ? 0x8080FF : 0x333333, false);
@@ -95,12 +95,12 @@ public class SpawnerREICategory extends ZenithREICatgeory<SpawnerREIDisplay> {
 
             if (hover) {
                 List<Component> list = new ArrayList<>();
-                list.add(s.stat.name().withStyle(ChatFormatting.GREEN, ChatFormatting.UNDERLINE));
-                list.add(s.stat.desc().withStyle(ChatFormatting.GRAY));
-                if (s.value instanceof Number) {
-                    if (((Number) s.min).intValue() > 0 || ((Number) s.max).intValue() != Integer.MAX_VALUE) list.add(Component.literal(" "));
-                    if (((Number) s.min).intValue() > 0) list.add(Component.translatable("misc.zenith.min_value", s.min).withStyle(ChatFormatting.GRAY));
-                    if (((Number) s.max).intValue() != Integer.MAX_VALUE) list.add(Component.translatable("misc.zenith.max_value", s.max).withStyle(ChatFormatting.GRAY));
+                list.add(s.stat().name().withStyle(ChatFormatting.GREEN, ChatFormatting.UNDERLINE));
+                list.add(s.stat().desc().withStyle(ChatFormatting.GRAY));
+                if (s.value() instanceof Number) {
+                    if (((Number) s.min()).intValue() > 0 || ((Number) s.max()).intValue() != Integer.MAX_VALUE) list.add(Component.literal(" "));
+                    if (((Number) s.min()).intValue() > 0) list.add(Component.translatable("misc.zenith.min_value", s.min()).withStyle(ChatFormatting.GRAY));
+                    if (((Number) s.max()).intValue() != Integer.MAX_VALUE) list.add(Component.translatable("misc.zenith.max_value", s.max()).withStyle(ChatFormatting.GRAY));
                 }
                 renderComponentTooltip(scn, gfx, list, left + 6 , (int) mouseY , maxWidth, font);
             }

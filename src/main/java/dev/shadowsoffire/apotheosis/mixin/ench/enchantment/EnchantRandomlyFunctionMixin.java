@@ -24,8 +24,6 @@ public class EnchantRandomlyFunctionMixin {
 
     @Redirect(method = "enchantItem", at = @At(value = "INVOKE", target = "net/minecraft/world/item/enchantment/Enchantment.getMaxLevel ()I"))
     private static int redirectLootLevel(Enchantment instance){
-        if (Apotheosis.enableDebug) EnchModule.LOGGER.info("Changing possible max level of enchantment {}", instance);
-        if (!Apotheosis.enableEnch) return instance.getMaxLevel();
         return EnchHooks.getMaxLootLevel(instance);
     }
 
@@ -33,12 +31,6 @@ public class EnchantRandomlyFunctionMixin {
     private static ItemStack enchantItem(ItemStack stack, Enchantment enchantment, RandomSource random) {
         return null;
     }
-/*
-    @Inject(method = "run", at = @At(value = "INVOKE", target = "java/util/List.isEmpty ()Z", ordinal = 1, shift = At.Shift.BEFORE))
-    private void whee(ItemStack stack, LootContext context, CallbackInfoReturnable<ItemStack> cir) {
-
-    }*/
-
 
     @ModifyVariable(method = "run",
             slice = @Slice(from = @At(value = "INVOKE", target = "net/minecraft/world/item/ItemStack.is (Lnet/minecraft/world/item/Item;)Z", shift = At.Shift.AFTER)),
@@ -50,7 +42,5 @@ public class EnchantRandomlyFunctionMixin {
         }
         return original;
     }
-
-
 
 }

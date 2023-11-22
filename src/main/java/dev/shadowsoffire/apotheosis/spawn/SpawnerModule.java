@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis.spawn;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.potion.PotionModule;
 import dev.shadowsoffire.apotheosis.spawn.enchantment.CapturingEnchant;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
 import dev.shadowsoffire.placebo.config.Configuration;
@@ -21,6 +20,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
@@ -39,6 +39,7 @@ public class SpawnerModule {
     public static int spawnerSilkLevel = 1;
     public static int spawnerSilkDamage = 100;
     public static Set<ResourceLocation> bannedMobs = new HashSet<>();
+    public static Enchantment CAPTURING = new CapturingEnchant();
 
     public static void init() {
         dropsEvent();
@@ -52,7 +53,7 @@ public class SpawnerModule {
 
     public static void register() {
         Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, Apotheosis.loc("spawner_modifier"), SpawnerModifier.SERIALIZER);
-        Registry.register(BuiltInRegistries.ENCHANTMENT, Apotheosis.loc("capturing"), PotionModule.CAPTURING);
+        Registry.register(BuiltInRegistries.ENCHANTMENT, Apotheosis.loc("capturing"), CAPTURING);
     }
 
     public static void dropsEvent() {
@@ -129,5 +130,4 @@ public class SpawnerModule {
     public static Component concat(Object... args) {
         return Component.translatable("misc.zenith.value_concat", args[0], Component.literal(args[1].toString()).withStyle(ChatFormatting.GRAY)).withStyle(ChatFormatting.GREEN);
     }
-
 }

@@ -4,6 +4,14 @@
 * Fix salvaging non single stacks of items not giving the proper amount of items in return
 
 
+## 0.2.1
+* Update to be in line with latest Apotheosis version
+  * More info [here](https://github.com/Shadows-of-Fire/Apotheosis/blob/1.20/changelog.md#710)
+* Fix max villager and loot levels not being increased properly
+* Hopefully fix spawners not saving when broken
+* Fix inability to launch the game with the potion module disabled and the spawner module enabled
+* Fix shearing in dispensers causing a crash
+
 ## 0.2.0
 * Make anvil repair event fire when in creative mode
 * Fix Tome of Extraction not giving item back due to incompatibility with puzzleslib

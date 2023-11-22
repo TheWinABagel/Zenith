@@ -65,12 +65,7 @@ dependencies {
 	implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.1.1"))
 
 	modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${project.reach_lib_version}")
-	//modImplementation("io.github.fabricators_of_create.Porting-Lib:Porting-Lib:${project.port_lib_version}") { //not included as it is already included with fakerlib
-	//	exclude(group: "io.github.fabricators_of_create.Porting-Lib", module: "networking")
-	//	exclude(group: "io.github.fabricators_of_create.Porting-Lib", module: "loot")
-	//}
 
-	//idk how to opt out :(
 	modImplementation("io.github.fabricators_of_create.Porting-Lib:accessors:${project.port_lib_version}")
 	modImplementation("io.github.fabricators_of_create.Porting-Lib:attributes:${project.port_lib_version}")
 	modImplementation("io.github.fabricators_of_create.Porting-Lib:base:${project.port_lib_version}")
@@ -111,7 +106,7 @@ dependencies {
 
 	// WTHIT
 	modCompileOnly "mcp.mobius.waila:wthit-api:fabric-${project.wthit_version}"
-	//modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${project.wthit_version}"
+	modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${project.wthit_version}"
 
 	// REI + Arch
 	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
@@ -121,7 +116,7 @@ dependencies {
 
 	//Jade
 	modCompileOnly "curse.maven:jade-324717:${jade_id}"
-	modImplementation "curse.maven:jade-324717:${jade_id}"
+	//modImplementation "curse.maven:jade-324717:${jade_id}"
 
 	//Fixes for other mods
 	//modCompileOnly

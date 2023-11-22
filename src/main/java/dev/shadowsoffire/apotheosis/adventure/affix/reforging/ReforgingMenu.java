@@ -189,6 +189,7 @@ public class ReforgingMenu extends PlaceboContainerMenu {
             ReforgingMenu.this.needsReset.set(0);
         }
         super.slotsChanged(pContainer);
+        this.tile.setChanged();
     }
 
     @Override

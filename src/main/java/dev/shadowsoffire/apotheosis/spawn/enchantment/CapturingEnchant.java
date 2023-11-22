@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis.spawn.enchantment;
 
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
-import dev.shadowsoffire.apotheosis.potion.PotionModule;
 import dev.shadowsoffire.apotheosis.spawn.SpawnerModule;
 import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingTableBehaviorEnchantment;
 import net.minecraft.world.damagesource.DamageSource;
@@ -49,7 +48,7 @@ public class CapturingEnchant extends Enchantment implements CustomEnchantingTab
     public static void handleCapturing(LivingEntity target, DamageSource source, Collection<ItemEntity> drops) {
         Entity killer = source.getEntity();
         if (killer instanceof LivingEntity living) {
-            int level = EnchantmentHelper.getItemEnchantmentLevel(PotionModule.CAPTURING, living.getMainHandItem());
+            int level = EnchantmentHelper.getItemEnchantmentLevel(SpawnerModule.CAPTURING, living.getMainHandItem());
             LivingEntity killed = target;
             if (level <= 0) return;
             if (enableDebug) SpawnerModule.LOG.info("Has capturing level: {}", level);

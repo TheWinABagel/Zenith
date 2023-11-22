@@ -41,8 +41,9 @@ import net.minecraft.world.ticks.LevelTickAccess;
 
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
-public class LyingLevel implements ServerLevelAccessor, WorldGenLevel {
+public class LyingLevel implements WorldGenLevel {
 
     protected final ServerLevel wrapped;
     protected int fakeLightLevel;
@@ -260,4 +261,28 @@ public class LyingLevel implements ServerLevelAccessor, WorldGenLevel {
         return this.wrapped.enabledFeatures();
     }
 
+    @Override
+    public boolean ensureCanWrite(BlockPos pPos) {
+        return this.wrapped.ensureCanWrite(pPos);
+    }
+
+    @Override
+    public void setCurrentlyGenerating(Supplier<String> pCurrentlyGenerating) {
+        this.wrapped.setCurrentlyGenerating(pCurrentlyGenerating);
+    }
+
+    @Override
+    public void addFreshEntityWithPassengers(Entity pEntity) {
+        this.wrapped.addFreshEntityWithPassengers(pEntity);
+    }
+
+    @Override
+    public void blockUpdated(BlockPos pPos, Block pBlock) {
+        this.wrapped.blockUpdated(pPos, pBlock);
+    }
+
+    @Override
+    public boolean addFreshEntity(Entity pEntity) {
+        return this.wrapped.addFreshEntity(pEntity);
+    }
 }

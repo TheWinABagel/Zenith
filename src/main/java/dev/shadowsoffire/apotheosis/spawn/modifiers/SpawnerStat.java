@@ -1,6 +1,8 @@
 package dev.shadowsoffire.apotheosis.spawn.modifiers;
 
 import com.google.gson.JsonElement;
+import com.mojang.serialization.Codec;
+import dev.shadowsoffire.apotheosis.spawn.spawner.IBaseSpawner;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
@@ -13,9 +15,20 @@ public interface SpawnerStat<T> {
     String getId();
 
     /**
-     * Parses a JsonElement into the correct value type for this stat.
+     * Returns a codec that can de/serialize a stat modifier for this stat.
      */
-    T parseValue(JsonElement value);
+    Codec<StatModifier<T>> getModifierCodec();
+
+    /**
+     * Gets the current value of this stat.
+     */
+    T getValue(IBaseSpawner spawner);
+
+    /**
+     * Computes a tooltip to be shown in the item tooltip and Jade/TOP.
+     * If the returned component is empty, the tooltip line will not be shown.
+     */
+    Component getTooltip(IBaseSpawner spawner);
 
     /**
      * Applies this stat change to the selected spawner.
@@ -26,9 +39,7 @@ public interface SpawnerStat<T> {
      * @param spawner The spawner tile entity.
      * @return If the application was successful (was a spawner stat changed).
      */
-    boolean apply(T value, T min, T max, SpawnerBlockEntity spawner);
-
-    Class<T> getTypeClass();
+    boolean apply(T value, T min, T max, IBaseSpawner spawner);
 
     default MutableComponent name() {
         return Component.translatable("stat.zenith." + this.getId());

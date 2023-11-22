@@ -35,6 +35,7 @@ import java.util.function.BiConsumer;
 /**
  * Increases all attributes by a percentage.
  */
+@SuppressWarnings("deprecation")
 public class AllStatsBonus extends GemBonus {
 
     public static Codec<AllStatsBonus> CODEC = RecordCodecBuilder.create(inst -> inst
