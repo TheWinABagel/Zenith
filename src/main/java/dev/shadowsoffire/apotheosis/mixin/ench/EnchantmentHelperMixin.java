@@ -52,11 +52,11 @@ public class EnchantmentHelperMixin {
     private static boolean zenith_redirectTreasureOnly(Enchantment ench) {
         return EnchHooks.isTreasureOnly(ench);
     }
-
+/*
     @Redirect(method = "getAvailableEnchantmentResults", at = @At(value = "INVOKE", target = "net/minecraft/world/item/enchantment/Enchantment.isDiscoverable ()Z"))
     private static boolean zenith_redirectDiscoverable(Enchantment ench) {
         return EnchHooks.isDiscoverable(ench);
-    }
+    }*/
 
     @Redirect(method = "getAvailableEnchantmentResults", at = @At(value = "INVOKE", target = "net/minecraft/world/item/enchantment/Enchantment.getMaxLevel ()I"))
     private static int zenith_redirectMaxLevel(Enchantment ench) {

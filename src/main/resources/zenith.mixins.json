@@ -13,6 +13,7 @@
     "adventure.LivingEntityMixin",
     "adventure.MHFMixinLivingEntity",
     "adventure.PlayerMixin",
+    "adventure.RangedAttributeAccessor",
     "adventure.SmithingMenuMixin",
     "ench.BlockMixin",
     "ench.CreativeModeTabsMixin",

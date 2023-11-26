@@ -21,7 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @Mixin(ShearsDispenseItemBehavior.class)
-public class ShearsDispenseItemBehaviorMixin  {
+public class ShearsDispenseItemBehaviorMixin {
     @Unique
     private static ItemStack shears = ItemStack.EMPTY;
 

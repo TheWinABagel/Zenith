@@ -361,7 +361,7 @@ public class NameHelper {
                 }
             }
             catch (Exception e) {
-            //    AdventureModule.LOGGER.error("The item {} has thrown an exception while attempting to access it's tier.", BuiltInRegistries.ITEM.getKey(i));
+            //    AdventureModule.LOGGER.error("The item {} has thrown an exception while attempting to access its tier.", BuiltInRegistries.ITEM.getKey(i));
                 e.printStackTrace();
             }
         }

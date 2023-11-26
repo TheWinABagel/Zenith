@@ -4,6 +4,10 @@
 * Fix salvaging non single stacks of items not giving the proper amount of items in return
 
 
+## 0.2.2
+* Temporarily disable mixin that was causing a crash with Soulslike weaponry
+* Increase priority of anvil mixin to override Easy Anvils anvil implementation
+
 ## 0.2.1
 * Update to be in line with latest Apotheosis version
   * More info [here](https://github.com/Shadows-of-Fire/Apotheosis/blob/1.20/changelog.md#710)

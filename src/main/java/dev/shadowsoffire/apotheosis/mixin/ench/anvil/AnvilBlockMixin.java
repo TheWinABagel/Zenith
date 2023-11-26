@@ -50,7 +50,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Mixin(AnvilBlock.class)
+@Mixin(value = AnvilBlock.class, priority = 1500)
 public class AnvilBlockMixin  extends FallingBlock implements INBTSensitiveFallingBlock, EntityBlock {
 
     public AnvilBlockMixin(Properties properties) {
@@ -69,9 +69,6 @@ public class AnvilBlockMixin  extends FallingBlock implements INBTSensitiveFalli
     public void appendHoverText(ItemStack itemStack, @Nullable BlockGetter blockGetter, List<Component> list, TooltipFlag tooltipFlag) {
         if (Apotheosis.enableEnch) {
             if (itemStack.is(Items.ANVIL) || itemStack.is(Items.CHIPPED_ANVIL) || itemStack.is(Items.DAMAGED_ANVIL)) {
-                if (FabricLoader.getInstance().isModLoaded("easyanvils")) {
-                    list.add(Component.translatable("zenith.easy_anvils"));
-                }
                 if (!itemStack.hasFoil())
                     list.add(Component.translatable("info.zenith.anvil").withStyle(ChatFormatting.GRAY));
             }

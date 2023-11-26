@@ -60,7 +60,6 @@ public class EnchModuleClient {
                 float arcana = EnchantingStatRegistry.getArcana(state, world, BlockPos.ZERO);
                 float rectification = EnchantingStatRegistry.getQuantaRectification(state, world, BlockPos.ZERO);
                 int clues = EnchantingStatRegistry.getBonusClues(state, world, BlockPos.ZERO);
-            //    if (Apotheosis.enableDebug) EnchModule.LOGGER.info("max {}, eterna {}, quanta {}, arcana {}, rect {}, clues {}", maxEterna, eterna, quanta, arcana, rectification, clues);
                 if (eterna != 0 || quanta != 0 || arcana != 0 || rectification != 0 || clues != 0) {
                     tooltip.add(Component.translatable("info.zenith.ench_stats").withStyle(ChatFormatting.GOLD));
                 }
