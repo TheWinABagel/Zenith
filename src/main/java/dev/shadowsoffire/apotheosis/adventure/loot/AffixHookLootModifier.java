@@ -33,7 +33,6 @@ public class AffixHookLootModifier extends LootModifier {
 
     @Override
     public Codec<? extends IGlobalLootModifier> codec() {
-        AdventureModule.LOGGER.info("AffixHookLootModifier CODEC");
         return CODEC;
     }
 

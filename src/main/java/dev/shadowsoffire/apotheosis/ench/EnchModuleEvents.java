@@ -71,9 +71,9 @@ public class EnchModuleEvents {
                 e.cost = (5 + EnchantmentHelper.getEnchantments(e.left).entrySet().stream().mapToInt(ent -> ent.getValue() * (ent.getKey().getRarity().ordinal() + 1)).sum());
                 e.materialCost = 1;
             }
-            if (ScrappingTomeItem.updateAnvil(e)) return true;
-            if (ImprovedScrappingTomeItem.updateAnvil(e)) return true;
-            if (ExtractionTomeItem.updateAnvil(e)) return true;
+            if (ScrappingTomeItem.updateAnvil(e)) return false;
+            if (ImprovedScrappingTomeItem.updateAnvil(e)) return false;
+            if (ExtractionTomeItem.updateAnvil(e)) return false;
             return false;
         });
 

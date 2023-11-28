@@ -37,6 +37,7 @@ import java.util.Set;
 public class PotionCharmItem extends Item implements CustomEnchantingBehaviorItem, DamageableItem {
 
     public static final Set<ResourceLocation> EXTENDED_POTIONS = new HashSet<>();
+    public static final Set<ResourceLocation> DISABLED_POTIONS = new HashSet<>();
 
     public PotionCharmItem() {
         super(new Properties().stacksTo(1).durability(192));
@@ -109,6 +110,9 @@ public class PotionCharmItem extends Item implements CustomEnchantingBehaviorIte
         if (hasPotion(stack)) {
             Potion p = PotionUtils.getPotion(stack);
             MobEffectInstance effect = p.getEffects().get(0);
+            if (DISABLED_POTIONS.contains(BuiltInRegistries.MOB_EFFECT.getKey(effect.getEffect()))){
+                tooltip.add(Component.translatable(this.getDescriptionId() + ".crafting_disabled").withStyle(ChatFormatting.RED));
+            }
             MutableComponent potionCmp = Component.translatable(effect.getDescriptionId());
             if (effect.getAmplifier() > 0) {
                 potionCmp = Component.translatable("potion.withAmplifier", potionCmp, Component.translatable("potion.potency." + effect.getAmplifier()));

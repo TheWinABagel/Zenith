@@ -43,7 +43,8 @@ public class PotionCharmRecipe extends ShapedRecipe {
     private static Ingredient makePotionIngredient() {
         List<ItemStack> potionStacks = new ArrayList<>();
         for (Potion p : BuiltInRegistries.POTION) {
-            if (p.getEffects().size() != 1 || p.getEffects().get(0).getEffect().isInstantenous()) continue;
+            if (p.getEffects().size() != 1 || p.getEffects().get(0).getEffect().isInstantenous()
+                    || PotionCharmItem.DISABLED_POTIONS.contains(BuiltInRegistries.MOB_EFFECT.getKey(p.getEffects().get(0).getEffect()))) continue;
             ItemStack potion = new ItemStack(Items.POTION);
             PotionUtils.setPotion(potion, p);
             potionStacks.add(potion);

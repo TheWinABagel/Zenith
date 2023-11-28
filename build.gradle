@@ -44,6 +44,20 @@ repositories {
 		name = "Fuzs Mod Resources"
 		url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
 	}
+	maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+
+	maven {
+		name = "MrCrayfish (GitHub)"
+		url = "https://maven.pkg.github.com/MrCrayfish/Maven"
+		credentials {
+			//username = project.findProperty("gpr.user") ?: System.getenv("GH_ID")
+			username = project.findProperty("gpr.user") ?: "gogglebobby@gmail.com"
+			password = project.findProperty("gpr.key") ?: System.getenv("GH_TOKEN")
+		}
+		content {
+			includeGroup "com.mrcrayfish"
+		}
+	}
 
 	mavenLocal()
 }
@@ -136,6 +150,15 @@ dependencies {
 
 	modCompileOnly "curse.maven:puzzles-lib-495476:4847147"
 	modCompileOnly "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:8.0.0"
+
+	modCompileOnly "curse.maven:dragonloot-424480:4656260"
+
+	modCompileOnly "curse.maven:mariums-soulslike-weaponry-632066:4891244"
+	//modImplementation "software.bernie.geckolib:geckolib-fabric-1.20:4.2"
+
+	modImplementation "com.mrcrayfish:framework-fabric:1.20.1-0.6.13"
+	modRuntimeOnly "com.mrcrayfish:catalogue-fabric:1.20.1-1.7.1"
+	modImplementation "com.mrcrayfish:goblintraders-fabric:1.20.1-1.9.3"
 
 }
 loom {

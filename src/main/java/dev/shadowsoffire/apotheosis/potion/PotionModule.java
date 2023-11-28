@@ -103,6 +103,18 @@ public class PotionModule {
                 LOGGER.error("Invalid extended potion charm entry {} will be ignored.", s);
             }
         }
+        String[] defDis = { "zenith_attributes:flying" };
+        String[] disabled = config.getStringList("Disabled Potion Charms", "general", defDis,
+                "A list of effects that will be unable to be crafted into charms.\nServer-authoritative.");
+        PotionCharmItem.DISABLED_POTIONS.clear();
+        for (String s : disabled) {
+            try {
+                PotionCharmItem.DISABLED_POTIONS.add(new ResourceLocation(s));
+            }
+            catch (ResourceLocationException ex) {
+                LOGGER.error("Invalid disabled potion charm entry {} will be ignored.", s);
+            }
+        }
 
         if (!e && config.hasChanged()) config.save();
     }

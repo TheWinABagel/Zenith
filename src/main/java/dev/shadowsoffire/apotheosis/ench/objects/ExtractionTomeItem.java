@@ -69,6 +69,25 @@ public class ExtractionTomeItem extends BookItem {
         return true;
     }
 
+    public static void updateRepair() {
+        if (FabricLoader.getInstance().isModLoaded("puzzleslib")) {
+            FabricPlayerEvents.ANVIL_REPAIR.register((player, left, right, out, mutableFloat) -> {
+                if (!(right.getItem() instanceof ExtractionTomeItem) || right.isEnchanted() || !left.isEnchanted())
+                    return;
+                EnchantmentHelper.setEnchantments(Collections.emptyMap(), left);
+                giveItem(player, left);
+            });
+        }
+            Events.AnvilRepair.ANVIL_REPAIR.register((ev) -> {
+                ItemStack weapon = ev.left;
+                ItemStack book = ev.right;
+                if (!(book.getItem() instanceof ExtractionTomeItem) || book.isEnchanted() || !weapon.isEnchanted())
+                    return;
+                EnchantmentHelper.setEnchantments(Collections.emptyMap(), weapon);
+                giveItem(ev.player, weapon);
+            });
+    }
+
     protected static void giveItem(Player player, ItemStack stack) {
         if (!player.isAlive() || player instanceof ServerPlayer && ((ServerPlayer) player).hasDisconnected()) {
             player.drop(stack, false);
@@ -82,25 +101,4 @@ public class ExtractionTomeItem extends BookItem {
             }
         }
     }
-
-    public static void updateRepair() {
-        if (FabricLoader.getInstance().isModLoaded("puzzleslib")) {
-            FabricPlayerEvents.ANVIL_REPAIR.register((player, left, right, out, mutableFloat) -> {
-                if (!(right.getItem() instanceof ExtractionTomeItem) || right.isEnchanted() || !left.isEnchanted())
-                    return;
-                EnchantmentHelper.setEnchantments(Collections.emptyMap(), left);
-                giveItem(player, left);
-            });
-        } else {
-            Events.AnvilRepair.ANVIL_REPAIR.register((ev) -> {
-                ItemStack weapon = ev.left;
-                ItemStack book = ev.right;
-                if (!(book.getItem() instanceof ExtractionTomeItem) || book.isEnchanted() || !weapon.isEnchanted())
-                    return;
-                EnchantmentHelper.setEnchantments(Collections.emptyMap(), weapon);
-                giveItem(ev.player, weapon);
-            });
-        }
-    }
-
 }

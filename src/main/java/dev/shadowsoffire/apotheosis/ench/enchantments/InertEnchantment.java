@@ -26,8 +26,18 @@ public class InertEnchantment extends Enchantment implements CustomEnchantingTab
         return false;
     }
 
-    //@Override
-    public boolean isAllowedOnBooks() {
+    @Override
+    public int getMinCost(int level) {
+        return 2000;
+    }
+
+    @Override
+    public int getMaxCost(int level) {
+        return 2001;
+    }
+
+    @Override
+    public boolean canEnchant(ItemStack stack) {
         return false;
     }
 

@@ -10,6 +10,10 @@ public class MixinCanceller implements com.bawnorton.mixinsquared.api.MixinCance
     public static final Logger LOGGER = LogManager.getLogger("Zenith : Mixin Canceller");
     @Override
     public boolean shouldCancel(List<String> targetClassNames, String mixinClassName) {
+        if (mixinClassName.equals("net.soulsweaponry.mixin.EnchantmentHelperMixin")) {
+            LOGGER.info("Cancelling mixin net.soulsweaponry.mixin.EnchantmentHelperMixin, replaced with slightly different implementation");
+            return true;
+        }
         return false;
     }
 }

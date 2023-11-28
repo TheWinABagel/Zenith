@@ -16,12 +16,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(FishingHook.class)
 public class FishingHookMixin {
-    @Shadow
-    @Final
-    public int lureSpeed;
+    @Shadow @Final public int lureSpeed;
 
-    @Shadow
-    private int timeUntilLured;
+    @Shadow private int timeUntilLured;
 
 
     /**
@@ -34,7 +31,8 @@ public class FishingHookMixin {
             at = @At(value = "FIELD", target = "net/minecraft/world/entity/projectile/FishingHook.timeUntilLured : I",
             opcode = Opcodes.PUTFIELD, shift = At.Shift.AFTER))
     private void pain(BlockPos pos, CallbackInfo ci){
-        if (Apotheosis.enableEnch && Apotheosis.enableDebug) EnchModule.LOGGER.error("WORKING");
+        if (!Apotheosis.enableEnch) return;
+        if (Apotheosis.enableDebug) EnchModule.LOGGER.error("Modifying catching fish time");
         int lowBound = Math.max(1, 100 - this.lureSpeed * 10);
         int highBound = Math.max(lowBound, 600 - this.lureSpeed * 60);
         this.timeUntilLured = Mth.nextInt(((FishingHook)(Object)this).random, lowBound, highBound);

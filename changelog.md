@@ -1,8 +1,14 @@
 ### TODO
 * EMI support
-* Add ability to enchant mining arrows
 * Fix salvaging non single stacks of items not giving the proper amount of items in return
 
+
+## 0.2.3
+* Reenable mixin that was causing a crash with Soulslike weaponry, was fixed
+* Fix Dragonloot bow and crossbow breaking when it's lootified with the adventure module, and fix it's anvil not supporting the tome of extraction
+* Add missing hook for when crossbows are fired
+* Redirect goblin trader's enchantment hook to work with the enchantment module's higher max levels
+* Add a blacklist to potion charms so they can be disabled from being crafted
 
 ## 0.2.2
 * Temporarily disable mixin that was causing a crash with Soulslike weaponry

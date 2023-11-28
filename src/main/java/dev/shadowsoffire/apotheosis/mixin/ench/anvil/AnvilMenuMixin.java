@@ -41,13 +41,13 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
         return Integer.MAX_VALUE;
     }
 
-    @Inject(method = "createResult", at = @At(value = "INVOKE", target = "net/minecraft/world/item/ItemStack.isEmpty ()Z", ordinal = 1, shift = At.Shift.AFTER), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
-    private void initUpdateAnvilEvent(CallbackInfo ci, ItemStack left, int i, int j, int k, ItemStack left2, ItemStack right) {
+    @Inject(method = "createResult", at = @At(value = "INVOKE", target = "net/minecraft/world/item/ItemStack.isEmpty ()Z", ordinal = 1, shift = At.Shift.AFTER), cancellable = true)
+    private void initUpdateAnvilEvent(CallbackInfo ci) {
         p = player;
-        leftItem = left;
-        rightItem = right;
+        leftItem = this.inputSlots.getItem(0);
+        rightItem = this.inputSlots.getItem(1);
         output = this.resultSlots.getItem(0);
-        if (Apotheosis.enableEnch && !onAnvilChange(left, right, this.resultSlots, itemName, ths().cost.get(), p)) {
+        if (Apotheosis.enableEnch && !onAnvilChange(leftItem, rightItem, this.resultSlots, itemName, ths().cost.get(), p)) {
             ci.cancel();
         }
     }
