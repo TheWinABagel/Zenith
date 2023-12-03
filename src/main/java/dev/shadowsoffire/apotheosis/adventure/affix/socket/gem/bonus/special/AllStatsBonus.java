@@ -4,26 +4,22 @@ import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemClass;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.attributeslib.AttributesLib;
-import dev.shadowsoffire.attributeslib.api.ALObjects;
 import dev.shadowsoffire.attributeslib.impl.BooleanAttribute;
 import dev.shadowsoffire.attributeslib.util.AttributeInfo;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
@@ -35,7 +31,6 @@ import java.util.function.BiConsumer;
 /**
  * Increases all attributes by a percentage.
  */
-@SuppressWarnings("deprecation")
 public class AllStatsBonus extends GemBonus {
 
     public static Codec<AllStatsBonus> CODEC = RecordCodecBuilder.create(inst -> inst
@@ -48,10 +43,9 @@ public class AllStatsBonus extends GemBonus {
     protected final Operation operation;
     protected final Map<LootRarity, StepFunction> values;
 
-    protected transient final List<Attribute> attributes = new ArrayList<>(AttributesLib.playerAttributes);
+    protected transient final List<Attribute> attributes = new ArrayList<>(Player.createAttributes().builder.keySet());
 
 
-    @SuppressWarnings("deprecation")
     public AllStatsBonus(GemClass gemClass, Operation op, Map<LootRarity, StepFunction> values) {
         super(Apotheosis.loc("all_stats"), gemClass);
         this.operation = op;

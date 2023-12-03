@@ -3,6 +3,9 @@
 * Fix salvaging non single stacks of items not giving the proper amount of items in return
 
 
+## 0.2.4
+* Fix crash when adventure module is enabled
+
 ## 0.2.3
 * Reenable mixin that was causing a crash with Soulslike weaponry, was fixed
 * Fix Dragonloot bow and crossbow breaking when it's lootified with the adventure module, and fix it's anvil not supporting the tome of extraction
