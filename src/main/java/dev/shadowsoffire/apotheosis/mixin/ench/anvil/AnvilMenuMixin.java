@@ -4,6 +4,7 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
 import dev.shadowsoffire.apotheosis.util.Events;
+import dev.shadowsoffire.placebo.util.EnchantmentUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -36,10 +37,22 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
     }
 
     @ModifyConstant(method = "createResult()V", constant = @Constant(intValue = 40))
-    public int zenith_removeLevelCap(int old) {
+    public int removeLevelCap(int old) {
         if (!Apotheosis.enableEnch) return old;
         return Integer.MAX_VALUE;
     }
+
+    /**
+     * Reduces the XP cost to the "optimal" cost (the amount of XP that would have been used if the player had exactly that level).
+     *
+     * @param player The player using the anvil.
+     * @param level  The negative of the cost of performing the anvil operation.
+     */
+    @Redirect(method = "onTake", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;giveExperienceLevels(I)V"))
+    public void chargeOptimalLevels(Player player, int level) {
+        EnchantmentUtils.chargeExperience(player, EnchantmentUtils.getTotalExperienceForLevel(-level));
+    }
+
 
     @Inject(method = "createResult", at = @At(value = "INVOKE", target = "net/minecraft/world/item/ItemStack.isEmpty ()Z", ordinal = 1, shift = At.Shift.AFTER), cancellable = true)
     private void initUpdateAnvilEvent(CallbackInfo ci) {

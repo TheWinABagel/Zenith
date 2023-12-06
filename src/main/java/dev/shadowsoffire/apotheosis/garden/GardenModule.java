@@ -34,9 +34,6 @@ public class GardenModule {
 
     public static void init() {
         reload(false);
-    //    Apotheosis.HELPER.registerProvider(factory -> {
-    //        factory.addShapeless(ENDER_LEAD, Items.ENDER_PEARL, Items.LEAD, Items.GOLD_INGOT);
-    //    });
         items();
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register((content) -> {
         content.accept(ENDER_LEAD);

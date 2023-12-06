@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Collections;
 import java.util.List;
 
 @Mixin(value = EnchantmentHelper.class, priority = 2000)
@@ -29,7 +30,7 @@ public class EnchantmentHelperMixin {
     @Inject(method = "getAvailableEnchantmentResults", at = @At("HEAD"), cancellable = true)
     private static void zenith_getAvailableEnchantmentResults(int level, ItemStack stack, boolean allowTreasure, CallbackInfoReturnable<List<EnchantmentInstance>> cir) {
         if (Apotheosis.enableEnch) {
-            cir.setReturnValue(RealEnchantmentHelper.getAvailableEnchantmentResults(level, stack, allowTreasure));
+            cir.setReturnValue(RealEnchantmentHelper.getAvailableEnchantmentResults(level, stack, allowTreasure, Collections.emptySet()));
         }
     }
 
@@ -44,7 +45,7 @@ public class EnchantmentHelperMixin {
     @Inject(method = "selectEnchantment", at = @At("HEAD"), cancellable = true)
     private static void zenith_selectEnchantment(RandomSource random, ItemStack itemStack, int level, boolean allowTreasure, CallbackInfoReturnable<List<EnchantmentInstance>> cir) {
         if (Apotheosis.enableEnch) {
-            cir.setReturnValue(RealEnchantmentHelper.selectEnchantment(random, itemStack, level, 15F, 0, 0, allowTreasure));
+            cir.setReturnValue(RealEnchantmentHelper.selectEnchantment(random, itemStack, level, 15F, 0, 0, allowTreasure, Collections.emptySet()));
         }
     }
 

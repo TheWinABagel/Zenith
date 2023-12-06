@@ -7,9 +7,11 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
+import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.placebo.menu.BlockEntityMenu;
 import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.menu.PlaceboContainerMenu;
+import dev.shadowsoffire.placebo.util.EnchantmentUtils;
 import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandler;
 import io.github.fabricators_of_create.porting_lib.transfer.item.RecipeWrapper;
 import net.minecraft.core.BlockPos;
@@ -129,7 +131,7 @@ public class ReforgingMenu extends PlaceboContainerMenu {
                     this.getSlot(1).getItem().shrink(matCost);
                     this.getSlot(2).getItem().shrink(dustCost);
                 }
-                player.giveExperienceLevels(-3 * ++slot);
+                EnchantmentUtils.chargeExperience(player, ApothMiscUtil.getExpCostForSlot(levelCost, slot));
                 player.getCustomData().putInt(REFORGE_SEED, player.random.nextInt());
                 this.updateSeed();
                 this.needsReset.set(1);

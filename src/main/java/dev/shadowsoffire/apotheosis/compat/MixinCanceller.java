@@ -1,5 +1,7 @@
 package dev.shadowsoffire.apotheosis.compat;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,6 +16,7 @@ public class MixinCanceller implements com.bawnorton.mixinsquared.api.MixinCance
             LOGGER.info("Cancelling mixin net.soulsweaponry.mixin.EnchantmentHelperMixin, replaced with slightly different implementation");
             return true;
         }
+
         return false;
     }
 }

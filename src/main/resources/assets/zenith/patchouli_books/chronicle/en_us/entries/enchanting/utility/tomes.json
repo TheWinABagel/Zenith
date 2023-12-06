@@ -3,6 +3,7 @@
     "icon": "zenith:other_tome",
     "category": "zenith:enchanting/utility",
 	"flag": "zenith:enchanting",
+	"sortnum": 3,
     "pages": [
         {
             "type": "patchouli:text",

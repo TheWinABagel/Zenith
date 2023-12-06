@@ -6,10 +6,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.ApiStatus;
+
+import java.util.Collections;
+import java.util.Set;
 
 /**
  * This is the main interface for all blocks that provide stats to an enchanting table.
@@ -19,17 +23,6 @@ import org.jetbrains.annotations.ApiStatus;
  * Enchantment Count: This controls the number of enchantments that can be placed on an item.
  */
 public interface IEnchantingBlock  {
-
-    /**
-     * Determines the amount of enchanting power (Eterna) this block can provide to an enchanting table.
-     *
-     * @return The amount of enchanting power this block produces.
-     * @apiNote Call via {@link EnchantingStatRegistry#getEterna(BlockState, Level, BlockPos)}
-     */
-    @ApiStatus.OverrideOnly
-    default float getEternaBonus(BlockState state, LevelReader world, BlockPos pos) {
-        return ((EnchantmentBonusBlock) this).getEnchantPowerBonus(state, world, pos);
-    }
 
     /**
      * Determines the maximum enchanting power (Eterna) that this block may contribute up to.
@@ -90,6 +83,15 @@ public interface IEnchantingBlock  {
     }
 
     /**
+     * Blacklisted enchantments are prevented from being rolled in the enchanting table, as if they were not discoverable.
+     *
+     * @return A list of all enchantments that are blacklisted by the presence of this block.
+     */
+    default Set<Enchantment> getBlacklistedEnchantments(BlockState state, LevelReader world, BlockPos pos) {
+        return Collections.emptySet();
+    }
+
+    /**
      * Spawns Enchant particles in the world flowing towards the Enchanting Table.<br>
      * Only called on the client.
      *
@@ -120,6 +122,15 @@ public interface IEnchantingBlock  {
      */
     default ParticleOptions getTableParticle(BlockState state) {
         return ParticleTypes.ENCHANT;
+    }
+
+    /**
+     * Enchanting tables normally cannot roll treasure enchantments, but if a bookshelf block permits it, they can.
+     *
+     * @return If this block allows the table to roll treasure enchantments.
+     */
+    default boolean allowsTreasure(BlockState state, LevelReader world, BlockPos pos) {
+        return false;
     }
 
 }

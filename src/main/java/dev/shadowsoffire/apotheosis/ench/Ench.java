@@ -103,6 +103,10 @@ public class Ench {
 
         public static final Block STONESHELF = stoneShelf("stoneshelf", MapColor.STONE, 1.25F, ParticleTypes.ENCHANT);
 
+        public static final Block FILTERING_SHELF = new FilteringShelfBlock(Block.Properties.of().mapColor(MapColor.COLOR_CYAN).sound(SoundType.STONE).strength(1.75F).requiresCorrectToolForDrops());
+
+        public static final Block TREASURE_SHELF = new TreasureShelfBlock(Block.Properties.of().mapColor(MapColor.COLOR_BLACK).sound(SoundType.STONE).strength(1.75F).requiresCorrectToolForDrops());
+
         private static void init() {
             reg(BEESHELF, "beeshelf");
             reg(BLAZING_HELLSHELF, "blazing_hellshelf");
@@ -131,6 +135,8 @@ public class Ench {
             reg(SOUL_TOUCHED_DEEPSHELF, "soul_touched_deepshelf");
             reg(SOUL_TOUCHED_SCULKSHELF, "soul_touched_sculkshelf");
             reg(STONESHELF, "stoneshelf");
+            reg(FILTERING_SHELF, "filtering_shelf");
+            reg(TREASURE_SHELF, "treasure_shelf");
         //    DispenserBlock.registerBehavior(net.minecraft.world.item.Items.SHEARS, new ShearsDispenseItemBehavior());
         }
 
@@ -240,6 +246,11 @@ public class Ench {
 
         public static final TomeItem WEAPON_TOME = new TomeItem(net.minecraft.world.item.Items.DIAMOND_SWORD, EnchantmentCategory.WEAPON);
 
+        public static final BlockItem FILTERING_SHELF = new BlockItem(Ench.Blocks.FILTERING_SHELF, new Item.Properties().rarity(Rarity.UNCOMMON));
+
+        public static final BlockItem TREASURE_SHELF = new BlockItem(Ench.Blocks.TREASURE_SHELF, new Item.Properties().rarity(Rarity.UNCOMMON));
+
+
         private static void init() {
             reg(BEESHELF, "beeshelf");
             reg(BLAZING_HELLSHELF, "blazing_hellshelf");
@@ -284,6 +295,8 @@ public class Ench {
             reg(STONESHELF, "stoneshelf");
             reg(WARDEN_TENDRIL, "warden_tendril");
             reg(WEAPON_TOME, "weapon_tome");
+            reg(FILTERING_SHELF, "filtering_shelf");
+            reg(TREASURE_SHELF, "treasure_shelf");
         }
 
         private static void reg(Item item, String id){
@@ -379,7 +392,7 @@ public class Ench {
                     Apoth.fill(b, Items.HELLSHELF, Items.INFUSED_HELLSHELF, Items.BLAZING_HELLSHELF, Items.GLOWING_HELLSHELF, Items.SEASHELF, Items.INFUSED_SEASHELF,
                             Items.CRYSTAL_SEASHELF, Items.HEART_SEASHELF, Items.DORMANT_DEEPSHELF, Items.DEEPSHELF, Items.ECHOING_DEEPSHELF, Items.SOUL_TOUCHED_DEEPSHELF, Items.ECHOING_SCULKSHELF,
                             Items.SOUL_TOUCHED_SCULKSHELF, Items.ENDSHELF, Items.PEARL_ENDSHELF, Items.DRACONIC_ENDSHELF, Items.BEESHELF, Items.MELONSHELF, Items.STONESHELF, Items.RECTIFIER,
-                            Items.RECTIFIER_T2, Items.RECTIFIER_T3, Items.SIGHTSHELF, Items.SIGHTSHELF_T2, Items.LIBRARY, Items.ENDER_LIBRARY);
+                            Items.RECTIFIER_T2, Items.RECTIFIER_T3, Items.SIGHTSHELF, Items.SIGHTSHELF_T2, Items.FILTERING_SHELF, Items.TREASURE_SHELF,  Items.LIBRARY, Items.ENDER_LIBRARY);
 
                     Apoth.fill(b, Items.HELMET_TOME, Items.CHESTPLATE_TOME, Items.LEGGINGS_TOME, Items.BOOTS_TOME, Items.WEAPON_TOME, Items.BOW_TOME, Items.PICKAXE_TOME,
                             Items.FISHING_TOME, Items.OTHER_TOME, Items.SCRAP_TOME, Items.IMPROVED_SCRAP_TOME, Items.EXTRACTION_TOME);
@@ -410,6 +423,7 @@ public class Ench {
     public static final class Tiles {
         public static final BlockEntityType<BasicLibraryTile> LIBRARY = Apoth.registerBEType("library", new BlockEntityType<>(EnchLibraryTile.BasicLibraryTile::new, ImmutableSet.of(Ench.Blocks.LIBRARY), null));
         public static final BlockEntityType<EnchLibraryTile.EnderLibraryTile> ENDER_LIBRARY = Apoth.registerBEType("ender_library", new BlockEntityType<>(EnchLibraryTile.EnderLibraryTile::new, ImmutableSet.of(Ench.Blocks.ENDER_LIBRARY), null));
+        public static final BlockEntityType<FilteringShelfBlock.FilteringShelfTile> FILTERING_SHELF = new BlockEntityType<>(FilteringShelfBlock.FilteringShelfTile::new, ImmutableSet.of(Blocks.FILTERING_SHELF), null);
 
         private static void bootstrap() {}
     }

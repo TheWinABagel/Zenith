@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.mixin.village;
 
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.village.wanderer.WandererReplacements;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
@@ -25,17 +26,20 @@ public class WandererSpawnerMixin {
 
     @ModifyConstant(method = "tick", constant = @Constant(intValue = 75))
     public int replaceMaxChance(int old) {
-        return 101;
+        if (!Apotheosis.enableVillage) return old;
+        return 90;
     }
 
     @ModifyConstant(method = "spawn", constant = @Constant(intValue = 10))
     public int replaceRng(int old) {
-        return 2;
+        if (!Apotheosis.enableVillage) return old;
+        return 4;
     }
 
     @ModifyConstant(method = "spawn", constant = @Constant(intValue = 48000))
     public int replaceDespawnDelay(int old) {
-        return 24000;
+        if (!Apotheosis.enableVillage) return old;
+        return 28000;
     }
 
     @Inject(at = @At("HEAD"), method = "findSpawnPositionNear", cancellable = true)

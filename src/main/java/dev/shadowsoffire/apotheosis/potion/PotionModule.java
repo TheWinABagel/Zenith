@@ -36,7 +36,7 @@ public class PotionModule {
     public static final ResourceLocation POTION_TEX = Apotheosis.loc("textures/potions.png");
     public static final PotionCharmItem POTION_CHARM = new PotionCharmItem();
     public static final Item LUCKY_FOOT = new GlowyBlockItem.GlowyItem(new Item.Properties());
-    public static final RegistryObject<Item> SKULL_FRAGMENT = new RegistryObject(new ResourceLocation("wstweaks", "fragment"), Registries.ITEM);
+    public static final RegistryObject<Item> SKULL_FRAGMENT = new RegistryObject<>(new ResourceLocation("wstweaks", "fragment"), Registries.ITEM);
 
     public static int knowledgeMult = 4;
     static boolean charmsInTrinketsOnly = false;
@@ -119,7 +119,7 @@ public class PotionModule {
         if (!e && config.hasChanged()) config.save();
     }
 
-    public static void potions(){
+    public static void potions() {
             PotionBrewing.addMix(Potions.AWKWARD, Items.SHULKER_SHELL, Potion.RESISTANCE);
             PotionBrewing.addMix(Potion.RESISTANCE, Items.REDSTONE, Potion.LONG_RESISTANCE);
             PotionBrewing.addMix(Potion.RESISTANCE, Items.GLOWSTONE_DUST, Potion.STRONG_RESISTANCE);
@@ -171,7 +171,7 @@ public class PotionModule {
             PotionBrewing.addMix(Potion.LONG_FLYING, Items.REDSTONE, Potion.EXTRA_LONG_FLYING);
     }
 
-    public class Potion {
+    public static class Potion {
 
         public static final net.minecraft.world.item.alchemy.Potion RESISTANCE = Apoth.registerPot(new net.minecraft.world.item.alchemy.Potion("resistance", new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 3600)), "resistance");
         public static final net.minecraft.world.item.alchemy.Potion LONG_RESISTANCE = Apoth.registerPot(new net.minecraft.world.item.alchemy.Potion("resistance", new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 9600)), "long_resistance");

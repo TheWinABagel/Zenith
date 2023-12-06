@@ -3,7 +3,7 @@
     "icon": "zenith:scrap_tome",
     "category": "zenith:enchanting/utility",
 	"flag": "zenith:enchanting",
-	"sortnum": 1,
+	"sortnum": 4,
     "pages": [
         {
             "type": "patchouli:text",

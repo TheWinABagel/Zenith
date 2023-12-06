@@ -119,6 +119,14 @@
 		{
 			"id": "zenith:simple_reforging_table",
 			"required": false
+		},
+		{
+			"id": "zenith:filtering_shelf",
+			"required": false
+		},
+		{
+			"id": "zenith:treasure_shelf",
+			"required": false
 		}
 	]
 }

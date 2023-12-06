@@ -1,5 +1,7 @@
 package dev.shadowsoffire.apotheosis.ench.enchantments.masterwork;
 
+import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityLootEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -41,23 +43,27 @@ public class KnowledgeEnchant extends Enchantment {
 
     public void drops() {
         LivingEntityLootEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
-            if (!(source.getEntity() instanceof Player p)) return false;
+            if (!(source.getEntity() instanceof Player p)) {
+                if (Apotheosis.enableDebug) EnchModule.LOGGER.info("Damage source {} from entity {} is not a player", source, source.getEntity());
+                return false;
+            }
             int knowledge = EnchantmentHelper.getItemEnchantmentLevel(this, p.getMainHandItem());
             if (knowledge > 0 && !(target instanceof Player)) {
                 int items = 0;
-                for (ItemEntity i : drops)
+                for (ItemEntity i : drops) {
                     items += i.getItem().getCount();
+                    if (Apotheosis.enableDebug) EnchModule.LOGGER.info("Item {} is being removed due to KOTA", i.getItem());
+                }
                 if (items > 0) drops.clear();
                 items *= knowledge * 25;
                 while (items > 0) {
                     int i = ExperienceOrb.getExperienceValue(items);
                     items -= i;
                     p.level().addFreshEntity(new ExperienceOrb(p.level(), target.getX(), target.getY(), target.getZ(), i));
+                    if (Apotheosis.enableDebug) EnchModule.LOGGER.info("Adding new experience orb with xp size {}", i);
                 }
             }
             return false;
         });
-
-
     }
 }

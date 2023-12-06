@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "fabric:load_conditions": [{
+    "condition": "zenith:module",
+    "module": "enchantment"
+  }],
+  "group": "wooden_door",
+  "pattern": [
+    "GSG",
+    "DED",
+    "GSG"
+  ],
+  "key": {
+    "G": {
+      "tag": "minecraft:gold_block"
+    },
+	"S": {
+      "item": "zenith:deepshelf"
+    },
+	"D": {
+      "tag": "c:diamonds"
+    },
+	"E": {
+      "tag": "minecraft:emerald_block"
+    }
+  },
+  "result": {
+    "item": "zenith:treasure_shelf",
+    "count": 1
+  }
+}

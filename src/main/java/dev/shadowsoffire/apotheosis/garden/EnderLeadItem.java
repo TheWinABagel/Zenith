@@ -8,9 +8,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -49,6 +51,12 @@ public class EnderLeadItem extends Item {
     }
 
     @Override
+    public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entity, InteractionHand usedHand) {
+        player.displayClientMessage(Component.translatable("info.zenith.ender_lead_left_click"), true);
+        return super.interactLivingEntity(stack, player, entity, usedHand);
+    }
+
+    @Override
     public InteractionResult useOn(UseOnContext ctx) {
         CompoundTag tag = ctx.getItemInHand().getOrCreateTagElement("entity_data");
         if (!tag.isEmpty()) {
@@ -59,6 +67,7 @@ public class EnderLeadItem extends Item {
                     e.setPos(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
                     ctx.getLevel().addFreshEntity(e);
                     ctx.getItemInHand().getTag().remove("entity_data");
+                    ctx.getItemInHand().getTag().remove("name");
                     this.playSound(ctx.getPlayer());
                     ctx.getItemInHand().hurtAndBreak(1, ctx.getPlayer(), pl -> pl.broadcastBreakEvent(ctx.getHand()));
                     return InteractionResult.SUCCESS;
@@ -68,8 +77,7 @@ public class EnderLeadItem extends Item {
         return InteractionResult.FAIL;
     }
 
-    public CompoundTag getShareTag(ItemStack stack) {
-        CompoundTag tag = null;
+    public static CompoundTag getShareTag(CompoundTag tag) {
         if (tag == null) return null;
         tag = tag.copy();
         CompoundTag entity = new CompoundTag();

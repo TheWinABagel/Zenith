@@ -3,6 +3,7 @@
     "icon": "minecraft:cobweb",
     "category": "zenith:enchanting/utility",
 	"flag": "zenith:enchanting",
+  "sortnum": 5,
     "pages": [
         {
             "type": "patchouli:text",

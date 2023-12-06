@@ -26,7 +26,6 @@
     "ench.BlockMixin",
     "ench.CreativeModeTabsMixin",
     "ench.EnchantmentHelperMixin",
-    "ench.EnchantmentUtilsMixin",
     "ench.FishingHookMixin",
     "ench.ItemMixin",
     "ench.anvil.AnvilBlockMixin",
@@ -51,6 +50,7 @@
     "garden.BambooStalkBlockMixin",
     "garden.BlockBehaviourMixin",
     "garden.CactusBlockMixin",
+    "garden.FriendlyByteBufMixin",
     "garden.SugarCaneBlockMixin",
     "spawn.BlockItemMixin",
     "spawn.SlimeMixin",
@@ -63,6 +63,7 @@
     "defaultRequire": 1
   },
   "client": [
+    "client.AbstractContainerScreenMixin",
     "client.AnvilScreenMixin",
     "client.EnchantmentScreenMixin",
     "client.GuiMixin",

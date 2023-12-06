@@ -77,3 +77,7 @@ accessible field net/minecraft/client/Minecraft timer Lnet/minecraft/client/Time
 accessible field net/minecraft/client/Minecraft pausePartialTick F
 accessible field net/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder builder Ljava/util/Map;
 accessible method net/minecraft/world/level/block/entity/SpawnerBlockEntity saveAdditional (Lnet/minecraft/nbt/CompoundTag;)V
+accessible method net/minecraft/world/level/block/ChiseledBookShelfBlock getRelativeHitCoordinatesForBlockFace (Lnet/minecraft/world/phys/BlockHitResult;Lnet/minecraft/core/Direction;)Ljava/util/Optional;
+accessible method net/minecraft/world/level/block/ChiseledBookShelfBlock getHitSlot (Lnet/minecraft/world/phys/Vec2;)I
+accessible method net/minecraft/world/level/block/ChiseledBookShelfBlock removeBook (Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/block/entity/ChiseledBookShelfBlockEntity;I)V
+accessible method net/minecraft/world/level/block/ChiseledBookShelfBlock addBook (Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/block/entity/ChiseledBookShelfBlockEntity;Lnet/minecraft/world/item/ItemStack;I)V

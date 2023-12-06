@@ -704,7 +704,7 @@
     "block.zenith.infused_hellshelf": "Infused Hellshelf",
     "block.zenith.blazing_hellshelf": "Blazing Hellshelf",
     "block.zenith.glowing_hellshelf": "Glowing Hellshelf",
-	
+
     "block.zenith.seashelf": "Seashelf",
     "block.zenith.infused_seashelf": "Infused Seashelf",
     "block.zenith.crystal_seashelf": "Crystalline Seashelf",
@@ -716,22 +716,23 @@
     "block.zenith.soul_touched_deepshelf": "Soul-Touched Deepshelf",
     "block.zenith.echoing_sculkshelf": "Echoing Sculkshelf",
     "block.zenith.soul_touched_sculkshelf": "Soul-Touched Sculkshelf",
-	
+
     "block.zenith.endshelf": "Endshelf",
     "block.zenith.infused_endshelf": "Infused Endshelf",
     "block.zenith.pearl_endshelf": "Pearlescent Endshelf",
     "block.zenith.draconic_endshelf": "Draconic Endshelf",
-	
+
     "block.zenith.beeshelf": "Beeshelf",
     "block.zenith.melonshelf": "Melonshelf",
     "block.zenith.stoneshelf": "Stoneshelf",
-	
-    "block.zenith.sightshelf": "Shelf of Sight",
-    "block.zenith.sightshelf_t2": "Shelf of Masterful Sight",
+
+    "block.zenith.sightshelf": "Hellshelf of Sight",
+    "block.zenith.sightshelf_t2": "Hellshelf of Masterful Sight",
     "block.zenith.rectifier": "Shelf of Seabound Rectification",
     "block.zenith.rectifier_t2": "Shelf of Hellbound Rectification",
     "block.zenith.rectifier_t3": "Shelf of End-Fused Rectification",
-
+	"block.zenith.filtering_shelf": "Seashelf of Aquatic Filtration",
+	"block.zenith.treasure_shelf": "Deepshelf of Arcane Treasures",
 
 	"zenith.container.enchant.limitedEnchantability": "Limited Enchantability",
     "info.zenith.ench_power": "Provides %s enchanting power.",
@@ -751,6 +752,8 @@
     "info.zenith.arcana": " - Arcana: %s%%",
     "info.zenith.rectification": " - Rectification: %s%%",
     "info.zenith.clues": " - Enchanting Clues: %s",
+	"info.zenith.allows_treasure": " - Allows Treasure Enchantments",
+	"info.zenith.filter": "Enchantment Filter:",
     "info.zenith.eterna.p": " - Eterna: +%s (Max %s)",
     "info.zenith.quanta.p": " - Quanta: +%s%%",
     "info.zenith.arcana.p": " - Arcana: +%s%%",
@@ -762,10 +765,10 @@
 	"info.zenith.rectification.t": "Rectification: %s%%",
 	"info.zenith.clues.t": "Enchanting Clues: %s",
     "gui.zenith.enchant.eterna.desc": " - Magical Energy",
-    "gui.zenith.enchant.eterna.desc2": "Determines the available enchantment levels",
-    "gui.zenith.enchant.eterna.desc3": "Current Value: %s/%s",
-    "gui.zenith.enchant.quanta.desc": " - Pure Chaos",
-    "gui.zenith.enchant.quanta.desc2": "Modulates the power range",
+	"gui.zenith.enchant.eterna.desc2": "Set the max enchanting level",
+	"gui.zenith.enchant.eterna.desc3": "Current Value: %s/%s",
+	"gui.zenith.enchant.quanta.desc": " - Pure Chaos",
+	"gui.zenith.enchant.quanta.desc2": "Increases underlying randomness",
     "gui.zenith.enchant.quanta.desc3": " lessens the negative effects",
     "gui.zenith.enchant.quanta.desc4": "Current Value: %s%%",
     "gui.zenith.enchant.arcana.desc": " - Ethereal Purity",
@@ -801,8 +804,11 @@
     "info.zenith.tradeable.not": "Not Tradeable",
     "info.zenith.treasure": "Treasure",
     "info.zenith.treasure.not": "Not Treasure",
+	"info.zenith.filtering_shelf": "Insert enchanted books to prevent them from appearing in the table.",
+	"info.zenith.filtering_shelf2": "Gains eterna and arcana based on the number of inserted books.",
 
-    "enchantment.zenith.infusion": "Infusion",
+
+	"enchantment.zenith.infusion": "Infusion",
     "enchantment.zenith.infusion.desc": "Placeholder for Enchantment Crafting",
     
     "enchantment.zenith.mounted_strike": "Mounted Strike",
@@ -1071,8 +1077,11 @@
     "info.zenith.item_ench": "Item Enchantability: %s",
     "info.zenith.num_clues": "Enchanting Clues: %s",
 	"info.zenith.infusion_failed": "Infusion Criteria Not Met",
-    
-    "info.zenith.slider_power": "Power: %s",
+	"info.zenith.anvil_at": "Forging at Level %s",
+	"info.zenith.anvil_xp_cost": "Raw XP Cost: %s",
+	"info.zenith.exclusive": "Exclusive With: %s",
+
+	"info.zenith.slider_power": "Power: %s",
     "info.zenith.enchinfo_level": "Level: %s",
     "info.zenith.enchinfo_rarity": "Rarity: %s",
     "info.zenith.enchinfo_chance": "Chance: %s",
@@ -1157,6 +1166,7 @@
     "info.zenith.noentity": "Held Entity: Nothing",
     "info.zenith.containedentity": "Held Entity: %s",
     "info.zenith.ender_lead": "The Ender Lead is an item that can be used to move animals around.  Punch an animal to capture, and right click to release it.  The leash will not work on other types of entities.",
+	"info.zenith.ender_lead_left_click": "Punch an animal to capture, and right click to release it. The leash will not work on other types of entities.",
 
     "comment_id": "/Villager Module",
     "name.zenith.merch_sword": "Captive Dreams",

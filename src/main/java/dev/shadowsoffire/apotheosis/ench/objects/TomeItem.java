@@ -36,7 +36,7 @@ public class TomeItem extends BookItem implements IEnchantableItem, CustomEnchan
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         if (this.type == null) return EnchModule.TYPED_BOOKS.stream().filter(b -> b != this).allMatch(b -> !enchantment.canEnchant(new ItemStack(b)));
-        return enchantment.category == this.type || enchantment.category.canEnchant(this.rep.getItem());
+        return enchantment.category.canEnchant(this.rep.getItem());
     }
 
     @Override
