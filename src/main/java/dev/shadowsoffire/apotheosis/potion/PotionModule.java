@@ -33,13 +33,24 @@ import java.io.File;
 public class PotionModule {
 
     public static final Logger LOGGER = LogManager.getLogger("Zenith : Potion");
-    public static final ResourceLocation POTION_TEX = Apotheosis.loc("textures/potions.png");
     public static final PotionCharmItem POTION_CHARM = new PotionCharmItem();
     public static final Item LUCKY_FOOT = new GlowyBlockItem.GlowyItem(new Item.Properties());
-    public static final RegistryObject<Item> SKULL_FRAGMENT = new RegistryObject<>(new ResourceLocation("wstweaks", "fragment"), Registries.ITEM);
-
     public static int knowledgeMult = 4;
-    static boolean charmsInTrinketsOnly = false;
+    public static boolean charmsInTrinketsOnly = false;
+
+    public static boolean RESISTANCE_ENABLED = true;
+    public static boolean SUNDERING_ENABLED = true;
+    public static boolean ABSORPTION_ENABLED = true;
+    public static boolean HASTE_ENABLED = true;
+    public static boolean FATIGUE_ENABLED = true;
+    public static boolean WITHER_ENABLED = true;
+    public static boolean KNOWLEDGE_ENABLED = true;
+    public static boolean LUCK_ENABLED = true;
+    public static boolean VITALITY_ENABLED = true;
+    public static boolean GRIEVOUS_ENABLED = true;
+    public static boolean LEVITATION_ENABLED = true;
+    public static boolean FLYING_ENABLED = true;
+
 
     public static void init() {
         potions();
@@ -103,7 +114,7 @@ public class PotionModule {
                 LOGGER.error("Invalid extended potion charm entry {} will be ignored.", s);
             }
         }
-        String[] defDis = { "zenith_attributes:flying" };
+        String[] defDis = { "modid:charm_id" };
         String[] disabled = config.getStringList("Disabled Potion Charms", "general", defDis,
                 "A list of effects that will be unable to be crafted into charms.\nServer-authoritative.");
         PotionCharmItem.DISABLED_POTIONS.clear();
@@ -115,60 +126,86 @@ public class PotionModule {
                 LOGGER.error("Invalid disabled potion charm entry {} will be ignored.", s);
             }
         }
-
+        config.setCategoryComment("brewing", "All brewing recipe disables are Server-authoritative.");
+        RESISTANCE_ENABLED = config.getBoolean("Resistance", "brewing", true, "If this potion type will be craftable in the brewing stand.");
+        SUNDERING_ENABLED = config.getBoolean("Sundering", "brewing", true, "If this potion type will be craftable in the brewing stand.");
+        ABSORPTION_ENABLED = config.getBoolean("Absorption", "brewing", true, "If this potion type will be craftable in the brewing stand.");
+        HASTE_ENABLED = config.getBoolean("Haste", "brewing", true, "If this potion type will be craftable in the brewing stand.");
+        FATIGUE_ENABLED = config.getBoolean("Fatigue", "brewing", true, "If this potion type will be craftable in the brewing stand.");
+        WITHER_ENABLED = config.getBoolean("Wither", "brewing", true, "If this potion type will be craftable in the brewing stand.");
+        KNOWLEDGE_ENABLED = config.getBoolean("Knowledge", "brewing", true, "If this potion type will be craftable in the brewing stand.");
+        LUCK_ENABLED = config.getBoolean("Luck", "brewing", true, "If this potion type will be craftable in the brewing stand.");
+        VITALITY_ENABLED = config.getBoolean("Vitality", "brewing", true, "If this potion type will be craftable in the brewing stand.");
+        GRIEVOUS_ENABLED = config.getBoolean("Grievous", "brewing", true, "If this potion type will be craftable in the brewing stand.");
+        LEVITATION_ENABLED = config.getBoolean("Levitation", "brewing", true, "If this potion type will be craftable in the brewing stand.");
+        FLYING_ENABLED = config.getBoolean("Flying", "brewing", true, "If this potion type will be craftable in the brewing stand.");
         if (!e && config.hasChanged()) config.save();
     }
 
     public static void potions() {
+
+        if (RESISTANCE_ENABLED) {
             PotionBrewing.addMix(Potions.AWKWARD, Items.SHULKER_SHELL, Potion.RESISTANCE);
             PotionBrewing.addMix(Potion.RESISTANCE, Items.REDSTONE, Potion.LONG_RESISTANCE);
             PotionBrewing.addMix(Potion.RESISTANCE, Items.GLOWSTONE_DUST, Potion.STRONG_RESISTANCE);
-
+        }
+        if (SUNDERING_ENABLED) {
             PotionBrewing.addMix(Potion.RESISTANCE, Items.FERMENTED_SPIDER_EYE, Potion.SUNDERING);
             PotionBrewing.addMix(Potion.LONG_RESISTANCE, Items.FERMENTED_SPIDER_EYE, Potion.LONG_SUNDERING);
             PotionBrewing.addMix(Potion.STRONG_RESISTANCE, Items.FERMENTED_SPIDER_EYE, Potion.STRONG_SUNDERING);
             PotionBrewing.addMix(Potion.SUNDERING, Items.REDSTONE, Potion.LONG_SUNDERING);
             PotionBrewing.addMix(Potion.SUNDERING, Items.GLOWSTONE_DUST, Potion.STRONG_SUNDERING);
-
+        }
+        if (ABSORPTION_ENABLED) {
             PotionBrewing.addMix(Potions.AWKWARD, Items.GOLDEN_APPLE, Potion.ABSORPTION);
             PotionBrewing.addMix(Potion.ABSORPTION, Items.REDSTONE, Potion.LONG_ABSORPTION);
             PotionBrewing.addMix(Potion.ABSORPTION, Items.GLOWSTONE_DUST, Potion.STRONG_ABSORPTION);
-
+        }
+        if (HASTE_ENABLED) {
             PotionBrewing.addMix(Potions.AWKWARD, Items.MUSHROOM_STEW, Potion.HASTE);
             PotionBrewing.addMix(Potion.HASTE, Items.REDSTONE, Potion.LONG_HASTE);
             PotionBrewing.addMix(Potion.HASTE, Items.GLOWSTONE_DUST, Potion.STRONG_HASTE);
-
+        }
+        if (FATIGUE_ENABLED) {
             PotionBrewing.addMix(Potion.HASTE, Items.FERMENTED_SPIDER_EYE, Potion.FATIGUE);
             PotionBrewing.addMix(Potion.LONG_HASTE, Items.FERMENTED_SPIDER_EYE, Potion.LONG_FATIGUE);
             PotionBrewing.addMix(Potion.STRONG_HASTE, Items.FERMENTED_SPIDER_EYE, Potion.STRONG_FATIGUE);
             PotionBrewing.addMix(Potion.FATIGUE, Items.REDSTONE, Potion.LONG_FATIGUE);
             PotionBrewing.addMix(Potion.FATIGUE, Items.GLOWSTONE_DUST, Potion.STRONG_FATIGUE);
-
-            if (SKULL_FRAGMENT.isPresent()) PotionBrewing.addMix(Potions.AWKWARD, SKULL_FRAGMENT.get(), Potion.WITHER);
-            else PotionBrewing.addMix(Potions.AWKWARD, Items.WITHER_SKELETON_SKULL, Potion.WITHER);
+        }
+        if (WITHER_ENABLED) {
+            PotionBrewing.addMix(Potions.AWKWARD, Items.WITHER_SKELETON_SKULL, Potion.WITHER);
             PotionBrewing.addMix(Potion.WITHER, Items.REDSTONE, Potion.LONG_WITHER);
             PotionBrewing.addMix(Potion.WITHER, Items.GLOWSTONE_DUST, Potion.STRONG_WITHER);
-
+        }
+        if (KNOWLEDGE_ENABLED) {
             PotionBrewing.addMix(Potions.AWKWARD, Items.EXPERIENCE_BOTTLE, Potion.KNOWLEDGE);
             PotionBrewing.addMix(Potion.KNOWLEDGE, Items.REDSTONE, Potion.LONG_KNOWLEDGE);
             PotionBrewing.addMix(Potion.KNOWLEDGE, Items.EXPERIENCE_BOTTLE, Potion.STRONG_KNOWLEDGE);
-
+        }
+        if (LUCK_ENABLED) {
             PotionBrewing.addMix(Potions.AWKWARD, LUCKY_FOOT, Potions.LUCK);
-
+        }
+        if (VITALITY_ENABLED) {
             PotionBrewing.addMix(Potions.AWKWARD, Items.SWEET_BERRIES, Potion.VITALITY);
             PotionBrewing.addMix(Potion.VITALITY, Items.REDSTONE, Potion.LONG_VITALITY);
             PotionBrewing.addMix(Potion.VITALITY, Items.GLOWSTONE_DUST, Potion.STRONG_VITALITY);
-
+        }
+        if (GRIEVOUS_ENABLED) {
             PotionBrewing.addMix(Potion.VITALITY, Items.FERMENTED_SPIDER_EYE, Potion.GRIEVOUS);
             PotionBrewing.addMix(Potion.LONG_VITALITY, Items.FERMENTED_SPIDER_EYE, Potion.LONG_GRIEVOUS);
             PotionBrewing.addMix(Potion.STRONG_VITALITY, Items.FERMENTED_SPIDER_EYE, Potion.STRONG_GRIEVOUS);
             PotionBrewing.addMix(Potion.GRIEVOUS, Items.REDSTONE, Potion.LONG_GRIEVOUS);
             PotionBrewing.addMix(Potion.GRIEVOUS, Items.GLOWSTONE_DUST, Potion.STRONG_GRIEVOUS);
-
+        }
+        if (LEVITATION_ENABLED) {
             PotionBrewing.addMix(Potions.SLOW_FALLING, Items.FERMENTED_SPIDER_EYE, Potion.LEVITATION);
+        }
+        if (FLYING_ENABLED) {
             PotionBrewing.addMix(Potion.LEVITATION, Items.POPPED_CHORUS_FRUIT, Potion.FLYING);
             PotionBrewing.addMix(Potion.FLYING, Items.REDSTONE, Potion.LONG_FLYING);
             PotionBrewing.addMix(Potion.LONG_FLYING, Items.REDSTONE, Potion.EXTRA_LONG_FLYING);
+        }
     }
 
     public static class Potion {

@@ -24,7 +24,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * Credits to MariumBacchus for the original code in Soulslike Weaponry, licensed under CC0 1.0 Universal
  * This is needed as both mods are redirecting the same thing
  */
-@Pseudo
 @Mixin(EnchantmentHelper.class)
 public class EnchantmentHelperSoulslikeWeaponryMixin {
 

@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Pseudo
-@Mixin(DragonCrossbowItem.class)
+@Mixin(value = DragonCrossbowItem.class, remap = false)
 public class DragonCrossbowItemMixin {
 
     @Inject(method = "<init>", at = @At("TAIL"))

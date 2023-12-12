@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Pseudo
-@Mixin(Hooks.class)
+@Mixin(value = Hooks.class, remap = false)
 public class HooksMixin {
     @Inject(method = "getEnchantmentLevel", at = @At("HEAD"), cancellable = true)
     private static void zenith$redirectMaxEnchLevel(Enchantment enchantment, CallbackInfoReturnable<Integer> cir){

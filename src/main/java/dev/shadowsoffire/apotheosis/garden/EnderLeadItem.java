@@ -13,6 +13,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -36,7 +37,7 @@ public class EnderLeadItem extends Item {
 
     @Override
     public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
-        if (stack.getOrCreateTagElement("entity_data").isEmpty() && entity instanceof Animal) {
+        if (stack.getOrCreateTagElement("entity_data").isEmpty() && (entity instanceof Animal || entity instanceof OwnableEntity)) {
             CompoundTag tag = entity.serializeNBT();
             if (!player.level().isClientSide) {
                 entity.discard();

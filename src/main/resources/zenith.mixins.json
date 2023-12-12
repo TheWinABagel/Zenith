@@ -22,6 +22,7 @@
     "compat.dragonloot.present.DragonCrossbowItemMixin",
     "compat.dragonloot.present.ZenithDragonLootCompatAnvilMenuMixin",
     "compat.goblintraders.present.HooksMixin",
+    "compat.modern_industrialization.present.ReplicatorMachineBlockEntityMixin",
     "compat.soulsweapons.present.EnchantmentHelperSoulslikeWeaponryMixin",
     "ench.BlockMixin",
     "ench.CreativeModeTabsMixin",

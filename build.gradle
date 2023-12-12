@@ -33,7 +33,12 @@ repositories {
 		}
 	}
 	maven { url "https://jitpack.io/" }
-	maven { url "https://maven.jamieswhiteshirt.com/libs-release" }
+	maven {
+		url = "https://maven.jamieswhiteshirt.com/libs-release/"
+		content {
+			includeGroup "com.jamieswhiteshirt"
+		}
+	}
 	maven { url 'https://maven.blamejared.com' }
 	maven { url "https://maven.shedaniel.me" }
 	maven { url "https://maven.terraformersmc.com" }
@@ -51,11 +56,19 @@ repositories {
 		url = "https://maven.pkg.github.com/MrCrayfish/Maven"
 		credentials {
 			//username = project.findProperty("gpr.user") ?: System.getenv("GH_ID")
-			username = project.findProperty("gpr.user") ?: "gogglebobby@gmail.com"
+			username = project.findProperty("gpr.user") ?: "gogglebobby@gmail.com" //only used for gh, what a terrible name lol
 			password = project.findProperty("gpr.key") ?: System.getenv("GH_TOKEN")
 		}
 		content {
 			includeGroup "com.mrcrayfish"
+		}
+	}
+	repositories {
+		maven {
+			url = "https://maven.draylar.dev/releases"
+			content {
+				includeGroup "dev.draylar"
+			}
 		}
 	}
 
@@ -71,8 +84,8 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation( "dev.shadowsoffire.placebo:placebo-fabric-1.20.1:${project.fakerlib_version}")
-	modImplementation( "dev.bagel:ZenithAttributes:${project.zenith_attributes_version}")
+	modCompileOnly modRuntimeOnly( "dev.shadowsoffire.placebo:placebo-fabric-1.20.1:${project.fakerlib_version}")
+	modCompileOnly modRuntimeOnly( "dev.bagel:ZenithAttributes:${project.zenith_attributes_version}")
 
 	// Mixin Extras + Mixin^2 for mod compat
 	implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.2.0-beta.10"))
@@ -123,10 +136,21 @@ dependencies {
 	modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${project.wthit_version}"
 
 	// REI + Arch
-	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
-	modRuntimeOnly "dev.architectury:architectury-fabric:${project.arch_version}"
-	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
-	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
+	//modRuntimeOnly "dev.architectury:architectury-fabric:${project.arch_version}"
+	//modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
+	//modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
+
+	// EMI
+	modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
+
+	switch (recipe_viewer.toLowerCase(Locale.ROOT)) {
+	//	case "rei": modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}";
+	//		modRuntimeOnly "dev.architectury:architectury-fabric:${project.arch_version}";
+	//		break
+		case "emi": modRuntimeOnly("dev.emi:emi-fabric:${project.emi_version}"); break
+		case "disabled": break
+		default: println("Unknown recipe viewer specified: $recipe_viewer. Must be EMI, REI or disabled.")
+	}
 
 	//Jade
 	modCompileOnly "curse.maven:jade-324717:${jade_id}"
@@ -134,19 +158,12 @@ dependencies {
 
 	//Fixes for other mods
 	//modCompileOnly
-	modImplementation("maven.modrinth:spell-power:${project.spell_power_version}-fabric")
+	modCompileOnly("maven.modrinth:spell-power:${project.spell_power_version}-fabric")
 	modCompileOnly ("maven.modrinth:spell-engine:${project.spell_engine_version}-fabric")
 
 	modCompileOnly("io.wispforest:lavender:0.1.0-pre.6+1.20")
-
 	modCompileOnly("io.wispforest:owo-lib:0.11.0+1.20")
 	modCompileOnly "curse.maven:conjuring-422310:4580578"
-	//modImplementation "curse.maven:iceberg-fabric-539382:4706535"
-	//modImplementation "curse.maven:prism-fabric-665526:4650327"
-	//modImplementation "curse.maven:legendary-tooltips-fabric-542478:4650438"
-
-	//modImplementation "maven.modrinth:obscure-api:16"
-	//modImplementation "maven.modrinth:aquamirae:ouUaC54p"
 
 	modCompileOnly "curse.maven:puzzles-lib-495476:4847147"
 	modCompileOnly "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:8.0.0"
@@ -154,11 +171,23 @@ dependencies {
 	modCompileOnly "curse.maven:dragonloot-424480:4656260"
 
 	modCompileOnly "curse.maven:mariums-soulslike-weaponry-632066:4891244"
-	//modImplementation "software.bernie.geckolib:geckolib-fabric-1.20:4.2"
 
-	modImplementation "com.mrcrayfish:framework-fabric:1.20.1-0.6.13"
+	modCompileOnly "com.mrcrayfish:framework-fabric:1.20.1-0.6.13"
 	modRuntimeOnly "com.mrcrayfish:catalogue-fabric:1.20.1-1.7.1"
-	modImplementation "com.mrcrayfish:goblintraders-fabric:1.20.1-1.9.3"
+	modCompileOnly "com.mrcrayfish:goblintraders-fabric:1.20.1-1.9.3"
+
+	modCompileOnly "curse.maven:modern-industrialization-405388:4775647"
+
+//	modApi("teamreborn:energy:3.0.0") {
+//		exclude(group: "net.fabricmc.fabric-api")
+//		exclude group: "net.fabricmc", module: "fabric-loader"
+//	}
+//
+//	modCompileOnly("dev.draylar:magna:1.10.1+1.20.1") {
+//		exclude(group: "io.github.prospector")
+//		exclude(group: "me.shedaniel.cloth")
+//		exclude(group: "net.fabricmc.fabric-api")
+//	}
 
 }
 loom {

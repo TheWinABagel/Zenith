@@ -36,18 +36,17 @@
     "nbt": {
       "StoredEnchantments": [
         {
-          "id": "zenith:inertia",
+          "id": "zenith:chainsaw",
           "lvl": "1s"
         }
       ]
     }
   },
-  "required_advancement": "spectrum:unlocks/enchantments/inertia",
   "fabric:load_conditions": [
     {
-      "condition": "spectrum:enchantments_exist",
+      "condition": "fabric:all_mods_loaded",
       "values": [
-        "spectrum:inertia"
+        "spectrum"
       ]
     }
   ]

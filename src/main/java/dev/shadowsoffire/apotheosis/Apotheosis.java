@@ -1,24 +1,20 @@
 package dev.shadowsoffire.apotheosis;
 
 import dev.shadowsoffire.apotheosis.advancements.AdvancementTriggers;
-import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.compat.PatchouliCompat;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.garden.GardenModule;
 import dev.shadowsoffire.apotheosis.potion.PotionModule;
 import dev.shadowsoffire.apotheosis.spawn.SpawnerModule;
-import dev.shadowsoffire.apotheosis.util.DummyLootModifier;
 import dev.shadowsoffire.apotheosis.util.Events;
 import dev.shadowsoffire.apotheosis.util.ModuleCondition;
 import dev.shadowsoffire.apotheosis.village.VillageModule;
 import dev.shadowsoffire.placebo.config.Configuration;
 
-import io.github.fabricators_of_create.porting_lib.loot.PortingLibLoot;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 
 import java.io.File;
