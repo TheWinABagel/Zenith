@@ -1,12 +1,10 @@
 package dev.shadowsoffire.apotheosis.ench.table;
 
-import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.advancements.AdvancementTriggers;
 import dev.shadowsoffire.apotheosis.ench.Ench;
-import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.api.IEnchantingBlock;
+import dev.shadowsoffire.apotheosis.mixin.accessors.EnchantmentMenuAccessor;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
-import dev.shadowsoffire.apotheosis.util.FloatReferenceHolder;
 import dev.shadowsoffire.placebo.util.EnchantmentUtils;
 import io.github.fabricators_of_create.porting_lib.tags.Tags;
 import io.github.fabricators_of_create.porting_lib.transfer.item.SlotItemHandler;
@@ -44,7 +42,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
         super(id, inv, ContainerLevelAccess.NULL);
         this.player = inv.player;
         this.slots.clear();
-        this.addSecretSlot(new Slot(this.enchantSlots, 0, 15, 47){
+        this.addSecretSlot(new Slot(((EnchantmentMenuAccessor) this).getEnchantSlots(), 0, 15, 47){
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return true;
@@ -55,7 +53,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
                 return 1;
             }
         });
-        this.addSecretSlot(new Slot(this.enchantSlots, 1, 35, 47){
+        this.addSecretSlot(new Slot(((EnchantmentMenuAccessor) this).getEnchantSlots(), 1, 35, 47){
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return stack.is(Tags.Items.ENCHANTING_FUELS);
@@ -68,7 +66,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
         super(id, inv, wPos);
         this.player = inv.player;
         this.slots.clear();
-        this.addSecretSlot(new Slot(this.enchantSlots, 0, 15, 47){
+        this.addSecretSlot(new Slot(((EnchantmentMenuAccessor) this).getEnchantSlots(), 0, 15, 47){
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return true;
@@ -109,7 +107,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
     public boolean clickMenuButton(Player player, int id) {
         int slot = id;
         int level = this.costs[slot];
-        ItemStack toEnchant = this.enchantSlots.getItem(0);
+        ItemStack toEnchant = ((EnchantmentMenuAccessor) this).getEnchantSlots().getItem(0);
         ItemStack lapis = this.getSlot(1).getItem();
         int cost = id + 1;
         if ((lapis.isEmpty() || lapis.getCount() < cost) && !player.getAbilities().instabuild) return false;
@@ -117,7 +115,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
 
         if (this.costs[id] <= 0 || toEnchant.isEmpty() || (player.experienceLevel < cost || player.experienceLevel < this.costs[id]) && !player.getAbilities().instabuild) return false;
 
-        this.access.execute((world, pos) -> {
+        ((EnchantmentMenuAccessor) this).getAccess().execute((world, pos) -> {
             ItemStack enchanted = toEnchant;
             float eterna = this.stats.eterna, quanta = this.stats.quanta, arcana = this.stats.arcana,
                     rectification = this.stats.rectification;
@@ -127,15 +125,15 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
                 player.onEnchantmentPerformed(toEnchant, 0); // Pass zero here instead of the cost so no experience is taken, but the method is still called for tracking reasons.
                 if (list.get(0).enchantment == Ench.Enchantments.INFUSION) {
                     EnchantingRecipe match = EnchantingRecipe.findMatch(world, toEnchant, eterna, quanta, arcana);
-                    if (match != null) this.enchantSlots.setItem(0, match.assemble(toEnchant, eterna, quanta, arcana));
+                    if (match != null) ((EnchantmentMenuAccessor) this).getEnchantSlots().setItem(0, match.assemble(toEnchant, eterna, quanta, arcana));
                     else return;
                 }
-                else this.enchantSlots.setItem(0, ((IEnchantableItem) toEnchant.getItem()).onEnchantment(toEnchant, list));
+                else ((EnchantmentMenuAccessor) this).getEnchantSlots().setItem(0, ((IEnchantableItem) toEnchant.getItem()).onEnchantment(toEnchant, list));
 
                 if (!player.getAbilities().instabuild) {
                     lapis.shrink(cost);
                     if (lapis.isEmpty()) {
-                        this.enchantSlots.setItem(1, ItemStack.EMPTY);
+                        ((EnchantmentMenuAccessor) this).getEnchantSlots().setItem(1, ItemStack.EMPTY);
                     }
                 }
 
@@ -144,9 +142,9 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
                     (AdvancementTriggers.ENCHANTED).trigger((ServerPlayer) player, enchanted, level, eterna, quanta, arcana, rectification);
                 }
 
-                this.enchantSlots.setChanged();
-                this.enchantmentSeed.set(player.getEnchantmentSeed());
-                this.slotsChanged(this.enchantSlots);
+                ((EnchantmentMenuAccessor) this).getEnchantSlots().setChanged();
+                ((EnchantmentMenuAccessor) this).getEnchantmentSeed().set(player.getEnchantmentSeed());
+                this.slotsChanged(((EnchantmentMenuAccessor) this).getEnchantSlots());
                 world.playSound((Player) null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F);
             }
 
@@ -161,18 +159,18 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
     @SuppressWarnings("deprecation")
     @Override
     public void slotsChanged(Container inventoryIn) {
-        this.access.evaluate((world, pos) -> {
-            if (inventoryIn == this.enchantSlots) {
+        ((EnchantmentMenuAccessor) this).getAccess().evaluate((world, pos) -> {
+            if (inventoryIn == ((EnchantmentMenuAccessor) this).getEnchantSlots()) {
                 ItemStack toEnchant = inventoryIn.getItem(0);
                 this.gatherStats();
                 EnchantingRecipe match = EnchantingRecipe.findItemMatch(world, toEnchant);
                 if (toEnchant.getCount() == 1 && (match != null || toEnchant.getItem().isEnchantable(toEnchant) && isEnchantableEnough(toEnchant))) {
                     float eterna = this.stats.eterna();
                     if (eterna < 1.5) eterna = 1.5F; // Allow for enchanting with no bookshelves as vanilla does
-                    this.random.setSeed(this.enchantmentSeed.get());
+                    ((EnchantmentMenuAccessor) this).getRandom().setSeed(((EnchantmentMenuAccessor) this).getEnchantmentSeed().get());
 
                     for (int slot = 0; slot < 3; ++slot) {
-                        this.costs[slot] = RealEnchantmentHelper.getEnchantmentCost(this.random, slot, eterna, toEnchant);
+                        this.costs[slot] = RealEnchantmentHelper.getEnchantmentCost(((EnchantmentMenuAccessor) this).getRandom(), slot, eterna, toEnchant);
                         this.enchantClue[slot] = -1;
                         this.levelClue[slot] = -1;
 
@@ -186,14 +184,14 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
                             List<EnchantmentInstance> list = this.getEnchantmentList(toEnchant, slot, this.costs[slot]);
                             if (list != null && !list.isEmpty()) {
 
-                                EnchantmentInstance enchantmentdata = list.remove(this.random.nextInt(list.size()));
+                                EnchantmentInstance enchantmentdata = list.remove(((EnchantmentMenuAccessor) this).getRandom().nextInt(list.size()));
                                 this.enchantClue[slot] = BuiltInRegistries.ENCHANTMENT.getId(enchantmentdata.enchantment);
                                 this.levelClue[slot] = enchantmentdata.level;
                                 int clues = this.stats.clues();
                                 List<EnchantmentInstance> clueList = new ArrayList<>();
                                 if (clues-- > 0) clueList.add(enchantmentdata);
                                 while (clues-- > 0 && !list.isEmpty()) {
-                                    clueList.add(list.remove(this.random.nextInt(list.size())));
+                                    clueList.add(list.remove(((EnchantmentMenuAccessor) this).getRandom().nextInt(list.size())));
                                 }
 
                                 ClueMessage.sendTo(slot, clueList, list.isEmpty(), this.player);
@@ -210,8 +208,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
                         this.levelClue[i] = -1;
                     }
                     this.stats = TableStats.INVALID;
-                    //PacketDistro.sendTo(Apotheosis.CHANNEL, new StatsMessage(this.stats), player);
-                    //TODO PACKETS AAAAAAAAAAAA
+                    StatsMessage.sendTo(this.stats, player);
                 }
             }
             return this;
@@ -219,9 +216,9 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
     }
 
     private List<EnchantmentInstance> getEnchantmentList(ItemStack stack, int enchantSlot, int level) {
-        this.random.setSeed(this.enchantmentSeed.get() + enchantSlot);
-        List<EnchantmentInstance> list = RealEnchantmentHelper.selectEnchantment(this.random, stack, level, this.stats.quanta(), this.stats.arcana(), this.stats.rectification(), this.stats.treasure(), this.stats.blacklist());
-        EnchantingRecipe match = this.access.evaluate((world, pos) -> Optional.ofNullable(EnchantingRecipe.findMatch(world, stack, this.stats.eterna(), this.stats.quanta(), this.stats.arcana()))).get().orElse(null);
+        ((EnchantmentMenuAccessor) this).getRandom().setSeed(((EnchantmentMenuAccessor) this).getEnchantmentSeed().get() + enchantSlot);
+        List<EnchantmentInstance> list = RealEnchantmentHelper.selectEnchantment(((EnchantmentMenuAccessor) this).getRandom(), stack, level, this.stats.quanta(), this.stats.arcana(), this.stats.rectification(), this.stats.treasure(), this.stats.blacklist());
+        EnchantingRecipe match = ((EnchantmentMenuAccessor) this).getAccess().evaluate((world, pos) -> Optional.ofNullable(EnchantingRecipe.findMatch(world, stack, this.stats.eterna(), this.stats.quanta(), this.stats.arcana()))).get().orElse(null);
         if (enchantSlot == 2 && match != null) {
             list.clear();
             list.add(new EnchantmentInstance(Ench.Enchantments.INFUSION, 1));
@@ -230,9 +227,9 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
     }
 
     public void gatherStats() {
-        this.access.evaluate((world, pos) -> {
+        ((EnchantmentMenuAccessor) this).getAccess().evaluate((world, pos) -> {
             this.stats = gatherStats(world, pos, this.getSlot(0).getItem().getItem().getEnchantmentValue());
-        //    PacketDistro.sendTo(Apotheosis.CHANNEL, new StatsMessage(this.stats), player);
+            StatsMessage.sendTo(this.stats, player);
             return this;
         }).orElse(this);
     }

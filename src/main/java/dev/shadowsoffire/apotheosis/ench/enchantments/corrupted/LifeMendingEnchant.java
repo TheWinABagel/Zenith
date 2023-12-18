@@ -1,5 +1,7 @@
 package dev.shadowsoffire.apotheosis.ench.enchantments.corrupted;
 
+import dev.emi.trinkets.api.TrinketsApi;
+import dev.shadowsoffire.apotheosis.potion.PotionCharmItem;
 import dev.shadowsoffire.apotheosis.util.Events;
 import dev.shadowsoffire.attributeslib.api.HealEvent;
 import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingTableBehaviorEnchantment;
@@ -13,6 +15,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -79,13 +82,13 @@ public class LifeMendingEnchant extends Enchantment implements CustomEnchantingT
                 if (!(entity instanceof LivingEntity living)) continue;
                 ItemStack stack = living.getItemBySlot(slot);
                 if (this.lifeMend(entity, amount, stack) == amount) return amount;
-
             }
-            if (FabricLoader.getInstance().isModLoaded("trinkets")) { //TODO reenable after trinkets compat
-            /*    List<ItemStack> stacks = AdventureCuriosCompat.getLifeMendingCurios(entity);
-                for (ItemStack stack : stacks) {
-                    if (this.lifeMend(entity, stack)) return;
-                }*/
+            if (FabricLoader.getInstance().isModLoaded("trinkets")) {
+                if (entity instanceof LivingEntity livingEntity) {
+                    TrinketsApi.getTrinketComponent(livingEntity).ifPresent(c -> c.forEach((slotReference, stack) -> {
+                        this.lifeMend(entity, amount, stack);
+                    }));
+                }
             }
             return amount;
         });

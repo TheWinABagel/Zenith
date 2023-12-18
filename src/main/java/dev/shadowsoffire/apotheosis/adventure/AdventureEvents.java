@@ -227,12 +227,12 @@ public class AdventureEvents {
 
     public static void dropsHigh() {
         LivingEntityLootEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
-            if (source.getEntity() instanceof ServerPlayer p && target instanceof Monster) {
+            if (source.getEntity() instanceof ServerPlayer p && target instanceof Monster && drops != null) {
                 if (p instanceof FakePlayer) return false;
                 float chance = AdventureConfig.gemDropChance + (target.getCustomData().contains("apoth.boss") ? AdventureConfig.gemBossBonus : 0);
-                if (p.random.nextFloat() <= chance) {
+                if (p.getRandom().nextFloat() <= chance) {
                     Entity ent = target;
-                    drops.add(new ItemEntity(ent.level(), ent.getX(), ent.getY(), ent.getZ(), GemRegistry.createRandomGemStack(p.random, (ServerLevel) p.level(), p.getLuck(), IDimensional.matches(p.level()), IStaged.matches(p)), 0, 0, 0));
+                    drops.add(new ItemEntity(ent.level(), ent.getX(), ent.getY(), ent.getZ(), GemRegistry.createRandomGemStack(p.getRandom(), (ServerLevel) p.level(), p.getLuck(), IDimensional.matches(p.level()), IStaged.matches(p)), 0, 0, 0));
                 }
             }
             return false;
@@ -241,6 +241,7 @@ public class AdventureEvents {
 
     public static void drops() {
         LivingEntityLootEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
+            if (drops == null) return false;
             Adventure.Affixes.FESTIVE.getOptional().ifPresent(afx -> afx.drops(target, source, drops));
             TelepathicAffix.drops(source, drops);
             Adventure.Affixes.FESTIVE.getOptional().ifPresent(afx -> afx.removeMarker(drops));
@@ -325,7 +326,7 @@ public class AdventureEvents {
                     float f = entity.getLightLevelDependentMagicValue();
                     BlockPos blockpos = BlockPos.containing(entity.getX(), entity.getEyeY(), entity.getZ());
                     boolean flag = entity.isInWaterRainOrBubble() || entity.isInPowderSnow || entity.wasInPowderSnow;
-                    if (f > 0.5F && entity.random.nextFloat() * 30.0F < (f - 0.4F) * 2.0F && !flag && entity.level().canSeeSky(blockpos)) {
+                    if (f > 0.5F && entity.getRandom().nextFloat() * 30.0F < (f - 0.4F) * 2.0F && !flag && entity.level().canSeeSky(blockpos)) {
                         entity.setSecondsOnFire(8);
                     }
                 }

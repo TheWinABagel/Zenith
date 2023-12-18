@@ -71,6 +71,7 @@ public class RarityRegistry extends WeightedDynamicRegistry<LootRarity> {
      * Guaranted to be {@linkplain DynamicHolder#isBound() bound}.
      */
     public static DynamicHolder<LootRarity> getMaxRarity() {
+        if (!Apotheosis.enableAdventure) return null;
         return INSTANCE.ordered.get(INSTANCE.ordered.size() - 1);
     }
 

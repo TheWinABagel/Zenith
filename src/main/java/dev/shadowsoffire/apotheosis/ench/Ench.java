@@ -33,6 +33,8 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -308,6 +310,8 @@ public class Ench {
 
         public static final BerserkersFuryEnchant BERSERKERS_FURY = new BerserkersFuryEnchant();
 
+        public static final BaneEnchant BANE_OF_ILLAGERS = new BaneEnchant(Enchantment.Rarity.UNCOMMON, MobType.ILLAGER, EquipmentSlot.MAINHAND);
+
         public static final ChainsawEnchant CHAINSAW = new ChainsawEnchant();
 
         public static final ChromaticEnchant CHROMATIC = new ChromaticEnchant();
@@ -376,6 +380,7 @@ public class Ench {
             reg(SPLITTING, "splitting");
             reg(STABLE_FOOTING, "stable_footing");
             reg(TEMPTING, "tempting");
+            reg(BANE_OF_ILLAGERS, "bane_of_illagers");
         }
         private static void reg(Enchantment ench, String id){
             Registry.register(BuiltInRegistries.ENCHANTMENT, Apotheosis.loc(id), ench);
@@ -423,7 +428,7 @@ public class Ench {
     public static final class Tiles {
         public static final BlockEntityType<BasicLibraryTile> LIBRARY = Apoth.registerBEType("library", new BlockEntityType<>(EnchLibraryTile.BasicLibraryTile::new, ImmutableSet.of(Ench.Blocks.LIBRARY), null));
         public static final BlockEntityType<EnchLibraryTile.EnderLibraryTile> ENDER_LIBRARY = Apoth.registerBEType("ender_library", new BlockEntityType<>(EnchLibraryTile.EnderLibraryTile::new, ImmutableSet.of(Ench.Blocks.ENDER_LIBRARY), null));
-        public static final BlockEntityType<FilteringShelfBlock.FilteringShelfTile> FILTERING_SHELF = new BlockEntityType<>(FilteringShelfBlock.FilteringShelfTile::new, ImmutableSet.of(Blocks.FILTERING_SHELF), null);
+        public static final BlockEntityType<FilteringShelfBlock.FilteringShelfTile> FILTERING_SHELF = Apoth.registerBEType("filtering_shelf", new BlockEntityType<>(FilteringShelfBlock.FilteringShelfTile::new, ImmutableSet.of(Blocks.FILTERING_SHELF), null));
 
         private static void bootstrap() {}
     }

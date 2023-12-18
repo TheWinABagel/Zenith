@@ -87,7 +87,7 @@ public class ReforgingMenu extends PlaceboContainerMenu {
     protected void updateSeed() {
         int seed = this.player.getCustomData().getInt(REFORGE_SEED);
         if (seed == 0) {
-            seed = this.player.random.nextInt();
+            seed = this.player.getRandom().nextInt();
             this.player.getCustomData().putInt(REFORGE_SEED, seed);
         }
         this.seed[0] = MenuUtil.split(seed, false);
@@ -132,7 +132,7 @@ public class ReforgingMenu extends PlaceboContainerMenu {
                     this.getSlot(2).getItem().shrink(dustCost);
                 }
                 EnchantmentUtils.chargeExperience(player, ApothMiscUtil.getExpCostForSlot(levelCost, slot));
-                player.getCustomData().putInt(REFORGE_SEED, player.random.nextInt());
+                player.getCustomData().putInt(REFORGE_SEED, player.getRandom().nextInt());
                 this.updateSeed();
                 this.needsReset.set(1);
             }

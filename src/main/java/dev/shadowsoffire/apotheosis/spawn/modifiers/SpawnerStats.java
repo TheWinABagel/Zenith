@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.spawn.modifiers;
 
+import dev.shadowsoffire.apotheosis.mixin.accessors.BaseSpawnerAccessor;
 import dev.shadowsoffire.apotheosis.spawn.SpawnerModule;
 import dev.shadowsoffire.apotheosis.spawn.spawner.IBaseSpawner;
 import net.minecraft.util.Mth;
@@ -18,33 +19,33 @@ import java.util.LinkedHashMap;
 
 public class SpawnerStats {
 
-    public static final Map<String, SpawnerStat<?>> REGISTRY = new LinkedHashMap<>();
+    public static final Map<String, SpawnerStat<?>> REGISTRY = new LinkedHashMap<>(); 
 
-    public static final SpawnerStat<Short> MIN_DELAY = register(new ShortStat("min_delay", s -> s.getSpawner().minSpawnDelay, (s, v) -> s.getSpawner().minSpawnDelay = v));
+    public static final SpawnerStat<Short> MIN_DELAY = register(new ShortStat("min_delay", s -> ((BaseSpawnerAccessor) s.zenith$getSpawner()).getMinSpawnDelay(), (s, v) -> ((BaseSpawnerAccessor) s.zenith$getSpawner()).setMinSpawnDelay(v)));
 
-    public static final SpawnerStat<Short> MAX_DELAY = register(new ShortStat("max_delay", s -> s.getSpawner().maxSpawnDelay, (s, v) -> s.getSpawner().maxSpawnDelay = v));
+    public static final SpawnerStat<Short> MAX_DELAY = register(new ShortStat("max_delay", s -> ((BaseSpawnerAccessor) s.zenith$getSpawner()).getMaxSpawnDelay(), (s, v) -> ((BaseSpawnerAccessor) s.zenith$getSpawner()).setMaxSpawnDelay(v)));
 
-    public static final SpawnerStat<Short> SPAWN_COUNT = register(new ShortStat("spawn_count", s -> s.getSpawner().spawnCount, (s, v) -> s.getSpawner().spawnCount = v));
+    public static final SpawnerStat<Short> SPAWN_COUNT = register(new ShortStat("spawn_count", s -> ((BaseSpawnerAccessor) s.zenith$getSpawner()).getSpawnCount(), (s, v) -> ((BaseSpawnerAccessor) s.zenith$getSpawner()).setSpawnCount(v)));
 
-    public static final SpawnerStat<Short> MAX_NEARBY_ENTITIES = register(new ShortStat("max_nearby_entities", s -> s.getSpawner().maxNearbyEntities, (s, v) -> s.getSpawner().maxNearbyEntities = v));
+    public static final SpawnerStat<Short> MAX_NEARBY_ENTITIES = register(new ShortStat("max_nearby_entities", s -> ((BaseSpawnerAccessor) s.zenith$getSpawner()).getMaxNearbyEntities(), (s, v) -> ((BaseSpawnerAccessor) s.zenith$getSpawner()).setMaxNearbyEntities(v)));
 
-    public static final SpawnerStat<Short> REQ_PLAYER_RANGE = register(new ShortStat("req_player_range", s -> s.getSpawner().requiredPlayerRange, (s, v) -> s.getSpawner().requiredPlayerRange = v));
+    public static final SpawnerStat<Short> REQ_PLAYER_RANGE = register(new ShortStat("req_player_range", s -> ((BaseSpawnerAccessor) s.zenith$getSpawner()).getRequiredPlayerRange(), (s, v) -> ((BaseSpawnerAccessor) s.zenith$getSpawner()).setRequiredPlayerRange(v)));
 
-    public static final SpawnerStat<Short> SPAWN_RANGE = register(new ShortStat("spawn_range", s -> s.getSpawner().spawnRange, (s, v) -> s.getSpawner().spawnRange = v));
+    public static final SpawnerStat<Short> SPAWN_RANGE = register(new ShortStat("spawn_range", s -> ((BaseSpawnerAccessor) s.zenith$getSpawner()).getSpawnRange(), (s, v) -> ((BaseSpawnerAccessor) s.zenith$getSpawner()).setSpawnRange(v)));
 
-    public static final SpawnerStat<Boolean> IGNORE_PLAYERS = register(new BoolStat("ignore_players", IBaseSpawner::getIgnorePlayers, IBaseSpawner::setIgnoresPlayers));
+    public static final SpawnerStat<Boolean> IGNORE_PLAYERS = register(new BoolStat("ignore_players", IBaseSpawner::zenith$getIgnorePlayers, IBaseSpawner::zenith$setIgnoresPlayers));
 
-    public static final SpawnerStat<Boolean> IGNORE_CONDITIONS = register(new BoolStat("ignore_conditions", IBaseSpawner::getIgnoresConditions, IBaseSpawner::setIgnoresConditions));
+    public static final SpawnerStat<Boolean> IGNORE_CONDITIONS = register(new BoolStat("ignore_conditions", IBaseSpawner::zenith$getIgnoresConditions, IBaseSpawner::zenith$setIgnoresConditions));
 
-    public static final SpawnerStat<Boolean> REDSTONE_CONTROL = register(new BoolStat("redstone_control", IBaseSpawner::getRedstoneControl, IBaseSpawner::setRedstoneControl));
+    public static final SpawnerStat<Boolean> REDSTONE_CONTROL = register(new BoolStat("redstone_control", IBaseSpawner::zenith$getRedstoneControl, IBaseSpawner::zenith$setRedstoneControl));
 
-    public static final SpawnerStat<Boolean> IGNORE_LIGHT = register(new BoolStat("ignore_light", IBaseSpawner::getIgnoreLight, IBaseSpawner::setIgnoreLight));
+    public static final SpawnerStat<Boolean> IGNORE_LIGHT = register(new BoolStat("ignore_light", IBaseSpawner::zenith$getIgnoreLight, IBaseSpawner::zenith$setIgnoreLight));
 
-    public static final SpawnerStat<Boolean> NO_AI = register(new BoolStat("no_ai", IBaseSpawner::getNoAi, IBaseSpawner::setNoAi));
+    public static final SpawnerStat<Boolean> NO_AI = register(new BoolStat("no_ai", IBaseSpawner::zenith$getNoAi, IBaseSpawner::zenith$setNoAi));
 
-    public static final SpawnerStat<Boolean> SILENT = register(new BoolStat("silent", IBaseSpawner::getSilent, IBaseSpawner::setSilent));
+    public static final SpawnerStat<Boolean> SILENT = register(new BoolStat("silent", IBaseSpawner::zenith$getSilent, IBaseSpawner::zenith$setSilent));
 
-    public static final SpawnerStat<Boolean> BABY = register(new BoolStat("baby", IBaseSpawner::getBaby, IBaseSpawner::setBaby));
+    public static final SpawnerStat<Boolean> BABY = register(new BoolStat("baby", IBaseSpawner::zenith$getBaby, IBaseSpawner::zenith$setBaby));
 
     public static void generateTooltip(SpawnerBlockEntity tile, Consumer<Component> list) {
         for (SpawnerStat<?> stat : REGISTRY.values()) {

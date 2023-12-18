@@ -18,13 +18,13 @@ public class AbstractContainerScreenMixin {
     @Shadow
     protected Slot hoveredSlot;
 
-    @Inject(method = "renderTooltip", at = @At(value = "INVOKE", target = "net/minecraft/client/gui/GuiGraphics.renderTooltip (Lnet/minecraft/client/gui/Font;Ljava/util/List;Ljava/util/Optional;II)V", shift = At.Shift.BEFORE))
+    @Inject(method = "renderTooltip", at = @At(value = "INVOKE", target = "net/minecraft/client/gui/GuiGraphics.renderTooltip (Lnet/minecraft/client/gui/Font;Ljava/util/List;Ljava/util/Optional;II)V"))
     private void collectTooltipItem(GuiGraphics guiGraphics, int x, int y, CallbackInfo ci){
         if (Apotheosis.enableAdventure) AdventureModuleClient.StackStorage.hoveredItem = hoveredSlot.getItem();
     }
 
     @Inject(method = "renderTooltip", at = @At(value = "INVOKE", target = "net/minecraft/client/gui/GuiGraphics.renderTooltip (Lnet/minecraft/client/gui/Font;Ljava/util/List;Ljava/util/Optional;II)V", shift = At.Shift.AFTER))
-    private void clearTooltipItem(GuiGraphics guiGraphics, int x, int y, CallbackInfo ci){
+    private void clearTooltipItem(GuiGraphics guiGraphics, int x, int y, CallbackInfo ci) {
         if (Apotheosis.enableAdventure) AdventureModuleClient.StackStorage.hoveredItem = ItemStack.EMPTY;
     }
 }

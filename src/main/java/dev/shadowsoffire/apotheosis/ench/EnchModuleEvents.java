@@ -1,17 +1,17 @@
 package dev.shadowsoffire.apotheosis.ench;
 
-import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.anvil.AnvilTile;
 import dev.shadowsoffire.apotheosis.ench.objects.ExtractionTomeItem;
 import dev.shadowsoffire.apotheosis.ench.objects.ImprovedScrappingTomeItem;
 import dev.shadowsoffire.apotheosis.ench.objects.ScrappingTomeItem;
+import dev.shadowsoffire.apotheosis.mixin.accessors.ItemCombinerMenuAccessor;
 import dev.shadowsoffire.apotheosis.util.Events;
 import fuzs.puzzleslib.api.event.v1.FabricPlayerEvents;
 import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityLootEvents;
 import io.github.fabricators_of_create.porting_lib.tags.Tags;
+import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.monster.warden.Warden;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.inventory.AnvilMenu;
@@ -19,6 +19,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.LootingEnchantFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 
 import java.util.Map.Entry;
@@ -92,17 +97,24 @@ public class EnchModuleEvents {
         Ench.Enchantments.KNOWLEDGE.drops();
     }
 
-    public static void dropsWarden() { //TODO modify warden loot table
-        LivingEntityLootEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
-            if (Apotheosis.enableEnch && target instanceof Warden warden) {
-                int amount = 1;
-                if (warden.random.nextFloat() <= 0.10F + lootingLevel * 0.10F) {
-                    amount++;
-                }
-                drops.add(new ItemEntity(warden.level(), warden.getX(), warden.getY(), warden.getZ(),
-                        new ItemStack(dev.shadowsoffire.apotheosis.ench.Ench.Items.WARDEN_TENDRIL, amount)));
+    public static void dropsWarden() {
+        LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
+             if (EntityType.WARDEN.getDefaultLootTable().equals(id) && source.isBuiltin()) {
+             LootPool pool = LootPool.lootPool()
+                     .add(LootItem.lootTableItem(Ench.Items.WARDEN_TENDRIL)
+                     .apply(SetItemCountFunction.setCount(UniformGenerator.between(0f, .1f)))
+                     .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0f, .1f)).setLimit(1)))
+                     .build();
+                 tableBuilder.pool(pool);
+             }
+        });
+        LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
+            if (EntityType.WARDEN.getDefaultLootTable().equals(id) && source.isBuiltin()) {
+                LootPool pool = LootPool.lootPool()
+                        .add(LootItem.lootTableItem(Ench.Items.WARDEN_TENDRIL))
+                        .build();
+                tableBuilder.pool(pool);
             }
-            return false;
         });
     }
 
@@ -155,10 +167,10 @@ public class EnchModuleEvents {
      * Event handler for Anvil Unbreaking.
      */
     public static void applyUnbreaking() {
-        if (FabricLoader.getInstance().isModLoaded("puzzleslib")) {
+        if (FabricLoader.getInstance().isModLoaded("puzzleslib")) { //they replace the lambda i mixin into :)))
             FabricPlayerEvents.ANVIL_REPAIR.register((player, itemStack, itemStack1, itemStack2, mutableFloat) -> {
                 if (player.containerMenu instanceof AnvilMenu anvMenu) {
-                    anvMenu.access.execute((level, pos) -> {
+                    ((ItemCombinerMenuAccessor) anvMenu).getAccess().execute((level, pos) -> {
                         if (level.getBlockEntity(pos) instanceof AnvilTile anvil) {
                             float old = mutableFloat.getAsFloat();
                             mutableFloat.accept((old / (anvil.getEnchantments().getInt(Enchantments.UNBREAKING) + 1)));
@@ -170,7 +182,7 @@ public class EnchModuleEvents {
             Events.AnvilRepair.ANVIL_REPAIR.register((event) -> {
                 Player player = event.player;
                 if (player.containerMenu instanceof AnvilMenu anvMenu) {
-                    anvMenu.access.execute((level, pos) -> {
+                    ((ItemCombinerMenuAccessor) anvMenu).getAccess().execute((level, pos) -> {
                         if (level.getBlockEntity(pos) instanceof AnvilTile anvil) {
                             event.breakChance = (event.breakChance / (anvil.getEnchantments().getInt(Enchantments.UNBREAKING) + 1));
                         }

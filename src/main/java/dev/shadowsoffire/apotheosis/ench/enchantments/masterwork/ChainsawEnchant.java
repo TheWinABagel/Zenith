@@ -71,7 +71,7 @@ public class ChainsawEnchant extends Enchantment {
             state = level.getBlockState(pos = pos.above());
         }
         for (BlockPos p : BlockPos.betweenClosed(pos.offset(-2, -2, -2), pos.offset(2, 2, 2))) {
-            if (level.getBlockState(p).is(BlockTags.LEAVES)) return true;
+            if (level.getBlockState(p).is(BlockTags.LEAVES) || level.getBlockState(p).is(BlockTags.WART_BLOCKS)) return true;
         }
         return false;
     }

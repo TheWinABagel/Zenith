@@ -2,17 +2,16 @@ package dev.shadowsoffire.apotheosis.util;
 
 import com.mojang.authlib.GameProfile;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.mixin.accessors.BlockAccessor;
+import dev.shadowsoffire.apotheosis.mixin.accessors.DropExperienceBlockAccessor;
 import dev.shadowsoffire.apotheosis.village.VillageModule;
 import io.github.fabricators_of_create.porting_lib.util.UsernameCache;
 import net.fabricmc.fabric.api.entity.FakePlayer;
-import net.fabricmc.fabric.api.item.v1.FabricItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -88,7 +87,7 @@ public class BlockUtil {
                         block.playerDestroy(world, player, pos, blockstate, tileentity, itemstack1);
                     }
 
-                    if (removed && exp > 0) blockstate.getBlock().popExperience(world, pos, exp);
+                    if (removed && exp > 0) ((BlockAccessor) blockstate.getBlock()).callPopExperience(world, pos, exp);
 
                     return true;
                 }
@@ -110,12 +109,11 @@ public class BlockUtil {
         boolean removed = onDestroyedByPlayer(state, world, pos, player, canHarvest, world.getFluidState(pos));
         if (removed) state.getBlock().destroy(world, pos, state);
         return removed;
-    //    return false;
     }
 
     private static int getXpForBlock(BlockState state, ServerLevel level) {
         if (state.getBlock() instanceof DropExperienceBlock ore) {
-            return ore.xpRange.sample(level.random);
+            return ((DropExperienceBlockAccessor) ore).getXpRange().sample(level.random);
         } else if (state.getBlock() instanceof RedStoneOreBlock) {
             return 1 + level.random.nextInt(5);
         } else if (state.getBlock() instanceof SpawnerBlock) {

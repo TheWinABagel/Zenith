@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.ench;
 
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
+import dev.shadowsoffire.apotheosis.mixin.accessors.EnchantmentAccessor;
 import dev.shadowsoffire.placebo.config.Configuration;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -80,7 +81,7 @@ public class EnchantmentInfo {
         String rarity = cfg.getString("Rarity", category, ench.getRarity().name(), "The rarity of this enchantment.  Valid values are COMMON, UNCOMMON, RARE, and VERY_RARE.");
         try {
             Enchantment.Rarity r = Enchantment.Rarity.valueOf(rarity);
-            ench.rarity = r;
+            ((EnchantmentAccessor) ench).setRarity(r);
         }
         catch (Exception ex) {
             EnchModule.LOGGER.error("Failed to parse rarity for {}, as {} is not a valid rarity string.", category, rarity);

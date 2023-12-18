@@ -18,9 +18,12 @@ import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBlockTags;
 import net.fabricmc.fabric.impl.resource.conditions.ResourceConditionsImpl;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.Level;
@@ -187,12 +190,21 @@ public class EnchantingStatRegistry extends DynamicRegistry<EnchantingStatRegist
         public final List<Block> blocks;
         public final Stats stats;
 
+        @SuppressWarnings({"unchecked"})
         public BlockStats(List<Block> blocks, Optional<TagKey<Block>> tag, Optional<Block> block, Stats stats) {
             this.blocks = new ArrayList<>();
             if (!blocks.isEmpty()) this.blocks.addAll(blocks);
-            // TODO figure out tag registration for this, as it requires a reload to load properly rn
-            if (tag.isPresent()) this.blocks.addAll(TagHelper.getContents(BuiltInRegistries.BLOCK, tag.get()));// EnchantingStatRegistry.INSTANCE.getContext().getTag(tag.get()).stream().map(Holder::value).toList());
-            if (block.isPresent()) this.blocks.add(block.get());
+            // A cursed implementation that works isn't cursed, or something
+            if (tag.isPresent()) {
+                Map<ResourceKey<?>, Map<ResourceLocation, Collection<Holder<?>>>> allTags = ResourceConditionsImpl.LOADED_TAGS.get();
+                if (allTags != null) {
+                    Map<ResourceLocation, Collection<Holder<?>>> registryTags = allTags.get(ResourceKey.createRegistryKey(new ResourceLocation("minecraft:block")));
+                    if (registryTags != null) {
+                        this.blocks.addAll((Collection<? extends Block>) registryTags.get(tag.get().location()).stream().map(Holder::value).toList());
+                    }
+                }
+            }
+            block.ifPresent(this.blocks::add);
             this.stats = stats;
         }
 
@@ -200,7 +212,6 @@ public class EnchantingStatRegistry extends DynamicRegistry<EnchantingStatRegist
         public Codec<? extends BlockStats> getCodec() {
             return CODEC;
         }
-
     }
 
 }

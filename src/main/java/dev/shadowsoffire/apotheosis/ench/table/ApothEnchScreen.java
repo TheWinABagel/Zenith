@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu.Arcana;
+import dev.shadowsoffire.apotheosis.mixin.accessors.EnchantmentScreenAccessor;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.apotheosis.util.DrawsOnLeft;
 import dev.shadowsoffire.placebo.util.EnchantmentUtils;
@@ -116,7 +117,7 @@ public class ApothEnchScreen extends EnchantmentScreen implements DrawsOnLeft {
         int xCenter = (this.width - this.imageWidth) / 2;
         int yCenter = (this.height - this.imageHeight) / 2;
         gfx.blit(TEXTURES, xCenter, yCenter, 0, 0, this.imageWidth, this.imageHeight);
-        this.renderBook(gfx, xCenter, yCenter, partialTicks);
+        ((EnchantmentScreenAccessor) this).callRenderBook(gfx, xCenter, yCenter, partialTicks);
 
         EnchantmentNames.getInstance().initSeed(this.menu.getEnchantmentSeed());
         int lapis = this.menu.getGoldCount();

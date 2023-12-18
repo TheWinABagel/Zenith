@@ -1,4 +1,4 @@
-package dev.shadowsoffire.apotheosis.mixin.adventure;
+package dev.shadowsoffire.apotheosis.mixin.accessors;
 
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import org.spongepowered.asm.mixin.Mixin;

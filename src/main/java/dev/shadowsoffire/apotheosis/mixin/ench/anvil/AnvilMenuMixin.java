@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -26,7 +27,8 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 
 
     @Shadow private @Nullable String itemName;
-    @Unique private static Player p = null;
+    @Shadow @Final public DataSlot cost;
+    @Shadow public int repairItemCountCost;
     @Unique private static ItemStack leftItem = ItemStack.EMPTY;
     @Unique private static ItemStack rightItem = ItemStack.EMPTY;
     @Unique private static ItemStack output;
@@ -56,23 +58,21 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 
     @Inject(method = "createResult", at = @At(value = "INVOKE", target = "net/minecraft/world/item/ItemStack.isEmpty ()Z", ordinal = 1, shift = At.Shift.AFTER), cancellable = true)
     private void initUpdateAnvilEvent(CallbackInfo ci) {
-        p = player;
         leftItem = this.inputSlots.getItem(0);
         rightItem = this.inputSlots.getItem(1);
         output = this.resultSlots.getItem(0);
-        if (Apotheosis.enableEnch && !onAnvilChange(leftItem, rightItem, this.resultSlots, itemName, ths().cost.get(), p)) {
+        if (Apotheosis.enableEnch && !onAnvilChange(leftItem, rightItem, this.resultSlots, itemName, this.cost.get(), player)) {
             ci.cancel();
         }
     }
 
     @Inject(method = "onTake", at = @At("HEAD"))
     private void initRepairEvent(Player player, ItemStack stack, CallbackInfo ci) {
-        p = player;
-        event = new Events.RepairEvent(p, output, leftItem, rightItem);
+        event = new Events.RepairEvent(player, output, leftItem, rightItem);
     }
 
     @ModifyConstant(method = "method_24922", constant = @Constant(floatValue = 0.12F))
-    private static float zenith_InitAnvilUse(float chance) {
+    private static float zenith$InitAnvilUse(float chance) {
         if (Apotheosis.enableEnch && event.player != null) {
             Events.AnvilRepair.ANVIL_REPAIR.invoker().onRepair(event);
             return event.breakChance;
@@ -81,7 +81,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
     }
 
     @Inject(method = "method_24922", at = @At("HEAD"))
-    private static void zenith_InitAnvilUseCreative(Player player, Level level, BlockPos blockPos, CallbackInfo ci) {
+    private static void zenith$InitAnvilUseCreative(Player player, Level level, BlockPos blockPos, CallbackInfo ci) {
         if (Apotheosis.enableEnch && event.player != null && event.player.getAbilities().instabuild) {
             Events.AnvilRepair.ANVIL_REPAIR.invoker().onRepair(event);
         }
@@ -93,8 +93,8 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
         Events.AnvilUpdate.UPDATE_ANVIL.invoker().onUpdate(e);
         if (e.output.isEmpty()) return true;
         outputSlot.setItem(0, e.output);
-        ths().cost.set(e.cost);
-        ths().repairItemCountCost = e.materialCost;
+        this.cost.set(e.cost);
+        this.repairItemCountCost = e.materialCost;
         return false;
     }
 
@@ -104,8 +104,4 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
         return EnchHooks.getMaxLevel(enchantment);
     }
 
-    @Unique
-    private AnvilMenu ths() {
-        return (AnvilMenu) (Object) this;
-    }
 }

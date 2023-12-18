@@ -28,7 +28,7 @@ public class GrowthSerumEnchant extends Enchantment {
     }
 
     public void unshear(Sheep sheep, ItemStack shears) {
-        if (EnchantmentHelper.getItemEnchantmentLevel(this, shears) > 0 && sheep.random.nextBoolean()) sheep.setSheared(false);
+        if (EnchantmentHelper.getItemEnchantmentLevel(this, shears) > 0 && sheep.getRandom().nextBoolean()) sheep.setSheared(false);
     }
 
 }

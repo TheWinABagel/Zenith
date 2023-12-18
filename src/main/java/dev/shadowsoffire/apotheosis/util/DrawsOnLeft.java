@@ -1,6 +1,8 @@
 package dev.shadowsoffire.apotheosis.util;
 
+import dev.shadowsoffire.apotheosis.mixin.accessors.ScreenAccessor;
 import dev.shadowsoffire.apotheosis.util.events.IComponentTooltip;
+import dev.shadowsoffire.attributeslib.mixin.accessors.AbstractContainerScreenAccessor;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
@@ -19,18 +21,18 @@ public interface DrawsOnLeft {
      */
     default void drawOnLeft(GuiGraphics gfx, List<Component> list, int y) {
         if (list.isEmpty()) return;
-        int xPos = ths().leftPos - 16 - list.stream().map(ths().font::width).max(Integer::compare).get();
+        int xPos = ((AbstractContainerScreenAccessor) ths()).getLeftPos() - 16 - list.stream().map(((ScreenAccessor) ths()).getFont()::width).max(Integer::compare).get();
         int maxWidth = 9999;
         if (xPos < 0) {
-            maxWidth = ths().leftPos - 6;
+            maxWidth = ((AbstractContainerScreenAccessor) ths()).getLeftPos() - 6;
             xPos = -8;
         }
 
         List<FormattedText> split = new ArrayList<>();
         int lambdastupid = maxWidth;
-        list.forEach(comp -> split.addAll(ths().font.getSplitter().splitLines(comp, lambdastupid, comp.getStyle())));
+        list.forEach(comp -> split.addAll(((ScreenAccessor) ths()).getFont().getSplitter().splitLines(comp, lambdastupid, comp.getStyle())));
 
-        ((IComponentTooltip) gfx).zenithRenderComponentTooltip(ths().font, split, xPos, y); // copying forge methods is my passion
+        ((IComponentTooltip) gfx).zenithRenderComponentTooltip(((ScreenAccessor) ths()).getFont(), split, xPos, y); // copying forge methods is my passion
     }
 
     default AbstractContainerScreen<?> ths() {

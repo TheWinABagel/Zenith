@@ -1,8 +1,8 @@
 package dev.shadowsoffire.apotheosis.util;
 
-import com.google.gson.annotations.SerializedName;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import dev.shadowsoffire.apotheosis.mixin.accessors.BaseSpawnerAccessor;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
@@ -25,14 +25,14 @@ public record SpawnerStats(int spawnDelay, int minDelay, int maxDelay, int spawn
     }
 
     public void apply(SpawnerBlockEntity entity) {
-        BaseSpawner base = entity.spawner;
-        base.spawnDelay = this.spawnDelay;
-        base.minSpawnDelay = this.minDelay;
-        base.maxSpawnDelay = this.maxDelay;
-        base.spawnCount = this.spawnCount;
-        base.maxNearbyEntities = this.maxNearbyEntities;
-        base.spawnRange = this.spawnRange;
-        base.requiredPlayerRange = this.playerRange;
+        BaseSpawner base = entity.getSpawner();
+        ((BaseSpawnerAccessor) base).setSpawnDelay(this.spawnDelay);
+        ((BaseSpawnerAccessor) base).setMinSpawnDelay(this.minDelay);
+        ((BaseSpawnerAccessor) base).setMaxSpawnDelay(this.maxDelay);
+        ((BaseSpawnerAccessor) base).setSpawnCount(this.spawnCount);
+        ((BaseSpawnerAccessor) base).setMaxNearbyEntities(this.maxNearbyEntities);
+        ((BaseSpawnerAccessor) base).setSpawnRange(this.spawnRange);
+        ((BaseSpawnerAccessor) base).setRequiredPlayerRange(this.playerRange);
     }
 
 }

@@ -38,7 +38,6 @@ public class Apotheosis implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        if (enableEnch) EnchModule.init();
         if (enableSpawner) SpawnerModule.init();
         if (enableGarden) GardenModule.init();
         if (enableAdventure) AdventureModule.init();
@@ -47,6 +46,7 @@ public class Apotheosis implements ModInitializer {
             VillageModule.init();
             VillageModule.FLETCHING.getClass(); // Static init wew
         }
+        if (enableEnch) EnchModule.init();
         if (config.hasChanged()) config.save();
 
         AdvancementTriggers.init();

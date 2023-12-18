@@ -29,6 +29,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class GemItem extends Item  {
 
@@ -82,16 +83,18 @@ public class GemItem extends Item  {
         return super.canBeHurtBy(src) && !src.is(DamageTypes.FALLING_ANVIL);
     }
 
-
     public static void fillItemCategory(CreativeModeTab.Output out) {
         GemRegistry.INSTANCE.getValues().stream().sorted(Comparator.comparing(Gem::getId)).forEach(gem -> {
+            ItemStack[] sortedStacks = new ItemStack[RarityRegistry.INSTANCE.getValues().size()];
             for (LootRarity rarity : RarityRegistry.INSTANCE.getValues()) {
                 if (gem.clamp(rarity) != rarity) continue;
                 ItemStack stack = new ItemStack(Items.GEM);
                 setGem(stack, gem);
+
                 AffixHelper.setRarity(stack, rarity);
-                out.accept(stack);
+                sortedStacks[rarity.ordinal()] = (stack);
             }
+            out.acceptAll(Stream.of(sortedStacks).filter(Objects::nonNull).toList());
         });
     }
 

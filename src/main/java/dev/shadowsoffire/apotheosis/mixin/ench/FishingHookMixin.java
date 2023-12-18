@@ -2,10 +2,9 @@ package dev.shadowsoffire.apotheosis.mixin.ench;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
-import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
+import dev.shadowsoffire.apotheosis.mixin.accessors.EntityAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.projectile.FishingHook;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
@@ -19,7 +18,6 @@ public class FishingHookMixin {
     @Shadow @Final public int lureSpeed;
 
     @Shadow private int timeUntilLured;
-
 
     /**
      * Calculates the delay for catching a fish. Ensures that the value never returns <= 0, so that it doesn't get infinitely locked.
@@ -35,6 +33,6 @@ public class FishingHookMixin {
         if (Apotheosis.enableDebug) EnchModule.LOGGER.error("Modifying catching fish time");
         int lowBound = Math.max(1, 100 - this.lureSpeed * 10);
         int highBound = Math.max(lowBound, 600 - this.lureSpeed * 60);
-        this.timeUntilLured = Mth.nextInt(((FishingHook)(Object)this).random, lowBound, highBound);
+        this.timeUntilLured = Mth.nextInt(((EntityAccessor)((FishingHook)(Object)this)).getRandom(), lowBound, highBound);
     }
 }

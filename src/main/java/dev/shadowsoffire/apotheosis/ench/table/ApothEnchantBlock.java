@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis.ench.table;
 
 import dev.shadowsoffire.apotheosis.ench.api.IEnchantingBlock;
-import dev.shadowsoffire.placebo.util.IReplacementBlock;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
@@ -22,7 +21,7 @@ import net.minecraft.world.level.material.MapColor;
 
 import javax.annotation.Nullable;
 
-public class ApothEnchantBlock extends EnchantmentTableBlock implements IReplacementBlock {
+public class ApothEnchantBlock extends EnchantmentTableBlock {
 
     public ApothEnchantBlock() {
         super(Properties.of().mapColor(MapColor.COLOR_RED).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().lightLevel((state) -> {
@@ -58,23 +57,6 @@ public class ApothEnchantBlock extends EnchantmentTableBlock implements IReplace
                 world.removeBlockEntity(pos);
             }
         }
-    }
-
-    @Override
-    public void _setDefaultState(BlockState state) {
-        this.registerDefaultState(state);
-    }
-
-    protected StateDefinition<Block, BlockState> container;
-
-    @Override
-    public void setStateContainer(StateDefinition<Block, BlockState> container) {
-        this.container = container;
-    }
-
-    @Override
-    public StateDefinition<Block, BlockState> getStateDefinition() {
-        return this.container == null ? super.getStateDefinition() : this.container;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.mixin.ench.enchantment;
 
 import dev.shadowsoffire.apotheosis.ench.EnchModuleEvents.TridentGetter;
+import dev.shadowsoffire.apotheosis.mixin.accessors.AbstractArrowAccessor;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -49,10 +50,10 @@ public abstract class ThrownTridentMixin extends AbstractArrow implements Triden
     @Inject(method = "onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V", at = @At("HEAD"), cancellable = true, require = 1)
     public void startHitEntity(EntityHitResult res, CallbackInfo ci) {
         if (this.getPierceLevel() > 0) {
-            if (this.piercingIgnoreEntityIds == null) {
-                this.piercingIgnoreEntityIds = new IntOpenHashSet(this.getPierceLevel());
+            if (((AbstractArrowAccessor) this).getPiercingIgnoreEntityIds() == null) {
+                ((AbstractArrowAccessor) this).setPiercingIgnoreEntityIds(new IntOpenHashSet(this.getPierceLevel()));
             }
-            if (this.piercingIgnoreEntityIds.contains(res.getEntity().getId())) ci.cancel();
+            if (((AbstractArrowAccessor) this).getPiercingIgnoreEntityIds().contains(res.getEntity().getId())) ci.cancel();
         }
 
         this.oldVel = this.getDeltaMovement();
@@ -61,9 +62,9 @@ public abstract class ThrownTridentMixin extends AbstractArrow implements Triden
     @Inject(method = "onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V", at = @At("TAIL"), cancellable = true, require = 1)
     public void endHitEntity(EntityHitResult res, CallbackInfo ci) {
         if (this.getPierceLevel() > 0) {
-            this.piercingIgnoreEntityIds.add(res.getEntity().getId());
+            ((AbstractArrowAccessor) this).getPiercingIgnoreEntityIds().add(res.getEntity().getId());
 
-            if (this.piercingIgnoreEntityIds.size() <= this.getPierceLevel()) {
+            if (((AbstractArrowAccessor) this).getPiercingIgnoreEntityIds().size() <= this.getPierceLevel()) {
                 this.dealtDamage = false;
                 this.setDeltaMovement(this.oldVel);
             }

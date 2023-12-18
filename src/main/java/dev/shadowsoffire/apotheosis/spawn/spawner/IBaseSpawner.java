@@ -3,19 +3,19 @@ package dev.shadowsoffire.apotheosis.spawn.spawner;
 import net.minecraft.world.level.BaseSpawner;
 
 public interface IBaseSpawner {
-    boolean getIgnorePlayers();
-    boolean getIgnoresConditions();
-    boolean getRedstoneControl();
-    boolean getIgnoreLight();
-    boolean getNoAi();
-    boolean getSilent();
-    boolean getBaby();
-    void setIgnoresPlayers(boolean flag);
-    void setIgnoresConditions(boolean flag);
-    void setRedstoneControl(boolean flag);
-    void setIgnoreLight(boolean flag);
-    void setNoAi(boolean flag);
-    void setSilent(boolean flag);
-    void setBaby(boolean flag);
-    BaseSpawner getSpawner();
+    boolean zenith$getIgnorePlayers();
+    boolean zenith$getIgnoresConditions();
+    boolean zenith$getRedstoneControl();
+    boolean zenith$getIgnoreLight();
+    boolean zenith$getNoAi();
+    boolean zenith$getSilent();
+    boolean zenith$getBaby();
+    void zenith$setIgnoresPlayers(boolean flag);
+    void zenith$setIgnoresConditions(boolean flag);
+    void zenith$setRedstoneControl(boolean flag);
+    void zenith$setIgnoreLight(boolean flag);
+    void zenith$setNoAi(boolean flag);
+    void zenith$setSilent(boolean flag);
+    void zenith$setBaby(boolean flag);
+    BaseSpawner zenith$getSpawner();
 }

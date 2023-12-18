@@ -3,6 +3,9 @@
 * Fix salvaging non single stacks of items not giving the proper amount of items in return
 
 
+## 0.2.5
+* Implement new shelves from apotheosis
+
 ## 0.2.4
 * Fix crash when adventure module is enabled
 

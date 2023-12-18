@@ -11,6 +11,7 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.attributeslib.AttributesLib;
 import dev.shadowsoffire.attributeslib.impl.BooleanAttribute;
+import dev.shadowsoffire.attributeslib.mixin.accessors.AttributeSupplierBuilderAccessor;
 import dev.shadowsoffire.attributeslib.util.AttributeInfo;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.util.StepFunction;
@@ -43,7 +44,7 @@ public class AllStatsBonus extends GemBonus {
     protected final Operation operation;
     protected final Map<LootRarity, StepFunction> values;
 
-    protected transient final List<Attribute> attributes = new ArrayList<>(Player.createAttributes().builder.keySet());
+    protected transient final List<Attribute> attributes = new ArrayList<>(((AttributeSupplierBuilderAccessor) Player.createAttributes()).getBuilder().keySet());
 
 
     public AllStatsBonus(GemClass gemClass, Operation op, Map<LootRarity, StepFunction> values) {

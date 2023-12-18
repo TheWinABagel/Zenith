@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.mixin.accessors.BaseSpawnerAccessor;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerStats;
 import dev.shadowsoffire.apotheosis.spawn.spawner.IBaseSpawner;
@@ -116,16 +117,16 @@ public class ModifierTrigger implements CriterionTrigger<ModifierTrigger.Instanc
         }
 
         public boolean test(SpawnerBlockEntity tile, SpawnerModifier modif) {
-            BaseSpawner logic = tile.spawner;
+            BaseSpawner logic = tile.getSpawner();
             IBaseSpawner spwn = (IBaseSpawner) tile;
-            if (!this.minDelay.matches(logic.minSpawnDelay) || !this.maxDelay.matches(logic.maxSpawnDelay) || !this.spawnCount.matches(logic.spawnCount) || !this.nearbyEnts.matches(logic.maxNearbyEntities)) return false;
-            if (!this.playerRange.matches(logic.requiredPlayerRange)) return false;
-            if (!this.spawnRange.matches(logic.spawnRange)) return false;
-            if (this.ignorePlayers != null && spwn.getIgnorePlayers() != this.ignorePlayers) return false;
-            if (this.ignoreConditions != null && spwn.getIgnoresConditions() != this.ignoreConditions) return false;
-            if (this.redstone != null && spwn.getRedstoneControl() != this.redstone) return false;
-            if (this.ignoreLight != null && spwn.getIgnoreLight() != this.ignoreLight) return false;
-            if (this.noAI != null && spwn.getNoAi() != this.noAI) return false;
+            if (!this.minDelay.matches(((BaseSpawnerAccessor) logic).getMinSpawnDelay()) || !this.maxDelay.matches(((BaseSpawnerAccessor) logic).getMaxSpawnDelay()) || !this.spawnCount.matches(((BaseSpawnerAccessor) logic).getSpawnCount()) || !this.nearbyEnts.matches(((BaseSpawnerAccessor) logic).getMaxNearbyEntities())) return false;
+            if (!this.playerRange.matches(((BaseSpawnerAccessor) logic).getRequiredPlayerRange())) return false;
+            if (!this.spawnRange.matches(((BaseSpawnerAccessor) logic).getSpawnRange())) return false;
+            if (this.ignorePlayers != null && spwn.zenith$getIgnorePlayers() != this.ignorePlayers) return false;
+            if (this.ignoreConditions != null && spwn.zenith$getIgnoresConditions() != this.ignoreConditions) return false;
+            if (this.redstone != null && spwn.zenith$getRedstoneControl() != this.redstone) return false;
+            if (this.ignoreLight != null && spwn.zenith$getIgnoreLight() != this.ignoreLight) return false;
+            if (this.noAI != null && spwn.zenith$getNoAi() != this.noAI) return false;
             return true;
         }
     }

@@ -84,8 +84,12 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modCompileOnly modRuntimeOnly( "dev.shadowsoffire.placebo:placebo-fabric-1.20.1:${project.fakerlib_version}")
-	modCompileOnly modRuntimeOnly( "dev.bagel:ZenithAttributes:${project.zenith_attributes_version}")
+	modCompileOnly modRuntimeOnly( "dev.shadowsoffire.placebo:placebo-fabric-1.20.1:${project.fakerlib_version}"), {
+		exclude(group: "me.shedaniel")
+	}
+	modCompileOnly modRuntimeOnly( "dev.bagel:ZenithAttributes:${project.zenith_attributes_version}"), {
+		exclude(group: "me.shedaniel")
+	}
 
 	// Mixin Extras + Mixin^2 for mod compat
 	implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.2.0-beta.10"))
@@ -134,19 +138,18 @@ dependencies {
 	// WTHIT
 	modCompileOnly "mcp.mobius.waila:wthit-api:fabric-${project.wthit_version}"
 	modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${project.wthit_version}"
+	modRuntimeOnly "lol.bai:badpackets:fabric-${project.badpackets_version}"
 
 	// REI + Arch
-	//modRuntimeOnly "dev.architectury:architectury-fabric:${project.arch_version}"
-	//modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
-	//modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
+	modRuntimeOnly "dev.architectury:architectury-fabric:${project.arch_version}"
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
+	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
 
 	// EMI
 	modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
 
 	switch (recipe_viewer.toLowerCase(Locale.ROOT)) {
-	//	case "rei": modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}";
-	//		modRuntimeOnly "dev.architectury:architectury-fabric:${project.arch_version}";
-	//		break
+		case "rei": modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}";	break
 		case "emi": modRuntimeOnly("dev.emi:emi-fabric:${project.emi_version}"); break
 		case "disabled": break
 		default: println("Unknown recipe viewer specified: $recipe_viewer. Must be EMI, REI or disabled.")
@@ -161,33 +164,29 @@ dependencies {
 	modCompileOnly("maven.modrinth:spell-power:${project.spell_power_version}-fabric")
 	modCompileOnly ("maven.modrinth:spell-engine:${project.spell_engine_version}-fabric")
 
-	modCompileOnly("io.wispforest:lavender:0.1.0-pre.6+1.20")
+	modCompileOnly("io.wispforest:lavender:0.1.0-pre.6+1.20") //conjuring
 	modCompileOnly("io.wispforest:owo-lib:0.11.0+1.20")
 	modCompileOnly "curse.maven:conjuring-422310:4580578"
 
-	modCompileOnly "curse.maven:puzzles-lib-495476:4847147"
+	modCompileOnly "curse.maven:puzzles-lib-495476:4847147" //puzzlelib
 	modCompileOnly "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:8.0.0"
 
-	modCompileOnly "curse.maven:dragonloot-424480:4656260"
+	modCompileOnly "curse.maven:dragonloot-424480:4656260" //dragon loot
 
-	modCompileOnly "curse.maven:mariums-soulslike-weaponry-632066:4891244"
+	modCompileOnly "curse.maven:mariums-soulslike-weaponry-632066:4891244" //soulslike weaponry
 
-	modCompileOnly "com.mrcrayfish:framework-fabric:1.20.1-0.6.13"
-	modRuntimeOnly "com.mrcrayfish:catalogue-fabric:1.20.1-1.7.1"
+	modCompileOnly "com.mrcrayfish:framework-fabric:1.20.1-0.6.13" //goblin traders
+	//modRuntimeOnly "com.mrcrayfish:catalogue-fabric:1.20.1-1.7.1"
 	modCompileOnly "com.mrcrayfish:goblintraders-fabric:1.20.1-1.9.3"
 
-	modCompileOnly "curse.maven:modern-industrialization-405388:4775647"
+	modCompileOnly "curse.maven:modern-industrialization-405388:4775647", { //modern industrialization
+		exclude(group: "me.shedaniel")
+	}
 
-//	modApi("teamreborn:energy:3.0.0") {
-//		exclude(group: "net.fabricmc.fabric-api")
-//		exclude group: "net.fabricmc", module: "fabric-loader"
-//	}
-//
-//	modCompileOnly("dev.draylar:magna:1.10.1+1.20.1") {
-//		exclude(group: "io.github.prospector")
-//		exclude(group: "me.shedaniel.cloth")
-//		exclude(group: "net.fabricmc.fabric-api")
-//	}
+	modCompileOnly "com.github.DaFuqs:Spectrum:${project.spectrum_version}", { //spectrum
+		exclude(group: "com.github.devs-immortal.*")
+		exclude(group: "azzy.fabric.*")
+	}
 
 }
 loom {

@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.spawn.compat;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.mixin.accessors.SpawnerBlockEntityAccessor;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerStats;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
@@ -43,7 +44,7 @@ public class SpawnerJadePlugin implements IWailaPlugin, IBlockComponentProvider,
     public void appendServerData(CompoundTag tag, BlockAccessor access) {
         if (!Apotheosis.enableSpawner) return;
         if (access.getBlockEntity() instanceof SpawnerBlockEntity spw) {
-            spw.saveAdditional(tag);
+            ((SpawnerBlockEntityAccessor) spw).callSaveAdditional(tag);
         }
     }
 

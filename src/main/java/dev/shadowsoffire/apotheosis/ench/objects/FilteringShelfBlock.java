@@ -8,16 +8,15 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.ench.api.IEnchantingBlock;
+import dev.shadowsoffire.apotheosis.mixin.accessors.ChiseledBookShelfBlockAccessor;
 import dev.shadowsoffire.placebo.recipe.VanillaPacketDispatcher;
 import io.github.fabricators_of_create.porting_lib.enchant.EnchantmentBonusBlock;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.InteractionHand;
@@ -97,20 +96,20 @@ public class FilteringShelfBlock extends ChiseledBookShelfBlock implements IEnch
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         BlockEntity be = pLevel.getBlockEntity(pPos);
         if (be instanceof ChiseledBookShelfBlockEntity shelf) {
-            Optional<Vec2> hitResult = getRelativeHitCoordinatesForBlockFace(pHit, pState.getValue(HorizontalDirectionalBlock.FACING));
+            Optional<Vec2> hitResult = ChiseledBookShelfBlockAccessor.callGetRelativeHitCoordinatesForBlockFace(pHit, pState.getValue(HorizontalDirectionalBlock.FACING));
             if (hitResult.isEmpty()) {
                 return InteractionResult.PASS;
             }
             else {
-                int slot = getHitSlot(hitResult.get());
+                int slot = ChiseledBookShelfBlockAccessor.callGetHitSlot(hitResult.get());
                 if (pState.getValue(SLOT_OCCUPIED_PROPERTIES.get(slot))) {
-                    removeBook(pLevel, pPos, pPlayer, shelf, slot);
+                    ChiseledBookShelfBlockAccessor.callRemoveBook(pLevel, pPos, pPlayer, shelf, slot);
                     return InteractionResult.sidedSuccess(pLevel.isClientSide);
                 }
                 else {
                     ItemStack stack = pPlayer.getItemInHand(pHand);
                     if (canInsert(stack)) {
-                        addBook(pLevel, pPos, pPlayer, shelf, stack, slot);
+                        ChiseledBookShelfBlockAccessor.callAddBook(pLevel, pPos, pPlayer, shelf, stack, slot);
                         return InteractionResult.sidedSuccess(pLevel.isClientSide);
                     }
                     else {

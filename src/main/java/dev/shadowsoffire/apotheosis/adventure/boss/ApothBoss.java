@@ -13,6 +13,7 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityClamp;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
+import dev.shadowsoffire.apotheosis.mixin.accessors.NearestAttackableTargetGoalAccessor;
 import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.apotheosis.util.SupportingEntity;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
@@ -79,7 +80,7 @@ public final class ApothBoss implements CodecProvider<ApothBoss>, ILuckyWeighted
             PlaceboCodecs.nullableField(SupportingEntity.CODEC, "mount").forGetter(a -> Optional.ofNullable(a.mount)))
         .apply(inst, ApothBoss::new));
 
-    public static final Predicate<Goal> IS_VILLAGER_ATTACK = a -> a instanceof NearestAttackableTargetGoal && ((NearestAttackableTargetGoal<?>) a).targetType == Villager.class;
+    public static final Predicate<Goal> IS_VILLAGER_ATTACK = a -> a instanceof NearestAttackableTargetGoal && ((NearestAttackableTargetGoalAccessor<?>) (a)).getTargetType() == Villager.class;
 
     protected final int weight;
     protected final float quality;
@@ -203,7 +204,7 @@ public final class ApothBoss implements CodecProvider<ApothBoss>, ILuckyWeighted
             modif.apply(rand, entity);
         }
 
-        entity.goalSelector.availableGoals.removeIf(IS_VILLAGER_ATTACK);
+        entity.goalSelector.getAvailableGoals().removeIf(IS_VILLAGER_ATTACK);
         String name = NameHelper.setEntityName(rand, entity);
 
         GearSet set = GearSetRegistry.INSTANCE.getRandomSet(rand, luck, this.gearSets);

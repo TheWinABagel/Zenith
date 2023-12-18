@@ -114,6 +114,7 @@ public class AffixHelper {
         display.put(LORE, tag);
     }
 
+    @SuppressWarnings("NoTranslation")
     public static void setRarity(ItemStack stack, LootRarity rarity) {
         Component comp = Component.translatable("%s", Component.literal("")).withStyle(Style.EMPTY.withColor(rarity.getColor()));
         CompoundTag afxData = stack.getOrCreateTagElement(AFFIX_DATA);
@@ -156,7 +157,7 @@ public class AffixHelper {
      * May be unbound
      */
     public static DynamicHolder<LootRarity> getRarity(ItemStack stack) {
-        if (!stack.hasTag()) return null;
+        if (!stack.hasTag()) return RarityRegistry.INSTANCE.emptyHolder();
         CompoundTag afxData = stack.getTagElement(AFFIX_DATA);
         return getRarity(afxData);
     }

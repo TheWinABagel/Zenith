@@ -30,12 +30,12 @@ public class GemCommand {
         root.then(Commands.literal("gem").requires(c -> c.hasPermission(2)).then(Commands.literal("fromPreset").then(Commands.argument("gem", ResourceLocationArgument.id()).suggests(SUGGEST_GEM).executes(c -> {
             Gem gem = GemRegistry.INSTANCE.getValue(ResourceLocationArgument.getId(c, "gem"));
             Player p = c.getSource().getPlayerOrException();
-            ItemStack stack = GemRegistry.createGemStack(gem, LootRarity.random(p.random, p.getLuck()));
+            ItemStack stack = GemRegistry.createGemStack(gem, LootRarity.random(p.getRandom(), p.getLuck()));
             p.addItem(stack);
             return 0;
         }))).then(Commands.literal("random").executes(c -> {
             Player p = c.getSource().getPlayerOrException();
-            ItemStack gem = GemRegistry.createRandomGemStack(p.random, c.getSource().getLevel(), p.getLuck(), IDimensional.matches(p.level()), IStaged.matches(p));
+            ItemStack gem = GemRegistry.createRandomGemStack(p.getRandom(), c.getSource().getLevel(), p.getLuck(), IDimensional.matches(p.level()), IStaged.matches(p));
             p.addItem(gem);
             return 0;
         })));

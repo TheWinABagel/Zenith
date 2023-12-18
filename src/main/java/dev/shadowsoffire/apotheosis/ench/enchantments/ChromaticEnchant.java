@@ -51,7 +51,7 @@ public class ChromaticEnchant extends Enchantment {
         if (EnchantmentHelper.getItemEnchantmentLevel(this, shears) > 0) {
             for (int i = 0; i < items.size(); i++) {
                 if (items.get(i).is(ItemTags.WOOL)) {
-                    items.set(i, new ItemStack(ITEM_BY_DYE.get(DyeColor.byId(sheep.random.nextInt(16)))));
+                    items.set(i, new ItemStack(ITEM_BY_DYE.get(DyeColor.byId(sheep.getRandom().nextInt(16)))));
                 }
             }
         }

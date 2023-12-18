@@ -139,8 +139,6 @@ public class AdventureModule {
     }
 
     public static void miscRegistration() {
-        LOGGER.info("Registering Zenith loot modifiers");
-
         Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), Apotheosis.loc("gems"), GemLootModifier.CODEC);
         Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), Apotheosis.loc("affix_loot"), AffixLootModifier.CODEC);
         Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), Apotheosis.loc("affix_conversion"), AffixConvertLootModifier.CODEC);

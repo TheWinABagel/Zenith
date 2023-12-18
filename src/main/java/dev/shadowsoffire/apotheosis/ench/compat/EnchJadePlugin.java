@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.ench.compat;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.ench.objects.FilteringShelfBlock;
+import dev.shadowsoffire.apotheosis.mixin.accessors.ChiseledBookShelfBlockAccessor;
 import dev.shadowsoffire.apotheosis.util.CommonTooltipUtil;
 import dev.shadowsoffire.apotheosis.ench.anvil.AnvilTile;
 import net.minecraft.nbt.CompoundTag;
@@ -98,11 +99,11 @@ public class EnchJadePlugin implements IWailaPlugin, IBlockComponentProvider, IS
         }
 
         if (accessor.getBlockEntity() instanceof FilteringShelfBlock.FilteringShelfTile tile) {
-            Optional<Vec2> optional = ChiseledBookShelfBlock.getRelativeHitCoordinatesForBlockFace(accessor.getHitResult(), accessor.getBlockState().getValue(HorizontalDirectionalBlock.FACING));
+            Optional<Vec2> optional = ChiseledBookShelfBlockAccessor.callGetRelativeHitCoordinatesForBlockFace(accessor.getHitResult(), accessor.getBlockState().getValue(HorizontalDirectionalBlock.FACING));
             if (optional.isEmpty()) {
                 return;
             }
-            int slot = ChiseledBookShelfBlock.getHitSlot(optional.get());
+            int slot = ChiseledBookShelfBlockAccessor.callGetHitSlot(optional.get());
             ItemStack stack = tile.getItem(slot);
             if (stack.isEmpty()) return;
             tooltip.add(CommonComponents.EMPTY);

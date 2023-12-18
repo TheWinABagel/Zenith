@@ -28,7 +28,7 @@ public class AddGemCommand {
         root.then(Commands.literal("socketGem").requires(c -> c.hasPermission(2)).then(Commands.literal("fromPreset").then(Commands.argument("gem", ResourceLocationArgument.id()).suggests(SUGGEST_GEM).executes(c -> {
             Gem gem = GemRegistry.INSTANCE.getValue(ResourceLocationArgument.getId(c, "gem"));
             Player p = c.getSource().getPlayerOrException();
-            ItemStack gemStack = GemRegistry.createGemStack(gem, LootRarity.random(p.random, p.getLuck()));
+            ItemStack gemStack = GemRegistry.createGemStack(gem, LootRarity.random(p.getRandom(), p.getLuck()));
 
             ItemStack result = p.getMainHandItem();
             result.setCount(1);

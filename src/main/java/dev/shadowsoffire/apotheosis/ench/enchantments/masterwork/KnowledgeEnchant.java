@@ -47,6 +47,7 @@ public class KnowledgeEnchant extends Enchantment {
                 if (Apotheosis.enableDebug) EnchModule.LOGGER.info("Damage source {} from entity {} is not a player", source, source.getEntity());
                 return false;
             }
+            if (drops == null) return false;
             int knowledge = EnchantmentHelper.getItemEnchantmentLevel(this, p.getMainHandItem());
             if (knowledge > 0 && !(target instanceof Player)) {
                 int items = 0;

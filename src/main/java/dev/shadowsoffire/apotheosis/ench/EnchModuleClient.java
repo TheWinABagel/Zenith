@@ -6,6 +6,7 @@ import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryScreen;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchScreen;
 import dev.shadowsoffire.apotheosis.ench.table.ClueMessage;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
+import dev.shadowsoffire.apotheosis.ench.table.StatsMessage;
 import dev.shadowsoffire.apotheosis.util.DrawsOnLeft;
 import dev.shadowsoffire.placebo.util.EnchantmentUtils;
 import net.fabricmc.api.EnvType;
@@ -44,6 +45,7 @@ public class EnchModuleClient {
 
     static BlockHitResult res = BlockHitResult.miss(Vec3.ZERO, Direction.NORTH, BlockPos.ZERO);
 
+    @SuppressWarnings("NoTranslation")
     public static void tooltips() {
         ItemTooltipCallback.EVENT.register((stack, context, tooltip) -> {
             if (stack.is(Items.COBWEB)) tooltip.add(Component.translatable("info.zenith.cobweb").withStyle(ChatFormatting.GRAY));
@@ -157,6 +159,7 @@ public class EnchModuleClient {
     public static void init() {
         tooltips();
         ClueMessage.init();
+        StatsMessage.init();
         MenuScreens.register(Ench.Menus.ENCHANTING_TABLE, ApothEnchScreen::new);
         MenuScreens.register(Ench.Menus.LIBRARY, EnchLibraryScreen::new);
         particles();

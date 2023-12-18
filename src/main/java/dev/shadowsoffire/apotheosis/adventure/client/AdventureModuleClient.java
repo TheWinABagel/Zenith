@@ -89,7 +89,7 @@ public class AdventureModuleClient {
     public static void onBossSpawn(BlockPos pos, float[] color) {
         BOSS_SPAWNS.add(new BossSpawnData(pos, color, new MutableInt()));
         Minecraft.getInstance().getSoundManager()
-            .play(new SimpleSoundInstance(SoundEvents.END_PORTAL_SPAWN, SoundSource.HOSTILE, AdventureConfig.bossAnnounceVolume, 1.25F, Minecraft.getInstance().player.random, Minecraft.getInstance().player.blockPosition()));
+            .play(new SimpleSoundInstance(SoundEvents.END_PORTAL_SPAWN, SoundSource.HOSTILE, AdventureConfig.bossAnnounceVolume, 1.25F, Minecraft.getInstance().player.getRandom(), Minecraft.getInstance().player.blockPosition()));
     }
 
     // This renders a beacon beam when a boss spawns
@@ -183,7 +183,7 @@ public class AdventureModuleClient {
         });
     }
 
-    // bleh
+    // i hate this even more than you do
     public static List<ClientTooltipComponent> gatherTooltipComponents(ItemStack stack, List<? extends FormattedText> textElements, Optional<TooltipComponent> itemComponent, int mouseX, int screenWidth, int screenHeight, Font font) {
         List<Either<FormattedText, TooltipComponent>> elements = textElements.stream()
                 .map((Function<FormattedText, Either<FormattedText, TooltipComponent>>) Either::left)

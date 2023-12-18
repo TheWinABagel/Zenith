@@ -55,6 +55,7 @@
     "java": ">=17",
     "fakerlib": ">=0.0.8",
     "zenith_attributes": ">=0.1.1"
+
   },
   "suggests": {
     "roughlyenoughitems": "*",

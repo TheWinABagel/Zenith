@@ -2,6 +2,7 @@ package dev.shadowsoffire.apotheosis.mixin.ench;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.table.IEnchantableItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -23,9 +24,9 @@ public class ItemMixin implements IEnchantableItem {
         if (Apotheosis.enableEnch) cir.setReturnValue(1);
     }
 
-    @Inject(method = "isEnchantable",at = @At("RETURN"), cancellable = true)
+    @Inject(method = "isEnchantable",at = @At("HEAD"), cancellable = true)
     private void zenith_addCustomEnchantableItems(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-        if (Apotheosis.enableEnch) cir.setReturnValue(cir.getReturnValue() || stack.is(Apoth.Tags.CUSTOM_ENCHANTABLES));
+        if (Apotheosis.enableEnch && EnchModule.isVanillaAnvil(stack)) cir.setReturnValue(true);
     }
 
 }

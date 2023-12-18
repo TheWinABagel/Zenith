@@ -1,14 +1,13 @@
 package dev.shadowsoffire.apotheosis.spawn.compat;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.mixin.accessors.SpawnerBlockEntityAccessor;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerStats;
-import dev.shadowsoffire.apotheosis.spawn.spawner.IBaseSpawner;
 import mcp.mobius.waila.api.*;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SpawnerBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -39,7 +38,7 @@ public class SpawnerWTHITPlugin implements IWailaPlugin, IBlockComponentProvider
     public void appendData(IDataWriter data, IServerAccessor<BlockEntity> accessor, IPluginConfig config) {
         if (!Apotheosis.enableSpawner) return;
         if (accessor.getTarget() instanceof SpawnerBlockEntity spw) {
-            spw.saveAdditional(data.raw());
+            ((SpawnerBlockEntityAccessor) spw).callSaveAdditional(data.raw());
         }
     }
 

@@ -14,6 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nullable;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -45,7 +46,7 @@ public final class AffixLootEntry implements CodecProvider<AffixLootEntry>, ILuc
     public AffixLootEntry(int weight, float quality, ItemStack stack, Set<ResourceLocation> dimensions, DynamicHolder<LootRarity> min, DynamicHolder<LootRarity> max, Optional<Set<String>> stages) {
         this.weight = weight;
         this.quality = quality;
-        this.stack = stack;
+        this.stack = Objects.requireNonNull(stack);
         this.dimensions = dimensions;
         this.minRarity = min;
         this.maxRarity = max;

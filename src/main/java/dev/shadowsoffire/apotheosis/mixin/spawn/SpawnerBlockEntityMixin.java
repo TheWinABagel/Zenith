@@ -1,14 +1,12 @@
 package dev.shadowsoffire.apotheosis.mixin.spawn;
 
+import dev.shadowsoffire.apotheosis.mixin.accessors.BaseSpawnerAccessor;
 import dev.shadowsoffire.apotheosis.spawn.spawner.IBaseSpawner;
 import dev.shadowsoffire.apotheosis.spawn.spawner.LyingLevel;
-import io.github.fabricators_of_create.porting_lib.block.CustomDataPacketHandlingBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.network.Connection;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.SimpleWeightedRandomList;
@@ -22,9 +20,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
+import org.jetbrains.annotations.NotNull;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -54,80 +51,82 @@ public abstract class SpawnerBlockEntityMixin extends BlockEntity implements IBa
     public boolean silent = false;
     @Unique
     public boolean baby = false;
+    @Final
     @Shadow
-    public BaseSpawner spawner;
+    @Mutable
+    private BaseSpawner spawner;
 
     @Override
-    public boolean getIgnorePlayers() {
+    public boolean zenith$getIgnorePlayers() {
         return ignoresPlayers;
     }
 
     @Override
-    public void setIgnoresPlayers(boolean bool) {
+    public void zenith$setIgnoresPlayers(boolean bool) {
         ignoresPlayers = bool;
     }
     
     @Override
-    public boolean getIgnoresConditions() {
+    public boolean zenith$getIgnoresConditions() {
         return ignoresConditions;
     }
 
     @Override
-    public void setIgnoresConditions(boolean bool) {
+    public void zenith$setIgnoresConditions(boolean bool) {
         ignoresConditions = bool;
     }
 
     @Override
-    public boolean getRedstoneControl() {
+    public boolean zenith$getRedstoneControl() {
         return redstoneControl;
     }
 
     @Override
-    public void setRedstoneControl(boolean bool) {
+    public void zenith$setRedstoneControl(boolean bool) {
         redstoneControl = bool;
     }
 
     @Override
-    public boolean getIgnoreLight() {
+    public boolean zenith$getIgnoreLight() {
         return ignoresLight;
     }
     @Override
-    public void setIgnoreLight(boolean bool) {
+    public void zenith$setIgnoreLight(boolean bool) {
         ignoresLight = bool;
     }
     
     @Override
-    public boolean getNoAi() {
+    public boolean zenith$getNoAi() {
         return hasNoAI;
     }
 
     @Override
-    public void setNoAi(boolean bool) {
+    public void zenith$setNoAi(boolean bool) {
         hasNoAI = bool;
     }
 
     @Override
-    public boolean getSilent() {
+    public boolean zenith$getSilent() {
         return silent;
     }
 
     @Override
-    public void setSilent(boolean bool) {
+    public void zenith$setSilent(boolean bool) {
         silent = bool;
     }
 
     @Override
-    public boolean getBaby() {
+    public boolean zenith$getBaby() {
         return baby;
     }
 
     @Override
-    public void setBaby(boolean bool) {
+    public void zenith$setBaby(boolean bool) {
         baby = bool;
     }
 
     @Override
-    public BaseSpawner getSpawner() {
+    public BaseSpawner zenith$getSpawner() {
         return spawner;
     }
 
@@ -154,14 +153,15 @@ public abstract class SpawnerBlockEntityMixin extends BlockEntity implements IBa
     }
 
     // Spawner logic override
+    @SuppressWarnings("ConstantConditions")
     @Inject(method = "<init>", at = @At("TAIL"))
     private void zenithOverrideSpawnerLogic(BlockPos blockPos, BlockState blockState, CallbackInfo ci) {
         this.spawner = new BaseSpawner() {
             @Override
             public void setEntityId(EntityType<?> type, @Nullable Level level, RandomSource rand, BlockPos pos) {
-                this.nextSpawnData = new SpawnData();
+                ((BaseSpawnerAccessor) (Object) this).setNextSpawnData(new SpawnData());
                 super.setEntityId(type, level, rand, pos);
-                this.spawnPotentials = SimpleWeightedRandomList.single(this.nextSpawnData);
+                ((BaseSpawnerAccessor) (Object) this).setSpawnPotentials(SimpleWeightedRandomList.single(((BaseSpawnerAccessor) (BaseSpawner) this).getNextSpawnData()));
                 if (level != null) this.delay(level, pos);
             }
 
@@ -180,60 +180,62 @@ public abstract class SpawnerBlockEntityMixin extends BlockEntity implements IBa
                 }
             }
 
-            protected boolean isActivated(Level level, BlockPos pos) {
-                boolean hasPlayer = SpawnerBlockEntityMixin.this.ignoresPlayers || isNearPlayer(level, pos);
+            private boolean isActivated(Level level, BlockPos pos) {
+                boolean hasPlayer = SpawnerBlockEntityMixin.this.ignoresPlayers || ((BaseSpawnerAccessor) (Object) this).callIsNearPlayer(level, pos);
                 return hasPlayer && (!SpawnerBlockEntityMixin.this.redstoneControl || SpawnerBlockEntityMixin.this.level.hasNeighborSignal(pos));
             }
 
             private void delay(Level pLevel, BlockPos pPos) {
-                if (this.maxSpawnDelay <= this.minSpawnDelay) {
-                    this.spawnDelay = this.minSpawnDelay;
+                if (((BaseSpawnerAccessor) (Object) this).getMaxSpawnDelay() <= ((BaseSpawnerAccessor) (Object) this).getMinSpawnDelay()) {
+                    ((BaseSpawnerAccessor) (Object) this).setSpawnDelay(((BaseSpawnerAccessor) (Object) this).getMinSpawnDelay());
                 } else {
-                    this.spawnDelay = this.minSpawnDelay + pLevel.random.nextInt(this.maxSpawnDelay - this.minSpawnDelay);
+                    ((BaseSpawnerAccessor) (Object) this).setSpawnDelay(
+                            ((BaseSpawnerAccessor) (Object) this).getMinSpawnDelay() +
+                                    pLevel.random.nextInt(((BaseSpawnerAccessor) (Object) this).getMaxSpawnDelay() - ((BaseSpawnerAccessor) (Object) this).getMinSpawnDelay()));
                 }
 
-                this.spawnPotentials.getRandom(pLevel.random).ifPresent(potential -> {
+                ((BaseSpawnerAccessor) (Object) this).getSpawnPotentials().getRandom(pLevel.random).ifPresent(potential -> {
                     this.setNextSpawnData(pLevel, pPos, potential.getData());
                 });
                 this.broadcastEvent(pLevel, pPos, 1);
             }
 
             @Override
-            public void clientTick(Level pLevel, BlockPos pPos) {
+            public void clientTick(@NotNull Level pLevel, @NotNull BlockPos pPos) {
                 if (!this.isActivated(pLevel, pPos)) {
-                    this.oSpin = this.spin;
+                    ((BaseSpawnerAccessor) (Object) this).setOSpin(((BaseSpawnerAccessor) (Object) this).getSpin());
                 } else {
                     double d0 = pPos.getX() + pLevel.random.nextDouble();
                     double d1 = pPos.getY() + pLevel.random.nextDouble();
                     double d2 = pPos.getZ() + pLevel.random.nextDouble();
                     pLevel.addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
                     pLevel.addParticle(ParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.0D, 0.0D);
-                    if (this.spawnDelay > 0) {
-                        --this.spawnDelay;
+                    if (((BaseSpawnerAccessor) (Object) this).getSpawnDelay() > 0) {
+                        ((BaseSpawnerAccessor) (Object) this).setSpawnDelay(((BaseSpawnerAccessor) (Object) this).getSpawnDelay() - 1);
+                        //--this.spawnDelay;
                     }
 
-                    this.oSpin = this.spin;
-                    this.spin = (this.spin + 1000.0F / (this.spawnDelay + 200.0F)) % 360.0D;
+                    ((BaseSpawnerAccessor) (Object) this).setOSpin(((BaseSpawnerAccessor) (Object) this).getSpin());
+                    ((BaseSpawnerAccessor) (Object) this).setSpin((((BaseSpawnerAccessor) (Object) this).getSpin() + 1000.0F / (((BaseSpawnerAccessor) (Object) this).getSpawnDelay() + 200.0F)) % 360.0D);
                 }
 
             }
 
-            @SuppressWarnings("deprecation")
             @Override
-            public void serverTick(ServerLevel level, BlockPos pPos) {
+            public void serverTick(@NotNull ServerLevel level, @NotNull BlockPos pPos) {
                 if (this.isActivated(level, pPos)) {
-                    if (this.spawnDelay == -1) {
+                    if (((BaseSpawnerAccessor) (Object) this).getSpawnDelay() == -1) {
                         this.delay(level, pPos);
                     }
 
-                    if (this.spawnDelay > 0) {
-                        --this.spawnDelay;
+                    if (((BaseSpawnerAccessor) (Object) this).getSpawnDelay() > 0) {
+                        ((BaseSpawnerAccessor) (Object) this).setSpawnDelay(((BaseSpawnerAccessor) (Object) this).getSpawnDelay() - 1);
                     } else {
                         boolean flag = false;
                         RandomSource rand = level.getRandom();
-                        SpawnData spawnData = this.getOrCreateNextSpawnData(level, rand, pPos);
+                        SpawnData spawnData = ((BaseSpawnerAccessor) (Object) this).callGetOrCreateNextSpawnData(level, rand, pPos);
 
-                        for (int i = 0; i < this.spawnCount; ++i) {
+                        for (int i = 0; i < ((BaseSpawnerAccessor) (Object) this).getSpawnCount(); ++i) {
                             CompoundTag tag = spawnData.getEntityToSpawn();
                             EntityType<?> entityType = EntityType.by(tag).orElse(null);
                             if (entityType == null) {
@@ -243,9 +245,9 @@ public abstract class SpawnerBlockEntityMixin extends BlockEntity implements IBa
 
                             ListTag posList = tag.getList("Pos", 6);
                             int size = posList.size();
-                            double x = size >= 1 ? posList.getDouble(0) : pPos.getX() + (rand.nextDouble() - rand.nextDouble()) * this.spawnRange + 0.5D;
+                            double x = size >= 1 ? posList.getDouble(0) : pPos.getX() + (rand.nextDouble() - rand.nextDouble()) * ((BaseSpawnerAccessor) (Object) this).getSpawnRange() + 0.5D;
                             double y = size >= 2 ? posList.getDouble(1) : (double) (pPos.getY() + rand.nextInt(3) - 1);
-                            double z = size >= 3 ? posList.getDouble(2) : pPos.getZ() + (rand.nextDouble() - rand.nextDouble()) * this.spawnRange + 0.5D;
+                            double z = size >= 3 ? posList.getDouble(2) : pPos.getZ() + (rand.nextDouble() - rand.nextDouble()) * ((BaseSpawnerAccessor) (Object) this).getSpawnRange() + 0.5D;
                             if (level.noCollision(entityType.getAABB(x, y, z))) {
                                 BlockPos blockpos = BlockPos.containing(x, y, z);
 
@@ -291,15 +293,14 @@ public abstract class SpawnerBlockEntityMixin extends BlockEntity implements IBa
 
                                 if (SpawnerBlockEntityMixin.this.silent) entity.setSilent(true);
 
-                                int nearby = level.getEntitiesOfClass(entity.getClass(), new AABB(pPos.getX(), pPos.getY(), pPos.getZ(), pPos.getX() + 1, pPos.getY() + 1, pPos.getZ() + 1).inflate(this.spawnRange)).size();
-                                if (nearby >= this.maxNearbyEntities) {
+                                int nearby = level.getEntitiesOfClass(entity.getClass(), new AABB(pPos.getX(), pPos.getY(), pPos.getZ(), pPos.getX() + 1, pPos.getY() + 1, pPos.getZ() + 1).inflate(((BaseSpawnerAccessor) (Object) this).getSpawnRange())).size();
+                                if (nearby >= ((BaseSpawnerAccessor) (Object) this).getMaxNearbyEntities()) {
                                     this.delay(level, pPos);
                                     return;
                                 }
 
                                 entity.moveTo(entity.getX(), entity.getY(), entity.getZ(), rand.nextFloat() * 360.0F, 0.0F);
-                                if (entity instanceof Mob) {
-                                    Mob mob = (Mob) entity;
+                                if (entity instanceof Mob mob) {
                                     if (spawnData.getCustomSpawnRules().isEmpty() && !mob.checkSpawnRules(useLiar ? liar : level, MobSpawnType.SPAWNER) || !mob.checkSpawnObstruction(level)) {
                                         continue;
                                     }

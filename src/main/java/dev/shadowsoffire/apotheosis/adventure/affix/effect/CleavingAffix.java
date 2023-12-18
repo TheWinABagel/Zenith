@@ -9,6 +9,7 @@ import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.mixin.accessors.LivingEntityInvoker;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -75,7 +76,7 @@ public class CleavingAffix extends Affix {
                 List<Entity> nearby = target.level().getEntities(target, new AABB(target.blockPosition()).inflate(6), cleavePredicate(user, target));
                 for (Entity e : nearby) {
                     if (targets > 0) {
-                        user.attackStrengthTicker = 300;
+                        ((LivingEntityInvoker) user).setAttackStrengthTicker(300);
                         player.attack(e);
                         targets--;
                     }

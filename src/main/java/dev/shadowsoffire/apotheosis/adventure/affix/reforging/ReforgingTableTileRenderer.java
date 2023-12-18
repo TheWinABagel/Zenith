@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.math.Axis;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.mixin.accessors.ItemRendererAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -49,7 +50,7 @@ public class ReforgingTableTileRenderer implements BlockEntityRenderer<Reforging
             matrix.mulPose(Axis.YN.rotationDegrees(45 * sinSq));
         }
         MultiBufferSource.BufferSource src = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
-        irenderer.renderModelLists(base, ItemStack.EMPTY, light, overlay, matrix, ItemRenderer.getFoilBufferDirect(src, ItemBlockRenderTypes.getRenderType(tile.getBlockState(), true), true, false));
+        ((ItemRendererAccessor) irenderer).callRenderModelLists(base, ItemStack.EMPTY, light, overlay, matrix, ItemRenderer.getFoilBufferDirect(src, ItemBlockRenderTypes.getRenderType(tile.getBlockState(), true), true, false));
         src.endBatch();
 
         matrix.popPose();

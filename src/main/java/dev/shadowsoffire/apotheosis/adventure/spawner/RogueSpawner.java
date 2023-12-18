@@ -1,10 +1,10 @@
 package dev.shadowsoffire.apotheosis.adventure.spawner;
 
-import com.google.gson.annotations.SerializedName;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
+import dev.shadowsoffire.apotheosis.mixin.accessors.BaseSpawnerAccessor;
 import dev.shadowsoffire.apotheosis.util.SpawnerStats;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.ILuckyWeighted;
@@ -69,8 +69,8 @@ public class RogueSpawner implements CodecProvider<RogueSpawner>, ILuckyWeighted
         world.setBlock(pos, Blocks.SPAWNER.defaultBlockState(), 2);
         SpawnerBlockEntity entity = (SpawnerBlockEntity) world.getBlockEntity(pos);
         this.stats.apply(entity);
-        entity.spawner.spawnPotentials = this.spawnPotentials;
-        entity.spawner.setNextSpawnData(null, pos, this.spawnPotentials.getRandomValue(rand).get());
+        ((BaseSpawnerAccessor) entity.getSpawner()).setSpawnPotentials(this.spawnPotentials);
+        ((BaseSpawnerAccessor) entity.getSpawner()).callSetNextSpawnData(null, pos, this.spawnPotentials.getRandomValue(rand).get());
         ChestBuilder.place(world, pos.below(), rand.nextFloat() <= AdventureConfig.spawnerValueChance ? Apoth.LootTables.CHEST_VALUABLE : this.lootTable);
         world.setBlock(pos.above(), FILLER_BLOCKS[rand.nextInt(FILLER_BLOCKS.length)].defaultBlockState(), 2);
         for (Direction f : Plane.HORIZONTAL) {

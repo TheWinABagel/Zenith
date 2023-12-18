@@ -40,7 +40,7 @@ public abstract class SheepMixin implements IShearHelper {
     }
 
     @WrapOperation(method = "shear", at = @At(value = "INVOKE", target = "net/minecraft/world/entity/animal/Sheep.setSheared (Z)V"))
-    private void zenith_handleGrowthSerum(Sheep instance, boolean sheared, Operation<Boolean> op) {
+    private void zenith$handleGrowthSerum(Sheep instance, boolean sheared, Operation<Boolean> op) {
         if (!Apotheosis.enableEnch || shears.isEmpty()) {
             if (EnchantmentHelper.getItemEnchantmentLevel(Ench.Enchantments.GROWTH_SERUM, shears) > 0 && ((Sheep) (Object) this).getRandom().nextBoolean()) {
                 if (Apotheosis.enableDebug) EnchModule.LOGGER.info("Growth serum resetting wool");
@@ -52,7 +52,7 @@ public abstract class SheepMixin implements IShearHelper {
     }
 
     @WrapOperation(method = "shear", at = @At(value = "INVOKE", target = "net/minecraft/world/entity/animal/Sheep.getColor ()Lnet/minecraft/world/item/DyeColor;"))
-    private DyeColor zenith_handleChromatic(Sheep instance,  Operation<Void> op) {
+    private DyeColor zenith$handleChromatic(Sheep instance,  Operation<Void> op) {
         if (!Apotheosis.enableEnch || shears.isEmpty()) return instance.getColor();
         if (EnchantmentHelper.getItemEnchantmentLevel(Ench.Enchantments.CHROMATIC, shears) > 0) {
             return DyeColor.byId(instance.getRandom().nextInt(16));
@@ -61,14 +61,14 @@ public abstract class SheepMixin implements IShearHelper {
     }
 
     @ModifyConstant(method = "shear", constant = @Constant(intValue = 3), remap = false)
-    private int zenith_applyFortune(int oldVal) {
+    private int zenith$applyFortune(int oldVal) {
         if (!Apotheosis.enableEnch || shears.isEmpty()) return oldVal;
         return oldVal + (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, shears)) * 2;
     }
 
     @Inject(method = "shear", at = @At(value = "INVOKE", target = "net/minecraft/world/entity/item/ItemEntity.setDeltaMovement (Lnet/minecraft/world/phys/Vec3;)V"),
             locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-    public void zenith_addExploitationStacks(SoundSource source, CallbackInfo ci, int i, int j, ItemEntity itemEntity) {
+    public void zenith$addExploitationStacks(SoundSource source, CallbackInfo ci, int i, int j, ItemEntity itemEntity) {
         if (!Apotheosis.enableEnch || shears.isEmpty()) return;
         if (EnchantmentHelper.getItemEnchantmentLevel(Ench.Enchantments.EXPLOITATION, shears) > 0) {
             itemList.add(itemEntity);
@@ -78,7 +78,7 @@ public abstract class SheepMixin implements IShearHelper {
     @Inject(method = "shear", at = @At(value = "INVOKE",
             target = "net/minecraft/world/entity/item/ItemEntity.setDeltaMovement (Lnet/minecraft/world/phys/Vec3;)V",
             shift = At.Shift.AFTER))
-    public void zenith_dropExploitationStacks(SoundSource source, CallbackInfo ci) {
+    public void zenith$dropExploitationStacks(SoundSource source, CallbackInfo ci) {
         if (!Apotheosis.enableEnch || shears.isEmpty()) return;
         if (EnchantmentHelper.getItemEnchantmentLevel(Ench.Enchantments.EXPLOITATION, shears) > 0) {
             for (ItemEntity item : itemList){

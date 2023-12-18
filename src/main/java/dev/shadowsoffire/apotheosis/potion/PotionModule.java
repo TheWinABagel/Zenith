@@ -85,7 +85,7 @@ public class PotionModule {
 
     public static void drops() {
         LivingEntityLootEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
-            if (target instanceof Rabbit rabbit) {
+            if (target instanceof Rabbit rabbit && drops != null) {
                 if (rabbit.level().random.nextFloat() < 0.045F + 0.045F * lootingLevel) {
                     drops.clear();
                     drops.add(new ItemEntity(rabbit.level(), rabbit.getX(), rabbit.getY(), rabbit.getZ(), new ItemStack(PotionModule.LUCKY_FOOT)));

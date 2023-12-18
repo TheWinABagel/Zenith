@@ -8,8 +8,8 @@ import dev.shadowsoffire.apotheosis.ench.Ench.*;
 import dev.shadowsoffire.apotheosis.ench.objects.TypedShelfBlock.SculkShelfBlock;
 import dev.shadowsoffire.apotheosis.ench.objects.TomeItem;
 import dev.shadowsoffire.apotheosis.ench.objects.TypedShelfBlock;
-import dev.shadowsoffire.apotheosis.ench.enchantments.BaneEnchant;
 import dev.shadowsoffire.apotheosis.ench.table.*;
+import dev.shadowsoffire.apotheosis.mixin.accessors.BlockEntityTypeAccessor;
 import dev.shadowsoffire.placebo.config.Configuration;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
@@ -17,11 +17,9 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -34,11 +32,6 @@ import java.io.File;
 import java.util.*;
 
 public class EnchModule {
-
-    public static ItemStack left;
-    public static ItemStack right;
-    public static ItemStack out;
-    public static int cost;
     public static final Map<Enchantment, EnchantmentInfo> ENCHANTMENT_INFO = new HashMap<>();
     public static final Object2IntMap<Enchantment> ENCH_HARD_CAPS = new Object2IntOpenHashMap<>();
     public static final String ENCH_HARD_CAP_IMC = "set_ench_hard_cap";
@@ -55,18 +48,16 @@ public class EnchModule {
     static Configuration enchInfoConfig;
 
     public static void init() {
-        reload(false);
-
         Ench.bootstrap();
         particles();
         recipeSerializers();
 
         EnchModuleEvents.registerEvents();
-        enchants();
 
 
         EnchantingStatRegistry.INSTANCE.register();
-        BlockEntityType.ENCHANTING_TABLE.factory = ApothEnchantTile::new;
+        ((BlockEntityTypeAccessor) BlockEntityType.ENCHANTING_TABLE).setFactory(ApothEnchantTile::new);
+        reload(false);
     }
 
     public static void recipeSerializers() {
@@ -95,9 +86,6 @@ public class EnchModule {
         return new SculkShelfBlock(props, particle);
     }
 
-    public static void enchants() {
-                registerEnch("bane_of_illagers", new BaneEnchant(Rarity.UNCOMMON, MobType.ILLAGER, EquipmentSlot.MAINHAND));
-    }
 
     @SuppressWarnings("deprecation")
     public static EnchantmentInfo getEnchInfo(Enchantment ench) {
@@ -115,7 +103,7 @@ public class EnchModule {
             info = EnchantmentInfo.load(ench, enchInfoConfig);
             ENCHANTMENT_INFO.put(ench, info);
             if (enchInfoConfig.hasChanged()) enchInfoConfig.save();
-        //    LOGGER.error("Had to late load enchantment info for {}, this is a bug in the mod {} as they are registering late!", BuiltInRegistries.ENCHANTMENT.getKey(ench), BuiltInRegistries.ENCHANTMENT.getKey(ench).getNamespace());
+            LOGGER.error("Had to late load enchantment info for {}, this is a bug in the mod {} as they are registering late!", BuiltInRegistries.ENCHANTMENT.getKey(ench), BuiltInRegistries.ENCHANTMENT.getKey(ench).getNamespace());
         }
 
         return info;
@@ -143,6 +131,9 @@ public class EnchModule {
         return level;
     }
 
+    public static boolean isVanillaAnvil(ItemStack stack) {
+        return stack.is(Items.ANVIL) || stack.is(Items.CHIPPED_ANVIL) || stack.is(Items.DAMAGED_ANVIL);
+    }
 
     public static void reload(boolean e) {
         enchInfoConfig = new Configuration(new File(Apotheosis.configDir, "enchantments.cfg"));
@@ -162,9 +153,5 @@ public class EnchModule {
         }
 
         if (!e && enchInfoConfig.hasChanged()) enchInfoConfig.save();
-    }
-
-    private static Enchantment registerEnch(String name, Enchantment ench) {
-        return Registry.register(BuiltInRegistries.ENCHANTMENT, Apotheosis.loc(name), ench);
     }
 }

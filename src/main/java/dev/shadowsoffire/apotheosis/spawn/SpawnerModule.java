@@ -58,6 +58,7 @@ public class SpawnerModule {
 
     public static void dropsEvent() {
         LivingEntityLootEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
+            if (drops == null) return false;
             CapturingEnchant.handleCapturing(target, source, drops);
             return false;
         });
