@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis.mixin.ench.table;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.api.IEnchantingBlock;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantTile;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu;
@@ -19,9 +18,7 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EnchantmentTableBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.EnchantmentTableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

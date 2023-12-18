@@ -15,16 +15,13 @@ import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
@@ -172,6 +169,7 @@ public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> imple
         gfx.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
     }
 
+    @SuppressWarnings("NoTranslation")
     @Override
     protected void renderTooltip(GuiGraphics gfx, int x, int y) {
         PoseStack stack = gfx.pose();

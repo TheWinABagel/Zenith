@@ -5,7 +5,6 @@ import io.github.fabricators_of_create.porting_lib.event.BaseEvent;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.network.chat.FormattedText;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 

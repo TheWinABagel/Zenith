@@ -2,7 +2,6 @@ package dev.shadowsoffire.apotheosis.mixin.util.events;
 
 import com.google.common.collect.Sets;
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.util.Events;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.resources.model.ModelBakery;

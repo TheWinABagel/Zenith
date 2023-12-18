@@ -3,13 +3,9 @@ package dev.shadowsoffire.apotheosis.adventure.compat;
 import dev.architectury.event.EventResult;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
-import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
-import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingMenu;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.util.GemIngredient;
@@ -25,18 +21,14 @@ import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.plugins.PluginManager;
 import me.shedaniel.rei.api.common.registry.ReloadStage;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
-import me.shedaniel.rei.api.common.util.EntryStacks;
-import me.shedaniel.rei.plugin.common.BuiltinPlugin;
 import me.shedaniel.rei.plugin.common.displays.DefaultInformationDisplay;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.level.levelgen.LegacyRandomSource;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class AdventureREIPlugin implements REIClientPlugin {
 

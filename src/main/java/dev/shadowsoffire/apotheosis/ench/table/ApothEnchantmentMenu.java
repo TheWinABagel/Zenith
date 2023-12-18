@@ -22,7 +22,10 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.*;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.EnchantmentMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -42,7 +45,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
         super(id, inv, ContainerLevelAccess.NULL);
         this.player = inv.player;
         this.slots.clear();
-        this.addSecretSlot(new Slot(((EnchantmentMenuAccessor) this).getEnchantSlots(), 0, 15, 47){
+        this.addSecretSlot(new Slot(((EnchantmentMenuAccessor) this).getEnchantSlots(), 0, 15, 47) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return true;

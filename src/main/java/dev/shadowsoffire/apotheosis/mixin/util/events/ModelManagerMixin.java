@@ -2,15 +2,12 @@ package dev.shadowsoffire.apotheosis.mixin.util.events;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.client.GemModel;
-import dev.shadowsoffire.apotheosis.util.Events;
-import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.resources.model.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.profiling.ProfilerFiller;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Map;

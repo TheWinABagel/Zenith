@@ -1,19 +1,13 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.socket.gem;
 
-import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
-import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketHelper;
-import dev.shadowsoffire.apotheosis.adventure.client.SocketTooltipRenderer;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
-import dev.shadowsoffire.placebo.tabs.ITabFiller;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
@@ -24,8 +18,10 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.inventory.tooltip.TooltipComponent;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
 import java.util.*;

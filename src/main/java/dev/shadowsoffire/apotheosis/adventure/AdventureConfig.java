@@ -2,11 +2,9 @@ package dev.shadowsoffire.apotheosis.adventure;
 
 import dev.shadowsoffire.apotheosis.adventure.boss.BossEvents.BossSpawnRules;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
-import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityClamp;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.config.Configuration;
-import io.github.fabricators_of_create.porting_lib.entity.events.player.PlayerTickEvents;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;

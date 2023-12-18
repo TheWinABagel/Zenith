@@ -4,8 +4,6 @@ package dev.shadowsoffire.apotheosis;
 import com.google.common.collect.ImmutableSet;
 import dev.shadowsoffire.apotheosis.ench.anvil.AnvilTile;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
-
-//import dev.shadowsoffire.apotheosis.village.fletching.arrows.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;

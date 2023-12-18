@@ -10,7 +10,6 @@ import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.DamageEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 public class ShieldBashEnchant extends Enchantment implements CustomEnchantingTableBehaviorEnchantment {

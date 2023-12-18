@@ -1,20 +1,5 @@
 package dev.shadowsoffire.apotheosis.ench.compat;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.ench.table.EnchantingRecipe;
-import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.block.Blocks;
-
-import java.util.ArrayList;
-import java.util.List;
 /*
 @JeiPlugin
 public class EnchJEIPlugin implements IModPlugin {

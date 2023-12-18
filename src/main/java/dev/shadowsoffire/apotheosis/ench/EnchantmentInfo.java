@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.ench;
 
+import dev.s_com.udojava.evalex.Expression;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
 import dev.shadowsoffire.apotheosis.mixin.accessors.EnchantmentAccessor;
 import dev.shadowsoffire.placebo.config.Configuration;
@@ -7,7 +8,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.math.BigDecimal;
-import dev.s_com.udojava.evalex.Expression;
 
 public class EnchantmentInfo {
 

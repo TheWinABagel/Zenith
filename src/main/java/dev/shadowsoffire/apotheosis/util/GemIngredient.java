@@ -1,13 +1,8 @@
 package dev.shadowsoffire.apotheosis.util;
 
-import java.util.Collection;
-import java.util.List;
-
 import com.google.gson.JsonObject;
-
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
-import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
@@ -20,6 +15,9 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.Collection;
+import java.util.List;
 
 public class GemIngredient implements CustomIngredient {
 

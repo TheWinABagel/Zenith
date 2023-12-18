@@ -1,13 +1,5 @@
 package dev.shadowsoffire.apotheosis.ench.objects;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-
 import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.ench.api.IEnchantingBlock;
 import dev.shadowsoffire.apotheosis.mixin.accessors.ChiseledBookShelfBlockAccessor;
@@ -39,6 +31,8 @@ import net.minecraft.world.level.block.entity.ChiseledBookShelfBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec2;
+
+import java.util.*;
 
 public class FilteringShelfBlock extends ChiseledBookShelfBlock implements IEnchantingBlock, EnchantmentBonusBlock {
 

@@ -9,8 +9,6 @@ import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
 import dev.shadowsoffire.attributeslib.AttributesLib;
 import dev.shadowsoffire.attributeslib.api.IFormattableAttribute;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
-import it.unimi.dsi.fastutil.floats.Float2FloatMap;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;

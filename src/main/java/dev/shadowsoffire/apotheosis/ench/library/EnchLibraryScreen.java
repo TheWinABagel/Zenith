@@ -1,11 +1,9 @@
 package dev.shadowsoffire.apotheosis.ench.library;
 
 import com.google.common.base.Strings;
-import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.attributeslib.AttributesLib;
-import dev.shadowsoffire.placebo.Placebo;
 import dev.shadowsoffire.placebo.packets.ButtonClickMessage;
 import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
 import net.fabricmc.loader.api.FabricLoader;
@@ -14,7 +12,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.registries.BuiltInRegistries;

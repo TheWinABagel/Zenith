@@ -4,7 +4,6 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingBehaviorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;

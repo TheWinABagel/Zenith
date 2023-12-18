@@ -2,7 +2,6 @@ package dev.shadowsoffire.apotheosis.ench.enchantments.masterwork;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.Ench;
-import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;

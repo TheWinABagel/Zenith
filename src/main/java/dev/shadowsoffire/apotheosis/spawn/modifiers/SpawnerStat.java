@@ -1,11 +1,9 @@
 package dev.shadowsoffire.apotheosis.spawn.modifiers;
 
-import com.google.gson.JsonElement;
 import com.mojang.serialization.Codec;
 import dev.shadowsoffire.apotheosis.spawn.spawner.IBaseSpawner;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 
 public interface SpawnerStat<T> {
 

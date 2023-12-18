@@ -1,6 +1,5 @@
 package dev.shadowsoffire.apotheosis.ench.objects;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.ench.api.IEnchantingBlock;
 import net.minecraft.core.BlockPos;

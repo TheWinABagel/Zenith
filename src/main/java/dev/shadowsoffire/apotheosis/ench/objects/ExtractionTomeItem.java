@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis.ench.objects;
 
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
-import dev.shadowsoffire.apotheosis.ench.anvil.AnvilTile;
 import dev.shadowsoffire.apotheosis.util.Events;
 import fuzs.puzzleslib.api.event.v1.FabricPlayerEvents;
 import net.fabricmc.api.EnvType;
@@ -12,11 +11,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AnvilMenu;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 
 import java.util.Collections;

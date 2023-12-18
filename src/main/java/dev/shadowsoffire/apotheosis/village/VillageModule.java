@@ -7,7 +7,6 @@ import dev.shadowsoffire.apotheosis.village.fletching.FletchingRecipe;
 import dev.shadowsoffire.apotheosis.village.fletching.arrows.*;
 import dev.shadowsoffire.apotheosis.village.wanderer.WandererReplacements;
 import dev.shadowsoffire.placebo.config.Configuration;
-import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;

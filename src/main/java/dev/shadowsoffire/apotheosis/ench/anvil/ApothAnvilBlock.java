@@ -2,7 +2,6 @@ package dev.shadowsoffire.apotheosis.ench.anvil;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.advancements.AdvancementTriggers;
-import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.util.INBTSensitiveFallingBlock;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -22,7 +21,6 @@ import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -38,10 +36,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.HitResult;
 
 import java.util.List;
 import java.util.Map;

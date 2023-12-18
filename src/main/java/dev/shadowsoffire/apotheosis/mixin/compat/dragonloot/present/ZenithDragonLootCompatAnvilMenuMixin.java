@@ -2,9 +2,7 @@ package dev.shadowsoffire.apotheosis.mixin.compat.dragonloot.present;
 
 import com.bawnorton.mixinsquared.TargetHandler;
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.util.Events;
-import net.dragonloot.init.BlockInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -51,6 +49,7 @@ public abstract class ZenithDragonLootCompatAnvilMenuMixin extends ItemCombinerM
         }
     }
 
+    @SuppressWarnings({"InvalidMemberReference", "MixinAnnotationTarget", "UnresolvedMixinReference"})
     @TargetHandler(
             mixin = "net.dragonloot.mixin.AnvilScreenHandlerMixin",
             name = "lambda$onTakeOutputMixin$0"

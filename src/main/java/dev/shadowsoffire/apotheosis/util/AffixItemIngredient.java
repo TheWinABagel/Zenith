@@ -1,11 +1,6 @@
 package dev.shadowsoffire.apotheosis.util;
 
-import java.util.Arrays;
-import java.util.List;
-
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
@@ -22,8 +17,10 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class AffixItemIngredient implements CustomIngredient {
 

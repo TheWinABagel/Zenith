@@ -3,7 +3,6 @@ package dev.shadowsoffire.apotheosis.ench.enchantments.corrupted;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityDamageEvents;
-import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;

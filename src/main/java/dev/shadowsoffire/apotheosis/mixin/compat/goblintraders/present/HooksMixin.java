@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis.mixin.compat.goblintraders.present;
 
 import com.mrcrayfish.goblintraders.Hooks;
-import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
 import net.minecraft.world.item.enchantment.Enchantment;
 import org.spongepowered.asm.mixin.Mixin;

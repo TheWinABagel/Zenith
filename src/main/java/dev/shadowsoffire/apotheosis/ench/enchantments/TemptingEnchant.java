@@ -3,11 +3,9 @@ package dev.shadowsoffire.apotheosis.ench.enchantments;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 public class TemptingEnchant extends Enchantment {

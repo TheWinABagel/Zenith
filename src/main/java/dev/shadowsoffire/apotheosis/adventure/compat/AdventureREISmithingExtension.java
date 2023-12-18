@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis.adventure.compat;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.*;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
@@ -22,7 +21,6 @@ import me.shedaniel.rei.api.common.util.EntryStacks;
 import me.shedaniel.rei.plugin.common.displays.DefaultSmithingDisplay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;

@@ -12,7 +12,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
 public class GemRegistry extends WeightedDynamicRegistry<Gem> {

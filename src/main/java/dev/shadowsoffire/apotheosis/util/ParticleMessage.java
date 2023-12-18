@@ -1,13 +1,6 @@
 package dev.shadowsoffire.apotheosis.util;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.FriendlyByteBuf;
-
-import java.util.Optional;
-import java.util.function.Supplier;
 
 public class ParticleMessage {
 

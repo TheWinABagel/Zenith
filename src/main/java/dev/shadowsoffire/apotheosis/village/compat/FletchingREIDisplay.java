@@ -1,18 +1,12 @@
 package dev.shadowsoffire.apotheosis.village.compat;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
 import dev.shadowsoffire.apotheosis.village.fletching.FletchingRecipe;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.block.Blocks;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class FletchingREIDisplay implements Display {

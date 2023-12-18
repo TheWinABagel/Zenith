@@ -1,6 +1,5 @@
 package dev.shadowsoffire.apotheosis.adventure.boss;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;

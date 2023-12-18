@@ -2,9 +2,6 @@ package dev.shadowsoffire.apotheosis.ench.asm;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
-import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 /**

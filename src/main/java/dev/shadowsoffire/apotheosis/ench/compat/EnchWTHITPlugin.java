@@ -17,7 +17,10 @@ import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.AnvilBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.phys.Vec2;
 import org.jetbrains.annotations.Nullable;
 

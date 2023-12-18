@@ -1,15 +1,12 @@
 package dev.shadowsoffire.apotheosis.adventure.compat;
 
 import com.google.common.base.Predicates;
-import dev.shadowsoffire.apotheosis.adventure.Adventure;
-import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.util.CommonTooltipUtil;
 import mcp.mobius.waila.api.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;

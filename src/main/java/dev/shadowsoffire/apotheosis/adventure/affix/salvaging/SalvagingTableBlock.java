@@ -1,14 +1,8 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.salvaging;
 
-import dev.shadowsoffire.apotheosis.adventure.Adventure;
-import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
-import dev.shadowsoffire.placebo.menu.MenuUtil;
-import dev.shadowsoffire.placebo.menu.SimplerMenuProvider;
-import io.github.fabricators_of_create.porting_lib.util.NetworkHooks;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -16,8 +10,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -30,7 +22,6 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 

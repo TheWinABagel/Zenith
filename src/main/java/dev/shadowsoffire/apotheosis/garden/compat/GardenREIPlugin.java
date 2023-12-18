@@ -1,6 +1,5 @@
 package dev.shadowsoffire.apotheosis.garden.compat;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.garden.GardenModule;
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;

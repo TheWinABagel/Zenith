@@ -1,21 +1,21 @@
 package dev.shadowsoffire.apotheosis.spawn.modifiers;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.mixin.accessors.BaseSpawnerAccessor;
 import dev.shadowsoffire.apotheosis.spawn.SpawnerModule;
 import dev.shadowsoffire.apotheosis.spawn.spawner.IBaseSpawner;
-import net.minecraft.util.Mth;
-import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
-import java.util.function.Function;
 import java.util.function.Consumer;
-import java.util.LinkedHashMap;
+import java.util.function.Function;
 
 public class SpawnerStats {
 

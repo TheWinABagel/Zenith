@@ -13,7 +13,6 @@ import net.soulsweaponry.config.ConfigConstructor;
 import net.soulsweaponry.items.TrickWeapon;
 import net.soulsweaponry.registry.WeaponRegistry;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

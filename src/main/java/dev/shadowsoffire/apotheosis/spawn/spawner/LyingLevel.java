@@ -15,7 +15,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.level.LightLayer;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeManager;

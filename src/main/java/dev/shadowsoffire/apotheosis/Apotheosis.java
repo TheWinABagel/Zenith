@@ -11,7 +11,6 @@ import dev.shadowsoffire.apotheosis.util.Events;
 import dev.shadowsoffire.apotheosis.util.ModuleCondition;
 import dev.shadowsoffire.apotheosis.village.VillageModule;
 import dev.shadowsoffire.placebo.config.Configuration;
-
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
 import net.fabricmc.loader.api.FabricLoader;

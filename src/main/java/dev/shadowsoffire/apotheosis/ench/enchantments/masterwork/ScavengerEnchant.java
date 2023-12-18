@@ -1,6 +1,5 @@
 package dev.shadowsoffire.apotheosis.ench.enchantments.masterwork;
 
-import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.mixin.accessors.LivingEntityInvoker;
 import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityLootEvents;
 import net.minecraft.ChatFormatting;
@@ -11,8 +10,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-
-import java.util.ArrayList;
 
 public class ScavengerEnchant extends Enchantment {
 

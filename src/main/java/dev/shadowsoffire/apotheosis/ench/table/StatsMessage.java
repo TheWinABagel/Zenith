@@ -1,25 +1,15 @@
 package dev.shadowsoffire.apotheosis.ench.table;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Supplier;
-
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu.TableStats;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentInstance;
 
 public class StatsMessage {
     public static ResourceLocation ID = Apotheosis.loc("stats_message");

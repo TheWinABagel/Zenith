@@ -18,7 +18,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
-
 import java.util.List;
 
 public class EnchLibraryContainer extends BlockEntityMenu<EnchLibraryTile> implements IButtonContainer {

@@ -13,7 +13,6 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.placebo.util.PlaceboUtil;
-import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;

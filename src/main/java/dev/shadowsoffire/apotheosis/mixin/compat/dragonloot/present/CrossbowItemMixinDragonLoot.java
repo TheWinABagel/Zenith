@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis.mixin.compat.dragonloot.present;
 
 import com.bawnorton.mixinsquared.TargetHandler;
-import dev.shadowsoffire.placebo.Placebo;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ArrowItem;
@@ -19,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = CrossbowItem.class, priority = 1500)
 public class CrossbowItemMixinDragonLoot {
 
+    @SuppressWarnings({"InvalidMemberReference", "MixinAnnotationTarget"})
     @TargetHandler(
             mixin = "net.dragonloot.mixin.CrossbowItemMixin",
             name = "createArrowMixin"

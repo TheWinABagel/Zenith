@@ -5,7 +5,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig.LootPatternMatcher;
-import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;

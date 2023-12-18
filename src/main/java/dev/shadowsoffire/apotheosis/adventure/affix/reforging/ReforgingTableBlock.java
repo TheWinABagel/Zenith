@@ -4,7 +4,6 @@ import dev.shadowsoffire.apotheosis.adventure.Adventure.Blocks;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.block_entity.TickingEntityBlock;
-import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.menu.SimplerMenuProvider;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

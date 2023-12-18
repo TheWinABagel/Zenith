@@ -3,7 +3,6 @@ package dev.shadowsoffire.apotheosis.spawn.modifiers;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.mojang.serialization.JsonOps;
-
 import dev.shadowsoffire.apotheosis.spawn.SpawnerModule;
 import dev.shadowsoffire.apotheosis.spawn.spawner.IBaseSpawner;
 import net.minecraft.nbt.CompoundTag;

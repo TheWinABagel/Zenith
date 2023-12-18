@@ -10,7 +10,6 @@ import me.shedaniel.rei.api.client.gui.Renderer;
 import me.shedaniel.rei.api.client.gui.widgets.Widget;
 import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
-import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;

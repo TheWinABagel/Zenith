@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis.mixin.compat.dragonloot.present;
 
 import com.bawnorton.mixinsquared.TargetHandler;
-import dev.shadowsoffire.placebo.Placebo;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -19,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = BowItem.class, priority = 1500)
 public class BowItemMixinDragonLoot {
 
+    @SuppressWarnings({"InvalidMemberReference", "MixinAnnotationTarget"})
     @TargetHandler(
             mixin = "net.dragonloot.mixin.BowItemMixin",
             name = "onStoppedUsingMixin"

@@ -1,8 +1,6 @@
 package dev.shadowsoffire.apotheosis.spawn.compat;
 
-import com.google.common.collect.ImmutableList;
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.ench.table.EnchantingRecipe;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;

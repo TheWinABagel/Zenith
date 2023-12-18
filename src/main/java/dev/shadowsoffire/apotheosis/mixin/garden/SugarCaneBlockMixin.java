@@ -4,7 +4,8 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.garden.GardenModule;
 import net.minecraft.world.level.block.SugarCaneBlock;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 
 @Mixin(SugarCaneBlock.class)

@@ -1,6 +1,5 @@
 package dev.shadowsoffire.apotheosis.ench.library;
 
-import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.menu.SimplerMenuProvider;
 import io.github.fabricators_of_create.porting_lib.util.NetworkHooks;
 import net.fabricmc.api.EnvType;
@@ -31,8 +30,6 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
-
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,10 +1,6 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.socket;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gson.JsonObject;
-
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothSmithingRecipe;
@@ -20,6 +16,9 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SocketingRecipe extends ApothSmithingRecipe {
 

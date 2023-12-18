@@ -2,17 +2,11 @@ package dev.shadowsoffire.apotheosis.ench.table;
 
 import io.github.fabricators_of_create.porting_lib.tags.Tags;
 import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandler;
-import io.github.fabricators_of_create.porting_lib.util.LazyOptional;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.EnchantmentTableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
 
 
 public class ApothEnchantTile extends EnchantmentTableBlockEntity {

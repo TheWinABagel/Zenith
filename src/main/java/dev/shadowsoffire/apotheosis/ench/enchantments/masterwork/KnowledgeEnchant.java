@@ -6,7 +6,6 @@ import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEn
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.item.ItemEntity;

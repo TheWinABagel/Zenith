@@ -1,7 +1,5 @@
 package dev.shadowsoffire.apotheosis.compat;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

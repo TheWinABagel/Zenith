@@ -2,14 +2,12 @@ package dev.shadowsoffire.apotheosis.potion.compat;
 
 import dev.shadowsoffire.apotheosis.potion.PotionCharmRecipe;
 import dev.shadowsoffire.apotheosis.potion.PotionModule;
-import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.screen.DisplayScreen;
 import me.shedaniel.rei.api.client.registry.category.extension.CategoryExtensionProvider;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategoryView;
 import me.shedaniel.rei.api.common.display.basic.BasicDisplay;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
-import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.plugin.common.displays.crafting.DefaultCraftingDisplay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.NonNullList;

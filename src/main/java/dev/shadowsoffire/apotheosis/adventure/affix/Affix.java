@@ -2,9 +2,8 @@ package dev.shadowsoffire.apotheosis.adventure.affix;
 
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
-import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
-import dev.shadowsoffire.placebo.events.GetEnchantmentLevelEvent;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
+import dev.shadowsoffire.placebo.events.GetEnchantmentLevelEvent;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -21,7 +20,6 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;

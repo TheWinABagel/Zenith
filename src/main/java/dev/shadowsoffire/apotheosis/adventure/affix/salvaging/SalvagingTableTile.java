@@ -1,6 +1,5 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.salvaging;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandler;
 import io.github.fabricators_of_create.porting_lib.util.LazyOptional;
@@ -10,7 +9,6 @@ import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;

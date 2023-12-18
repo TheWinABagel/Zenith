@@ -11,7 +11,6 @@ import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;

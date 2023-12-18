@@ -1,22 +1,5 @@
 package dev.shadowsoffire.apotheosis.spawn.compat;
 
-import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.spawn.SpawnerModule;
-import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SpawnEggItem;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.block.Blocks;
-
-import java.util.ArrayList;
-import java.util.List;
 /*
 @JeiPlugin
 public class SpawnerJEIPlugin implements IModPlugin {

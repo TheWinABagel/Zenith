@@ -1,6 +1,5 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.reforging;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
@@ -11,7 +10,6 @@ import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandle
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;

@@ -6,7 +6,6 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -17,8 +16,6 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Supplier;
 
 public class ClueMessage {
     public static ResourceLocation ID = Apotheosis.loc("enchant_clue");

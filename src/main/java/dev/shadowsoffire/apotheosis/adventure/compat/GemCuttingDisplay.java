@@ -2,7 +2,6 @@ package dev.shadowsoffire.apotheosis.adventure.compat;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
-import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingMenu;

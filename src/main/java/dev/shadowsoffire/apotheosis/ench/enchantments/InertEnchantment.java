@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis.ench.enchantments;
 
 import com.chocohead.mm.api.ClassTinkerers;
-import com.google.common.base.Predicates;
 import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingTableBehaviorEnchantment;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;

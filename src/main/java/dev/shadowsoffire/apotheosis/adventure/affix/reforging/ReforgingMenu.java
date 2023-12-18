@@ -8,7 +8,6 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
-import dev.shadowsoffire.placebo.menu.BlockEntityMenu;
 import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.menu.PlaceboContainerMenu;
 import dev.shadowsoffire.placebo.util.EnchantmentUtils;

@@ -3,7 +3,6 @@ package dev.shadowsoffire.apotheosis.village.fletching;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.village.VillageModule;
 import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;

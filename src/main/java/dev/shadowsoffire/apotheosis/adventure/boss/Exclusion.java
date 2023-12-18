@@ -1,7 +1,5 @@
 package dev.shadowsoffire.apotheosis.adventure.boss;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.Apotheosis;
@@ -12,7 +10,6 @@ import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.json.NBTAdapter;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.ServerLevelAccessor;

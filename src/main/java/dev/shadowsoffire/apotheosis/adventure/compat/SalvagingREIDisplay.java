@@ -1,17 +1,11 @@
 package dev.shadowsoffire.apotheosis.adventure.compat;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
-import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.Display;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.SmithingRecipe;
-import net.minecraft.world.level.block.Blocks;
 
 import java.util.ArrayList;
 import java.util.Collections;

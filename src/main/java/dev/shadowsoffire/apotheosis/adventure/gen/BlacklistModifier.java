@@ -5,7 +5,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public record BlacklistModifier(HolderSet<Biome> blacklistedBiomes, Holder<PlacedFeature> feature)/* implements BiomeModifier */{

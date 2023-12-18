@@ -11,8 +11,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.function.Supplier;
-
 public class TypedShelfBlock extends Block implements IEnchantingBlock {
 
     protected final SimpleParticleType particle;

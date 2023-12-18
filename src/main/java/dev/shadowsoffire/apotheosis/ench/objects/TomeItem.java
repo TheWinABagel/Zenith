@@ -18,7 +18,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.Level;
 
-
 import java.util.List;
 
 public class TomeItem extends BookItem implements IEnchantableItem, CustomEnchantingBehaviorItem {

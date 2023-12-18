@@ -2,11 +2,9 @@ package dev.shadowsoffire.apotheosis.ench.enchantments.twisted;
 
 import io.github.fabricators_of_create.porting_lib.entity.events.player.PlayerEvents;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.DiggingEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;

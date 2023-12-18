@@ -27,8 +27,6 @@ import dev.shadowsoffire.attributeslib.api.client.GatherSkippedAttributeTooltips
 import dev.shadowsoffire.attributeslib.api.client.ItemTooltipCallbackWithPlayer;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.CoreShaderRegistrationCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;

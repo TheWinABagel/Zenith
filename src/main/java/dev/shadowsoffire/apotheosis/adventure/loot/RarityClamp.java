@@ -1,16 +1,14 @@
 package dev.shadowsoffire.apotheosis.adventure.loot;
 
-import java.util.function.Function;
-
-import javax.annotation.Nullable;
-
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
+
+import javax.annotation.Nullable;
+import java.util.function.Function;
 
 /**
  * A Rarity clamp imposes min and/or max bounds on rarities.

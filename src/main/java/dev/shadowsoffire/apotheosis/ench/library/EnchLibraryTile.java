@@ -1,19 +1,12 @@
 package dev.shadowsoffire.apotheosis.ench.library;
 
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.placebo.recipe.VanillaPacketDispatcher;
 import io.github.fabricators_of_create.porting_lib.block.CustomDataPacketHandlingBlockEntity;
-import io.github.fabricators_of_create.porting_lib.util.LazyOptional;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
-import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
-import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
-import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;

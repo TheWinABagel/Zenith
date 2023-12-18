@@ -1,25 +1,5 @@
 package dev.shadowsoffire.apotheosis.ench.compat;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry.Stats;
-import dev.shadowsoffire.apotheosis.ench.table.EnchantingRecipe;
-import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.inventory.EnchantmentNames;
-import net.minecraft.client.resources.language.I18n;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FormattedCharSequence;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Blocks;
-
-import java.util.*;
 /*
 public class EnchantingCategory implements IRecipeCategory<EnchantingRecipe> {
 

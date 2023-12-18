@@ -1,16 +1,8 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.socket;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Stream;
-
 import com.google.common.collect.ImmutableList;
-
-import dev.shadowsoffire.apotheosis.adventure.Adventure.Affixes;
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
+import dev.shadowsoffire.apotheosis.adventure.Adventure.Affixes;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
@@ -28,7 +20,12 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * Utility class for the manipulation of Sockets on items.

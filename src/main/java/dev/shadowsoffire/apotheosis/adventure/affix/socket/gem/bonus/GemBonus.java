@@ -1,7 +1,5 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 import com.mojang.datafixers.kinds.App;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -11,7 +9,6 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.special.*;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.placebo.codec.CodecMap;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
-import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.events.GetEnchantmentLevelEvent;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -28,7 +25,6 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -37,7 +33,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.HitResult;
 import net.spell_engine.api.spell.SpellEvents;
-
 
 import javax.annotation.Nullable;
 import java.util.Map;

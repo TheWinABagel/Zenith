@@ -25,7 +25,6 @@ import net.minecraft.world.level.storage.loot.functions.LootingEnchantFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
-
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 

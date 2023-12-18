@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis.ench.api;
 
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
-import io.github.fabricators_of_create.porting_lib.enchant.EnchantmentBonusBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;

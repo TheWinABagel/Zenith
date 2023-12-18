@@ -9,8 +9,8 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
-import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityClamp;
+import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
@@ -100,6 +100,7 @@ public class Gem implements CodecProvider<Gem>, ILuckyWeighted, IDimensional, Ra
      * @param rarity   The rarity of this gem.
      * @param list     The destination for tooltips.
      */
+    @SuppressWarnings("NoTranslation")
     public void addInformation(ItemStack gem, LootRarity rarity, Consumer<Component> list) {
         if (this.isUnique()) list.accept(Component.translatable("text.zenith.unique").withStyle(Style.EMPTY.withColor(0xC73912)));
         list.accept(CommonComponents.EMPTY);

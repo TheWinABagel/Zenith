@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis.mixin.util.events;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.adventure.client.AdventureModuleClient;
 import dev.shadowsoffire.apotheosis.util.events.IComponentTooltip;

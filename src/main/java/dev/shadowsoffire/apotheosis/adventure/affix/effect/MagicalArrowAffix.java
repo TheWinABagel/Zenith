@@ -9,8 +9,6 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityDamageEvents;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 

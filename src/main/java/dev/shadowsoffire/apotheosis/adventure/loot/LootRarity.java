@@ -1,30 +1,17 @@
 package dev.shadowsoffire.apotheosis.adventure.loot;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.annotation.Nullable;
-
-import dev.shadowsoffire.placebo.codec.CodecProvider;
-import net.minecraft.core.registries.BuiltInRegistries;
-import org.apache.commons.lang3.mutable.MutableInt;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.ListCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
+import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.ILuckyWeighted;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
@@ -33,6 +20,11 @@ import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import org.apache.commons.lang3.mutable.MutableInt;
+
+import javax.annotation.Nullable;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class LootRarity implements CodecProvider<LootRarity>, ILuckyWeighted, Comparable<LootRarity> {
 

@@ -1,9 +1,7 @@
 package dev.shadowsoffire.apotheosis.village.wanderer;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.village.util.BasicItemListing;
 import dev.shadowsoffire.placebo.config.Configuration;
 import dev.shadowsoffire.placebo.json.ItemAdapter;
@@ -11,7 +9,6 @@ import dev.shadowsoffire.placebo.json.NBTAdapter;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 import java.util.List;
 

@@ -2,7 +2,6 @@ package dev.shadowsoffire.apotheosis.adventure.loot;
 
 import com.mojang.serialization.Codec;
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import io.github.fabricators_of_create.porting_lib.loot.IGlobalLootModifier;
 import io.github.fabricators_of_create.porting_lib.loot.LootModifier;

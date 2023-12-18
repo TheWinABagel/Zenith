@@ -9,7 +9,6 @@ import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;

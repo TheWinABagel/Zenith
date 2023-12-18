@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis.ench.compat;
 
 import com.google.common.collect.ImmutableMap;
-import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingRecipe;
@@ -11,7 +10,6 @@ import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.plugin.common.displays.anvil.AnvilRecipe;
-import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;

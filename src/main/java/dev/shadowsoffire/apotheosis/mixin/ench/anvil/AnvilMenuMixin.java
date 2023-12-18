@@ -1,7 +1,6 @@
 package dev.shadowsoffire.apotheosis.mixin.ench.anvil;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
 import dev.shadowsoffire.apotheosis.util.Events;
 import dev.shadowsoffire.placebo.util.EnchantmentUtils;
@@ -20,7 +19,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(AnvilMenu.class)
 public abstract class AnvilMenuMixin extends ItemCombinerMenu {

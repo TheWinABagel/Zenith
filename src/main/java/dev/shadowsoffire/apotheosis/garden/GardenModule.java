@@ -2,18 +2,16 @@ package dev.shadowsoffire.apotheosis.garden;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.placebo.config.Configuration;
-import dev.shadowsoffire.placebo.recipe.RecipeHelper;
-import dev.shadowsoffire.placebo.tabs.TabFillingRegistry;
-import dev.shadowsoffire.placebo.util.PlaceboUtil;
-import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ComposterBlock;
 

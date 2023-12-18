@@ -1,25 +1,5 @@
 package dev.shadowsoffire.apotheosis.spawn.compat;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
-import dev.shadowsoffire.apotheosis.spawn.modifiers.StatModifier;
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.block.Blocks;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 /*
 public class SpawnerCategory implements IRecipeCategory<SpawnerModifier> {
 

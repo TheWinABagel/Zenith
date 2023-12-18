@@ -7,8 +7,6 @@ import dev.shadowsoffire.apotheosis.ench.table.ApothEnchScreen;
 import dev.shadowsoffire.apotheosis.ench.table.ClueMessage;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
 import dev.shadowsoffire.apotheosis.ench.table.StatsMessage;
-import dev.shadowsoffire.apotheosis.util.DrawsOnLeft;
-import dev.shadowsoffire.placebo.util.EnchantmentUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
@@ -17,16 +15,15 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.gui.screens.inventory.AnvilScreen;
 import net.minecraft.client.particle.EnchantmentTableParticle;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
@@ -35,8 +32,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 @Environment(EnvType.CLIENT)

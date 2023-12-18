@@ -1,6 +1,5 @@
 package dev.shadowsoffire.apotheosis.ench.anvil;
 
-import dev.shadowsoffire.apotheosis.Apotheosis;
 import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingBehaviorItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
