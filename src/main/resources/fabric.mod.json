@@ -5,8 +5,8 @@
   "name": "Zenith",
   "description": "Unofficial Fabric port of Apotheosis.",
   "authors": [
-    "Safro (original port)",
     "ShadowsOfFire (Forge)",
+    "Safro (original port)",
     "TheWinABagel"
   ],
   "contact": {
@@ -49,13 +49,12 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.14.22",
-    "fabric": "*",
+    "fabricloader": ">=${loader_version}",
+    "fabric": "${fapi_version}",
     "minecraft": "1.20.1",
     "java": ">=17",
-    "fakerlib": ">=0.0.8",
-    "zenith_attributes": ">=0.1.1"
-
+    "fakerlib": ">=${fakerlib_version}",
+    "zenith_attributes": ">=${zenith_attributes_version}"
   },
   "suggests": {
     "roughlyenoughitems": "*",

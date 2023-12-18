@@ -25,8 +25,8 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 
 
     @Shadow private @Nullable String itemName;
-    @Shadow @Final public DataSlot cost;
-    @Shadow public int repairItemCountCost;
+    @Shadow @Final private DataSlot cost;
+    @Shadow private int repairItemCountCost;
     @Unique private static ItemStack leftItem = ItemStack.EMPTY;
     @Unique private static ItemStack rightItem = ItemStack.EMPTY;
     @Unique private static ItemStack output;
@@ -37,7 +37,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
     }
 
     @ModifyConstant(method = "createResult()V", constant = @Constant(intValue = 40))
-    public int removeLevelCap(int old) {
+    public int zenith$removeLevelCap(int old) {
         if (!Apotheosis.enableEnch) return old;
         return Integer.MAX_VALUE;
     }
@@ -49,17 +49,16 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
      * @param level  The negative of the cost of performing the anvil operation.
      */
     @Redirect(method = "onTake", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;giveExperienceLevels(I)V"))
-    public void chargeOptimalLevels(Player player, int level) {
+    public void zenith$chargeOptimalLevels(Player player, int level) {
         EnchantmentUtils.chargeExperience(player, EnchantmentUtils.getTotalExperienceForLevel(-level));
     }
-
 
     @Inject(method = "createResult", at = @At(value = "INVOKE", target = "net/minecraft/world/item/ItemStack.isEmpty ()Z", ordinal = 1, shift = At.Shift.AFTER), cancellable = true)
     private void initUpdateAnvilEvent(CallbackInfo ci) {
         leftItem = this.inputSlots.getItem(0);
         rightItem = this.inputSlots.getItem(1);
         output = this.resultSlots.getItem(0);
-        if (Apotheosis.enableEnch && !onAnvilChange(leftItem, rightItem, this.resultSlots, itemName, this.cost.get(), player)) {
+        if (Apotheosis.enableEnch && onAnvilChange(leftItem, rightItem, this.resultSlots, itemName, this.cost.get(), player)) {
             ci.cancel();
         }
     }
@@ -89,11 +88,11 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
     private boolean onAnvilChange(ItemStack left, ItemStack right, Container outputSlot, String name, int cost, Player player) {
         Events.AnvilUpdate.UpdateAnvilEvent e = new Events.AnvilUpdate.UpdateAnvilEvent(left, right, name, cost, player);
         Events.AnvilUpdate.UPDATE_ANVIL.invoker().onUpdate(e);
-        if (e.output.isEmpty()) return true;
+        if (e.output.isEmpty()) return false;
         outputSlot.setItem(0, e.output);
         this.cost.set(e.cost);
         this.repairItemCountCost = e.materialCost;
-        return false;
+        return true;
     }
 
     @Redirect(method = "createResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/Enchantment;getMaxLevel()I"))

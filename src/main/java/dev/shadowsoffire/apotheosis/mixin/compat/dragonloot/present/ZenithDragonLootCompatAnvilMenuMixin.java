@@ -3,32 +3,33 @@ package dev.shadowsoffire.apotheosis.mixin.compat.dragonloot.present;
 import com.bawnorton.mixinsquared.TargetHandler;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.util.Events;
+import net.dragonloot.init.BlockInit;
+import net.dragonloot.init.ConfigInit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AnvilMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.ItemCombinerMenu;
-import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Pseudo;
-import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Pseudo
 @Mixin(value = AnvilMenu.class, priority = 1500)
 public abstract class ZenithDragonLootCompatAnvilMenuMixin extends ItemCombinerMenu {
-
-    @Unique private static Player p = null;
     @Unique private static ItemStack DLLeftItem = ItemStack.EMPTY;
     @Unique private static ItemStack DLRightItem = ItemStack.EMPTY;
     @Unique private static ItemStack DLOutput = ItemStack.EMPTY;
     @Unique private static Events.RepairEvent DLRepairEvent;
+
+    @Shadow @Final private DataSlot cost;
+
+    @Unique private static boolean isDragonAnvil = false;
 
     public ZenithDragonLootCompatAnvilMenuMixin(@Nullable MenuType<?> type, int containerId, Inventory playerInventory, ContainerLevelAccess access) {
         super(type, containerId, playerInventory, access);
@@ -41,11 +42,20 @@ public abstract class ZenithDragonLootCompatAnvilMenuMixin extends ItemCombinerM
         DLOutput = this.resultSlots.getItem(0);
     }
 
+    @Inject(method = "isValidBlock", at = @At("HEAD"))
+    private void zenith$isDragonAnvil(BlockState state, CallbackInfoReturnable<Boolean> cir) {
+        if (state.is(BlockInit.DRAGON_ANVIL_BLOCK)) {
+            isDragonAnvil = true;
+        }
+    }
+
     @Inject(method = "onTake", at = @At("HEAD"))
     private void zenith$IntegrateRepairEventDragonLoot(Player player, ItemStack stack, CallbackInfo ci) {
-        p = player;
         if (!DLLeftItem.isEmpty() && !DLRightItem.isEmpty()) {
-            DLRepairEvent = new Events.RepairEvent(p, DLOutput, DLLeftItem, DLRightItem);
+            DLRepairEvent = new Events.RepairEvent(player, DLOutput, DLLeftItem, DLRightItem);
+        }
+        if (isDragonAnvil && cost.get() > 30 && ConfigInit.CONFIG.dragon_anvil_no_cap) {
+            cost.set(30);
         }
     }
 

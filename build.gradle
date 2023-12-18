@@ -171,7 +171,11 @@ dependencies {
 	modCompileOnly "curse.maven:puzzles-lib-495476:4847147" //puzzlelib
 	modCompileOnly "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:8.0.0"
 
-	modCompileOnly "curse.maven:dragonloot-424480:4656260" //dragon loot
+	modImplementation "curse.maven:dragonloot-424480:4656260" //dragon loot
+
+	modImplementation("me.shedaniel.cloth:cloth-config-fabric:11.1.106") { //cloth config, required by dragon loot
+		exclude(group: "net.fabricmc.fabric-api")
+	}
 
 	modCompileOnly "curse.maven:mariums-soulslike-weaponry-632066:4891244" //soulslike weaponry
 
@@ -197,7 +201,7 @@ processResources {
 	inputs.property "version", project.version
 
 	filesMatching("fabric.mod.json") {
-		expand "version": project.version
+		expand "version": project.version, "loader_version": project.loader_version, "fakerlib_version": project.fakerlib_version, "zenith_attributes_version": project.zenith_attributes_version, "fapi_version": project.fabric_version
 	}
 }
 

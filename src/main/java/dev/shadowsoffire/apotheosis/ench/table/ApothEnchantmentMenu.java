@@ -1,6 +1,6 @@
 package dev.shadowsoffire.apotheosis.ench.table;
 
-import dev.shadowsoffire.apotheosis.advancements.AdvancementTriggers;
+import dev.shadowsoffire.apotheosis.advancements.EnchantedTrigger;
 import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.ench.api.IEnchantingBlock;
 import dev.shadowsoffire.apotheosis.mixin.accessors.EnchantmentMenuAccessor;
@@ -10,6 +10,7 @@ import io.github.fabricators_of_create.porting_lib.tags.Tags;
 import io.github.fabricators_of_create.porting_lib.transfer.item.SlotItemHandler;
 import it.unimi.dsi.fastutil.floats.Float2FloatMap;
 import it.unimi.dsi.fastutil.floats.Float2FloatOpenHashMap;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
@@ -142,7 +143,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
 
                 player.awardStat(Stats.ENCHANT_ITEM);
                 if (player instanceof ServerPlayer) {
-                    (AdvancementTriggers.ENCHANTED).trigger((ServerPlayer) player, enchanted, level, eterna, quanta, arcana, rectification);
+                    ((EnchantedTrigger) CriteriaTriggers.ENCHANTED_ITEM).trigger((ServerPlayer) player, enchanted, level, eterna, quanta, arcana, rectification);
                 }
 
                 ((EnchantmentMenuAccessor) this).getEnchantSlots().setChanged();
