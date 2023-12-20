@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.adventure;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
@@ -311,6 +312,7 @@ public class AdventureEvents {
         GetEnchantmentLevelEvent.GET_ENCHANTMENT_LEVEL.register(((enchantments, stack) -> {
             boolean isReentrant = reentrantLock.get().getAndSet(true);
             if (isReentrant) return enchantments;
+            if (stack.is(Apoth.Tags.ENCHANT_LEVEL_MODIFIER_BLACKLIST)) return enchantments;
             AffixHelper.streamAffixes(stack).forEach(inst -> inst.getEnchantmentLevels(enchantments));
             reentrantLock.get().set(false);
             return enchantments;

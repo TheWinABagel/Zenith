@@ -1204,8 +1204,20 @@
 	"config.jade.plugin_zenith.adventure": "Zenith Adventure Module",
 	"zenith.creative_tab": "Zenith",
 	
-    "comment_id": "Guidebook",
+    "comment_id": "/Guidebook",
     "book.zenith.name": "Chronicle of Shadows",
     "book.zenith.subtitle": "Guide to Zenith",
-    "book.zenith.landing": "Welcome to the world of Zenith, the $(l)unofficial$() Apotheosis port.$(br2)Zenith is organized into $(#8080FF)Modules$(), and so is the content of this book.$(br2)Disabled modules are hidden."
+    "book.zenith.landing": "Welcome to the world of Zenith, the $(l)unofficial$() Apotheosis port.$(br2)Zenith is organized into $(#8080FF)Modules$(), and so is the content of this book.$(br2)Disabled modules are hidden.",
+
+	"comment_id": "/Emi",
+	"emi.category.zenith.enchanting": "Enchanting",
+	"emi.category.zenith.fletching": "Fletching",
+	"emi.category.zenith.spawner": "Spawner Modifiers",
+	"emi.category.zenith.salvaging": "Salvaging",
+	"emi.category.zenith.gem_cutting": "Gem Cutting",
+
+	"tag.item.zenith.boon_drops": "Boon of the Earth Drops",
+	"tag.item.zenith.infused_shelves": "Infused Shelves",
+	"tag.item.zenith.rarity_materials": "Rarity Materials",
+	"tag.item.zenith.spearfishing_drops": "Spearfishing Fish"
 }

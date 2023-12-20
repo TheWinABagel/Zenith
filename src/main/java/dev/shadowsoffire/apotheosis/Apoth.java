@@ -50,7 +50,7 @@ public class Apoth {
     }
 
     public static final class Tags {
-        public static final TagKey<Item> CUSTOM_ENCHANTABLES = registerItemTag(Apotheosis.loc("custom_enchantables"));
+        public static final TagKey<Item> ENCHANT_LEVEL_MODIFIER_BLACKLIST = registerItemTag(Apotheosis.loc("enchant_level_modifier_blacklist"));
         public static final TagKey<Item> BOON_DROPS = registerItemTag(Apotheosis.loc("boon_drops"));
         public static final TagKey<Item> SPEARFISHING_DROPS = registerItemTag(Apotheosis.loc("spearfishing_drops"));
     }

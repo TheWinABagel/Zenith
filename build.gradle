@@ -146,7 +146,7 @@ dependencies {
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
 
 	// EMI
-	modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
+	modCompileOnly "dev.emi:emi-fabric:${emi_version}"
 
 	switch (recipe_viewer.toLowerCase(Locale.ROOT)) {
 		case "rei": modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}";	break

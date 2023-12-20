@@ -1,10 +1,14 @@
 ### TODO
-* EMI support
 * Fix salvaging non single stacks of items not giving the proper amount of items in return
 
 
-## 0.2.5
-* Implement new shelves from apotheosis
+## 1.0.0
+* First "release" version
+* Implement new shelves from apotheosis, as well as other changes from [7.2.0](https://github.com/Shadows-of-Fire/Apotheosis/blob/1.20/changelog.md#720)
+  * This changed how anvils and enchanting took xp to use the optimal xp cost (as if you were spending the exact level)
+* Finally fix that tag loading bug with enchanting stats
+* Implement EMI support
+* Remove Soulslike weaponry compat, no longer needed
 
 ## 0.2.4
 * Fix crash when adventure module is enabled

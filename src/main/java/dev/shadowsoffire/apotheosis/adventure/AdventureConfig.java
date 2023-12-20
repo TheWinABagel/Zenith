@@ -60,6 +60,7 @@ public class AdventureConfig {
     public static float gemBossBonus = 0.33F;
     public static Supplier<Item> torchItem = () -> Items.TORCH;
     public static boolean cleaveHitsPlayers = false;
+    public static boolean collapsableGemEntries = true;
 
 
     public static void load(Configuration c) {
@@ -105,6 +106,7 @@ public class AdventureConfig {
             }
         }
 
+        collapsableGemEntries = c.getBoolean("Collapse REI gem entries", "gems", collapsableGemEntries, "If gems will be grouped in collapsable entries in REI.");
         lootRules = c.getStringList("Gem Loot Rules", "gems", new String[] { "minecraft:chests.*|0.25", ".*chests.*|0.20", "twilightforest:structures.*|0.20" },
             "Loot Rules, in the form of Loot Table Matchers, permitting gems to spawn in loot tables.  See comment on \"Affix Item Loot Rules\" for description.");
         GEM_LOOT_RULES.clear();

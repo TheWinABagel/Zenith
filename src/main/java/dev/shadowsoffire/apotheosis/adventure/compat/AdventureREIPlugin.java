@@ -3,14 +3,16 @@ package dev.shadowsoffire.apotheosis.adventure.compat;
 import dev.architectury.event.EventResult;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
+import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
+import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.util.GemIngredient;
 import dev.shadowsoffire.apotheosis.util.REIUtil;
-import me.shedaniel.rei.api.client.entry.filtering.base.BasicFilteringRule;
+import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
@@ -18,19 +20,23 @@ import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.client.registry.display.visibility.DisplayVisibilityPredicate;
 import me.shedaniel.rei.api.client.registry.entry.CollapsibleEntryRegistry;
 import me.shedaniel.rei.api.common.display.Display;
+import me.shedaniel.rei.api.common.entry.type.VanillaEntryTypes;
 import me.shedaniel.rei.api.common.plugins.PluginManager;
 import me.shedaniel.rei.api.common.registry.ReloadStage;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.plugin.common.displays.DefaultInformationDisplay;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class AdventureREIPlugin implements REIClientPlugin {
+    public static final ResourceLocation TEXTURES = new ResourceLocation(Apotheosis.MODID, "textures/gui/salvage_jei.png");
 
     @Override
     public String getPluginProviderName() {
@@ -39,17 +45,19 @@ public class AdventureREIPlugin implements REIClientPlugin {
 
     @SuppressWarnings("UnstableApiUsage")
     @Override
-    public void registerBasicEntryFiltering(BasicFilteringRule<?> rule) {
-
-
-    }
-
-
-
-    @SuppressWarnings("UnstableApiUsage")
-    @Override
     public void registerCollapsibleEntries(CollapsibleEntryRegistry registry) {
-        //registry
+        if (!Apotheosis.enableAdventure || !AdventureConfig.collapsableGemEntries) return;
+        GemRegistry.INSTANCE.getValues().stream().sorted(Comparator.comparing(Gem::getId)).forEach(gem -> {
+            String gemId = "item.zenith.gem." + gem.getId().getNamespace() + ":" + gem.getId().getPath();
+            registry.group(gem.getId(), Component.translatable(gemId), VanillaEntryTypes.ITEM, itemStackEntryStack -> {
+                ItemStack stack = itemStackEntryStack.getValue().copy();
+                if (!stack.is(Adventure.Items.GEM)) return false;
+                DynamicHolder<Gem> gemHolder = GemItem.getGem(stack);
+                if (!gemHolder.isBound()) return false;
+                if (gemHolder.get().getId() == gem.getId()) return true;
+                return false;
+            });
+        });
     }
 
     @Override
@@ -65,7 +73,6 @@ public class AdventureREIPlugin implements REIClientPlugin {
     public void postStage(PluginManager<REIClientPlugin> manager, ReloadStage stage) {
         if (!Apotheosis.enableAdventure) return;
         if (stage != ReloadStage.END || !manager.equals(PluginManager.getClientInstance())) return;
-    //    CategoryRegistry.getInstance().get(BuiltinPlugin.SMITHING).registerExtension(new AdventureREISmithingExtension());
     }
 
     @SuppressWarnings("UnstableApiUsage")

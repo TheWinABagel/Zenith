@@ -104,7 +104,7 @@ public class Ench {
 
         public static final Block SOUL_TOUCHED_SCULKSHELF = sculkShelf("soul_touched_sculkshelf");
 
-        public static final Block STONESHELF = stoneShelf("stoneshelf", MapColor.STONE, 1.25F, ParticleTypes.ENCHANT);
+        public static final Block STONESHELF = stoneShelf("stoneshelf", MapColor.STONE, 1.75F, ParticleTypes.ENCHANT);
 
         public static final Block FILTERING_SHELF = new FilteringShelfBlock(Block.Properties.of().mapColor(MapColor.COLOR_CYAN).sound(SoundType.STONE).strength(1.75F).requiresCorrectToolForDrops());
 

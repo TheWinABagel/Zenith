@@ -2,16 +2,12 @@ package dev.shadowsoffire.apotheosis.garden;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.placebo.config.Configuration;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ComposterBlock;
 
@@ -25,27 +21,18 @@ public class GardenModule {
 
     public static final Item ENDER_LEAD = new EnderLeadItem();
 
-    private static final CreativeModeTab ITEM_GROUP = FabricItemGroup.builder()
-            .icon(() -> new ItemStack(ENDER_LEAD))
-            .title(Component.translatable("zenith.creative_tab"))
-            .build();
-
     public static void init() {
         reload(false);
         items();
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register((content) -> {
-        content.accept(ENDER_LEAD);
+            content.accept(ENDER_LEAD);
         });
     }
-
-
 
     public static void items() {
         Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(Apotheosis.MODID, "ender_lead"), ENDER_LEAD);
         ComposterBlock.COMPOSTABLES.put(Blocks.CACTUS.asItem(), 0.5F);
         ComposterBlock.COMPOSTABLES.put(Blocks.SUGAR_CANE.asItem(), 0.5F);
-
-        //TabFillingRegistry.register(CreativeModeTabs.TOOLS_AND_UTILITIES, ENDER_LEAD);
     }
 
     public static void reload(boolean e) {

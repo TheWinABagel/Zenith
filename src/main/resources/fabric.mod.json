@@ -42,12 +42,14 @@
     ],
     "mixinsquared": [
       "dev.shadowsoffire.apotheosis.compat.MixinCanceller"
+    ],
+    "emi": [
+      "dev.shadowsoffire.apotheosis.compat.ZenithEMIPlugin"
     ]
   },
   "mixins": [
     "zenith.mixins.json"
   ],
-
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "${fapi_version}",

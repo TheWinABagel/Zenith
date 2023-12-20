@@ -31,11 +31,8 @@ import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -188,17 +185,5 @@ public class Adventure {
         Tabs.bootstrap();
         Tiles.bootstrap();
     };
-
-
-    public static <T extends AbstractContainerMenu> ExtendedScreenHandlerType.ExtendedFactory<T> extendedType(ExtenFactory<T> factory) {
-        return factory::create;
-    }
-
-
-    public static interface ExtenFactory<T extends AbstractContainerMenu> {
-
-        T create(int syncId, Inventory inventory, FriendlyByteBuf buf);
-    }
-
 
 }

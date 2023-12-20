@@ -150,13 +150,13 @@ public class RealEnchantmentHelper {
             }
         }
         if (FabricLoader.getInstance().isModLoaded("spell_power")){
-            checkSpellEngine(stack, list);
+        //    checkSpellEngine(stack, list);
         }
 
         return list;
     }
     /**
-     * This code is taken from SpellPowerAttributes and is liscensed under GNU Lesser General Public License v3.0
+     * This code is taken from SpellPowerAttributes and is licensed under GNU Lesser General Public License v3.0
      * Written by ZsoltMolnarrr
      */
     private static void checkSpellEngine(ItemStack stack, List<EnchantmentInstance> currentEntries) {

@@ -58,27 +58,25 @@ public class RarityRegistry extends WeightedDynamicRegistry<LootRarity> {
     /**
      * Returns the minimum rarity based on the ordinals.
      * <p>
-     * Guaranted to be {@linkplain DynamicHolder#isBound() bound}.
+     * Guaranteed to be {@linkplain DynamicHolder#isBound() bound}.
      */
     public static DynamicHolder<LootRarity> getMinRarity() {
-        if (!Apotheosis.enableAdventure) return null;
         return INSTANCE.ordered.get(0);
     }
 
     /**
      * Returns the maximum rarity based on the ordinals.
      * <p>
-     * Guaranted to be {@linkplain DynamicHolder#isBound() bound}.
+     * Guaranteed to be {@linkplain DynamicHolder#isBound() bound}.
      */
     public static DynamicHolder<LootRarity> getMaxRarity() {
-        if (!Apotheosis.enableAdventure) return null;
         return INSTANCE.ordered.get(INSTANCE.ordered.size() - 1);
     }
 
     /**
      * Returns the rarity for a particular ordinal.
      * <p>
-     * Guaranted to be {@linkplain DynamicHolder#isBound() bound}.
+     * Guaranteed to be {@linkplain DynamicHolder#isBound() bound}.
      * 
      * @throws IndexOutOfBoundsException if the ordinal is invalid.
      */

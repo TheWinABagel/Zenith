@@ -1,0 +1,19 @@
+{
+  "name": "Treasure Enchantments",
+  "icon": "zenith:treasure_shelf",
+  "category": "zenith:enchanting/utility",
+  "flag": "zenith:enchanting",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Treasure enchantments are special enchantments that are typically unavailable in the Enchanting Table.$(p)However, this can be remedied with a $(9)Deepshelf of Arcane Treasures$()."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "zenith:treasure_shelf",
+      "title": "Arcane Treasures",
+      "text": "Placing this bookshelf in a valid slot will cause treasure enchantments to appear while enchanting.$(p)Bear in mind that most $(4)Curses$() are treasure enchantments."
+    }
+  ]
+}
