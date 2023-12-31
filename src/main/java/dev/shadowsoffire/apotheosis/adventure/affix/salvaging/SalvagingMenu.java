@@ -8,13 +8,14 @@ import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe.Ou
 import dev.shadowsoffire.placebo.menu.FilteredSlot;
 import dev.shadowsoffire.placebo.menu.PlaceboContainerMenu;
 import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandler;
-import io.github.fabricators_of_create.porting_lib.transfer.item.RecipeWrapper;
+import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandlerContainer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
@@ -31,7 +32,18 @@ public class SalvagingMenu extends PlaceboContainerMenu {
     protected final Player player;
     protected final BlockPos pos;
     protected final SalvagingTableTile tile;
-    protected final ItemStackHandler inputInv = new ItemStackHandler(15);
+    protected final ItemStackHandler inputInv = new ItemStackHandlerContainer(15) {
+        @Override
+        public int getMaxStackSize() {
+            return 1;
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return 1;
+        }
+
+    };
 
     public SalvagingMenu(int id, Inventory inv, FriendlyByteBuf buf) {
         this(id, inv, buf.readBlockPos());
@@ -43,6 +55,29 @@ public class SalvagingMenu extends PlaceboContainerMenu {
         this.pos = pos;
         this.tile = (SalvagingTableTile) this.level.getBlockEntity(pos);
         for (int i = 0; i < 15; i++) {
+            /*this.addSlot(new Slot((Container) this.inputInv, i, 8 + i % 5 * 18, 17 + i / 5 * 18) {
+                @Override
+                public boolean mayPlace(ItemStack stack) {
+                    return findMatch(inv.player.level(), stack) != null;
+                }
+
+                @Override
+                public int getMaxStackSize() {
+                    return 1;
+                }
+
+                @Override
+                public int getMaxStackSize(ItemStack stack) {
+                    return 1;
+                }
+
+                @Override
+                public void setChanged() {
+                    super.setChanged();
+                    SalvagingMenu.this.slotsChanged((Container) inputInv);
+                }
+            });*/
+
             this.addSlot(new UpdatingSlot(this.inputInv, i, 8 + i % 5 * 18, 17 + i / 5 * 18, s -> findMatch(this.level, s) != null){
 
                 @Override
@@ -78,7 +113,7 @@ public class SalvagingMenu extends PlaceboContainerMenu {
     public void removed(Player player) {
         super.removed(player);
         if (!this.level.isClientSide) {
-            this.clearContainer(player, new RecipeWrapper(this.inputInv));
+            this.clearContainer(player, (Container) this.inputInv);
         }
     }
 
@@ -170,4 +205,8 @@ public class SalvagingMenu extends PlaceboContainerMenu {
         return null;
     }
 
+    @Override
+    public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
+        return super.quickMoveStack(pPlayer, pIndex);
+    }
 }

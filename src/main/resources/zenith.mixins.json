@@ -5,6 +5,7 @@
   "plugin": "dev.shadowsoffire.apotheosis.mixin.compat.Plugin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "MobAccessor",
     "accessors.AbstractArrowAccessor",
     "accessors.BaseSpawnerAccessor",
     "accessors.BlockAccessor",
@@ -39,7 +40,6 @@
     "compat.dragonloot.present.ZenithDragonLootCompatAnvilMenuMixin",
     "compat.goblintraders.present.HooksMixin",
     "compat.modern_industrialization.present.ReplicatorMachineBlockEntityMixin",
-    "compat.soulsweapons.present.EnchantmentHelperSoulslikeWeaponryMixin",
     "compat.spectrum.present.BedrockAnvilMenuMixin",
     "ench.BlockMixin",
     "ench.CreativeModeTabsMixin",

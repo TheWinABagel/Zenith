@@ -39,17 +39,17 @@ public abstract class GuiGraphicsMixin implements IComponentTooltip {
     private void renderTooltipInternal(Font font, List<ClientTooltipComponent> components, int mouseX, int mouseY, ClientTooltipPositioner tooltipPositioner) {}
 
     @Inject(method = "renderTooltip(Lnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;II)V", at = @At(value = "INVOKE", target = "net/minecraft/client/gui/GuiGraphics.renderTooltip (Lnet/minecraft/client/gui/Font;Ljava/util/List;Ljava/util/Optional;II)V", shift = At.Shift.BEFORE))
-    private void cacheItemStack(Font font, ItemStack itemStack, int i, int j, CallbackInfo ci) {
+    private void zenith$cacheItemStack(Font font, ItemStack itemStack, int i, int j, CallbackInfo ci) {
         if (Apotheosis.enableAdventure) AdventureModuleClient.StackStorage.hoveredItem = itemStack;
     }
 
     @Inject(method = "renderTooltip(Lnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;II)V", at = @At(value = "INVOKE", target = "net/minecraft/client/gui/GuiGraphics.renderTooltip (Lnet/minecraft/client/gui/Font;Ljava/util/List;Ljava/util/Optional;II)V", shift = At.Shift.AFTER))
-    private void clearStack(Font font, ItemStack itemStack, int i, int j, CallbackInfo ci) {
+    private void zenith$clearStack(Font font, ItemStack itemStack, int i, int j, CallbackInfo ci) {
         if (Apotheosis.enableAdventure) AdventureModuleClient.StackStorage.hoveredItem = ItemStack.EMPTY;
     }
 
     @ModifyArgs(method = "renderTooltip(Lnet/minecraft/client/gui/Font;Ljava/util/List;Ljava/util/Optional;II)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;renderTooltipInternal(Lnet/minecraft/client/gui/Font;Ljava/util/List;IILnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipPositioner;)V"))
-    private void gatherComponents(Args args, Font font, List<Component> lines, Optional<TooltipComponent> data, int x, int y) {
+    private void zenith$gatherComponents(Args args, Font font, List<Component> lines, Optional<TooltipComponent> data, int x, int y) {
         if (Apotheosis.enableAdventure && SocketHelper.getSockets(AdventureModuleClient.StackStorage.hoveredItem) != 0) {
             var list = new ArrayList<>(AdventureModuleClient.gatherTooltipComponents(AdventureModuleClient.StackStorage.hoveredItem, lines, data, x, guiWidth(), guiHeight(), font));
             args.set(1, list);
@@ -58,7 +58,7 @@ public abstract class GuiGraphicsMixin implements IComponentTooltip {
 
     @Unique
     @Override
-    public void zenithRenderComponentTooltip(Font font, List<? extends FormattedText> tooltips, int mouseX, int mouseY) {
+    public void zenith$RenderComponentTooltip(Font font, List<? extends FormattedText> tooltips, int mouseX, int mouseY) {
         var components = AdventureModuleClient.gatherTooltipComponents(ItemStack.EMPTY, tooltips, Optional.empty(), mouseX, guiWidth(), guiHeight(), font);
         renderTooltipInternal(font, components, mouseX, mouseY, DefaultTooltipPositioner.INSTANCE);
     }

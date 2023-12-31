@@ -32,7 +32,9 @@ repositories {
 			includeGroup "maven.modrinth"
 		}
 	}
-	maven { url "https://jitpack.io/" }
+	maven {
+		url = "https://jitpack.io/"
+	}
 	maven {
 		url = "https://maven.jamieswhiteshirt.com/libs-release/"
 		content {
@@ -92,8 +94,9 @@ dependencies {
 	}
 
 	// Mixin Extras + Mixin^2 for mod compat
+	//implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${project.mixin_extras_version}"))
 	implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.2.0-beta.10"))
-	implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.1.1"))
+	implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${project.mixin_squared_version}"))
 
 	modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${project.reach_lib_version}")
 
@@ -137,57 +140,71 @@ dependencies {
 
 	// WTHIT
 	modCompileOnly "mcp.mobius.waila:wthit-api:fabric-${project.wthit_version}"
-	modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${project.wthit_version}"
-	modRuntimeOnly "lol.bai:badpackets:fabric-${project.badpackets_version}"
 
-	// REI + Arch
-	modRuntimeOnly "dev.architectury:architectury-fabric:${project.arch_version}"
+	//Jade
+	modCompileOnly "curse.maven:jade-324717:${jade_id}"
+
+	// REI
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
 
 	// EMI
 	modCompileOnly "dev.emi:emi-fabric:${emi_version}"
 
+	switch (block_viewer.toLowerCase(Locale.ROOT)) {
+		case "wthit": 	modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${project.wthit_version}"
+			modRuntimeOnly "lol.bai:badpackets:fabric-${project.badpackets_version}"; break
+		case "jade": modRuntimeOnly "curse.maven:jade-324717:${jade_id}"; break
+		case "disabled": break
+		default: println("Unknown block viewer specified: $recipe_viewer. Must be Jade, WTHIT, or disabled.")
+	}
+
 	switch (recipe_viewer.toLowerCase(Locale.ROOT)) {
-		case "rei": modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}";	break
+		case "rei": modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
+					modRuntimeOnly "dev.architectury:architectury-fabric:${project.arch_version}"; break
 		case "emi": modRuntimeOnly("dev.emi:emi-fabric:${project.emi_version}"); break
 		case "disabled": break
 		default: println("Unknown recipe viewer specified: $recipe_viewer. Must be EMI, REI or disabled.")
 	}
 
-	//Jade
-	modCompileOnly "curse.maven:jade-324717:${jade_id}"
-	//modImplementation "curse.maven:jade-324717:${jade_id}"
 
-	//Fixes for other mods
-	//modCompileOnly
+	//Fixes +compat for other mods
+	//Spell power + Spell engine
 	modCompileOnly("maven.modrinth:spell-power:${project.spell_power_version}-fabric")
 	modCompileOnly ("maven.modrinth:spell-engine:${project.spell_engine_version}-fabric")
 
-	modCompileOnly("io.wispforest:lavender:0.1.0-pre.6+1.20") //conjuring
-	modCompileOnly("io.wispforest:owo-lib:0.11.0+1.20")
-	modCompileOnly "curse.maven:conjuring-422310:4580578"
+	//modCompileOnly("io.wispforest:lavender:0.1.0-pre.6+1.20") //conjuring
+	//modCompileOnly("io.wispforest:owo-lib:0.11.0+1.20")
+	//modCompileOnly "curse.maven:conjuring-422310:4580578"
 
-	modCompileOnly "curse.maven:puzzles-lib-495476:4847147" //puzzlelib
-	modCompileOnly "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:8.0.0"
+	//puzzlelib
+	modCompileOnly "curse.maven:puzzles-lib-495476:4847147"
+	modApi "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:8.0.0"
 
-	modImplementation "curse.maven:dragonloot-424480:4656260" //dragon loot
-
-	modImplementation("me.shedaniel.cloth:cloth-config-fabric:11.1.106") { //cloth config, required by dragon loot
+	//dragon loot
+	modCompileOnly "curse.maven:dragonloot-424480:4656260"
+	modRuntimeOnly("me.shedaniel.cloth:cloth-config-fabric:11.1.106") { //cloth config, required by dragon loot
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 
-	modCompileOnly "curse.maven:mariums-soulslike-weaponry-632066:4891244" //soulslike weaponry
+	//modCompileOnly "curse.maven:mariums-soulslike-weaponry-632066:4891244" //soulslike weaponry
 
-	modCompileOnly "com.mrcrayfish:framework-fabric:1.20.1-0.6.13" //goblin traders
+	//goblin traders
+	modCompileOnly "com.mrcrayfish:framework-fabric:1.20.1-0.6.13"
 	//modRuntimeOnly "com.mrcrayfish:catalogue-fabric:1.20.1-1.7.1"
 	modCompileOnly "com.mrcrayfish:goblintraders-fabric:1.20.1-1.9.3"
 
-	modCompileOnly "curse.maven:modern-industrialization-405388:4775647", { //modern industrialization
+	//modern industrialization
+	modCompileOnly "curse.maven:modern-industrialization-405388:4775647", {
 		exclude(group: "me.shedaniel")
 	}
 
-	modCompileOnly "com.github.DaFuqs:Spectrum:${project.spectrum_version}", { //spectrum
+	//Iceberg
+	modImplementation "curse.maven:iceberg-fabric-539382:4953470"
+	modImplementation "curse.maven:equipment-compare-fabric-541329:4940609"
+
+	//spectrum
+	modCompileOnly "com.github.DaFuqs:Spectrum:${project.spectrum_version}", {
 		exclude(group: "com.github.devs-immortal.*")
 		exclude(group: "azzy.fabric.*")
 	}
@@ -236,7 +253,7 @@ publishing {
 modrinth {
 	token = System.getenv("MODRINTH_TOKEN")
 	projectId = "zenith"
-	versionType = "beta"
+	versionType = "release"
 	versionName = "Zenith " + project.version
 	uploadFile = remapJar
 	gameVersions = ["1.20.1"]
@@ -256,7 +273,7 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
 	//debugMode = true
 	def mainFile = upload(620928, remapJar)
 	mainFile.changelog = "https://github.com/TheWinABagel/Zenith/blob/1.20/changelog.md"
-	mainFile.releaseType = "beta"
+	mainFile.releaseType = "release"
 	//mainFile.addJavaVersion("17")
 	mainFile.addGameVersion("1.20.1")
 	mainFile.addModLoader("fabric")

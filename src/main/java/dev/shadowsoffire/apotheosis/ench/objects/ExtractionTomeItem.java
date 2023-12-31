@@ -69,17 +69,15 @@ public class ExtractionTomeItem extends BookItem {
     public static void updateRepair() {
         if (FabricLoader.getInstance().isModLoaded("puzzleslib")) {
             FabricPlayerEvents.ANVIL_REPAIR.register((player, left, right, out, mutableFloat) -> {
-                if (!(right.getItem() instanceof ExtractionTomeItem) || right.isEnchanted() || !left.isEnchanted())
-                    return;
-                EnchantmentHelper.setEnchantments(Collections.emptyMap(), left);
-                giveItem(player, left);
+                Events.AnvilRepair.ANVIL_REPAIR.invoker().onRepair(new Events.RepairEvent(player, left, right, out));
             });
         }
             Events.AnvilRepair.ANVIL_REPAIR.register((ev) -> {
+                if (!(ev.player instanceof ServerPlayer)) return;
                 ItemStack weapon = ev.left;
                 ItemStack book = ev.right;
-                if (!(book.getItem() instanceof ExtractionTomeItem) || book.isEnchanted() || !weapon.isEnchanted())
-                    return;
+                if (!(book.getItem() instanceof ExtractionTomeItem) || book.isEnchanted() || !weapon.isEnchanted()) return;
+
                 EnchantmentHelper.setEnchantments(Collections.emptyMap(), weapon);
                 giveItem(ev.player, weapon);
             });
@@ -93,6 +91,8 @@ public class ExtractionTomeItem extends BookItem {
             Inventory inventory = player.getInventory();
             if (inventory.player instanceof ServerPlayer) {
                 inventory.placeItemBackInInventory(stack);
+            } else if (player instanceof ServerPlayer) {
+                player.addItem(stack);
             } else {
                 EnchModule.LOGGER.info("Player not found to give items to!");
             }

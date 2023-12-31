@@ -32,7 +32,7 @@ public interface DrawsOnLeft {
         int lambdastupid = maxWidth;
         list.forEach(comp -> split.addAll(((ScreenAccessor) ths()).getFont().getSplitter().splitLines(comp, lambdastupid, comp.getStyle())));
 
-        ((IComponentTooltip) gfx).zenithRenderComponentTooltip(((ScreenAccessor) ths()).getFont(), split, xPos, y); // copying forge methods is my passion
+        ((IComponentTooltip) gfx).zenith$RenderComponentTooltip(((ScreenAccessor) ths()).getFont(), split, xPos, y); // copying forge methods is my passion
     }
 
     default AbstractContainerScreen<?> ths() {

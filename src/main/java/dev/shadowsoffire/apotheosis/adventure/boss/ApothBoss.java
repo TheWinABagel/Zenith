@@ -9,6 +9,7 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import dev.shadowsoffire.apotheosis.adventure.loot.*;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
+import dev.shadowsoffire.apotheosis.mixin.MobAccessor;
 import dev.shadowsoffire.apotheosis.mixin.accessors.NearestAttackableTargetGoalAccessor;
 import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.apotheosis.util.SupportingEntity;
@@ -200,7 +201,7 @@ public final class ApothBoss implements CodecProvider<ApothBoss>, ILuckyWeighted
             modif.apply(rand, entity);
         }
 
-        entity.goalSelector.getAvailableGoals().removeIf(IS_VILLAGER_ATTACK);
+        ((MobAccessor) entity).getGoalSelector().getAvailableGoals().removeIf(IS_VILLAGER_ATTACK);
         String name = NameHelper.setEntityName(rand, entity);
 
         GearSet set = GearSetRegistry.INSTANCE.getRandomSet(rand, luck, this.gearSets);

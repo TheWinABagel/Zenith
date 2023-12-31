@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface IComponentTooltip {
 
-    void zenithRenderComponentTooltip(Font font, List<? extends FormattedText> tooltips, int mouseX, int mouseY);
+    void zenith$RenderComponentTooltip(Font font, List<? extends FormattedText> tooltips, int mouseX, int mouseY);
 }

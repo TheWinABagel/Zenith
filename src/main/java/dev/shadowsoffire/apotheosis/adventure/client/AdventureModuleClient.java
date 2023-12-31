@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.adventure.client;
 
+import com.anthonyhilyard.iceberg.events.RenderTooltipEvents;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexFormat;
@@ -30,6 +31,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.CoreShaderRegistrationCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -52,6 +54,7 @@ import net.minecraft.network.chat.contents.LiteralContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
@@ -146,7 +149,14 @@ public class AdventureModuleClient {
             }
             return null;
         });
-
+        if (FabricLoader.getInstance().isModLoaded("iceberg")) {
+            RenderTooltipEvents.GATHER.register((itemStack, screenWidth, screenHeight, tooltipElements, maxWidth, index) -> {
+                ModifyComponents.ModifyComponentsEvent event = new ModifyComponents.ModifyComponentsEvent(itemStack, screenWidth, screenHeight, tooltipElements, maxWidth);
+                ModifyComponents.MODIFY_COMPONENTS.invoker().modifyComponents(event);
+                InteractionResult result = event.isCanceled() ? InteractionResult.CONSUME : InteractionResult.PASS;
+                return new RenderTooltipEvents.GatherResult(result, event.maxWidth, event.tooltipElements);
+            });
+        }
         ModifyComponents.MODIFY_COMPONENTS.register(e -> {
             int sockets = SocketHelper.getSockets(e.stack);
             if (sockets == 0) return;
@@ -181,7 +191,6 @@ public class AdventureModuleClient {
         });
     }
 
-    // i hate this even more than you do
     public static List<ClientTooltipComponent> gatherTooltipComponents(ItemStack stack, List<? extends FormattedText> textElements, Optional<TooltipComponent> itemComponent, int mouseX, int screenWidth, int screenHeight, Font font) {
         List<Either<FormattedText, TooltipComponent>> elements = textElements.stream()
                 .map((Function<FormattedText, Either<FormattedText, TooltipComponent>>) Either::left)
@@ -200,11 +209,9 @@ public class AdventureModuleClient {
         boolean needsWrap = false;
 
         int tooltipX = mouseX + 12;
-        if (tooltipX + tooltipTextWidth + 4 > screenWidth)
-        {
+        if (tooltipX + tooltipTextWidth + 4 > screenWidth) {
             tooltipX = mouseX - 16 - tooltipTextWidth;
-            if (tooltipX < 4) // if the tooltip doesn't fit on the screen
-            {
+            if (tooltipX < 4) { // if the tooltip doesn't fit on the screen
                 if (mouseX > screenWidth / 2)
                     tooltipTextWidth = mouseX - 12 - 8;
                 else
@@ -212,15 +219,13 @@ public class AdventureModuleClient {
                 needsWrap = true;
             }
         }
-        if (event.maxWidth > 0 && tooltipTextWidth > event.maxWidth)
-        {
+        if (event.maxWidth > 0 && tooltipTextWidth > event.maxWidth) {
             tooltipTextWidth = event.maxWidth;
             needsWrap = true;
         }
 
         int tooltipTextWidthF = tooltipTextWidth;
-        if (needsWrap)
-        {
+        if (needsWrap) {
             return event.tooltipElements.stream()
                     .flatMap(either -> either.map(
                             text -> splitLine(text, font, tooltipTextWidthF),

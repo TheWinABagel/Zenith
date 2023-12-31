@@ -4,9 +4,10 @@
 
 ## 1.0.0
 * First "release" version
-* Implement new shelves from apotheosis, as well as other changes from [7.2.0](https://github.com/Shadows-of-Fire/Apotheosis/blob/1.20/changelog.md#720)
+* Update to be in line with Apotheosis [7.2.0](https://github.com/Shadows-of-Fire/Apotheosis/blob/1.20/changelog.md#720)
   * This changed how anvils and enchanting took xp to use the optimal xp cost (as if you were spending the exact level)
-* Finally fix that tag loading bug with enchanting stats
+  * It also added 2 new shelves, one that allows filtering and one that allows
+* Finally fix that tag loading bug with enchanting stats in where tags were not supported properly
 * Implement EMI support
 * Remove Soulslike weaponry compat, no longer needed
 

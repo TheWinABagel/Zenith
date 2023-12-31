@@ -12,15 +12,15 @@ import java.util.List;
 
 public class ModifyComponents {
 
-    public static final Event<modifyComponentsCallback> MODIFY_COMPONENTS = EventFactory.createArrayBacked(modifyComponentsCallback.class, callbacks -> event -> {
-        for (modifyComponentsCallback callback : callbacks) {
+    public static final Event<ModifyComponentsCallback> MODIFY_COMPONENTS = EventFactory.createArrayBacked(ModifyComponentsCallback.class, callbacks -> event -> {
+        for (ModifyComponentsCallback callback : callbacks) {
             callback.modifyComponents(event);
             if (event.isCanceled()) return;
         }
     });
 
     @FunctionalInterface
-    public interface modifyComponentsCallback {
+    public interface ModifyComponentsCallback {
         void modifyComponents(ModifyComponentsEvent event);
     }
 
