@@ -12,7 +12,7 @@
   ],
   "key": {
     "G": {
-      "tag": "minecraft:gold_block"
+      "item": "minecraft:gold_block"
     },
 	"S": {
       "item": "zenith:deepshelf"
@@ -21,7 +21,7 @@
       "tag": "c:diamonds"
     },
 	"E": {
-      "tag": "minecraft:emerald_block"
+      "item": "minecraft:emerald_block"
     }
   },
   "result": {

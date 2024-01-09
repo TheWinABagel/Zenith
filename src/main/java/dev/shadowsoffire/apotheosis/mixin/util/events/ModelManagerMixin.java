@@ -17,14 +17,10 @@ public class ModelManagerMixin {
 
     @Inject(method = "loadModels", at = @At(value = "INVOKE", target = "net/minecraft/util/profiling/ProfilerFiller.popPush (Ljava/lang/String;)V", ordinal = 1, shift = At.Shift.BEFORE))
     private void initModels(ProfilerFiller profilerFiller, Map<ResourceLocation, AtlasSet.StitchResult> map, ModelBakery modelBakery, CallbackInfoReturnable<ModelManager.ReloadState> cir){
-        //Events.ModifyBakedModelCallback.EVENT.invoker().modifyBakedModels(modelBakery, modelBakery.getBakedTopLevelModels());
-
-
-            ModelResourceLocation key = new ModelResourceLocation(Apotheosis.loc("gem"), "inventory");
-            BakedModel oldModel = modelBakery.getBakedTopLevelModels().get(key);
-            if (oldModel != null) {
-                modelBakery.getBakedTopLevelModels().put(key, new GemModel(oldModel, modelBakery));
-            }
-
+        ModelResourceLocation key = new ModelResourceLocation(Apotheosis.loc("gem"), "inventory");
+        BakedModel oldModel = modelBakery.getBakedTopLevelModels().get(key);
+        if (oldModel != null) {
+            modelBakery.getBakedTopLevelModels().put(key, new GemModel(oldModel, modelBakery));
+        }
     }
 }

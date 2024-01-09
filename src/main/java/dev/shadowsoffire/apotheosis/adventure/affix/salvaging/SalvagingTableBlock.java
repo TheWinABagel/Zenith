@@ -32,22 +32,6 @@ public class SalvagingTableBlock extends Block implements EntityBlock {
     public SalvagingTableBlock(Properties properties) {
         super(properties);
     }
-/*
-    @Override
-    public MenuProvider getMenuProvider(BlockState pState, Level pLevel, BlockPos pPos) {
-
-        return new ExtendedScreenHandlerFactory( new SalvagingMenu(id, inv, pPos), Component.translatable("block.zenith.salvaging_table")) ;
-    }*/
-
-
-/*
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (player.level().isClientSide) return InteractionResult.SUCCESS;
-        NetworkHooks.openScreen((ServerPlayer) player, new SimplerMenuProvider<>(player.level(), pos, SalvagingMenu::new), pos);
-        return InteractionResult.CONSUME;
-        return MenuUtil.openGui(player, pos, SalvagingMenu::new);
-    }*/
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
@@ -69,15 +53,8 @@ public class SalvagingTableBlock extends Block implements EntityBlock {
                 }
             });
             return InteractionResult.SUCCESS;
-        /*    MenuProvider screenHandlerFactory = state.getMenuProvider(level, pos);
-            AdventureModule.LOGGER.error("USING");
-            if (screenHandlerFactory != null) {
-                AdventureModule.LOGGER.error("screen isn't null");
-                player.openMenu(screenHandlerFactory);
-                return InteractionResult.SUCCESS;
-            }*/
         }
-        return InteractionResult.PASS;
+        return InteractionResult.CONSUME;
     }
 
     @Environment(EnvType.CLIENT)

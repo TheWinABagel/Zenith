@@ -2,6 +2,11 @@
 * Fix salvaging non single stacks of items not giving the proper amount of items in return
 
 
+## 1.0.1
+* Fix broken recipe for treasure shelf
+* Fix Reforging table and Salvaging table not cancelling item's use action when opened
+* Fix bug where enchanting seed does not change due to improper casting
+
 ## 1.0.0
 * First "release" version
 * Update to be in line with Apotheosis [7.2.0](https://github.com/Shadows-of-Fire/Apotheosis/blob/1.20/changelog.md#720)

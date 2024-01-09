@@ -810,9 +810,6 @@
 
 	"enchantment.zenith.infusion": "Infusion",
     "enchantment.zenith.infusion.desc": "Placeholder for Enchantment Crafting",
-    
-    "enchantment.zenith.mounted_strike": "Mounted Strike",
-    "enchantment.zenith.mounted_strike.desc": "Deals extra damage when on a horse.",
 
     "enchantment.zenith.miners_fervor": "Miner's Fervor",
     "enchantment.zenith.miners_fervor.desc": "You will mine very fast, but never instantly.",
@@ -897,9 +894,6 @@
 
     "enchantment.zenith.rebounding": "Rebounding",
     "enchantment.zenith.rebounding.desc": "Melee attackers may find themselves much further away.",
-
-    "enchantment.zenith.magic_protection": "Occult Aversion",
-    "enchantment.zenith.magic_protection.desc": "Magic damage dealt by and to the user is reduced.",
     
     "enchantment.zenith.crescendo": "Crescendo of Bolts",
     "enchantment.zenith.crescendo.desc": "Your crossbow may be fired additional times per reload.",

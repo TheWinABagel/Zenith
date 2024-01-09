@@ -76,9 +76,9 @@ public class ReforgingTableBlock extends Block implements TickingEntityBlock {
                     return new ReforgingMenu(i, inventory, pos);
                 }
             });
-            return InteractionResult.CONSUME;
+            return InteractionResult.SUCCESS;
         }
-        return InteractionResult.PASS;
+        return InteractionResult.CONSUME;
     }
 
     @Override

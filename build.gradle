@@ -170,8 +170,8 @@ dependencies {
 
 	//Fixes +compat for other mods
 	//Spell power + Spell engine
-	modCompileOnly("maven.modrinth:spell-power:${project.spell_power_version}-fabric")
-	modCompileOnly ("maven.modrinth:spell-engine:${project.spell_engine_version}-fabric")
+	modCompileOnly(modRuntimeOnly("maven.modrinth:spell-power:${project.spell_power_version}-fabric"))
+	modCompileOnly(modRuntimeOnly ("maven.modrinth:spell-engine:${project.spell_engine_version}-fabric"))
 
 	//modCompileOnly("io.wispforest:lavender:0.1.0-pre.6+1.20") //conjuring
 	//modCompileOnly("io.wispforest:owo-lib:0.11.0+1.20")
@@ -200,8 +200,8 @@ dependencies {
 	}
 
 	//Iceberg
-	modImplementation "curse.maven:iceberg-fabric-539382:4953470"
-	modImplementation "curse.maven:equipment-compare-fabric-541329:4940609"
+	modCompileOnly "curse.maven:iceberg-fabric-539382:4953470"
+	modCompileOnly "curse.maven:equipment-compare-fabric-541329:4940609"
 
 	//spectrum
 	modCompileOnly "com.github.DaFuqs:Spectrum:${project.spectrum_version}", {

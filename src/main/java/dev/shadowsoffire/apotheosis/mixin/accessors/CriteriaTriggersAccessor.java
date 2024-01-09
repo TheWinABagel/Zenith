@@ -13,6 +13,7 @@ import java.util.Map;
 @Mixin(CriteriaTriggers.class)
 public interface CriteriaTriggersAccessor {
     @Accessor
+    @Mutable
     static Map<ResourceLocation, CriterionTrigger<?>> getCRITERIA() {
         throw new UnsupportedOperationException();
     }
