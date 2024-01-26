@@ -9,6 +9,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -45,18 +46,19 @@ public class CapturingEnchant extends Enchantment implements CustomEnchantingTab
         return CustomEnchantingTableBehaviorEnchantment.super.canApplyAtEnchantingTable(stack) || EnchModule.AXE.canEnchant(stack.getItem());
     }
 
-    public static void handleCapturing(LivingEntity target, DamageSource source, Collection<ItemEntity> drops) {
+    public static void handleCapturing(LivingEntity killed, DamageSource source, Collection<ItemEntity> drops) {
         Entity killer = source.getEntity();
         if (killer instanceof LivingEntity living) {
             int level = EnchantmentHelper.getItemEnchantmentLevel(SpawnerModule.CAPTURING, living.getMainHandItem());
-            LivingEntity killed = target;
             if (level <= 0) return;
             if (enableDebug) SpawnerModule.LOG.info("Has capturing level: {}", level);
             if (SpawnerModule.bannedMobs.contains(EntityType.getKey(killed.getType()))) return;
             if (enableDebug) SpawnerModule.LOG.info("Mob is not banned");
             if (killed.level().random.nextFloat() < level / 250F) {
                 if (enableDebug) SpawnerModule.LOG.info(String.valueOf(killed.getType()));
-                ItemStack egg = new ItemStack(SpawnEggItem.byId(killed.getType()));
+                Item eggItem = SpawnEggItem.byId(killed.getType());
+                if (eggItem == null) return;
+                ItemStack egg = new ItemStack(eggItem);
                 if (enableDebug) SpawnerModule.LOG.info("Dropping egg of type: {}", egg);
                 drops.add(new ItemEntity(killed.level(), killed.getX(), killed.getY(), killed.getZ(), egg));
             }

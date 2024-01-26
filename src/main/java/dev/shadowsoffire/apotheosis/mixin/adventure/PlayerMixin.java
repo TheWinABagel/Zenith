@@ -21,7 +21,7 @@ public abstract class PlayerMixin {
 
     @Inject(method = "attack", at = @At("HEAD"))
     private void getAtkStrength(Entity target, CallbackInfo ci) {
-        Apotheosis.localAtkStrength = this.getAttackStrengthScale(0.5F);
+        Apotheosis.setLocalAtkStrength(this.getAttackStrengthScale(0.5F));
     }
 
     @ModifyReturnValue(method = "hasCorrectToolForDrops", at = @At("RETURN"))

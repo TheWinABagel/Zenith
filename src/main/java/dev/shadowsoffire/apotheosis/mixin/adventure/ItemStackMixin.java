@@ -21,7 +21,7 @@ import java.util.stream.DoubleStream;
 public class ItemStackMixin {
 
     @Inject(method = "getHoverName", at = @At("RETURN"), cancellable = true)
-    public void zenith_affixItemName(CallbackInfoReturnable<Component> ci) {
+    public void zenith$affixItemName(CallbackInfoReturnable<Component> ci) {
         if (Apotheosis.enableAdventure) {
             ItemStack ths = (ItemStack) (Object) this;
             CompoundTag afxData = ths.getTagElement(AffixHelper.AFFIX_DATA);
@@ -46,10 +46,10 @@ public class ItemStackMixin {
      * Modifies the pAmount parameter, reducing it by the result of randomly rolling each point of damage against the block chance.
      */
     @ModifyVariable(at = @At(value = "INVOKE", target = "net/minecraft/world/item/ItemStack.getDamageValue()I"), method = "hurt", argsOnly = true, ordinal = 0)
-    public int swapDura(int amount, int amountCopy, RandomSource pRandom, @Nullable ServerPlayer pUser) {
+    public int zenith$swapDura(int amount, int amountCopy, RandomSource pRandom, @Nullable ServerPlayer pUser) {
         if (Apotheosis.enableAdventure) {
             int blocked = 0;
-            DoubleStream chances = AffixHelper.getAffixes((ItemStack) (Object) this).values().stream().mapToDouble(inst -> inst.getDurabilityBonusPercentage(pUser));
+            DoubleStream chances = AffixHelper.streamAffixes((ItemStack) (Object) this).mapToDouble(inst -> inst.getDurabilityBonusPercentage(pUser));
             double chance = chances.reduce(0, (res, ele) -> res + (1 - res) * ele);
             int delta = 1;
             if (chance < 0) {

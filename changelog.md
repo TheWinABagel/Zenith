@@ -1,6 +1,13 @@
 ### TODO
-* Fix salvaging non single stacks of items not giving the proper amount of items in return
+* Rewrite adventure module blocks to use transfer API, which will fix various issues with the current implementation
 
+
+## 1.0.3
+* Update to be in line with Apotheosis [7.2.2](https://github.com/Shadows-of-Fire/Apotheosis/blob/1.20/changelog.md#722)
+* Fix enchanting giving random results
+* Fix horrible implementation of advancement triggers
+* Fix an exploit with biome makeover and spectrum
+* Fix disabled potion charms not being actually disabled
 
 ## 1.0.1
 * Fix broken recipe for treasure shelf

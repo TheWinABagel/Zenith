@@ -15,6 +15,8 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 
 import java.io.File;
 
@@ -33,7 +35,7 @@ public class Apotheosis implements ModInitializer {
     public static boolean enableDebug = FabricLoader.getInstance().isDevelopmentEnvironment();
     public static boolean giveBook = true;
 
-    public static float localAtkStrength = 1;
+    private static float localAtkStrength = 1;
 
     @Override
     public void onInitialize() {
@@ -75,4 +77,19 @@ public class Apotheosis implements ModInitializer {
         return new ResourceLocation(MODID, id);
     }
 
+    /**
+     * Gets the local attack strength of an entity.
+     * <p>
+     * For players, this is recorded in {@link dev.shadowsoffire.apotheosis.mixin.adventure.PlayerMixin} and is valid for other damage events.
+     * <p>
+     * For non-players, this value is always 1.
+     */
+    public static float getLocalAtkStrength(Entity entity) {
+        if (entity instanceof Player) return localAtkStrength;
+        return 1;
+    }
+
+    public static void setLocalAtkStrength(float localAtkStrength) {
+        Apotheosis.localAtkStrength = localAtkStrength;
+    }
 }

@@ -50,7 +50,6 @@ public class BerserkersFuryEnchant extends Enchantment {
     /**
      * Handles the application of Berserker's Fury.
      */
-    @SuppressWarnings("deprecation")
     public void livingHurt() {
         LivingEntityDamageEvents.HURT.register(e -> {
             LivingEntity user = e.damaged;
@@ -67,7 +66,6 @@ public class BerserkersFuryEnchant extends Enchantment {
                 }
             }
         });
-
     }
 
 }

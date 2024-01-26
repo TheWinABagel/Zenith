@@ -58,20 +58,12 @@ public class EnchWTHITPlugin implements IWailaPlugin, IBlockComponentProvider {
 
     @Override
     public @Nullable ITooltipComponent getIcon(IBlockAccessor accessor, IPluginConfig config) {
+        if (!Apotheosis.enableEnch) return IBlockComponentProvider.super.getIcon(accessor, config);;
         if (accessor.getBlock() == Ench.Blocks.FILTERING_SHELF) {
             return new ItemComponent(accessor.getStack()); // Need to override the book icon back to the shelf when WTHIT triggers vanilla integration.
         }
         return IBlockComponentProvider.super.getIcon(accessor, config);
     }
-
-    /*
-    @Override
-    public @Nullable ITooltipComponent getIcon(IBlockAccessor accessor, IPluginConfig config) {
-        if (accessor.getBlock() == Ench.Blocks.FILTERING_SHELF) {
-            return IElementHelper.get().item(accessor.getStack()); // Need to override the book icon back to the shelf when Jade triggers vanilla integration.
-        }
-        return accessor.getData();
-    }*/
 
     public void handleFilteringShelf(ITooltip tooltip, IBlockAccessor accessor) {
 

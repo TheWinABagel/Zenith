@@ -37,12 +37,12 @@ public class EnchJadePlugin implements IWailaPlugin, IBlockComponentProvider, IS
 
     @Override
     public void register(IWailaCommonRegistration reg) {
-        reg.registerBlockDataProvider(this, AnvilTile.class);
+        if (Apotheosis.enableEnch) reg.registerBlockDataProvider(this, AnvilTile.class);
     }
 
     @Override
     public void registerClient(IWailaClientRegistration reg) {
-        reg.registerBlockComponent(this, Block.class);
+        if (Apotheosis.enableEnch) reg.registerBlockComponent(this, Block.class);
     }
 
     @Override

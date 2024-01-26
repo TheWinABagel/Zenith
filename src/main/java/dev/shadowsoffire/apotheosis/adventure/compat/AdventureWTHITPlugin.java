@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.adventure.compat;
 
 import com.google.common.base.Predicates;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.util.CommonTooltipUtil;
 import mcp.mobius.waila.api.*;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -17,13 +18,15 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 public class AdventureWTHITPlugin implements IWailaPlugin, IEntityComponentProvider, IDataProvider<Entity> {
     @Override
     public void register(IRegistrar registrar) {
-        registrar.addEntityData(this, Entity.class);
-        registrar.addComponent(this, TooltipPosition.BODY, Entity.class);
+        if (Apotheosis.enableAdventure) {
+            registrar.addEntityData(this, Entity.class);
+            registrar.addComponent(this, TooltipPosition.BODY, Entity.class);
+        }
     }
 
     @Override
     public void appendData(IDataWriter data, IServerAccessor access, IPluginConfig config) {
-        if (access.getTarget() instanceof LivingEntity living && living.getCustomData().getBoolean("apoth.boss")) {
+        if (Apotheosis.enableAdventure && access.getTarget() instanceof LivingEntity living && living.getCustomData().getBoolean("apoth.boss")) {
             data.raw().putBoolean("apoth.boss", true);
             data.raw().putString("apoth.rarity", living.getCustomData().getString("apoth.rarity"));
 
@@ -42,7 +45,7 @@ public class AdventureWTHITPlugin implements IWailaPlugin, IEntityComponentProvi
 
     @Override
     public void appendBody(ITooltip tooltip, IEntityAccessor accessor, IPluginConfig config) {
-        if (accessor.getEntity() instanceof LivingEntity living && accessor.getData().raw().getBoolean("apoth.boss")) {
+        if (Apotheosis.enableAdventure && accessor.getEntity() instanceof LivingEntity living && accessor.getData().raw().getBoolean("apoth.boss")) {
             ListTag bossAttribs = accessor.getData().raw().getList("apoth.modifiers", Tag.TAG_COMPOUND);
             AttributeMap map = living.getAttributes();
             for (Tag t : bossAttribs) {

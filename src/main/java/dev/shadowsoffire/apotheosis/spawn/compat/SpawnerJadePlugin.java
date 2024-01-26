@@ -22,12 +22,12 @@ public class SpawnerJadePlugin implements IWailaPlugin, IBlockComponentProvider,
 
     @Override
     public void register(IWailaCommonRegistration reg) {
-        reg.registerBlockDataProvider(this, SpawnerBlockEntity.class);
+        if (Apotheosis.enableSpawner) reg.registerBlockDataProvider(this, SpawnerBlockEntity.class);
     }
 
     @Override
     public void registerClient(IWailaClientRegistration reg) {
-        reg.registerBlockComponent(this, SpawnerBlock.class);
+        if (Apotheosis.enableSpawner) reg.registerBlockComponent(this, SpawnerBlock.class);
     }
 
     @Override

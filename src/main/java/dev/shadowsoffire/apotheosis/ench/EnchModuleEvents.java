@@ -45,7 +45,6 @@ public class EnchModuleEvents {
         applyUnbreaking();
     }
 
-
     public static void anvilEvent() {
         Events.AnvilUpdate.UPDATE_ANVIL.register((e) -> {
             if (e.left.isEnchanted()) {
