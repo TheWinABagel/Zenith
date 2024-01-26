@@ -3,8 +3,8 @@ package safro.zenith.potion.potions;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.entity.LivingEntity;
 import safro.zenith.potion.PotionModule;
+import safro.zenith.util.Events;
 
 public class VitalityEffect extends MobEffect {
 
@@ -12,12 +12,14 @@ public class VitalityEffect extends MobEffect {
 		super(MobEffectCategory.BENEFICIAL, ChatFormatting.RED.getColor());
 	}
 
-	public static float vitalityEffects(Float f, LivingEntity entity) {
-		if (entity.hasEffect(PotionModule.VITALITY_EFFECT)) {
-			int level = entity.getEffect(PotionModule.VITALITY_EFFECT).getAmplifier() + 1;
-			return (f * (level * 0.2F));
-		}
-		return 0;
+	public static void vitalityEffects() {
+		Events.HealEvent.EVENT.register((entity, amount) -> {
+			if (entity.hasEffect(PotionModule.VITALITY_EFFECT)) {
+				int level = entity.getEffect(PotionModule.VITALITY_EFFECT).getAmplifier() + 1;
+				return (amount * (level * 0.2F));
+			}
+			return 0;
+		});
 	}
 
 }

@@ -1,37 +1,25 @@
 package safro.zenith.mixin;
 
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.stats.Stats;
-import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.*;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import safro.zenith.Zenith;
-import safro.zenith.adventure.AdventureEvents;
-import safro.zenith.adventure.AdventureModule;
-import safro.zenith.adventure.affix.Affix;
-import safro.zenith.adventure.affix.AffixHelper;
-import safro.zenith.adventure.affix.AffixInstance;
 import safro.zenith.ench.enchantments.ReflectiveEnchant;
-import safro.zenith.ench.enchantments.corrupted.LifeMendingEnchant;
 import safro.zenith.potion.PotionModule;
-import safro.zenith.potion.potions.GrievousEffect;
-import safro.zenith.potion.potions.VitalityEffect;
+import safro.zenith.util.Events;
 
 import javax.annotation.Nullable;
-import java.util.Map;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
@@ -51,48 +39,12 @@ public abstract class LivingEntityMixin {
 
     @Shadow
     public abstract MobEffectInstance getEffect(MobEffect ef);
-/*
-    @Inject(method = "updatingUsingItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;updateUsingItem(Lnet/minecraft/world/item/ItemStack;)V", shift = At.Shift.BEFORE))
-    private void zenithUseTickEvent(CallbackInfo ci) {
-        LivingEntity entity = (LivingEntity) (Object) this;
-        if (Zenith.enableAdventure) {
-            if (!useItem.isEmpty()) {
-                useItemRemaining = AdventureEvents.drawSpeed(entity, useItem, useItemRemaining);
-           }
-        }
-    }*//*
-    @ModifyVariable(method = "heal")
-    private float zenithHealEvent(float f){
 
-    }*/
-    //TODO make this less shit
-    @Inject(method = "heal", at = @At("HEAD"), cancellable = true)
-    private void zenithHealEvent(float f, CallbackInfo ci) {
-        LivingEntity entity = (LivingEntity) (Object) this;
-        float health = this.getHealth();
-        float total = f;
-        if (Zenith.enablePotion) {
-            float grievous = GrievousEffect.GrievousEffects(f, entity);
-            if (grievous > -1) {
-                total+=(grievous - 1);
-            }
-        }
-        if (Zenith.enablePotion) {
-            float vitality = VitalityEffect.vitalityEffects(total, entity);
-            total+=vitality;
-        }
-        if (Zenith.enableEnch) {
-            float lifeMend = LifeMendingEnchant.lifeMend(entity, total);
-            if (lifeMend > -1) {
-                total-=lifeMend;
-            }
-        }
-        if (health > 0.0F && total > 0.0F) {
-            this.setHealth(health + total);
-        }
-        ci.cancel();
+    @ModifyVariable(method = "heal", at = @At(value = "HEAD"), argsOnly = true)
+    private float zenith$healEvent(float value){
+        float amount = Events.HealEvent.EVENT.invoker().onLivingHeal((LivingEntity) (Object) this, value);
+        return amount >= 0 ? amount : 0;
     }
-
 
 
     @Inject(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;hurtCurrentlyUsedShield(F)V", shift = At.Shift.BEFORE))

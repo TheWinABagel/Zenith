@@ -2,6 +2,7 @@ package safro.zenith.ench.table;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
@@ -12,8 +13,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import safro.zenith.Zenith;
-import safro.zenith.api.json.ZenithJsonReloadListener;
 import safro.zenith.api.json.SerializerBuilder;
+import safro.zenith.api.json.ZenithJsonReloadListener;
 import safro.zenith.ench.EnchModule;
 import safro.zenith.ench.objects.IEnchantingBlock;
 
@@ -80,7 +81,8 @@ public class EnchantingStatManager extends ZenithJsonReloadListener<EnchantingSt
     public static float getEterna(BlockState state, Level world, BlockPos pos) {
         Block block = state.getBlock();
         if (INSTANCE.statsPerBlock.containsKey(block)) return INSTANCE.statsPerBlock.get(block).eterna;
-        return state.is(Blocks.BOOKSHELF) ? 1 : 0;
+        if (state.is(Blocks.BOOKSHELF) || state.is(ConventionalBlockTags.BOOKSHELVES)) return 1;
+        return 0;
     }
 
     /**
@@ -92,7 +94,8 @@ public class EnchantingStatManager extends ZenithJsonReloadListener<EnchantingSt
         Block block = state.getBlock();
         if (INSTANCE.statsPerBlock.containsKey(block)) return INSTANCE.statsPerBlock.get(block).maxEterna;
         if (block instanceof IEnchantingBlock) return ((IEnchantingBlock) block).getMaxEnchantingPower(state, world, pos);
-        return 15;
+        if (state.is(Blocks.BOOKSHELF) || state.is(ConventionalBlockTags.BOOKSHELVES)) return 15;
+        return 0;
     }
 
     /**

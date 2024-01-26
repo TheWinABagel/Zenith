@@ -17,7 +17,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import org.apache.logging.log4j.LogManager;
@@ -164,6 +163,8 @@ public class PotionModule {
         PotionBrewing.addMix(GRIEVOUS, Items.REDSTONE, LONG_GRIEVOUS);
         PotionBrewing.addMix(GRIEVOUS, Items.GLOWSTONE_DUST, STRONG_GRIEVOUS);
 
+        VitalityEffect.vitalityEffects();
+        GrievousEffect.grievousEffects();
     }
 
     public static void reload(boolean e) {

@@ -1,18 +1,21 @@
 package safro.zenith.ench.enchantments.corrupted;
 
+import dev.emi.trinkets.api.TrinketsApi;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import safro.zenith.api.enchant.TableApplicableEnchant;
-import safro.zenith.ench.EnchModule;
+import safro.zenith.util.Events;
 import safro.zenith.util.ZenithUtil;
 
 public class LifeMendingEnchant extends Enchantment implements TableApplicableEnchant {
@@ -52,21 +55,34 @@ public class LifeMendingEnchant extends Enchantment implements TableApplicableEn
 
 	private static final EquipmentSlot[] SLOTS = EquipmentSlot.values();
 
-	public static float lifeMend(LivingEntity e, float amt) {
-		if (e.level.isClientSide) return -1;
-		if (amt <= 0F) return -1;
-		for (EquipmentSlot slot : SLOTS) {
-			ItemStack stack = e.getItemBySlot(slot);
-			if (!stack.isEmpty() && stack.isDamaged()) {
-				int level = EnchantmentHelper.getItemEnchantmentLevel(EnchModule.LIFE_MENDING, stack);
-				if (level <= 0) continue;
-				float cost = 1.0F / (1 << level - 1);
-				int maxRestore = Math.min(Mth.floor(amt / cost), stack.getDamageValue());
-				float amount = (amt - maxRestore * cost);
-				stack.setDamageValue(stack.getDamageValue() - maxRestore);
-				return amount;
-			}
+	private float lifeMend(Entity entity, float amount, ItemStack stack) {
+		if (!stack.isEmpty() && stack.isDamaged()) {
+			int level = EnchantmentHelper.getItemEnchantmentLevel(this, stack);
+			if (level <= 0) return amount;
+			float cost = 1.0F / (1 << level - 1);
+			int maxRestore = Math.min(Mth.floor(amount / cost), stack.getDamageValue());
+			stack.setDamageValue(stack.getDamageValue() - maxRestore);
+			return (amount - maxRestore * cost);
 		}
-		return -1;
+		return amount;
+	}
+
+	public void lifeMend() {
+		Events.HealEvent.EVENT.register((living, amount) -> {
+			if (living.getType() == EntityType.ARMOR_STAND) return amount;
+			if (living.level.isClientSide) return amount;
+			if (amount <= 0F) return 0f;
+			for (EquipmentSlot slot : SLOTS) {
+				ItemStack stack = living.getItemBySlot(slot);
+				if (this.lifeMend(living, amount, stack) == amount) return amount;
+			}
+			if (FabricLoader.getInstance().isModLoaded("trinkets")) {
+				TrinketsApi.getTrinketComponent(living).ifPresent(c -> c.forEach((slotReference, stack) -> {
+					this.lifeMend(living, amount, stack);
+				}));
+			}
+			return amount;
+		});
+
 	}
 }

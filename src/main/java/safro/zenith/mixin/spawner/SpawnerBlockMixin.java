@@ -1,5 +1,6 @@
 package safro.zenith.mixin.spawner;
 
+import io.github.fabricators_of_create.porting_lib.block.CustomExpBlock;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
@@ -9,13 +10,19 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.Stats;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.SpawnerBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -28,23 +35,40 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import safro.zenith.Zenith;
 import safro.zenith.advancements.AdvancementTriggers;
+import safro.zenith.spawn.SpawnerModule;
 import safro.zenith.spawn.modifiers.SpawnerModifier;
 import safro.zenith.spawn.modifiers.SpawnerStats;
 import safro.zenith.util.IBaseSpawner;
 
 import java.util.List;
 
-@Mixin(SpawnerBlock.class)
-public abstract class SpawnerBlockMixin extends BaseEntityBlock {
+@Mixin(value = SpawnerBlock.class, priority = 1100)
+public abstract class SpawnerBlockMixin extends BaseEntityBlock implements CustomExpBlock {
 
     public SpawnerBlockMixin(Properties properties) {
         super(properties);
     }
 
-    //Injecting at the call for spawnAfterBreak doesn't work for disabling xp and I don't know why and I wasted multiple hours of my life trying to get it to work aaaaaaaa
+    @Override
+    public int getExpDrop(BlockState state, LevelReader level, RandomSource randomSource, BlockPos pos, int fortuneLevel, int silkTouchLevel) {
+        return 0;
+    }
+
+    @Override
+    public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity te, ItemStack stack) {
+        if (Zenith.enableSpawner && SpawnerModule.spawnerSilkLevel != -1 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, stack) >= SpawnerModule.spawnerSilkLevel) {
+            ItemStack s = new ItemStack(this);
+            if (te != null) s.getOrCreateTag().put("BlockEntityTag", te.saveWithoutMetadata());
+            popResource(world, pos, s);
+            player.getMainHandItem().hurtAndBreak(SpawnerModule.spawnerSilkDamage, player, pl -> pl.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+            player.awardStat(Stats.BLOCK_MINED.get(this));
+            player.causeFoodExhaustion(0.035F);
+        }
+        else super.playerDestroy(world, player, pos, state, te, stack);
+    }
 
     @Inject(method = "getCloneItemStack", at = @At("HEAD"), cancellable = true)
-    private void zenithGetClone(BlockGetter world, BlockPos pos, BlockState blockState, CallbackInfoReturnable<ItemStack> cir) {
+    private void zenith$getClone(BlockGetter world, BlockPos pos, BlockState blockState, CallbackInfoReturnable<ItemStack> cir) {
         if (Zenith.enableSpawner) {
             ItemStack s = new ItemStack(this);
             BlockEntity te = world.getBlockEntity(pos);

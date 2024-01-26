@@ -5,7 +5,6 @@ import io.github.fabricators_of_create.porting_lib.event.common.LivingEntityEven
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.server.packs.PackType;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.warden.Warden;
@@ -22,6 +21,8 @@ import safro.zenith.Zenith;
 import safro.zenith.api.json.ZenithJsonReloadListener;
 import safro.zenith.api.placebo.json.PlaceboJsonReloadListener;
 import safro.zenith.ench.enchantments.SpearfishingEnchant;
+import safro.zenith.ench.enchantments.corrupted.BerserkersFuryEnchant;
+import safro.zenith.ench.enchantments.corrupted.LifeMendingEnchant;
 import safro.zenith.ench.enchantments.masterwork.KnowledgeEnchant;
 import safro.zenith.ench.enchantments.masterwork.ScavengerEnchant;
 import safro.zenith.ench.objects.ExtractionTomeItem;
@@ -73,6 +74,9 @@ public class EnchModuleEvents {
             }
             return currentLevel;
         }));
+
+        ((LifeMendingEnchant) EnchModule.LIFE_MENDING).lifeMend();
+        ((BerserkersFuryEnchant) EnchModule.BES_FURY).livingHurt();
     }
 
     public static Pair<ItemStack, List<Integer>> anvilEvent(ItemStack left, ItemStack right, Player player, int cost, int materialCost) {
