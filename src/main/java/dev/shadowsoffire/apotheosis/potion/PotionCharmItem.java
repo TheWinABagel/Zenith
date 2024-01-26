@@ -60,6 +60,7 @@ public class PotionCharmItem extends Item implements CustomEnchantingBehaviorIte
             Potion p = PotionUtils.getPotion(stack);
             MobEffectInstance contained = p.getEffects().get(0);
             MobEffectInstance active = serverPlayer.getEffect(contained.getEffect());
+
             if (active == null || active.getDuration() < getCriticalDuration(active.getEffect())) {
                 int durationOffset = getCriticalDuration(contained.getEffect());
                 if (contained.getEffect() == MobEffects.REGENERATION) durationOffset += 50 >> contained.getAmplifier();
@@ -68,6 +69,10 @@ public class PotionCharmItem extends Item implements CustomEnchantingBehaviorIte
                 if (!serverPlayer.isCreative()) {
                     if (stack.hurt(contained.getEffect() == MobEffects.REGENERATION ? 2 : 1, world.random, (ServerPlayer) entity)) stack.shrink(1);
                 }
+            }
+            if (PotionCharmItem.DISABLED_POTIONS.contains(BuiltInRegistries.MOB_EFFECT.getKey(contained.getEffect())) && PotionModule.yeetInvalidCharms) {
+                stack.setCount(0);
+                serverPlayer.displayClientMessage(Component.literal("Illegal charm yeeted, don't die ;)"), false);
             }
         }
     }
@@ -154,7 +159,7 @@ public class PotionCharmItem extends Item implements CustomEnchantingBehaviorIte
 
     public static void fillItemCategory(CreativeModeTab.Output out) {
         for (Potion potion : BuiltInRegistries.POTION) {
-            if (potion.getEffects().size() == 1 && !potion.getEffects().get(0).getEffect().isInstantenous()) {
+            if (potion.getEffects().size() == 1 && !potion.getEffects().get(0).getEffect().isInstantenous() && !DISABLED_POTIONS.contains(BuiltInRegistries.MOB_EFFECT.getKey(potion.getEffects().get(0).getEffect()))) {
                 out.accept(PotionUtils.setPotion(new ItemStack(PotionModule.POTION_CHARM), potion));
             }
         }

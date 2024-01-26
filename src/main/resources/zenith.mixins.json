@@ -38,7 +38,6 @@
     "compat.dragonloot.present.DragonBowItemMixin",
     "compat.dragonloot.present.DragonCrossbowItemMixin",
     "compat.dragonloot.present.ZenithDragonLootCompatAnvilMenuMixin",
-    "compat.goblintraders.present.HooksMixin",
     "compat.modern_industrialization.present.ReplicatorMachineBlockEntityMixin",
     "compat.spectrum.present.BedrockAnvilMenuMixin",
     "ench.BlockMixin",
@@ -74,6 +73,8 @@
     "spawn.SlimeMixin",
     "spawn.SpawnerBlockEntityMixin",
     "spawn.SpawnerBlockMixin",
+    "util.advancements.EnchantedItemTriggerMixin",
+    "util.advancements.InventoryChangeTriggerMixin",
     "village.FletchingTableBlockMixin",
     "village.WandererSpawnerMixin"
   ],

@@ -95,7 +95,7 @@ dependencies {
 
 	// Mixin Extras + Mixin^2 for mod compat
 	//implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${project.mixin_extras_version}"))
-	implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.2.0-beta.10"))
+	implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.2.0-beta.10")) //want to use later version but things break if i do :))))))))))))
 	implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${project.mixin_squared_version}"))
 
 	modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${project.reach_lib_version}")
@@ -170,8 +170,8 @@ dependencies {
 
 	//Fixes +compat for other mods
 	//Spell power + Spell engine
-	modCompileOnly(modRuntimeOnly("maven.modrinth:spell-power:${project.spell_power_version}-fabric"))
-	modCompileOnly(modRuntimeOnly ("maven.modrinth:spell-engine:${project.spell_engine_version}-fabric"))
+	modCompileOnly(("maven.modrinth:spell-power:${project.spell_power_version}-fabric"))
+	modCompileOnly(("maven.modrinth:spell-engine:${project.spell_engine_version}-fabric"))
 
 	//modCompileOnly("io.wispforest:lavender:0.1.0-pre.6+1.20") //conjuring
 	//modCompileOnly("io.wispforest:owo-lib:0.11.0+1.20")
@@ -190,9 +190,9 @@ dependencies {
 	//modCompileOnly "curse.maven:mariums-soulslike-weaponry-632066:4891244" //soulslike weaponry
 
 	//goblin traders
-	modCompileOnly "com.mrcrayfish:framework-fabric:1.20.1-0.6.13"
+	//modCompileOnly "com.mrcrayfish:framework-fabric:1.20.1-0.6.13"
 	//modRuntimeOnly "com.mrcrayfish:catalogue-fabric:1.20.1-1.7.1"
-	modCompileOnly "com.mrcrayfish:goblintraders-fabric:1.20.1-1.9.3"
+	//modCompileOnly "com.mrcrayfish:goblintraders-fabric:1.20.1-1.9.3"
 
 	//modern industrialization
 	modCompileOnly "curse.maven:modern-industrialization-405388:4775647", {

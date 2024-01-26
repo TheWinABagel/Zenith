@@ -1,49 +1,48 @@
-package dev.shadowsoffire.apotheosis.advancements;
+package dev.shadowsoffire.apotheosis.mixin.util.advancements;
 
 import com.google.gson.JsonObject;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import dev.shadowsoffire.apotheosis.advancements.TrueItemPredicate;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
-import net.minecraft.advancements.critereon.ContextAwarePredicate;
-import net.minecraft.advancements.critereon.DeserializationContext;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
-import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.advancements.critereon.MinMaxBounds.Ints;
+import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArgs;
+import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.function.Predicate;
 
-public class ExtendedInvTrigger extends InventoryChangeTrigger {
+@Mixin(InventoryChangeTrigger.class)
+public class InventoryChangeTriggerMixin {
 
-    @Override
-    public TriggerInstance createInstance(JsonObject json, ContextAwarePredicate andPred, DeserializationContext conditionsParser) {
-        JsonObject slots = GsonHelper.getAsJsonObject(json, "slots", new JsonObject());
-        Ints occupied = Ints.fromJson(slots.get("occupied"));
-        Ints full = Ints.fromJson(slots.get("full"));
-        Ints empty = Ints.fromJson(slots.get("empty"));
-        ItemPredicate[] predicate = ItemPredicate.fromJsonArray(json.get("items"));
-        if (json.has("zenith")) predicate = this.deserializeZenith(json.getAsJsonObject("zenith"));
-        return new TriggerInstance(andPred, occupied, full, empty, predicate);
+    @ModifyArgs(method = "createInstance(Lcom/google/gson/JsonObject;Lnet/minecraft/advancements/critereon/ContextAwarePredicate;Lnet/minecraft/advancements/critereon/DeserializationContext;)Lnet/minecraft/advancements/critereon/InventoryChangeTrigger$TriggerInstance;",
+            at = @At(value = "INVOKE", target = "net/minecraft/advancements/critereon/InventoryChangeTrigger$TriggerInstance.<init> (Lnet/minecraft/advancements/critereon/ContextAwarePredicate;Lnet/minecraft/advancements/critereon/MinMaxBounds$Ints;Lnet/minecraft/advancements/critereon/MinMaxBounds$Ints;Lnet/minecraft/advancements/critereon/MinMaxBounds$Ints;[Lnet/minecraft/advancements/critereon/ItemPredicate;)V"))
+    private void test(Args args, JsonObject json, ContextAwarePredicate predicate, DeserializationContext deserializationContext) {
+        if (json.has("zenith")) {
+            args.set(4 , deserializeZenith(json.getAsJsonObject("zenith")));
+        }
     }
 
-    ItemPredicate[] deserializeZenith(JsonObject json) {
+    @Unique
+    private ItemPredicate[] deserializeZenith(JsonObject json) {
         String type = json.get("type").getAsString();
         if ("spawn_egg".equals(type)) return new ItemPredicate[] { new TrueItemPredicate(s -> s.getItem() instanceof SpawnEggItem) };
         if ("enchanted".equals(type)) {
             Enchantment ench = json.has("enchantment") ? BuiltInRegistries.ENCHANTMENT.get(new ResourceLocation(json.get("enchantment").getAsString())) : null;
-            Ints bound = Ints.fromJson(json.get("level"));
+            MinMaxBounds.Ints bound = MinMaxBounds.Ints.fromJson(json.get("level"));
             return new ItemPredicate[] { new TrueItemPredicate(s -> {
                 Map<Enchantment, Integer> enchMap = EnchantmentHelper.getEnchantments(s);
                 if (ench != null) return bound.matches(enchMap.getOrDefault(ench, 0));
@@ -83,19 +82,4 @@ public class ExtendedInvTrigger extends InventoryChangeTrigger {
         }
         return new ItemPredicate[0];
     }
-
-    private static class TrueItemPredicate extends ItemPredicate {
-
-        Predicate<ItemStack> predicate;
-
-        TrueItemPredicate(Predicate<ItemStack> predicate) {
-            this.predicate = predicate;
-        }
-
-        @Override
-        public boolean matches(ItemStack item) {
-            return this.predicate.test(item);
-        }
-    }
-
 }

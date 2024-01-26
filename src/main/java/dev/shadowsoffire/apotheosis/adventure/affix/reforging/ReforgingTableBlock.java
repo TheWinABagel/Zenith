@@ -78,6 +78,7 @@ public class ReforgingTableBlock extends Block implements TickingEntityBlock {
             });
             return InteractionResult.SUCCESS;
         }
+        
         return InteractionResult.CONSUME;
     }
 
