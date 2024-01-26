@@ -171,12 +171,14 @@ public class AnvilBlockMixin  extends FallingBlock implements INBTSensitiveFalli
     @Unique
     protected boolean handleSplitting(Level world, BlockPos pos, ItemEntity entity, ListTag enchants) {
         entity.remove(Entity.RemovalReason.DISCARDED);
+        Boolean isCursed = entity.getItem().getTag().contains("BMCursed");
         for (Tag nbt : enchants) {
             CompoundTag tag = (CompoundTag) nbt;
             int level = tag.getInt("lvl");
             Enchantment enchant = BuiltInRegistries.ENCHANTMENT.get(new ResourceLocation(tag.getString("id")));
             if (enchant == null) continue;
             ItemStack book = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchant, level));
+            if (isCursed) book.getOrCreateTag().putBoolean("BMCursed", true);
             Block.popResource(world, pos.above(), book);
         }
         world.getEntitiesOfClass(ServerPlayer.class, new AABB(pos).inflate(5, 5, 5), EntitySelector.NO_SPECTATORS).forEach(p -> {
