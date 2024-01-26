@@ -64,7 +64,7 @@ public class RealEnchantmentHelper {
         int srcLevel = level;
         if (Apotheosis.enableDebug) EnchModule.LOGGER.info("enchantability {}, level {}", enchantability, level);
         if (enchantability > 0) {
-            float quantaFactor = getQuantaFactor(rand, quanta, rectification);
+            float quantaFactor = 1 + getQuantaFactor(rand, quanta, rectification);
             level = Mth.clamp(Math.round(level * quantaFactor), 1, (int) (EnchantingStatRegistry.getAbsoluteMaxEterna() * 4));
             Arcana arcanaVals = Arcana.getForThreshold(arcana);
             List<EnchantmentInstance> allEnchants = getAvailableEnchantmentResults(level, stack, treasure, blacklist);
@@ -126,6 +126,7 @@ public class RealEnchantmentHelper {
      * @return All possible enchantments that are eligible to be placed on this item at a specific power level.
      */
     public static List<EnchantmentInstance> getAvailableEnchantmentResults(int power, ItemStack stack, boolean allowTreasure, Set<Enchantment> blacklist) {
+        if (Apotheosis.enableDebug) EnchModule.LOGGER.info("getting enchantments for item {} with power {}", stack.getDisplayName(), power);
         List<EnchantmentInstance> list = new ArrayList<>();
         IEnchantableItem item = (IEnchantableItem) stack.getItem();
         allowTreasure = item.isTreasureAllowed(stack, allowTreasure);
@@ -135,22 +136,21 @@ public class RealEnchantmentHelper {
             boolean special = false;
             if (enchantment instanceof CustomEnchantingTableBehaviorEnchantment customEnch) special = customEnch.canApplyAtEnchantingTable(stack);
             if (stack.getItem() instanceof CustomEnchantingBehaviorItem customItem) special = customItem.canApplyAtEnchantingTable(stack, enchantment);
-            if (Apotheosis.enableDebug) EnchModule.LOGGER.info("Before check, {} {} {}, stack: {}", special, enchantment.category.canEnchant(stack.getItem()), item.forciblyAllowsTableEnchantment(stack, enchantment), stack);
             if (blacklist.contains(enchantment)) continue;
 
-            if (special || enchantment.category.canEnchant(stack.getItem()) || item.forciblyAllowsTableEnchantment(stack, enchantment) ) {
-                if (Apotheosis.enableDebug) EnchModule.LOGGER.info("allows table enchantment");
+            if (special || enchantment.canEnchant(stack) || item.forciblyAllowsTableEnchantment(stack, enchantment) ) {
                 for (int level = info.getMaxLevel(); level > enchantment.getMinLevel() - 1; --level) {
                     if (power >= info.getMinPower(level) && power <= info.getMaxPower(level)) {
-                        if (Apotheosis.enableDebug) EnchModule.LOGGER.info("Adding ench {} to list", enchantment);
                         list.add(new EnchantmentInstance(enchantment, level));
                         break;
                     }
                 }
             }
         }
-        if (FabricLoader.getInstance().isModLoaded("spell_power")){
-        //    checkSpellEngine(stack, list);
+
+        if (Apotheosis.enableDebug) EnchModule.LOGGER.info("total {} enchantments:", list.size());
+        for (EnchantmentInstance ench : list) {
+            if (Apotheosis.enableDebug) EnchModule.LOGGER.info("ench {} level {}", ench.enchantment, ench.level);
         }
 
         return list;
@@ -201,7 +201,7 @@ public class RealEnchantmentHelper {
             factor = Mth.nextFloat(rand, rectPercent - 1, 1);
         }
 
-        return quanta * factor;
+        return quanta * factor / 100;
     }
 
     public static class ArcanaEnchantmentData extends IntrusiveBase {
