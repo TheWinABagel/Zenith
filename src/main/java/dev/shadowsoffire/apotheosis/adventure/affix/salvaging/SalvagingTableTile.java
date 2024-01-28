@@ -1,18 +1,19 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.salvaging;
 
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
-import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandler;
-import io.github.fabricators_of_create.porting_lib.util.LazyOptional;
-import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
-import it.unimi.dsi.fastutil.ints.IntSet;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
-import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
+import net.fabricmc.fabric.api.transfer.v1.item.base.SingleStackStorage;
+import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
+import net.fabricmc.fabric.api.transfer.v1.storage.base.CombinedStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -32,25 +33,15 @@ public class SalvagingTableTile extends BlockEntity implements ExtendedScreenHan
 
     protected final BlockPos pos;
 
-    /**
-     * "Real" output inventory, as reflected in the container menu.
-     */
-    protected final ItemStackHandler output = new ItemStackHandler(6);
-
-    /**
-     * External-facing inventory handler, which automatically salvages input items.
-     */
-    protected final LazyOptional<SalvagingItemHandler> itemHandler = LazyOptional.of(SalvagingItemHandler::new);
-
     @Override
     protected void saveAdditional(CompoundTag tag) {
-        tag.put("output", this.output.serializeNBT());
+        ContainerHelper.saveAllItems(tag, this.container.items);
         super.saveAdditional(tag);
     }
 
     @Override
     public void load(CompoundTag tag) {
-        if (tag.contains("output")) this.output.deserializeNBT(tag.getCompound("output"));
+        ContainerHelper.loadAllItems(tag, this.container.items);
         super.load(tag);
     }
 
@@ -70,135 +61,71 @@ public class SalvagingTableTile extends BlockEntity implements ExtendedScreenHan
         return new SalvagingMenu(i, inventory, pos);
     }
 
-    protected class SalvagingItemHandler extends ItemStackHandler {
+    protected SimpleContainer container = new SimpleContainer(6) {
         @Override
-        public int getSlotCount() {
-            return 1 + SalvagingTableTile.this.output.getSlotCount();
+        public void setChanged() {
+            SalvagingTableTile.this.setChanged();
         }
 
         @Override
-        public ItemStack getStackInSlot(int slot) {
-            if (slot == 0) return ItemStack.EMPTY;
-            else return SalvagingTableTile.this.output.getStackInSlot(slot - 1);
-        }
-
-        @Override
-        public long insertSlot(int slot, ItemVariant resource, long maxAmount, TransactionContext transaction) {
-            ItemStack stack = resource.toStack();
-            if (slot != 0) return 0;
-            List<ItemStack> outputs = SalvagingMenu.getBestPossibleSalvageResults(SalvagingTableTile.this.level, stack);
-            if (outputs.isEmpty()) return 0;
-            IntSet skipSlots = new IntOpenHashSet();
-            // Simulate inserting all outputs.
-            for (ItemStack out : outputs) {
-                // I've made an assumption with this logic that a Salvaging Recipe won't have two stacks with the same item in the output.
-                // Thus, if the size changes, we can assume that part of that stack fit in that slot, and that any further insertions would fail.
-                for (int i = 0; i < 6; i++) {
-                    if (skipSlots.contains(i)) continue;
-                    int size = out.getCount();
-            //        out = SalvagingTableTile.this.output.insertItem(i, out, true); // Always simulate during this check.
-                    if (size != out.getCount()) skipSlots.add(i);
-                    if (out.isEmpty()) break;
-                }
-                if (!out.isEmpty()) return 0; // If any output fails to insert to the output inventory, we abort.
-            }
-            // Now, if we passed the checks we aren't simulating, do the actual insertion.
-        //    if (!simulate) {
-                for (ItemStack out : outputs) {
-                    for (int i = 0; i < 6; i++) {
-                //        out = SalvagingTableTile.this.output.insert(i, ItemVariant.of(out), 64, transaction);
-                        if (out.isEmpty()) break;
-                    }
-                    if (!out.isEmpty()) return 0; // If any output fails to insert to the output inventory, we abort.
-        //        }
-            }
-            return 1;
-
-        //    return super.insertSlot(slot, resource, maxAmount, transaction);
-        }
-
-        @Override
-        public long extractSlot(int slot, ItemVariant resource, long amount, TransactionContext transaction) {
-            if (slot == 0) return 1;
-            return SalvagingTableTile.this.output.extractSlot(slot - 1, resource, amount, transaction);
-        }
-
-        @Override
-        public int getSlotLimit(int slot) {
-            if (slot == 0) return 1;
-            return SalvagingTableTile.this.output.getSlotLimit(slot - 1);
-        }
-
-        @Override
-        public boolean isItemValid(int slot, ItemVariant resource) {
-            if (slot == 0) return SalvagingMenu.findMatch(SalvagingTableTile.this.level, resource.toStack()) != null;
+        public boolean canPlaceItem(int index, ItemStack stack) {
             return false;
         }
 
-    }
-/*    protected class SalvagingItemHandler implements ItemStackHandler {
+    };
+    /**
+     * Output inventory, as reflected in the container menu.
+     */
+    public final InventoryStorage outputStorage = InventoryStorage.of(container, null);
+
+    public SingleStackStorage inputStorage = new SingleStackStorage() {
 
         @Override
-        public int getSlots() {
-            return 1 + SalvagingTableTile.this.output.getSlots();
-        }
-
-        @Override
-        public ItemStack getStackInSlot(int slot) {
-            if (slot == 0) return ItemStack.EMPTY;
-            else return SalvagingTableTile.this.output.getStackInSlot(slot - 1);
-        }
-
-        @Override
-        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            if (slot != 0) return stack;
-            List<ItemStack> outputs = SalvagingMenu.getBestPossibleSalvageResults(SalvagingTableTile.this.level, stack);
-            if (outputs.isEmpty()) return stack;
-            IntSet skipSlots = new IntOpenHashSet();
-            // Simulate inserting all outputs.
-            for (ItemStack out : outputs) {
-                // I've made an assumption with this logic that a Salvaging Recipe won't have two stacks with the same item in the output.
-                // Thus, if the size changes, we can assume that part of that stack fit in that slot, and that any further insertions would fail.
-                for (int i = 0; i < 6; i++) {
-                    if (skipSlots.contains(i)) continue;
-                    int size = out.getCount();
-                    out = SalvagingTableTile.this.output.insertItem(i, out, true); // Always simulate during this check.
-                    if (size != out.getCount()) skipSlots.add(i);
-                    if (out.isEmpty()) break;
-                }
-                if (!out.isEmpty()) return stack; // If any output fails to insert to the output inventory, we abort.
-            }
-            // Now, if we passed the checks we aren't simulating, do the actual insertion.
-            if (!simulate) {
-                for (ItemStack out : outputs) {
-                    for (int i = 0; i < 6; i++) {
-                        out = SalvagingTableTile.this.output.insertItem(i, out, false);
-                        if (out.isEmpty()) break;
-                    }
-                    if (!out.isEmpty()) return stack; // If any output fails to insert to the output inventory, we abort.
-                }
-            }
+        protected ItemStack getStack() {
             return ItemStack.EMPTY;
         }
 
         @Override
-        public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            if (slot == 0) return ItemStack.EMPTY;
-            return SalvagingTableTile.this.output.extractItem(slot - 1, amount, simulate);
+        protected void setStack(ItemStack stack) {
+            List<ItemStack> outputs = SalvagingMenu.getBestPossibleSalvageResults(SalvagingTableTile.this.level, stack);
+            if (outputs.isEmpty()) return;
+            for (ItemStack stack2 : outputs) {
+                if (canAddItemWithStackSize(stack2)) {
+                    SalvagingTableTile.this.container.addItem(stack2);
+                }
+            }
         }
 
         @Override
-        public int getSlotLimit(int slot) {
-            if (slot == 0) return 1;
-            return SalvagingTableTile.this.output.getSlotLimit(slot - 1);
+        protected boolean canInsert(ItemVariant itemVariant) {
+            List<ItemStack> outputs = SalvagingMenu.getBestPossibleSalvageResults(SalvagingTableTile.this.level, itemVariant.toStack());
+            int i = 0;
+            for (ItemStack outputStack : outputs) {
+                if (!canAddItemWithStackSize(outputStack)) i++;
+            }
+            return !outputs.isEmpty() && i == 0;
         }
 
         @Override
-        public boolean isItemValid(int slot, ItemStack stack) {
-            if (slot == 0) return SalvagingMenu.findMatch(SalvagingTableTile.this.level, stack) != null;
+        public boolean supportsExtraction() {
             return false;
         }
 
-    }
-*/
+        @Override
+        protected void onFinalCommit() {
+            SalvagingTableTile.this.setChanged();
+            super.onFinalCommit();
+        }
+        private boolean canAddItemWithStackSize(ItemStack stack) {
+            boolean canAdd = false;
+            for (ItemStack itemStack : SalvagingTableTile.this.container.items) {
+                if (itemStack.isEmpty() || ItemStack.isSameItemSameTags(itemStack, stack) && !(itemStack.getCount() + stack.getCount() > itemStack.getMaxStackSize())) {
+                    canAdd = true;
+                    break;
+                }
+            }
+            return canAdd;
+        }
+    };
+    public Storage<ItemVariant> combinedStorage = new CombinedStorage<>(List.of(outputStorage, inputStorage));
 }

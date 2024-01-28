@@ -12,18 +12,20 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.menu.PlaceboContainerMenu;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
-import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandler;
-import io.github.fabricators_of_create.porting_lib.transfer.item.RecipeWrapper;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class GemCuttingMenu extends PlaceboContainerMenu {
 
@@ -39,12 +41,7 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 
     protected final Player player;
     protected final ContainerLevelAccess access;
-    protected final ItemStackHandler inv = new ItemStackHandler(4){
-        @Override
-        public int getSlotLimit(int slot) {
-            return slot == 0 ? 1 : super.getSlotLimit(slot);
-        };
-    };
+    protected final SimpleContainer inventory = new SimpleContainer(4);
 
     public GemCuttingMenu(int id, Inventory playerInv) {
         this(id, playerInv, ContainerLevelAccess.NULL);
@@ -54,13 +51,30 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
         super(Menus.GEM_CUTTING, id, playerInv);
         this.player = playerInv.player;
         this.access = access;
-        this.addSlot(new UpdatingSlot(this.inv, 0, 53, 25, stack -> GemItem.getGem(stack).isBound()));
-        this.addSlot(new UpdatingSlot(this.inv, 1, 12, 25, stack -> stack.getItem() == Items.GEM_DUST));
-        this.addSlot(new UpdatingSlot(this.inv, 2, 53, 68, this::matchesMainGem));
-        this.addSlot(new UpdatingSlot(this.inv, 3, 94, 25, this::isValidMaterial));
+        //this.addSlot(new UpdatingSlot(this.inv, 0, 53, 25, stack -> GemItem.getGem(stack).isBound()));
+        this.addSlot(new Slot(this.inventory, 0, 53, 25) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return GemItem.getGem(stack).isBound();
+            }
+
+            @Override
+            public void setChanged() {
+                super.setChanged();
+                GemCuttingMenu.this.slotsChanged(container);
+            }
+
+            @Override
+            public int getMaxStackSize() {
+                return 1;
+            }
+        });
+        this.addSlot(addUpdatingSlot(this.inventory, 1, 12, 25, stack -> stack.getItem() == Items.GEM_DUST));
+        this.addSlot(addUpdatingSlot(this.inventory, 2, 53, 68, this::matchesMainGem));
+        this.addSlot(addUpdatingSlot(this.inventory, 3, 94, 25, this::isValidMaterial));
 
         this.addPlayerSlots(playerInv, 8, 98);
-        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.inv.getStackInSlot(0).isEmpty() && this.isValidMainGem(stack), 0, 1);
+        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.inventory.getItem(0).isEmpty() && this.isValidMainGem(stack), 0, 1);
         this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && stack.getItem() == Items.GEM_DUST, 1, 2);
         this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.matchesMainGem(stack), 2, 3);
         this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.isValidMaterial(stack), 3, 4);
@@ -68,18 +82,33 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
         this.registerInvShuffleRules();
     }
 
+    protected Slot addUpdatingSlot(Container container , int index, int x, int y, Predicate<ItemStack> filter) {
+        return new Slot(container, index, x, y) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return filter.test(stack);
+            }
+
+            @Override
+            public void setChanged() {
+                super.setChanged();
+                GemCuttingMenu.this.slotsChanged(container);
+            }
+        };
+    }
+
     @Override
     public boolean clickMenuButton(Player player, int id) {
         if (id == 0) {
-            ItemStack gem = this.inv.getStackInSlot(0);
-            ItemStack left = this.inv.getStackInSlot(1);
-            ItemStack bot = this.inv.getStackInSlot(2);
-            ItemStack right = this.inv.getStackInSlot(3);
+            ItemStack gem = this.inventory.getItem(0);
+            ItemStack left = this.inventory.getItem(1);
+            ItemStack bot = this.inventory.getItem(2);
+            ItemStack right = this.inventory.getItem(3);
             for (GemCuttingRecipe r : RECIPES) {
                 if (r.matches(gem, left, bot, right)) {
                     ItemStack out = r.getResult(gem, left, bot, right);
                     r.decrementInputs(gem, left, bot, right);
-                    this.inv.setStackInSlot(0, out);
+                    this.inventory.setItem(0, out);
                     this.level.playSound(player, player.blockPosition(), SoundEvents.AMETHYST_BLOCK_BREAK, SoundSource.BLOCKS, 1, 1.5F + 0.35F * (1 - 2 * this.level.random.nextFloat()));
                     AdvancementTriggers.GEM_CUT.trigger((ServerPlayer) player, out, AffixHelper.getRarity(out).getId());
                     return true;
@@ -95,7 +124,7 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
     }
 
     protected boolean isValidMaterial(ItemStack stack) {
-        var mainGem = GemInstance.unsocketed(this.inv.getStackInSlot(0));
+        var mainGem = GemInstance.unsocketed(this.inventory.getItem(0));
         if (!mainGem.isValidUnsocketed()) return false;
         DynamicHolder<LootRarity> rarity = RarityRegistry.getMaterialRarity(stack.getItem());
         return rarity.isBound() && Math.abs(rarity.get().ordinal() - mainGem.rarity().get().ordinal()) <= 1;
@@ -103,7 +132,7 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 
     protected boolean matchesMainGem(ItemStack stack) {
         var gem = GemInstance.unsocketed(stack);
-        var mainGem = GemInstance.unsocketed(this.inv.getStackInSlot(0));
+        var mainGem = GemInstance.unsocketed(this.inventory.getItem(0));
         return gem.isValidUnsocketed() && mainGem.isValidUnsocketed() && gem.gem() == mainGem.gem() && gem.rarity() == mainGem.rarity();
     }
 
@@ -116,7 +145,8 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
     public void removed(Player pPlayer) {
         super.removed(pPlayer);
         this.access.execute((level, pos) -> {
-            this.clearContainer(pPlayer, new RecipeWrapper(this.inv));
+            this.clearContainer(pPlayer, this.inventory);
+            //this.clearContainer(pPlayer, new RecipeWrapper(this.inv));
         });
     }
 
