@@ -1,8 +1,16 @@
 ### TODO
-* Rewrite adventure module blocks to use transfer API, which will fix various issues with the current implementation
+* yeet the porting lib
 
 
 ## 1.0.3
+* Move to transfer api with the following:
+  * Salvaging table allows insertion/extraction of salvaged items.
+  * Reforging table allows insertion of gem dust.
+  * Enchanting table allows insertion/extraction of lapis. THIS WILL DELETE LAPIS CURRENTLY IN THE TABLE!
+  * Enchantment Library/Library of Alexandria allows insertion.
+* Please report any dupe/deletion bugs resulting from this change to the issue tracker!
+
+## 1.0.2
 * Update to be in line with Apotheosis [7.2.2](https://github.com/Shadows-of-Fire/Apotheosis/blob/1.20/changelog.md#722)
 * Fix enchanting giving random results
 * Fix horrible implementation of advancement triggers
