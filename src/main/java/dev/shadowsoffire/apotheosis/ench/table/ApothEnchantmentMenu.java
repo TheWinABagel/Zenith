@@ -7,6 +7,7 @@ import dev.shadowsoffire.apotheosis.mixin.accessors.EnchantmentMenuAccessor;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.placebo.util.EnchantmentUtils;
 import io.github.fabricators_of_create.porting_lib.tags.Tags;
+import io.github.fabricators_of_create.porting_lib.transfer.item.SlotItemHandler;
 import it.unimi.dsi.fastutil.floats.Float2FloatMap;
 import it.unimi.dsi.fastutil.floats.Float2FloatOpenHashMap;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -48,7 +49,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
         this.addSecretSlot(new Slot(((EnchantmentMenuAccessor) this).getEnchantSlots(), 0, 15, 47) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return !stack.is(Tags.Items.ENCHANTING_FUELS);
+                return true;
             }
 
             @Override
@@ -72,7 +73,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
         this.addSecretSlot(new Slot(((EnchantmentMenuAccessor) this).getEnchantSlots(), 0, 15, 47){
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return !stack.is(Tags.Items.ENCHANTING_FUELS);
+                return true;
             }
 
             @Override
@@ -80,7 +81,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
                 return 1;
             }
         });
-        this.addSecretSlot(new Slot(te.inventory, 0, 35, 47 ) {
+        this.addSecretSlot(new SlotItemHandler(te.inv, 0, 35, 47){
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return stack.is(Tags.Items.ENCHANTING_FUELS);

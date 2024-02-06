@@ -1199,7 +1199,7 @@
 	"zenith.creative_tab": "Zenith",
 	
     "comment_id": "/Guidebook",
-    "book.zenith.name": "Chronicle of Shadows (Zenith Guide Book)",
+    "book.zenith.name": "Chronicle of Shadows",
     "book.zenith.subtitle": "Guide to Zenith",
     "book.zenith.landing": "Welcome to the world of Zenith, the $(l)unofficial$() Apotheosis port.$(br2)Zenith is organized into $(#8080FF)Modules$(), and so is the content of this book.$(br2)Disabled modules are hidden.",
 

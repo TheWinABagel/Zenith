@@ -156,30 +156,27 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
         this.scrolling = false;
         int left = this.leftPos + 52;
         int top = this.topPos + 14;
 
-        LibrarySlot libSlot = this.getHoveredSlot((int) mouseX, (int) mouseY);
+        LibrarySlot libSlot = this.getHoveredSlot((int) pMouseX, (int) pMouseY);
         if (libSlot != null) {
             int id = BuiltInRegistries.ENCHANTMENT.getId(libSlot.ench);
             if (Screen.hasShiftDown()) id |= 0x80000000;
             this.menu.onButtonClick(id);
             ButtonClickMessage.sendToServer(id);
+            //Placebo.CHANNEL.sendToServer(new ButtonClickMessage(id));
             this.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));
         }
 
         left = this.leftPos + 75;
         top = this.topPos + 9;
-        if (mouseX >= left && mouseX < left + 12 && mouseY >= top && mouseY < top + 131) {
+        if (pMouseX >= left && pMouseX < left + 12 && pMouseY >= top && pMouseY < top + 131) {
             this.scrolling = true;
         }
-        //reset if filter isn't clicked
-        this.setFocused(null);
-        this.filter.setFocused(false);
-
-        return super.mouseClicked(mouseX, mouseY, button);
+        return super.mouseClicked(pMouseX, pMouseY, pButton);
     }
 
     @Override

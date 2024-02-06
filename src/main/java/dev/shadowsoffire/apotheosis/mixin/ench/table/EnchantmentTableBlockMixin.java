@@ -40,13 +40,13 @@ abstract class EnchantmentTableBlockMixin extends BaseEntityBlock {
     }
 
     @Inject(method = "newBlockEntity", at = @At("HEAD"), cancellable = true)
-    public void zenith$newBlockEntity(BlockPos pos, BlockState state, CallbackInfoReturnable<BlockEntity> cir) {
+    public void newBlockEntity(BlockPos pos, BlockState state, CallbackInfoReturnable<BlockEntity> cir) {
         if (Apotheosis.enableEnch) cir.setReturnValue(new ApothEnchantTile(pos, state));
     }
 
 
     @Inject(method = "getMenuProvider", at = @At("HEAD"), cancellable = true)
-    private void zenith$EnchMenu(BlockState state, Level world, BlockPos pos, CallbackInfoReturnable<MenuProvider> cir) {
+    private void zenithEnchMenu(BlockState state, Level world, BlockPos pos, CallbackInfoReturnable<MenuProvider> cir) {
         if (Apotheosis.enableEnch) {
             BlockEntity tileentity = world.getBlockEntity(pos);
             if (tileentity instanceof ApothEnchantTile enchTile) {
@@ -61,7 +61,7 @@ abstract class EnchantmentTableBlockMixin extends BaseEntityBlock {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tileentity = world.getBlockEntity(pos);
             if (tileentity instanceof ApothEnchantTile blockEntity) {
-                Block.popResource(world, pos, blockEntity.inventory.getItem(0));
+                Block.popResource(world, pos, blockEntity.inv.getStackInSlot(0));
                 blockEntity.setChanged();
                 world.removeBlockEntity(pos);
             }

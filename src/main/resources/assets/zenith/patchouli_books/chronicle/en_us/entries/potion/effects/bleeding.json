@@ -1,6 +1,6 @@
 {
     "name": "Bleeding",
-    "icon": "zenith_attributes:textures/mob_effect/bleeding.png",
+    "icon": "zenith:textures/mob_effect/bleeding.png",
     "category": "zenith:potion/effects",
 	"flag": "zenith:potion",
 	"sortnum": 1,

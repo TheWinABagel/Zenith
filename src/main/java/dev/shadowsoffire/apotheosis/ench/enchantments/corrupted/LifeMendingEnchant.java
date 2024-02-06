@@ -9,6 +9,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -55,7 +56,7 @@ public class LifeMendingEnchant extends Enchantment implements CustomEnchantingT
 
     private static final EquipmentSlot[] SLOTS = EquipmentSlot.values();
 
-    private float lifeMend(float amount, ItemStack stack) {
+    private float lifeMend(Entity entity, float amount, ItemStack stack) {
         if (!stack.isEmpty() && stack.isDamaged()) {
             int level = EnchantmentHelper.getItemEnchantmentLevel(this, stack);
             if (level <= 0) return amount;
@@ -66,21 +67,21 @@ public class LifeMendingEnchant extends Enchantment implements CustomEnchantingT
         }
         return amount;
     }
-//todo die
+
     public void lifeMend() {
          HealEvent.EVENT.register((entity, amount) -> {
             if (entity.getType() == EntityType.ARMOR_STAND) return amount;
             if (entity.level().isClientSide) return amount;
             if (amount <= 0F) return 0f;
-            if (!(entity instanceof LivingEntity living)) return amount;
             for (EquipmentSlot slot : SLOTS) {
+                if (!(entity instanceof LivingEntity living)) continue;
                 ItemStack stack = living.getItemBySlot(slot);
-                return this.lifeMend(amount, stack);
+                if (this.lifeMend(entity, amount, stack) == amount) return amount;
             }
             if (FabricLoader.getInstance().isModLoaded("trinkets")) {
                 if (entity instanceof LivingEntity livingEntity) {
                     TrinketsApi.getTrinketComponent(livingEntity).ifPresent(c -> c.forEach((slotReference, stack) -> {
-                        this.lifeMend(amount, stack);
+                        this.lifeMend(entity, amount, stack);
                     }));
                 }
             }

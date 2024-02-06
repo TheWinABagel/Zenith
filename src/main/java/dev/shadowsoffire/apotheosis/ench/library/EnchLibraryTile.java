@@ -5,14 +5,14 @@ import dev.shadowsoffire.placebo.recipe.VanillaPacketDispatcher;
 import io.github.fabricators_of_create.porting_lib.block.CustomDataPacketHandlingBlockEntity;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
-import net.fabricmc.fabric.api.transfer.v1.item.base.SingleStackStorage;
+import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -188,35 +188,86 @@ public abstract class EnchLibraryTile extends BlockEntity implements CustomDataP
     public int getMax(Enchantment ench) {
         return Math.min(this.maxLevel, this.maxLevels.getInt(ench));
     }
+/*
+    @Override
+    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+        if (cap == ForgeCapabilities.ITEM_HANDLER) return this.itemHandler.cast();
+        return super.getCapability(cap, side);
+    }*/
 
-    public final SingleStackStorage storage = new SingleStackStorage() {
+    private final SimpleContainer inventory = new SimpleContainer(1){
         @Override
-        protected ItemStack getStack() {
+        public int getMaxStackSize() {
+            return 1;
+        }
+
+        @Override
+        public boolean canPlaceItem(int slot, ItemStack stack) {
+            return slot == 0 && stack.getItem() == Items.ENCHANTED_BOOK;
+        }
+
+        @Override
+        public boolean canAddItem(ItemStack stack) {
+            return stack.getItem() == Items.ENCHANTED_BOOK;
+        }
+
+        @Override
+        public ItemStack addItem(ItemStack stack) {
+            if (stack.getItem() != Items.ENCHANTED_BOOK || stack.getCount() > 1) return stack;
+            else {
+                EnchLibraryTile.this.depositBook(stack);
+            }
             return ItemStack.EMPTY;
         }
 
         @Override
-        protected void setStack(ItemStack stack) {
-            EnchLibraryTile.this.depositBook(stack);
-            stack.setCount(stack.getCount() - 1);
-        }
-
-        @Override
-        protected boolean canInsert(ItemVariant itemVariant) {
-            return itemVariant.isOf(Items.ENCHANTED_BOOK);
-        }
-
-        @Override
-        protected boolean canExtract(ItemVariant itemVariant) {
-            return false;
-        }
-
-        @Override
-        protected void onFinalCommit() {
+        public void setChanged() {
             EnchLibraryTile.this.setChanged();
-            super.onFinalCommit();
         }
-    };
+
+
+};
+
+    public final InventoryStorage inventoryWrapper = InventoryStorage.of(inventory, null);
+
+/*
+    private class EnchLibContainer extends SimpleContainer {
+
+        @Override
+        public int getSlots() {
+            return 1;
+        }
+
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            return ItemStack.EMPTY;
+        }
+
+        @Override
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            if (stack.getItem() != Items.ENCHANTED_BOOK || stack.getCount() > 1) return stack;
+            else if (!simulate) {
+                EnchLibraryTile.this.depositBook(stack);
+            }
+            return ItemStack.EMPTY;
+        }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return ItemStack.EMPTY;
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return 1;
+        }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return slot == 0 && stack.getItem() == Items.ENCHANTED_BOOK;
+        }
+
+    }*/
 
     public static class BasicLibraryTile extends EnchLibraryTile {
 

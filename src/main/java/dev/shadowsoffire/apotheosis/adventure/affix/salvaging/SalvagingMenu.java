@@ -1,17 +1,21 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.salvaging;
 
+import com.google.common.base.Predicates;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Blocks;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Menus;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe.OutputData;
+import dev.shadowsoffire.placebo.menu.FilteredSlot;
 import dev.shadowsoffire.placebo.menu.PlaceboContainerMenu;
+import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandler;
+import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandlerContainer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
@@ -28,18 +32,17 @@ public class SalvagingMenu extends PlaceboContainerMenu {
     protected final Player player;
     protected final BlockPos pos;
     protected final SalvagingTableTile tile;
-
-    protected final SimpleContainer inputInventory = new SimpleContainer(15) {
+    protected final ItemStackHandler inputInv = new ItemStackHandlerContainer(15) {
         @Override
         public int getMaxStackSize() {
             return 1;
         }
 
-
         @Override
-        public void setChanged() {
-            SalvagingMenu.this.tile.setChanged();
+        public int getSlotLimit(int slot) {
+            return 1;
         }
+
     };
 
     public SalvagingMenu(int id, Inventory inv, FriendlyByteBuf buf) {
@@ -52,39 +55,50 @@ public class SalvagingMenu extends PlaceboContainerMenu {
         this.pos = pos;
         this.tile = (SalvagingTableTile) this.level.getBlockEntity(pos);
         for (int i = 0; i < 15; i++) {
-            this.addSlot(new Slot(this.inputInventory, i, 8 + i % 5 * 18, 17 + i / 5 * 18) {
+            /*this.addSlot(new Slot((Container) this.inputInv, i, 8 + i % 5 * 18, 17 + i / 5 * 18) {
                 @Override
                 public boolean mayPlace(ItemStack stack) {
-                    return findMatch(SalvagingMenu.this.level, stack) != null;
-                }
-
-                @Override
-                public void setChanged() {
-                    SalvagingMenu.this.slotsChanged(SalvagingMenu.this.inputInventory);
-                    super.setChanged();
+                    return findMatch(inv.player.level(), stack) != null;
                 }
 
                 @Override
                 public int getMaxStackSize() {
                     return 1;
                 }
+
+                @Override
+                public int getMaxStackSize(ItemStack stack) {
+                    return 1;
+                }
+
+                @Override
+                public void setChanged() {
+                    super.setChanged();
+                    SalvagingMenu.this.slotsChanged((Container) inputInv);
+                }
+            });*/
+
+            this.addSlot(new UpdatingSlot(this.inputInv, i, 8 + i % 5 * 18, 17 + i / 5 * 18, s -> findMatch(this.level, s) != null){
+
+                @Override
+                public int getMaxStackSize() {
+                    return 1;
+                }
+
+                @Override
+                public int getMaxStackSize(ItemStack stack) {
+                    return 1;
+                }
+
             });
         }
 
         for (int i = 0; i < 6; i++) {
-            this.addSlot(new Slot(this.tile.container, i, 134 + i % 2 * 18, 17 + i / 2 * 18) {
-                @Override
-                public boolean mayPlace(ItemStack stack) {
-                    return false;
-                }
-            });
+            this.addSlot(new FilteredSlot(this.tile.output, i, 134 + i % 2 * 18, 17 + i / 2 * 18, Predicates.alwaysFalse()));
         }
 
         this.addPlayerSlots(inv, 8, 84);
-        for (int i = 0; i < 15; i++) {
-            int finalI = i;
-            this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.inputInventory.getItem(finalI).isEmpty() && findMatch(this.level, stack) != null, i, i+1);
-        }
+        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && findMatch(this.level, stack) != null, 0, 15);
         this.mover.registerRule((stack, slot) -> slot < this.playerInvStart, this.playerInvStart, this.hotbarStart + 9);
         this.registerInvShuffleRules();
     }
@@ -99,7 +113,7 @@ public class SalvagingMenu extends PlaceboContainerMenu {
     public void removed(Player player) {
         super.removed(player);
         if (!this.level.isClientSide) {
-            this.clearContainer(player, this.inputInventory);
+            this.clearContainer(player, (Container) this.inputInv);
         }
     }
 
@@ -133,10 +147,13 @@ public class SalvagingMenu extends PlaceboContainerMenu {
             ItemStack stack = s.getItem();
             List<ItemStack> outputs = salvageItem(this.level, stack);
             s.set(ItemStack.EMPTY);
+            long transfered;
             for (ItemStack out : outputs) {
                 for (int outSlot = 0; outSlot < 6; outSlot++) {
-                    if (out.isEmpty()) break;
-                    out = this.tile.container.addItem(out);
+                    if (out.isEmpty()) break; // TODO figure out salvaging inserting; transfer api gives me a headache
+                //    this.tile.output.setStackInSlot(outSlot, out.copy());
+                //    out.setCount(0);
+                //    transfered = this.tile.output.insertSlot(outSlot, ItemVariant.of(out), out.getCount(), Transaction.openOuter());
                 }
                 if (!out.isEmpty()) this.giveItem(this.player, out);
             }
@@ -151,7 +168,7 @@ public class SalvagingMenu extends PlaceboContainerMenu {
     public static int[] getSalvageCounts(OutputData output, ItemStack stack) {
         int[] out = { output.min, output.max };
         if (stack.isDamageableItem()) {
-            out[1] = Math.max(out[0], Math.round((float) (out[1] * (stack.getMaxDamage() - stack.getDamageValue())) / stack.getMaxDamage()));
+            out[1] = Math.max(out[0], Math.round(out[1] * (stack.getMaxDamage() - stack.getDamageValue()) / stack.getMaxDamage()));
         }
         return out;
     }
@@ -186,5 +203,10 @@ public class SalvagingMenu extends PlaceboContainerMenu {
             if (recipe.matches(stack)) return recipe;
         }
         return null;
+    }
+
+    @Override
+    public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
+        return super.quickMoveStack(pPlayer, pIndex);
     }
 }

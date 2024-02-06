@@ -1,6 +1,6 @@
 {
     "name": "Grievous Wounds",
-    "icon": "zenith_attributes:textures/mob_effect/grievous.png",
+    "icon": "zenith:textures/mob_effect/grievous.png",
     "category": "zenith:potion/effects",
 	"flag": "zenith:potion",
 	"sortnum": 0,
