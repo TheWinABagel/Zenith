@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.reforging;
 
+import blue.endless.jankson.annotation.Nullable;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Menus;
@@ -11,21 +12,20 @@ import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.menu.PlaceboContainerMenu;
 import dev.shadowsoffire.placebo.util.EnchantmentUtils;
-import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandler;
-import io.github.fabricators_of_create.porting_lib.transfer.item.RecipeWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.DataSlot;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 
-import javax.annotation.Nullable;
 
 public class ReforgingMenu extends PlaceboContainerMenu {
 
@@ -33,7 +33,19 @@ public class ReforgingMenu extends PlaceboContainerMenu {
     protected final BlockPos pos;
     protected final ReforgingTableTile tile;
     protected final Player player;
-    protected ItemStackHandler itemInv = new ItemStackHandler(1);
+    protected SimpleContainer itemInventory = new SimpleContainer(1) {
+        @Override
+        public boolean canAddItem(ItemStack stack) {
+            return !LootCategory.forItem(stack).isNone();
+        }
+
+        @Override
+        public void setChanged() {
+            super.setChanged();
+            ReforgingMenu.this.slotsChanged(this);
+        }
+    };
+
     protected final RandomSource random = new XoroshiroRandomSource(0);
     protected final int[] seed = new int[2];
     protected final int[] costs = new int[3];
@@ -48,19 +60,27 @@ public class ReforgingMenu extends PlaceboContainerMenu {
         this.player = inv.player;
         this.pos = pos;
         this.tile = (ReforgingTableTile) this.level.getBlockEntity(pos);
-        this.addSlot(new UpdatingSlot(this.itemInv, 0, 25, 24, stack -> !LootCategory.forItem(stack).isNone()){
+        this.addSlot(new Slot(this.itemInventory, 0, 25, 24) {
             @Override
-            public int getMaxStackSize() {
-                return 1;
-            }
-
-            @Override
-            public int getMaxStackSize(ItemStack pStack) {
-                return 1;
+            public void setChanged() {
+                super.setChanged();
+                ReforgingMenu.this.slotsChanged(ReforgingMenu.this.itemInventory);
             }
         });
-        this.addSlot(new UpdatingSlot(this.tile.inv, 0, 15, 45, this.tile::isValidRarityMat));
-        this.addSlot(new UpdatingSlot(this.tile.inv, 1, 35, 45, stack -> stack.getItem() == Items.GEM_DUST));
+        this.addSlot(new Slot(this.tile.inventory, 0, 15, 45) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return ReforgingMenu.this.tile.isValidRarityMat(stack);
+            }
+        });
+        this.addSlot(new Slot(this.tile.inventory, 1, 35, 45){
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return stack.is(Items.GEM_DUST);
+            }
+        });
+//        this.addSlot(new UpdatingSlot(this.tile.inv, 0, 15, 45, this.tile::isValidRarityMat));
+//        this.addSlot(new UpdatingSlot(this.tile.inv, 1, 35, 45, stack -> stack.getItem() == Items.GEM_DUST));
         this.addPlayerSlots(inv, 8, 84);
         this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && !LootCategory.forItem(stack).isNone(), 0, 1);
         this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.tile.isValidRarityMat(stack), 1, 2);
@@ -78,9 +98,10 @@ public class ReforgingMenu extends PlaceboContainerMenu {
     }
 
     @Override
-    public void removed(Player pPlayer) {
-        super.removed(pPlayer);
-        this.clearContainer(pPlayer, new RecipeWrapper(this.itemInv));
+    public void removed(Player player) {
+        super.removed(player);
+        this.clearContainer(player, this.itemInventory);
+        //this.clearContainer(player, new RecipeWrapper(this.itemInv));
     }
 
     protected void updateSeed() {

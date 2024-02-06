@@ -50,7 +50,8 @@ public class ApothEnchantBlock extends EnchantmentTableBlock {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tileentity = world.getBlockEntity(pos);
             if (tileentity instanceof ApothEnchantTile) {
-                Block.popResource(world, pos, ((ApothEnchantTile) tileentity).inv.getStackInSlot(0));
+                //Block.popResource(world, pos, ((ApothEnchantTile) tileentity).inv.getStackInSlot(0));
+                Block.popResource(world, pos, ((ApothEnchantTile) tileentity).inventory.getItem(0));
                 world.removeBlockEntity(pos);
             }
         }

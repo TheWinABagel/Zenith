@@ -106,9 +106,12 @@ public class ReforgingTableBlock extends Block implements TickingEntityBlock {
         if (state.getBlock() == this && newState.getBlock() == this) return;
         BlockEntity te = world.getBlockEntity(pos);
         if (te instanceof ReforgingTableTile ref) {
-            for (int i = 0; i < ref.inv.getSlots().size(); i++) {
-                popResource(world, pos, ref.inv.getStackInSlot(i));
+            for (int i = 0; i < ref.inventory.items.size(); i++) {
+                popResource(world, pos, ref.inventory.getItem(i));
             }
+//            for (int i = 0; i < ref.inv.getSlots().size(); i++) {
+//                popResource(world, pos, ref.inv.getStackInSlot(i));
+//            }
         }
         super.onRemove(state, world, pos, newState, isMoving);
     }

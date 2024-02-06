@@ -18,6 +18,7 @@ import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryTile.BasicLibraryTil
 import dev.shadowsoffire.apotheosis.ench.library.EnchLibraryTile.EnderLibraryTile;
 import dev.shadowsoffire.apotheosis.ench.objects.*;
 import dev.shadowsoffire.apotheosis.ench.objects.TypedShelfBlock.SculkShelfBlock;
+import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantTile;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingRecipe;
 import dev.shadowsoffire.placebo.util.PlaceboUtil;
@@ -25,6 +26,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -140,7 +142,7 @@ public class Ench {
             reg(STONESHELF, "stoneshelf");
             reg(FILTERING_SHELF, "filtering_shelf");
             reg(TREASURE_SHELF, "treasure_shelf");
-        //    DispenserBlock.registerBehavior(net.minecraft.world.item.Items.SHEARS, new ShearsDispenseItemBehavior());
+
         }
 
         private static Block sculkShelf(String id) {
@@ -430,8 +432,12 @@ public class Ench {
         public static final BlockEntityType<BasicLibraryTile> LIBRARY = Apoth.registerBEType("library", new BlockEntityType<>(EnchLibraryTile.BasicLibraryTile::new, ImmutableSet.of(Ench.Blocks.LIBRARY), null));
         public static final BlockEntityType<EnchLibraryTile.EnderLibraryTile> ENDER_LIBRARY = Apoth.registerBEType("ender_library", new BlockEntityType<>(EnchLibraryTile.EnderLibraryTile::new, ImmutableSet.of(Ench.Blocks.ENDER_LIBRARY), null));
         public static final BlockEntityType<FilteringShelfBlock.FilteringShelfTile> FILTERING_SHELF = Apoth.registerBEType("filtering_shelf", new BlockEntityType<>(FilteringShelfBlock.FilteringShelfTile::new, ImmutableSet.of(Blocks.FILTERING_SHELF), null));
-
-        private static void bootstrap() {}
+        public static final BlockEntityType<ApothEnchantTile> ENCHANTING_TABLE = Apoth.registerBEType("enchanting_table", new BlockEntityType<>(ApothEnchantTile::new, ImmutableSet.of(net.minecraft.world.level.block.Blocks.ENCHANTING_TABLE), null));
+        private static void bootstrap() {
+            ItemStorage.SIDED.registerForBlockEntity(((blockEntity, direction) -> blockEntity.storage), LIBRARY);
+            ItemStorage.SIDED.registerForBlockEntity(((blockEntity, direction) -> blockEntity.storage), ENDER_LIBRARY);
+            ItemStorage.SIDED.registerForBlockEntity(((blockEntity, direction) -> blockEntity.container), ENCHANTING_TABLE);
+        }
     }
 
     public static final class RecipeTypes {

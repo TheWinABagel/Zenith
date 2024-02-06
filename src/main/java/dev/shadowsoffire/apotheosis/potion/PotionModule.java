@@ -127,18 +127,18 @@ public class PotionModule {
             }
         }
         config.setCategoryComment("brewing", "All brewing recipe disables are Server-authoritative.");
-        resistanceEnabled = config.getBoolean("Resistance", "brewing", true, "If this potion type will be craftable in the brewing stand.");
-        sunderingEnabled = config.getBoolean("Sundering", "brewing", true, "If this potion type will be craftable in the brewing stand.");
-        absorptionEnabled = config.getBoolean("Absorption", "brewing", true, "If this potion type will be craftable in the brewing stand.");
-        hasteEnabled = config.getBoolean("Haste", "brewing", true, "If this potion type will be craftable in the brewing stand.");
-        fatigueEnabled = config.getBoolean("Fatigue", "brewing", true, "If this potion type will be craftable in the brewing stand.");
-        witherEnabled = config.getBoolean("Wither", "brewing", true, "If this potion type will be craftable in the brewing stand.");
-        knowledgeEnabled = config.getBoolean("Knowledge", "brewing", true, "If this potion type will be craftable in the brewing stand.");
-        luckEnabled = config.getBoolean("Luck", "brewing", true, "If this potion type will be craftable in the brewing stand.");
-        vitalityEnabled = config.getBoolean("Vitality", "brewing", true, "If this potion type will be craftable in the brewing stand.");
-        grievousEnabled = config.getBoolean("Grievous", "brewing", true, "If this potion type will be craftable in the brewing stand.");
-        levitationEnabled = config.getBoolean("Levitation", "brewing", true, "If this potion type will be craftable in the brewing stand.");
-        flyingEnabled = config.getBoolean("Flying", "brewing", true, "If this potion type will be craftable in the brewing stand.");
+        resistanceEnabled = config.getBoolean("Resistance", "brewing", resistanceEnabled, "If this potion type will be craftable in the brewing stand.");
+        sunderingEnabled = config.getBoolean("Sundering", "brewing", sunderingEnabled, "If this potion type will be craftable in the brewing stand.");
+        absorptionEnabled = config.getBoolean("Absorption", "brewing", absorptionEnabled, "If this potion type will be craftable in the brewing stand.");
+        hasteEnabled = config.getBoolean("Haste", "brewing", hasteEnabled, "If this potion type will be craftable in the brewing stand.");
+        fatigueEnabled = config.getBoolean("Fatigue", "brewing", fatigueEnabled, "If this potion type will be craftable in the brewing stand.");
+        witherEnabled = config.getBoolean("Wither", "brewing", witherEnabled, "If this potion type will be craftable in the brewing stand.");
+        knowledgeEnabled = config.getBoolean("Knowledge", "brewing", knowledgeEnabled, "If this potion type will be craftable in the brewing stand.");
+        luckEnabled = config.getBoolean("Luck", "brewing", luckEnabled, "If this potion type will be craftable in the brewing stand.");
+        vitalityEnabled = config.getBoolean("Vitality", "brewing", vitalityEnabled, "If this potion type will be craftable in the brewing stand.");
+        grievousEnabled = config.getBoolean("Grievous", "brewing", grievousEnabled, "If this potion type will be craftable in the brewing stand.");
+        levitationEnabled = config.getBoolean("Levitation", "brewing", levitationEnabled, "If this potion type will be craftable in the brewing stand.");
+        flyingEnabled = config.getBoolean("Flying", "brewing", flyingEnabled, "If this potion type will be craftable in the brewing stand.");
         if (!e && config.hasChanged()) config.save();
     }
 

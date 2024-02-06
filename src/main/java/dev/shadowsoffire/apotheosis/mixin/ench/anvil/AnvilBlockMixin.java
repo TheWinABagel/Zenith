@@ -201,6 +201,11 @@ public class AnvilBlockMixin  extends FallingBlock implements INBTSensitiveFalli
         return true;
     }
 
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        super.onRemove(state, level, pos, newState, isMoving);
+    }
+
     @Unique
     @Nullable //TODO make block entity keep enchs when damaged
     private static BlockState damage(BlockState state) {
