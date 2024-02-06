@@ -6,9 +6,8 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntity;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
-import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
+import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -18,6 +17,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -33,18 +34,19 @@ public class ReforgingTableTile extends BlockEntity implements ExtendedScreenHan
     public boolean step1 = true;
     protected final BlockPos pos;
 
-    protected ItemStackHandler inv = new ItemStackHandler(2){
+    protected SimpleContainer inventory = new SimpleContainer(2) {
         @Override
-        public boolean isItemValid(int slot, ItemVariant resource) {
-            if (slot == 0) return ReforgingTableTile.this.isValidRarityMat(resource.toStack());
-            return resource.toStack().is(Items.GEM_DUST);
+        public boolean canPlaceItem(int slot, ItemStack stack) {
+            if (slot == 0) return ReforgingTableTile.this.isValidRarityMat(stack);
+            return stack.is(Items.GEM_DUST);
         }
 
         @Override
-        protected void onContentsChanged(int slot) {
+        public void setChanged() {
             ReforgingTableTile.this.setChanged();
-        };
+        }
     };
+    public InventoryStorage storage = InventoryStorage.of(inventory, null);
 
     public ReforgingTableTile(BlockPos pPos, BlockState pBlockState) {
         super(Adventure.Tiles.REFORGING_TABLE, pPos, pBlockState);
@@ -95,13 +97,15 @@ public class ReforgingTableTile extends BlockEntity implements ExtendedScreenHan
     @Override
     public void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.put("inventory", this.inv.serializeNBT());
+        ContainerHelper.saveAllItems(tag, this.inventory.items);
+        //tag.put("inventory", this.inv.serializeNBT());
     }
 
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        this.inv.deserializeNBT(tag.getCompound("inventory"));
+        ContainerHelper.loadAllItems(tag, this.inventory.items);
+        //this.inv.deserializeNBT(tag.getCompound("inventory"));
     }
 
     public void writeScreenOpeningData(ServerPlayer player, FriendlyByteBuf buf) {

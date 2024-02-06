@@ -28,6 +28,7 @@ import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -161,7 +162,10 @@ public class Adventure {
         public static final BlockEntityType<BossSpawnerBlock.BossSpawnerTile> BOSS_SPAWNER = Apoth.registerBEType("boss_spawner", new TickingBlockEntityType<>(BossSpawnerBlock.BossSpawnerTile::new, ImmutableSet.of(Blocks.BOSS_SPAWNER), false, true));
         public static final BlockEntityType<ReforgingTableTile> REFORGING_TABLE = Apoth.registerBEType("reforging_table", new TickingBlockEntityType<>(ReforgingTableTile::new, ImmutableSet.of(Adventure.Blocks.SIMPLE_REFORGING_TABLE, Adventure.Blocks.REFORGING_TABLE), true, false));
         public static final BlockEntityType<SalvagingTableTile> SALVAGING_TABLE = Apoth.registerBEType("salvaging_table", new BlockEntityType<>(SalvagingTableTile::new, ImmutableSet.of(Adventure.Blocks.SALVAGING_TABLE), null));
-        public static void bootstrap() {}
+        public static void bootstrap() {
+            ItemStorage.SIDED.registerForBlockEntity(((blockEntity, direction) -> blockEntity.combinedStorage), SALVAGING_TABLE);
+            ItemStorage.SIDED.registerForBlockEntity(((blockEntity, direction) -> blockEntity.storage), REFORGING_TABLE);
+        }
     }
 
     public static class Features {
