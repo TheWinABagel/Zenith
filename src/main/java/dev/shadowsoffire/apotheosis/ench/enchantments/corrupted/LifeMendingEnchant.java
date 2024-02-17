@@ -17,6 +17,8 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 public class LifeMendingEnchant extends Enchantment implements CustomEnchantingTableBehaviorEnchantment {
 
     public LifeMendingEnchant() {
@@ -66,7 +68,7 @@ public class LifeMendingEnchant extends Enchantment implements CustomEnchantingT
         }
         return amount;
     }
-//todo die
+
     public void lifeMend() {
          HealEvent.EVENT.register((entity, amount) -> {
             if (entity.getType() == EntityType.ARMOR_STAND) return amount;
@@ -75,17 +77,19 @@ public class LifeMendingEnchant extends Enchantment implements CustomEnchantingT
             if (!(entity instanceof LivingEntity living)) return amount;
             for (EquipmentSlot slot : SLOTS) {
                 ItemStack stack = living.getItemBySlot(slot);
-                return this.lifeMend(amount, stack);
+                amount = this.lifeMend(amount, stack);
             }
             if (FabricLoader.getInstance().isModLoaded("trinkets")) {
                 if (entity instanceof LivingEntity livingEntity) {
+                    AtomicReference<Float> atomicAmount = new AtomicReference<>(amount);
                     TrinketsApi.getTrinketComponent(livingEntity).ifPresent(c -> c.forEach((slotReference, stack) -> {
-                        this.lifeMend(amount, stack);
+                        atomicAmount.set(this.lifeMend(atomicAmount.get(), stack));
                     }));
+                    amount = atomicAmount.get();
                 }
             }
-            return amount;
-        });
+             return Math.max(amount, 0F);
+         });
 
     }
 
