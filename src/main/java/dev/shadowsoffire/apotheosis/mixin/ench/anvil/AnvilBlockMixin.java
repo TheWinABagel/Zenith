@@ -17,6 +17,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
@@ -41,6 +42,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -51,7 +53,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Mixin(value = AnvilBlock.class, priority = 1500)
-public class AnvilBlockMixin  extends FallingBlock implements INBTSensitiveFallingBlock, EntityBlock {
+public abstract class AnvilBlockMixin  extends FallingBlock implements INBTSensitiveFallingBlock, EntityBlock {
+
+    @Shadow
+    public static @Nullable BlockState damage(BlockState state) {
+        return null;
+    }
 
     public AnvilBlockMixin(Properties properties) {
         super(properties);
@@ -203,18 +210,12 @@ public class AnvilBlockMixin  extends FallingBlock implements INBTSensitiveFalli
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        super.onRemove(state, level, pos, newState, isMoving);
-    }
-
-    @Unique
-    @Nullable //TODO make block entity keep enchs when damaged
-    private static BlockState damage(BlockState state) {
-        if (state.is(Blocks.ANVIL)) {
-            return (BlockState)Blocks.CHIPPED_ANVIL.defaultBlockState().setValue(AnvilBlock.FACING, state.getValue(AnvilBlock.FACING));
+        if (!Apotheosis.enableEnch) {
+            super.onRemove(state, level, pos, newState, isMoving);
+            return;
         }
-        if (state.is(Blocks.CHIPPED_ANVIL)) {
-            return (BlockState)Blocks.DAMAGED_ANVIL.defaultBlockState().setValue(AnvilBlock.FACING, state.getValue(AnvilBlock.FACING));
+        if (state.hasBlockEntity() && !newState.is(BlockTags.ANVIL)) {
+            level.removeBlockEntity(pos);
         }
-        return null;
     }
 }

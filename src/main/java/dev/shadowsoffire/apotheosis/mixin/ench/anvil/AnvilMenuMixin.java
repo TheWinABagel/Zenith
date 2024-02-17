@@ -27,10 +27,10 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
     @Shadow private @Nullable String itemName;
     @Shadow @Final private DataSlot cost;
     @Shadow private int repairItemCountCost;
-    @Unique private static ItemStack leftItem = ItemStack.EMPTY;
-    @Unique private static ItemStack rightItem = ItemStack.EMPTY;
-    @Unique private static ItemStack output;
-    @Unique private static Events.RepairEvent event;
+    @Unique private static ItemStack zenith$leftItem = ItemStack.EMPTY;
+    @Unique private static ItemStack zenith$rightItem = ItemStack.EMPTY;
+    @Unique private static ItemStack zenith$output;
+    @Unique private static Events.RepairEvent zenith$event;
 
     public AnvilMenuMixin(@Nullable MenuType<?> type, int containerId, Inventory playerInventory, ContainerLevelAccess access) {
         super(type, containerId, playerInventory, access);
@@ -55,32 +55,32 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 
     @Inject(method = "createResult", at = @At(value = "INVOKE", target = "net/minecraft/world/item/ItemStack.isEmpty ()Z", ordinal = 1, shift = At.Shift.AFTER), cancellable = true)
     private void initUpdateAnvilEvent(CallbackInfo ci) {
-        leftItem = this.inputSlots.getItem(0);
-        rightItem = this.inputSlots.getItem(1);
-        output = this.resultSlots.getItem(0);
-        if (Apotheosis.enableEnch && onAnvilChange(leftItem, rightItem, this.resultSlots, itemName, this.cost.get(), player)) {
+        zenith$leftItem = this.inputSlots.getItem(0);
+        zenith$rightItem = this.inputSlots.getItem(1);
+        zenith$output = this.resultSlots.getItem(0);
+        if (Apotheosis.enableEnch && onAnvilChange(zenith$leftItem, zenith$rightItem, this.resultSlots, itemName, this.cost.get(), player)) {
             ci.cancel();
         }
     }
 
     @Inject(method = "onTake", at = @At("HEAD"))
     private void initRepairEvent(Player player, ItemStack stack, CallbackInfo ci) {
-        event = new Events.RepairEvent(player, output, leftItem, rightItem);
+        zenith$event = new Events.RepairEvent(player, zenith$output, zenith$leftItem, zenith$rightItem);
     }
 
     @ModifyConstant(method = "method_24922", constant = @Constant(floatValue = 0.12F))
     private static float zenith$InitAnvilUse(float chance) {
-        if (Apotheosis.enableEnch && event.player != null) {
-            Events.AnvilRepair.ANVIL_REPAIR.invoker().onRepair(event);
-            return event.breakChance;
+        if (Apotheosis.enableEnch && zenith$event.player != null) {
+            Events.AnvilRepair.ANVIL_REPAIR.invoker().onRepair(zenith$event);
+            return zenith$event.breakChance;
         }
         return chance;
     }
 
     @Inject(method = "method_24922", at = @At("HEAD"))
     private static void zenith$InitAnvilUseCreative(Player player, Level level, BlockPos blockPos, CallbackInfo ci) {
-        if (Apotheosis.enableEnch && event.player != null && event.player.getAbilities().instabuild) {
-            Events.AnvilRepair.ANVIL_REPAIR.invoker().onRepair(event);
+        if (Apotheosis.enableEnch && zenith$event.player != null && zenith$event.player.getAbilities().instabuild) {
+            Events.AnvilRepair.ANVIL_REPAIR.invoker().onRepair(zenith$event);
         }
     }
 

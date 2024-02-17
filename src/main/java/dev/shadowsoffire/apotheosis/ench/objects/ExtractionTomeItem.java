@@ -29,6 +29,59 @@ public class ExtractionTomeItem extends BookItem {
         super(new Properties());
     }
 
+    public static boolean updateAnvil(Events.AnvilUpdate.UpdateAnvilEvent ev) {
+        ItemStack weapon = ev.left;
+        ItemStack book = ev.right;
+        if (!(book.getItem() instanceof ExtractionTomeItem) || book.isEnchanted() || !weapon.isEnchanted())
+            return false;
+
+        Map<Enchantment, Integer> wepEnch = EnchantmentHelper.getEnchantments(weapon);
+        ItemStack out = new ItemStack(Items.ENCHANTED_BOOK);
+        EnchantmentHelper.setEnchantments(wepEnch, out);
+        ev.materialCost = 1;
+        ev.cost = (wepEnch.size() * 16);
+        ev.output = out;
+        return true;
+    }
+
+    public static void updateRepair() {
+        // pain
+        if (FabricLoader.getInstance().isModLoaded("puzzleslib")) {
+            FabricPlayerEvents.ANVIL_REPAIR.register((player, left, right, out, mutableFloat) -> {
+                var event = new Events.RepairEvent(player, out, left, right);
+                event.breakChance = mutableFloat.getAsFloat();
+                Events.AnvilRepair.ANVIL_REPAIR.invoker().onRepair(event);
+                mutableFloat.accept(event.breakChance);
+            });
+        }
+        // and suffering
+        Events.AnvilRepair.ANVIL_REPAIR.register((ev) -> {
+            if (!(ev.player instanceof ServerPlayer)) return;
+            ItemStack weapon = ev.left;
+            ItemStack book = ev.right;
+            if (!(book.getItem() instanceof ExtractionTomeItem) || book.isEnchanted() || !weapon.isEnchanted()) return;
+
+            EnchantmentHelper.setEnchantments(Collections.emptyMap(), weapon);
+            giveItem(ev.player, weapon);
+        });
+
+    }
+
+    protected static void giveItem(Player player, ItemStack stack) {
+        if (!player.isAlive() || player instanceof ServerPlayer && ((ServerPlayer) player).hasDisconnected()) {
+            player.drop(stack, false);
+        } else {
+            Inventory inventory = player.getInventory();
+            if (inventory.player instanceof ServerPlayer) {
+                inventory.placeItemBackInInventory(stack);
+            } else if (player instanceof ServerPlayer) {
+                player.addItem(stack);
+            } else {
+                EnchModule.LOGGER.info("Player not found to give items to!");
+            }
+        }
+    }
+
     @Override
     public boolean isEnchantable(ItemStack stack) {
         return false;
@@ -50,52 +103,5 @@ public class ExtractionTomeItem extends BookItem {
     @Override
     public boolean isFoil(ItemStack pStack) {
         return true;
-    }
-
-    public static boolean updateAnvil(Events.AnvilUpdate.UpdateAnvilEvent ev) {
-        ItemStack weapon = ev.left;
-        ItemStack book = ev.right;
-        if (!(book.getItem() instanceof ExtractionTomeItem) || book.isEnchanted() || !weapon.isEnchanted()) return false;
-
-        Map<Enchantment, Integer> wepEnch = EnchantmentHelper.getEnchantments(weapon);
-        ItemStack out = new ItemStack(Items.ENCHANTED_BOOK);
-        EnchantmentHelper.setEnchantments(wepEnch, out);
-        ev.materialCost = 1;
-        ev.cost = (wepEnch.size() * 16);
-        ev.output = out;
-        return true;
-    }
-
-    public static void updateRepair() {
-        if (FabricLoader.getInstance().isModLoaded("puzzleslib")) {
-            FabricPlayerEvents.ANVIL_REPAIR.register((player, left, right, out, mutableFloat) -> {
-                Events.AnvilRepair.ANVIL_REPAIR.invoker().onRepair(new Events.RepairEvent(player, left, right, out));
-            });
-        }
-            Events.AnvilRepair.ANVIL_REPAIR.register((ev) -> {
-                if (!(ev.player instanceof ServerPlayer)) return;
-                ItemStack weapon = ev.left;
-                ItemStack book = ev.right;
-                if (!(book.getItem() instanceof ExtractionTomeItem) || book.isEnchanted() || !weapon.isEnchanted()) return;
-
-                EnchantmentHelper.setEnchantments(Collections.emptyMap(), weapon);
-                giveItem(ev.player, weapon);
-            });
-    }
-
-    protected static void giveItem(Player player, ItemStack stack) {
-        if (!player.isAlive() || player instanceof ServerPlayer && ((ServerPlayer) player).hasDisconnected()) {
-            player.drop(stack, false);
-        }
-        else {
-            Inventory inventory = player.getInventory();
-            if (inventory.player instanceof ServerPlayer) {
-                inventory.placeItemBackInInventory(stack);
-            } else if (player instanceof ServerPlayer) {
-                player.addItem(stack);
-            } else {
-                EnchModule.LOGGER.info("Player not found to give items to!");
-            }
-        }
     }
 }

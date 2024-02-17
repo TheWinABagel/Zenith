@@ -1,4 +1,4 @@
-package dev.shadowsoffire.apotheosis.mixin;
+package dev.shadowsoffire.apotheosis.mixin.accessors;
 
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.GoalSelector;
