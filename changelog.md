@@ -2,6 +2,13 @@
 * yeet the porting lib
 
 
+
+## 1.0.5
+* Fix armor not being repaired with life mending
+* Fix enchantments going away when anvil loses durability
+* Fix the puzzlelib anvil compat not initiating properly
+* Fix curse boss item erroring and not summoning bosses
+
 ## 1.0.4
 * Fix shift clicking in the salvaging table
 
