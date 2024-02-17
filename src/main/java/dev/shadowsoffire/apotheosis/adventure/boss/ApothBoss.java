@@ -9,7 +9,7 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import dev.shadowsoffire.apotheosis.adventure.loot.*;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
-import dev.shadowsoffire.apotheosis.mixin.MobAccessor;
+import dev.shadowsoffire.apotheosis.mixin.accessors.MobAccessor;
 import dev.shadowsoffire.apotheosis.mixin.accessors.NearestAttackableTargetGoalAccessor;
 import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.apotheosis.util.SupportingEntity;
@@ -19,7 +19,6 @@ import dev.shadowsoffire.placebo.json.*;
 import dev.shadowsoffire.placebo.json.GearSet.SetPredicate;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.ILuckyWeighted;
-import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingTableBehaviorEnchantment;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -279,8 +278,7 @@ public final class ApothBoss implements CodecProvider<ApothBoss>, ILuckyWeighted
         }
 
         if (AdventureConfig.curseBossItems) {
-            final ItemStack stk = stack; // Lambda rules require this instead of a direct reference to stack
-            List<Enchantment> curses = BuiltInRegistries.ENCHANTMENT.stream().filter(e -> ((CustomEnchantingTableBehaviorEnchantment) e).canApplyAtEnchantingTable(stk) && e.isCurse()).collect(Collectors.toList());
+            List<Enchantment> curses = BuiltInRegistries.ENCHANTMENT.stream().filter(Enchantment::isCurse).toList();
             if (!curses.isEmpty()) {
                 Enchantment curse = curses.get(rand.nextInt(curses.size()));
                 enchMap.put(curse, Mth.nextInt(rand, 1, EnchHooks.getMaxLevel(curse)));
