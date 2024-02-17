@@ -63,11 +63,6 @@ public class SalvagingMenu extends PlaceboContainerMenu {
                     SalvagingMenu.this.slotsChanged(SalvagingMenu.this.inputInventory);
                     super.setChanged();
                 }
-
-                @Override
-                public int getMaxStackSize() {
-                    return 1;
-                }
             });
         }
 

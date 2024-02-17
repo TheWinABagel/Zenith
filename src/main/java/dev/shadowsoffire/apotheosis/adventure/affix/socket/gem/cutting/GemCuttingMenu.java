@@ -12,6 +12,8 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.menu.PlaceboContainerMenu;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
+import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandler;
+import io.github.fabricators_of_create.porting_lib.transfer.item.RecipeWrapper;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
