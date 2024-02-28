@@ -2,7 +2,7 @@ package dev.shadowsoffire.apotheosis.ench.enchantments.corrupted;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
-import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityDamageEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -11,7 +11,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -51,12 +50,11 @@ public class BerserkersFuryEnchant extends Enchantment {
      * Handles the application of Berserker's Fury.
      */
     public void livingHurt() {
-        LivingEntityDamageEvents.HURT.register(e -> {
-            LivingEntity user = e.damaged;
-            if (e.damageSource.getEntity() instanceof Entity && user.getEffect(MobEffects.DAMAGE_RESISTANCE) == null) {
+        LivingEntityEvents.HURT.register((source, user, amount) -> {
+            if (source.getEntity() instanceof Entity && user.getEffect(MobEffects.DAMAGE_RESISTANCE) == null) {
                 int level = EnchantmentHelper.getEnchantmentLevel(this, user);
                 if (level > 0) {
-                    if (Affix.isOnCooldown(BuiltInRegistries.ENCHANTMENT.getKey(this), 900, user)) return;
+                    if (Affix.isOnCooldown(BuiltInRegistries.ENCHANTMENT.getKey(this), 900, user)) return amount;
                     user.invulnerableTime = 0;
                     user.hurt(user.damageSources().source(Apoth.DamageTypes.CORRUPTED), (float) Math.pow(2.5, level));
                     user.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 500, level - 1));
@@ -65,6 +63,7 @@ public class BerserkersFuryEnchant extends Enchantment {
                     Affix.startCooldown(BuiltInRegistries.ENCHANTMENT.getKey(this), user);
                 }
             }
+            return amount;
         });
     }
 

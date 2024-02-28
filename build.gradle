@@ -94,6 +94,7 @@ dependencies {
 
 	modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${project.reach_lib_version}")
 
+	modImplementation("io.github.fabricators_of_create.Porting-Lib:base:${project.port_lib_version}")
 	modImplementation("io.github.fabricators_of_create.Porting-Lib:accessors:${project.port_lib_version}")
 	modImplementation("io.github.fabricators_of_create.Porting-Lib:attributes:${project.port_lib_version}")
 	modImplementation("io.github.fabricators_of_create.Porting-Lib:client_events:${project.port_lib_version}")

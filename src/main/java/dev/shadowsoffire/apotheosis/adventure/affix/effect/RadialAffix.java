@@ -130,10 +130,7 @@ public class RadialAffix extends Affix {
     @SuppressWarnings("deprecation")
     public static void breakBlockRadius(ServerPlayer player, BlockPos pos, int x, int y, int xOff, int yOff, float hardness) {
         Level world = player.level();
-        if (x < 2 && y < 2) {
-            if (Apotheosis.enableDebug) AdventureModule.LOGGER.warn("Area is not large enough, aborting");
-            return;
-        }
+        if (x < 2 && y < 2) return;
         int lowerY = (int) Math.ceil(-y / 2D), upperY = (int) Math.round(y / 2D);
         int lowerX = (int) Math.ceil(-x / 2D), upperX = (int) Math.round(x / 2D);
 
@@ -147,7 +144,7 @@ public class RadialAffix extends Affix {
         HitResult trace = world.clip(new ClipContext(base, target, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player));
 
         if (trace == null || trace.getType() != Type.BLOCK){
-            if (Apotheosis.enableDebug) AdventureModule.LOGGER.warn("Trace is null, or trace type isnt block!");
+            if (Apotheosis.enableDebug) AdventureModule.LOGGER.warn("Hit result is null, or Hit result type isn't block!");
             return;
         }
         BlockHitResult res = (BlockHitResult) trace;

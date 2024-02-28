@@ -123,7 +123,6 @@ public class SocketHelper {
         int sockets = afxData != null ? afxData.getInt(SOCKETS) : 0;
         var event = new GetItemSocketsEvent(stack, sockets);
         //MinecraftForge.EVENT_BUS.post(event);
-        //AdventureModule.LOGGER.info("Stack {}, getInt {}", stack, sockets);
         return sockets;
     }
 

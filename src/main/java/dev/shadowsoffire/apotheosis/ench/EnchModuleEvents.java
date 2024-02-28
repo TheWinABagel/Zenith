@@ -7,7 +7,7 @@ import dev.shadowsoffire.apotheosis.ench.objects.ScrappingTomeItem;
 import dev.shadowsoffire.apotheosis.mixin.accessors.ItemCombinerMenuAccessor;
 import dev.shadowsoffire.apotheosis.util.Events;
 import fuzs.puzzleslib.api.event.v1.FabricPlayerEvents;
-import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityLootEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
 import io.github.fabricators_of_create.porting_lib.tags.Tags;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.fabricmc.loader.api.FabricLoader;
@@ -125,7 +125,7 @@ public class EnchModuleEvents {
     }
 
     public static void tridentLooting() {
-        LivingEntityLootEvents.LOOTING_LEVEL.register((src, target, currentLevel, recentlyHit) -> {
+        LivingEntityEvents.LOOTING_LEVEL.register((src, target, currentLevel, recentlyHit) -> {
             if (src != null && src.getDirectEntity() instanceof ThrownTrident trident) {
                 ItemStack triStack = ((TridentGetter) trident).getTridentItem();
                 return (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, triStack));
