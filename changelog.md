@@ -2,6 +2,9 @@
 * yeet the porting lib
 
 
+## 1.0.6
+* Properly check if anvil is vanilla and should be enchantable
+* Update porting lib loot to fix loot table issues (Full update to latest porting lib coming soon™️)
 
 ## 1.0.5
 * Fix armor not being repaired with life mending
