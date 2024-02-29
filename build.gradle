@@ -17,6 +17,10 @@ repositories {
 	maven { url = "https://mvn.devos.one/snapshots/" } 					//Porting lib snapshots
 	maven { url = "https://mvn.devos.one/releases/" }					//Porting lib releases (using both just in case)
 	maven {
+		name = "Porting Lib beta"
+		url = "https://mvn.devos.one/releases/"
+	}
+	maven {
 		name = "CCA"
 		url = 'https://maven.ladysnake.org/releases'
 	}
