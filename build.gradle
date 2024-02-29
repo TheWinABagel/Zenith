@@ -22,6 +22,10 @@ repositories {
 		url = "https://mvn.devos.one/snapshots/"
 	}
 	maven {
+		name = "Porting Lib beta"
+		url = "https://mvn.devos.one/releases/"
+	}
+	maven {
 		name = "CCA"
 		url = 'https://maven.ladysnake.org/releases'
 	}
@@ -109,7 +113,7 @@ dependencies {
 	modImplementation("io.github.fabricators_of_create.Porting-Lib:entity:${project.port_lib_version}")
 	modImplementation("io.github.fabricators_of_create.Porting-Lib:extensions:${project.port_lib_version}")
 	modImplementation("io.github.fabricators_of_create.Porting-Lib:lazy_registration:${project.port_lib_version}")
-	modImplementation("io.github.fabricators_of_create.Porting-Lib:loot:2.1.1102+1.20-entity-refactor") //Using a more recent version... hopefully fine?
+	modImplementation("io.github.fabricators_of_create.Porting-Lib:loot:2.2.1-beta+1.20.1") //Using a more recent version... hopefully fine?
 	modImplementation("io.github.fabricators_of_create.Porting-Lib:mixin_extensions:${project.port_lib_version}")
 	modImplementation("io.github.fabricators_of_create.Porting-Lib:models:${project.port_lib_version}")
 	modImplementation("io.github.fabricators_of_create.Porting-Lib:registries:${project.port_lib_version}")
