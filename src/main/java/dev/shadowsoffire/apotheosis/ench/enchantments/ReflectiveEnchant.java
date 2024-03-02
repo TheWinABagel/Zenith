@@ -3,12 +3,12 @@ package dev.shadowsoffire.apotheosis.ench.enchantments;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingTableBehaviorEnchantment;
 import io.github.fabricators_of_create.porting_lib.entity.events.ShieldBlockEvent;
-import io.github.fabricators_of_create.porting_lib.tool.ToolActions;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
@@ -35,7 +35,7 @@ public class ReflectiveEnchant extends Enchantment implements CustomEnchantingTa
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack) {
-        return CustomEnchantingTableBehaviorEnchantment.super.canApplyAtEnchantingTable(stack) || stack.canPerformAction(ToolActions.SHIELD_BLOCK);
+        return CustomEnchantingTableBehaviorEnchantment.super.canApplyAtEnchantingTable(stack) || stack.getItem() instanceof ShieldItem;
     }
 
     /**

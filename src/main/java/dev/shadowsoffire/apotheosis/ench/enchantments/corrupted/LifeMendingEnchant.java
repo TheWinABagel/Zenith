@@ -3,7 +3,6 @@ package dev.shadowsoffire.apotheosis.ench.enchantments.corrupted;
 import dev.emi.trinkets.api.TrinketsApi;
 import dev.shadowsoffire.attributeslib.api.HealEvent;
 import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingTableBehaviorEnchantment;
-import io.github.fabricators_of_create.porting_lib.tool.ToolActions;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -13,6 +12,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -47,7 +47,7 @@ public class LifeMendingEnchant extends Enchantment implements CustomEnchantingT
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack) {
-        return CustomEnchantingTableBehaviorEnchantment.super.canApplyAtEnchantingTable(stack) || stack.canPerformAction(ToolActions.SHIELD_BLOCK);
+        return CustomEnchantingTableBehaviorEnchantment.super.canApplyAtEnchantingTable(stack) || stack.getItem() instanceof ShieldItem;
     }
 
     @Override

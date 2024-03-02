@@ -6,7 +6,6 @@ import com.mojang.serialization.Codec;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import io.github.fabricators_of_create.porting_lib.item.ShieldBlockItem;
-import io.github.fabricators_of_create.porting_lib.tool.ToolActions;
 import io.github.fabricators_of_create.porting_lib.util.ServerLifecycleHooks;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.MinecraftServer;
@@ -45,7 +44,7 @@ public final class LootCategory {
     public static final LootCategory BOOTS = register("boots", armorSlot(EquipmentSlot.FEET), arr(EquipmentSlot.FEET));
     public static final LootCategory SHIELD = register("shield", s -> s.getItem() instanceof ShieldItem, arr(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND));
     public static final LootCategory TRIDENT = register("trident", s -> s.getItem() instanceof TridentItem, arr(EquipmentSlot.MAINHAND));
-    public static final LootCategory SWORD = register("sword", s -> s.canPerformAction(ToolActions.SWORD_SWEEP) || s.getItem() instanceof SwordItem || s.getItem().getAttributeModifiers(s, EquipmentSlot.MAINHAND).get(Attributes.ATTACK_DAMAGE).stream().anyMatch(m -> m.getAmount() > 0), arr(EquipmentSlot.MAINHAND));
+    public static final LootCategory SWORD = register("sword", s -> s.getItem() instanceof SwordItem || s.getItem().getAttributeModifiers(s, EquipmentSlot.MAINHAND).get(Attributes.ATTACK_DAMAGE).stream().anyMatch(m -> m.getAmount() > 0), arr(EquipmentSlot.MAINHAND));
     public static final LootCategory NONE = register("none", Predicates.alwaysFalse(), new EquipmentSlot[0]);
 
     private final String name;
@@ -199,7 +198,6 @@ public final class LootCategory {
                     if (t.getItem() instanceof ShieldBlockItem) return ((ShieldBlockItem) t.getItem()).canDisableShield(t, shield, this.holder, this.attacker);
                     return true;
                 }
-
 
             }
             catch (Exception ex) {
