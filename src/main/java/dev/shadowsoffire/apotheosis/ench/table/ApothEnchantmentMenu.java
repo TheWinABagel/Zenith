@@ -69,7 +69,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
         super(id, inv, wPos);
         this.player = inv.player;
         this.slots.clear();
-        this.addSecretSlot(new Slot(((EnchantmentMenuAccessor) this).getEnchantSlots(), 0, 15, 47){
+        this.addSecretSlot(new Slot(((EnchantmentMenuAccessor) this).getEnchantSlots(), 0, 15, 47) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return !stack.is(Tags.Items.ENCHANTING_FUELS);
@@ -143,7 +143,6 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
                 player.awardStat(Stats.ENCHANT_ITEM);
                 if (player instanceof ServerPlayer) {
                     ((EnchTrigger) CriteriaTriggers.ENCHANTED_ITEM).zenith$trigger((ServerPlayer) player, enchanted, level, eterna, quanta, arcana, rectification);
-                    //((EnchantedTrigger) CriteriaTriggers.ENCHANTED_ITEM).trigger((ServerPlayer) player, enchanted, level, eterna, quanta, arcana, rectification);
                 }
 
                 ((EnchantmentMenuAccessor) this).getEnchantSlots().setChanged();
@@ -376,15 +375,15 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
             buf.writeFloat(this.arcana);
             buf.writeFloat(this.rectification);
             buf.writeByte(this.clues);
-            buf.writeShort(blacklist.size());
-            for (Enchantment e : blacklist) {
+            buf.writeShort(this.blacklist.size());
+            for (Enchantment e : this.blacklist) {
                 buf.writeVarInt(BuiltInRegistries.ENCHANTMENT.getId(e));
             }
             buf.writeBoolean(this.treasure);
         }
 
         public static TableStats read(FriendlyByteBuf buf) {
-            float[] data = new float[]{buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readByte()};
+            float[] data = { buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readByte() };
             int size = buf.readShort();
             Set<Enchantment> blacklist = new HashSet<>(size);
             for (int i = 0; i < size; i++) {
@@ -411,7 +410,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
             }
 
             public void addEterna(float eterna, float max) {
-                this.eternaMap.put(max, eternaMap.getOrDefault(max, 0) + eterna);
+                this.eternaMap.put(max, this.eternaMap.getOrDefault(max, 0) + eterna);
             }
 
             public void addQuanta(float quanta) {

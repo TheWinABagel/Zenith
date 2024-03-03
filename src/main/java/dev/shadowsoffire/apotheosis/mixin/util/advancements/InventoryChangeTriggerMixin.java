@@ -54,7 +54,7 @@ public class InventoryChangeTriggerMixin {
         }
         if ("rarity".equals(type)) {
             var rarity = RarityRegistry.byLegacyId(json.get("rarity").getAsString().toLowerCase(Locale.ROOT));
-            return new ItemPredicate[] { new TrueItemPredicate(s -> rarity.isBound() && AffixHelper.getRarity(s) == rarity) };
+            return new ItemPredicate[] { new TrueItemPredicate(s -> !AffixHelper.getAffixes(s).isEmpty() && rarity.isBound() && AffixHelper.getRarity(s) == rarity) };
         }
         if ("gem_rarity".equals(type)) {
             var rarity = RarityRegistry.byLegacyId(json.get("rarity").getAsString().toLowerCase(Locale.ROOT));

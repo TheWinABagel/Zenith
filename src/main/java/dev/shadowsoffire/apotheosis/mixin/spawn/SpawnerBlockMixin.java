@@ -32,6 +32,8 @@ import net.minecraft.world.level.block.SpawnerBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -52,14 +54,28 @@ public abstract class SpawnerBlockMixin extends BaseEntityBlock {
     @Override
     public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity te, ItemStack stack) {
         if (Apotheosis.enableSpawner && SpawnerModule.spawnerSilkLevel != -1 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, stack) >= SpawnerModule.spawnerSilkLevel) {
-            ItemStack s = new ItemStack(this);
-            if (te != null) s.getOrCreateTag().put("BlockEntityTag", te.saveWithoutMetadata());
-            popResource(world, pos, s);
-            player.getMainHandItem().hurtAndBreak(SpawnerModule.spawnerSilkDamage, player, pl -> pl.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+            if (SpawnerModule.spawnerSilkDamage > 1) {
+                player.getMainHandItem().hurtAndBreak(SpawnerModule.spawnerSilkDamage - 1, player, pl -> pl.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+            }
             player.awardStat(Stats.BLOCK_MINED.get(this));
             player.causeFoodExhaustion(0.035F);
         }
         else super.playerDestroy(world, player, pos, state, te, stack);
+    }
+
+    @Override
+    @Deprecated
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
+        ItemStack tool = params.getParameter(LootContextParams.TOOL);
+
+        if (SpawnerModule.spawnerSilkLevel != -1 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) >= SpawnerModule.spawnerSilkLevel) {
+            ItemStack s = new ItemStack(this);
+            BlockEntity te = params.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
+            if (te != null) s.getOrCreateTag().put("BlockEntityTag", te.saveWithoutMetadata());
+            return List.of(s);
+        }
+
+        return super.getDrops(state, params);
     }
 
     @Override

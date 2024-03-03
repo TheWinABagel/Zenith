@@ -43,7 +43,7 @@ public interface RarityClamp {
                 .apply(inst, Simple::new)));
 
         /**
-         * Acceps either a string as the rarity name or an object specifying "min" and "max" rarity names.
+         * Accepts either a string as the rarity name or an object specifying "min" and "max" rarity names.
          */
         public static final Codec<Simple> CODEC = Codec.either(STRING_CODEC, MIN_MAX_CODEC).xmap(e -> e.map(Function.identity(), Function.identity()), Either::right);
 

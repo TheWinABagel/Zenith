@@ -14,6 +14,7 @@ import dev.shadowsoffire.apotheosis.adventure.boss.BossRegistry;
 import dev.shadowsoffire.apotheosis.adventure.boss.Exclusion;
 import dev.shadowsoffire.apotheosis.adventure.boss.MinibossRegistry;
 import dev.shadowsoffire.apotheosis.adventure.loot.*;
+import dev.shadowsoffire.apotheosis.adventure.net.RadialStateChangeMessage;
 import dev.shadowsoffire.apotheosis.adventure.spawner.RogueSpawnerRegistry;
 import dev.shadowsoffire.apotheosis.util.AffixItemIngredient;
 import dev.shadowsoffire.apotheosis.util.GemIngredient;
@@ -42,12 +43,6 @@ public class AdventureModule {
     public static final Logger LOGGER = LogManager.getLogger("Zenith : Adventure");
     public static final boolean STAGES_LOADED = FabricLoader.getInstance().isModLoaded("gamestages");
 
-
-
-    public AdventureModule() {
-        Adventure.bootstrap();
-    }
-
     public void preInit() {
     //    ObfuscationReflectionHelper.setPrivateValue(RangedAttribute.class, (RangedAttribute) Attributes.ARMOR, 200D, "f_22308_");
     //    ObfuscationReflectionHelper.setPrivateValue(RangedAttribute.class, (RangedAttribute) Attributes.ARMOR_TOUGHNESS, 100D, "f_22308_");
@@ -65,29 +60,18 @@ public class AdventureModule {
         BossRegistry.INSTANCE.register();
         RogueSpawnerRegistry.INSTANCE.register();
         MinibossRegistry.INSTANCE.register();
-        structureDatapack();
 
         //    if (FabricLoader.getInstance().isModLoaded("gateways")) GatewaysCompat.register();
-        //    if (FabricLoader.getInstance().isModLoaded("theoneprobe")) AdventureTOPPlugin.register();
-        //    if (FabricLoader.getInstance().isModLoaded("twilightforest")) AdventureTwilightCompat.register();
-            //LootSystem.defaultBlockTable(Blocks.SIMPLE_REFORGING_TABLE);
-            //LootSystem.defaultBlockTable(Blocks.REFORGING_TABLE);
-            //LootSystem.defaultBlockTable(Blocks.SALVAGING_TABLE);
-            //LootSystem.defaultBlockTable(Blocks.GEM_CUTTING_TABLE);
-            Registry.register(BuiltInRegistries.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "random_affix_item"), AffixLootPoolEntry.TYPE);
-            Registry.register(BuiltInRegistries.LOOT_POOL_ENTRY_TYPE, new ResourceLocation(Apotheosis.MODID, "random_gem"), GemLootPoolEntry.TYPE);
-            Exclusion.initSerializers();
-            GemBonus.initCodecs();
+        //TODO Add support for the gateways port
+        Registry.register(BuiltInRegistries.LOOT_POOL_ENTRY_TYPE, Apotheosis.loc("random_affix_item"), AffixLootPoolEntry.TYPE);
+        Registry.register(BuiltInRegistries.LOOT_POOL_ENTRY_TYPE, Apotheosis.loc("random_gem"), GemLootPoolEntry.TYPE);
+        Exclusion.initSerializers();
+        GemBonus.initCodecs();
+        RadialStateChangeMessage.init();
         CustomIngredientSerializer.register(GemIngredient.Serializer.INSTANCE);
         CustomIngredientSerializer.register(AffixItemIngredient.Serializer.INSTANCE);
-            //CraftingHelper.register(Apotheosis.loc("affix_item"), AffixItemIngredient.Serializer.INSTANCE);
-        //    CraftingHelper.register(Apotheosis.loc("gem"), GemIngredient.Serializer.INSTANCE);
-/*
-            TabFillingRegistry.register(Adventure.Tabs.ADVENTURE.getKey(), Items.COMMON_MATERIAL, Items.UNCOMMON_MATERIAL, Items.RARE_MATERIAL, Items.EPIC_MATERIAL, Items.MYTHIC_MATERIAL, Items.GEM_DUST, Items.VIAL_OF_EXPULSION,
-                Items.VIAL_OF_EXTRACTION, Items.VIAL_OF_UNNAMING, Items.SIGIL_OF_SOCKETING, Items.SIGIL_OF_ENHANCEMENT, Items.SUPERIOR_SIGIL_OF_SOCKETING, Items.SUPERIOR_SIGIL_OF_ENHANCEMENT, Items.BOSS_SUMMONER,
-                Items.SIMPLE_REFORGING_TABLE, Items.REFORGING_TABLE, Items.SALVAGING_TABLE, Items.GEM_CUTTING_TABLE);
-            TabFillingRegistry.register(Adventure.Tabs.ADVENTURE.getKey(), Items.GEM);*/
-        tiles();
+
+        structureDatapack();
         serializers();
         blocks();
         items();
@@ -146,11 +130,6 @@ public class AdventureModule {
         Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), Apotheosis.loc("affix_loot"), AffixLootModifier.CODEC);
         Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), Apotheosis.loc("affix_conversion"), AffixConvertLootModifier.CODEC);
         Registry.register(PortingLibLoot.GLOBAL_LOOT_MODIFIER_SERIALIZERS.get(), Apotheosis.loc("affix_hook"), AffixHookLootModifier.CODEC);
-
-    /*    if (e.getForgeRegistry() == (Object) ForgeRegistries.BIOME_MODIFIER_SERIALIZERS.get()) {
-            e.getForgeRegistry().register("blacklist", BlacklistModifier.CODEC);
-        }*/
-
     }
 
     public static void structureDatapack() {

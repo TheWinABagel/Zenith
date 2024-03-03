@@ -116,7 +116,7 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
                 list.add(Component.translatable("tooltip.enchlib.extracting", Component.translatable("enchantment.level." + targetLevel)).withStyle(ChatFormatting.BLUE));
                 list.add(Component.translatable("tooltip.enchlib.cost", cost).withStyle(cost > libSlot.points ? ChatFormatting.RED : ChatFormatting.GOLD));
             }
-            gfx.renderComponentTooltip(font, list.stream().map(formatted -> (Component) Component.literal(formatted.getString())).toList(), this.leftPos - 16 - list.stream().map(this.font::width).max(Integer::compare).get(), mouseY);
+            gfx.renderComponentTooltip(this.font, list.stream().map(formatted -> (Component) Component.literal(formatted.getString())).toList(), this.leftPos - 16 - list.stream().map(this.font::width).max(Integer::compare).get(), mouseY);
         }
     }
 
@@ -134,8 +134,8 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
             idx++;
         }
 
-        gfx.drawString(font, Component.translatable("tooltip.enchlib.nfilt"), this.leftPos + 91, this.topPos + 20, 4210752, false);
-        gfx.drawString(font, Component.translatable("tooltip.enchlib.ifilt"), this.leftPos + 91, this.topPos + 50, 4210752, false);
+        gfx.drawString(this.font, Component.translatable("tooltip.enchlib.nfilt"), this.leftPos + 91, this.topPos + 20, 4210752, false);
+        gfx.drawString(this.font, Component.translatable("tooltip.enchlib.ifilt"), this.leftPos + 91, this.topPos + 50, 4210752, false);
     }
 
     private void renderEntry(GuiGraphics gfx, LibrarySlot data, int x, int y, int mouseX, int mouseY) {
@@ -151,7 +151,7 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
             scale = 60F / this.font.width(txt);
         }
         stack.scale(scale, scale, 1);
-        gfx.drawString(font, txt, (int) ((x + 2) / scale), (int) ((y + 2) / scale), 0xFFFF80, false);
+        gfx.drawString(this.font, txt, (int) ((x + 2) / scale), (int) ((y + 2) / scale), 0xFFFF80, false);
         stack.popPose();
     }
 

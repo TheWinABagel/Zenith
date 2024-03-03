@@ -53,7 +53,7 @@ public class EnchWTHITPlugin implements IWailaPlugin, IBlockComponentProvider {
             CommonTooltipUtil.appendTableStats(accessor.getWorld(), accessor.getPosition(), tooltip::addLine);
         }
 
-        if (accessor.getBlock() == Ench.Blocks.FILTERING_SHELF) handleFilteringShelf(tooltip, accessor);
+        if (accessor.getBlock() == Ench.Blocks.FILTERING_SHELF) this.handleFilteringShelf(tooltip, accessor);
     }
 
     @Override

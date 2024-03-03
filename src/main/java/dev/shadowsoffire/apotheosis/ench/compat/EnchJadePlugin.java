@@ -61,7 +61,7 @@ public class EnchJadePlugin implements IWailaPlugin, IBlockComponentProvider, IS
             tooltip.remove(Identifiers.MC_TOTAL_ENCHANTMENT_POWER);
         }
 
-        if (accessor.getBlock() == Ench.Blocks.FILTERING_SHELF) handleFilteringShelf(tooltip, accessor);
+        if (accessor.getBlock() == Ench.Blocks.FILTERING_SHELF) this.handleFilteringShelf(tooltip, accessor);
     }
 
     @Override

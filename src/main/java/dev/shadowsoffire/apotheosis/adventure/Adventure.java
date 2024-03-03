@@ -109,7 +109,7 @@ public class Adventure {
             return new SalvageItem(RarityRegistry.INSTANCE.holder(Apotheosis.loc(id)), new Item.Properties());
         }
 
-        private static void bootstrap() {};
+        private static void bootstrap() {}
 
     }
 
@@ -119,14 +119,14 @@ public class Adventure {
         public static final MenuType<GemCuttingMenu> GEM_CUTTING = ScreenHandlerRegistry.registerSimple(Apotheosis.loc("gem_cutting"), GemCuttingMenu::new);
         public static final MenuType<SalvagingMenu> SALVAGE = Registry.register(BuiltInRegistries.MENU, Apotheosis.loc("salvage"), new ExtendedScreenHandlerType<>(SalvagingMenu::new)); //Registry.register(BuiltInRegistries.MENU, Apotheosis.loc("salvage"),new ExtendedScreenHandlerType<>(SalvagingMenu::new));
 
-        private static void bootstrap() {};
+        private static void bootstrap() {}
     }
 
     public static class RecipeTypes {
         public static final RecipeType<SalvagingRecipe> SALVAGING = RecipeType.register("zenith:salvaging");
         public static final RecipeType<ReforgingRecipe> REFORGING = RecipeType.register("zenith:reforging");
 
-        private static void bootstrap() {};
+        private static void bootstrap() {}
     }
 
     public static class Tabs {
@@ -190,6 +190,6 @@ public class Adventure {
         RecipeTypes.bootstrap();
         Tabs.bootstrap();
         Tiles.bootstrap();
-    };
+    }
 
 }

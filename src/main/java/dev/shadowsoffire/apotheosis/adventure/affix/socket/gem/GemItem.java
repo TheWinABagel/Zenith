@@ -23,6 +23,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -39,24 +40,22 @@ public class GemItem extends Item  {
 
     @Environment(EnvType.CLIENT)
     @Override
-    public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> tooltip, TooltipFlag pIsAdvanced) {
-        DynamicHolder<Gem> gem = getGem(pStack);
-        DynamicHolder<LootRarity> rarity = AffixHelper.getRarity(pStack);
-        if (!gem.isBound() || !rarity.isBound()) {
+    public void appendHoverText(ItemStack stack, Level pLevel, List<Component> tooltip, TooltipFlag isAdvanced) {
+        GemInstance inst = GemInstance.unsocketed(stack);
+        if (!inst.isValidUnsocketed()) {
             tooltip.add(Component.literal("Errored gem with no bonus!").withStyle(ChatFormatting.GRAY));
             return;
         }
-        gem.get().addInformation(pStack, rarity.get(), tooltip::add);
+        inst.gem().get().addInformation(stack, inst.rarity().get(), tooltip::add);
     }
 
     @Override
     public Component getName(ItemStack pStack) {
-        DynamicHolder<Gem> gem = getGem(pStack);
-        DynamicHolder<LootRarity> rarity = AffixHelper.getRarity(pStack);
-        if (!gem.isBound() || !rarity.isBound()) return super.getName(pStack);
+        GemInstance inst = GemInstance.unsocketed(pStack);
+        if (!inst.isValidUnsocketed()) return super.getName(pStack);
         MutableComponent comp = Component.translatable(this.getDescriptionId(pStack));
-        comp = Component.translatable("item.zenith.gem." + rarity.getId(), comp);
-        return comp.withStyle(Style.EMPTY.withColor(rarity.get().getColor()));
+        comp = Component.translatable("item.zenith.gem." + inst.rarity().getId(), comp);
+        return comp.withStyle(Style.EMPTY.withColor(inst.rarity().get().getColor()));
     }
 
     @Override
@@ -68,10 +67,9 @@ public class GemItem extends Item  {
 
     @Override
     public boolean isFoil(ItemStack pStack) {
-        DynamicHolder<Gem> gem = getGem(pStack);
-        DynamicHolder<LootRarity> rarity = AffixHelper.getRarity(pStack);
-        if (!gem.isBound() || !rarity.isBound()) return super.isFoil(pStack);
-        return gem.get().getMaxRarity() == rarity.get();
+        GemInstance inst = GemInstance.unsocketed(pStack);
+        if (!inst.isValidUnsocketed()) return super.isFoil(pStack);
+        return inst.isMaxRarity();
     }
 
     @Override
@@ -106,6 +104,16 @@ public class GemItem extends Item  {
         DynamicHolder<Gem> gem = getGem(gemStack);
         if (!gem.isBound()) return Collections.emptyList();
         return getOrCreateUUIDs(gemStack.getOrCreateTag(), gem.get().getNumberOfUUIDs());
+    }
+
+    @Override
+    @Nullable
+    public String getCreatorModId(ItemStack stack) {
+        GemInstance inst = GemInstance.unsocketed(stack);
+        if (inst.isValidUnsocketed()) {
+            return inst.gem().getId().getNamespace();
+        }
+        return super.getCreatorModId(stack);
     }
 
     /**
@@ -155,7 +163,7 @@ public class GemItem extends Item  {
      * Retrieves the underlying Gem instance of this gem stack.
      *
      * @param gem The gem stack
-     * @returns The backing Gem, or null if the gem does not exist or is invalid.
+     * @return A {@link DynamicHolder} targetting the gem, which may be unbound if the gem is missing or invalid.
      */
     public static DynamicHolder<Gem> getGem(ItemStack gem) {
         if (gem.getItem() != Items.GEM || !gem.hasTag()) return GemRegistry.INSTANCE.emptyHolder();

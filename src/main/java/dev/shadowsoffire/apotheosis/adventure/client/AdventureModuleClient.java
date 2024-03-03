@@ -85,6 +85,8 @@ public class AdventureModuleClient {
         renderBossBeam();
         BossSpawnMessage.init();
         CoreShaderRegistrationCallback.EVENT.register(context -> context.register(Apotheosis.loc("gray"), DefaultVertexFormat.NEW_ENTITY, shaderInstance -> {}));
+        AdventureKeys.registerKeys();
+        AdventureKeys.handleKeys();
     }
 
     public static void onBossSpawn(BlockPos pos, float[] color) {

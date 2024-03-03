@@ -7,7 +7,6 @@ import dev.shadowsoffire.apotheosis.ench.EnchantmentInfo;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu.Arcana;
 import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingBehaviorItem;
 import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingTableBehaviorEnchantment;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.Util;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.Mth;
@@ -197,7 +196,7 @@ public class RealEnchantmentHelper {
 
         float rectPercent = rectification / 100F;
 
-        if (factor < (rectPercent - 1)) {
+        if (factor < rectPercent - 1) {
             factor = Mth.nextFloat(rand, rectPercent - 1, 1);
         }
 

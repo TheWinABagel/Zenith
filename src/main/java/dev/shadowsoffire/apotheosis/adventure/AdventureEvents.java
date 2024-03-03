@@ -34,9 +34,6 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
@@ -47,7 +44,6 @@ import net.minecraft.world.phys.HitResult;
 import net.spell_engine.api.spell.SpellEvents;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AdventureEvents {
@@ -88,27 +84,12 @@ public class AdventureEvents {
         });
     }
 
-    private static final UUID HEAVY_WEAPON_AS = UUID.fromString("f8c3de3d-1fea-4d7c-a8b0-29f63c4c3454");
-
     public static void affixModifiers() {
         ItemAttributeModifierEvent.GATHER_TOOLTIPS.register(e -> {
             ItemStack stack = e.stack;
             if (stack.hasTag()) {
                 var affixes = AffixHelper.getAffixes(stack);
                 affixes.forEach((afx, inst) -> inst.addModifiers(e.slot, e::addModifier));
-                if (!affixes.isEmpty() && LootCategory.forItem(stack) == LootCategory.HEAVY_WEAPON && e.slot == EquipmentSlot.MAINHAND) {
-                    double amt = -0.15 - 0.10 * affixes.values().stream().findAny().get().rarity().get().ordinal();
-//                    AttributeModifier baseAS = e.originalModifiers.get(Attributes.ATTACK_SPEED).stream().filter(a -> ItemAccess.getBaseAS() == a.getId()).findFirst().orElse(null);
-                    AttributeModifier baseAS = null; //todo UPDATE zenith attributes to not be null all the time
-                    if (baseAS != null) {
-                        // Try to not reduce attack speed below 0.4 if possible.
-                        double value = 4 + baseAS.getAmount();
-                        double clampedAmt = 0.4F / value - 1;
-                        amt = Math.max(amt, clampedAmt);
-                        if (amt >= 0) return;
-                    }
-                    e.addModifier(Attributes.ATTACK_SPEED, new AttributeModifier(HEAVY_WEAPON_AS, "Heavy Weapon AS", amt, Operation.MULTIPLY_TOTAL));
-                }
             }
         });
     }

@@ -114,38 +114,26 @@ public class EnchModuleClient {
                             tooltip.add(Component.translatable(ench.getDescriptionId() + ".desc").withStyle(ChatFormatting.DARK_GRAY));
                         }
                     }
-                    var info = EnchModule.getEnchInfo(ench);
-                    Object[] args = new Object[4];
-                    args[0] = boolComp("info.zenith.discoverable", info.isDiscoverable());
-                    args[1] = boolComp("info.zenith.lootable", info.isLootable());
-                    args[2] = boolComp("info.zenith.tradeable", info.isTradeable());
-                    args[3] = boolComp("info.zenith.treasure", info.isTreasure());
-                    if (context.isAdvanced()) {
-                        tooltip.add(Component.translatable("%s \u2507 %s \u2507 %s \u2507 %s", args[0], args[1], args[2], args[3]).withStyle(ChatFormatting.DARK_GRAY));
-                        tooltip.add(Component.translatable("info.zenith.book_range", info.getMinPower(lvl), info.getMaxPower(lvl)).withStyle(ChatFormatting.GREEN));
-                    }
-                    else {
-                        tooltip.add(Component.translatable("%s \u2507 %s", args[2], args[3]).withStyle(ChatFormatting.DARK_GRAY));
+                    if (EnchConfig.showEnchantedBookMetadata) {
+                        var info = EnchModule.getEnchInfo(ench);
+                        Object[] args = new Object[4];
+                        args[0] = boolComp("info.apotheosis.discoverable", info.isDiscoverable());
+                        args[1] = boolComp("info.apotheosis.lootable", info.isLootable());
+                        args[2] = boolComp("info.apotheosis.tradeable", info.isTradeable());
+                        args[3] = boolComp("info.apotheosis.treasure", info.isTreasure());
+                        if (context.isAdvanced()) {
+                            tooltip.add(Component.translatable("%s \u2507 %s \u2507 %s \u2507 %s", args[0], args[1], args[2], args[3]).withStyle(ChatFormatting.DARK_GRAY));
+                            tooltip.add(Component.translatable("info.apotheosis.book_range", info.getMinPower(lvl), info.getMaxPower(lvl)).withStyle(ChatFormatting.GREEN));
+                        }
+                        else {
+                            tooltip.add(Component.translatable("%s \u2507 %s", args[2], args[3]).withStyle(ChatFormatting.DARK_GRAY));
+                        }
                     }
                 }
             }
         });
 
     }
-/* //TODO implement via mixin
-    public void drawAnvilCostBlob(ScreenEvent.Render.Post e) {
-        if (e.getScreen() instanceof AnvilScreen anv) {
-            int level = anv.getMenu().getCost();
-            if (level <= 0 || !anv.getMenu().getSlot(anv.getMenu().getResultSlot()).hasItem()) return;
-            List<Component> list = new ArrayList<>();
-            list.add(Component.literal(I18n.get("info.zenith.anvil_at", level)).withStyle(ChatFormatting.UNDERLINE, ChatFormatting.GREEN));
-            int expCost = EnchantmentUtils.getTotalExperienceForLevel(level);
-            list.add(Component.translatable("info.zenith.anvil_xp_cost", Component.literal("" + expCost).withStyle(ChatFormatting.GREEN),
-                    Component.literal("" + level).withStyle(ChatFormatting.GREEN)));
-            DrawsOnLeft.draw(anv, e.getGuiGraphics(), list, anv.getGuiTop() + 28);
-        }
-    }*/
-
 
     private static Component boolComp(String key, boolean flag) {
         return Component.translatable(key + (flag ? "" : ".not")).withStyle(Style.EMPTY.withColor(flag ? 0x108810 : 0xAA1616));

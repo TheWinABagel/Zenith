@@ -44,7 +44,7 @@ public class LootController {
      * @return The modifed ItemStack (note the original is not preserved, but the stack is returned for simplicity).
      */
     public static ItemStack createLootItem(ItemStack stack, LootCategory cat, LootRarity rarity, RandomSource rand) {
-        Set<DynamicHolder<Affix>> selected = new HashSet<>();
+        Set<DynamicHolder<Affix>> selected = new LinkedHashSet<>();
         MutableInt sockets = new MutableInt(0);
         float durability = 0;
         for (LootRarity.LootRule rule : rarity.getRules()) {

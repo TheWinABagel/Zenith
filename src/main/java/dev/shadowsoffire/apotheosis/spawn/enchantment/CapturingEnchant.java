@@ -51,9 +51,7 @@ public class CapturingEnchant extends Enchantment implements CustomEnchantingTab
         if (killer instanceof LivingEntity living) {
             int level = EnchantmentHelper.getItemEnchantmentLevel(SpawnerModule.CAPTURING, living.getMainHandItem());
             if (level <= 0) return;
-            if (enableDebug) SpawnerModule.LOG.info("Has capturing level: {}", level);
             if (SpawnerModule.bannedMobs.contains(EntityType.getKey(killed.getType()))) return;
-            if (enableDebug) SpawnerModule.LOG.info("Mob is not banned");
             if (killed.level().random.nextFloat() < level / 250F) {
                 if (enableDebug) SpawnerModule.LOG.info(String.valueOf(killed.getType()));
                 Item eggItem = SpawnEggItem.byId(killed.getType());

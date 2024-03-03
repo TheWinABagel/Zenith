@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.effect;
 
+import com.google.common.base.Predicate;
 import com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -13,6 +14,7 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.placebo.util.PlaceboUtil;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -68,11 +70,9 @@ public class RadialAffix extends Affix {
     // EventPriority.LOW
     public void onBreak(Level world, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity) {
         ItemStack tool = player.getMainHandItem();
-        //if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Radial affix breaking");
         if (!world.isClientSide && tool.hasTag()) {
-        //    if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("World is not client side, Tool has tag");
             AffixInstance inst = AffixHelper.getAffixes(tool).get(Affixes.RADIAL);
-            if (inst != null && inst.isValid()) {
+            if (inst != null && inst.isValid() && RadialState.getState(player).isRadialMiningEnabled(player)) {
                 if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Affix instance is valid");
                 float hardness = state.getDestroySpeed(world, pos);
                 breakExtraBlocks((ServerPlayer) player, pos, tool, this.getTrueLevel(inst.rarity().get(), inst.level()), hardness);
@@ -90,16 +90,14 @@ public class RadialAffix extends Affix {
         return CODEC;
     }
 
-    static record RadialData(int x, int y, int xOff, int yOff) {
-
-        public static Codec<RadialData> CODEC = RecordCodecBuilder.create(inst -> inst
-            .group(
-                Codec.INT.fieldOf("x").forGetter(RadialData::x),
-                Codec.INT.fieldOf("y").forGetter(RadialData::y),
-                Codec.INT.fieldOf("xOff").forGetter(RadialData::xOff),
-                Codec.INT.fieldOf("yOff").forGetter(RadialData::yOff))
-            .apply(inst, RadialData::new));
-
+    /**
+     * Updates the players radial state to the next state, and notifies them of the change.
+     */
+    public static void toggleRadialState(Player player) {
+        RadialState state = RadialState.getState(player);
+        RadialState next = state.next();
+        RadialState.setState(player, next);
+        player.sendSystemMessage(Apotheosis.sysMessageHeader().append(Component.translatable("misc.zenith.radial_state_updated", next.toComponent(), state.toComponent()).withStyle(ChatFormatting.YELLOW)));
     }
 
     /**
@@ -112,11 +110,8 @@ public class RadialAffix extends Affix {
      */
     public static void breakExtraBlocks(ServerPlayer player, BlockPos pos, ItemStack tool, RadialData level, float hardness) {
         if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("BreakExtraBlocks initialised");
-        if (!breakers.add(player.getUUID())) {
-            if (Apotheosis.enableDebug) AdventureModule.LOGGER.warn("Multiple break attempts by the same player");
-            return; // Prevent multiple break operations from cascading, and don't execute when sneaking.
-        }
-        if (!player.isShiftKeyDown()) try {
+        if (!breakers.add(player.getUUID())) return; // Prevent multiple break operations from cascading, and don't execute when sneaking.
+        try {
             if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Shift key is not down, attempting to break in a radius");
             breakBlockRadius(player, pos, level.x, level.y, level.xOff, level.yOff, hardness);
         }
@@ -179,6 +174,66 @@ public class RadialAffix extends Affix {
 
     static boolean isEffective(BlockState state, Player player) {
         return player.hasCorrectToolForDrops(state);
+    }
+
+
+    static record RadialData(int x, int y, int xOff, int yOff) {
+
+        public static Codec<RadialData> CODEC = RecordCodecBuilder.create(inst -> inst
+                .group(
+                        Codec.INT.fieldOf("x").forGetter(RadialData::x),
+                        Codec.INT.fieldOf("y").forGetter(RadialData::y),
+                        Codec.INT.fieldOf("xOff").forGetter(RadialData::xOff),
+                        Codec.INT.fieldOf("yOff").forGetter(RadialData::yOff))
+                .apply(inst, RadialData::new));
+
+    }
+
+    static enum RadialState {
+        REQUIRE_NOT_SNEAKING(p -> !p.isShiftKeyDown()),
+        REQUIRE_SNEAKING(Player::isShiftKeyDown),
+        ENABLED(p -> true),
+        DISABLED(p -> false);
+
+        private Predicate<Player> condition;
+
+        RadialState(Predicate<Player> condition) {
+            this.condition = condition;
+        }
+
+        /**
+         * @return If the radial breaking feature is enabled while the player is in the current state
+         */
+        public boolean isRadialMiningEnabled(Player input) {
+            return this.condition.apply(input);
+        }
+
+        public RadialState next() {
+            return switch (this) {
+                case REQUIRE_NOT_SNEAKING -> REQUIRE_SNEAKING;
+                case REQUIRE_SNEAKING -> ENABLED;
+                case ENABLED -> DISABLED;
+                case DISABLED -> REQUIRE_NOT_SNEAKING;
+            };
+        }
+
+        public Component toComponent() {
+            return Component.translatable("misc.apotheosis.radial_state." + this.name().toLowerCase(Locale.ROOT));
+        }
+
+        public static RadialState getState(Player player) {
+            String str = player.getCustomData().getString("zenith.radial_state"); //todo Move to CCA, this can be removed completely safely
+            try {
+                return RadialState.valueOf(str);
+            }
+            catch (Exception ex) {
+                return RadialState.REQUIRE_SNEAKING;
+            }
+        }
+
+        public static void setState(Player player, RadialState state) {
+            player.getCustomData().putString("zenith.radial_state", state.name());
+        }
     }
 
 }

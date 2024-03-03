@@ -226,8 +226,6 @@ public class AdventureConfig {
 
     }
 
-    public record ReforgeData(int matCost, int dustCost, int levelCost) {}
-
     public static boolean canGenerateIn(WorldGenLevel world) {
         ResourceKey<Level> key = world.getLevel().dimension();
         return DIM_WHITELIST.contains(key.location());

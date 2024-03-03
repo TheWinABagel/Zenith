@@ -1,7 +1,10 @@
 {
 	"comment_id": "/Adventure Module",
 
-    "info.zenith.affix_item": "Zenith Affix Item",
+	"key.categories.zenith": "Apotheosis",
+	"key.zenith.toggle_radial_mining": "Change Radial Mining Mode",
+
+	"info.zenith.affix_item": "Zenith Affix Item",
 	
 	"death.attack.zenith.execute": "%s was executed by %s",
 	"death.attack.zenith.execute.item": "%s was executed by %s using %s",
@@ -9,8 +12,14 @@
 	"misc.zenith.affix_name.two": "%s %s",
 	"misc.zenith.affix_name.three": "%s %s %s",
 	"misc.zenith.affix_name.four": "%s %s %s %s",
-	
-    "affix.zenith:armor/attribute/blessed": "Blessed",
+
+	"misc.zenith.radial_state_updated": "Radial mining mode updated to \"%s\"",
+	"misc.zenith.radial_state.require_not_sneaking": "Disabled While Sneaking",
+	"misc.zenith.radial_state.require_sneaking": "Enabled While Sneaking",
+	"misc.zenith.radial_state.enabled": "Enabled",
+	"misc.zenith.radial_state.disabled": "Disabled",
+
+	"affix.zenith:armor/attribute/blessed": "Blessed",
     "affix.zenith:armor/attribute/blessed.suffix": "of Health",
 
     "affix.zenith:armor/attribute/windswept": "Windswept",
@@ -927,6 +936,7 @@
     "forge.entity_gravity": "Gravity",
     "block.reeds": "Sugar Cane",
     "potion.potency.3": "IV",
+	"enchantment.level.0": "0",
     "enchantment.level.11": "XI",
     "enchantment.level.12": "XII",
     "enchantment.level.13": "XIII",
