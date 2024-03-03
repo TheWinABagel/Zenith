@@ -4,7 +4,6 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.spawn.enchantment.CapturingEnchant;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
 import dev.shadowsoffire.placebo.config.Configuration;
-import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import io.github.fabricators_of_create.porting_lib.entity.events.EntityEvents;
 import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
@@ -35,7 +34,7 @@ import static dev.shadowsoffire.apotheosis.Apotheosis.enableDebug;
 public class SpawnerModule {
 
     public static final Logger LOG = LogManager.getLogger("Zenith : Spawner");
-    public static final RecipeType<SpawnerModifier> MODIFIER = PlaceboUtil.makeRecipeType("zenith:spawner_modifier");
+    public static final RecipeType<SpawnerModifier> MODIFIER = RecipeType.register("zenith:spawner_modifier");
     public static int spawnerSilkLevel = 1;
     public static int spawnerSilkDamage = 100;
     public static Set<ResourceLocation> bannedMobs = new HashSet<>();

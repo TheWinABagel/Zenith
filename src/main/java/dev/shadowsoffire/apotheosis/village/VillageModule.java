@@ -7,7 +7,6 @@ import dev.shadowsoffire.apotheosis.village.fletching.FletchingRecipe;
 import dev.shadowsoffire.apotheosis.village.fletching.arrows.*;
 import dev.shadowsoffire.apotheosis.village.wanderer.WandererReplacements;
 import dev.shadowsoffire.placebo.config.Configuration;
-import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.core.Position;
@@ -35,7 +34,7 @@ import java.io.File;
 public class VillageModule {
     public static final Logger LOGGER = LogManager.getLogger("Zenith : Village");
     public static final RecipeSerializer<FletchingRecipe> FLETCHING_SERIALIZER = new FletchingRecipe.Serializer();
-    public static final RecipeType<FletchingRecipe> FLETCHING = PlaceboUtil.makeRecipeType("zenith:fletching");
+    public static final RecipeType<FletchingRecipe> FLETCHING = RecipeType.register("zenith:fletching");
     public static final MenuType<FletchingContainer> FLETCHING_MENU = ScreenHandlerRegistry.registerSimple(Apotheosis.loc("fletching"), FletchingContainer::new);
 
 

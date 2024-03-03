@@ -24,7 +24,6 @@ import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.ench.objects.GlowyBlockItem.GlowyItem;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntityType;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
-import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
@@ -124,8 +123,10 @@ public class Adventure {
     }
 
     public static class RecipeTypes {
-        public static final RecipeType<SalvagingRecipe> SALVAGING = PlaceboUtil.makeRecipeType("zenith:salvaging");
-        public static final RecipeType<ReforgingRecipe> REFORGING = PlaceboUtil.makeRecipeType("zenith:reforging");
+        public static final RecipeType<SalvagingRecipe> SALVAGING = RecipeType.register("zenith:salvaging");
+        public static final RecipeType<ReforgingRecipe> REFORGING = RecipeType.register("zenith:reforging");
+
+        private static void bootstrap() {};
     }
 
     public static class Tabs {
@@ -186,6 +187,7 @@ public class Adventure {
         Items.bootstrap();
         Features.bootstrap();
         Menus.bootstrap();
+        RecipeTypes.bootstrap();
         Tabs.bootstrap();
         Tiles.bootstrap();
     };

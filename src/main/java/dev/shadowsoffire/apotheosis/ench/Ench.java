@@ -21,7 +21,6 @@ import dev.shadowsoffire.apotheosis.ench.objects.TypedShelfBlock.SculkShelfBlock
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantTile;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingRecipe;
-import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
@@ -441,7 +440,7 @@ public class Ench {
     }
 
     public static final class RecipeTypes {
-        public static final RecipeType<EnchantingRecipe> INFUSION = PlaceboUtil.makeRecipeType("zenith:enchanting");
+        public static final RecipeType<EnchantingRecipe> INFUSION = RecipeType.register("zenith:enchanting");
         private static void bootstrap() {}
     }
 
