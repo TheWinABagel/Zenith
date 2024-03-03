@@ -59,13 +59,12 @@ public class EnchModule {
         Ench.bootstrap();
         particles();
         recipeSerializers();
-
+        PlaceboUtil.registerCustomColor(Ench.Colors.LIGHT_BLUE_FLASH);
         EnchModuleEvents.registerEvents();
 
 
         EnchantingStatRegistry.INSTANCE.register();
         ((BlockEntityTypeAccessor) BlockEntityType.ENCHANTING_TABLE).setFactory(ApothEnchantTile::new);
-        PlaceboUtil.registerCustomColor(Ench.Colors.LIGHT_BLUE_FLASH);
         reload(false);
     }
 

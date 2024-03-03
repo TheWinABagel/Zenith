@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.mixin.ench;
 
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
+import dev.shadowsoffire.placebo.events.PlaceboEventFactory;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -9,18 +10,25 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.*;
 
-@Mixin(ItemStack.class)
+@Mixin(value = ItemStack.class, priority = 500)
 public class ItemStackMixin {
 
 
+    @Shadow private @Nullable CompoundTag tag;
+
+    @Unique
     private static void appendModifiedEnchTooltip(List<Component> tooltip, Enchantment ench, int realLevel, int nbtLevel) {
         MutableComponent mc = ench.getFullname(realLevel).copy();
         mc.getSiblings().clear();
@@ -30,7 +38,7 @@ public class ItemStackMixin {
 
         int diff = realLevel - nbtLevel;
         char sign = diff > 0 ? '+' : '-';
-        Component diffComp = Component.translatable("(%s " + sign + " %s)", nbtLevelComp, Component.translatable("enchantment.level." + Math.abs(diff))).withStyle(ChatFormatting.DARK_GRAY);
+        Component diffComp = Component.translatable("(%s " + sign + " %s)", Component.translatable("enchantment.level." + Math.abs(diff)), nbtLevelComp).withStyle(ChatFormatting.DARK_GRAY);
         mc.append(CommonComponents.SPACE).append(diffComp);
         if (realLevel == 0) {
             mc.withStyle(ChatFormatting.DARK_GRAY);
@@ -43,7 +51,7 @@ public class ItemStackMixin {
      */
     @SuppressWarnings("deprecation")
     @Redirect(method = "getTooltipLines", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;appendEnchantmentNames(Ljava/util/List;Lnet/minecraft/nbt/ListTag;)V"))
-    public void apoth_enchTooltipRewrite(List<Component> tooltip, ListTag tagEnchants) {
+    public void zenith$enchTooltipRewrite(List<Component> tooltip, ListTag tagEnchants) {
         ItemStack ths = (ItemStack) (Object) this;
         Map<Enchantment, Integer> realLevels = new HashMap<>(EnchantmentHelper.getEnchantments(ths));
         List<Component> enchTooltips = new ArrayList<>();
@@ -55,8 +63,9 @@ public class ItemStackMixin {
             Enchantment ench = BuiltInRegistries.ENCHANTMENT.get(EnchantmentHelper.getEnchantmentId(compoundtag));
             if (ench == null || !realLevels.containsKey(ench)) continue;
 
-            int nbtLevel = EnchantmentHelper.getEnchantmentLevel(compoundtag);
-            int realLevel = realLevels.remove(ench);
+            int originalLevel = realLevels.remove(ench);
+            int nbtLevel = PlaceboEventFactory.getEnchantmentLevelSpecific(originalLevel, ths, ench) - originalLevel;
+            int realLevel = originalLevel + nbtLevel;
 
             if (nbtLevel == realLevel) {
                 // Default logic when levels are the same
@@ -71,7 +80,7 @@ public class ItemStackMixin {
         // Reverse and add to tooltip. Honestly we probably don't even need to reverse, but for consistency's sake.
         Collections.reverse(enchTooltips);
         tooltip.addAll(enchTooltips);
-
+        if(ths.is(Items.ENCHANTED_BOOK)) return;
         // Show the tooltip for any modified enchantments not present in NBT.
         for (Map.Entry<Enchantment, Integer> real : realLevels.entrySet()) {
             if (real.getValue() > 0) appendModifiedEnchTooltip(tooltip, real.getKey(), real.getValue(), 0);
