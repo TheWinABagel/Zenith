@@ -12,7 +12,7 @@ import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 
 public class PotionCharmEnchintingEMIRecipe extends EnchantingEMIRecipe {
-    private static ResourceLocation id;
+    private final ResourceLocation id;
     public PotionCharmEnchintingEMIRecipe(EnchantingRecipe recipe, ItemStack potion) {
         super(recipe);
         input = EmiStack.of(fixPotion(potion));
@@ -36,7 +36,7 @@ public class PotionCharmEnchintingEMIRecipe extends EnchantingEMIRecipe {
     private ResourceLocation getRecipeId(ItemStack stack) {
         Potion pot = PotionUtils.getPotion(stack);
         MobEffectInstance contained = pot.getEffects().get(0);
-        return new ResourceLocation("_" + BuiltInRegistries.MOB_EFFECT.getKey(contained.getEffect()) + "_" + contained.getAmplifier() + "_" + contained.getDuration());
+        return new ResourceLocation(BuiltInRegistries.MOB_EFFECT.getKey(contained.getEffect()) + "_" + contained.getAmplifier() + "_" + contained.getDuration());
     }
 
     @Override

@@ -1204,7 +1204,7 @@
     "itemGroup.zenith.adventure": "Zenith: Adventure Module",
     "itemGroup.zenith.ench": "Zenith: Enchanting Module",
     "config.jade.plugin_zenith.spawner": "Zenith Spawner Module",
-	"config.jade.plugin_zenith.ench": "Zenith Ench Module",
+	"config.jade.plugin_zenith.ench": "Zenith Enchantment Module",
 	"config.jade.plugin_zenith.adventure": "Zenith Adventure Module",
 	"zenith.creative_tab": "Zenith",
 	
