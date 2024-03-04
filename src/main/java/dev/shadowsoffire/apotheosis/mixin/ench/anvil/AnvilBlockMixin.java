@@ -42,7 +42,6 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -54,11 +53,6 @@ import java.util.stream.Collectors;
 
 @Mixin(value = AnvilBlock.class, priority = 1500)
 public abstract class AnvilBlockMixin  extends FallingBlock implements INBTSensitiveFallingBlock, EntityBlock {
-
-    @Shadow
-    public static @Nullable BlockState damage(BlockState state) {
-        return null;
-    }
 
     public AnvilBlockMixin(Properties properties) {
         super(properties);
@@ -116,7 +110,7 @@ public abstract class AnvilBlockMixin  extends FallingBlock implements INBTSensi
                     }
                     if (handled) {
                         if (world.random.nextInt(1 + ub) == 0) {
-                            BlockState dmg = damage(fallState);
+                            BlockState dmg = AnvilBlock.damage(fallState);
                             if (dmg == null) {
                                 world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
                                 world.levelEvent(LevelEvent.SOUND_ANVIL_BROKEN, pos, 0);
