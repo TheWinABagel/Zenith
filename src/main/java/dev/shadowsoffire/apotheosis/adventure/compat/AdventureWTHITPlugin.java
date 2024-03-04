@@ -2,6 +2,7 @@ package dev.shadowsoffire.apotheosis.adventure.compat;
 
 import com.google.common.base.Predicates;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.cca.ZenithComponents;
 import dev.shadowsoffire.apotheosis.util.CommonTooltipUtil;
 import mcp.mobius.waila.api.*;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -26,9 +27,9 @@ public class AdventureWTHITPlugin implements IWailaPlugin, IEntityComponentProvi
 
     @Override
     public void appendData(IDataWriter data, IServerAccessor access, IPluginConfig config) {
-        if (Apotheosis.enableAdventure && access.getTarget() instanceof LivingEntity living && living.getCustomData().getBoolean("apoth.boss")) {
-            data.raw().putBoolean("apoth.boss", true);
-            data.raw().putString("apoth.rarity", living.getCustomData().getString("apoth.rarity"));
+        if (Apotheosis.enableAdventure && access.getTarget() instanceof LivingEntity living && ZenithComponents.BOSS_DATA.get(living).getIsBoss()) {
+            data.raw().putBoolean("zenith.boss", true);
+            data.raw().putString("zenith.rarity", ZenithComponents.BOSS_DATA.get(living).getRarity());
 
             AttributeMap map = living.getAttributes();
             ListTag bossAttribs = new ListTag();
@@ -39,22 +40,23 @@ public class AdventureWTHITPlugin implements IWailaPlugin, IEntityComponentProvi
                     }
                 }
             });
-            data.raw().put("apoth.modifiers", bossAttribs);
+            data.raw().put("zenith.modifiers", bossAttribs);
         }
     }
 
     @Override
     public void appendBody(ITooltip tooltip, IEntityAccessor accessor, IPluginConfig config) {
         if (Apotheosis.enableAdventure && accessor.getEntity() instanceof LivingEntity living && accessor.getData().raw().getBoolean("apoth.boss")) {
-            ListTag bossAttribs = accessor.getData().raw().getList("apoth.modifiers", Tag.TAG_COMPOUND);
+            ListTag bossAttribs = accessor.getData().raw().getList("zenith.modifiers", Tag.TAG_COMPOUND);
             AttributeMap map = living.getAttributes();
             for (Tag t : bossAttribs) {
                 CompoundTag tag = (CompoundTag) t;
                 Attribute attrib = BuiltInRegistries.ATTRIBUTE.get(new ResourceLocation(tag.getString("Name")));
                 map.getInstance(attrib).load(tag);
             }
-            accessor.getData().raw().remove("apoth.modifiers");
-            living.getCustomData().merge(accessor.getData().raw());
+            accessor.getData().raw().remove("zenith.modifiers");
+//            living.getCustomData().merge(accessor.getData().raw());
+
             CommonTooltipUtil.appendBossData(living.level(), living, tooltip::addLine);
         }
     }

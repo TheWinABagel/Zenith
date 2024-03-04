@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.mixin.spawn;
 
+import dev.shadowsoffire.apotheosis.cca.ZenithComponents;
 import dev.shadowsoffire.apotheosis.mixin.accessors.BaseSpawnerAccessor;
 import dev.shadowsoffire.apotheosis.spawn.spawner.IBaseSpawner;
 import dev.shadowsoffire.apotheosis.spawn.spawner.LyingLevel;
@@ -283,7 +284,7 @@ public abstract class SpawnerBlockEntityMixin extends BlockEntity implements IBa
                                 if (SpawnerBlockEntityMixin.this.hasNoAI) {
                                     entity.getSelfAndPassengers().filter(Mob.class::isInstance).map(Mob.class::cast).forEach(mob -> {
                                         mob.setNoAi(true);
-                                        mob.getCustomData().putBoolean("zenith:movable", true);
+                                        ZenithComponents.MOVABLE.get(mob).setValue(true);
                                     });
                                 }
 

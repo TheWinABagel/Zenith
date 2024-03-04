@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.spawn;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.cca.ZenithComponents;
 import dev.shadowsoffire.apotheosis.spawn.enchantment.CapturingEnchant;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
 import dev.shadowsoffire.placebo.config.Configuration;
@@ -89,8 +90,12 @@ public class SpawnerModule {
 
     public static void tickDumbMobs() {
         LivingEntityEvents.TICK.register(entity -> {
-            if (entity instanceof Mob mob){
-                if (!mob.level().isClientSide && mob.isNoAi() && mob.getCustomData().getBoolean("zenith:movable")) {
+            if (entity instanceof Mob mob) {
+                if (mob.getCustomData().contains("zenith:movable")) {
+                    ZenithComponents.MOVABLE.get(mob).setValue(mob.getCustomData().getBoolean("zenith:movable"));
+                    mob.getCustomData().remove("zenith:movable");
+                }
+                if (!mob.level().isClientSide && mob.isNoAi() && ZenithComponents.MOVABLE.get(mob).getValue()) {
                     mob.setNoAi(false);
                     mob.travel(new Vec3(mob.xxa, mob.zza, mob.yya));
                     mob.setNoAi(true);
@@ -102,7 +107,7 @@ public class SpawnerModule {
 
     public static void dumbMobsCantTeleport() {
         EntityEvents.TELEPORT.register(e -> {
-            if (e.getEntity().getCustomData().getBoolean("zenith:movable")) {
+            if (ZenithComponents.MOVABLE.get(e.getEntity()).getValue()) {
                 e.setCanceled(true);
             }
         });

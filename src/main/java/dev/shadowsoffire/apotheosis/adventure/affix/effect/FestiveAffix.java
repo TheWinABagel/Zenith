@@ -12,6 +12,7 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.cca.ZenithComponents;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -64,14 +65,14 @@ public class FestiveAffix extends Affix {
     private static String MARKER = "zenith.equipment";
 
     public void markEquipment(LivingEntity entity, DamageSource source) {
-        if (entity instanceof Player || entity.getCustomData().getBoolean("zenith.no_pinata")) return;
+        if (entity instanceof Player || ZenithComponents.NO_PINATA.get(entity).getValue()) return;
         entity.getAllSlots().forEach(i -> {
             if (!i.isEmpty()) i.getOrCreateTag().putBoolean(MARKER, true);
         });
     }
 
     public void drops(LivingEntity target, DamageSource source, Collection<ItemEntity> drops) {
-        if (target instanceof Player || target.getCustomData().getBoolean("zenith.no_pinata")) return;
+        if (target instanceof Player || ZenithComponents.NO_PINATA.get(target).getValue()) return;
 
         if (source.getEntity() instanceof Player player && !drops.isEmpty()) {
             AffixInstance inst = AffixHelper.getAffixes(player.getMainHandItem()).get(Affixes.FESTIVE);
@@ -83,7 +84,7 @@ public class FestiveAffix extends Affix {
 
                 List<ItemEntity> dropsList = new ArrayList<>(drops);
                 for (ItemEntity item : dropsList) {
-                    if (item.getItem().hasTag() && item.getItem().getTag().contains(MARKER)) continue;
+                    if (item.getItem().hasTag() && item.getItem().getOrCreateTag().contains(MARKER)) continue;
                     for (int i = 0; i < 20; i++) {
                         drops.add(new ItemEntity(player.level(), item.getX(), item.getY(), item.getZ(), item.getItem().copy()));
                     }
@@ -103,9 +104,9 @@ public class FestiveAffix extends Affix {
 
     // Lowest prio + receive cancelled
     public void removeMarker(Collection<ItemEntity> drops) {
-        drops.stream().forEach(ent -> {
+        drops.forEach(ent -> {
             ItemStack s = ent.getItem();
-            if (s.hasTag() && s.getTag().contains(MARKER)) {
+            if (s.hasTag() && s.getOrCreateTag().contains(MARKER)) {
                 s.getTag().remove(MARKER);
                 if (s.getTag().isEmpty()) s.setTag(null);
             }

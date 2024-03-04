@@ -8,6 +8,7 @@ import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import dev.shadowsoffire.apotheosis.adventure.loot.*;
+import dev.shadowsoffire.apotheosis.cca.ZenithComponents;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
 import dev.shadowsoffire.apotheosis.mixin.accessors.MobAccessor;
 import dev.shadowsoffire.apotheosis.mixin.accessors.NearestAttackableTargetGoalAccessor;
@@ -240,8 +241,7 @@ public final class ApothBoss implements CodecProvider<ApothBoss>, ILuckyWeighted
                 entity.setItemSlot(s, stack);
             }
         }
-        entity.getCustomData().putBoolean("apoth.boss", true);
-        entity.getCustomData().putString("apoth.rarity", RarityRegistry.INSTANCE.getKey(rarity).toString());
+        ZenithComponents.BOSS_DATA.get(entity).setRarityAndBoss(RarityRegistry.INSTANCE.getKey(rarity).toString());
         entity.setHealth(entity.getMaxHealth());
         if (AdventureConfig.bossGlowOnSpawn) entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 3600));
     }

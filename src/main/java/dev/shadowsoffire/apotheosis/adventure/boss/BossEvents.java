@@ -7,6 +7,7 @@ import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.boss.MinibossRegistry.IEntityMatch;
 import dev.shadowsoffire.apotheosis.adventure.client.BossSpawnMessage;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
+import dev.shadowsoffire.apotheosis.cca.ZenithComponents;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
 import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
@@ -105,7 +106,9 @@ public class BossEvents {
 
     @Nullable
     private static Component getName(Mob boss) {
-        return boss.getSelfAndPassengers().filter(e -> e.getCustomData().contains("apoth.boss")).findFirst().map(Entity::getCustomName).orElse(null);
+        return boss.getSelfAndPassengers().filter(e ->  {
+           return ZenithComponents.BOSS_DATA.get(e).getIsBoss();
+        }).findFirst().map(Entity::getCustomName).orElse(null);
     }
 
     public static void minibosses() {
@@ -117,8 +120,8 @@ public class BossEvents {
                 if (player == null) return false; // Spawns require player context
                 ApothMiniboss item = MinibossRegistry.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(sLevel.getLevel()), IStaged.matches(player), IEntityMatch.matches(mob));
                 if (item != null && !item.isExcluded(mob, sLevel, type) && sLevel.getRandom().nextFloat() <= item.getChance()) {
-                    mob.getCustomData().putString("apoth.miniboss", MinibossRegistry.INSTANCE.getKey(item).toString());
-                    mob.getCustomData().putFloat("apoth.miniboss.luck", player.getLuck());
+                    ZenithComponents.BOSS_DATA.get(mob).setMiniBoss(MinibossRegistry.INSTANCE.getKey(item).toString());
+                    ZenithComponents.BOSS_DATA.get(mob).setMinibossLuck(player.getLuck());
                     AdventureModule.debugLog(mob.blockPosition(), "Miniboss - " + mob.getName().getString());
                     if (!item.shouldFinalize()) return false;
                 }
@@ -130,11 +133,19 @@ public class BossEvents {
     public static void delayedMinibosses() {
         LivingEntityEvents.CHECK_SPAWN.register((mob, level, x, y, z, spawner, type) -> {
             if (!level.isClientSide()) {
-                String key = mob.getCustomData().getString("apoth.miniboss");
+                if (mob.getCustomData().contains("apoth.miniboss")) {
+                    ZenithComponents.BOSS_DATA.get(mob).setMiniBoss(mob.getCustomData().getString("apoth.miniboss"));
+                    mob.getCustomData().remove("apoth.miniboss");
+                }
+                String key = ZenithComponents.BOSS_DATA.get(mob).getMiniBoss();
                 if (key != null) {
                     ApothMiniboss item = MinibossRegistry.INSTANCE.getValue(new ResourceLocation(key));
                     if (item != null) {
-                        item.transformMiniboss((ServerLevel) level, mob, level.getRandom(), mob.getCustomData().getFloat("apoth.miniboss.luck"));
+                        if (mob.getCustomData().contains("apoth.miniboss.luck")) {
+                            ZenithComponents.BOSS_DATA.get(mob).setMinibossLuck(mob.getCustomData().getFloat("apoth.miniboss.luck"));
+                            mob.getCustomData().remove("apoth.miniboss.luck");
+                        }
+                        item.transformMiniboss((ServerLevel) level, mob, level.getRandom(), ZenithComponents.BOSS_DATA.get(mob).getMinibossLuck());
                     }
                 }
             }

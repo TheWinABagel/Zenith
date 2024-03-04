@@ -2,6 +2,7 @@ package dev.shadowsoffire.apotheosis.adventure.affix;
 
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.cca.ZenithComponents;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.events.GetEnchantmentLevelEvent;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -82,7 +83,6 @@ public abstract class Affix implements CodecProvider<Affix> {
     /**
      * Calculates the protection value of this affix, with respect to the given damage source.<br>
      * Math is in {@link CombatRules#getDamageAfterMagicAbsorb}<br>
-     * Ench module overrides with {link EnchHooks#getDamageAfterMagicAbsorb}<br>
      *
      * @param level  The level of this affix, if applicable.<br>
      * @param source The damage source to compare against.<br>
@@ -174,7 +174,7 @@ public abstract class Affix implements CodecProvider<Affix> {
     }
 
     /**
-     * Fires during the {link LivingHurtEvent}, and allows for modification of the damage value.<br>
+     * Fires during the {@link io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents#HURT} event, and allows for modification of the damage value.<br>
      * If the value is set to zero or below, the event will be cancelled.
      *
      * @param stack  The stack with the affix.
@@ -219,8 +219,8 @@ public abstract class Affix implements CodecProvider<Affix> {
     public void modifyLoot(ItemStack stack, LootRarity rarity, float level, ObjectArrayList<ItemStack> loot, LootContext ctx) {}
 
     /**
-     * Fires from {link LootModifier#apply(ObjectArrayList, LootContext)} when this affix is on the tool given by the context.
-     * Only fired when Spell Engine is installed, allows for
+     * Fires from {@link SpellEvents#PROJECTILE_SHOOT}.
+     * Only fired when Spell Engine is installed, allows for modifying cast spells
      *
      * @param stack  The stack with the affix.
      * @param rarity The rarity of the item.
@@ -249,18 +249,22 @@ public abstract class Affix implements CodecProvider<Affix> {
     public abstract boolean canApplyTo(ItemStack stack, LootCategory cat, LootRarity rarity);
 
     /**
-     * Checks if the affix is still on cooldown, if a cooldown was set via {link #startCooldown(Affix, int, LivingEntity)}
+     * Checks if the affix is still on cooldown, if a cooldown was set via {@link #startCooldown(ResourceLocation, LivingEntity)}
      */
     public static boolean isOnCooldown(ResourceLocation id, int cooldown, LivingEntity entity) {
-        long lastApplied = entity.getCustomData().getLong("apoth.affix_cooldown." + id.toString());
+        if (entity.getCustomData().contains("apoth.affix_cooldown." + id.toString())) {
+            long val = entity.getCustomData().getLong("apoth.affix_cooldown." + id.toString());
+            ZenithComponents.AFFIX_COOLDOWN.get(entity).setValue("affix_cooldown." + id.toString(), val);
+        }
+        long lastApplied = ZenithComponents.AFFIX_COOLDOWN.get(entity).getValue("affix_cooldown." + id.toString());
         return lastApplied != 0 && lastApplied + cooldown >= entity.level().getGameTime();
     }
 
     /**
-     * Records the current time as a cooldown tracker. Used in conjunction with {link #isOnCooldown(Affix, int, LivingEntity)}
+     * Records the current time as a cooldown tracker. Used in conjunction with {@link #isOnCooldown(ResourceLocation, int, LivingEntity)}
      */
     public static void startCooldown(ResourceLocation id, LivingEntity entity) {
-        entity.getCustomData().putLong("apoth.affix_cooldown." + id.toString(), entity.level().getGameTime());
+        ZenithComponents.AFFIX_COOLDOWN.get(entity).setValue("affix_cooldown." + id.toString(), entity.level().getGameTime());
     }
 
     public static String fmt(float f) {

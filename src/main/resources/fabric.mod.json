@@ -45,6 +45,22 @@
     ],
     "emi": [
       "dev.shadowsoffire.apotheosis.compat.ZenithEMIPlugin"
+    ],
+    "cardinal-components": [
+      "dev.shadowsoffire.apotheosis.cca.ZenithComponents"
+    ]
+  },
+  "custom": {
+    "cardinal-components": [
+      "zenith:movable",
+      "zenith:affix_data",
+      "zenith:affix_cooldown",
+      "zenith:boss_data",
+      "zenith:burns_in_sun",
+      "zenith:generated",
+      "zenith:no_pinata",
+      "zenith:radial_state",
+      "zenith:reforging_seed"
     ]
   },
   "mixins": [

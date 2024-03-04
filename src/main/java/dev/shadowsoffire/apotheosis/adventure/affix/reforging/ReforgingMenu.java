@@ -8,6 +8,7 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
+import dev.shadowsoffire.apotheosis.cca.ZenithComponents;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.menu.PlaceboContainerMenu;
@@ -33,18 +34,7 @@ public class ReforgingMenu extends PlaceboContainerMenu {
     protected final BlockPos pos;
     protected final ReforgingTableTile tile;
     protected final Player player;
-    protected SimpleContainer itemInventory = new SimpleContainer(1) {
-        @Override
-        public boolean canAddItem(ItemStack stack) {
-            return !LootCategory.forItem(stack).isNone();
-        }
-
-        @Override
-        public void setChanged() {
-            super.setChanged();
-            ReforgingMenu.this.slotsChanged(this);
-        }
-    };
+    protected SimpleContainer itemInventory = new SimpleContainer(1);
 
     protected final RandomSource random = new XoroshiroRandomSource(0);
     protected final int[] seed = new int[2];
@@ -60,11 +50,15 @@ public class ReforgingMenu extends PlaceboContainerMenu {
         this.player = inv.player;
         this.pos = pos;
         this.tile = (ReforgingTableTile) this.level.getBlockEntity(pos);
-        this.addSlot(new Slot(this.itemInventory, 0, 25, 24) {
+        this.addSlot(new UpdatingSlot(this.itemInventory, 0, 25, 24, stack -> !LootCategory.forItem(stack).isNone()){
             @Override
-            public void setChanged() {
-                super.setChanged();
-                ReforgingMenu.this.slotsChanged(ReforgingMenu.this.itemInventory);
+            public int getMaxStackSize() {
+                return 1;
+            }
+
+            @Override
+            public int getMaxStackSize(ItemStack stack) {
+                return 1;
             }
         });
         this.addSlot(new Slot(this.tile.inventory, 0, 15, 45) {
@@ -79,8 +73,8 @@ public class ReforgingMenu extends PlaceboContainerMenu {
                 return stack.is(Items.GEM_DUST);
             }
         });
-//        this.addSlot(new UpdatingSlot(this.tile.inv, 0, 15, 45, this.tile::isValidRarityMat));
-//        this.addSlot(new UpdatingSlot(this.tile.inv, 1, 35, 45, stack -> stack.getItem() == Items.GEM_DUST));
+        this.addSlot(new UpdatingSlot(this.tile.inventory, 0, 15, 45, this.tile::isValidRarityMat));
+        this.addSlot(new UpdatingSlot(this.tile.inventory, 1, 35, 45, stack -> stack.is(Items.GEM_DUST)));
         this.addPlayerSlots(inv, 8, 84);
         this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && !LootCategory.forItem(stack).isNone(), 0, 1);
         this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.tile.isValidRarityMat(stack), 1, 2);
@@ -101,14 +95,14 @@ public class ReforgingMenu extends PlaceboContainerMenu {
     public void removed(Player player) {
         super.removed(player);
         this.clearContainer(player, this.itemInventory);
-        //this.clearContainer(player, new RecipeWrapper(this.itemInv));
     }
 
     protected void updateSeed() {
-        int seed = this.player.getCustomData().getInt(REFORGE_SEED);
+        this.player.getCustomData().remove(REFORGE_SEED);
+        int seed = ZenithComponents.REFORGING_SEED.get(this.player).getValue();
         if (seed == 0) {
             seed = this.player.getRandom().nextInt();
-            this.player.getCustomData().putInt(REFORGE_SEED, seed);
+            ZenithComponents.REFORGING_SEED.get(this.player).setValue(seed);
         }
         this.seed[0] = MenuUtil.split(seed, false);
         this.seed[1] = MenuUtil.split(seed, true);
@@ -147,7 +141,7 @@ public class ReforgingMenu extends PlaceboContainerMenu {
                     this.getSlot(2).getItem().shrink(dustCost);
                 }
                 EnchantmentUtils.chargeExperience(player, ApothMiscUtil.getExpCostForSlot(levelCost, slot));
-                player.getCustomData().putInt(REFORGE_SEED, player.getRandom().nextInt());
+                ZenithComponents.REFORGING_SEED.get(this.player).setValue(player.getRandom().nextInt());
                 this.updateSeed();
                 this.needsReset.set(1);
             }

@@ -13,6 +13,7 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.cca.ZenithComponents;
 import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -218,11 +219,11 @@ public class RadialAffix extends Affix {
         }
 
         public Component toComponent() {
-            return Component.translatable("misc.apotheosis.radial_state." + this.name().toLowerCase(Locale.ROOT));
+            return Component.translatable("misc.zenith.radial_state." + this.name().toLowerCase(Locale.ROOT));
         }
 
         public static RadialState getState(Player player) {
-            String str = player.getCustomData().getString("zenith.radial_state"); //todo Move to CCA, this can be removed completely safely
+            String str = ZenithComponents.RADIAL_STATE.get(player).getValue();
             try {
                 return RadialState.valueOf(str);
             }
@@ -232,7 +233,7 @@ public class RadialAffix extends Affix {
         }
 
         public static void setState(Player player, RadialState state) {
-            player.getCustomData().putString("zenith.radial_state", state.name());
+            ZenithComponents.RADIAL_STATE.get(player).setValue(state.name());
         }
     }
 

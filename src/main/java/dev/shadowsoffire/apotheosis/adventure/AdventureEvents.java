@@ -11,6 +11,7 @@ import dev.shadowsoffire.apotheosis.adventure.commands.*;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
+import dev.shadowsoffire.apotheosis.cca.ZenithComponents;
 import dev.shadowsoffire.apotheosis.util.Events;
 import dev.shadowsoffire.attributeslib.api.ItemAttributeModifierEvent;
 import dev.shadowsoffire.placebo.events.AnvilLandCallback;
@@ -20,6 +21,7 @@ import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
 import io.github.fabricators_of_create.porting_lib.entity.events.EntityEvents;
 import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
 import io.github.fabricators_of_create.porting_lib.entity.events.PlayerEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.ShieldBlockEvent;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.FakePlayer;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
@@ -96,7 +98,11 @@ public class AdventureEvents {
 
     public static void preventBossSuffocate() {
         LivingEntityEvents.HURT.register((source, damaged, amount) -> {
-            if (source.is(DamageTypes.IN_WALL) && damaged.getCustomData().contains("apoth.boss")) {
+            if (damaged.getCustomData().contains("apoth.boss")) {
+                ZenithComponents.BOSS_DATA.get(damaged).setIsBoss(damaged.getCustomData().getBoolean("apoth.boss"));
+                damaged.getCustomData().remove("apoth.boss");
+            }
+            if (source.is(DamageTypes.IN_WALL) && ZenithComponents.BOSS_DATA.get(damaged).getIsBoss()) {
                 return 0f;
             }
             return amount;
@@ -109,7 +115,7 @@ public class AdventureEvents {
      */
 
     public static void fireArrow(AbstractArrow arrow) {
-        if (!arrow.getCustomData().getBoolean("apoth.generated")) {
+        if (!ZenithComponents.GENERATED_ARROW.get(arrow).getValue()) {
             Entity shooter = arrow.getOwner();
             if (shooter instanceof LivingEntity living) {
                 ItemStack bow = living.getUseItem();
@@ -180,16 +186,15 @@ public class AdventureEvents {
     }
 
     public static void shieldBlock() {
-        //todo Shield block event was removed from porting lib... reimplement?
-//        EntityEvents.SHIELD_BLOCK.register(e -> {
-//            ItemStack stack = e.blocker.getUseItem();
-//            var affixes = AffixHelper.getAffixes(stack);
-//            float blocked = e.damageBlocked;
-//            for (AffixInstance inst : affixes.values()) {
-//                blocked = inst.onShieldBlock(e.blocker, e.source, blocked);
-//            }
-//            if (blocked != e.damageBlocked) e.damageBlocked = blocked;
-//        });
+        ShieldBlockEvent.EVENT.register(e -> {
+            ItemStack stack = e.getEntity().getUseItem();
+            var affixes = AffixHelper.getAffixes(stack);
+            float blocked = e.getBlockedDamage();
+            for (AffixInstance inst : affixes.values()) {
+                blocked = inst.onShieldBlock(e.getEntity(), e.getDamageSource(), blocked);
+            }
+            if (blocked != e.getBlockedDamage()) e.setBlockedDamage(blocked);
+        });
     }
 
     public static void blockBreak() {
@@ -205,7 +210,7 @@ public class AdventureEvents {
         LivingEntityEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
             if (source.getEntity() instanceof ServerPlayer p && target instanceof Monster && drops != null) {
                 if (p instanceof FakePlayer) return false;
-                float chance = AdventureConfig.gemDropChance + (target.getCustomData().contains("apoth.boss") ? AdventureConfig.gemBossBonus : 0);
+                float chance = AdventureConfig.gemDropChance + (ZenithComponents.BOSS_DATA.get(target).getIsBoss() ? AdventureConfig.gemBossBonus : 0);
                 if (p.getRandom().nextFloat() <= chance) {
                     Entity ent = target;
                     drops.add(new ItemEntity(ent.level(), ent.getX(), ent.getY(), ent.getZ(), GemRegistry.createRandomGemStack(p.getRandom(), (ServerLevel) p.level(), p.getLuck(), IDimensional.matches(p.level()), IStaged.matches(p)), 0, 0, 0));
@@ -296,6 +301,10 @@ public class AdventureEvents {
     public static void update() {
         LivingEntityEvents.TICK.register(entity -> {
             if (entity.getCustomData().contains("apoth.burns_in_sun")) {
+                ZenithComponents.BURNS.get(entity).setValue(entity.getCustomData().getBoolean("apoth.burns_in_sun"));
+                entity.getCustomData().remove("apoth.burns_in_sun");
+            }
+            if (ZenithComponents.BURNS.get(entity).getValue()) {
                 // Copy of Mob#isSunBurnTick()
                 if (entity.level().isDay() && !entity.level().isClientSide) {
                     float f = entity.getLightLevelDependentMagicValue();
