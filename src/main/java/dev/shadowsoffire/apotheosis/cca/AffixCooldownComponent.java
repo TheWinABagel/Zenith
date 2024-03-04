@@ -30,6 +30,10 @@ public class AffixCooldownComponent implements Component, AutoSyncedComponent {
     }
 
     public long getValue(String id) {
+        if (values.get(id) == null) {
+            values.put(id, 0L);
+            return 0;
+        }
         return values.get(id);
     }
 

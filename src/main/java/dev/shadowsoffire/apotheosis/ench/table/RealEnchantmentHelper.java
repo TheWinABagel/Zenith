@@ -125,7 +125,6 @@ public class RealEnchantmentHelper {
      * @return All possible enchantments that are eligible to be placed on this item at a specific power level.
      */
     public static List<EnchantmentInstance> getAvailableEnchantmentResults(int power, ItemStack stack, boolean allowTreasure, Set<Enchantment> blacklist) {
-        if (Apotheosis.enableDebug) EnchModule.LOGGER.info("getting enchantments for item {} with power {}", stack.getDisplayName(), power);
         List<EnchantmentInstance> list = new ArrayList<>();
         IEnchantableItem item = (IEnchantableItem) stack.getItem();
         allowTreasure = item.isTreasureAllowed(stack, allowTreasure);
@@ -145,11 +144,6 @@ public class RealEnchantmentHelper {
                     }
                 }
             }
-        }
-
-        if (Apotheosis.enableDebug) EnchModule.LOGGER.info("total {} enchantments:", list.size());
-        for (EnchantmentInstance ench : list) {
-            if (Apotheosis.enableDebug) EnchModule.LOGGER.info("ench {} level {}", ench.enchantment, ench.level);
         }
 
         return list;

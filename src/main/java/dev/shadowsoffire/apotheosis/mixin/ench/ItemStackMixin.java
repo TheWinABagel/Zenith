@@ -67,7 +67,7 @@ public class ItemStackMixin {
             int nbtLevel = PlaceboEventFactory.getEnchantmentLevelSpecific(originalLevel, ths, ench) - originalLevel;
             int realLevel = originalLevel + nbtLevel;
 
-            if (nbtLevel == realLevel) {
+            if (nbtLevel == realLevel || nbtLevel == 0) {
                 // Default logic when levels are the same
                 enchTooltips.add(ench.getFullname(EnchantmentHelper.getEnchantmentLevel(compoundtag)));
             }

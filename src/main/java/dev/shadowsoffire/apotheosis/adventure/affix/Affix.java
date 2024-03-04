@@ -255,6 +255,7 @@ public abstract class Affix implements CodecProvider<Affix> {
         if (entity.getCustomData().contains("apoth.affix_cooldown." + id.toString())) {
             long val = entity.getCustomData().getLong("apoth.affix_cooldown." + id.toString());
             ZenithComponents.AFFIX_COOLDOWN.get(entity).setValue("affix_cooldown." + id.toString(), val);
+            entity.getCustomData().remove("apoth.affix_cooldown." + id.toString());
         }
         long lastApplied = ZenithComponents.AFFIX_COOLDOWN.get(entity).getValue("affix_cooldown." + id.toString());
         return lastApplied != 0 && lastApplied + cooldown >= entity.level().getGameTime();

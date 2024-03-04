@@ -34,29 +34,28 @@ public class ZenithComponents implements EntityComponentInitializer {
         BOSS_DATA = ComponentRegistry.getOrCreate(Apotheosis.loc("boss_data"), BossComponent.class);
         BURNS = ComponentRegistry.getOrCreate(Apotheosis.loc("burns_in_sun"), BooleanComponent.class);
         GENERATED_ARROW = ComponentRegistry.getOrCreate(Apotheosis.loc("generated"), BooleanComponent.class);
-
         NO_PINATA = ComponentRegistry.getOrCreate(Apotheosis.loc("no_pinata"), BooleanComponent.class);
-
+        //Player only
         RADIAL_STATE = ComponentRegistry.getOrCreate(Apotheosis.loc("radial_state"), StringComponent.class);
         REFORGING_SEED = ComponentRegistry.getOrCreate(Apotheosis.loc("reforging_seed"), IntComponent.class);
     }
 
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
-        if (Apotheosis.enableSpawner) {
-            registry.registerFor(LivingEntity.class, MOVABLE, entity -> new SyncedBooleanComponent(Apotheosis.loc("movable").toString()));
-        }
-        if (Apotheosis.enableAdventure) {
-            registry.registerFor(Entity.class, AFFIX_DATA, entity -> new AffixDataComponent());
-            registry.registerFor(LivingEntity.class, AFFIX_COOLDOWN, entity -> new AffixCooldownComponent());
-            registry.registerFor(LivingEntity.class, BOSS_DATA, entity -> new BossComponent());
-            registry.registerFor(LivingEntity.class, BURNS, entity -> new BooleanComponent(Apotheosis.loc("burns_in_sun").toString()));
-            registry.registerFor(AbstractArrow.class, GENERATED_ARROW, arrow -> new BooleanComponent(Apotheosis.loc("generated").toString()));
-            registry.registerFor(LivingEntity.class, NO_PINATA, entity -> new BooleanComponent(Apotheosis.loc("no_pinata").toString()));
 
-            registry.registerForPlayers(RADIAL_STATE, player -> new StringComponent(Apotheosis.loc("radial_state").toString()), RespawnCopyStrategy.ALWAYS_COPY);
-            registry.registerForPlayers(REFORGING_SEED, player -> new IntComponent(Apotheosis.loc("reforging_seed").toString()), RespawnCopyStrategy.ALWAYS_COPY);
-        }
+        registry.registerFor(LivingEntity.class, MOVABLE, entity -> new SyncedBooleanComponent(Apotheosis.loc("movable").toString()));
+
+        registry.registerFor(LivingEntity.class, AFFIX_COOLDOWN, entity -> new AffixCooldownComponent());
+        registry.registerFor(Entity.class, AFFIX_DATA, entity -> new AffixDataComponent());
+
+        registry.registerFor(LivingEntity.class, BOSS_DATA, entity -> new BossComponent());
+        registry.registerFor(LivingEntity.class, BURNS, entity -> new BooleanComponent(Apotheosis.loc("burns_in_sun").toString()));
+        registry.registerFor(AbstractArrow.class, GENERATED_ARROW, arrow -> new BooleanComponent(Apotheosis.loc("generated").toString()));
+        registry.registerFor(LivingEntity.class, NO_PINATA, entity -> new BooleanComponent(Apotheosis.loc("no_pinata").toString()));
+
+        registry.registerForPlayers(RADIAL_STATE, player -> new StringComponent(Apotheosis.loc("radial_state").toString()), RespawnCopyStrategy.ALWAYS_COPY);
+        registry.registerForPlayers(REFORGING_SEED, player -> new IntComponent(Apotheosis.loc("reforging_seed").toString()), RespawnCopyStrategy.ALWAYS_COPY);
+
     }
 
 }

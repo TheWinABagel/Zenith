@@ -98,7 +98,9 @@ public class ReforgingMenu extends PlaceboContainerMenu {
     }
 
     protected void updateSeed() {
-        this.player.getCustomData().remove(REFORGE_SEED);
+        if (this.player.getCustomData().contains(REFORGE_SEED)) {
+            this.player.getCustomData().remove(REFORGE_SEED);
+        }
         int seed = ZenithComponents.REFORGING_SEED.get(this.player).getValue();
         if (seed == 0) {
             seed = this.player.getRandom().nextInt();

@@ -6,7 +6,7 @@ import net.minecraft.nbt.CompoundTag;
 
 public class StringComponent implements Component, AutoSyncedComponent {
     protected final String name;
-    private String value;
+    private String value = "REQUIRE_SNEAKING";
     public StringComponent(String name) {
         this.name = name;
     }
