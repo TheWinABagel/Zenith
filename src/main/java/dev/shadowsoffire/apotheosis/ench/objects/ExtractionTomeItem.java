@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.ench.objects;
 
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.util.Events;
 import fuzs.puzzleslib.api.event.v1.FabricPlayerEvents;
@@ -32,7 +33,7 @@ public class ExtractionTomeItem extends BookItem {
     public static boolean updateAnvil(Events.AnvilUpdate.UpdateAnvilEvent ev) {
         ItemStack weapon = ev.left;
         ItemStack book = ev.right;
-        if (!(book.getItem() instanceof ExtractionTomeItem) || book.isEnchanted() || !weapon.isEnchanted())
+        if (!(book.getItem() instanceof ExtractionTomeItem) || book.isEnchanted() || !weapon.isEnchanted() || weapon.is(Apoth.Tags.NO_SCRAP_ITEMS))
             return false;
 
         Map<Enchantment, Integer> wepEnch = EnchantmentHelper.getEnchantments(weapon);

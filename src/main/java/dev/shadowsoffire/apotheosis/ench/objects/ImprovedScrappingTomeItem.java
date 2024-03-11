@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.ench.objects;
 
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.util.Events;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -43,7 +44,7 @@ public class ImprovedScrappingTomeItem extends BookItem {
     public static boolean updateAnvil(Events.AnvilUpdate.UpdateAnvilEvent ev) {
         ItemStack weapon = ev.left;
         ItemStack book = ev.right;
-        if (!(book.getItem() instanceof ImprovedScrappingTomeItem) || book.isEnchanted() || !weapon.isEnchanted()) return false;
+        if (!(book.getItem() instanceof ImprovedScrappingTomeItem) || book.isEnchanted() || !weapon.isEnchanted() || weapon.is(Apoth.Tags.NO_SCRAP_ITEMS)) return false;
 
         Map<Enchantment, Integer> wepEnch = EnchantmentHelper.getEnchantments(weapon);
         ItemStack out = new ItemStack(Items.ENCHANTED_BOOK);

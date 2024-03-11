@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.ench.objects;
 
 import com.google.common.collect.Lists;
+import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.util.Events;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -46,7 +47,8 @@ public class ScrappingTomeItem extends BookItem {
     public static boolean updateAnvil(Events.AnvilUpdate.UpdateAnvilEvent ev) {
         ItemStack weapon = ev.left;
         ItemStack book = ev.right;
-        if (!(book.getItem() instanceof ScrappingTomeItem) || book.isEnchanted() || !weapon.isEnchanted()) return false;
+        if (!(book.getItem() instanceof ScrappingTomeItem) || book.isEnchanted() || !weapon.isEnchanted() || weapon.is(Apoth.Tags.NO_SCRAP_ITEMS))
+            return false;
 
         Map<Enchantment, Integer> wepEnch = EnchantmentHelper.getEnchantments(weapon);
         int size = Mth.ceil(wepEnch.size() / 2D);
