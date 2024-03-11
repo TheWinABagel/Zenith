@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.util;
 import com.google.common.base.Predicates;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
+import dev.shadowsoffire.apotheosis.cca.ZenithComponents;
 import dev.shadowsoffire.apotheosis.ench.api.IEnchantingBlock;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
@@ -29,7 +30,7 @@ import java.util.function.Consumer;
 public class CommonTooltipUtil {
 
     public static void appendBossData(Level level, LivingEntity entity, Consumer<Component> tooltip) {
-        DynamicHolder<LootRarity> rarity = RarityRegistry.byLegacyId(entity.getCustomData().getString("apoth.rarity"));
+        DynamicHolder<LootRarity> rarity = RarityRegistry.byLegacyId(ZenithComponents.BOSS_DATA.get(entity).getRarity());
         if (!rarity.isBound()) return;
         tooltip.accept(Component.translatable("info.zenith.boss", rarity.get().toComponent()).withStyle(ChatFormatting.GRAY));
         tooltip.accept(CommonComponents.EMPTY);

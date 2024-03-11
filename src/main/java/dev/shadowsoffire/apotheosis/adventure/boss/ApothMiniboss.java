@@ -11,6 +11,7 @@ import dev.shadowsoffire.apotheosis.adventure.boss.MinibossRegistry.IEntityMatch
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.cca.ZenithComponents;
 import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.apotheosis.util.SupportingEntity;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
@@ -236,7 +237,7 @@ public final class ApothMiniboss implements CodecProvider<ApothMiniboss>, ILucky
      * @param mob
      */
     public void initBoss(RandomSource rand, Mob mob, float luck) {
-        mob.getCustomData().putBoolean("apoth.miniboss", true);
+        ZenithComponents.BOSS_DATA.get(mob).setMiniBoss(MinibossRegistry.INSTANCE.getKey(this).toString());
 
         int duration = mob instanceof Creeper ? 6000 : Integer.MAX_VALUE;
 

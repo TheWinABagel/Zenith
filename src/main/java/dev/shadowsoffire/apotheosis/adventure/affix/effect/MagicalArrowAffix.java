@@ -8,7 +8,8 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
-import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityDamageEvents;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 
@@ -35,8 +36,8 @@ public class MagicalArrowAffix extends Affix {
     }
 
     // EventPriority.HIGH
-    public void onHurt(LivingEntityDamageEvents.HurtEvent e) {
-        if (e.damageSource.getDirectEntity() instanceof AbstractArrow arrow) {
+    public void onHurt(DamageSource source, LivingEntity damaged, float amount) {
+        if (source.getDirectEntity() instanceof AbstractArrow arrow) {
             if (AffixHelper.getAffixes(arrow).containsKey(Affixes.MAGICAL)) {
                 // Doesn't do anything rn :P, also doesn't in apoth
                 // e.damageSource.setMagic();

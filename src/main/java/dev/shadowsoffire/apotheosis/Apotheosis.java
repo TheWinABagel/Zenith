@@ -14,6 +14,9 @@ import dev.shadowsoffire.placebo.config.Configuration;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -91,5 +94,9 @@ public class Apotheosis implements ModInitializer {
 
     public static void setLocalAtkStrength(float localAtkStrength) {
         Apotheosis.localAtkStrength = localAtkStrength;
+    }
+
+    public static MutableComponent sysMessageHeader() {
+        return Component.translatable("[%s] ", Component.literal("Zenith").withStyle(ChatFormatting.GOLD));
     }
 }

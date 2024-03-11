@@ -156,53 +156,9 @@ public class EnchantingREICategory extends ZenithREICatgeory<EnchantingREIDispla
 
 
     @Override
-    public void setRecipe(EnchantingREIDisplay display, List<Widget> widgets, Point origin) { //TODO figure out this mess
-    /*    var focused = ScreenRegistry.getInstance().getFocusedStack(Minecraft.getInstance().screen, PointHelper.ofMouse());
-        if (focused != null) PotionModule.LOGGER.warn("focused: {}", ((ItemStack) focused.castValue()));
-        EntryStack<?> stack = EntryStack.empty();
-        if (REIRuntime.getInstance().isOverlayVisible()) {
-            ScreenOverlay overlay = REIRuntime.getInstance().getOverlay().get();
-            stack = overlay.getEntryList().getFocusedStack();
-            PotionModule.LOGGER.warn("alternate stack: {}",(ItemStack) stack.castValue());
-        }
-        if (Apotheosis.enablePotion && display.getRecipe() instanceof PotionEnchantingRecipe) {
-            display.getInputEntries().get(0).get(0).castValue();
-
-            Potion potion = PotionUtils.getPotion((ItemStack) stack.castValue());
-
-             //potion.getEffects().forEach(mobEffectInstance -> {
-             //    PotionModule.LOGGER.warn("potion: {}", mobEffectInstance.getEffect().getDisplayName());
-             //});
-            if (potion != Potions.EMPTY) {
-
-                ItemStack output = display.getInputEntries().get(0).get(0).castValue();
-                PotionUtils.setPotion(output, potion);
-                ItemStack input = display.getInputEntries().get(0).get(0).castValue();
-                output.getOrCreateTag().putBoolean("Unbreakable", true);
-                widgets.add(slot(6, 6, origin, List.of(EntryStacks.of(input)), false).markInput());
-                widgets.add(slot(37, 6, origin, List.of(EntryStacks.of(output)), false).markOutput());
-            }
-            else {
-                List<ItemStack> potionStacks = new ArrayList<>();
-                List<ItemStack> unbreakable = new ArrayList<>();
-                for (Potion p : BuiltInRegistries.POTION) {
-                    if (p.getEffects().size() != 1 || p.getEffects().get(0).getEffect().isInstantenous()) continue;
-                    ItemStack charm = new ItemStack(PotionModule.POTION_CHARM);
-                    PotionUtils.setPotion(charm, p);
-                    potionStacks.add(charm);
-                    ItemStack copy = charm.copy();
-                    copy.getOrCreateTag().putBoolean("Unbreakable", true);
-                    unbreakable.add(copy);
-                    widgets.add(slot(6, 6, origin, potionStacks.stream().map(EntryStacks::of).toList(), false).markInput());
-                    widgets.add(slot(37, 6, origin, unbreakable.stream().map(EntryStacks::of).toList(), false).markOutput());
-                }
-            }
-        }
-        else {*/
-            widgets.add(slot(6, 6, origin, display.getInputEntries().get(0), false).markInput());
-            widgets.add(slot(37, 6, origin, display.getOutputEntries().get(0), false).markOutput());
-    //    }
-
+    public void setRecipe(EnchantingREIDisplay display, List<Widget> widgets, Point origin) {
+        widgets.add(slot(6, 6, origin, display.getInputEntries().get(0), false).markInput());
+        widgets.add(slot(37, 6, origin, display.getOutputEntries().get(0), false).markOutput());
     }
 
     public static void drawWordWrap(Font font, FormattedText pText, int pX, int pY, int pMaxWidth, int pColor, GuiGraphics gfx) {

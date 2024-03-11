@@ -83,7 +83,7 @@ public class AffixTrade implements JsonTrade {
             affixItem = LootController.createLootItem(entry.getStack().copy(), selectedRarity, rand);
         }
 
-        return new MerchantOffer(price, price2, affixItem, 1, 100, 1);
+        return new MerchantOffer(this.price, this.price2, affixItem, 1, 100, 1);
     }
 
     @Override

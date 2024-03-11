@@ -15,8 +15,9 @@ import java.util.Map;
 @Mixin(ModelManager.class)
 public class ModelManagerMixin {
 
-    @Inject(method = "loadModels", at = @At(value = "INVOKE", target = "net/minecraft/util/profiling/ProfilerFiller.popPush (Ljava/lang/String;)V", ordinal = 1, shift = At.Shift.BEFORE))
-    private void initModels(ProfilerFiller profilerFiller, Map<ResourceLocation, AtlasSet.StitchResult> map, ModelBakery modelBakery, CallbackInfoReturnable<ModelManager.ReloadState> cir){
+    @Inject(method = "loadModels", at = @At(value = "INVOKE", target = "net/minecraft/util/profiling/ProfilerFiller.popPush (Ljava/lang/String;)V", ordinal = 1))
+    private void zenith$initGemModel(ProfilerFiller profilerFiller, Map<ResourceLocation, AtlasSet.StitchResult> map, ModelBakery modelBakery, CallbackInfoReturnable<ModelManager.ReloadState> cir){
+        if (!Apotheosis.enableAdventure) return;
         ModelResourceLocation key = new ModelResourceLocation(Apotheosis.loc("gem"), "inventory");
         BakedModel oldModel = modelBakery.getBakedTopLevelModels().get(key);
         if (oldModel != null) {

@@ -24,7 +24,7 @@
 			"conditions": {
 				"zenith": {
 					"type": "nbt",
-					"nbt": "{apoth_rspawn:true}"
+					"nbt": "{zenith_rspawn:true}"
 				}
 			}
 		}

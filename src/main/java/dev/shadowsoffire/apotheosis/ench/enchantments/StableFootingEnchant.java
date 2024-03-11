@@ -1,7 +1,8 @@
 package dev.shadowsoffire.apotheosis.ench.enchantments;
 
-import io.github.fabricators_of_create.porting_lib.entity.events.player.PlayerEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.PlayerEvents;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -23,14 +24,12 @@ public class StableFootingEnchant extends Enchantment {
     }
 
     public void breakSpeed() {
-        PlayerEvents.BREAK_SPEED.register((p, state, pos, speed) -> {
+        PlayerEvents.BREAK_SPEED.register(e -> {
+            Player p = e.getPlayer();
+            float speed = e.getOriginalSpeed();
             if (!p.onGround() && EnchantmentHelper.getEnchantmentLevel(this, p) > 0) {
-                if (speed < speed * 5) return (speed * 5F);
+                if (speed < speed * 5) e.setNewSpeed(speed * 5F);
             }
-            return speed;
         });
-
     }
-
-
 }

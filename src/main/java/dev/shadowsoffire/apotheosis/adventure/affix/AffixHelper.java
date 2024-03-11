@@ -5,6 +5,7 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
+import dev.shadowsoffire.apotheosis.cca.ZenithComponents;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import dev.shadowsoffire.placebo.util.CachedObject;
 import dev.shadowsoffire.placebo.util.CachedObject.CachedObjectSource;
@@ -130,14 +131,14 @@ public class AffixHelper {
     public static void copyFrom(ItemStack stack, Entity entity) {
         if (hasAffixes(stack)) {
             CompoundTag afxData = stack.getTagElement(AFFIX_DATA);
-            entity.getCustomData().put(AFFIX_DATA, afxData.copy());
+            ZenithComponents.AFFIX_DATA.get(entity).setEntityTag(afxData.copy());
         }
     }
 
     public static Map<DynamicHolder<Affix>, AffixInstance> getAffixes(Entity entity) {
         Map<DynamicHolder<Affix>, AffixInstance> map = new HashMap<>();
         if (entity == null) return map;
-        CompoundTag afxData = entity.getCustomData().getCompound(AFFIX_DATA);
+        CompoundTag afxData = ZenithComponents.AFFIX_DATA.get(entity).getEntityTag();
         if (afxData != null && afxData.contains(AFFIXES)) {
             CompoundTag affixes = afxData.getCompound(AFFIXES);
             DynamicHolder<LootRarity> rarity = getRarity(afxData);

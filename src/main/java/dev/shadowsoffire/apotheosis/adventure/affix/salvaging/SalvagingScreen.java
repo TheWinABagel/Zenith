@@ -190,7 +190,7 @@ public class SalvagingScreen extends PlaceboContainerScreen<SalvagingMenu> imple
 
     @Override
     protected void renderLabels(GuiGraphics gfx, int mouseX, int mouseY) {
-        gfx.drawString(font, Component.translatable("text.zenith.results"), 133, this.titleLabelY, 4210752, false);
+        gfx.drawString(this.font, Component.translatable("text.zenith.results"), 133, this.titleLabelY, 4210752, false);
         super.renderLabels(gfx, mouseX, mouseY);
     }
 

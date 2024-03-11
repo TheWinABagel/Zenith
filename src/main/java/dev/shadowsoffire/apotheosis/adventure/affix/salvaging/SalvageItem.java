@@ -26,17 +26,17 @@ public class SalvageItem extends Item {
 
     @Override
     public Component getName(ItemStack pStack) {
-        if (this.rarity.getId().getPath().equals("ancient")) {
+        if ("ancient".equals(this.rarity.getId().getPath())) {
             return Component.translatable(this.getDescriptionId(pStack)).withStyle(ChatFormatting.OBFUSCATED).withStyle(s -> s.withColor(GradientColor.RAINBOW));
         }
-        if (!rarity.isBound()) return super.getName(pStack);
+        if (!this.rarity.isBound()) return super.getName(pStack);
         return Component.translatable(this.getDescriptionId(pStack)).withStyle(Style.EMPTY.withColor(this.rarity.get().getColor()));
     }
 
     @Environment(EnvType.CLIENT)
     @Override
     public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> list, TooltipFlag pIsAdvanced) {
-        if (rarity.isBound()) {
+        if (this.rarity.isBound()) {
             list.add(Component.translatable("info.zenith.rarity_material", this.rarity.get().toComponent()).withStyle(ChatFormatting.GRAY));
         }
     }

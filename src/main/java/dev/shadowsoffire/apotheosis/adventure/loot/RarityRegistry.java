@@ -117,11 +117,11 @@ public class RarityRegistry extends WeightedDynamicRegistry<LootRarity> {
         this.ordered = this.registry.values().stream().sorted(Comparator.comparing(LootRarity::ordinal)).map(this::holder).toList();
 
         int lastOrdinal = -1;
-        for (DynamicHolder<LootRarity> r : ordered) {
+        for (DynamicHolder<LootRarity> r : this.ordered) {
             if (r.get().ordinal() != lastOrdinal + 1) {
                 StringBuilder sb = new StringBuilder();
                 sb.append("Rarity ordinal order is inconsistent. The ordinals must start at zero and be continuous up to the max value.\n");
-                for (var rarity : ordered) {
+                for (var rarity : this.ordered) {
                     sb.append(rarity.getId() + " | " + rarity.get().ordinal() + "\n");
                 }
                 throw new RuntimeException(sb.toString());
@@ -129,7 +129,7 @@ public class RarityRegistry extends WeightedDynamicRegistry<LootRarity> {
             lastOrdinal = r.get().ordinal();
         }
 
-        for (DynamicHolder<LootRarity> r : ordered) {
+        for (DynamicHolder<LootRarity> r : this.ordered) {
             DynamicHolder<LootRarity> old = this.materialMap.put(r.get().getMaterial(), r);
             if (old != null) {
                 throw new RuntimeException("Two rarities may not share the same rarity material: " + r.getId() + " conflicts with " + old.getId());
@@ -141,7 +141,7 @@ public class RarityRegistry extends WeightedDynamicRegistry<LootRarity> {
     protected void registerBuiltinCodecs() {
         this.registerDefaultCodec(Apotheosis.loc("rarity"), LootRarity.LOAD_CODEC);
     }
-
+    // this is how the chicken got to the other side
     @Override
     protected void validateItem(ResourceLocation key, LootRarity item) {
         super.validateItem(key, item);
@@ -166,7 +166,7 @@ public class RarityRegistry extends WeightedDynamicRegistry<LootRarity> {
 
                     if (affixes.size() < rules.size()) {
                         var errMsg = new StringBuilder();
-                        errMsg.append("Insufficient number of affixes to satisfy the loot rules (ignoring backup rules) of rarity " + getKey(rarity) + " for category " + cat.getName());
+                        errMsg.append("Insufficient number of affixes to satisfy the loot rules (ignoring backup rules) of rarity " + this.getKey(rarity) + " for category " + cat.getName());
                         errMsg.append("Required: " + rules.size());
                         errMsg.append("; Provided: " + affixes.size());
                         // errMsg.append("The following affixes exist for this category/rarity combination: ");

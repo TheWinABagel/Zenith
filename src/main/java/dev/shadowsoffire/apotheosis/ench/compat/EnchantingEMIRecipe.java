@@ -28,8 +28,8 @@ import java.util.List;
 
 public class EnchantingEMIRecipe implements EmiRecipe {
     private final EnchantingRecipe recipe;
-    private final EmiIngredient input;
-    private final EmiStack output;
+    protected EmiIngredient input;
+    protected EmiStack output;
     private static final ResourceLocation TEXTURES = Apotheosis.loc( "textures/gui/enchanting_jei.png");
     public EnchantingEMIRecipe(EnchantingRecipe recipe) {
         this.recipe = recipe;

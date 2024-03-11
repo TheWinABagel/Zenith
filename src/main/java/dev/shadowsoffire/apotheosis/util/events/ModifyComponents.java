@@ -1,7 +1,7 @@
 package dev.shadowsoffire.apotheosis.util.events;
 
 import com.mojang.datafixers.util.Either;
-import io.github.fabricators_of_create.porting_lib.event.BaseEvent;
+import io.github.fabricators_of_create.porting_lib.core.event.BaseEvent;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.network.chat.FormattedText;

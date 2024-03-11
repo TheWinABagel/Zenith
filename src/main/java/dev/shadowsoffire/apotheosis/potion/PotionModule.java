@@ -6,8 +6,7 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.objects.GlowyBlockItem;
 import dev.shadowsoffire.attributeslib.api.ALObjects;
 import dev.shadowsoffire.placebo.config.Configuration;
-import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityEvents;
-import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityLootEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ResourceLocationException;
@@ -83,7 +82,7 @@ public class PotionModule {
     }
 
     public static void drops() {
-        LivingEntityLootEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
+        LivingEntityEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
             if (target instanceof Rabbit rabbit && drops != null) {
                 if (rabbit.level().random.nextFloat() < 0.045F + 0.045F * lootingLevel) {
                     drops.clear();

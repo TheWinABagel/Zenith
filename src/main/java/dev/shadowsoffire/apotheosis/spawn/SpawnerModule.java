@@ -1,13 +1,12 @@
 package dev.shadowsoffire.apotheosis.spawn;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.cca.ZenithComponents;
 import dev.shadowsoffire.apotheosis.spawn.enchantment.CapturingEnchant;
 import dev.shadowsoffire.apotheosis.spawn.modifiers.SpawnerModifier;
 import dev.shadowsoffire.placebo.config.Configuration;
-import dev.shadowsoffire.placebo.util.PlaceboUtil;
-import io.github.fabricators_of_create.porting_lib.entity.events.EntityMoveEvents;
-import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityEvents;
-import io.github.fabricators_of_create.porting_lib.entity.events.living.LivingEntityLootEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.EntityEvents;
+import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.ChatFormatting;
 import net.minecraft.ResourceLocationException;
@@ -36,7 +35,7 @@ import static dev.shadowsoffire.apotheosis.Apotheosis.enableDebug;
 public class SpawnerModule {
 
     public static final Logger LOG = LogManager.getLogger("Zenith : Spawner");
-    public static final RecipeType<SpawnerModifier> MODIFIER = PlaceboUtil.makeRecipeType("zenith:spawner_modifier");
+    public static final RecipeType<SpawnerModifier> MODIFIER = RecipeType.register("zenith:spawner_modifier");
     public static int spawnerSilkLevel = 1;
     public static int spawnerSilkDamage = 100;
     public static Set<ResourceLocation> bannedMobs = new HashSet<>();
@@ -58,7 +57,7 @@ public class SpawnerModule {
     }
 
     public static void dropsEvent() {
-        LivingEntityLootEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
+        LivingEntityEvents.DROPS.register((target, source, drops, lootingLevel, recentlyHit) -> {
             if (drops == null) return false;
             CapturingEnchant.handleCapturing(target, source, drops);
             return false;
@@ -91,8 +90,12 @@ public class SpawnerModule {
 
     public static void tickDumbMobs() {
         LivingEntityEvents.TICK.register(entity -> {
-            if (entity instanceof Mob mob){
-                if (!mob.level().isClientSide && mob.isNoAi() && mob.getCustomData().getBoolean("zenith:movable")) {
+            if (entity instanceof Mob mob) {
+                if (mob.getCustomData().contains("zenith:movable")) {
+                    ZenithComponents.MOVABLE.get(mob).setValue(mob.getCustomData().getBoolean("zenith:movable"));
+                    mob.getCustomData().remove("zenith:movable");
+                }
+                if (!mob.level().isClientSide && mob.isNoAi() && ZenithComponents.MOVABLE.get(mob).getValue()) {
                     mob.setNoAi(false);
                     mob.travel(new Vec3(mob.xxa, mob.zza, mob.yya));
                     mob.setNoAi(true);
@@ -103,8 +106,8 @@ public class SpawnerModule {
     }
 
     public static void dumbMobsCantTeleport() {
-        EntityMoveEvents.TELEPORT.register(e -> {
-            if (e.entity.getCustomData().getBoolean("zenith:movable")) {
+        EntityEvents.TELEPORT.register(e -> {
+            if (ZenithComponents.MOVABLE.get(e.getEntity()).getValue()) {
                 e.setCanceled(true);
             }
         });

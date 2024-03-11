@@ -7,7 +7,6 @@ import dev.shadowsoffire.apotheosis.ench.EnchantmentInfo;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu.Arcana;
 import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingBehaviorItem;
 import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingTableBehaviorEnchantment;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.Util;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.Mth;
@@ -126,7 +125,6 @@ public class RealEnchantmentHelper {
      * @return All possible enchantments that are eligible to be placed on this item at a specific power level.
      */
     public static List<EnchantmentInstance> getAvailableEnchantmentResults(int power, ItemStack stack, boolean allowTreasure, Set<Enchantment> blacklist) {
-        if (Apotheosis.enableDebug) EnchModule.LOGGER.info("getting enchantments for item {} with power {}", stack.getDisplayName(), power);
         List<EnchantmentInstance> list = new ArrayList<>();
         IEnchantableItem item = (IEnchantableItem) stack.getItem();
         allowTreasure = item.isTreasureAllowed(stack, allowTreasure);
@@ -146,11 +144,6 @@ public class RealEnchantmentHelper {
                     }
                 }
             }
-        }
-
-        if (Apotheosis.enableDebug) EnchModule.LOGGER.info("total {} enchantments:", list.size());
-        for (EnchantmentInstance ench : list) {
-            if (Apotheosis.enableDebug) EnchModule.LOGGER.info("ench {} level {}", ench.enchantment, ench.level);
         }
 
         return list;
@@ -197,7 +190,7 @@ public class RealEnchantmentHelper {
 
         float rectPercent = rectification / 100F;
 
-        if (factor < (rectPercent - 1)) {
+        if (factor < rectPercent - 1) {
             factor = Mth.nextFloat(rand, rectPercent - 1, 1);
         }
 

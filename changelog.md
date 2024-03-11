@@ -2,6 +2,10 @@
 * yeet the porting lib
 
 
+## 1.1.0
+* Update to be in line with Apotheosis [7.3.1](https://github.com/Shadows-of-Fire/Apotheosis/blob/1.20/changelog.md#731)
+* Update to latest porting lib. Will break stuff probably!
+
 ## 1.0.6
 * Properly check if anvil is vanilla and should be enchantable
 * Update porting lib loot to fix loot table issues (Full update to latest porting lib coming soon™️)

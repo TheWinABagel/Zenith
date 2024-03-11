@@ -14,6 +14,7 @@ import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
 import dev.shadowsoffire.apotheosis.ench.table.KeepNBTEnchantingRecipe;
 import dev.shadowsoffire.apotheosis.mixin.accessors.BlockEntityTypeAccessor;
 import dev.shadowsoffire.placebo.config.Configuration;
+import dev.shadowsoffire.placebo.util.PlaceboUtil;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.Registry;
@@ -58,7 +59,7 @@ public class EnchModule {
         Ench.bootstrap();
         particles();
         recipeSerializers();
-
+        PlaceboUtil.registerCustomColor(Ench.Colors.LIGHT_BLUE_FLASH);
         EnchModuleEvents.registerEvents();
 
 
@@ -160,5 +161,6 @@ public class EnchModule {
         }
 
         if (!e && enchInfoConfig.hasChanged()) enchInfoConfig.save();
+        EnchConfig.load(new Configuration(new File(Apotheosis.configDir, "ench.cfg")));
     }
 }

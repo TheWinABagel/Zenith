@@ -2,8 +2,6 @@ package dev.shadowsoffire.apotheosis.util;
 
 import com.google.common.base.Preconditions;
 import dev.shadowsoffire.placebo.config.Configuration;
-import io.github.fabricators_of_create.porting_lib.tool.ToolAction;
-import io.github.fabricators_of_create.porting_lib.tool.ToolActions;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -13,9 +11,11 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 /**
  * Generates names for various objects, based on stuff.
@@ -253,21 +253,20 @@ public class NameHelper {
             }
 
             String[] type = { "Tool" };
-            Set<ToolAction> types = ToolAction.getActions().stream().filter(stack::canPerformAction).collect(Collectors.toSet());
 
             if (stack.getItem() instanceof SwordItem) {
                 type = swords;
             }
-            else if (types.contains(ToolActions.AXE_DIG)) {
+            else if (stack.getItem() instanceof AxeItem) {
                 type = axes;
             }
-            else if (types.contains(ToolActions.PICKAXE_DIG)) {
+            else if (stack.getItem() instanceof PickaxeItem) {
                 type = pickaxes;
             }
-            else if (types.contains(ToolActions.SHOVEL_DIG)) {
+            else if (stack.getItem() instanceof ShovelItem) {
                 type = shovels;
             }
-            else if (types.contains(ToolActions.SHIELD_BLOCK)) {
+            else if (stack.getItem() instanceof ShieldItem) {
                 type = shields;
             }
             name.append(type[random.nextInt(type.length)]);
