@@ -14,7 +14,6 @@
     "accessors.DropExperienceBlockAccessor",
     "accessors.EnchantmentAccessor",
     "accessors.EnchantmentMenuAccessor",
-    "accessors.EnchantmentScreenAccessor",
     "accessors.EntityAccessor",
     "accessors.ItemCombinerMenuAccessor",
     "accessors.ItemRendererAccessor",
@@ -84,6 +83,7 @@
     "defaultRequire": 1
   },
   "client": [
+    "accessors.EnchantmentScreenAccessor",
     "client.AbstractContainerScreenMixin",
     "client.AnvilScreenMixin",
     "client.EnchantmentScreenMixin",

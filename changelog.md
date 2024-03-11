@@ -2,6 +2,10 @@
 * yeet the porting lib
 
 
+## 1.1.1
+* Move client only accessor to client mixin module
+* Fix incorrect version of zenith attributes being required
+
 ## 1.1.0
 * Update to be in line with Apotheosis [7.3.1](https://github.com/Shadows-of-Fire/Apotheosis/blob/1.20/changelog.md#731)
 * Update to latest porting lib. Will break stuff probably!
