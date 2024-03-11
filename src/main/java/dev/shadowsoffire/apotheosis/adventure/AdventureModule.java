@@ -43,11 +43,6 @@ public class AdventureModule {
     public static final Logger LOGGER = LogManager.getLogger("Zenith : Adventure");
     public static final boolean STAGES_LOADED = FabricLoader.getInstance().isModLoaded("gamestages");
 
-    public void preInit() {
-    //    ObfuscationReflectionHelper.setPrivateValue(RangedAttribute.class, (RangedAttribute) Attributes.ARMOR, 200D, "f_22308_");
-    //    ObfuscationReflectionHelper.setPrivateValue(RangedAttribute.class, (RangedAttribute) Attributes.ARMOR_TOUGHNESS, 100D, "f_22308_");
-    }
-
     public static void init() {
         reload(false);
         AdventureEvents.init();

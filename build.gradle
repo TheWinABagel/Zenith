@@ -13,18 +13,9 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-	maven {
-		name = "Parchment"
-		url = 'https://maven.parchmentmc.org'
-	}
-	maven {
-		name = "Porting Lib"
-		url = "https://mvn.devos.one/snapshots/"
-	}
-	maven {
-		name = "Porting Lib beta"
-		url = "https://mvn.devos.one/releases/"
-	}
+	maven { url = 'https://maven.parchmentmc.org' }						//Parchment mappings
+	maven { url = "https://mvn.devos.one/snapshots/" } 					//Porting lib snapshots
+	maven { url = "https://mvn.devos.one/releases/" }					//Porting lib releases (using both just in case)
 	maven {
 		name = "CCA"
 		url = 'https://maven.ladysnake.org/releases'
@@ -78,7 +69,7 @@ repositories {
 		}
 	}
 
-	mavenLocal()
+	mavenLocal()														//Fakerlib, Zenith Attributes TODO Create maven/move to jitpack
 }
 
 dependencies {
@@ -91,19 +82,16 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	modImplementation("dev.bagel.fakerlib:FakerLib:${project.fakerlib_version}")
-	modCompileOnly modRuntimeOnly( "dev.bagel:ZenithAttributes:${project.zenith_attributes_version}")
+	modCompileOnly modRuntimeOnly("dev.bagel:ZenithAttributes:${project.zenith_attributes_version}")
 
 	// Mixin^2 for mod compat
 	implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${project.mixin_squared_version}"))
 
-//	modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${project.reach_lib_version}")
+	implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.3.5")) // ???????????????????? why is this needed????????
 
-	modImplementation("io.github.fabricators_of_create.Porting-Lib:attributes:${project.port_lib_version}")
-	modImplementation("io.github.fabricators_of_create.Porting-Lib:entity:${project.port_lib_version}")
-	modImplementation("io.github.fabricators_of_create.Porting-Lib:extensions:${project.port_lib_version}")
 	modImplementation(include("io.github.fabricators_of_create.Porting-Lib:base:${project.port_lib_version}"))
 	modImplementation(include("io.github.fabricators_of_create.Porting-Lib:loot:${project.port_lib_version}"))
-	modImplementation(include("io.github.fabricators_of_create.Porting-Lib:utility:${project.port_lib_version}"))
+	modImplementation(include( "io.github.fabricators_of_create.Porting-Lib:utility:${project.port_lib_version}"))
 	modImplementation(include("io.github.fabricators_of_create.Porting-Lib:tags:${project.port_lib_version}"))
 
 
@@ -139,7 +127,7 @@ dependencies {
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${project.rei_version}"
 
 	// EMI
-	modCompileOnly "dev.emi:emi-fabric:${emi_version}"
+	modCompileOnly "dev.emi:emi-fabric:${project.emi_version}"
 
 	switch (block_viewer.toLowerCase(Locale.ROOT)) {
 		case "wthit": 	modRuntimeOnly "mcp.mobius.waila:wthit:fabric-${project.wthit_version}"

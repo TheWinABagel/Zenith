@@ -141,7 +141,7 @@ public class RarityRegistry extends WeightedDynamicRegistry<LootRarity> {
     protected void registerBuiltinCodecs() {
         this.registerDefaultCodec(Apotheosis.loc("rarity"), LootRarity.LOAD_CODEC);
     }
-
+    // this is how the chicken got to the other side
     @Override
     protected void validateItem(ResourceLocation key, LootRarity item) {
         super.validateItem(key, item);
