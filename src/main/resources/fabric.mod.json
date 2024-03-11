@@ -71,8 +71,8 @@
     "fabric": "${fapi_version}",
     "minecraft": "1.20.1",
     "java": ">=17",
-    "fakerlib": ">=${fakerlib_version}",
-    "zenith_attributes": ">=${zenith_attributes_version}"
+    "fakerlib": ">=0.1.1",
+    "zenith_attributes": ">=0.2.0"
   },
   "suggests": {
     "roughlyenoughitems": "*",
