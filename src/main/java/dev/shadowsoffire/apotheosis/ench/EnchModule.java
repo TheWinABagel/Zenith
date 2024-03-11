@@ -107,7 +107,7 @@ public class EnchModule {
             return new EnchantmentInfo(ench);
         }
 
-        if (info == null) { // Happens every time the game is loaded... odd
+        if (info == null) {
             info = EnchantmentInfo.load(ench, enchInfoConfig);
             ENCHANTMENT_INFO.put(ench, info);
             if (enchInfoConfig.hasChanged()) enchInfoConfig.save();
