@@ -2,6 +2,9 @@
 * yeet the porting lib
 
 
+## 1.1.2
+* Move client only accessor to client mixin module
+
 ## 1.1.1
 * Move client only accessor to client mixin module
 * Fix incorrect version of zenith attributes being required

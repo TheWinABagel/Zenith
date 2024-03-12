@@ -1,6 +1,6 @@
 {
 	"type": "zenith:attribute",
-	"attribute": "additionalentityattributes:dropped_experience",
+	"attribute": "additionalentityattributes:player.dropped_experience",
 	"operation": "ADDITION",
 	"values": {
 		"common": {

@@ -38,7 +38,7 @@
 					"pickaxe"
 				]
 			},
-			"attribute": "additionalentityattributes:dropped_experience",
+			"attribute": "additionalentityattributes:player.dropped_experience",
 			"operation": "MULTIPLY_TOTAL",
 			"values": {
 				"common": 0.075,
