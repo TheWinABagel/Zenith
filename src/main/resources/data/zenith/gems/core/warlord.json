@@ -15,7 +15,7 @@
 					"crossbow"
 				]
 			},
-			"attribute": "additionalentityattributes:critical_bonus_damage",
+			"attribute": "additionalentityattributes:player.critical_bonus_damage",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.05,
@@ -34,7 +34,7 @@
 					"heavy_weapon"
 				]
 			},
-			"attribute": "additionalentityattributes:critical_bonus_damage",
+			"attribute": "additionalentityattributes:player.critical_bonus_damage",
 			"operation": "ADDITION",
 			"values": {
 				"common": 0.075,

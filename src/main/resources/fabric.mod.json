@@ -72,7 +72,7 @@
     "minecraft": "1.20.1",
     "java": ">=17",
     "fakerlib": ">=0.1.1",
-    "zenith_attributes": ">=0.2.0"
+    "zenith_attributes": ">=${zenith_attributes_version}"
   },
   "suggests": {
     "roughlyenoughitems": "*",
