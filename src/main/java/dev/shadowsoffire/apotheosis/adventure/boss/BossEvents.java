@@ -61,13 +61,13 @@ public class BossEvents {
                     Pair<Float, BossSpawnRules> rules = AdventureConfig.BOSS_SPAWN_RULES.get(sLevel.getLevel().dimension().location());
                     if (rules == null) {
                         if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Boss spawn rules are null");
-                        return false;
+                        return true;
                     }
                     if (rand.nextFloat() <= rules.getLeft() && rules.getRight().test(sLevel, BlockPos.containing(x, y, z))) {
                         Player player = sLevel.getNearestPlayer(x, y, z, -1, false);
                         if (player == null) {
                             if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("No player context for boss spawn");
-                            return false; // Spawns require player context
+                            return true; // Spawns require player context
                         }
                         ApothBoss item = BossRegistry.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(sLevel.getLevel()), IStaged.matches(player));
                         Mob boss = item.createBoss(sLevel, BlockPos.containing(x - 0.5, y, z - 0.5), rand, player.getLuck());
@@ -93,14 +93,14 @@ public class BossEvents {
                                 });
                             }
                             bossCooldowns.put(mob.level().dimension().location(), AdventureConfig.bossSpawnCooldown);
-                            return true;
+                            return false;
                         }
                     }
                 } else if (!level.isClientSide() && mob instanceof Monster) {
                     if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Boss cooldown is too high to spawn a mob, currently {}", bossCooldowns.getInt(mob.level().dimension().location()));
                 }
             }
-            return false;
+            return true;
         });
     }
 
@@ -123,10 +123,10 @@ public class BossEvents {
                     ZenithComponents.BOSS_DATA.get(mob).setMiniBoss(MinibossRegistry.INSTANCE.getKey(item).toString());
                     ZenithComponents.BOSS_DATA.get(mob).setMinibossLuck(player.getLuck());
                     AdventureModule.debugLog(mob.blockPosition(), "Miniboss - " + mob.getName().getString());
-                    if (!item.shouldFinalize()) return false;
+                    if (!item.shouldFinalize()) return true;
                 }
             }
-            return false;
+            return true;
         });
     }
 
@@ -149,7 +149,7 @@ public class BossEvents {
                     }
                 }
             }
-            return false;
+            return true;
         });
     }
 

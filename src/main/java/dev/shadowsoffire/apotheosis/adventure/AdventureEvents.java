@@ -253,16 +253,16 @@ public class AdventureEvents {
         LivingEntityEvents.CHECK_SPAWN.register((mob, level, x, y, z, spawner, type) -> {
             if (level.getRandom().nextFloat() <= AdventureConfig.randomAffixItem && mob instanceof Monster) {
                 Player player = level.getNearestPlayer(x, y, z, -1, false);
-                if (player == null) return false;
+                if (player == null) return true;
                 ItemStack affixItem = LootController.createRandomLootItem(level.getRandom(), null, player, (ServerLevel) mob.level());
-                if (affixItem.isEmpty()) return false;
+                if (affixItem.isEmpty()) return true;
                 affixItem.getOrCreateTag().putBoolean("zenith_rspawn", true);
                 LootCategory cat = LootCategory.forItem(affixItem);
                 EquipmentSlot slot = cat.getSlots()[0];
                 mob.setItemSlot(slot, affixItem);
                 mob.setGuaranteedDrop(slot);
             }
-            return false;
+            return true;
         });
     }
 
