@@ -7,6 +7,7 @@
 
 ## 1.1.2
 * Move client only accessor to client mixin module
+* Fix broken affixes
 
 ## 1.1.1
 * Move client only accessor to client mixin module
