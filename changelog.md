@@ -2,6 +2,9 @@
 * yeet the porting lib
 
 
+## 1.1.3
+* Fix mobs not spawning
+
 ## 1.1.2
 * Move client only accessor to client mixin module
 
