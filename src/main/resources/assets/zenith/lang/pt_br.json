@@ -1,7 +1,7 @@
 {
     "comment_id": "/Adventure Module",
 
-    "info.zenith.affix_item": "Item de afixo apótico",
+    "info.zenith.affix_item": "Item de afixo zênite",
 	
 	"death.attack.zenith.execute": "%s foi executado por %s",
 	"death.attack.zenith.execute.item": "%s foi executado por %s usando %s",
@@ -13,7 +13,7 @@
     "affix.zenith:armor/attribute/blessed": "Abençoado",
     "affix.zenith:armor/attribute/blessed.suffix": "da Saúde",
 
-    "affix.zenith:armor/attribute/windswept": "Levado pelo vento",
+    "affix.zenith:armor/attribute/windswept": "Levado pelo Vento",
     "affix.zenith:armor/attribute/windswept.suffix": "da Corrente",
 
     "affix.zenith:armor/attribute/ironforged": "Ferroforjado",
@@ -22,7 +22,7 @@
     "affix.zenith:sword/attribute/violent": "Violento",
     "affix.zenith:sword/attribute/violent.suffix": "da Matança",
 
-    "affix.zenith:ranged/attribute/windswept": "Levado pelo vento",
+    "affix.zenith:ranged/attribute/windswept": "Levado pelo Vento",
     "affix.zenith:ranged/attribute/windswept.suffix": "da Corrente",
 
     "affix.zenith:sword/attribute/graceful": "Gracioso",
@@ -49,7 +49,7 @@
 	"affix.zenith:ranged/attribute/agile": "Ágil",
     "affix.zenith:ranged/attribute/agile.suffix": "da Destreza",
 
-	"affix.zenith:armor/attribute/steel_touched": "Tocado pelo aço",
+	"affix.zenith:armor/attribute/steel_touched": "Tocado pelo Aço",
     "affix.zenith:armor/attribute/steel_touched.suffix": "do Defensor",
 
 	"affix.zenith:armor/attribute/stalwart": "Robusto",
@@ -60,6 +60,9 @@
 
 	"affix.zenith:armor/attribute/fortunate": "Afortunado",
     "affix.zenith:armor/attribute/fortunate.suffix": "do Trevo-de-quatro-folhas",
+
+    "affix.zenith:armor/attribute/winged": "Alado",
+    "affix.zenith:armor/attribute/winged.suffix": "dos Céus",
 
 	"affix.zenith:sword/attribute/intricate": "Confuso",
     "affix.zenith:sword/attribute/intricate.suffix": "do Pensamento crítico",
@@ -82,7 +85,7 @@
 	"affix.zenith:heavy_weapon/attribute/shredding": "Retalhador",
     "affix.zenith:heavy_weapon/attribute/shredding.suffix": "da Penetração",
 
-	"affix.zenith:heavy_weapon/attribute/giant_slaying": "Assassino de gigantes",
+	"affix.zenith:heavy_weapon/attribute/giant_slaying": "Assassino de Gigantes",
     "affix.zenith:heavy_weapon/attribute/giant_slaying.suffix": "dos Golpes colossais",
 
 	"affix.zenith:heavy_weapon/attribute/berserking": "Furioso",
@@ -103,7 +106,7 @@
 	"affix.zenith:breaker/mob_effect/swift": "Veloz",
     "affix.zenith:breaker/mob_effect/swift.suffix": "do Esmagamento",
 
-    "affix.zenith:breaker/mob_effect/spelunkers": "de espeleólogo",
+    "affix.zenith:breaker/mob_effect/spelunkers": "Espeleológico",
     "affix.zenith:breaker/mob_effect/spelunkers.suffix": "de Exploração de cavernas",
 
 	"affix.zenith:ranged/mob_effect/ensnaring": "Ilusório",
@@ -130,7 +133,7 @@
 	"affix.zenith:armor/mob_effect/blinding": "Ofuscante",
     "affix.zenith:armor/mob_effect/blinding.suffix": "da Escuridão",
 
-	"affix.zenith:ranged/mob_effect/shulkers": "Tocado por shulker",
+	"affix.zenith:ranged/mob_effect/shulkers": "Tocado por Shulker",
     "affix.zenith:ranged/mob_effect/shulkers.suffix": "da Levitação",
 
 	"affix.zenith:shield/mob_effect/withering": "Murchador",
@@ -139,7 +142,7 @@
     "affix.zenith:shield/attribute/ironforged": "Ferroforjado",
     "affix.zenith:shield/attribute/ironforged.suffix": "do Ferro",
 
-    "affix.zenith:shield/attribute/steel_touched": "Tocado pelo aço",
+    "affix.zenith:shield/attribute/steel_touched": "Tocado pelo Aço",
     "affix.zenith:shield/attribute/steel_touched.suffix": "do Defensor",
 
 	"affix.zenith:ranged/mob_effect/ivy_laced": "Entrelaçado de Hera",
@@ -266,7 +269,7 @@
 	"affix.zenith:heavy_weapon/attribute/nullifying": "Anulante",
 	"affix.zenith:heavy_weapon/attribute/nullifying.suffix": "do Destruidor de magos",
 
-	"affix.zenith:sword/attribute/spellbreaking": "Quebra-encantos",
+	"affix.zenith:sword/attribute/spellbreaking": "Quebra-Encantos",
 	"affix.zenith:sword/attribute/spellbreaking.suffix": "do Golem de petricita",
 
 	"affix.zenith:ranged/mob_effect/grievous": "Grave",
@@ -310,7 +313,7 @@
 	"gem_class.breaker": "Ferramentas de mineração",
     "gem_class.pickaxe": "Picaretas",
 	"gem_class.light_ranged": "Armas leves ou de longo alcance",
-	"gem_class.weapons_or_tools": "Armas ou ferramentas",
+	"gem_class.weapon_or_tool": "Armas ou ferramentas",
     "gem_class.weapon": "Armas",
 
 	"gem_class.helmet": "Capacetes",
@@ -363,7 +366,7 @@
     "item.zenith.gem.zenith:twilight/forest": "Gema da floresta do crepúsculo",
 	"item.zenith.gem.zenith:twilight/queen": "Gema da rainha congelada",
 
-	"item.zenith.boss_summoner": "Invocador de chefe apótico",
+	"item.zenith.boss_summoner": "Invocador de chefe zênite",
     "item.zenith.gem.zenith:common": "%s rachada",
     "item.zenith.gem.zenith:uncommon": "%s lascada",
     "item.zenith.gem.zenith:rare": "%s defeituosa",
@@ -374,12 +377,13 @@
 	"item.zenith.vial_of_expulsion": "Frasco de expulsão ardente",
 	"item.zenith.vial_of_unnaming": "Frasco de desnomeação",
 	"item.zenith.gem_dust": "Pó de gema",
-	"item.zenith.gem_dust.desc": "Uma pedra preciosa apotéica triturada",
+	"item.zenith.gem_dust.desc": "Uma pedra zênite preciosa triturada",
 	"item.zenith.common_material": "Sucata de metal misteriosa",
 	"item.zenith.uncommon_material": "Tecido antigo",
 	"item.zenith.rare_material": "Fragmento de cristal luminoso",
 	"item.zenith.epic_material": "Areias arcanas",
 	"item.zenith.mythic_material": "Pérola forjada pelos deuses",
+	"item.zenith.ancient_material": "Manifestaçäo do infinito",
 	"item.zenith.sigil_of_socketing": "Signo de encaixe",
 	"item.zenith.superior_sigil_of_socketing": "Signo de encaixe superior",
 	"item.zenith.sigil_of_enhancement": "[ANI] Signo de aprimoramento",
@@ -388,25 +392,26 @@
     "block.zenith.boss_spawner": "Gerador de chefe",
     "block.zenith.gem_cutting_table": "Bancada de lapidação de gema",
 	"block.zenith.gem_cutting_table.desc": "Usa pó de gema materiais de raridade para melhorar gemas",
-	"block.zenith.salvaging_table": "Bancada de desmontagem",
-	"block.zenith.salvaging_table.desc": "Desmonta itens de afixo em materiais de raridade",
+    "block.zenith.salvaging_table": "Bancada de reciclagem",
+	"block.zenith.salvaging_table.desc": "Recicla itens de afixo em materiais de raridade",
 	"block.zenith.simple_reforging_table": "Bancada simples de reforja",
 	"block.zenith.reforging_table": "Bancada de reforja",
 	"block.zenith.reforging_table.desc": "Usa pó de gema e materiais de raridade para rolar novamente os afixos",
 	"block.zenith.reforging_table.desc2": "Raridade máxima: %s",
 	
-	"button.zenith.salvage": "Itens de desmontagem",
+	"button.zenith.salvage": "Itens de reciclagem",
 	"button.zenith.no_salvage": "Nenhum item selecionado",
 	"button.zenith.no_salvage_all": "Nenhum item válido no inventário",
     "button.zenith.upgrade": "Aprimorar gema",
-	"button.zenith.upgrade.no": "Entradas ausentes",
+	"button.zenith.upgrade.no": "Itens ausentes",
 
 	"menu.zenith.gem_cutting": "Lapidação de gema",
-    "container.zenith.salvage": "Desmontar",
+    "container.zenith.salvage": "Reciclar",
 	"container.zenith.reforge": "Reforjar",
 	"text.zenith.cost": "%sx %s",
+    "text.zenith.range": "%d-%d",
 	"text.zenith.reforge_cost": "Custo de reforja",
-	"text.zenith.salvage_results": "Resultados da desmontagem",
+	"text.zenith.salvage_results": "Resultados da reciclagem",
 	"text.zenith.unique": "Único",
 	"text.zenith.results": "Resultados",
 	"text.zenith.facets": "Facetas: %s",
@@ -416,10 +421,10 @@
     "text.zenith.no_upgrade": "Não pode ser melhorado",
 	"text.zenith.cut_cost": "Custo de lapidação de gema",
 	"text.zenith.one_rarity_mat": "Materiais de raridade (1)",
-	"title.zenith.smithing": "Ferraria apótica",
-    "title.zenith.salvaging": "Desmontagem",
+	"title.zenith.smithing": "Ferraria zênite",
+    "title.zenith.salvaging": "Reciclagem",
 
-"text.zenith.anything": "Qualquer coisa",
+    "text.zenith.anything": "Qualquer coisa",
 	"text.zenith.category.none": "Nada",
 	"text.zenith.category.none.plural": "Nada",
 	"text.zenith.category.bow": "Arco",
@@ -453,15 +458,15 @@
 	"text.zenith.any_x_item": "Qualquer item de afixo %s",
 	
 	"info.zenith.boss_spawn": "%s despertou por perto!",
-	"info.zenith.boss": "Chefe apótico %s",
+	"info.zenith.boss": "Chefe zênite %s",
 	"info.zenith.boss_item": "Derrubará: %s",
 	"info.zenith.boss_modifiers": "Modificadores do chefe:",
 	"info.zenith.rarity_material": "Material de raridade (%s)",
-	"info.zenith.gem_crushing": "O pó de gema é obtido ao jogar qualquer gema apótica no chão e deixar um bloco de bigorna cair sobre ela.",
-	"info.zenith.gem_extraction": "Usado em uma bancada de ferraria para desencaixar gemas apóticas.\n\nO item será destruído no processo.",
-	"info.zenith.gem_expulsion": "Usado em uma bancada de ferraria para desencaixar gemas apóticas.\n\nAs gemas serão destruídas no processo.",
+	"info.zenith.gem_crushing": "O pó de gema é obtido ao jogar qualquer gema zênite no chão e deixar um bloco de bigorna cair sobre ela.",
+	"info.zenith.gem_extraction": "Usado em uma bancada de ferraria para desencaixar gemas zênite.\n\nO item será destruído no processo.",
+	"info.zenith.gem_expulsion": "Usado em uma bancada de ferraria para desencaixar gemas zênite.\n\nAs gemas serão destruídas no processo.",
 	"info.zenith.unnaming": "Usado em uma bancada de ferraria para remover os componentes de afixo do nome de um item.",
-    "info.zenith.salvaging": "Materiais de raridade são obtidos ao desmontar itens de afixo em uma bancada de desmontagem.",
+    "info.zenith.salvaging": "Materiais de raridade são obtidos ao reciclar itens de afixo em uma bancada de reciclagem.",
 	
     "rarity.zenith:common": "comum",
     "rarity.zenith:uncommon": "incomum",
@@ -470,173 +475,173 @@
     "rarity.zenith:mythic": "mítico",
     "rarity.zenith:ancient": "ancestral",
     
-    "death.attack.apoth.frozen_solid": "%s foi congelado.",
-    "death.attack.apoth.frozen_solid.player": "%s foi congelado por %s.",
-    "death.attack.apoth.execute": "%s foi executado.",
-    "death.attack.apoth.execute.player": "%s foi executado por %s.",
+    "death.attack.zenith:psychic": "%s foi morto por um ataque refletido.",
+    "death.attack.zenith:psychic.player": "%s teve seu ataque refletido por %s.",
+    "death.attack.zenith:execute": "%s foi executado.",
+    "death.attack.zenith:execute.player": "%s foi executado por %s.",
 
 	"comment_id": "/Adventure + Gateways Compat",
 
-	"misc.zenith.boss": "Chefe apótico %s",
+	"misc.zenith.boss": "Chefe zênite %s",
 	"misc.zenith.random": "Aleatório",
 	"reward.zenith.affix": "Item de afixo %s",
 	"reward.zenith.random_affix": "Item de afixo aleatório",
-	"zenith.boss_gate_small": "Portão de chefe apótico pequeno",
+	"zenith.boss_gate_small": "Portão pequeno de chefe zênite",
 
     "comment_id": "/Advancements",
 
-    "advancements.zenith.enchantment": "Os segredos do encantamento",
+    "advancements.zenith.enchantment": "Os Segredos do Encantamento",
     "advancements.zenith.enchantment.desc": "Obtenha uma mesa de encantamentos e comece a desvendar o mistério.",
     
-    "advancements.zenith.30ench": "O básico",
+    "advancements.zenith.30ench": "O Básico",
     "advancements.zenith.30ench.desc": "Encante um item no nível 30.",
     
-    "advancements.zenith.60ench": "Dominando o mar e o inferno",
+    "advancements.zenith.60ench": "Dominando o Mar e o Inferno",
     "advancements.zenith.60ench.desc": "Encante um item no nível 60.",
     
-    "advancements.zenith.80ench": "Encatamentos das profundezas",
+    "advancements.zenith.80ench": "Encatamentos das Profundezas",
     "advancements.zenith.80ench.desc": "Encante um item no nível 80.",
     
-    "advancements.zenith.100ench": "Encantamento dracônico",
+    "advancements.zenith.100ench": "Encantamento Dracônico",
     "advancements.zenith.100ench.desc": "Encante um item no nível 100.",
     
-    "advancements.zenith.bookshelf": "Bibliotecário local",
+    "advancements.zenith.bookshelf": "Bibliotecário Local",
     "advancements.zenith.bookshelf.desc": "Crie uma estante de livros.",
     
-    "advancements.zenith.hellshelf": "O caos do inferno",
+    "advancements.zenith.hellshelf": "O Caos do Inferno",
     "advancements.zenith.hellshelf.desc": "Obtenha uma estante infernal",
     
-    "advancements.zenith.upgrade_hellshelf": "Dominando o inferno",
+    "advancements.zenith.upgrade_hellshelf": "Dominando o Inferno",
     "advancements.zenith.upgrade_hellshelf.desc": "Melhore uma estante infernal infundida.",
     
-    "advancements.zenith.deepshelf": "Mergulhando nas trevas",
-    "advancements.zenith.deepshelf.desc": "Ative uma estante das profundezas dormente.",
+    "advancements.zenith.deepshelf": "Mergulhando nas Trevas",
+    "advancements.zenith.deepshelf.desc": "Ative uma estante profunda dormente.",
     
-    "advancements.zenith.sculkshelf": "Abraçando o sculk",
+    "advancements.zenith.sculkshelf": "Abraçando o Sculk",
     "advancements.zenith.sculkshelf.desc": "Crie uma estante sculk usando uma gavinha do defensor.",
     
-    "advancements.zenith.endshelf": "A força do End",
+    "advancements.zenith.endshelf": "A Força do End",
     "advancements.zenith.endshelf.desc": "Obtenha um bafo de dragão infundido e crie uma estante do End",
     
-    "advancements.zenith.upgrade_endshelf": "A última estante",
+    "advancements.zenith.upgrade_endshelf": "A Última Estante",
     "advancements.zenith.upgrade_endshelf.desc": "Melhore uma estante do End em uma estante dracônica.",
     
-    "advancements.zenith.seashelf": "A pureza dos mares",
-    "advancements.zenith.seashelf.desc": "Obtenha uma estante do mar.",
+    "advancements.zenith.seashelf": "A Pureza dos Mares",
+    "advancements.zenith.seashelf.desc": "Obtenha uma estante marinha.",
     
-    "advancements.zenith.infuse_seashelf": "Infusão do mar",
-    "advancements.zenith.infuse_seashelf.desc": "Obtenha uma estante do mar infundida através do encantamento de infusão.",
+    "advancements.zenith.infuse_seashelf": "Infusão Marinha",
+    "advancements.zenith.infuse_seashelf.desc": "Obtenha uma estante marinha infundida através do encantamento de infusão.",
     
-    "advancements.zenith.upgrade_seashelf": "Dormindo no frio abaixo",
-    "advancements.zenith.upgrade_seashelf.desc": "Melhore uma estante do mar infundida",
+    "advancements.zenith.upgrade_seashelf": "Dormindo no Frio Abaixo",
+    "advancements.zenith.upgrade_seashelf.desc": "Melhore uma estante marinha infundida",
     
-    "advancements.zenith.infuse_hellshelf": "Infusão infernal",
+    "advancements.zenith.infuse_hellshelf": "Infusão Infernal",
     "advancements.zenith.infuse_hellshelf.desc": "Obtenha uma estante infernal infundida através do encantamento de infusão.",
     
-    "advancements.zenith.anvilench": "Encantador de bigorna",
+    "advancements.zenith.anvilench": "Encantador de Bigorna",
     "advancements.zenith.anvilench.desc": "Encante uma bigorna",
-    "advancements.zenith.shieldench": "Encantador de escudo",
+    "advancements.zenith.shieldench": "Encantador de Escudo",
     "advancements.zenith.shieldench.desc": "Encante um escudo",
     "advancements.zenith.altar": "Transformação Oceânica",
     "advancements.zenith.altar.desc": "Create an Altar of the Seas, which can turn unwanted enchanted items into a new book.",
-    "advancements.zenith.splitting": "Esmagador de encantamentos",
+    "advancements.zenith.splitting": "Esmagador de Encantamentos",
     "advancements.zenith.splitting.desc": "Deixe cair uma bigorna encantada com divisão em um livro encantado para separá-lo",
-    "advancements.zenith.sharp10": "O mais afiado",
+    "advancements.zenith.sharp10": "O Mais Afiado",
     "advancements.zenith.sharp10.desc": "Encante uma arma com afiação X ou superior",
-    "advancements.zenith.level20": "Poder ilimitado",
+    "advancements.zenith.level20": "Poder Ilimitado",
     "advancements.zenith.level20.desc": "Obtenha um item com um encantamento no nível XX ou superior",
-    "advancements.zenith.enchanting_stats": "Eterna, quanta, arcana",
+    "advancements.zenith.enchanting_stats": "Eterna, Quanta, Arcana",
     "advancements.zenith.enchanting_stats.desc": "Encante um item tendo pelo menos 10 de cada atributo.",
-    "advancements.zenith.quanta0": "Desapareça, fluxo",
+    "advancements.zenith.quanta0": "Desapareça, Fluxo",
     "advancements.zenith.quanta0.desc": "Encante um item com 0% de quanta.",
-    "advancements.zenith.quanta50": "Introdução ao caos",
+    "advancements.zenith.quanta50": "Introdução ao Caos",
     "advancements.zenith.quanta50.desc": "Encante um item com 50% de quanta.",
-    "advancements.zenith.quanta100": "Jogando os dados",
+    "advancements.zenith.quanta100": "Jogando os Dados",
     "advancements.zenith.quanta100.desc": "Encante um item com 100% de quanta.",
-    "advancements.zenith.arcana50": "Energia mágica",
+    "advancements.zenith.arcana50": "Energia Mágica",
     "advancements.zenith.arcana50.desc": "Encante um item com 50% de arcana.",
-    "advancements.zenith.arcana100": "Poder arcano",
+    "advancements.zenith.arcana100": "Poder Arcano",
     "advancements.zenith.arcana100.desc": "Encante um item com 100% de arcana.",
-    "advancements.zenith.max_stats": "Força máxima",
+    "advancements.zenith.max_stats": "Força Máxima",
     "advancements.zenith.max_stats.desc": "Encante um item tendo todos os status no máximo.",
-    "advancements.zenith.max_stable": "Poder estável",
+    "advancements.zenith.max_stable": "Poder Estável",
     "advancements.zenith.max_stable.desc": "Encante um item tendo eterna e arcana máximas, mas 0% de quanta.",
-    "advancements.zenith.max_rectified": "Apenas o melhor",
+    "advancements.zenith.max_rectified": "Apenas o Melhor",
     "advancements.zenith.max_rectified.desc": "Encante um item com atributos máximos e retificação máxima.",
     
-    "advancements.zenith.affix": "Uma fixação impressionante",
-    "advancements.zenith.affix.desc": "Encontre um item com um afixo apótico.",
+    "advancements.zenith.affix": "Uma Fixação Impressionante",
+    "advancements.zenith.affix.desc": "Encontre um item com um afixo zênite.",
 
-    "advancements.zenith.rare": "Certamente parece raro...",
+    "advancements.zenith.rare": "Certamente Parece Raro...",
     "advancements.zenith.rare.desc": "Encontre um item de afixo raro.",
     
     "advancements.zenith.epic": "Épico!",
     "advancements.zenith.epic.desc": "Encontre um item de afixo épico.",
     
-    "advancements.zenith.mythic": "Forjado pelos titãs",
+    "advancements.zenith.mythic": "Forjado Pelos Titãs",
     "advancements.zenith.mythic.desc": "Encontre um item de afixo mítico.",
     
-    "advancements.zenith.ancient": "Tesouros perdidos dos deuses",
+    "advancements.zenith.ancient": "Tesouros Perdidos dos Deuses",
     "advancements.zenith.ancient.desc": "Encontre um item antigo.",
     
     "advancements.zenith.boss": "Ele não era tão forte",
-    "advancements.zenith.boss.desc": "Mate um chefe apótico e recupere o item de afixo dele.",
+    "advancements.zenith.boss.desc": "Mate um chefe zênite e recupere o item de afixo dele.",
     "advancements.zenith.chests": "Eu encontrei isso embaixo da terra",
     "advancements.zenith.chests.desc": "Encontre um item de afixo em um baú.",
-    "advancements.zenith.merchant": "Eu consegui negócios",
+    "advancements.zenith.merchant": "Eu Fechei Negócios",
     "advancements.zenith.merchant.desc": "Compre um item de afixo do vendedor ambulante.",
     "advancements.zenith.random": "Como você conseguiu isso?",
     "advancements.zenith.random.desc": "Recupere um item de afixo de um monstro aleatório.",
     
-    "advancements.zenith.gem": "Um cristal antigo",
+    "advancements.zenith.gem": "Um Cristal Antigo",
     "advancements.zenith.gem.desc": "Encontre uma gema encaixável.",
 
-    "advancements.zenith.rare_gem": "Longe de ser perfeito",
+    "advancements.zenith.rare_gem": "Longe de ser Perfeito",
     "advancements.zenith.rare_gem.desc": "Adquira uma gema defeituosa.",
 
-    "advancements.zenith.mythic_gem": "Cristais impecáveis",
+    "advancements.zenith.mythic_gem": "Cristais Impecáveis",
     "advancements.zenith.mythic_gem.desc": "Adquira uma gema impecável.",
 	
-	"advancements.zenith.ancient_gem": "Jóias do infinito",
+	"advancements.zenith.ancient_gem": "Jóias do Infinito",
     "advancements.zenith.ancient_gem.desc": "Usando a bancada de lapidação de gema, crie uma gema perfeita.",
 
-    "advancements.zenith.socket": "O joalheiro",
+    "advancements.zenith.socket": "O Joalheiro",
     "advancements.zenith.socket.desc": "Usando uma bancada de ferraria, encaixe uma gema em um item.",
     
-    "advancements.zenith.gem_cut": "O lapidário",
-    "advancements.zenith.gem_cut.desc": "Use uma bancada de lapidação de gema para melhorar uma gema apótica.",
+    "advancements.zenith.gem_cut": "O Lapidário",
+    "advancements.zenith.gem_cut.desc": "Use uma bancada de lapidação de gema para melhorar uma gema zênite.",
 	
     "advancements.zenith.spawner.root": "Geradores do Zenith",
     "advancements.zenith.spawner.root.desc": "Geradores podem ser coletados e modificados, consulte o JEI para obter informações.",
-    "advancements.zenith.spawner": "Geradores apóticos",
+    "advancements.zenith.spawner": "Geradores Zênite",
     "advancements.zenith.spawner.desc": "Colete um gerador de mobs usando toque suave.",
     "advancements.zenith.capturing": "Capturado!",
     "advancements.zenith.capturing.desc": "Obtenha um ovo gerador de um criatura usando o encantamento captura.",
-    "advancements.zenith.modifier": "Apenas algumas modificações...",
+    "advancements.zenith.modifier": "Apenas Algumas Modificações...",
     "advancements.zenith.modifier.desc": "Use um modificador de gerador para alterar os status de um gerador.",
-    "advancements.zenith.spawncount": "Olhe o tamanho do seu gerador!",
+    "advancements.zenith.spawncount": "Olhe o Tamanho do seu Gerador!",
     "advancements.zenith.spawncount.desc": "Aumente a quantidade de surgimento de um gerador para 16.",
-    "advancements.zenith.maxdelay": "Gerador temporal",
+    "advancements.zenith.maxdelay": "Gerador Temporal",
     "advancements.zenith.maxdelay.desc": "Diminua o atraso máximo de surgimento de um gerador para 20.",
-    "advancements.zenith.mindelay": "Eu sou a velocidade",
+    "advancements.zenith.mindelay": "Eu sou a Velocidade",
     "advancements.zenith.mindelay.desc": "Diminua o atraso mínimo de surgimento de um gerador para 20.",
-    "advancements.zenith.nearbyents": "Criando uma horda",
+    "advancements.zenith.nearbyents": "Criando uma Horda",
     "advancements.zenith.nearbyents.desc": "Aumente o número máximo de entidades próximas de um gerador para 32.",
-    "advancements.zenith.playerrange": "Longe da luta",
+    "advancements.zenith.playerrange": "Longe da Luta",
     "advancements.zenith.playerrange.desc": "Aumente o alcance de ativação do jogador de um gerador para 48.",
-    "advancements.zenith.spawnrange": "Criaturas por quilômetros",
+    "advancements.zenith.spawnrange": "Criaturas por Milhas",
     "advancements.zenith.spawnrange.desc": "Aumente o alcance de surgimento de um gerador para 32.",
-    "advancements.zenith.conditions": "Geração sem verificação",
+    "advancements.zenith.conditions": "Geração sem Verificação",
     "advancements.zenith.conditions.desc": "Desative as condições de surgimento para um gerador.",
-    "advancements.zenith.players": "Pronto de fábrica",
+    "advancements.zenith.players": "Pronto de Fábrica",
     "advancements.zenith.players.desc": "Desative a necessidade de jogadores próximos para um gerador.",
-    "advancements.zenith.redstone": "Adicionando um interruptor",
+    "advancements.zenith.redstone": "Adicionando um Interruptor",
     "advancements.zenith.redstone.desc": "Habilite o controle por redstone para um gerador.",
-    "advancements.zenith.light": "Quem precisa de escuridão?",
+    "advancements.zenith.light": "Quem Precisa da Escuridão?",
     "advancements.zenith.light.desc": "Faça seu gerador funcionar em qualquer nível de luz.",
-    "advancements.zenith.noai": "Esvaziamento cerebral",
+    "advancements.zenith.noai": "Esvaziamento Cerebral",
     "advancements.zenith.noai.desc": "Desative a IA das criaturas para um gerador.",
-    "advancements.zenith.ultimate_spawner": "O gerador definitivo",
+    "advancements.zenith.ultimate_spawner": "O Gerador Definitivo",
     "advancements.zenith.ultimate_spawner.desc": "Crie um gerador com atrasos mínimos, controle por redstone, sem IA, que ignora condições de spawn e jogadores.",
 
     "comment_id": "/Spawner Module",
@@ -671,6 +676,7 @@
     "stat.zenith.ignore_light": "Ignora luz",
     "stat.zenith.no_ai": "Sem IA",
 	"stat.zenith.silent": "Silencioso",
+    "stat.zenith.baby": "Juvenil",
 
     "stat.zenith.min_delay.desc": "O número mínimo de ticks entre as gerações",
     "stat.zenith.max_delay.desc": "O número máximo de ticks entre as gerações",
@@ -684,6 +690,7 @@
     "stat.zenith.ignore_light.desc": "O gerador ignora os níveis de luz",
     "stat.zenith.no_ai.desc": "As entidades geradas não terão IA",
 	"stat.zenith.silent.desc": "As entidades geradas não farão nenhum barulho",
+    "stat.zenith.baby.desc": "O gerador sempre gerará uma entidade bebê quando possível",
 
     "title.zenith.spawner": "Modificação de gerador",
     "info.zenith.spawner": "Os geradores podem ser coletados com %s e podem ser modificados com vários itens.",
@@ -698,15 +705,15 @@
     "block.zenith.blazing_hellshelf": "Estante infernal em chamas",
     "block.zenith.glowing_hellshelf": "Estante infernal brilhante",
 
-    "block.zenith.seashelf": "Estante do mar",
-    "block.zenith.infused_seashelf": "Estante do mar infundida",
-    "block.zenith.crystal_seashelf": "Estante do mar cristalina",
-    "block.zenith.heart_seashelf": "Estante do mar forjada pelo coração",
+    "block.zenith.seashelf": "Estante marinha",
+    "block.zenith.infused_seashelf": "Estante marinha infundida",
+    "block.zenith.crystal_seashelf": "Estante marinha cristalina",
+    "block.zenith.heart_seashelf": "Estante marinha forjada pelo coração",
 
-    "block.zenith.dormant_deepshelf": "Estante das profundezas dormente",
-    "block.zenith.deepshelf": "Estante das profundezas",
-    "block.zenith.echoing_deepshelf": "Estante das profundezas ecoante",
-    "block.zenith.soul_touched_deepshelf": "Estante das profundezas tocada pela alma",
+    "block.zenith.dormant_deepshelf": "Estante profunda dormente",
+    "block.zenith.deepshelf": "Estante profunda",
+    "block.zenith.echoing_deepshelf": "Estante profunda ecoante",
+    "block.zenith.soul_touched_deepshelf": "Estante profunda tocada pela alma",
     "block.zenith.echoing_sculkshelf": "Estante sculk ecoante",
     "block.zenith.soul_touched_sculkshelf": "Estante sculk tocada pela alma",
 
@@ -719,13 +726,15 @@
     "block.zenith.melonshelf": "Estante de melancia",
     "block.zenith.stoneshelf": "Estante pedregosa",
 
-    "block.zenith.sightshelf": "Estante da observação",
-    "block.zenith.sightshelf_t2": "Estante da observação mestra",
-    "block.zenith.rectifier": "Estante da retificação do mar",
+    "block.zenith.sightshelf": "Estante infernal da observação",
+    "block.zenith.sightshelf_t2": "Estante infernal da visão magistral",
+    "block.zenith.rectifier": "Estante da retificação marinha",
     "block.zenith.rectifier_t2": "Estante da retificação infernal",
     "block.zenith.rectifier_t3": "Estante da retificação fundida do End",
+    "block.zenith.filtering_shelf": "Estante marinha da filtração aquática",
+    "block.zenith.treasure_shelf": "Estante profunda de tesouros arcanos",
 
-    
+	"zenith.container.enchant.limitedEnchantability": "Encantabilidade limitada",
     "info.zenith.ench_power": "Fornece %s de poder de encantamento.",
     "info.zenith.cobweb": "Pode ser usada para remover encantamentos.",
     "info.zenith.masterwork": "Obra-prima",
@@ -743,6 +752,8 @@
     "info.zenith.arcana": " - Arcana: %s%%",
     "info.zenith.rectification": " - Retificação: %s%%",
     "info.zenith.clues": " - Pistas de encantamento: %s",
+    "info.zenith.allows_treasure": " - Permite encantamentos de tesouro",
+    "info.zenith.filter": "Filtro de encantamento:",
     "info.zenith.eterna.p": " - Eterna: +%s (Máx. %s)",
     "info.zenith.quanta.p": " - Quanta: +%s%%",
     "info.zenith.arcana.p": " - Arcana: +%s%%",
@@ -784,7 +795,7 @@
     "info.zenith.eterna_exact": "Requer exatamente: %s/%s",
     "info.zenith.percent_exact": "Requer exatamente: %s%%",
     "zenith.recipes.enchanting": "Encatamento de infusão",
-    "info.zenith.power_range": "Requer pelo menos: %s%%",
+    "info.zenith.book_range": "Alcance de força: [%s, %s]",
     "info.zenith.discoverable": "Encontrável",
     "info.zenith.discoverable.not": "Não encontrável",
     "info.zenith.lootable": "Saqueável",
@@ -793,12 +804,12 @@
     "info.zenith.tradeable.not": "Não trocável",
     "info.zenith.treasure": "Tesouro",
     "info.zenith.treasure.not": "Não é um tesouro",
+    "info.zenith.filtering_shelf": "Insira livros encantados para evitar que eles apareçam na mesa.",
+    "info.zenith.filtering_shelf2": "Ganhe bônus de eterna e arcana baseado no número de livros inseridos.",
+
 
     "enchantment.zenith.infusion": "Infusão",
     "enchantment.zenith.infusion.desc": "Espaço reservado para criação de encantamentos",
-    
-    "enchantment.zenith.mounted_strike": "Ataque montado",
-    "enchantment.zenith.mounted_strike.desc": "Causa dano extra quando montado em um cavalo.",
 
     "enchantment.zenith.miners_fervor": "Fervor do mineiro",
     "enchantment.zenith.miners_fervor.desc": "Você irá minerar muito rápido, mas nunca instantaneamente.",
@@ -818,8 +829,8 @@
     "enchantment.zenith.bane_of_illagers": "Ruína dos illagers",
     "enchantment.zenith.bane_of_illagers.desc": "Illagers sofrem dano aumentado.",
 
-    "death.attack.apoth_corrupted": "%s foi drenado por um encantamento corrupto.",
-    "death.attack.apoth_corrupted.player": "%s foi corrompido por %s.",
+    "death.attack.zenith:corrupted": "%s foi drenado por um encantamento corrupto.",
+    "death.attack.zenith:corrupted.player": "%s foi corrompido por %s.",
 
     "item.zenith.prismatic_web": "Teia de aranha prismática",
     "info.zenith.prismatic_cobweb": "Pode ser usada para remover maldições.",
@@ -883,9 +894,6 @@
 
     "enchantment.zenith.rebounding": "Ricochete",
     "enchantment.zenith.rebounding.desc": "Os atacantes corpo a corpo serão jogados para longe.",
-
-    "enchantment.zenith.magic_protection": "Aversão oculta",
-    "enchantment.zenith.magic_protection.desc": "Dano mágico causado pelo e ao o usuário é reduzido.",
     
     "enchantment.zenith.crescendo": "Chuva de virotes",
     "enchantment.zenith.crescendo.desc": "Sua besta pode disparar mais vezes por recarga.",
@@ -910,6 +918,8 @@
     
     "enchantment.zenith.endless_quiver": "Aljava infinda",
     "enchantment.zenith.endless_quiver.desc": "Torna todas as flechas infinitas.",
+
+
 
     "comment_id": "/Vanilla",
     "generic.reachDistance": "Distância do alcance",
@@ -1049,7 +1059,7 @@
     "tooltip.enchlib.nfilt": "Filtro de nome",
     "tooltip.enchlib.ifilt": "Filtro de item",
     "info.zenith.library": "A biblioteca de encantamentos é um bloco que armazena encantamentos.  Inserir um livro encantado irá depositá-lo. Clicar com o botão esquerdo em um encantamento armazenado extrairá um nível dele.  Clicar com a tecla Shift extrairá o nível máximo disponível.",
-    "info.zenith.runes": "As runas Revelam",
+    "info.zenith.runes": "As runas revelam",
     "info.zenith.no_clue": "As runas não revelam nada",
     "info.zenith.runes_all": "As runas revelam tudo",
     "info.zenith.arcana_bonus": "Empoderamentos arcanos",
@@ -1061,7 +1071,10 @@
     "info.zenith.item_ench": "Encantabilidade do item: %s",
     "info.zenith.num_clues": "Pistas de encantamento: %s",
     "info.zenith.infusion_failed": "Critérios de infusão não atendidos",
-    
+    "info.zenith.anvil_at": "Forjando no nível %s",
+    "info.zenith.anvil_xp_cost": "Custo de EXP bruto: %s",
+	"info.zenith.exclusive": "Exclusivo com: %s",
+
     "info.zenith.slider_power": "Poder: %s",
     "info.zenith.enchinfo_level": "Nível: %s",
     "info.zenith.enchinfo_rarity": "Raridade: %s",
@@ -1120,6 +1133,11 @@
     "item.minecraft.lingering_potion.effect.grievous": "Poção prolongada de redução de cura",
     "item.minecraft.tipped_arrow.effect.grievous": "Flecha de redução de cura",
 
+    "item.minecraft.potion.effect.flying": "Poçäo de voo",
+    "item.minecraft.splash_potion.effect.flying": "Poçäo arremessável de voo",
+    "item.minecraft.lingering_potion.effect.flying": "Poçäo prolongada de voo",
+    "item.minecraft.tipped_arrow.effect.flying": "Flecha de voo",
+
     "item.zenith.lucky_foot": "Pé de coelho da sorte",
 
     "item.zenith.potion_charm_broke": "Amuleto de poção inválida",
@@ -1129,16 +1147,20 @@
     "item.zenith.potion_charm.desc3": "Fonte: %s",
     "item.zenith.potion_charm.enabled": "Habilitado",
     "item.zenith.potion_charm.disabled": "Desabilitado",
-	"item.zenith.potion_charm.curios_only": "Funciona apenas em um encaixe de Curios",
+	"item.zenith.potion_charm.trinkets_only": "Funciona apenas em um encaixe de Trinkets",
+	"item.zenith.potion_charm.crafting_disabled": "A fabricação deste amuleto está desativada!",
+	"trinkets.slot.hand.charm": "Encaixe de amuleto",
     
     "comment_id": "/Anvil Module",
     "info.zenith.anvil": "Pode ser encantado.",
+	"zenith.easy_anvils": "O Easy Anvils não é compatível com as modificações de bigorna do Zenith. Os encantamentos não funcionarão!",
 
     "comment_id": "/Garden Module",
     "item.zenith.ender_lead": "Laço do ender",
     "info.zenith.noentity": "Entidade segurada: nada",
     "info.zenith.containedentity": "Entidade segurada: %s",
     "info.zenith.ender_lead": "O laço do ender é um item que pode ser usado para mover animais.  Soque um animal para capturar e clique com o botão direito para liberá-lo.  The leash will not work on other types of entities.",
+	"info.zenith.ender_lead_left_click": "Dê um soco em um animal para capturá-lo e clique com o botão direito do mouse para soltá-lo. A coleira não funcionará em outros tipos de entidades.",
 
     "comment_id": "/Villager Module",
     "name.zenith.merch_sword": "Sonhos aprisonados",
@@ -1152,27 +1174,44 @@
     "name.zenith.merch_boots": "Grevas forjadas com runas",
     "name.zenith.vigilance": "Vigília eterna",
     "zenith.recipes.fletching": "Flecharia",
-    "item.zenith.obsidian_arrow": "Flecha obsidiana",
+    "item.zenith.obsidian_arrow": "Flecha de obsidiana",
+	"entity.zenith.obsidian_arrow": "Flecha de obsidiana",
     "info.zenith.obsidian_arrow": "+20%% dano",
     "item.zenith.broadhead_arrow": "Flecha de ponta larga",
+	"entity.zenith.broadhead_arrow": "Flecha de ponta larga",
     "info.zenith.broadhead_arrow": "Sangramento (0:15)",
     "item.zenith.explosive_arrow": "Flecha explosiva",
+	"entity.zenith.explosive_arrow": "Flecha explosiva",
     "info.zenith.explosive_arrow": "Raio de explosão: 2",
     "item.zenith.iron_mining_arrow": "Flecha de mineração de ferro",
     "item.zenith.diamond_mining_arrow": "Flecha de mineração de diamante",
+	"entity.zenith.mining_arrow": "Flecha de mineração",
     "info.zenith.mining_arrow.iron": "Quebra blocos como uma picareta de ferro",
     "info.zenith.mining_arrow.diamond": "Quebra blocos como uma picareta de diamante",
     
     "comment_id": "/Misc",
-    "generic.reachDistance": "Distância de alcance",
     "info.apoth.modifier_disabled": "Este Modificador está desativado",
-    "itemGroup.zenith": "Zenith",
-    "config.jade.plugin_zenith.spawner": "Módulo de gerador apótico",
-	"config.jade.plugin_zenith.ench": "Módulo de encan. apótico",
-	"config.jade.plugin_zenith.adventure": "Módulo de aventura apótico",
-	
+    "itemGroup.zenith.adventure": "Zenith: Módulo de aventura",
+    "itemGroup.zenith.ench": "Zenith: Módulo de encantamento",
+    "config.jade.plugin_zenith.spawner": "Módulo de gerador zênite",
+	"config.jade.plugin_zenith.ench": "Módulo de encan. zênite",
+	"config.jade.plugin_zenith.adventure": "Módulo de aventura zênite",
+	"zenith.creative_tab": "Zenith",
+
     "comment_id": "Guidebook",
     "book.zenith.name": "Crônica das sombras",
-    "book.zenith.subtitle": "Guia apoteótico",
-    "book.zenith.landing": "Bem-vindo ao mundo do Zenith.$(br2)O Zenith é organizado em $(#8080FF)módulos$(), assim como o conteúdo deste livro.$(br2)Os módulos desabilitados estão ocultos."
+    "book.zenith.subtitle": "Guia para o Zênite",
+    "book.zenith.landing": "Bem-vindo ao mundo do Zenith.$(br2)O Zenith é organizado em $(#8080FF)módulos$(), assim como o conteúdo deste livro.$(br2)Os módulos desabilitados estão ocultos.",
+
+    "comment_id": "/Emi",
+	"emi.category.zenith.enchanting": "Encantamento",
+	"emi.category.zenith.fletching": "Flecharia",
+	"emi.category.zenith.spawner": "Modificadores de gerador",
+	"emi.category.zenith.salvaging": "Reciclagem",
+	"emi.category.zenith.gem_cutting": "Lapidação de gema",
+
+	"tag.item.zenith.boon_drops": "Saques de Benção da Terra",
+	"tag.item.zenith.infused_shelves": "Estante infundida",
+	"tag.item.zenith.rarity_materials": "Materiais de raridade",
+	"tag.item.zenith.spearfishing_drops": "Peixe de caça submarina"
 }
