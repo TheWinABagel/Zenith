@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class EnchantedItemTriggerMixin extends SimpleCriterionTrigger<EnchantedItemTrigger.TriggerInstance> implements EnchTrigger {
 
     @Inject(method = "createInstance(Lcom/google/gson/JsonObject;Lnet/minecraft/advancements/critereon/ContextAwarePredicate;Lnet/minecraft/advancements/critereon/DeserializationContext;)Lnet/minecraft/advancements/critereon/EnchantedItemTrigger$TriggerInstance;", at = @At("RETURN"), cancellable = true)
-    private void zenith$createCustomInstance(JsonObject json, ContextAwarePredicate predicate, DeserializationContext deserializationContext, CallbackInfoReturnable<EnchantedItemTrigger.TriggerInstance> cir) {
+    private void zenith$createCustomEnchTriggerInstance(JsonObject json, ContextAwarePredicate predicate, DeserializationContext deserializationContext, CallbackInfoReturnable<EnchantedItemTrigger.TriggerInstance> cir) {
         ItemPredicate item = ItemPredicate.fromJson(json.get("item"));
         MinMaxBounds.Ints levels = MinMaxBounds.Ints.fromJson(json.get("levels"));
         MinMaxBounds.Doubles eterna = MinMaxBounds.Doubles.fromJson(json.get("eterna"));
@@ -25,7 +25,6 @@ public abstract class EnchantedItemTriggerMixin extends SimpleCriterionTrigger<E
         cir.setReturnValue(new EnchAdvancementInstance(item, levels, eterna, quanta, arcana, rectification));
     }
 
-
     @Override
     public void zenith$trigger(ServerPlayer player, ItemStack stack, int level, float eterna, float quanta, float arcana, float rectification) {
         this.trigger(player, inst -> {
@@ -33,5 +32,4 @@ public abstract class EnchantedItemTriggerMixin extends SimpleCriterionTrigger<E
             return inst.matches(stack, level);
         });
     }
-
 }

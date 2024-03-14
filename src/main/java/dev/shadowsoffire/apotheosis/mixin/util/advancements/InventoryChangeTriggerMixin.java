@@ -26,11 +26,11 @@ import java.util.Locale;
 import java.util.Map;
 
 @Mixin(InventoryChangeTrigger.class)
-public class InventoryChangeTriggerMixin {
+public abstract class InventoryChangeTriggerMixin {
 
     @ModifyArgs(method = "createInstance(Lcom/google/gson/JsonObject;Lnet/minecraft/advancements/critereon/ContextAwarePredicate;Lnet/minecraft/advancements/critereon/DeserializationContext;)Lnet/minecraft/advancements/critereon/InventoryChangeTrigger$TriggerInstance;",
             at = @At(value = "INVOKE", target = "net/minecraft/advancements/critereon/InventoryChangeTrigger$TriggerInstance.<init> (Lnet/minecraft/advancements/critereon/ContextAwarePredicate;Lnet/minecraft/advancements/critereon/MinMaxBounds$Ints;Lnet/minecraft/advancements/critereon/MinMaxBounds$Ints;Lnet/minecraft/advancements/critereon/MinMaxBounds$Ints;[Lnet/minecraft/advancements/critereon/ItemPredicate;)V"))
-    private void test(Args args, JsonObject json, ContextAwarePredicate predicate, DeserializationContext deserializationContext) {
+    private void zenith$deserializeCustomInvChangeTrigger(Args args, JsonObject json, ContextAwarePredicate predicate, DeserializationContext deserializationContext) {
         if (json.has("zenith")) {
             args.set(4 , deserializeZenith(json.getAsJsonObject("zenith")));
         }

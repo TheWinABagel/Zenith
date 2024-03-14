@@ -21,5 +21,4 @@ public abstract class TridentItemMixin extends Item implements CustomEnchantingB
         if (!Apotheosis.enableEnch) return ench.category.canEnchant(stack.getItem());
         return ench.category.canEnchant(stack.getItem()) || ench == Enchantments.SHARPNESS || ench == Enchantments.MOB_LOOTING || ench == Enchantments.PIERCING;
     }
-
 }

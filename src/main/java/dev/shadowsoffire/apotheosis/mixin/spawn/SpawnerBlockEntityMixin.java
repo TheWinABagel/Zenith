@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.mixin.spawn;
 
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.cca.ZenithComponents;
 import dev.shadowsoffire.apotheosis.mixin.accessors.BaseSpawnerAccessor;
 import dev.shadowsoffire.apotheosis.spawn.spawner.IBaseSpawner;
@@ -132,7 +133,7 @@ public abstract class SpawnerBlockEntityMixin extends BlockEntity implements IBa
     }
 
     @Inject(method = "load", at = @At("TAIL"))
-    private void load(CompoundTag tag, CallbackInfo ci) {
+    private void zenith$loadSpawnData(CompoundTag tag, CallbackInfo ci) {
         this.ignoresPlayers = tag.getBoolean("ignore_players");
         this.ignoresConditions = tag.getBoolean("ignore_conditions");
         this.redstoneControl = tag.getBoolean("redstone_control");
@@ -143,7 +144,7 @@ public abstract class SpawnerBlockEntityMixin extends BlockEntity implements IBa
     }
 
     @Inject(method = "saveAdditional", at = @At("TAIL"))
-    private void saveAdditional(CompoundTag tag, CallbackInfo ci) {
+    private void zenith$saveSpawnData(CompoundTag tag, CallbackInfo ci) {
         tag.putBoolean("ignore_players", this.ignoresPlayers);
         tag.putBoolean("ignore_conditions", this.ignoresConditions);
         tag.putBoolean("redstone_control", this.redstoneControl);
@@ -156,7 +157,8 @@ public abstract class SpawnerBlockEntityMixin extends BlockEntity implements IBa
     // Spawner logic override
     @SuppressWarnings("ConstantConditions")
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void zenithOverrideSpawnerLogic(BlockPos blockPos, BlockState blockState, CallbackInfo ci) {
+    private void zenith$overrideSpawnerLogic(BlockPos blockPos, BlockState blockState, CallbackInfo ci) {
+        if (!Apotheosis.enableSpawner) return;
         this.spawner = new BaseSpawner() {
             @Override
             public void setEntityId(EntityType<?> type, @Nullable Level level, RandomSource rand, BlockPos pos) {

@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(FletchingTableBlock.class)
-public class FletchingTableBlockMixin extends CraftingTableBlock {
+public abstract class FletchingTableBlockMixin extends CraftingTableBlock {
 
     private static final Component NAME = Component.translatable("zenith.recipes.fletching");
 

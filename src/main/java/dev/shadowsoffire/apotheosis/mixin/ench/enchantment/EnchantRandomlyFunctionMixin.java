@@ -21,8 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Mixin(value = EnchantRandomlyFunction.class, priority = 1100)// Patches vanilla loot to include possibility of config set level enchants
-public class EnchantRandomlyFunctionMixin {
-
+public abstract class EnchantRandomlyFunctionMixin {
 
     @Redirect(method = "enchantItem", at = @At(value = "INVOKE", target = "net/minecraft/world/item/enchantment/Enchantment.getMaxLevel ()I"))
     private static int redirectLootLevel(Enchantment instance){
@@ -31,7 +30,7 @@ public class EnchantRandomlyFunctionMixin {
 
     @Shadow
     private static ItemStack enchantItem(ItemStack stack, Enchantment enchantment, RandomSource random) {
-        return null;
+        throw new RuntimeException("what");
     }
 
     @ModifyVariable(method = "run",

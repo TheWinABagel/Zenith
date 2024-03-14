@@ -30,5 +30,4 @@ public abstract class BowItemMixin {
     private boolean zenithEndlessQuiver(ItemStack stack, Item item, ItemStack bow, Level level, LivingEntity livingEntity, int i) {
         return Apotheosis.enableEnch ? Ench.Enchantments.ENDLESS_QUIVER.isTrulyInfinite(stack, bow) || stack.is(Items.ARROW) : stack.is(Items.ARROW);
     }
-
 }

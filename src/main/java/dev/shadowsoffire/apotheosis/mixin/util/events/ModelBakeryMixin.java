@@ -19,13 +19,13 @@ import java.util.Map;
 import java.util.Set;
 
 @Mixin(ModelBakery.class)
-public class ModelBakeryMixin {
+public abstract class ModelBakeryMixin {
 
     @Shadow @Final private Map<ResourceLocation, UnbakedModel> unbakedCache;
     @Shadow @Final private  Map<ResourceLocation, UnbakedModel> topLevelModels;
 
     @Inject(method = "<init>", at = @At(value = "INVOKE", target = "net/minecraft/client/resources/model/ModelBakery.loadTopLevel (Lnet/minecraft/client/resources/model/ModelResourceLocation;)V", ordinal = 3))
-    private void initModels(BlockColors blockColors, ProfilerFiller profilerFiller, Map map, Map map2, CallbackInfo ci){
+    private void zenith$initCustomModels(BlockColors blockColors, ProfilerFiller profilerFiller, Map map, Map map2, CallbackInfo ci){
         Set<ResourceLocation> extraModels = Sets.newHashSet();
 
         Set<ResourceLocation> locs = Minecraft.getInstance().getResourceManager().listResources("models", loc -> Apotheosis.MODID.equals(loc.getNamespace()) && loc.getPath().contains("/gems/") && loc.getPath().endsWith(".json"))

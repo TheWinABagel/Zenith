@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.mixin.ench.enchantment;
 
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.Ench;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -10,13 +11,14 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = Enchantment.class, priority = 1500)
-public class EnchantmentMixin {
+public abstract class EnchantmentMixin {
 
     /**
      * Adjusts the color of the enchantment text if above the vanilla max.
      */
     @Inject(method = "getFullname", at = @At("RETURN"), cancellable = true)
     public void zenith$modifyEnchColorForAboveMaxLevel(int level, CallbackInfoReturnable<Component> cir) {
+        if (!Apotheosis.enableEnch) return;
         Enchantment ench = (Enchantment) (Object) this;
         if (!ench.isCurse() && level > ench.getMaxLevel() && cir.getReturnValue() instanceof MutableComponent mc) {
             cir.setReturnValue(mc.withStyle(s -> s.withColor(Ench.Colors.LIGHT_BLUE_FLASH)));

@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Item.class)
-public class ItemMixin implements IEnchantableItem {
+public abstract class ItemMixin implements IEnchantableItem {
 
     /**
      * @author Shadows
@@ -26,6 +26,5 @@ public class ItemMixin implements IEnchantableItem {
     private void zenith_addCustomEnchantableItems(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
         if (Apotheosis.enableEnch && EnchModule.isVanillaAnvil(stack)) cir.setReturnValue(true);
     }
-
 }
 

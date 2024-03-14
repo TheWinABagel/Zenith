@@ -11,14 +11,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(FriendlyByteBuf.class)
-public class FriendlyByteBufMixin {
+public abstract class FriendlyByteBufMixin { //is this needed?
 
     @ModifyVariable(method = "writeItem", at = @At(value = "INVOKE", target = "net/minecraft/world/item/ItemStack.getTag ()Lnet/minecraft/nbt/CompoundTag;"))
-    private CompoundTag fixEnderLeadOnServers(CompoundTag value, ItemStack stack) {
+    private CompoundTag fixEnderLeadOnServers(CompoundTag oldTag, ItemStack stack) {
         if (Apotheosis.enableGarden && stack.is(GardenModule.ENDER_LEAD)) {
-            return EnderLeadItem.getShareTag(value);
+            return EnderLeadItem.getShareTag(oldTag);
         }
-        return value;
+        return oldTag;
     }
-
 }

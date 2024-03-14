@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Mixin(VillagerTrades.EnchantBookForEmeralds.class)
-public class VillagerTradesMixin {
+public abstract class VillagerTradesMixin {
 
     @Redirect(method = "getOffer", at = @At(value = "INVOKE", target = "net/minecraft/world/item/enchantment/Enchantment.isTreasureOnly ()Z"))
     private boolean zenith_redirectIsTradable(Enchantment ench) {
@@ -31,5 +31,4 @@ public class VillagerTradesMixin {
     private int zenith_redirectLootableLevel(Enchantment ench) {
         return EnchHooks.getMaxLootLevel(ench);
     }
-
 }

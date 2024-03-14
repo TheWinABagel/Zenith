@@ -35,7 +35,7 @@ public abstract class SheepMixin implements IShearHelper {
     @Unique private ItemStack shears = ItemStack.EMPTY;
     @Unique private List<ItemEntity> itemList = new ArrayList<>();
 
-    @Inject(method = "Lnet/minecraft/world/entity/animal/Sheep;mobInteract(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;",
+    @Inject(method = "mobInteract(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;",
             at = @At(value = "INVOKE", target = "net/minecraft/world/entity/animal/Sheep.shear (Lnet/minecraft/sounds/SoundSource;)V",
             shift = At.Shift.BEFORE))
     private void captureItemStack(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {

@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AbstractContainerScreen.class)
-public class AbstractContainerScreenMixin {
+public abstract class AbstractContainerScreenMixin {
 
     @Shadow
     protected Slot hoveredSlot;

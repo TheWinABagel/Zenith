@@ -9,13 +9,10 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 
 @Mixin(CactusBlock.class)
-public class CactusBlockMixin {
+public abstract class CactusBlockMixin {
 
     @ModifyConstant(method = "randomTick", constant = @Constant(intValue = 3))
-    private int zenithModifyCactusHeight(int constant){
-        if (Apotheosis.enableGarden){
-            return GardenModule.maxCactusHeight;
-        }
-        return constant;
+    private int zenithModifyCactusHeight(int old){
+        return Apotheosis.enableGarden ? GardenModule.maxCactusHeight : old;
     }
 }

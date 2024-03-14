@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(DigDurabilityEnchantment.class)
-public class UnbreakingEnchantmentMixin extends Enchantment {
+public abstract class UnbreakingEnchantmentMixin extends Enchantment {
 
     protected UnbreakingEnchantmentMixin(Rarity rarity, EnchantmentCategory enchantmentCategory, EquipmentSlot[] equipmentSlots) {
         super(rarity, enchantmentCategory, equipmentSlots);

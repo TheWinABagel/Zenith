@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Pseudo
 @Mixin(value = CrossbowItem.class, priority = 1500)
-public class CrossbowItemMixinDragonLoot {
+public abstract class CrossbowItemMixinDragonLoot {
 
     @SuppressWarnings({"InvalidMemberReference", "MixinAnnotationTarget"})
     @TargetHandler(

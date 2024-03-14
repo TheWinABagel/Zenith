@@ -20,7 +20,7 @@ import java.util.List;
 
 @Environment(EnvType.CLIENT)
 @Mixin(value = BedrockAnvilScreen.class, remap = false)
-public class BedrockAnvilScreenMixin {
+public abstract class BedrockAnvilScreenMixin {
     @Inject(method = "renderForeground", at = @At("RETURN"))
     private void zenith$renderCustom(GuiGraphics drawContext, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         BedrockAnvilScreen anv = (BedrockAnvilScreen) (Object) this;

@@ -108,7 +108,7 @@ public abstract class SpawnerBlockMixin extends BaseEntityBlock {
 
     @Environment(EnvType.CLIENT)
     @Inject(method = "appendHoverText", at = @At("HEAD"), cancellable = true)
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag, CallbackInfo ci) {
+    public void zenith$spawnerHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag, CallbackInfo ci) {
         if (Apotheosis.enableSpawner && stack.hasTag() && stack.getTag().contains("BlockEntityTag", Tag.TAG_COMPOUND)) {
             if (Screen.hasShiftDown()) {
                 CompoundTag tag = stack.getTag().getCompound("BlockEntityTag");
@@ -122,6 +122,4 @@ public abstract class SpawnerBlockMixin extends BaseEntityBlock {
             ci.cancel();
         }
     }
-
-
 }

@@ -16,15 +16,15 @@ import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(FishingHook.class)
-public class FishingHookMixin {
-    @Shadow @Final public int lureSpeed;
+public abstract class FishingHookMixin {
+    @Shadow @Final private int lureSpeed;
 
     @Shadow private int timeUntilLured;
 
     /**
      * Calculates the delay for catching a fish. Ensures that the value never returns <= 0, so that it doesn't get infinitely locked.
      */
-
+    //todo what the fuck is this
     @Inject(method = "catchingFish",
             slice = @Slice(from = @At(value = "INVOKE",
             target = "net/minecraft/util/Mth.nextInt (Lnet/minecraft/util/RandomSource;II)I",  shift = At.Shift.AFTER, ordinal = 2)),
