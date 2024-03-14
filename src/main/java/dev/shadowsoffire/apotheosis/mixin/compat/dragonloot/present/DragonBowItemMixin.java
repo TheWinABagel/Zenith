@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Pseudo
 @Mixin(value = DragonBowItem.class, remap = false)
-public class DragonBowItemMixin {
+public abstract class DragonBowItemMixin {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void setDamage(Item.Properties settings, CallbackInfo ci){

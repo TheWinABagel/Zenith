@@ -10,7 +10,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(ShearsItem.class)
-public class ShearsItemMixin extends Item implements CustomEnchantingBehaviorItem {
+public abstract class ShearsItemMixin extends Item implements CustomEnchantingBehaviorItem {
 
     public ShearsItemMixin(Properties pProperties) {
         super(pProperties);

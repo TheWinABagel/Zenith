@@ -23,7 +23,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(AnvilMenu.class)
 public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 
-
     @Shadow private @Nullable String itemName;
     @Shadow @Final private DataSlot cost;
     @Shadow private int repairItemCountCost;

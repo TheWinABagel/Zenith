@@ -12,10 +12,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(DamageEnchantment.class)
-public class DamageEnchantmentMixin extends Enchantment {
+public abstract class DamageEnchantmentMixin extends Enchantment {
 
-
-    protected DamageEnchantmentMixin(Rarity rarity, EnchantmentCategory enchantmentCategory, EquipmentSlot[] equipmentSlots) {
+    public DamageEnchantmentMixin(Rarity rarity, EnchantmentCategory enchantmentCategory, EquipmentSlot[] equipmentSlots) {
         super(rarity, enchantmentCategory, equipmentSlots);
     }
 
@@ -30,5 +29,4 @@ public class DamageEnchantmentMixin extends Enchantment {
             cir.setReturnValue(other == Enchantments.SHARPNESS ? other != ths : !(other instanceof DamageEnchantment));
         }
     }
-
 }

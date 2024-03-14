@@ -78,6 +78,4 @@ abstract class EnchantmentTableBlockMixin extends BaseEntityBlock {
             }
         }
     }
-
-
 }

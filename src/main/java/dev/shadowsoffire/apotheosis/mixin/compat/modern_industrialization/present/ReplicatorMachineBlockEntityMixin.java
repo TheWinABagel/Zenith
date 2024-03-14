@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Pseudo
 @Mixin(value = ReplicatorMachineBlockEntity.class, remap = false)
-public class ReplicatorMachineBlockEntityMixin {
+public abstract class ReplicatorMachineBlockEntityMixin {
 
     @Inject(method = "replicationStep",
             at = @At(value = "INVOKE", target = "net/fabricmc/fabric/api/transfer/v1/context/ContainerItemContext.withConstant (Lnet/fabricmc/fabric/api/transfer/v1/item/ItemVariant;J)Lnet/fabricmc/fabric/api/transfer/v1/context/ContainerItemContext;"),

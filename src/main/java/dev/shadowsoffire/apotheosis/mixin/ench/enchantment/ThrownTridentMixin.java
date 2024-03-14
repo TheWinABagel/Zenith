@@ -27,8 +27,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ThrownTridentMixin extends AbstractArrow implements TridentGetter {
 
     @Unique
-    int pierces = 0;
-    @Unique
     Vec3 oldVel = null;
 
     @Shadow
@@ -59,7 +57,7 @@ public abstract class ThrownTridentMixin extends AbstractArrow implements Triden
         this.oldVel = this.getDeltaMovement();
     }
 
-    @Inject(method = "onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V", at = @At("TAIL"), cancellable = true, require = 1)
+    @Inject(method = "onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V", at = @At("TAIL"), require = 1)
     public void endHitEntity(EntityHitResult res, CallbackInfo ci) {
         if (this.getPierceLevel() > 0) {
             ((AbstractArrowAccessor) this).getPiercingIgnoreEntityIds().add(res.getEntity().getId());
@@ -70,5 +68,4 @@ public abstract class ThrownTridentMixin extends AbstractArrow implements Triden
             }
         }
     }
-
 }

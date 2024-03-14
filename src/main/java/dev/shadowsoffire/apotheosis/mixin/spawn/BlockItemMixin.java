@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(BlockItem.class)
-public class BlockItemMixin extends Item {
+public abstract class BlockItemMixin extends Item {
 
     public BlockItemMixin(Properties properties) {
         super(properties);
@@ -54,5 +54,4 @@ public class BlockItemMixin extends Item {
         }
         return super.getName(stack);
     }
-
 }

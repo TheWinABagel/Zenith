@@ -10,6 +10,7 @@ import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.npc.WanderingTraderSpawner;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.NaturalSpawner;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,31 +20,27 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(WanderingTraderSpawner.class)
-public class WandererSpawnerMixin {
+public abstract class WandererSpawnerMixin {
 
-    @Shadow
-    private RandomSource random;
+    @Final @Shadow private RandomSource random;
 
     @ModifyConstant(method = "tick", constant = @Constant(intValue = 75))
-    public int replaceMaxChance(int old) {
-        if (!Apotheosis.enableVillage) return old;
-        return 90;
+    public int zenith$replaceMaxChance(int old) {
+        return Apotheosis.enableVillage ? 90 : old;
     }
 
     @ModifyConstant(method = "spawn", constant = @Constant(intValue = 10))
-    public int replaceRng(int old) {
-        if (!Apotheosis.enableVillage) return old;
-        return 4;
+    public int zenith$replaceRng(int old) {
+        return Apotheosis.enableVillage ? 4 : old;
     }
 
     @ModifyConstant(method = "spawn", constant = @Constant(intValue = 48000))
-    public int replaceDespawnDelay(int old) {
-        if (!Apotheosis.enableVillage) return old;
-        return 28000;
+    public int zenith$replaceDespawnDelay(int old) {
+        return Apotheosis.enableVillage ? 28000 : old;
     }
 
     @Inject(at = @At("HEAD"), method = "findSpawnPositionNear", cancellable = true)
-    private void findSpawnPositionNear(LevelReader level, BlockPos pos, int radius, CallbackInfoReturnable<BlockPos> cir) {
+    private void zenith$findSpawnPositionNear(LevelReader level, BlockPos pos, int radius, CallbackInfoReturnable<BlockPos> cir) {
         if (WandererReplacements.undergroundTrader) {
             for (int i = 0; i < 10; ++i) {
                 int x = pos.getX() + this.random.nextInt(radius / 2) - radius / 4;
@@ -63,6 +60,5 @@ public class WandererSpawnerMixin {
                 }
             }
         }
-
     }
 }

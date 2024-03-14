@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ProtectionEnchantment.class)
-public class ProtectionEnchantmentMixin {
+public abstract class ProtectionEnchantmentMixin {
 
     @Inject(method = "checkCompatibility(Lnet/minecraft/world/item/enchantment/Enchantment;)Z", at = @At("HEAD"), cancellable = true)
     protected void checkCompatibility(Enchantment ench, CallbackInfoReturnable<Boolean> cir) {
@@ -28,19 +28,15 @@ public class ProtectionEnchantmentMixin {
 
     @ModifyConstant(method = "getDamageProtection", constant = @Constant(intValue = 2, ordinal = 0))
     private int modifyFireProt(int constant){
-        if (!Apotheosis.enableEnch) return constant;
-        return 1;
+        return Apotheosis.enableEnch ? 1 : constant;
     }
 
     @ModifyConstant(method = "getDamageProtection", constant = @Constant(intValue = 2, ordinal = 2))
     private int modifyProjProt(int constant){
-        if (!Apotheosis.enableEnch) return constant;
-        return 1;
+        return Apotheosis.enableEnch ? 1 : constant;
     }
 
     private ProtectionEnchantment ths(){
         return (ProtectionEnchantment) (Object) this;
     }
-
-
 }

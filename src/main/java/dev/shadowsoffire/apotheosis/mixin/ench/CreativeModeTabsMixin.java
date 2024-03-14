@@ -20,12 +20,12 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 @Mixin(CreativeModeTabs.class)
-public class CreativeModeTabsMixin { // should be wrap operation, will fix if issues come up
+public class CreativeModeTabsMixin {
 
     @Inject(method = "generateEnchantmentBookTypesOnlyMaxLevel", at = @At("HEAD"), cancellable = true)
     private static void ZenithChangeCreativeMaxBooks(CreativeModeTab.Output output, HolderLookup<Enchantment> enchantments, Set<EnchantmentCategory> categories, CreativeModeTab.TabVisibility tabVisibility, CallbackInfo ci) {
         if (Apotheosis.enableEnch) {
-            enchantments.listElements().map(Holder::value).filter(enchantment -> categories.contains((Object) enchantment.category)).map(enchantment -> EnchantedBookItem.createForEnchantment(new EnchantmentInstance((Enchantment) enchantment, EnchHooks.getMaxLevel(enchantment)))).forEach(itemStack -> output.accept((ItemStack) itemStack, tabVisibility));
+            enchantments.listElements().map(Holder::value).filter(enchantment -> categories.contains(enchantment.category)).map(enchantment -> EnchantedBookItem.createForEnchantment(new EnchantmentInstance((Enchantment) enchantment, EnchHooks.getMaxLevel(enchantment)))).forEach(itemStack -> output.accept((ItemStack) itemStack, tabVisibility));
             ci.cancel();
         }
     }
@@ -33,9 +33,8 @@ public class CreativeModeTabsMixin { // should be wrap operation, will fix if is
     @Inject(method = "generateEnchantmentBookTypesAllLevels", at = @At("HEAD"), cancellable = true)
     private static void ZenithChangeCreativeAllBooks(CreativeModeTab.Output output, HolderLookup<Enchantment> enchantments, Set<EnchantmentCategory> categories, CreativeModeTab.TabVisibility tabVisibility, CallbackInfo ci) {
         if (Apotheosis.enableEnch) {
-            enchantments.listElements().map(Holder::value).filter(enchantment -> categories.contains((Object)enchantment.category)).flatMap(enchantment -> IntStream.rangeClosed( enchantment.getMinLevel(), EnchHooks.getMaxLevel(enchantment)).mapToObj(i -> EnchantedBookItem.createForEnchantment(new EnchantmentInstance((Enchantment)enchantment, i)))).forEach(itemStack -> output.accept((ItemStack)itemStack, tabVisibility));
+            enchantments.listElements().map(Holder::value).filter(enchantment -> categories.contains(enchantment.category)).flatMap(enchantment -> IntStream.rangeClosed( enchantment.getMinLevel(), EnchHooks.getMaxLevel(enchantment)).mapToObj(i -> EnchantedBookItem.createForEnchantment(new EnchantmentInstance((Enchantment)enchantment, i)))).forEach(itemStack -> output.accept((ItemStack)itemStack, tabVisibility));
             ci.cancel();
         }
     }
-
 }

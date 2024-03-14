@@ -9,15 +9,11 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 
 @Mixin(SugarCaneBlock.class)
-public class SugarCaneBlockMixin {
+public abstract class SugarCaneBlockMixin {
 
     @ModifyConstant(method = "randomTick", constant = @Constant(intValue = 3))
-    private int zenithModifySugarCaneHeight(int constant){
-        if (Apotheosis.enableGarden){
-            return GardenModule.maxReedHeight;
-        }
-        return constant;
+    private int zenith$maxHeightSugarcane(int old) {
+        return Apotheosis.enableGarden ? GardenModule.maxReedHeight : old;
     }
-
 }
 

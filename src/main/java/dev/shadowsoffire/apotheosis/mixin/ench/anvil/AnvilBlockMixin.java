@@ -58,7 +58,6 @@ public abstract class AnvilBlockMixin  extends FallingBlock implements INBTSensi
         super(properties);
     }
 
-
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {

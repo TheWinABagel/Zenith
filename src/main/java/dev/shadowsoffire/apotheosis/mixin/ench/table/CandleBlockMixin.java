@@ -19,5 +19,4 @@ public abstract class CandleBlockMixin extends AbstractCandleBlock implements IE
     public float getArcanaBonus(BlockState state, LevelReader world, BlockPos pos) {
         return 1.25F * state.getValue(CandleBlock.CANDLES);
     }
-
 }
