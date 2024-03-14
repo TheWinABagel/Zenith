@@ -1,4 +1,4 @@
-package dev.shadowsoffire.apotheosis.mixin.ench;
+package dev.shadowsoffire.apotheosis.mixin.compat.clean_tooltips.absent;
 
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
 import dev.shadowsoffire.placebo.events.PlaceboEventFactory;
