@@ -138,7 +138,7 @@ public class RealEnchantmentHelper {
 
             if (special || enchantment.canEnchant(stack) || item.forciblyAllowsTableEnchantment(stack, enchantment) ) {
                 for (int level = info.getMaxLevel(); level > enchantment.getMinLevel() - 1; --level) {
-                    if (power >= info.getMinPower(level) && power <= info.getMaxPower(level)) {
+                    if (power >= info.getMinPower(level) && (power >= info.getMaxPower(level) || level == enchantment.getMinLevel())) {
                         list.add(new EnchantmentInstance(enchantment, level));
                         break;
                     }

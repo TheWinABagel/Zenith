@@ -66,13 +66,19 @@ public class EnchantmentInfo {
     }
 
     public static EnchantmentInfo load(Enchantment ench, Configuration cfg) {
+        float maxEnchantmentLevel = EnchModule.getDefaultMax(ench);
+        float absoluteMaxPower = EnchantingStatRegistry.getAbsoluteMaxEterna() * 2f;
+        int powerScalar = Mth.floor(absoluteMaxPower / maxEnchantmentLevel);
+        String defaultMaxF = String.format("%d * x", powerScalar);
+        String defaultMinF = "1";
+        
         String category = BuiltInRegistries.ENCHANTMENT.getKey(ench).toString();
         int max = cfg.getInt("Max Level", category, EnchModule.getDefaultMax(ench), 1, 127, "The max level of this enchantment - originally " + ench.getMaxLevel() + ".");
         int maxLoot = cfg.getInt("Max Loot Level", category, ench.getMaxLevel(), 1, 127, "The max level of this enchantment available from loot sources.");
-        String maxF = cfg.getString("Max Power Function", category, "", "A function to determine the max enchanting power.  The variable \"x\" is level.  See: https://github.com/uklimaschewski/EvalEx#usage-examples");
-        String minF = cfg.getString("Min Power Function", category, "", "A function to determine the min enchanting power.");
-        PowerFunc maxPower = maxF.isEmpty() ? defaultMax(ench) : new ExpressionPowerFunc(maxF);
-        PowerFunc minPower = minF.isEmpty() ? defaultMin(ench) : new ExpressionPowerFunc(minF);
+        String maxF = cfg.getString("Max Power Function", category, defaultMaxF, "A function to determine the max enchanting power.  The variable \"x\" is level.  See: https://github.com/uklimaschewski/EvalEx#usage-examples");
+        String minF = cfg.getString("Min Power Function", category, defaultMinF, "A function to determine the min enchanting power.");
+        PowerFunc maxPower = maxF.isEmpty() ? new ExpressionPowerFunc(defaultMaxF) : new ExpressionPowerFunc(maxF);
+        PowerFunc minPower = minF.isEmpty() ? new ExpressionPowerFunc(defaultMinF) : new ExpressionPowerFunc(minF);
         boolean treasure = cfg.getBoolean("Treasure", category, ench.isTreasureOnly(), "If this enchantment is only available by loot sources.");
         boolean discoverable = cfg.getBoolean("Discoverable", category, ench.isDiscoverable(), "If this enchantment is obtainable via enchanting and enchanted loot items.");
         boolean lootable = cfg.getBoolean("Lootable", category, ench.isDiscoverable(), "If enchanted books of this enchantment are available via loot sources.");
