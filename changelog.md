@@ -2,6 +2,10 @@
 * yeet the porting lib
 
 
+## 1.1.4
+* Compat for clean tooltips
+* Slight mixin refactor
+
 ## 1.1.3
 * Fix mobs not spawning
 
