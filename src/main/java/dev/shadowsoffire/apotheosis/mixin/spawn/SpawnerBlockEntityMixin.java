@@ -134,6 +134,7 @@ public abstract class SpawnerBlockEntityMixin extends BlockEntity implements IBa
 
     @Inject(method = "load", at = @At("TAIL"))
     private void zenith$loadSpawnData(CompoundTag tag, CallbackInfo ci) {
+        if (!Apotheosis.enableSpawner) return;
         this.ignoresPlayers = tag.getBoolean("ignore_players");
         this.ignoresConditions = tag.getBoolean("ignore_conditions");
         this.redstoneControl = tag.getBoolean("redstone_control");
@@ -145,6 +146,7 @@ public abstract class SpawnerBlockEntityMixin extends BlockEntity implements IBa
 
     @Inject(method = "saveAdditional", at = @At("TAIL"))
     private void zenith$saveSpawnData(CompoundTag tag, CallbackInfo ci) {
+        if (!Apotheosis.enableSpawner) return;
         tag.putBoolean("ignore_players", this.ignoresPlayers);
         tag.putBoolean("ignore_conditions", this.ignoresConditions);
         tag.putBoolean("redstone_control", this.redstoneControl);
