@@ -237,7 +237,7 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
     private boolean isAllowedByItem(Entry<Enchantment> e) {
         ItemStack stack = this.menu.ioInv.getItem(2);
 
-        if (FabricLoader.getInstance().isModLoaded("spell_power")){
+        if (!stack.isEmpty() && FabricLoader.getInstance().isModLoaded("spell_power")){
             if (EnchantmentRestriction.isPermitted(e.getKey(), stack)) return true;
             if (EnchantmentRestriction.isProhibited(e.getKey(), stack)) return false;
         }
