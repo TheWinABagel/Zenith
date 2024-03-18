@@ -4,6 +4,7 @@
 
 ## 1.1.5
 * Fix broken spawner mixin crashing the game when the spawner module is disabled
+* Missing enchant no filter (Maikotui)
 
 ## 1.1.4
 * Compat for clean tooltips
