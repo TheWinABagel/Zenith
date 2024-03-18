@@ -66,8 +66,8 @@ public abstract class SpawnerBlockMixin extends BaseEntityBlock {
     @Override
     @Deprecated
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
+        if (!Apotheosis.enableSpawner) return super.getDrops(state, params);
         ItemStack tool = params.getParameter(LootContextParams.TOOL);
-
         if (SpawnerModule.spawnerSilkLevel != -1 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) >= SpawnerModule.spawnerSilkLevel) {
             ItemStack s = new ItemStack(this);
             BlockEntity te = params.getOptionalParameter(LootContextParams.BLOCK_ENTITY);

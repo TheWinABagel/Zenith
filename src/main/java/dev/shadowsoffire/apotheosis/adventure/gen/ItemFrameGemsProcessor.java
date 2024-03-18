@@ -35,7 +35,7 @@ public class ItemFrameGemsProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return Adventure.Features.ITEM_FRAME_LOOT;
+        return Adventure.ITEM_FRAME_LOOT;
     }
 
     @Override

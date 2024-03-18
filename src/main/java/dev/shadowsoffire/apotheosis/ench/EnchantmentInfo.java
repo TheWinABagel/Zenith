@@ -5,6 +5,7 @@ import dev.shadowsoffire.apotheosis.ench.table.EnchantingStatRegistry;
 import dev.shadowsoffire.apotheosis.mixin.accessors.EnchantmentAccessor;
 import dev.shadowsoffire.placebo.config.Configuration;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.math.BigDecimal;
