@@ -1,5 +1,7 @@
 package dev.shadowsoffire.apotheosis.adventure;
 
+import dev.architectury.event.EventResult;
+import dev.architectury.event.events.common.EntityEvent;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Blocks;
@@ -20,6 +22,7 @@ import dev.shadowsoffire.apotheosis.util.AffixItemIngredient;
 import dev.shadowsoffire.apotheosis.util.GemIngredient;
 import dev.shadowsoffire.apotheosis.util.NameHelper;
 import dev.shadowsoffire.placebo.config.Configuration;
+import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
 import io.github.fabricators_of_create.porting_lib.loot.PortingLibLoot;
 import net.fabricmc.fabric.api.recipe.v1.ingredient.CustomIngredientSerializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
@@ -30,6 +33,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.SmithingTransformRecipe;
@@ -47,7 +51,7 @@ public class AdventureModule {
         reload(false);
         AdventureEvents.init();
         Adventure.bootstrap();
-        BossEvents.init();
+        BossEvents.INSTANCE.init();
         RarityRegistry.INSTANCE.register();
         AffixRegistry.INSTANCE.register();
         GemRegistry.INSTANCE.register();
@@ -71,6 +75,12 @@ public class AdventureModule {
         blocks();
         items();
         miscRegistration();
+        if (FabricLoader.getInstance().isModLoaded("architectury") && FabricLoader.getInstance().getModContainer("architectury").get().getMetadata().getVersion().getFriendlyString().equals("9.1.13")) {
+            EntityEvent.LIVING_CHECK_SPAWN.register((entity, world, x, y, z, type, spawner) -> {
+                boolean isCancelled = LivingEntityEvents.CHECK_SPAWN.invoker().onCheckSpawn((Mob) entity, world, x, y, z, spawner, type);
+                return EventResult.pass();
+            });
+        }
     }
 
     public static void blocks() {

@@ -13,32 +13,16 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 
 public class ZenithComponents implements EntityComponentInitializer {
-    public static final ComponentKey<SyncedBooleanComponent> MOVABLE;
-    public static final ComponentKey<AffixDataComponent> AFFIX_DATA;
-    public static final ComponentKey<AffixCooldownComponent> AFFIX_COOLDOWN;
-    public static final ComponentKey<BossComponent> BOSS_DATA;
-    public static final ComponentKey<BooleanComponent> BURNS;
-    public static final ComponentKey<BooleanComponent> GENERATED_ARROW;
+    public static final ComponentKey<SyncedBooleanComponent> MOVABLE = ComponentRegistry.getOrCreate(Apotheosis.loc("movable"), SyncedBooleanComponent.class);
+    public static final ComponentKey<AffixDataComponent> AFFIX_DATA = ComponentRegistry.getOrCreate(Apotheosis.loc("affix_data"), AffixDataComponent.class);
+    public static final ComponentKey<AffixCooldownComponent> AFFIX_COOLDOWN = ComponentRegistry.getOrCreate(Apotheosis.loc("affix_cooldown"), AffixCooldownComponent.class);
+    public static final ComponentKey<BossComponent> BOSS_DATA = ComponentRegistry.getOrCreate(Apotheosis.loc("boss_data"), BossComponent.class);
+    public static final ComponentKey<BooleanComponent> BURNS = ComponentRegistry.getOrCreate(Apotheosis.loc("burns_in_sun"), BooleanComponent.class);
+    public static final ComponentKey<BooleanComponent> GENERATED_ARROW = ComponentRegistry.getOrCreate(Apotheosis.loc("generated"), BooleanComponent.class);
 
-    public static final ComponentKey<BooleanComponent> NO_PINATA;
-    public static final ComponentKey<StringComponent> RADIAL_STATE;
-    public static final ComponentKey<IntComponent> REFORGING_SEED;
-
-    static {
-        //Spawner
-        MOVABLE = ComponentRegistry.getOrCreate(Apotheosis.loc("movable"), SyncedBooleanComponent.class);
-
-        //Adventure
-        AFFIX_DATA = ComponentRegistry.getOrCreate(Apotheosis.loc("affix_data"), AffixDataComponent.class);
-        AFFIX_COOLDOWN = ComponentRegistry.getOrCreate(Apotheosis.loc("affix_cooldown"), AffixCooldownComponent.class);
-        BOSS_DATA = ComponentRegistry.getOrCreate(Apotheosis.loc("boss_data"), BossComponent.class);
-        BURNS = ComponentRegistry.getOrCreate(Apotheosis.loc("burns_in_sun"), BooleanComponent.class);
-        GENERATED_ARROW = ComponentRegistry.getOrCreate(Apotheosis.loc("generated"), BooleanComponent.class);
-        NO_PINATA = ComponentRegistry.getOrCreate(Apotheosis.loc("no_pinata"), BooleanComponent.class);
-        //Player only
-        RADIAL_STATE = ComponentRegistry.getOrCreate(Apotheosis.loc("radial_state"), StringComponent.class);
-        REFORGING_SEED = ComponentRegistry.getOrCreate(Apotheosis.loc("reforging_seed"), IntComponent.class);
-    }
+    public static final ComponentKey<BooleanComponent> NO_PINATA = ComponentRegistry.getOrCreate(Apotheosis.loc("no_pinata"), BooleanComponent.class);
+    public static final ComponentKey<StringComponent> RADIAL_STATE = ComponentRegistry.getOrCreate(Apotheosis.loc("radial_state"), StringComponent.class);
+    public static final ComponentKey<IntComponent> REFORGING_SEED = ComponentRegistry.getOrCreate(Apotheosis.loc("reforging_seed"), IntComponent.class);
 
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {

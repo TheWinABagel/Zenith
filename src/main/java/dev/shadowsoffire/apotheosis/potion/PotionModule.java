@@ -49,8 +49,8 @@ public class PotionModule {
     public static boolean levitationEnabled = true;
     public static boolean flyingEnabled = true;
 
-
     public static void init() {
+        reload(false);
         potions();
         items();
         serializers();
@@ -65,8 +65,6 @@ public class PotionModule {
                 }));
             });
         }
-
-        reload(false);
     }
 
     public static void items() {

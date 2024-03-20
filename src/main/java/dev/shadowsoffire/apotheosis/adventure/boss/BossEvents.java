@@ -43,16 +43,18 @@ import javax.annotation.Nullable;
 import java.util.function.BiPredicate;
 
 public class BossEvents {
-    public static Object2IntMap<ResourceLocation> bossCooldowns = new Object2IntOpenHashMap<>();
+    public static BossEvents INSTANCE = new BossEvents();
+    public Object2IntMap<ResourceLocation> bossCooldowns = new Object2IntOpenHashMap<>();
 
-    public static void init() {
+    public void init() {
         naturalBosses();
         minibosses();
         delayedMinibosses();
+        load();
         tick();
     }
 
-    public static void naturalBosses() {
+    public void naturalBosses() {
         LivingEntityEvents.CHECK_SPAWN.register((mob, level, x, y, z, spawner, type) -> {
             if (type == MobSpawnType.NATURAL || type == MobSpawnType.CHUNK_GENERATION) {
                 RandomSource rand = level.getRandom();
@@ -93,25 +95,29 @@ public class BossEvents {
                                 });
                             }
                             bossCooldowns.put(mob.level().dimension().location(), AdventureConfig.bossSpawnCooldown);
-                            return false;
+
+                            return true;
                         }
                     }
                 } else if (!level.isClientSide() && mob instanceof Monster) {
                     if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Boss cooldown is too high to spawn a mob, currently {}", bossCooldowns.getInt(mob.level().dimension().location()));
                 }
             }
+            else {
+                if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Current boss cooldown {}", bossCooldowns.getInt(mob.level().dimension().location()));
+            }
             return true;
         });
     }
 
     @Nullable
-    private static Component getName(Mob boss) {
+    private Component getName(Mob boss) {
         return boss.getSelfAndPassengers().filter(e ->  {
            return ZenithComponents.BOSS_DATA.get(e).getIsBoss();
         }).findFirst().map(Entity::getCustomName).orElse(null);
     }
 
-    public static void minibosses() {
+    public void minibosses() {
         LivingEntityEvents.CHECK_SPAWN.register((mob, level, x, y, z, spawner, type) -> {
             RandomSource rand = level.getRandom();
             if (!level.isClientSide() && mob != null) {
@@ -130,7 +136,7 @@ public class BossEvents {
         });
     }
 
-    public static void delayedMinibosses() {
+    public void delayedMinibosses() {
         LivingEntityEvents.CHECK_SPAWN.register((mob, level, x, y, z, spawner, type) -> {
             if (!level.isClientSide()) {
                 if (mob.getCustomData().contains("apoth.miniboss")) {
@@ -153,7 +159,7 @@ public class BossEvents {
         });
     }
 
-    public static void tick() {
+    public void tick() {
         ServerTickEvents.END_WORLD_TICK.register(world -> {
             bossCooldowns.computeIntIfPresent(world.dimension().location(), (key, value) -> Math.max(0, value - 1));
         });
@@ -187,7 +193,7 @@ public class BossEvents {
         return new TimerPersistData();
     }
 
-    private static boolean canSpawn(LevelAccessor world, Mob entity, double playerDist) {
+    private boolean canSpawn(LevelAccessor world, Mob entity, double playerDist) {
         if (playerDist > entity.getType().getCategory().getDespawnDistance() * entity.getType().getCategory().getDespawnDistance() && entity.removeWhenFarAway(playerDist)) {
             return false;
         }
@@ -196,7 +202,7 @@ public class BossEvents {
         }
     }
 
-    public static enum BossSpawnRules implements BiPredicate<ServerLevelAccessor, BlockPos> {
+    public enum BossSpawnRules implements BiPredicate<ServerLevelAccessor, BlockPos> {
         NEEDS_SKY(ServerLevelAccessor::canSeeSky),
         NEEDS_SURFACE(
             (level, pos) -> pos.getY() >= level.getHeight(Types.MOTION_BLOCKING_NO_LEAVES, pos.getX(), pos.getZ())),

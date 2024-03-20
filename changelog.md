@@ -2,6 +2,11 @@
 * yeet the porting lib
 
 
+## 1.1.6
+* Fix for potion crafting not being disabled
+* Temp fix for bosses not spawning (Mod incompat with arch)
+* Temp fix for item frames with items not spawing (Mod incompat with YUNGS Api)
+
 ## 1.1.5
 * Fix broken spawner mixin crashing the game when the spawner module is disabled
 * Missing enchant no filter (Maikotui)
