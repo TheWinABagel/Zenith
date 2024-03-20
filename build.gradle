@@ -22,7 +22,7 @@ repositories {
 	maven { url = "https://maven.jamieswhiteshirt.com/libs-release/" }	//Reach Entity Attribute
 	maven { url = 'https://maven.blamejared.com' }
 	maven { url = "https://maven.shedaniel.me" }						//REI, Arch
-	maven { url = "https://maven.terraformersmc.com" }
+	maven { url = "https://maven.terraformersmc.com" }					//Modmenu
 	maven { url = "https://cursemaven.com" }
 	maven { url = "https://maven.bai.lol" }
 	mavenLocal()														//Fakerlib, Zenith Attributes TODO Create maven/move to jitpack
@@ -151,6 +151,9 @@ dependencies {
 		exclude(group: "com.github.devs-immortal.*")
 		exclude(group: "azzy.fabric.*")
 	}
+
+	//YUNGS api
+	modCompileOnly "curse.maven:yungs-api-fabric-421649:5147000"
 
 }
 loom {

@@ -16,10 +16,7 @@ import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttin
 import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingMenu;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossSpawnerBlock;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossSummonerItem;
-import dev.shadowsoffire.apotheosis.adventure.gen.BossDungeonFeature;
-import dev.shadowsoffire.apotheosis.adventure.gen.BossDungeonFeature2;
-import dev.shadowsoffire.apotheosis.adventure.gen.ItemFrameGemsProcessor;
-import dev.shadowsoffire.apotheosis.adventure.gen.RogueSpawnerFeature;
+import dev.shadowsoffire.apotheosis.adventure.gen.*;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.apotheosis.ench.objects.GlowyBlockItem.GlowyItem;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntityType;
@@ -28,6 +25,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -178,8 +176,19 @@ public class Adventure {
         public static final Feature<NoneFeatureConfiguration> BOSS_DUNGEON_2 = Registry.register(BuiltInRegistries.FEATURE, Apotheosis.loc("boss_dungeon_2"), new BossDungeonFeature2());
 
         public static final Feature<NoneFeatureConfiguration> ROGUE_SPAWNER = Registry.register(BuiltInRegistries.FEATURE, Apotheosis.loc("rogue_spawner"), new RogueSpawnerFeature());;
-        public static final StructureProcessorType<ItemFrameGemsProcessor> ITEM_FRAME_GEMS = Registry.register(BuiltInRegistries.STRUCTURE_PROCESSOR, Apotheosis.loc("item_frame_gems"), () -> ItemFrameGemsProcessor.CODEC);
-
+        public static final StructureProcessorType<ItemFrameGemsProcessor> ITEM_FRAME_GEMS;
+        public static final StructureProcessorType<ItemFrameGemsProcessorYung> ITEM_FRAME_GEMS_YUNG;
+        static {
+            //todo remove when yung fixes mixin compat
+            if (FabricLoader.getInstance().isModLoaded("yungsapi") && FabricLoader.getInstance().getModContainer("yungsapi").get().getMetadata().getVersion().getFriendlyString().equals("1.20-Fabric-4.0.4")) {
+                ITEM_FRAME_GEMS_YUNG = Registry.register(BuiltInRegistries.STRUCTURE_PROCESSOR, Apotheosis.loc("item_frame_gems"), () -> ItemFrameGemsProcessorYung.CODEC);
+                ITEM_FRAME_GEMS = null;
+            }
+            else {
+                ITEM_FRAME_GEMS = Registry.register(BuiltInRegistries.STRUCTURE_PROCESSOR, Apotheosis.loc("item_frame_gems"), () -> ItemFrameGemsProcessor.CODEC);
+                ITEM_FRAME_GEMS_YUNG = null;
+            }
+        }
         public static void bootstrap() {}
     }
 
