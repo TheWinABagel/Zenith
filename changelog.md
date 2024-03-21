@@ -2,6 +2,10 @@
 * yeet the porting lib
 
 
+## 1.1.7
+* Update dependencies
+* Change how the all stats bonus gem modifier works to be in line with current apoth
+
 ## 1.1.6
 * Fix for potion crafting not being disabled
 * Temp fix for bosses not spawning (Mod incompat with arch)
