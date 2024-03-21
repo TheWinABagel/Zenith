@@ -5,21 +5,55 @@
 	"unique": true,
 	"min_rarity": "rare",
 	"bonuses": [{
-			"type": "zenith:all_stats",
-			"gem_class": {
-				"key": "helmet",
-				"types": [
-					"helmet"
-				]
-			},
-			"operation": "multiply_total",
-			"values": {
-				"rare": 0.05,
-				"epic": 0.10,
-				"mythic": 0.15,
-				"ancient": 0.20
-			}
+		"type": "zenith:all_stats",
+		"gem_class": {
+			"key": "helmet",
+			"types": [
+				"helmet"
+			]
 		},
+		"operation": "multiply_total",
+		"values": {
+			"rare": 0.05,
+			"epic": 0.075,
+			"mythic": 0.10,
+			"ancient": 0.15
+		},
+		"attributes": [
+			"minecraft:generic.max_health",
+			"minecraft:generic.knockback_resistance",
+			"minecraft:generic.movement_speed",
+			"minecraft:generic.attack_damage",
+			"minecraft:generic.attack_knockback",
+			"minecraft:generic.attack_speed",
+			"minecraft:generic.armor",
+			"minecraft:generic.armor_toughness",
+			"minecraft:generic.luck",
+			"zenith_attributes:armor_pierce",
+			"zenith_attributes:armor_shred",
+			"projectile_damage:generic",
+			"zenith_attributes:arrow_velocity",
+			"zenith_attributes:cold_damage",
+			"zenith_attributes:crit_chance",
+			"additionalentityattributes:player.critical_bonus_damage",
+			"zenith_attributes:current_hp_damage",
+			"zenith_attributes:dodge_chance",
+			"zenith_attributes:draw_speed",
+			"additionalentityattributes:player.dropped_experience",
+			"zenith_attributes:fire_damage",
+			"zenith_attributes:ghost_health",
+			"zenith_attributes:healing_received",
+			"zenith_attributes:life_steal",
+			"zenith_attributes:mining_speed",
+			"zenith_attributes:overheal",
+			"zenith_attributes:prot_pierce",
+			"zenith_attributes:prot_shred",
+			"porting_lib:swim_speed",
+			"reach-entity-attributes:reach",
+			"reach-entity-attributes:attack_range",
+			"porting_lib:step_height_addition"
+		]
+	},
 		{
 			"type": "zenith:drop_transform",
 			"gem_class": {
@@ -28,18 +62,18 @@
 					"pickaxe"
 				]
 			},
-			"blocks": "minecraft:iron_ore",
+			"blocks": "minecraft:copper_ore",
 			"inputs": {
-				"tag": "c:raw_iron_ores"
+				"tag": "c:raw_copper_ores"
 			},
 			"output": {
 				"item": "minecraft:raw_gold"
 			},
 			"values": {
-				"rare": 0.20,
-				"epic": 0.30,
-				"mythic": 0.40,
-				"ancient": 0.50
+				"rare": 0.15,
+				"epic": 0.20,
+				"mythic": 0.25,
+				"ancient": 0.40
 			},
 			"desc": "gem.zenith:overworld/royalty.bonus.pickaxe"
 		},
@@ -53,15 +87,15 @@
 				]
 			},
 			"modifiers": [{
-					"attribute": "zenith_attributes:prot_shred",
-					"operation": "ADDITION",
-					"values": {
-						"rare": 0.25,
-						"epic": 0.30,
-						"mythic": 0.35,
-						"ancient": 0.40
-					}
-				},
+				"attribute": "zenith_attributes:prot_shred",
+				"operation": "ADDITION",
+				"values": {
+					"rare": 0.25,
+					"epic": 0.30,
+					"mythic": 0.35,
+					"ancient": 0.40
+				}
+			},
 				{
 					"attribute": "zenith_attributes:draw_speed",
 					"operation": "MULTIPLY_TOTAL",
@@ -84,15 +118,15 @@
 				]
 			},
 			"modifiers": [{
-					"attribute": "minecraft:generic.armor",
-					"operation": "MULTIPLY_TOTAL",
-					"values": {
-						"rare": 0.15,
-						"epic": 0.25,
-						"mythic": 0.35,
-						"ancient": 0.5
-					}
-				},
+				"attribute": "minecraft:generic.armor",
+				"operation": "MULTIPLY_TOTAL",
+				"values": {
+					"rare": 0.15,
+					"epic": 0.25,
+					"mythic": 0.35,
+					"ancient": 0.5
+				}
+			},
 				{
 					"attribute": "minecraft:generic.armor_toughness",
 					"operation": "MULTIPLY_TOTAL",
