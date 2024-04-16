@@ -1,7 +1,7 @@
 {
 	"comment_id": "/Adventure Module",
 
-	"key.categories.zenith": "Apotheosis",
+	"key.categories.zenith": "Zenith",
 	"key.zenith.toggle_radial_mining": "Change Radial Mining Mode",
 
 	"info.zenith.affix_item": "Zenith Affix Item",
@@ -579,7 +579,7 @@
     "advancements.zenith.max_rectified.desc": "Enchant an item with max stats and max rectification.",
     
     "advancements.zenith.affix": "Zenith Affixes",
-    "advancements.zenith.affix.desc": "Find an item with an Zenith Affix.",
+    "advancements.zenith.affix.desc": "Find an item with a Zenith Affix.",
 
     "advancements.zenith.rare": "Worthy Equipment",
     "advancements.zenith.rare.desc": "Find a rare affix item.",
@@ -594,7 +594,7 @@
     "advancements.zenith.ancient.desc": "Find an Ancient item.",
 
     "advancements.zenith.boss": "He Wasn't So Strong",
-    "advancements.zenith.boss.desc": "Slay an Zenith Boss, and retrieve their affix item.",
+    "advancements.zenith.boss.desc": "Slay a Zenith Boss, and retrieve their affix item.",
     "advancements.zenith.chests": "I Found It Underground",
     "advancements.zenith.chests.desc": "Find an affix item in a chest.",
     "advancements.zenith.merchant": "I Got Deals",
@@ -618,7 +618,7 @@
     "advancements.zenith.socket.desc": "Using a Smithing Table, socket a Gem into an item.",
 
    	"advancements.zenith.gem_cut": "The Lapidary",
-    "advancements.zenith.gem_cut.desc": "Use the Gem Cutting Table to upgrade an Zenith Gem.",
+    "advancements.zenith.gem_cut.desc": "Use the Gem Cutting Table to upgrade a Zenith Gem.",
 	
     "advancements.zenith.spawner.root": "Zenith Spawners",
     "advancements.zenith.spawner.root.desc": "Spawners can be collected and modified, see JEI for info.",
