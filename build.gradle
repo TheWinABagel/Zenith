@@ -147,10 +147,7 @@ dependencies {
 	modCompileOnly "curse.maven:equipment-compare-fabric-541329:4940609"
 
 	//spectrum
-	modCompileOnly "com.github.DaFuqs:Spectrum:${project.spectrum_version}", {
-		exclude(group: "com.github.devs-immortal.*")
-		exclude(group: "azzy.fabric.*")
-	}
+	modCompileOnly "com.github.DaFuqs:Spectrum:${project.spectrum_version}"
 
 	//YUNGS api
 	modCompileOnly "curse.maven:yungs-api-fabric-421649:5147000"
