@@ -2,6 +2,10 @@
 * yeet the porting lib
 
 
+## 1.1.8
+* Temporarily remove spectrum compat, will readd at a later time
+* Fix the mod breaking on newer fapi versions
+
 ## 1.1.7
 * Update dependencies
 * Change how the all stats bonus gem modifier works to be in line with current apoth

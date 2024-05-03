@@ -76,7 +76,8 @@
   },
   "suggests": {
     "roughlyenoughitems": "*",
-    "patchouli": "*"
+    "patchouli": "*",
+    "trinkets": "*"
   },
     "accessWidener": "zenith.aw"
 }
