@@ -23,7 +23,6 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.DataSlot;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 
@@ -59,18 +58,6 @@ public class ReforgingMenu extends PlaceboContainerMenu {
             @Override
             public int getMaxStackSize(ItemStack stack) {
                 return 1;
-            }
-        });
-        this.addSlot(new Slot(this.tile.inventory, 0, 15, 45) {
-            @Override
-            public boolean mayPlace(ItemStack stack) {
-                return ReforgingMenu.this.tile.isValidRarityMat(stack);
-            }
-        });
-        this.addSlot(new Slot(this.tile.inventory, 1, 35, 45){
-            @Override
-            public boolean mayPlace(ItemStack stack) {
-                return stack.is(Items.GEM_DUST);
             }
         });
         this.addSlot(new UpdatingSlot(this.tile.inventory, 0, 15, 45, this.tile::isValidRarityMat));
