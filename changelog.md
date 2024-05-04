@@ -2,6 +2,11 @@
 * yeet the porting lib
 
 
+## 1.1.9
+* Bring back tool action support, should fix issues where Hephaestus tools are incorrectly categorized
+* Hopefully fix unknown crash with biome modifiers
+* Fix free reforging
+
 ## 1.1.8
 * Temporarily remove spectrum compat, will readd at a later time
 * Fix the mod breaking on newer fapi versions
