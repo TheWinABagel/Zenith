@@ -44,7 +44,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.List;
 
 
-@Mixin(SpawnerBlock.class)
+@Mixin(value = SpawnerBlock.class, priority = 1500)
 public abstract class SpawnerBlockMixin extends BaseEntityBlock {
 
     protected SpawnerBlockMixin(Properties properties) {
@@ -53,12 +53,17 @@ public abstract class SpawnerBlockMixin extends BaseEntityBlock {
 
     @Override
     public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, BlockEntity te, ItemStack stack) {
-        if (Apotheosis.enableSpawner && SpawnerModule.spawnerSilkLevel != -1 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, stack) >= SpawnerModule.spawnerSilkLevel) {
+        if (!Apotheosis.enableSpawner)  {
+            super.playerDestroy(world, player, pos, state, te, stack);
+            return;
+        }
+        if (SpawnerModule.spawnerSilkLevel != -1 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, stack) >= SpawnerModule.spawnerSilkLevel) {
             if (SpawnerModule.spawnerSilkDamage > 1) {
                 player.getMainHandItem().hurtAndBreak(SpawnerModule.spawnerSilkDamage - 1, player, pl -> pl.broadcastBreakEvent(EquipmentSlot.MAINHAND));
             }
             player.awardStat(Stats.BLOCK_MINED.get(this));
             player.causeFoodExhaustion(0.035F);
+            super.playerDestroy(world, player, pos, state, te, stack);
         }
         else super.playerDestroy(world, player, pos, state, te, stack);
     }
@@ -66,12 +71,15 @@ public abstract class SpawnerBlockMixin extends BaseEntityBlock {
     @Override
     @Deprecated
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
+        SpawnerModule.LOG.warn("get drops head");
         if (!Apotheosis.enableSpawner) return super.getDrops(state, params);
         ItemStack tool = params.getParameter(LootContextParams.TOOL);
+        SpawnerModule.LOG.warn("get drops broken stack {}", tool);
         if (SpawnerModule.spawnerSilkLevel != -1 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) >= SpawnerModule.spawnerSilkLevel) {
-            ItemStack s = new ItemStack(this);
+            ItemStack s = new ItemStack(((SpawnerBlock) (Object) this));
             BlockEntity te = params.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
             if (te != null) s.getOrCreateTag().put("BlockEntityTag", te.saveWithoutMetadata());
+            SpawnerModule.LOG.warn("get drops new stack {}", s);
             return List.of(s);
         }
 
@@ -80,13 +88,17 @@ public abstract class SpawnerBlockMixin extends BaseEntityBlock {
 
     @Override
     public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+        if (!Apotheosis.enableSpawner)  {
+            super.setPlacedBy(world, pos, state, placer, stack);
+            return;
+        }
         BlockEntity te = world.getBlockEntity(pos);
         if (te != null && stack.hasTag()) te.load(stack.getOrCreateTagElement("BlockEntityTag"));
     }
 
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (!Apotheosis.enableSpawner) return InteractionResult.PASS;
+        if (!Apotheosis.enableSpawner) return super.use(state, world, pos, player, hand, hit);
         BlockEntity te = world.getBlockEntity(pos);
         ItemStack stack = player.getItemInHand(hand);
         ItemStack otherStack = player.getItemInHand(hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
@@ -109,7 +121,10 @@ public abstract class SpawnerBlockMixin extends BaseEntityBlock {
     @Environment(EnvType.CLIENT)
     @Inject(method = "appendHoverText", at = @At("HEAD"), cancellable = true)
     public void zenith$spawnerHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag, CallbackInfo ci) {
-        if (Apotheosis.enableSpawner && stack.hasTag() && stack.getTag().contains("BlockEntityTag", Tag.TAG_COMPOUND)) {
+        if (!Apotheosis.enableSpawner) {
+            return;
+        }
+        if (stack.hasTag() && stack.getTag().contains("BlockEntityTag", Tag.TAG_COMPOUND)) {
             if (Screen.hasShiftDown()) {
                 CompoundTag tag = stack.getTag().getCompound("BlockEntityTag");
                 SpawnerBlockEntity tooltipTile = new SpawnerBlockEntity(BlockPos.ZERO, Blocks.AIR.defaultBlockState());
