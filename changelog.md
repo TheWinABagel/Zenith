@@ -3,6 +3,11 @@
 * add compat for fancy enchant descriptions mod that aof has
 
 
+## 1.1.10
+* I'm back from a hiatus, apologies it took so long to get this out!
+* Hopefully fix bosses not spawning
+* Fix spawner's not dropping with silk touch when the spawner module is enabled
+
 ## 1.1.9
 * Bring back tool action support, should fix issues where Hephaestus tools are incorrectly categorized
 * Hopefully fix unknown crash with biome modifiers
