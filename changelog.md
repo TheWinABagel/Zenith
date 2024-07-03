@@ -1,5 +1,6 @@
 ### TODO
 * yeet the porting lib
+* add compat for fancy enchant descriptions mod that aof has
 
 
 ## 1.1.9

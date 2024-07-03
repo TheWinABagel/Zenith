@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.spawn.enchantment;
 
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.spawn.SpawnerModule;
 import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingTableBehaviorEnchantment;
@@ -43,7 +44,11 @@ public class CapturingEnchant extends Enchantment implements CustomEnchantingTab
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack) {
-        return CustomEnchantingTableBehaviorEnchantment.super.canApplyAtEnchantingTable(stack) || EnchModule.AXE.canEnchant(stack.getItem());
+        boolean supr = CustomEnchantingTableBehaviorEnchantment.super.canApplyAtEnchantingTable(stack);
+        if (Apotheosis.enableEnch) {
+            supr |= EnchModule.AXE.canEnchant(stack.getItem());
+        }
+        return supr;
     }
 
     public static void handleCapturing(LivingEntity killed, DamageSource source, Collection<ItemEntity> drops) {

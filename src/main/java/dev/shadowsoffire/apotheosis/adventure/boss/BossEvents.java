@@ -1,6 +1,8 @@
 package dev.shadowsoffire.apotheosis.adventure.boss;
 
 import com.mojang.serialization.Codec;
+import dev.architectury.event.EventResult;
+import dev.architectury.event.events.common.EntityEvent;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
@@ -15,6 +17,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -25,12 +28,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -47,15 +48,25 @@ public class BossEvents {
     public Object2IntMap<ResourceLocation> bossCooldowns = new Object2IntOpenHashMap<>();
 
     public void init() {
-        naturalBosses();
-        minibosses();
-        delayedMinibosses();
+        if (FabricLoader.getInstance().isModLoaded("architectury")) {
+            EntityEvent.LIVING_CHECK_SPAWN.register((entity, world, x, y, z, type, spawner) -> {
+                naturalBosses(entity, world, x, y, z, spawner, type);
+                minibosses(entity, world, x, y, z, spawner, type);
+                delayedMinibosses(entity, world, x, y, z, spawner, type);
+                return EventResult.pass();
+            });
+        }
+        else {
+            LivingEntityEvents.CHECK_SPAWN.register(this::naturalBosses);
+            LivingEntityEvents.CHECK_SPAWN.register(this::minibosses);
+            LivingEntityEvents.CHECK_SPAWN.register(this::delayedMinibosses);
+        }
+
         load();
         tick();
     }
 
-    public void naturalBosses() {
-        LivingEntityEvents.CHECK_SPAWN.register((mob, level, x, y, z, spawner, type) -> {
+    public boolean naturalBosses(LivingEntity mob, LevelAccessor level, double x, double y, double z, @Nullable BaseSpawner spawner, MobSpawnType type) {
             if (type == MobSpawnType.NATURAL || type == MobSpawnType.CHUNK_GENERATION) {
                 RandomSource rand = level.getRandom();
                 if (bossCooldowns.getInt(mob.level().dimension().location()) <= 0 && !level.isClientSide() && mob instanceof Monster) {
@@ -107,7 +118,6 @@ public class BossEvents {
                 if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("Current boss cooldown {}", bossCooldowns.getInt(mob.level().dimension().location()));
             }
             return true;
-        });
     }
 
     @Nullable
@@ -117,10 +127,9 @@ public class BossEvents {
         }).findFirst().map(Entity::getCustomName).orElse(null);
     }
 
-    public void minibosses() {
-        LivingEntityEvents.CHECK_SPAWN.register((mob, level, x, y, z, spawner, type) -> {
+    public boolean minibosses(LivingEntity entity, LevelAccessor level, double x, double y, double z, @Nullable BaseSpawner spawner, MobSpawnType type) {
             RandomSource rand = level.getRandom();
-            if (!level.isClientSide() && mob != null) {
+            if (!level.isClientSide() && entity instanceof Mob mob) {
                 ServerLevelAccessor sLevel = (ServerLevelAccessor) level;
                 Player player = sLevel.getNearestPlayer(x, y, z, -1, false);
                 if (player == null) return false; // Spawns require player context
@@ -133,12 +142,10 @@ public class BossEvents {
                 }
             }
             return true;
-        });
     }
 
-    public void delayedMinibosses() {
-        LivingEntityEvents.CHECK_SPAWN.register((mob, level, x, y, z, spawner, type) -> {
-            if (!level.isClientSide()) {
+    public boolean delayedMinibosses(LivingEntity living, LevelAccessor level, double x, double y, double z, @Nullable BaseSpawner spawner, MobSpawnType type) {
+            if (!level.isClientSide() && living instanceof Mob mob) {
                 if (mob.getCustomData().contains("apoth.miniboss")) {
                     ZenithComponents.BOSS_DATA.get(mob).setMiniBoss(mob.getCustomData().getString("apoth.miniboss"));
                     mob.getCustomData().remove("apoth.miniboss");
@@ -156,7 +163,6 @@ public class BossEvents {
                 }
             }
             return true;
-        });
     }
 
     public void tick() {

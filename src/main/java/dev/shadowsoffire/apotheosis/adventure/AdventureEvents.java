@@ -13,7 +13,6 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
 import dev.shadowsoffire.apotheosis.cca.ZenithComponents;
 import dev.shadowsoffire.apotheosis.util.Events;
-import dev.shadowsoffire.attributeslib.api.ItemAttributeModifierEvent;
 import dev.shadowsoffire.placebo.events.AnvilLandCallback;
 import dev.shadowsoffire.placebo.events.GetEnchantmentLevelEvent;
 import dev.shadowsoffire.placebo.events.ItemUseEvent;
@@ -25,6 +24,7 @@ import io.github.fabricators_of_create.porting_lib.entity.events.ShieldBlockEven
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.FakePlayer;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.fabricmc.fabric.api.item.v1.ModifyItemAttributeModifiersCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -87,11 +87,10 @@ public class AdventureEvents {
     }
 
     public static void affixModifiers() {
-        ItemAttributeModifierEvent.GATHER_TOOLTIPS.register(e -> {
-            ItemStack stack = e.stack;
+        ModifyItemAttributeModifiersCallback.EVENT.register((stack, slot, attributeModifiers) -> {
             if (stack.hasTag()) {
                 var affixes = AffixHelper.getAffixes(stack);
-                affixes.forEach((afx, inst) -> inst.addModifiers(e.slot, e::addModifier));
+                affixes.forEach((afx, inst) -> inst.addModifiers(slot, attributeModifiers::put));
             }
         });
     }
