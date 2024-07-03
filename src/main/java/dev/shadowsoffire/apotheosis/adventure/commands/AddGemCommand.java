@@ -2,10 +2,10 @@ package dev.shadowsoffire.apotheosis.adventure.commands;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketHelper;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.socket.SocketHelper;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.Gem;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemRegistry;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;

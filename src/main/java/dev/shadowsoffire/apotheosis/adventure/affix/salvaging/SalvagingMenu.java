@@ -1,9 +1,11 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.salvaging;
 
+import com.google.common.base.Predicates;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Blocks;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Menus;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe.OutputData;
+import dev.shadowsoffire.placebo.menu.FilteredSlot;
 import dev.shadowsoffire.placebo.menu.PlaceboContainerMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -29,7 +31,7 @@ public class SalvagingMenu extends PlaceboContainerMenu {
     protected final BlockPos pos;
     protected final SalvagingTableTile tile;
 
-    protected final SimpleContainer inputInventory = new SimpleContainer(15) {
+    protected final SimpleContainer inputInventory = new SimpleContainer(12) {
         @Override
         public int getMaxStackSize() {
             return 1;
@@ -51,8 +53,10 @@ public class SalvagingMenu extends PlaceboContainerMenu {
         this.player = inv.player;
         this.pos = pos;
         this.tile = (SalvagingTableTile) this.level.getBlockEntity(pos);
-        for (int i = 0; i < 15; i++) {
-            this.addSlot(new Slot(this.inputInventory, i, 8 + i % 5 * 18, 17 + i / 5 * 18) {
+        int leftOffset = 17;
+        int topOffset = 17;
+        for (int i = 0; i < 12; i++) {
+            this.addSlot(new UpdatingSlot(this.inputInventory, i, leftOffset + i % 4 * 19, topOffset + i / 4 * 19, s -> findMatch(this.level, s) != null){
                 @Override
                 public boolean mayPlace(ItemStack stack) {
                     return findMatch(SalvagingMenu.this.level, stack) != null;
@@ -67,16 +71,13 @@ public class SalvagingMenu extends PlaceboContainerMenu {
         }
 
         for (int i = 0; i < 6; i++) {
-            this.addSlot(new Slot(this.tile.container, i, 134 + i % 2 * 18, 17 + i / 2 * 18) {
-                @Override
-                public boolean mayPlace(ItemStack stack) {
-                    return false;
-                }
-            });
+            leftOffset = 124;
+            topOffset = 17;
+            this.addSlot(new FilteredSlot(this.tile.output, i, leftOffset + i % 2 * 19, topOffset + i / 2 * 19, Predicates.alwaysFalse()));
         }
 
-        this.addPlayerSlots(inv, 8, 84);
-        for (int i = 0; i < 15; i++) {
+        this.addPlayerSlots(inv, 8, 92);
+        for (int i = 0; i < 12; i++) {
             int finalI = i;
             this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.inputInventory.getItem(finalI).isEmpty() && findMatch(this.level, stack) != null, i, i+1);
         }
@@ -123,7 +124,7 @@ public class SalvagingMenu extends PlaceboContainerMenu {
     }
 
     protected void salvageAll() {
-        for (int inSlot = 0; inSlot < 15; inSlot++) {
+        for (int inSlot = 0; inSlot < 12; inSlot++) {
             Slot s = this.getSlot(inSlot);
             ItemStack stack = s.getItem();
             List<ItemStack> outputs = salvageItem(this.level, stack);

@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "zenith:items/sigil_of_enhancement"
+		"layer0": "zenith:items/sigils/enhancement"
 	}
 }

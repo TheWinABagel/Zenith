@@ -9,9 +9,11 @@ import dev.shadowsoffire.apotheosis.util.SpawnerStats;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.ILuckyWeighted;
 import dev.shadowsoffire.placebo.util.ChestBuilder;
+import io.github.fabricators_of_create.porting_lib.tags.TagHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Plane;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.SimpleWeightedRandomList;
@@ -31,8 +33,6 @@ public class RogueSpawner implements CodecProvider<RogueSpawner>, ILuckyWeighted
                     ResourceLocation.CODEC.fieldOf("loot_table").forGetter(RogueSpawner::getLootTableId),
                     SimpleWeightedRandomList.wrappedCodec(SpawnData.CODEC).fieldOf("spawn_potentials").forGetter(s -> s.spawnPotentials))
             .apply(inst, RogueSpawner::new));
-
-    public static final Block[] FILLER_BLOCKS = { Blocks.CRACKED_STONE_BRICKS, Blocks.MOSSY_COBBLESTONE, Blocks.CRYING_OBSIDIAN, Blocks.LODESTONE };
 
     protected final int weight;
     protected final SpawnerStats stats;
@@ -72,7 +72,8 @@ public class RogueSpawner implements CodecProvider<RogueSpawner>, ILuckyWeighted
         ((BaseSpawnerAccessor) entity.getSpawner()).setSpawnPotentials(this.spawnPotentials);
         ((BaseSpawnerAccessor) entity.getSpawner()).callSetNextSpawnData(null, pos, this.spawnPotentials.getRandomValue(rand).get());
         ChestBuilder.place(world, pos.below(), rand.nextFloat() <= AdventureConfig.spawnerValueChance ? Apoth.LootTables.CHEST_VALUABLE : this.lootTable);
-        world.setBlock(pos.above(), FILLER_BLOCKS[rand.nextInt(FILLER_BLOCKS.length)].defaultBlockState(), 2);
+        Block cover = TagHelper.getRandomElement(BuiltInRegistries.BLOCK, Apoth.Tags.ROGUE_SPAWNER_COVERS, rand).orElse(Blocks.STONE);
+        world.setBlock(pos.above(), cover.defaultBlockState(), 2);
         for (Direction f : Plane.HORIZONTAL) {
             if (world.getBlockState(pos.relative(f)).isAir()) {
                 BooleanProperty side = (BooleanProperty) Blocks.VINE.getStateDefinition().getProperty(f.getOpposite().getName());

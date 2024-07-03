@@ -16,22 +16,33 @@ import java.util.List;
  */
 public interface DrawsOnLeft {
 
-    /**
-     * Renders a list of text as a tooltip attached to the left edge of the currently open container screen.
-     */
     default void drawOnLeft(GuiGraphics gfx, List<Component> list, int y) {
-        if (list.isEmpty()) return;
+        if (list.isEmpty()) {
+            return;
+        }
         int xPos = ((AbstractContainerScreenAccessor) ths()).getLeftPos() - 16 - list.stream().map(((ScreenAccessor) ths()).getFont()::width).max(Integer::compare).get();
         int maxWidth = 9999;
         if (xPos < 0) {
             maxWidth = ((AbstractContainerScreenAccessor) ths()).getLeftPos() - 6;
             xPos = -8;
         }
+        drawOnLeft(gfx, list, y, maxWidth);
+    }
+
+    /**
+     * Renders a list of text as a tooltip attached to the left edge of the currently open container screen.
+     */
+    default void drawOnLeft(GuiGraphics gfx, List<Component> list, int y, int maxWidth) {
+        if (list.isEmpty()) {
+            return;
+        }
 
         List<FormattedText> split = new ArrayList<>();
         int lambdastupid = maxWidth;
         list.forEach(comp -> split.addAll(((ScreenAccessor) ths()).getFont().getSplitter().splitLines(comp, lambdastupid, comp.getStyle())));
+        list.forEach(comp -> split.addAll(((ScreenAccessor) ths()).getFont().getSplitter().splitLines(comp, maxWidth, comp.getStyle())));
 
+        int xPos = ths().getGuiLeft() - 16 - split.stream().map(((ScreenAccessor) ths()).getFont()::width).max(Integer::compare).get();
         ((IComponentTooltip) gfx).zenith$RenderComponentTooltip(((ScreenAccessor) ths()).getFont(), split, xPos, y); // copying forge methods is my passion
     }
 

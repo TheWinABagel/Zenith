@@ -45,7 +45,7 @@ public class EnchLibraryContainer extends BlockEntityMenu<EnchLibraryTile> imple
     }
 
     void initCommon(Inventory inv) {
-        this.addSlot(new Slot(this.ioInv, 0, 148, 93){
+        this.addSlot(new Slot(this.ioInv, 0, 142, 77) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return stack.getItem() == Items.ENCHANTED_BOOK;
@@ -67,7 +67,7 @@ public class EnchLibraryContainer extends BlockEntityMenu<EnchLibraryTile> imple
                 EnchLibraryContainer.this.ioInv.setItem(0, ItemStack.EMPTY);
             }
         });
-        this.addSlot(new Slot(this.ioInv, 1, 148, 127){
+        this.addSlot(new Slot(this.ioInv, 1, 142, 106){
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return stack.getItem() == Items.ENCHANTED_BOOK;
@@ -78,7 +78,7 @@ public class EnchLibraryContainer extends BlockEntityMenu<EnchLibraryTile> imple
                 return 1;
             }
         });
-        this.addSlot(new Slot(this.ioInv, 2, 92, 61){
+        this.addSlot(new Slot(this.ioInv, 2, 142, 18){
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return true;
@@ -94,7 +94,7 @@ public class EnchLibraryContainer extends BlockEntityMenu<EnchLibraryTile> imple
                 EnchLibraryContainer.this.onChanged();
             }
         });
-        this.addPlayerSlots(inv, 8, 159);
+        this.addPlayerSlots(inv, 8, 148);
         this.mover.registerRule((stack, slot) -> slot == 0, 3, 39);
         this.mover.registerRule((stack, slot) -> slot == 1, 3, 39);
         this.mover.registerRule((stack, slot) -> slot == 2, 3, 39);

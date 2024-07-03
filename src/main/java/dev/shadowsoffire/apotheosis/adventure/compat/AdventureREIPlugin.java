@@ -5,11 +5,11 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.AdventureConfig;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.Gem;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemItem;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.util.GemIngredient;
 import dev.shadowsoffire.apotheosis.util.REIUtil;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
@@ -90,9 +90,7 @@ public class AdventureREIPlugin implements REIClientPlugin {
         registry.add(info);
 
         REIUtil.addInfo(registry, Adventure.Items.GEM_DUST, "info.zenith.gem_crushing");
-        REIUtil.addInfo(registry, Adventure.Items.VIAL_OF_EXTRACTION, "info.zenith.gem_extraction");
-        REIUtil.addInfo(registry, Adventure.Items.VIAL_OF_EXPULSION, "info.zenith.gem_expulsion");
-        REIUtil.addInfo(registry, Adventure.Items.VIAL_OF_UNNAMING, "info.zenith.unnaming");
+        REIUtil.addInfo(registry, Adventure.Items.SIGIL_OF_SOCKETING, "info.zenith.unnaming");
 
         //List<GemCuttingDisplay.GemCuttingRecipe> gemCutRecipes = new ArrayList<>();
 

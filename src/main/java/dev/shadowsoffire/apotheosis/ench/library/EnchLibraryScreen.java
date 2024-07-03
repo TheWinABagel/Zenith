@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.ench.library;
 import com.google.common.base.Strings;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.adventure.client.AdventureContainerScreen;
 import dev.shadowsoffire.attributeslib.AttributesLib;
 import dev.shadowsoffire.placebo.packets.ButtonClickMessage;
 import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
@@ -11,7 +12,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -33,8 +33,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContainer> {
+public class EnchLibraryScreen extends AdventureContainerScreen<EnchLibraryContainer> {
     public static final ResourceLocation TEXTURES = new ResourceLocation(Apotheosis.MODID, "textures/gui/library.png");
+    public static final int MAX_ENTRIES = 5;
+    public static final int ENTRY_WIDTH = 113;
+    public static final int ENTRY_HEIGHT = 20;
 
     protected float scrollOffs;
     protected boolean scrolling;
@@ -46,30 +49,29 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 
     public EnchLibraryScreen(EnchLibraryContainer container, Inventory inv, Component title) {
         super(container, inv, title);
-        this.width = this.imageWidth = 176;
-        this.height = this.imageHeight = 241;
-        this.titleLabelX = this.inventoryLabelX = 7;
-        this.titleLabelY = 4;
-        this.inventoryLabelY = 149;
-        this.containerChanged();
+        this.imageHeight = 230;
         container.setNotifier(this::containerChanged);
     }
 
     @Override
     protected void init() {
         super.init();
-        this.filter = this.addRenderableWidget(new EditBox(this.font, this.leftPos + 91, this.topPos + 20 + this.font.lineHeight + 2, 78, this.font.lineHeight + 4, this.filter, Component.literal("")));
+        this.filter = this.addRenderableWidget(new EditBox(this.font, this.getGuiLeft() + 16, this.getGuiTop() + 16, 110, 11, this.filter, Component.literal("")));
+        this.filter.setBordered(false);
+        this.filter.setTextColor(0x97714F);
         this.filter.setResponder(t -> this.containerChanged());
+        this.setFocused(this.filter);
+        this.containerChanged();
     }
 
     @Override
     public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
-        if (pKeyCode == GLFW.GLFW_KEY_ESCAPE && this.getFocused() == this.filter) {
+        /*if (pKeyCode == GLFW.GLFW_KEY_ESCAPE && this.getFocused() == this.filter) {
             this.setFocused(null);
             this.filter.setFocused(false);
             return true;
         }
-        else if (this.minecraft.options.keyInventory.matches(pKeyCode, pScanCode) && this.getFocused() == this.filter) {
+        else */if (this.minecraft.options.keyInventory.matches(pKeyCode, pScanCode) && this.getFocused() == this.filter) {
             return true;
         }
         return super.keyPressed(pKeyCode, pScanCode, pModifiers);
@@ -125,41 +127,41 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
     protected void renderBg(GuiGraphics gfx, float partial, int mouseX, int mouseY) {
         int left = this.leftPos;
         int top = this.topPos;
-        gfx.blit(TEXTURES, left, top, 0, 0, this.imageWidth, this.imageHeight);
-        int scrollbarPos = (int) (118F * this.scrollOffs);
-        gfx.blit(TEXTURES, left + 75, top + 14 + scrollbarPos, 244, this.isScrollBarActive() ? 0 : 15, 12, 15);
+        gfx.blit(TEXTURES, left, top, 0, 0, this.imageWidth, this.imageHeight, 307, 256);
+        int scrollbarPos = (int) (90F * this.scrollOffs);
+        gfx.blit(TEXTURES, left + 13, top + 29 + scrollbarPos, 303, 40 + (this.isScrollBarActive() ? 0 : 12), 4, 12, 307, 256);
         int idx = this.startIndex;
-        while (idx < this.startIndex + 7 && idx < this.data.size()) {
-            this.renderEntry(gfx, this.data.get(idx), this.leftPos + 8, this.topPos + 14 + 19 * (idx - this.startIndex), mouseX, mouseY);
+        while (idx < this.startIndex + MAX_ENTRIES && idx < this.data.size()) {
+            this.renderEntry(gfx, this.data.get(idx), this.leftPos + 20, this.topPos + 30 + ENTRY_HEIGHT * (idx - this.startIndex), mouseX, mouseY);
             idx++;
         }
-
-        gfx.drawString(this.font, Component.translatable("tooltip.enchlib.nfilt"), this.leftPos + 91, this.topPos + 20, 4210752, false);
-        gfx.drawString(this.font, Component.translatable("tooltip.enchlib.ifilt"), this.leftPos + 91, this.topPos + 50, 4210752, false);
     }
 
     private void renderEntry(GuiGraphics gfx, LibrarySlot data, int x, int y, int mouseX, int mouseY) {
-        boolean hover = this.isHovering(x - this.leftPos, y - this.topPos, 64, 17, mouseX, mouseY);
-        gfx.blit(TEXTURES, x, y, 178, hover ? 19 : 0, 64, 19);
-        int progress = (int) Math.round(62 * Math.sqrt(data.points) / (float) Math.sqrt(this.menu.getPointCap()));
-        gfx.blit(TEXTURES, x + 1, y + 12, 179, 38, progress, 5);
+        LibrarySlot hover = this.getHoveredSlot(mouseX, mouseY);
+        gfx.blit(TEXTURES, x, y, 194, data == hover ? ENTRY_HEIGHT : 0, ENTRY_WIDTH, ENTRY_HEIGHT, 307, 256);
+        int progress = (int) Math.round(85 * Math.sqrt(data.points) / (float) Math.sqrt(this.menu.getPointCap()));
+        gfx.blit(TEXTURES, x + 3, y + 14, 197, 42, progress, 3, 307, 256);
         PoseStack stack = gfx.pose();
         stack.pushPose();
         Component txt = Component.translatable(data.ench.getDescriptionId());
         float scale = 1;
-        if (this.font.width(txt) > 60) {
+        if (this.font.width(txt) > ENTRY_WIDTH - 6) {
             scale = 60F / this.font.width(txt);
         }
         stack.scale(scale, scale, 1);
-        gfx.drawString(this.font, txt, (int) ((x + 2) / scale), (int) ((y + 2) / scale), 0xFFFF80, false);
+        gfx.drawString(this.font, txt, (int) ((x + 3) / scale), (int) ((y + 3) / scale), 0x8EE14D, false);
         stack.popPose();
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         this.scrolling = false;
-        int left = this.leftPos + 52;
-        int top = this.topPos + 14;
+        if (this.isHovering(14, 29, 4, 103, mouseX, mouseY)) {
+            this.scrolling = true;
+            this.mouseDragged(mouseX, mouseY, button, 0, 0);
+            return true;
+        }
 
         LibrarySlot libSlot = this.getHoveredSlot((int) mouseX, (int) mouseY);
         if (libSlot != null) {
@@ -168,13 +170,14 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
             this.menu.onButtonClick(id);
             ButtonClickMessage.sendToServer(id);
             this.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1.0F));
+            return true;
         }
 
-        left = this.leftPos + 75;
-        top = this.topPos + 9;
-        if (mouseX >= left && mouseX < left + 12 && mouseY >= top && mouseY < top + 131) {
-            this.scrolling = true;
+        if (this.filter.isHovered() && button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
+            this.filter.setValue("");
+            return true;
         }
+
         //reset if filter isn't clicked
         this.setFocused(null);
         this.filter.setFocused(false);
@@ -185,9 +188,9 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
     @Override
     public boolean mouseDragged(double pMouseX, double pMouseY, int pButton, double pDragX, double pDragY) {
         if (this.scrolling && this.isScrollBarActive()) {
-            int i = this.topPos + 14;
-            int j = i + 131;
-            this.scrollOffs = ((float) pMouseY - i - 7.5F) / (j - i - 15.0F);
+            int barTop = this.topPos + 14;
+            int barBot = barTop + 103;
+            this.scrollOffs = ((float) pMouseY - barTop - 6F) / (barBot - barTop - 12F) - 0.12F;
             this.scrollOffs = Mth.clamp(this.scrollOffs, 0.0F, 1.0F);
             this.startIndex = (int) (this.scrollOffs * this.getOffscreenRows() + 0.5D);
             return true;
@@ -209,11 +212,11 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
     }
 
     private boolean isScrollBarActive() {
-        return this.data.size() > 7;
+        return this.data.size() > MAX_ENTRIES;
     }
 
     protected int getOffscreenRows() {
-        return this.data.size() - 7;
+        return this.data.size() - MAX_ENTRIES;
     }
 
     private void containerChanged() {
@@ -252,9 +255,9 @@ public class EnchLibraryScreen extends AbstractContainerScreen<EnchLibraryContai
 
     @Nullable
     public LibrarySlot getHoveredSlot(int mouseX, int mouseY) {
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < MAX_ENTRIES; i++) {
             if (this.startIndex + i < this.data.size()) {
-                if (this.isHovering(8, 14 + 19 * i, 64, 17, mouseX, mouseY)) return this.data.get(this.startIndex + i);
+                if (this.isHovering(21, 31 + i * ENTRY_HEIGHT, ENTRY_WIDTH, ENTRY_HEIGHT - 2, mouseX, mouseY)) return this.data.get(this.startIndex + i);
             }
         }
         return null;

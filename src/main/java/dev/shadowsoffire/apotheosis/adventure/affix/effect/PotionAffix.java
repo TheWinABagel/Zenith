@@ -31,7 +31,6 @@ import net.spell_engine.api.spell.SpellEvents;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Consumer;
 
 /**
  * Applies a potion effect, with a cooldown, to a certain target.
@@ -68,7 +67,7 @@ public class PotionAffix extends Affix {
     }
 
     @Override
-    public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
+    public MutableComponent getDescription(ItemStack stack, LootRarity rarity, float level) {
         MobEffectInstance inst = this.values.get(rarity).build(this.effect, level);
         MutableComponent comp = this.target.toComponent(toComponent(inst));
         int cooldown = this.getCooldown(rarity);
@@ -79,7 +78,40 @@ public class PotionAffix extends Affix {
         if (this.stackOnReapply) {
             comp = comp.append(" ").append(Component.translatable("affix.zenith.stacking"));
         }
-        list.accept(comp);
+        return comp;
+    }
+
+    @Override
+    public Component getAugmentingText(ItemStack stack, LootRarity rarity, float level) {
+        MobEffectInstance inst = this.values.get(rarity).build(this.effect, level);
+        MutableComponent comp = this.target.toComponent(toComponent(inst));
+
+        MobEffectInstance min = this.values.get(rarity).build(this.effect, 0);
+        MobEffectInstance max = this.values.get(rarity).build(this.effect, 1);
+
+        if (min.getAmplifier() != max.getAmplifier()) {
+            // Vanilla ships potion.potency.0 as an empty string, so we have to fix that here
+            Component minComp = min.getAmplifier() == 0 ? Component.literal("I") : Component.translatable("potion.potency." + min.getAmplifier());
+            Component maxComp = Component.translatable("potion.potency." + max.getAmplifier());
+            comp.append(valueBounds(minComp, maxComp));
+        }
+
+        if (!this.effect.isInstantenous() && min.getDuration() != max.getDuration()) {
+            Component minComp = MobEffectUtil.formatDuration(min, 1);
+            Component maxComp = MobEffectUtil.formatDuration(max, 1);
+            comp.append(valueBounds(minComp, maxComp));
+        }
+
+        int cooldown = this.getCooldown(rarity);
+        if (cooldown != 0) {
+            Component cd = Component.translatable("affix.zenith.cooldown", StringUtil.formatTickDuration(cooldown));
+            comp = comp.append(" ").append(cd);
+        }
+        if (this.stackOnReapply) {
+            comp = comp.append(" ").append(Component.translatable("affix.zenith.stacking"));
+        }
+
+        return comp;
     }
 
     @Override

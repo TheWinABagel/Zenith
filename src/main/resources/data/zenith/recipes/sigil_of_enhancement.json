@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "fabric:load_conditions": [{
+    "condition": "zenith:module",
+    "module": "enchantment"
+  }],
+  "group": "something",
+  "pattern": [
+    "GSG",
+    "SPS",
+    "GSG"
+  ],
+  "key": {
+    "G": {
+      "item": "zenith:gem_dust"
+    },
+    "S": {
+      "item": "zenith:gem_fused_slate"
+    },
+    "P": {
+      "item": "zenith:mythic_material"
+    }
+  },
+  "result": {
+    "item": "zenith:sigil_of_enhancement",
+    "count": 4
+  }
+}

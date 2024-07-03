@@ -127,6 +127,10 @@
 		{
 			"id": "zenith:treasure_shelf",
 			"required": false
+		},
+		{
+			"id": "zenith:augmenting_table",
+			"required": false
 		}
 	]
 }

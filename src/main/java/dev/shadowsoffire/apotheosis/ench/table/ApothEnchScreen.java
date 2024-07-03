@@ -338,7 +338,7 @@ public class ApothEnchScreen extends EnchantmentScreen implements DrawsOnLeft {
                     int maxPow = Math.round(Mth.clamp(level + level * quanta, 1, EnchantingStatRegistry.getAbsoluteMaxEterna() * 4));
                     list.add(Component.translatable("info.zenith.power_range", Component.literal("" + minPow).withStyle(ChatFormatting.DARK_RED), Component.literal("" + maxPow).withStyle(ChatFormatting.BLUE)));
                     list.add(Component.translatable("info.zenith.item_ench", Component.literal("" + enchanting.getItem().getEnchantmentValue()).withStyle(ChatFormatting.GREEN)));
-                    list.add(Component.translatable("info.zenith.num_clues", Component.literal("" + (1 + this.menu.stats.clues())).withStyle(ChatFormatting.DARK_AQUA)));
+                    list.add(Component.translatable("info.zenith.num_clues", Component.literal("" + this.menu.stats.clues()).withStyle(ChatFormatting.DARK_AQUA)));
                     this.drawOnLeft(gfx, list, this.topPos + 29);
                     break;
                 }

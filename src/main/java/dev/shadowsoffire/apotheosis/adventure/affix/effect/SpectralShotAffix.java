@@ -6,11 +6,13 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.bonus.GemBonus;
+import dev.shadowsoffire.apotheosis.cca.ZenithComponents;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
@@ -19,7 +21,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 import java.util.Map;
-import java.util.function.Consumer;
 
 /**
  * Fires an additional spectral arrow with the same velocity as the original arrow
@@ -44,8 +45,17 @@ public class SpectralShotAffix extends Affix {
     }
 
     @Override
-    public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-        list.accept(Component.translatable("affix." + this.getId() + ".desc", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(100 * this.getTrueLevel(rarity, level))));
+    public MutableComponent getDescription(ItemStack stack, LootRarity rarity, float level) {
+        return Component.translatable("affix." + this.getId() + ".desc", fmt(100 * this.getTrueLevel(rarity, level)));
+    }
+
+    @Override
+    public Component getAugmentingText(ItemStack stack, LootRarity rarity, float level) {
+        MutableComponent comp = this.getDescription(stack, rarity, level);
+
+        Component minComp = Component.translatable("%s%%", fmt(100 * this.getTrueLevel(rarity, 0)));
+        Component maxComp = Component.translatable("%s%%", fmt(100 * this.getTrueLevel(rarity, 1)));
+        return comp.append(valueBounds(minComp, maxComp));
     }
 
     @Override
@@ -62,6 +72,7 @@ public class SpectralShotAffix extends Affix {
                 spectralArrow.setKnockback(arrow.getKnockback());
                 spectralArrow.setRemainingFireTicks(arrow.getRemainingFireTicks());
                 spectralArrow.pickup = Pickup.CREATIVE_ONLY;
+                ZenithComponents.GENERATED_ARROW.get(spectralArrow).setValue(true);
                 boolean didjoin = arrow.level().addFreshEntity(spectralArrow);
                 if (Apotheosis.enableDebug) AdventureModule.LOGGER.info("did arrow join level: {}", didjoin);
             }

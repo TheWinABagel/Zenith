@@ -6,15 +6,17 @@ import dev.shadowsoffire.apotheosis.adventure.Adventure.Blocks;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixRegistry;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.*;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossEvents;
 import dev.shadowsoffire.apotheosis.adventure.boss.BossRegistry;
 import dev.shadowsoffire.apotheosis.adventure.boss.Exclusion;
 import dev.shadowsoffire.apotheosis.adventure.boss.MinibossRegistry;
 import dev.shadowsoffire.apotheosis.adventure.loot.*;
 import dev.shadowsoffire.apotheosis.adventure.net.RadialStateChangeMessage;
+import dev.shadowsoffire.apotheosis.adventure.socket.AddSocketsRecipe;
+import dev.shadowsoffire.apotheosis.adventure.socket.SocketingRecipe;
+import dev.shadowsoffire.apotheosis.adventure.socket.UnnamingRecipe;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemRegistry;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.spawner.RogueSpawnerRegistry;
 import dev.shadowsoffire.apotheosis.util.AffixItemIngredient;
 import dev.shadowsoffire.apotheosis.util.GemIngredient;
@@ -80,6 +82,7 @@ public class AdventureModule {
         Apoth.registerBlock(Blocks.GEM_CUTTING_TABLE, "gem_cutting_table");
         Apoth.registerBlock(Blocks.SIMPLE_REFORGING_TABLE, "simple_reforging_table");
         Apoth.registerBlock(Blocks.SALVAGING_TABLE, "salvaging_table");
+        Apoth.registerBlock(Blocks.AUGMENTING_TABLE, "augmenting_table");
     }
 
     public static void items() {
@@ -92,11 +95,11 @@ public class AdventureModule {
         Apoth.registerItem(Adventure.Items.GEM_DUST, "gem_dust");
         Apoth.registerItem(Adventure.Items.VIAL_OF_EXPULSION, "vial_of_expulsion");
         Apoth.registerItem(Adventure.Items.VIAL_OF_EXTRACTION, "vial_of_extraction");
-        Apoth.registerItem(Adventure.Items.VIAL_OF_UNNAMING, "vial_of_unnaming");
-        Apoth.registerItem(Adventure.Items.SIGIL_OF_SOCKETING, "sigil_of_socketing");
-        Apoth.registerItem(Adventure.Items.SUPERIOR_SIGIL_OF_SOCKETING, "superior_sigil_of_socketing");
+        Apoth.registerItem(Adventure.Items.SIGIL_OF_SOCKETING, "vial_of_unnaming");
+        Apoth.registerItem(Adventure.Items.SIGIL_OF_WITHDRAWAL, "sigil_of_socketing");
+        Apoth.registerItem(Adventure.Items.SIGIL_OF_REBIRTH, "superior_sigil_of_socketing");
         Apoth.registerItem(Adventure.Items.SIGIL_OF_ENHANCEMENT, "sigil_of_enhancement");
-        Apoth.registerItem(Adventure.Items.SUPERIOR_SIGIL_OF_ENHANCEMENT, "superior_sigil_of_enhancement");
+        Apoth.registerItem(Adventure.Items.SIGIL_OF_UNNAMING, "superior_sigil_of_enhancement");
         Apoth.registerItem(Adventure.Items.BOSS_SUMMONER, "boss_summoner");
         Apoth.registerItem(Adventure.Items.SIMPLE_REFORGING_TABLE, "simple_reforging_table");
         Apoth.registerItem(Adventure.Items.REFORGING_TABLE, "reforging_table");
@@ -113,8 +116,7 @@ public class AdventureModule {
 
     public static void serializers() {
         Apoth.registerSerializer("socketing", SocketingRecipe.Serializer.INSTANCE);
-        Apoth.registerSerializer("expulsion", ExpulsionRecipe.Serializer.INSTANCE);
-        Apoth.registerSerializer("extraction", ExtractionRecipe.Serializer.INSTANCE);
+        Apoth.registerSerializer("withdrawal", WithdrawalRecipe.Serializer.INSTANCE);
         Apoth.registerSerializer("unnaming", UnnamingRecipe.Serializer.INSTANCE);
         Apoth.registerSerializer("add_sockets", AddSocketsRecipe.Serializer.INSTANCE);
         Apoth.registerSerializer("salvaging", SalvagingRecipe.Serializer.INSTANCE);

@@ -2,7 +2,7 @@ package dev.shadowsoffire.apotheosis.adventure.compat;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.cutting.GemCuttingBlock;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.cutting.GemCuttingBlock;
 import dev.shadowsoffire.apotheosis.compat.ZenithREICatgeory;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
@@ -18,7 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.Arrays;
 import java.util.List;
 
-public class GemCuttingCategory  extends ZenithREICatgeory<GemCuttingDisplay> {
+public class GemCuttingCategory extends ZenithREICatgeory<GemCuttingDisplay> {
 
     public static final ResourceLocation TEXTURES = new ResourceLocation(Apotheosis.MODID, "textures/gui/gem_cutting_jei.png");
 
@@ -38,11 +38,13 @@ public class GemCuttingCategory  extends ZenithREICatgeory<GemCuttingDisplay> {
     @Override
     public void setRecipe(GemCuttingDisplay display, List<Widget> widgets, Point origin) {
         var recipe = display.getRecipe();
-            widgets.add(slot(46, 14, origin, List.of(EntryStacks.of(recipe.gem)), false));
-            widgets.add(slot(5, 14, origin, List.of(EntryStacks.of(recipe.dust)), false));
-            widgets.add(slot(46, 57, origin, List.of(EntryStacks.of(recipe.gem)), false));
-            widgets.add(slot(87, 14, origin, Arrays.stream(recipe.materials).map(EntryStacks::of).toList(), false));
-            widgets.add(slot(129, 14, origin, List.of(EntryStacks.of(recipe.out)), false));
+        widgets.add(slot(48, 37, origin, List.of(EntryStacks.of(recipe.gem)), false));
+
+        widgets.add(slot(48, 4, origin, Arrays.stream(recipe.materials).map(EntryStacks::of).toList(), false));
+        widgets.add(slot(19, 56, origin, List.of(EntryStacks.of(recipe.gem)), false));
+        widgets.add(slot(76, 56, origin, List.of(EntryStacks.of(recipe.dust)), false));
+
+        widgets.add(slot(117, 35, origin, List.of(EntryStacks.of(recipe.out)), false));
     }
 
     @Override

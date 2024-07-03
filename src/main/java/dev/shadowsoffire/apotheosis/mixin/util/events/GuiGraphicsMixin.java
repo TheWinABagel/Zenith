@@ -1,8 +1,8 @@
 package dev.shadowsoffire.apotheosis.mixin.util.events;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.adventure.client.AdventureModuleClient;
+import dev.shadowsoffire.apotheosis.adventure.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.util.events.IComponentTooltip;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;

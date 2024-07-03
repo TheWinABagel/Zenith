@@ -5,7 +5,6 @@ import com.mojang.serialization.codecs.ListCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
-import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
 import dev.shadowsoffire.placebo.codec.CodecProvider;
 import dev.shadowsoffire.placebo.codec.PlaceboCodecs;
@@ -24,7 +23,6 @@ import org.apache.commons.lang3.mutable.MutableInt;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class LootRarity implements CodecProvider<LootRarity>, ILuckyWeighted, Comparable<LootRarity> {
 
@@ -187,14 +185,14 @@ public class LootRarity implements CodecProvider<LootRarity>, ILuckyWeighted, Co
             this(type, chance, backup.orElse(null));
         }
 
-        public void execute(ItemStack stack, LootRarity rarity, Set<DynamicHolder<Affix>> currentAffixes, MutableInt sockets, RandomSource rand) {
+        public void execute(ItemStack stack, LootRarity rarity, Set<DynamicHolder<? extends Affix>> currentAffixes, MutableInt sockets, RandomSource rand) {
             if (this.type == AffixType.DURABILITY) return;
             if (rand.nextFloat() <= this.chance) {
                 if (this.type == AffixType.SOCKET) {
                     sockets.add(1);
                     return;
                 }
-                List<DynamicHolder<Affix>> available = AffixHelper.byType(this.type).stream().filter(a -> a.get().canApplyTo(stack, LootCategory.forItem(stack), rarity) && !currentAffixes.contains(a)).collect(Collectors.toList());
+                List<DynamicHolder<? extends Affix>> available = LootController.getAvailableAffixes(stack, rarity, currentAffixes, this.type);
                 if (available.size() == 0) {
                     if (this.backup != null) this.backup.execute(stack, rarity, currentAffixes, sockets, rand);
                     else AdventureModule.LOGGER.error("Failed to execute LootRule {}/{}/{}/{}!", BuiltInRegistries.ITEM.getKey(stack.getItem()), RarityRegistry.INSTANCE.getKey(rarity), this.type, this.chance);

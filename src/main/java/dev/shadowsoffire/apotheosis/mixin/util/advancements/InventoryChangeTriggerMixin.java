@@ -5,8 +5,8 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.shadowsoffire.apotheosis.advancements.TrueItemPredicate;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
+import dev.shadowsoffire.apotheosis.adventure.socket.SocketHelper;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -61,7 +61,7 @@ public abstract class InventoryChangeTriggerMixin {
             return new ItemPredicate[] { new TrueItemPredicate(s -> s.getItem() == Adventure.Items.GEM && rarity.isBound() && AffixHelper.getRarity(s) == rarity) };
         }
         if ("socket".equals(type)) {
-            return new ItemPredicate[] { new TrueItemPredicate(s -> SocketHelper.getGems(s).stream().anyMatch(gem -> !gem.isEmpty())) };
+            return new ItemPredicate[] { new TrueItemPredicate(s -> SocketHelper.getGems(s).stream().anyMatch(GemInstance::isValid)) };
         }
         if ("nbt".equals(type)) {
             CompoundTag tag;

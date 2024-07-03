@@ -22,8 +22,10 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
@@ -49,17 +51,18 @@ public class EnchModuleClient {
                 Block block = blockItem.getBlock();
                 Level world = Minecraft.getInstance().level;
                 if (world == null || Minecraft.getInstance().player == null) return;
-            //    BlockPlaceContext ctx = new BlockPlaceContext(world, Minecraft.getInstance().player, InteractionHand.MAIN_HAND, stack, res){};
+                BlockPlaceContext ctx = new BlockPlaceContext(world, Minecraft.getInstance().player, InteractionHand.MAIN_HAND, stack, res){};
                 BlockState state = null;
-            /*    try {
+                try {
                     state = block.getStateForPlacement(ctx);
                 }
                 catch (Exception ex) {
-                    EnchModule.LOGGER.debug(ex.getMessage());
+                    // Since we're calling with an invalid context, this may fail, and we need to handle that quietly.
+                    EnchModule.LOGGER.trace(ex.getMessage());
                     StackTraceElement[] trace = ex.getStackTrace();
                     for (StackTraceElement traceElement : trace)
-                        EnchModule.LOGGER.debug("\tat " + traceElement);
-                }*/
+                        EnchModule.LOGGER.trace("\tat " + traceElement);
+                }
 
                 if (state == null) state = block.defaultBlockState();
                 float maxEterna = EnchantingStatRegistry.getMaxEterna(state, world, BlockPos.ZERO);

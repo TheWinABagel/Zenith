@@ -6,6 +6,6 @@
 	"type": "zenith:reforging",
 	"rarity": "zenith:uncommon",
     "material_cost": 2,
-    "dust_cost": 1,
+    "sigil_cost": 1,
     "level_cost": 5
 }

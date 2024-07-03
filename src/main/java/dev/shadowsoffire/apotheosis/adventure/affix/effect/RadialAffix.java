@@ -21,6 +21,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -36,7 +37,6 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 /**
  * Enables AOE mining.
@@ -63,9 +63,24 @@ public class RadialAffix extends Affix {
     }
 
     @Override
-    public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
+    public MutableComponent getDescription(ItemStack stack, LootRarity rarity, float level) {
         RadialData data = this.getTrueLevel(rarity, level);
-        list.accept(Component.translatable("affix." + this.getId() + ".desc", data.x, data.y));
+        return Component.translatable("affix." + this.getId() + ".desc", data.x, data.y);
+    }
+
+    @Override
+    public Component getAugmentingText(ItemStack stack, LootRarity rarity, float level) {
+        MutableComponent comp = this.getDescription(stack, rarity, level);
+        RadialData min = this.getTrueLevel(rarity, 0);
+        RadialData max = this.getTrueLevel(rarity, 1);
+
+        if (min != max) {
+            Component minComp = Component.translatable("%sx%s", min.x, min.y);
+            Component maxComp = Component.translatable("%sx%s", max.x, max.y);
+            comp.append(valueBounds(minComp, maxComp));
+        }
+
+        return comp;
     }
 
     // EventPriority.LOW

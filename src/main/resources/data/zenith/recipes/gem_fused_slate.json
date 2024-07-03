@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "fabric:load_conditions": [{
+    "condition": "zenith:module",
+    "module": "adventure"
+  }],
+  "group": "gorilla",
+  "pattern": [
+    "EEE",
+    "EBE",
+    "EEE"
+  ],
+  "key": {
+    "E": {
+      "tag": "zenith:deepslate"
+    },
+    "B": {
+      "item": "zenith:gem_dust"
+    }
+  },
+  "result": {
+    "item": "zenith:gem_fused_slate",
+    "count": 8
+  }
+}

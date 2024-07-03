@@ -1,6 +1,8 @@
 {
-	"dodge": {
-		"subtitle": "zenith.subtitle.dodge",
-		"sounds": ["zenith:dodge"]
+	"reforge": {
+		"subtitle": "zenith.subtitle.reforge",
+		"sounds": [
+			"zenith:reforge"
+		]
 	}
 }

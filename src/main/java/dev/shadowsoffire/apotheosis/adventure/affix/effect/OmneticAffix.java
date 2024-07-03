@@ -13,6 +13,7 @@ import dev.shadowsoffire.placebo.json.ItemAdapter;
 import io.github.fabricators_of_create.porting_lib.entity.events.PlayerEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
@@ -23,7 +24,6 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Arrays;
 import java.util.Map;
-import java.util.function.Consumer;
 
 /**
  * Increases mining level of tools to a level set by the affix.
@@ -48,8 +48,8 @@ public class OmneticAffix extends Affix {
     }
 
     @Override
-    public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-        list.accept(Component.translatable("affix." + this.getId() + ".desc", Component.translatable("misc.zenith." + this.values.get(rarity).name)));
+    public MutableComponent getDescription(ItemStack stack, LootRarity rarity, float level) {
+        return Component.translatable("affix." + this.getId() + ".desc", Component.translatable("misc.zenith." + this.values.get(rarity).name));
     }
 
     public boolean harvest(Player player, BlockState state) {

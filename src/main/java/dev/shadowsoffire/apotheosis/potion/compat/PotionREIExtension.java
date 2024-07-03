@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("UnstableApiUsage")
-class PotionJEIExtension implements CategoryExtensionProvider<DefaultCraftingDisplay<?>> {
+class PotionREIExtension implements CategoryExtensionProvider<DefaultCraftingDisplay<?>> {
 
     @Override
     public DisplayCategoryView<DefaultCraftingDisplay<?>> provide(DefaultCraftingDisplay<?> display, DisplayCategory<DefaultCraftingDisplay<?>> category, DisplayCategoryView<DefaultCraftingDisplay<?>> lastView) {

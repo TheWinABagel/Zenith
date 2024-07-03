@@ -41,30 +41,33 @@ public abstract class ThrownTridentMixin extends AbstractArrow implements Triden
     public abstract ItemStack getTridentItem();
 
     @Inject(method = "<init>*", at = @At("TAIL"), require = 1, remap = false)
-    private void init(CallbackInfo ci) {
+    private void zenith$init(CallbackInfo ci) {
         this.setPierceLevel((byte) EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, this.getTridentItem()));
     }
 
     @Inject(method = "onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V", at = @At("HEAD"), cancellable = true, require = 1)
-    public void startHitEntity(EntityHitResult res, CallbackInfo ci) {
-        if (this.getPierceLevel() > 0) {
+    public void zenith$startHitEntity(EntityHitResult res, CallbackInfo ci) {
+        if (this.getPierceLevel() > 0 && !this.isNoPhysics()) {
             if (((AbstractArrowAccessor) this).getPiercingIgnoreEntityIds() == null) {
                 ((AbstractArrowAccessor) this).setPiercingIgnoreEntityIds(new IntOpenHashSet(this.getPierceLevel()));
             }
-            if (((AbstractArrowAccessor) this).getPiercingIgnoreEntityIds().contains(res.getEntity().getId())) ci.cancel();
+            if (((AbstractArrowAccessor) this).getPiercingIgnoreEntityIds().contains(res.getEntity().getId())) {
+                ci.cancel();
+            }
+            this.oldVel = this.getDeltaMovement();
         }
-
-        this.oldVel = this.getDeltaMovement();
     }
 
     @Inject(method = "onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V", at = @At("TAIL"), require = 1)
-    public void endHitEntity(EntityHitResult res, CallbackInfo ci) {
-        if (this.getPierceLevel() > 0) {
+    public void zenith$endHitEntity(EntityHitResult res, CallbackInfo ci) {
+        if (this.getPierceLevel() > 0 && !this.isNoPhysics()) {
             ((AbstractArrowAccessor) this).getPiercingIgnoreEntityIds().add(res.getEntity().getId());
 
             if (((AbstractArrowAccessor) this).getPiercingIgnoreEntityIds().size() <= this.getPierceLevel()) {
                 this.dealtDamage = false;
-                this.setDeltaMovement(this.oldVel);
+                if (this.oldVel != null) {
+                    this.setDeltaMovement(this.oldVel);
+                }
             }
         }
     }

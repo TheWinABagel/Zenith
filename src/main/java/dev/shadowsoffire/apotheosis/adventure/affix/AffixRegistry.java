@@ -7,7 +7,6 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Affixes;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
 import dev.shadowsoffire.apotheosis.adventure.affix.effect.*;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.SocketAffix;
 import dev.shadowsoffire.apotheosis.adventure.client.AdventureModuleClient;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
@@ -39,7 +38,6 @@ public class AffixRegistry extends DynamicRegistry<Affix> {
         ImmutableMultimap.Builder<AffixType, DynamicHolder<Affix>> builder = ImmutableMultimap.builder();
         this.registry.values().forEach(a -> builder.put(a.type, this.holder(a)));
         this.byType = builder.build();
-        Preconditions.checkArgument(Affixes.SOCKET.get() instanceof SocketAffix, "Socket Affix not registered!");
         Preconditions.checkArgument(Affixes.DURABLE.get() instanceof DurableAffix, "Durable Affix not registered!");
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT && Apotheosis.enableDebug) {
             AdventureModuleClient.checkAffixLangKeys();
@@ -65,7 +63,6 @@ public class AffixRegistry extends DynamicRegistry<Affix> {
         this.registerCodec(Apotheosis.loc("spectral"), SpectralShotAffix.CODEC);
         this.registerCodec(Apotheosis.loc("telepathic"), TelepathicAffix.CODEC);
         this.registerCodec(Apotheosis.loc("thunderstruck"), ThunderstruckAffix.CODEC);
-        this.registerCodec(Apotheosis.loc("socket"), SocketAffix.CODEC);
         this.registerCodec(Apotheosis.loc("durable"), DurableAffix.CODEC);
     }
 

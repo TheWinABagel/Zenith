@@ -1,16 +1,18 @@
 package dev.shadowsoffire.apotheosis.adventure;
 
+import com.google.common.base.Predicates;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.adventure.affix.effect.TelepathicAffix;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.adventure.commands.*;
 import dev.shadowsoffire.apotheosis.adventure.compat.GameStagesCompat.IStaged;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
+import dev.shadowsoffire.apotheosis.adventure.socket.SocketHelper;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.cca.ZenithComponents;
 import dev.shadowsoffire.apotheosis.util.Events;
 import dev.shadowsoffire.placebo.events.AnvilLandCallback;
@@ -83,12 +85,15 @@ public class AdventureEvents {
             BossCommand.register(root);
             AddGemCommand.register(root);
             dispatcher.register(root);
+            AffixCommand.register(root);
         });
     }
 
     public static void affixModifiers() {
         ModifyItemAttributeModifiersCallback.EVENT.register((stack, slot, attributeModifiers) -> {
             if (stack.hasTag()) {
+                SocketHelper.getGems(stack).addModifiers(LootCategory.forItem(stack), e.getSlotType(), e::addModifier);
+
                 var affixes = AffixHelper.getAffixes(stack);
                 affixes.forEach((afx, inst) -> inst.addModifiers(slot, attributeModifiers::put));
             }
@@ -116,17 +121,18 @@ public class AdventureEvents {
     public static void fireArrow(AbstractArrow arrow) {
         if (!ZenithComponents.GENERATED_ARROW.get(arrow).getValue()) {
             Entity shooter = arrow.getOwner();
-            if (shooter instanceof LivingEntity living) {
-                ItemStack bow = living.getUseItem();
+            if (arrow.getOwner() instanceof LivingEntity user) {
+                ItemStack bow = user.getUseItem();
                 if (bow.isEmpty()) {
-                    bow = living.getMainHandItem();
+                    bow = user.getMainHandItem();
                     if (bow.isEmpty() || !LootCategory.forItem(bow).isRanged()) {
-                        bow = living.getOffhandItem();
+                        bow = user.getOffhandItem();
                     }
                 }
                 if (bow.isEmpty()) return;
+                SocketHelper.getGems(bow).onArrowFired(user, arrow);
                 AffixHelper.streamAffixes(bow).forEach(a -> {
-                    a.onArrowFired(living, arrow);
+                    a.onArrowFired(user, arrow);
                 });
                 AffixHelper.copyFrom(bow, arrow);
             }
@@ -139,6 +145,7 @@ public class AdventureEvents {
     public static void impact() {
         EntityEvents.PROJECTILE_IMPACT.register((event) -> {
             if (event.getProjectile() instanceof AbstractArrow arrow) {
+                SocketHelper.getGemInstances(arrow).forEach(inst -> inst.onArrowImpact(arrow, event.getRayTraceResult()));
                 var affixes = AffixHelper.getAffixes(arrow);
                 HitResult hitResult = event.getRayTraceResult();
                 affixes.values().forEach(inst -> inst.onArrowImpact(arrow, hitResult, hitResult.getType()));
@@ -152,6 +159,7 @@ public class AdventureEvents {
             Adventure.Affixes.MAGICAL.getOptional().ifPresent(afx -> afx.onHurt(source, damaged, finalAmount));
             amount = finalAmount;
             for (ItemStack s : damaged.getAllSlots()) {
+                amount = SocketHelper.getGems(s).onHurt(src, ent, amount);
                 var affixes = AffixHelper.getAffixes(s);
                 for (AffixInstance inst : affixes.values()) {
                     amount = inst.onHurt(source, damaged, amount);
@@ -163,17 +171,21 @@ public class AdventureEvents {
     }
 
     public static void onItemUse() {
-        ItemUseEvent.ItemUse.ITEM_USE_EVENT.register(event -> {
-            ItemStack s = event.stack;
-            AtomicBoolean result = new AtomicBoolean(false);
-            AffixHelper.streamAffixes(s).forEach(inst -> {
-                InteractionResult type = inst.onItemUse(event.ctx);
-                if (type != null) {
-                    event.cancellationResult = type;
-                    result.set(true);
-                }
-            });
-            return result.get();
+        ItemUseEvent.ItemUse.ITEM_USE_EVENT.register(e -> {
+            ItemStack s = e.stack;
+            boolean cancelled = false;
+            InteractionResult socketRes = SocketHelper.getGems(s).onItemUse(e.ctx);
+            if (socketRes != null) {
+                cancelled = true;
+                e.cancellationResult = socketRes;
+            }
+
+            InteractionResult afxRes = AffixHelper.streamAffixes(s).map(afx -> afx.onItemUse(e.ctx)).filter(Predicates.notNull()).findFirst().orElse(null);
+            if (afxRes != null) {
+                cancelled = true;
+                e.cancellationResult = afxRes;
+            }
+            return cancelled;
         });
     }
 
@@ -189,6 +201,8 @@ public class AdventureEvents {
             ItemStack stack = e.getEntity().getUseItem();
             var affixes = AffixHelper.getAffixes(stack);
             float blocked = e.getBlockedDamage();
+            blocked = SocketHelper.getGems(stack).onShieldBlock(e.getEntity(), e.getDamageSource(), blocked);
+
             for (AffixInstance inst : affixes.values()) {
                 blocked = inst.onShieldBlock(e.getEntity(), e.getDamageSource(), blocked);
             }
@@ -199,6 +213,7 @@ public class AdventureEvents {
     public static void blockBreak() {
         PlayerBlockBreakEvents.AFTER.register((world, player, pos, state, blockEntity) -> {
             ItemStack stack = player.getMainHandItem();
+            SocketHelper.getGems(stack).onBlockBreak(player, world, pos, state);
             AffixHelper.streamAffixes(stack).forEach(inst -> {
                 inst.onBlockBreak(player, world, pos, state);
             });
@@ -290,11 +305,33 @@ public class AdventureEvents {
             boolean isReentrant = reentrantLock.get().getAndSet(true);
             if (isReentrant) return enchantments;
             if (stack.is(Apoth.Tags.ENCHANT_LEVEL_MODIFIER_BLACKLIST)) return enchantments;
+            SocketHelper.getGems(stack).getEnchantmentLevels(enchantments);
+
             AffixHelper.streamAffixes(stack).forEach(inst -> inst.getEnchantmentLevels(enchantments));
             reentrantLock.get().set(false);
             return enchantments;
         }));
     }
+
+    /**
+     * Allows bosses that descend from {@link AbstractGolem} to despawn naturally, only after they have existed for 10 minutes.
+     * Without this, they'll pile up forever - https://github.com/Shadows-of-Fire/Apotheosis/issues/1248
+     */
+    //todo MOB SPAWN EVENT, absolutely WILL cause issues if not implemented
+/*    @SubscribeEvent
+    public void despawn(MobSpawnEvent.AllowDespawn e) {
+        if (e.getEntity() instanceof AbstractGolem g && g.tickCount > 12000 && g.getPersistentData().getBoolean("apoth.boss")) {
+            Entity player = g.level().getNearestPlayer(g, -1.0D);
+            if (player != null) {
+                double dist = player.distanceToSqr(g);
+                int despawnDist = g.getType().getCategory().getDespawnDistance();
+                int dsDistSq = despawnDist * despawnDist;
+                if (dist > dsDistSq) {
+                    e.setResult(Result.ALLOW);
+                }
+            }
+        }
+    }*/
 
     @SuppressWarnings("deprecation")
     public static void update() {

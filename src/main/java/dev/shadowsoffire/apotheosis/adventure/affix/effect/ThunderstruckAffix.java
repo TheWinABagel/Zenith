@@ -5,11 +5,12 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixType;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.placebo.util.StepFunction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -17,7 +18,6 @@ import net.minecraft.world.phys.AABB;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 /**
  * Damages all enemies in a chain.
@@ -37,8 +37,17 @@ public class ThunderstruckAffix extends Affix {
     }
 
     @Override
-    public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-        list.accept(Component.translatable("affix." + this.getId() + ".desc", (int) this.getTrueLevel(rarity, level)));
+    public MutableComponent getDescription(ItemStack stack, LootRarity rarity, float level) {
+        return Component.translatable("affix." + this.getId() + ".desc", fmt(this.getTrueLevel(rarity, level)));
+    }
+
+    @Override
+    public Component getAugmentingText(ItemStack stack, LootRarity rarity, float level) {
+        MutableComponent comp = this.getDescription(stack, rarity, level);
+
+        Component minComp = Component.literal(fmt(this.getTrueLevel(rarity, 0)));
+        Component maxComp = Component.literal(fmt(this.getTrueLevel(rarity, 1)));
+        return comp.append(valueBounds(minComp, maxComp));
     }
 
     @Override

@@ -2,10 +2,10 @@ package dev.shadowsoffire.apotheosis.adventure.compat;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.*;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemItem;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
+import dev.shadowsoffire.apotheosis.adventure.socket.*;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.Gem;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemItem;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.util.IGetRecipe;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
@@ -112,12 +112,12 @@ public class AdventureREISmithingExtension implements CategoryExtensionProvider<
 
                     widgets.add(Widgets.createSlot(new Point(startPoint.x + 61 + offsetX, startPoint.y + 5)).entries(SOCKETING_DUMMY_OUTPUTS).disableBackground().markOutput());
 
-                } else if (recipe instanceof ExpulsionRecipe rec) {
+                } /*else if (recipe instanceof ExpulsionRecipe rec) {
                     widgets.add(Widgets.createSlot(new Point(startPoint.x + 4 - 18 + offsetX, startPoint.y + 5)).entries(List.of(EntryStacks.of(Items.GOLDEN_SWORD.getDefaultInstance()))).markInput());
                     widgets.add(Widgets.createSlot(new Point(startPoint.x + 4 + offsetX, startPoint.y + 5)).entries(display.getInputEntries().get(2)).markInput());
 
                     widgets.add(Widgets.createSlot(new Point(startPoint.x + 61 + offsetX, startPoint.y + 5)).entries(List.of(EntryStacks.of(Items.GOLDEN_APPLE.getDefaultInstance()))).disableBackground().markOutput());
-                } else if (recipe instanceof ExtractionRecipe rec) {
+                }*/ else if (recipe instanceof WithdrawalRecipe rec) {
                     widgets.add(Widgets.createSlot(new Point(startPoint.x + 4 - 18 + offsetX, startPoint.y + 5)).entries(List.of(EntryStacks.of(Items.IRON_CHESTPLATE.getDefaultInstance()))).markInput());
                     widgets.add(Widgets.createSlot(new Point(startPoint.x + 4 + offsetX, startPoint.y + 5)).entries(display.getInputEntries().get(2)).markInput());
 

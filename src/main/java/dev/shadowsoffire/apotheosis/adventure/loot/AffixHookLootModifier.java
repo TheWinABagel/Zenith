@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.adventure.loot;
 import com.mojang.serialization.Codec;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
+import dev.shadowsoffire.apotheosis.adventure.socket.SocketHelper;
 import io.github.fabricators_of_create.porting_lib.loot.IGlobalLootModifier;
 import io.github.fabricators_of_create.porting_lib.loot.LootModifier;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -25,6 +26,7 @@ public class AffixHookLootModifier extends LootModifier {
         if (!Apotheosis.enableAdventure) return generatedLoot;
         if (ctx.hasParam(LootContextParams.TOOL)) {
             ItemStack tool = ctx.getParam(LootContextParams.TOOL);
+            SocketHelper.getGems(tool).modifyLoot(generatedLoot, ctx);
             AffixHelper.streamAffixes(tool).forEach(inst -> inst.modifyLoot(generatedLoot, ctx));
         }
         return generatedLoot;

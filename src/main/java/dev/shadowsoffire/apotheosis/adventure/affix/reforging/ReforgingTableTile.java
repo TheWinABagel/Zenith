@@ -38,7 +38,7 @@ public class ReforgingTableTile extends BlockEntity implements ExtendedScreenHan
         @Override
         public boolean canPlaceItem(int slot, ItemStack stack) {
             if (slot == 0) return ReforgingTableTile.this.isValidRarityMat(stack);
-            return stack.is(Items.GEM_DUST);
+            return stack.is(Items.SIGIL_OF_REBIRTH);
         }
 
         @Override

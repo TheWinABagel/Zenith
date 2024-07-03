@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.yungsapi.world.processor.StructureEntityProcessor;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemRegistry;
 import dev.shadowsoffire.placebo.reload.WeightedDynamicRegistry.IDimensional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

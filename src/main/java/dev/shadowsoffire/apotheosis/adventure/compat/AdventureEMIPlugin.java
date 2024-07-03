@@ -9,10 +9,10 @@ import dev.emi.emi.api.stack.EmiStack;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingRecipe;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.Gem;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.adventure.loot.RarityRegistry;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.Gem;
+import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.compat.ZenithEMIPlugin;
 import dev.shadowsoffire.apotheosis.util.GemIngredient;
 import net.minecraft.network.chat.Component;
@@ -44,13 +44,7 @@ public class AdventureEMIPlugin {
                 new EmiInfoRecipe(List.of(EmiStack.of(Adventure.Items.GEM_DUST)), List.of(Component.translatable("info.zenith.gem_crushing")), Apotheosis.loc("gem_crushing_info")));
 
         ZenithEMIPlugin.addRecipeSafe(registry, () ->
-                new EmiInfoRecipe(List.of(EmiStack.of(Adventure.Items.VIAL_OF_EXTRACTION)), List.of(Component.translatable("info.zenith.gem_extraction")), Apotheosis.loc("gem_extraction_info")));
-
-        ZenithEMIPlugin.addRecipeSafe(registry, () ->
-                new EmiInfoRecipe(List.of(EmiStack.of(Adventure.Items.VIAL_OF_EXPULSION)), List.of(Component.translatable("info.zenith.gem_expulsion")), Apotheosis.loc("gem_expulsion_info")));
-
-        ZenithEMIPlugin.addRecipeSafe(registry, () ->
-                new EmiInfoRecipe(List.of(EmiStack.of(Adventure.Items.VIAL_OF_UNNAMING)), List.of(Component.translatable("info.zenith.unnaming")), Apotheosis.loc("unnaming_info")));
+                new EmiInfoRecipe(List.of(EmiStack.of(Adventure.Items.SIGIL_OF_SOCKETING)), List.of(Component.translatable("info.zenith.unnaming")), Apotheosis.loc("unnaming_info")));
 
 
         for (SalvagingRecipe recipe : registry.getRecipeManager().getAllRecipesFor(Adventure.RecipeTypes.SALVAGING)) {

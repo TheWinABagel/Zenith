@@ -7,7 +7,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
@@ -61,24 +60,28 @@ public class SimpleTexButton extends Button {
         if (!this.isActive()) {
             yTex += this.height;
         }
-        else if (this.isHoveredOrFocused()) {
+        else if (this.isHovered()) {
             yTex += this.height * 2;
         }
 
         RenderSystem.enableDepthTest();
         gfx.blit(this.texture, this.getX(), this.getY(), this.xTexStart, yTex, this.width, this.height, this.textureWidth, this.textureHeight);
-        if (this.isHoveredOrFocused()) {
+        if (this.isHovered()) {
             this.renderToolTip(gfx, pMouseX, pMouseY);
         }
     }
 
     public void renderToolTip(GuiGraphics gfx, int pMouseX, int pMouseY) {
         if (this.getMessage() != CommonComponents.EMPTY && this.isHovered()) {
-            MutableComponent primary = (MutableComponent) this.getMessage();
-            if (!this.active) primary = primary.withStyle(ChatFormatting.GRAY);
+            Component primary = this.getMessage();
+            if (!this.active) {
+                primary = primary.copy().withStyle(ChatFormatting.GRAY);
+            }
             List<Component> tooltips = new ArrayList<>();
             tooltips.add(primary);
-            if (!this.active && this.inactiveMessage != CommonComponents.EMPTY) tooltips.add(this.inactiveMessage);
+            if (!this.active && this.inactiveMessage != CommonComponents.EMPTY) {
+                tooltips.add(this.inactiveMessage);
+            }
             gfx.renderComponentTooltip(Minecraft.getInstance().font, tooltips, pMouseX, pMouseY);
         }
     }

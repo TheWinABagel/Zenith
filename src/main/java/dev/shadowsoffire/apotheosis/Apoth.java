@@ -54,6 +54,7 @@ public class Apoth {
         public static final TagKey<Item> BOON_DROPS = registerItemTag(Apotheosis.loc("boon_drops"));
         public static final TagKey<Item> SPEARFISHING_DROPS = registerItemTag(Apotheosis.loc("spearfishing_drops"));
         public static final TagKey<Item> NO_SCRAP_ITEMS = registerItemTag(Apotheosis.loc("no_scrapping"));
+        public static final TagKey<Block> ROGUE_SPAWNER_COVERS = TagKey.create(Registries.BLOCK, Apotheosis.loc("rogue_spawner_covers"));
     }
 
 

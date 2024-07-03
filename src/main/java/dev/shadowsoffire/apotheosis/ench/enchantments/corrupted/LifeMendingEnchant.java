@@ -16,6 +16,7 @@ import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -48,6 +49,11 @@ public class LifeMendingEnchant extends Enchantment implements CustomEnchantingT
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack) {
         return CustomEnchantingTableBehaviorEnchantment.super.canApplyAtEnchantingTable(stack) || stack.getItem() instanceof ShieldItem;
+    }
+
+    @Override
+    protected boolean checkCompatibility(Enchantment other) {
+        return super.checkCompatibility(other) && other != Enchantments.MENDING;
     }
 
     @Override

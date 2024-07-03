@@ -11,8 +11,8 @@ import dev.shadowsoffire.apotheosis.adventure.loot.LootCategory;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import dev.shadowsoffire.apotheosis.mixin.accessors.LivingEntityInvoker;
 import dev.shadowsoffire.placebo.util.StepFunction;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
@@ -24,7 +24,6 @@ import net.minecraft.world.phys.AABB;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 /**
  * Damage mobs in an area when attacking.
@@ -51,8 +50,31 @@ public class CleavingAffix extends Affix {
     }
 
     @Override
-    public void addInformation(ItemStack stack, LootRarity rarity, float level, Consumer<Component> list) {
-        list.accept(Component.translatable("affix." + this.getId() + ".desc", ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(100 * this.getChance(rarity, level)), this.getTargets(rarity, level)).withStyle(ChatFormatting.YELLOW));
+    public MutableComponent getDescription(ItemStack stack, LootRarity rarity, float level) {
+        return Component.translatable("affix." + this.getId() + ".desc", fmt(100 * this.getChance(rarity, level)), this.getTargets(rarity, level));
+    }
+
+    @Override
+    public Component getAugmentingText(ItemStack stack, LootRarity rarity, float level) {
+        MutableComponent comp = this.getDescription(stack, rarity, level);
+
+        float minChance = this.getChance(rarity, 0);
+        float maxChance = this.getChance(rarity, 1);
+        if (minChance != maxChance) {
+            Component minComp = Component.translatable("%s%%", fmt(100 * minChance));
+            Component maxComp = Component.translatable("%s%%", fmt(100 * maxChance));
+            comp.append(valueBounds(minComp, maxComp));
+        }
+
+        int minTargets = this.getTargets(rarity, 0);
+        int maxTargets = this.getTargets(rarity, 1);
+        if (minTargets != maxTargets) {
+            Component minComp = Component.literal(fmt(minTargets));
+            Component maxComp = Component.literal(fmt(maxTargets));
+            return comp.append(valueBounds(minComp, maxComp));
+        }
+
+        return comp;
     }
 
     private float getChance(LootRarity rarity, float level) {
@@ -60,10 +82,7 @@ public class CleavingAffix extends Affix {
     }
 
     private int getTargets(LootRarity rarity, float level) {
-        // We want targets to sort of be separate from chance, so we modulo and double.
-        level %= 0.5F;
-        level *= 2;
-        return (int) this.values.get(rarity).targets.get(level);
+        return this.values.get(rarity).targets.getInt(level);
     }
 
     @Override

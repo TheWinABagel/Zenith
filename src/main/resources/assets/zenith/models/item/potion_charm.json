@@ -1,6 +1,15 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "zenith:items/potion_charm"
-    }
+        "layer0": "zenith:items/potion_charm",
+        "layer1": "zenith:items/potion_charm_static"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "zenith:enabled": 1
+            },
+            "model": "zenith:item/potion_charm_glow"
+        }
+    ]
 }

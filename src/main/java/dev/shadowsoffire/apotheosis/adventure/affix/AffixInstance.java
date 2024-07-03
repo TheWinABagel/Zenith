@@ -5,7 +5,9 @@ import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -28,7 +30,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 /**
  * An Affix Instance is a wrapper around the necessary parameters for all affix methods.<br>
@@ -56,17 +57,24 @@ public record AffixInstance(DynamicHolder<? extends Affix> affix, ItemStack stac
     }
 
     /**
-     * @see Affix#addInformation(ItemStack, LootRarity, float, Consumer)
+     * @see Affix#getDescription(ItemStack, LootRarity, float)
      */
-    public void addInformation(Consumer<Component> list) {
-        this.afx().addInformation(this.stack, this.rty(), this.level, list);
+    public MutableComponent getDescription() {
+        return this.afx().getDescription(this.stack, this.rty(), this.level);
     }
 
     /**
-     * @see Affix#getName(ItemStack, LootRarity, float, boolean)
+     * @see Affix#getAugmentingText(ItemStack, LootRarity, float)
+     */
+    public Component getAugmentingText() {
+        return this.afx().getAugmentingText(this.stack, this.rty(), this.level);
+    }
+
+    /**
+     * @see Affix#getName(boolean)
      */
     public Component getName(boolean prefix) {
-        return this.afx().getName(this.stack, this.rty(), this.level, prefix);
+        return this.afx().getName(prefix);
     }
 
     /**
@@ -166,6 +174,10 @@ public record AffixInstance(DynamicHolder<? extends Affix> affix, ItemStack stac
      */
     public void modifyLoot(ObjectArrayList<ItemStack> loot, LootContext ctx) {
         this.afx().modifyLoot(this.stack, this.rty(), this.level, loot, ctx);
+    }
+
+    public AffixInstance withNewLevel(float level) {
+        return new AffixInstance(this.affix, this.stack, this.rarity, Mth.clamp(level, 0, 1));
     }
 
     /**

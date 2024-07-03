@@ -2,6 +2,8 @@ package dev.shadowsoffire.apotheosis.mixin.util.events;
 
 import com.google.common.collect.Sets;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.adventure.affix.augmenting.AugmentingTableTileRenderer;
+import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingTableTileRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.resources.model.ModelBakery;
@@ -35,7 +37,8 @@ public abstract class ModelBakeryMixin {
             extraModels.add(Apotheosis.loc(path));
         }
 
-        extraModels.add((new ResourceLocation(Apotheosis.MODID, "item/hammer")));
+        extraModels.add(ReforgingTableTileRenderer.HAMMER);
+        extraModels.add(AugmentingTableTileRenderer.STAR_CUBE);
 
         for (ResourceLocation resourceLocation : extraModels) {
             UnbakedModel unbakedmodel = ((ModelBakery) (Object) this).getModel(resourceLocation);

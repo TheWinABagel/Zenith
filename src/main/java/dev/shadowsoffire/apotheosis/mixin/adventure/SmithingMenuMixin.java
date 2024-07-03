@@ -1,7 +1,7 @@
 package dev.shadowsoffire.apotheosis.mixin.adventure;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.adventure.affix.socket.ReactiveSmithingRecipe;
+import dev.shadowsoffire.apotheosis.adventure.socket.ReactiveSmithingRecipe;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
@@ -30,7 +30,10 @@ public abstract class SmithingMenuMixin extends ItemCombinerMenu {
 
     @Inject(at = @At("HEAD"), method = "onTake")
     protected void onTake(Player player, ItemStack stack, CallbackInfo ci) {
-        if (Apotheosis.enableAdventure)
-            if (this.selectedRecipe instanceof ReactiveSmithingRecipe ext) ext.onCraft(this.inputSlots, player, stack);
+        if (Apotheosis.enableAdventure) {
+            if (this.selectedRecipe instanceof ReactiveSmithingRecipe ext) {
+                ext.onCraft(this.inputSlots, player, stack);
+            }
+        }
     }
 }
