@@ -2,6 +2,7 @@ package dev.shadowsoffire.apotheosis.adventure.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.adventure.socket.SocketedGems;
 import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemInstance;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;

@@ -74,8 +74,8 @@ public class SalvagingTableBlock extends Block implements EntityBlock {
         if (state.getBlock() == this && newState.getBlock() == this) return;
         BlockEntity te = world.getBlockEntity(pos);
         if (te instanceof SalvagingTableTile salvTile) {
-            for (int i = 0; i < salvTile.container.items.size(); i++) {
-                popResource(world, pos, salvTile.container.getItem(i));
+            for (int i = 0; i < salvTile.output.items.size(); i++) {
+                popResource(world, pos, salvTile.output.getItem(i));
             }
         }
         super.onRemove(state, world, pos, newState, isMoving);

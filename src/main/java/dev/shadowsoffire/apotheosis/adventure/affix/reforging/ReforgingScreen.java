@@ -7,6 +7,7 @@ import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingScreen;
 import dev.shadowsoffire.apotheosis.adventure.client.AdventureContainerScreen;
+import dev.shadowsoffire.apotheosis.adventure.client.GhostVertexBuilder;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootRarity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
@@ -43,7 +44,6 @@ public class ReforgingScreen extends AdventureContainerScreen<ReforgingMenu> {
     @SuppressWarnings("noTranslation")
     @Override
     public void render(GuiGraphics gfx, int mouseX, int mouseY, float pPartialTick) {
-        if (this.shouldRecompute()) this.recomputeChoices();
         this.renderBackground(gfx);
         super.render(gfx, mouseX, mouseY, pPartialTick);
         RenderSystem.disableBlend();
@@ -79,7 +79,7 @@ public class ReforgingScreen extends AdventureContainerScreen<ReforgingMenu> {
                 tooltips.add(Component.literal(" "));
                 tooltips.add(Component.translatable("container.enchant.level.requirement", levelCost).withStyle(creative || levels >= levelCost ? ChatFormatting.GRAY : ChatFormatting.RED));
 
-                this.drawOnLeft(gfx, tooltips, this.getGuiTop() + 45);
+                this.drawOnLeft(gfx, tooltips, this.topPos + 45);
                 break;
             }
         }
@@ -87,8 +87,8 @@ public class ReforgingScreen extends AdventureContainerScreen<ReforgingMenu> {
 
     @Override
     protected void renderBg(GuiGraphics gfx, float partials, int x, int y) {
-        int left = this.getGuiLeft();
-        int top = this.getGuiTop();
+        int left = this.leftPos;
+        int top = this.topPos;
         int xCenter = (this.width - this.imageWidth) / 2;
         int yCenter = (this.height - this.imageHeight) / 2;
         gfx.blit(TEXTURE, xCenter, yCenter, 0, 0, this.imageWidth, this.imageHeight, 256, 384);

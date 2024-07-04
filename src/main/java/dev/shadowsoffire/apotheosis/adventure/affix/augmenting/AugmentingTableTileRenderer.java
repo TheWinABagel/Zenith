@@ -5,6 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.affix.augmenting.AugmentingTableTile.AnimationStage;
+import dev.shadowsoffire.apotheosis.mixin.accessors.ItemRendererAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.Sheets;
@@ -22,7 +23,6 @@ public class AugmentingTableTileRenderer implements BlockEntityRenderer<Augmenti
     public static final ResourceLocation STAR_CUBE = new ResourceLocation(Apotheosis.MODID, "item/star_cube");
 
     @Override
-    @SuppressWarnings("deprecation")
     public void render(AugmentingTableTile tile, float partials, PoseStack matrix, MultiBufferSource pBufferSource, int light, int overlay) {
         if (tile.stage == AnimationStage.HIDING) {
             return; // no-op if the cube is hidden
@@ -69,8 +69,7 @@ public class AugmentingTableTileRenderer implements BlockEntityRenderer<Augmenti
             }
         }
 
-        irenderer.renderModelLists(base, ItemStack.EMPTY, light, overlay, matrix, ItemRenderer.getFoilBufferDirect(pBufferSource, Sheets.translucentItemSheet(), true, false));
-
+        ((ItemRendererAccessor) irenderer).callRenderModelLists(base, ItemStack.EMPTY, light, overlay, matrix, ItemRenderer.getFoilBufferDirect(pBufferSource, Sheets.translucentItemSheet(), true, false));
         matrix.popPose();
     }
 

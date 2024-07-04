@@ -123,7 +123,7 @@ public class SalvagingScreen extends AdventureContainerScreen<SalvagingMenu> {
             }
             if (displaySlot == -1) continue;
             Slot slot = this.menu.getSlot(displaySlot);
-            renderGuiItem(gfx, display, this.getGuiLeft() + slot.x, this.getGuiTop() + slot.y, GrayBufferSource::new);
+            renderGuiItem(gfx, display, this.leftPos + slot.x, this.topPos + slot.y, GrayBufferSource::new);
         }
 
         this.renderTooltip(gfx, pMouseX, pMouseY);

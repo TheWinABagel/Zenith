@@ -1,20 +1,18 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.augmenting;
 
-import dev.shadowsoffire.apotheosis.Apoth.Affixes;
-import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
-import dev.shadowsoffire.placebo.cap.InternalItemHandler;
 import dev.shadowsoffire.placebo.menu.BlockEntityMenu;
-import dev.shadowsoffire.placebo.network.PacketDistro;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -31,7 +29,11 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
     public static final int REROLL_COST = 1;
 
     protected final Player player;
-    protected InternalItemHandler itemInv = new InternalItemHandler(1);
+    protected SimpleContainer itemInv = new SimpleContainer(1);
+
+    public AugmentingMenu(int id, Inventory inv, FriendlyByteBuf buf) {
+        this(id, inv, buf.readBlockPos());
+    }
 
     public AugmentingMenu(int id, Inventory inv, BlockPos pos) {
         super(Adventure.Menus.AUGMENTING, id, inv, pos);
@@ -49,12 +51,12 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
             }
         });
 
-        this.addSlot(new UpdatingSlot(this.tile.inv, 0, 16, 41, stack -> stack.getItem() == Items.SIGIL_OF_ENHANCEMENT.get()));
+        this.addSlot(new UpdatingSlot(this.tile.inv, 0, 16, 41, stack -> stack.getItem() == Items.SIGIL_OF_ENHANCEMENT));
 
         this.addPlayerSlots(inv, 8, 140);
 
         this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && AffixHelper.hasAffixes(stack), 0, 1);
-        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && stack.getItem() == Items.SIGIL_OF_ENHANCEMENT.get(), 1, 2);
+        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && stack.getItem() == Items.SIGIL_OF_ENHANCEMENT, 1, 2);
         this.mover.registerRule((stack, slot) -> slot < this.playerInvStart, this.playerInvStart, this.hotbarStart + 9, true);
         this.registerInvShuffleRules();
     }
@@ -62,7 +64,7 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
     @Override
     public void removed(Player pPlayer) {
         super.removed(pPlayer);
-        this.clearContainer(pPlayer, new RecipeWrapper(this.itemInv));
+        this.clearContainer(pPlayer, this.itemInv);
     }
 
     @Override
@@ -125,8 +127,8 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
                 Map<DynamicHolder<? extends Affix>, AffixInstance> newAffixes = new HashMap<>(AffixHelper.getAffixes(mainItem));
                 newAffixes.remove(inst.affix());
 
-                DynamicHolder<? extends Affix> newAffix = alternatives.get(player.random.nextInt(alternatives.size()));
-                newAffixes.put(newAffix, new AffixInstance(newAffix, mainItem, inst.rarity(), player.random.nextFloat()));
+                DynamicHolder<? extends Affix> newAffix = alternatives.get(player.getRandom().nextInt(alternatives.size()));
+                newAffixes.put(newAffix, new AffixInstance(newAffix, mainItem, inst.rarity(), player.getRandom().nextFloat()));
 
                 AffixHelper.setAffixes(mainItem, newAffixes);
                 this.slots.get(0).set(mainItem);
@@ -134,7 +136,8 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
                 player.level().playSound(null, this.pos, SoundEvents.AMETHYST_CLUSTER_STEP, SoundSource.PLAYERS, 0.34F, player.level().random.nextFloat() * 0.2F + 0.8F);
                 player.level().playSound(null, this.pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.PLAYERS, 0.45F, player.level().random.nextFloat() * 0.75F + 0.5F);
                 this.broadcastChanges();
-                PacketDistro.sendTo(Apotheosis.CHANNEL, new RerollResultMessage(newAffix), this.player);
+                //todo reroll packet!
+                /*PacketDistro.sendTo(Apotheosis.CHANNEL, new RerollResultMessage(newAffix), this.player);*/
                 return true;
             }
         }
@@ -156,7 +159,7 @@ public class AugmentingMenu extends BlockEntityMenu<AugmentingTableTile> {
             return Collections.emptyList();
         }
 
-        return affixes.values().stream().sorted(Comparator.comparing(inst -> inst.affix().getId())).filter(a -> !a.affix().equals(Affixes.DURABLE)).toList();
+        return affixes.values().stream().sorted(Comparator.comparing(inst -> inst.affix().getId())).filter(a -> !a.affix().equals(Adventure.Affixes.DURABLE)).toList();
     }
 
     protected static List<DynamicHolder<? extends Affix>> computeAlternatives(ItemStack stack, AffixInstance selected, List<AffixInstance> affixes) {

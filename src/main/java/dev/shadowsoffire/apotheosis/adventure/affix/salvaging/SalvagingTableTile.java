@@ -35,13 +35,13 @@ public class SalvagingTableTile extends BlockEntity implements ExtendedScreenHan
 
     @Override
     protected void saveAdditional(CompoundTag tag) {
-        ContainerHelper.saveAllItems(tag, this.container.items);
+        ContainerHelper.saveAllItems(tag, this.output.items);
         super.saveAdditional(tag);
     }
 
     @Override
     public void load(CompoundTag tag) {
-        ContainerHelper.loadAllItems(tag, this.container.items);
+        ContainerHelper.loadAllItems(tag, this.output.items);
         super.load(tag);
     }
 
@@ -61,7 +61,7 @@ public class SalvagingTableTile extends BlockEntity implements ExtendedScreenHan
         return new SalvagingMenu(i, inventory, pos);
     }
 
-    protected SimpleContainer container = new SimpleContainer(6) {
+    protected SimpleContainer output = new SimpleContainer(6) {
         @Override
         public void setChanged() {
             SalvagingTableTile.this.setChanged();
@@ -76,7 +76,7 @@ public class SalvagingTableTile extends BlockEntity implements ExtendedScreenHan
     /**
      * Output inventory, as reflected in the container menu.
      */
-    public final InventoryStorage outputStorage = InventoryStorage.of(container, null);
+    public final InventoryStorage outputStorage = InventoryStorage.of(output, null);
 
     public SingleStackStorage inputStorage = new SingleStackStorage() {
 
@@ -91,7 +91,7 @@ public class SalvagingTableTile extends BlockEntity implements ExtendedScreenHan
             if (outputs.isEmpty()) return;
             for (ItemStack stack2 : outputs) {
                 if (canAddItemWithStackSize(stack2)) {
-                    SalvagingTableTile.this.container.addItem(stack2);
+                    SalvagingTableTile.this.output.addItem(stack2);
                 }
             }
         }
@@ -118,7 +118,7 @@ public class SalvagingTableTile extends BlockEntity implements ExtendedScreenHan
         }
         private boolean canAddItemWithStackSize(ItemStack stack) {
             boolean canAdd = false;
-            for (ItemStack itemStack : SalvagingTableTile.this.container.items) {
+            for (ItemStack itemStack : SalvagingTableTile.this.output.items) {
                 if (itemStack.isEmpty() || ItemStack.isSameItemSameTags(itemStack, stack) && !(itemStack.getCount() + stack.getCount() > itemStack.getMaxStackSize())) {
                     canAdd = true;
                     break;

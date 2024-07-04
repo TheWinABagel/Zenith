@@ -1,10 +1,10 @@
 package dev.shadowsoffire.apotheosis.adventure.compat;
 
 import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
-import dev.shadowsoffire.apotheosis.adventure.socket.*;
+import dev.shadowsoffire.apotheosis.adventure.socket.AddSocketsRecipe;
+import dev.shadowsoffire.apotheosis.adventure.socket.SocketHelper;
+import dev.shadowsoffire.apotheosis.adventure.socket.SocketingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.socket.gem.Gem;
-import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemItem;
 import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.util.IGetRecipe;
 import me.shedaniel.math.Point;
@@ -16,7 +16,6 @@ import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import me.shedaniel.rei.api.client.registry.category.extension.CategoryExtensionProvider;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategoryView;
-import me.shedaniel.rei.api.common.entry.EntryStack;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import me.shedaniel.rei.plugin.common.displays.DefaultSmithingDisplay;
 import net.minecraft.client.Minecraft;
@@ -27,7 +26,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.SmithingRecipe;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -93,6 +91,7 @@ public class AdventureREISmithingExtension implements CategoryExtensionProvider<
                     Gem gemObj = GemRegistry.INSTANCE.getRandomItem(new LegacyRandomSource(1632));
 
 
+/*
                     GemItem.setGem(gem, gemObj);
                     AffixHelper.setRarity(gem, gemObj.getMaxRarity());
                     List<EntryStack<ItemStack>> DUMMY_GEM = List.of(EntryStacks.of(gem));
@@ -112,12 +111,14 @@ public class AdventureREISmithingExtension implements CategoryExtensionProvider<
 
                     widgets.add(Widgets.createSlot(new Point(startPoint.x + 61 + offsetX, startPoint.y + 5)).entries(SOCKETING_DUMMY_OUTPUTS).disableBackground().markOutput());
 
-                } /*else if (recipe instanceof ExpulsionRecipe rec) {
+                } */
+/*else if (recipe instanceof ExpulsionRecipe rec) {
                     widgets.add(Widgets.createSlot(new Point(startPoint.x + 4 - 18 + offsetX, startPoint.y + 5)).entries(List.of(EntryStacks.of(Items.GOLDEN_SWORD.getDefaultInstance()))).markInput());
                     widgets.add(Widgets.createSlot(new Point(startPoint.x + 4 + offsetX, startPoint.y + 5)).entries(display.getInputEntries().get(2)).markInput());
 
                     widgets.add(Widgets.createSlot(new Point(startPoint.x + 61 + offsetX, startPoint.y + 5)).entries(List.of(EntryStacks.of(Items.GOLDEN_APPLE.getDefaultInstance()))).disableBackground().markOutput());
-                }*/ else if (recipe instanceof WithdrawalRecipe rec) {
+                }*//*
+ else if (recipe instanceof WithdrawalRecipe rec) {
                     widgets.add(Widgets.createSlot(new Point(startPoint.x + 4 - 18 + offsetX, startPoint.y + 5)).entries(List.of(EntryStacks.of(Items.IRON_CHESTPLATE.getDefaultInstance()))).markInput());
                     widgets.add(Widgets.createSlot(new Point(startPoint.x + 4 + offsetX, startPoint.y + 5)).entries(display.getInputEntries().get(2)).markInput());
 
@@ -128,7 +129,8 @@ public class AdventureREISmithingExtension implements CategoryExtensionProvider<
 
                     widgets.add(Widgets.createSlot(new Point(startPoint.x + 61 + offsetX, startPoint.y + 5)).entries(List.of(EntryStacks.of(Items.GOLDEN_APPLE.getDefaultInstance()))).disableBackground().markOutput());
                 }
-
+*/
+                }
                     return widgets;
                 }
             }

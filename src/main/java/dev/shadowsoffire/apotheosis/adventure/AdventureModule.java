@@ -15,6 +15,7 @@ import dev.shadowsoffire.apotheosis.adventure.net.RadialStateChangeMessage;
 import dev.shadowsoffire.apotheosis.adventure.socket.AddSocketsRecipe;
 import dev.shadowsoffire.apotheosis.adventure.socket.SocketingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.socket.UnnamingRecipe;
+import dev.shadowsoffire.apotheosis.adventure.socket.WithdrawalRecipe;
 import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.adventure.socket.gem.bonus.GemBonus;
 import dev.shadowsoffire.apotheosis.adventure.spawner.RogueSpawnerRegistry;
@@ -93,18 +94,18 @@ public class AdventureModule {
         Apoth.registerItem(Adventure.Items.MYTHIC_MATERIAL, "mythic_material");
         Apoth.registerItem(Adventure.Items.ANCIENT_MATERIAL, "ancient_material");
         Apoth.registerItem(Adventure.Items.GEM_DUST, "gem_dust");
-        Apoth.registerItem(Adventure.Items.VIAL_OF_EXPULSION, "vial_of_expulsion");
-        Apoth.registerItem(Adventure.Items.VIAL_OF_EXTRACTION, "vial_of_extraction");
-        Apoth.registerItem(Adventure.Items.SIGIL_OF_SOCKETING, "vial_of_unnaming");
-        Apoth.registerItem(Adventure.Items.SIGIL_OF_WITHDRAWAL, "sigil_of_socketing");
-        Apoth.registerItem(Adventure.Items.SIGIL_OF_REBIRTH, "superior_sigil_of_socketing");
+        Apoth.registerItem(Adventure.Items.GEM_FUSED_SLATE, "gem_fused_slate");
+        Apoth.registerItem(Adventure.Items.SIGIL_OF_SOCKETING, "sigil_of_socketing");
+        Apoth.registerItem(Adventure.Items.SIGIL_OF_WITHDRAWAL, "sigil_of_withdrawal");
+        Apoth.registerItem(Adventure.Items.SIGIL_OF_REBIRTH, "sigil_of_rebirth");
         Apoth.registerItem(Adventure.Items.SIGIL_OF_ENHANCEMENT, "sigil_of_enhancement");
-        Apoth.registerItem(Adventure.Items.SIGIL_OF_UNNAMING, "superior_sigil_of_enhancement");
+        Apoth.registerItem(Adventure.Items.SIGIL_OF_UNNAMING, "sigil_of_unnaming");
         Apoth.registerItem(Adventure.Items.BOSS_SUMMONER, "boss_summoner");
         Apoth.registerItem(Adventure.Items.SIMPLE_REFORGING_TABLE, "simple_reforging_table");
         Apoth.registerItem(Adventure.Items.REFORGING_TABLE, "reforging_table");
         Apoth.registerItem(Adventure.Items.SALVAGING_TABLE, "salvaging_table");
         Apoth.registerItem(Adventure.Items.GEM_CUTTING_TABLE, "gem_cutting_table");
+        Apoth.registerItem(Adventure.Items.AUGMENTING_TABLE, "augmenting_table");
         Apoth.registerItem(Adventure.Items.GEM, "gem");
     }
 

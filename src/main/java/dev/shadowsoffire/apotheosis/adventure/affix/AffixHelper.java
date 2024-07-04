@@ -35,6 +35,8 @@ public class AffixHelper {
     public static final String AFFIXES = "affixes";
     public static final String RARITY = "rarity";
     public static final String NAME = "name";
+    // Used to encode the loot category of the shooting item on arrows.
+    public static final String CATEGORY = "category";
 
     /**
      * Adds this specific affix to the Item's NBT tag.
@@ -119,6 +121,15 @@ public class AffixHelper {
             CompoundTag afxData = stack.getTagElement(AFFIX_DATA);
             ZenithComponents.AFFIX_DATA.get(entity).setEntityTag(afxData.copy());
         }
+    }
+
+    @Nullable
+    public static LootCategory getShooterCategory(Entity entity) {
+        CompoundTag afxData = entity.getCustomData().getCompound(AFFIX_DATA);
+        if (afxData != null && afxData.contains(CATEGORY)) {
+            return LootCategory.byId(afxData.getString(CATEGORY));
+        }
+        return null;
     }
 
     public static Map<DynamicHolder<Affix>, AffixInstance> getAffixes(Entity entity) {

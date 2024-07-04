@@ -9,6 +9,10 @@ import dev.shadowsoffire.apotheosis.adventure.client.AdventureContainerScreen;
 import dev.shadowsoffire.apotheosis.adventure.client.DropDownList;
 import dev.shadowsoffire.apotheosis.adventure.client.SimpleTexButton;
 import dev.shadowsoffire.apotheosis.adventure.loot.LootController;
+import dev.shadowsoffire.apotheosis.mixin.AbstractContainerScreenAccessor;
+import dev.shadowsoffire.apotheosis.mixin.GuiGraphicsAccessor;
+import dev.shadowsoffire.apotheosis.mixin.accessors.ScreenAccessor;
+import dev.shadowsoffire.apotheosis.util.TooltipUtil;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -17,7 +21,6 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
-import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -65,14 +68,14 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
     protected void init() {
         super.init();
 
-        int left = this.getGuiLeft();
-        int top = this.getGuiTop();
+        int left = this.leftPos;
+        int top = this.topPos;
 
         int selected = this.getSelectedAffix();
         this.list = this.addRenderableWidget(new AffixDropList(left + 39, top + 17, 123, 14, Component.empty(), this.currentItemAffixes, 6));
         this.list.setSelected(selected);
 
-        Component sigilName = Component.translatable("item.apotheosis.sigil_of_enhancement").withStyle(ChatFormatting.YELLOW);
+        Component sigilName = Component.translatable("item.zenith.sigil_of_enhancement").withStyle(ChatFormatting.YELLOW);
 
         this.upgradeBtn = this.addRenderableWidget(
                 new FatTexButton(left + 60, top + 111, 29, 13, 186, 135,
@@ -81,8 +84,8 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
                                 this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, AugmentingMenu.UPGRADE | this.getSelectedAffix() << 1);
                             }
                         },
-                        Component.translatable("button.apotheosis.augmenting.upgrade"),
-                        Component.translatable("button.apotheosis.augmenting.upgrade.cost", 2, sigilName)));
+                        Component.translatable("button.zenith.augmenting.upgrade"),
+                        Component.translatable("button.zenith.augmenting.upgrade.cost", 2, sigilName)));
 
         this.rerollBtn = this.addRenderableWidget(
                 new FatTexButton(left + 112, top + 111, 29, 13, 186 + 37, 135,
@@ -91,16 +94,16 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
                                 this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, AugmentingMenu.REROLL | this.getSelectedAffix() << 1);
                             }
                         },
-                        Component.translatable("button.apotheosis.augmenting.reroll"),
-                        Component.translatable("button.apotheosis.augmenting.upgrade.cost", 1, sigilName)));
+                        Component.translatable("button.zenith.augmenting.reroll"),
+                        Component.translatable("button.zenith.augmenting.upgrade.cost", 1, sigilName)));
     }
 
     @Override
     protected void renderBg(GuiGraphics gfx, float partialTick, int mouseX, int mouseY) {
         this.updateCachedState();
 
-        int left = this.getGuiLeft();
-        int top = this.getGuiTop();
+        int left = this.leftPos;
+        int top = this.topPos;
         int xCenter = (this.width - this.imageWidth) / 2;
         int yCenter = (this.height - this.imageHeight) / 2;
         gfx.blit(TEXTURE, xCenter, yCenter, 0, 0, this.imageWidth, this.imageHeight, 256, 307);
@@ -117,12 +120,12 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
 
             int bgColor = 0xF0100010;
             int borderColor = 0xFF36454F;
-            TooltipRenderUtil.renderTooltipBackground(gfx, left + 42, top + 39, 117, 6 * 11 - 1, 0, bgColor, bgColor, borderColor, borderColor);
+            TooltipUtil.renderTooltipBackground(gfx, left + 42, top + 39, 117, 6 * 11 - 1, 0, bgColor, bgColor, borderColor, borderColor);
         }
         else {
             int bgColor = 0xAA101010;
             int borderColor = 0xAA36454F;
-            TooltipRenderUtil.renderTooltipBackground(gfx, left + 42, top + 39, 117, 6 * 11 - 1, 0, bgColor, bgColor, borderColor, borderColor);
+            TooltipUtil.renderTooltipBackground(gfx, left + 42, top + 39, 117, 6 * 11 - 1, 0, bgColor, bgColor, borderColor, borderColor);
         }
 
         if (selected != DropDownList.NO_SELECTION && this.rerollBtn.isHovered() && this.rerollBtn.isActive()) {
@@ -140,7 +143,7 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
                     list.set(list.size() - 2, new FakeWidthComponent(this.alternativeWidth));
                 }
 
-                gfx.renderTooltipInternal(this.font, list, this.alternativeXPos, this.getGuiTop() + 33, DefaultTooltipPositioner.INSTANCE);
+                ((GuiGraphicsAccessor) gfx).callRenderTooltipInternal(this.font, list, this.alternativeXPos, this.topPos + 33, DefaultTooltipPositioner.INSTANCE);
             }
         }
 
@@ -149,7 +152,7 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
             AffixInstance upgraded = new AffixInstance(inst.affix(), inst.stack(), inst.rarity(), Math.min(1F, inst.level() + 0.25F));
 
             List<Component> altText = new ArrayList<>();
-            altText.add(Component.translatable("text.apotheosis.upgraded_form").withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE));
+            altText.add(Component.translatable("text.zenith.upgraded_form").withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE));
             altText.add(Component.translatable("%s", upgraded.getAugmentingText()).withStyle(ChatFormatting.YELLOW));
 
             this.drawOnLeft(gfx, altText, top + 33, 150);
@@ -181,7 +184,7 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
 
         int selected = this.getSelectedAffix();
         if (selected == DropDownList.NO_SELECTION) {
-            Component comp = Component.translatable("button.apotheosis.augmenting.no_selection").withStyle(ChatFormatting.RED);
+            Component comp = Component.translatable("button.zenith.augmenting.no_selection").withStyle(ChatFormatting.RED);
             this.upgradeBtn.active = false;
             this.upgradeBtn.setInactiveMessage(comp);
             this.rerollBtn.active = false;
@@ -195,12 +198,12 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
 
             if (current.level() >= 1F) {
                 this.upgradeBtn.active = false;
-                this.upgradeBtn.setInactiveMessage(Component.translatable("button.apotheosis.augmenting.max_level").withStyle(ChatFormatting.RED));
+                this.upgradeBtn.setInactiveMessage(Component.translatable("button.zenith.augmenting.max_level").withStyle(ChatFormatting.RED));
             }
 
             if (this.alternativePages.isEmpty()) {
                 this.rerollBtn.active = false;
-                this.rerollBtn.setInactiveMessage(Component.translatable("button.apotheosis.augmenting.no_alternatives").withStyle(ChatFormatting.RED));
+                this.rerollBtn.setInactiveMessage(Component.translatable("button.zenith.augmenting.no_alternatives").withStyle(ChatFormatting.RED));
             }
 
             if (this.upgradeBtn.isActive() && this.menu.getSigils().getCount() < 2 && !this.menu.player.isCreative()) {
@@ -235,7 +238,7 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
 
             {
                 int maxWidth = 0;
-                Component heading = Component.translatable("text.apotheosis.potential_rerolls").withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE);
+                Component heading = Component.translatable("text.zenith.potential_rerolls").withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE);
                 List<List<FormattedText>> pages = new ArrayList<>();
                 List<FormattedText> page = new ArrayList<>();
                 page.add(heading);
@@ -243,7 +246,7 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
                 for (DynamicHolder<? extends Affix> afx : alternatives) {
                     Component augTxt = afx.get().getAugmentingText(current.stack(), current.rarity().get(), current.level());
                     List<FormattedText> split = splitter.splitLines(Component.translatable("%s", augTxt).withStyle(ChatFormatting.YELLOW), ALTERNATIVE_TEXT_WIDTH, augTxt.getStyle());
-                    maxWidth = Math.max(maxWidth, split.stream().map(this.ths().font::width).max(Integer::compare).get());
+                    maxWidth = Math.max(maxWidth, split.stream().map(((ScreenAccessor) this.ths()).getFont()::width).max(Integer::compare).get());
 
                     if (page.size() + split.size() + 1 > ALTERNATIVE_MAX_LINES) {
                         pages.add(page);
@@ -266,7 +269,7 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
 
                 this.alternativePage = 0;
                 this.alternativePages = pages;
-                this.alternativeXPos = this.ths().getGuiLeft() - 16 - maxWidth;
+                this.alternativeXPos = ((AbstractContainerScreenAccessor) this.ths()).getLeftPos() - 16 - maxWidth;
                 this.alternativeWidth = maxWidth;
             }
 
@@ -276,7 +279,7 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
                 for (int i = 0; i < pages; i++) {
                     List<FormattedText> page = this.alternativePages.get(i);
                     page.add(CommonComponents.SPACE);
-                    page.add(Component.translatable("text.apotheosis.alternative_page", i + 1, pages).withStyle(ChatFormatting.DARK_GRAY));
+                    page.add(Component.translatable("text.zenith.alternative_page", i + 1, pages).withStyle(ChatFormatting.DARK_GRAY));
                 }
             }
         }
@@ -323,7 +326,7 @@ public class AugmentingScreen extends AdventureContainerScreen<AugmentingMenu> {
                 list.add(inst.getName(true).copy().withStyle(Style.EMPTY.withColor(0xFFFF80).withUnderlined(true)));
                 list.add(Component.translatable("%s", inst.getAugmentingText()).withStyle(ChatFormatting.YELLOW));
 
-                AugmentingScreen.this.drawOnLeft(gfx, list, AugmentingScreen.this.getGuiTop() + 33, 150);
+                AugmentingScreen.this.drawOnLeft(gfx, list, AugmentingScreen.this.topPos + 33, 150);
             }
 
             gfx.blit(TEXTURE, this.getX() + this.width - 15, this.getY(), 123 + (this.isOpen ? 15 : 0), 239, 15, 14, 256, 307);

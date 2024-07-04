@@ -56,7 +56,7 @@ public class EnchLibraryScreen extends AdventureContainerScreen<EnchLibraryConta
     @Override
     protected void init() {
         super.init();
-        this.filter = this.addRenderableWidget(new EditBox(this.font, this.getGuiLeft() + 16, this.getGuiTop() + 16, 110, 11, this.filter, Component.literal("")));
+        this.filter = this.addRenderableWidget(new EditBox(this.font, this.leftPos + 16, this.topPos + 16, 110, 11, this.filter, Component.literal("")));
         this.filter.setBordered(false);
         this.filter.setTextColor(0x97714F);
         this.filter.setResponder(t -> this.containerChanged());

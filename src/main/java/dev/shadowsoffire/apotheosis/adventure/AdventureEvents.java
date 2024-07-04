@@ -83,7 +83,6 @@ public class AdventureEvents {
             GemCommand.register(root);
             SocketCommand.register(root);
             BossCommand.register(root);
-            AddGemCommand.register(root);
             dispatcher.register(root);
             AffixCommand.register(root);
         });
@@ -92,7 +91,7 @@ public class AdventureEvents {
     public static void affixModifiers() {
         ModifyItemAttributeModifiersCallback.EVENT.register((stack, slot, attributeModifiers) -> {
             if (stack.hasTag()) {
-                SocketHelper.getGems(stack).addModifiers(LootCategory.forItem(stack), e.getSlotType(), e::addModifier);
+                SocketHelper.getGems(stack).addModifiers(LootCategory.forItem(stack), slot, attributeModifiers::put);
 
                 var affixes = AffixHelper.getAffixes(stack);
                 affixes.forEach((afx, inst) -> inst.addModifiers(slot, attributeModifiers::put));
@@ -159,7 +158,7 @@ public class AdventureEvents {
             Adventure.Affixes.MAGICAL.getOptional().ifPresent(afx -> afx.onHurt(source, damaged, finalAmount));
             amount = finalAmount;
             for (ItemStack s : damaged.getAllSlots()) {
-                amount = SocketHelper.getGems(s).onHurt(src, ent, amount);
+                amount = SocketHelper.getGems(s).onHurt(source, damaged, amount);
                 var affixes = AffixHelper.getAffixes(s);
                 for (AffixInstance inst : affixes.values()) {
                     amount = inst.onHurt(source, damaged, amount);
@@ -314,7 +313,7 @@ public class AdventureEvents {
     }
 
     /**
-     * Allows bosses that descend from {@link AbstractGolem} to despawn naturally, only after they have existed for 10 minutes.
+     * Allows bosses that descend from {@link net.minecraft.world.entity.animal.AbstractGolem} to despawn naturally, only after they have existed for 10 minutes.
      * Without this, they'll pile up forever - https://github.com/Shadows-of-Fire/Apotheosis/issues/1248
      */
     //todo MOB SPAWN EVENT, absolutely WILL cause issues if not implemented

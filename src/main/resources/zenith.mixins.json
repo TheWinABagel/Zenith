@@ -5,6 +5,9 @@
   "plugin": "dev.shadowsoffire.apotheosis.mixin.compat.Plugin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AbstractContainerScreenAccessor",
+    "GuiGraphicsAccessor",
+    "TooltipRenderUtilAccessor",
     "accessors.AbstractArrowAccessor",
     "accessors.BaseSpawnerAccessor",
     "accessors.BlockAccessor",

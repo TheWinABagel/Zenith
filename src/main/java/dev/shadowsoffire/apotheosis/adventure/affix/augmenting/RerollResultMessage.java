@@ -1,18 +1,11 @@
 package dev.shadowsoffire.apotheosis.adventure.affix.augmenting;
 
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
-import dev.shadowsoffire.apotheosis.adventure.affix.AffixRegistry;
-import dev.shadowsoffire.placebo.network.MessageHelper;
-import dev.shadowsoffire.placebo.network.MessageProvider;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent.Context;
 
-import java.util.function.Supplier;
+public record RerollResultMessage(DynamicHolder<? extends Affix> newAffix) { //todo reroll result message
 
-public record RerollResultMessage(DynamicHolder<? extends Affix> newAffix) {
-
-    public static class Provider implements MessageProvider<RerollResultMessage> {
+/*    public static class Provider implements MessageProvider<RerollResultMessage> {
 
         @Override
         public Class<?> getMsgClass() {
@@ -36,6 +29,6 @@ public record RerollResultMessage(DynamicHolder<? extends Affix> newAffix) {
             }, ctx);
         }
 
-    }
+    }*/
 
 }

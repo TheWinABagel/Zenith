@@ -22,7 +22,6 @@ import dev.shadowsoffire.apotheosis.adventure.socket.gem.cutting.GemCuttingBlock
 import dev.shadowsoffire.apotheosis.adventure.socket.gem.cutting.GemCuttingMenu;
 import dev.shadowsoffire.apotheosis.util.TooltipItem;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntityType;
-import dev.shadowsoffire.placebo.menu.MenuUtil;
 import dev.shadowsoffire.placebo.reload.DynamicHolder;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
@@ -34,6 +33,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
@@ -86,14 +86,14 @@ public class Adventure {
 
         public static final Item GEM_DUST = new Item(new Item.Properties());
 
-        public static final Item GEM_FUSED_SLATE = new Item(new Item.Properties()); //"gem_fused_slate"
-        public static final Item SIGIL_OF_SOCKETING = new TooltipItem(new Item.Properties().rarity(Rarity.UNCOMMON)); //"sigil_of_socketing"
+        public static final Item GEM_FUSED_SLATE = new Item(new Item.Properties());
+        public static final Item SIGIL_OF_SOCKETING = new TooltipItem(new Item.Properties().rarity(Rarity.UNCOMMON));
 
-        public static final Item SIGIL_OF_WITHDRAWAL = new TooltipItem(new Item.Properties().rarity(Rarity.UNCOMMON)); //"sigil_of_withdrawal"
+        public static final Item SIGIL_OF_WITHDRAWAL = new TooltipItem(new Item.Properties().rarity(Rarity.UNCOMMON));
 
-        public static final Item SIGIL_OF_REBIRTH = new TooltipItem(new Item.Properties().rarity(Rarity.UNCOMMON)); //"sigil_of_rebirth"
+        public static final Item SIGIL_OF_REBIRTH = new TooltipItem(new Item.Properties().rarity(Rarity.UNCOMMON));
 
-        public static final Item SIGIL_OF_ENHANCEMENT = new TooltipItem(new Item.Properties().rarity(Rarity.UNCOMMON)); //"sigil_of_enhancement"
+        public static final Item SIGIL_OF_ENHANCEMENT = new TooltipItem(new Item.Properties().rarity(Rarity.UNCOMMON));
 
         public static final Item SIGIL_OF_UNNAMING =  new TooltipItem(new Item.Properties().rarity(Rarity.UNCOMMON)); //"sigil_of_unnaming"
 
@@ -107,7 +107,7 @@ public class Adventure {
 
         public static final Item GEM_CUTTING_TABLE = new BlockItem(Blocks.GEM_CUTTING_TABLE, new Item.Properties());
 
-        public static final Item AUGMENTING_TABLE = new BlockItem(Blocks.AUGMENTING_TABLE, new Item.Properties().rarity(Rarity.UNCOMMON)); //"augmenting_table"
+        public static final Item AUGMENTING_TABLE = new BlockItem(Blocks.AUGMENTING_TABLE, new Item.Properties().rarity(Rarity.UNCOMMON));
 
         public static final Item GEM = new GemItem(new Item.Properties());
 
@@ -124,7 +124,7 @@ public class Adventure {
         public static final MenuType<ReforgingMenu> REFORGING = Registry.register(BuiltInRegistries.MENU, Apotheosis.loc("reforging"), new ExtendedScreenHandlerType<>(ReforgingMenu::new));
         public static final MenuType<GemCuttingMenu> GEM_CUTTING = ScreenHandlerRegistry.registerSimple(Apotheosis.loc("gem_cutting"), GemCuttingMenu::new);
         public static final MenuType<SalvagingMenu> SALVAGE = Registry.register(BuiltInRegistries.MENU, Apotheosis.loc("salvage"), new ExtendedScreenHandlerType<>(SalvagingMenu::new)); //Registry.register(BuiltInRegistries.MENU, Apotheosis.loc("salvage"),new ExtendedScreenHandlerType<>(SalvagingMenu::new));
-        public static final MenuType<AugmentingMenu> AUGMENTING = Apoth.registerMenu("augmenting", MenuUtil.posType(AugmentingMenu::new));
+        public static final MenuType<AugmentingMenu> AUGMENTING = Apoth.registerMenu("augmenting", new ExtendedScreenHandlerType<>(AugmentingMenu::new));
 
 
         private static void bootstrap() {}
@@ -170,7 +170,7 @@ public class Adventure {
         public static final BlockEntityType<BossSpawnerBlock.BossSpawnerTile> BOSS_SPAWNER = Apoth.registerBEType("boss_spawner", new TickingBlockEntityType<>(BossSpawnerBlock.BossSpawnerTile::new, ImmutableSet.of(Blocks.BOSS_SPAWNER), false, true));
         public static final BlockEntityType<ReforgingTableTile> REFORGING_TABLE = Apoth.registerBEType("reforging_table", new TickingBlockEntityType<>(ReforgingTableTile::new, ImmutableSet.of(Adventure.Blocks.SIMPLE_REFORGING_TABLE, Adventure.Blocks.REFORGING_TABLE), true, false));
         public static final BlockEntityType<SalvagingTableTile> SALVAGING_TABLE = Apoth.registerBEType("salvaging_table", new BlockEntityType<>(SalvagingTableTile::new, ImmutableSet.of(Adventure.Blocks.SALVAGING_TABLE), null));
-        public static final BlockEntityType<AugmentingTableTile> AUGMENTING_TABLE = Apoth.registerBEType("augmenting_table", new TickingBlockEntityType<>(AugmentingTableTile::new, ImmutableSet.of(Blocks.AUGMENTING_TABLE)));
+        public static final BlockEntityType<AugmentingTableTile> AUGMENTING_TABLE = Apoth.registerBEType("augmenting_table", new TickingBlockEntityType<>(AugmentingTableTile::new, ImmutableSet.of(Blocks.AUGMENTING_TABLE), true, true));
 
         public static void bootstrap() {
             ItemStorage.SIDED.registerForBlockEntity(((blockEntity, direction) -> blockEntity.combinedStorage), SALVAGING_TABLE);
@@ -201,8 +201,8 @@ public class Adventure {
         public static void bootstrap() {}
     }
     public static class Sounds {
-
-        public static final SoundEvent REFORGE = Registry.register(BuiltInRegistries.SOUND_EVENT, Apotheosis.loc("reforge"), );
+        private static final ResourceLocation REFORGE_ID = Apotheosis.loc("reforge");
+        public static final SoundEvent REFORGE = Registry.register(BuiltInRegistries.SOUND_EVENT, REFORGE_ID, SoundEvent.createVariableRangeEvent(REFORGE_ID));
 
         private static void bootstrap() {}
     }

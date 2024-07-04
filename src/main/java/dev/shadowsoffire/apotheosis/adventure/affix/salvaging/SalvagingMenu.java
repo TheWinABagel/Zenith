@@ -132,7 +132,7 @@ public class SalvagingMenu extends PlaceboContainerMenu {
             for (ItemStack out : outputs) {
                 for (int outSlot = 0; outSlot < 6; outSlot++) {
                     if (out.isEmpty()) break;
-                    out = this.tile.container.addItem(out);
+                    out = this.tile.output.addItem(out);
                 }
                 if (!out.isEmpty()) this.giveItem(this.player, out);
             }

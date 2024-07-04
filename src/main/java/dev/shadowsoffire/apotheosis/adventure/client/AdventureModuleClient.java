@@ -15,6 +15,7 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixHelper;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixRegistry;
 import dev.shadowsoffire.apotheosis.adventure.affix.augmenting.AugmentingScreen;
+import dev.shadowsoffire.apotheosis.adventure.affix.augmenting.AugmentingTableTileRenderer;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingScreen;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingTableTileRenderer;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingScreen;
@@ -80,6 +81,7 @@ public class AdventureModuleClient {
         MenuScreens.register(Menus.AUGMENTING, AugmentingScreen::new);
 
         BlockEntityRenderers.register(Adventure.Tiles.REFORGING_TABLE, context -> new ReforgingTableTileRenderer());
+        BlockEntityRenderers.register(Adventure.Tiles.AUGMENTING_TABLE, context -> new AugmentingTableTileRenderer());
         time();
         tooltips();
         ignoreSocketUUIDS();
@@ -142,7 +144,7 @@ public class AdventureModuleClient {
     public static void ignoreSocketUUIDS() {
         GatherSkippedAttributeTooltipsEvent.EVENT.register((stack, player, skips, flag) -> {
             for (GemInstance gem : SocketHelper.getGems(stack)) {
-                gem.getUUIDs().forEach(e::skipUUID);
+                skips.addAll(gem.getUUIDs());
             }
         });
     }
