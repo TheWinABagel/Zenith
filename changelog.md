@@ -3,6 +3,13 @@
 * add compat for fancy enchant descriptions mod that aof has
 
 
+## 1.2.0
+* Update to be in line with Apotheosis 7.3.5 and 7.4.0 
+  * Big update, read the whole patch notes [here](https://github.com/Shadows-of-Fire/Apotheosis/blob/1.20/changelog.md)
+    * Added the Augmenting table, allowing for re-rolling and upgrading affixes
+    * Gui updates to Salvaging, Reforging, Gem Cutting, and the Enchanting Library
+    * New potion charm texture
+
 ## 1.1.10
 * I'm back from a hiatus, apologies it took so long to get this out!
 * Hopefully fix bosses not spawning
