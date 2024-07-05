@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.Block;
 
 public class WithdrawalRecipe extends ApothSmithingRecipe implements ReactiveSmithingRecipe {
 
-    private static final ResourceLocation ID = Apotheosis.loc("widthdrawal");
+    private static final ResourceLocation ID = Apotheosis.loc("withdrawal");
 
     public WithdrawalRecipe() {
         super(ID, Ingredient.EMPTY, Ingredient.of(Items.SIGIL_OF_WITHDRAWAL), ItemStack.EMPTY);

@@ -65,7 +65,7 @@ public class ReforgingScreen extends AdventureContainerScreen<ReforgingMenu> {
                 int levelCost = this.menu.getLevelCost(idx);
                 boolean creative = this.minecraft.player.isCreative();
 
-                tooltips.add(Component.translatable("text.apotheosis.reforge_cost").withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
+                tooltips.add(Component.translatable("text.zenith.reforge_cost").withStyle(ChatFormatting.YELLOW, ChatFormatting.UNDERLINE));
                 tooltips.add(CommonComponents.EMPTY);
                 if (sigilCost > 0) {
                     tooltips.add(Component.translatable("%s %s", sigilCost, Items.SIGIL_OF_REBIRTH.getName(ItemStack.EMPTY)).withStyle(creative || sigils >= sigilCost ? ChatFormatting.GRAY : ChatFormatting.RED));

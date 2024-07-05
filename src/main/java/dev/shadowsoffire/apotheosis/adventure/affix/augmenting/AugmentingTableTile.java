@@ -3,6 +3,7 @@ package dev.shadowsoffire.apotheosis.adventure.affix.augmenting;
 import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.Adventure.Items;
 import dev.shadowsoffire.placebo.block_entity.TickingBlockEntity;
+import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.ContainerHelper;
@@ -33,6 +34,8 @@ public class AugmentingTableTile extends BlockEntity implements TickingBlockEnti
             AugmentingTableTile.this.setChanged();
         }
     };
+
+    public InventoryStorage storage = InventoryStorage.of(inv, null);
 
     public AugmentingTableTile(BlockPos pPos, BlockState pBlockState) {
         super(Adventure.Tiles.AUGMENTING_TABLE, pPos, pBlockState);

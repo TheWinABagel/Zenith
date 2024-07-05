@@ -1,0 +1,8 @@
+{
+  "type": "zenith:withdrawal",
+  "fabric:load_conditions": [{
+    "condition": "zenith:module",
+    "module": "adventure"
+  }],
+  "group": "something"
+}

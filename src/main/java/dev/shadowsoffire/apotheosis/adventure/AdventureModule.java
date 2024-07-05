@@ -174,8 +174,8 @@ public class AdventureModule {
         }
 
         @Override
-        public boolean isBaseIngredient(ItemStack pStack) {
-            return !LootCategory.forItem(pStack).isNone();
+        public boolean isBaseIngredient(ItemStack stack) {
+            return !LootCategory.forItem(stack).isNone();
         }
     }
 

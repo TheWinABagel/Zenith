@@ -175,6 +175,7 @@ public class Adventure {
         public static void bootstrap() {
             ItemStorage.SIDED.registerForBlockEntity(((blockEntity, direction) -> blockEntity.combinedStorage), SALVAGING_TABLE);
             ItemStorage.SIDED.registerForBlockEntity(((blockEntity, direction) -> blockEntity.storage), REFORGING_TABLE);
+            ItemStorage.SIDED.registerForBlockEntity(((blockEntity, direction) -> blockEntity.storage), AUGMENTING_TABLE);
         }
     }
 
