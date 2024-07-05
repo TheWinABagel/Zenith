@@ -42,7 +42,7 @@ public class ReflectiveEnchant extends Enchantment implements CustomEnchantingTa
      * Enables application of the reflective defenses enchantment.
      * Called from {link LivingEntity#blockUsingShield(LivingEntity)}
      */
-    public void reflect() { //todo Event NYI
+    public void reflect() {
         ShieldBlockEvent.EVENT.register(e -> {
             LivingEntity user = e.getEntity();
             Entity attacker = e.getDamageSource().getDirectEntity();

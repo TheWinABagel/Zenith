@@ -1,14 +1,19 @@
 package dev.shadowsoffire.apotheosis.adventure.event;
 
 import dev.shadowsoffire.apotheosis.adventure.socket.SocketHelper;
+import net.fabricmc.fabric.api.event.Event;
+import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.world.item.ItemStack;
 
 /**
  * Fired from {@link SocketHelper#getSockets(ItemStack)} to allow modification of the number of sockets an item has.
- * <p>
- * This event is fired on the {link MinecraftForge#EVENT_BUS}.
  */
 public class GetItemSocketsEvent {
+    public static Event<GetItemSockets> GET_ITEM_SOCKETS = EventFactory.createArrayBacked(GetItemSockets.class, callbacks -> event -> {
+        for (GetItemSockets e : callbacks)
+            e.getSockets(event);
+    });
+
     protected final ItemStack stack;
     protected int sockets;
 
@@ -38,5 +43,10 @@ public class GetItemSocketsEvent {
      */
     public void setSockets(int sockets) {
         this.sockets = sockets;
+    }
+
+    @FunctionalInterface
+    public interface GetItemSockets {
+        void getSockets(GetItemSocketsEvent socketingEvent);
     }
 }

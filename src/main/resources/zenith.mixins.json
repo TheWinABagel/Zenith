@@ -24,6 +24,7 @@
     "accessors.NearestAttackableTargetGoalAccessor",
     "accessors.RangedAttributeAccessor",
     "accessors.SpawnerBlockEntityAccessor",
+    "adventure.AbstractGolemMixin",
     "adventure.BlockMixin",
     "adventure.BowItemMixin",
     "adventure.CrossbowItemMixin",

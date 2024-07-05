@@ -44,7 +44,7 @@ public class SocketHelper {
         CompoundTag afxData = stack.getTagElement(AFFIX_DATA);
         int sockets = afxData != null ? afxData.getInt(SOCKETS) : 0;
         var event = new GetItemSocketsEvent(stack, sockets);
-//        MinecraftForge.EVENT_BUS.post(event);
+        GetItemSocketsEvent.GET_ITEM_SOCKETS.invoker();
         return event.getSockets();
     }
 

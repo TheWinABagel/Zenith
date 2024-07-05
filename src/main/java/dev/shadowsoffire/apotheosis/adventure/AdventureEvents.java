@@ -316,10 +316,10 @@ public class AdventureEvents {
      * Allows bosses that descend from {@link net.minecraft.world.entity.animal.AbstractGolem} to despawn naturally, only after they have existed for 10 minutes.
      * Without this, they'll pile up forever - https://github.com/Shadows-of-Fire/Apotheosis/issues/1248
      */
-    //todo MOB SPAWN EVENT, absolutely WILL cause issues if not implemented
+    //todo MOB SPAWN EVENT, will cause issues if not implemented
 /*    @SubscribeEvent
     public void despawn(MobSpawnEvent.AllowDespawn e) {
-        if (e.getEntity() instanceof AbstractGolem g && g.tickCount > 12000 && g.getPersistentData().getBoolean("apoth.boss")) {
+        if (e.getEntity() instanceof AbstractGolem g && g.tickCount > 12000 && ZenithComponents.BOSS_DATA.get(living).getIsBoss()) {
             Entity player = g.level().getNearestPlayer(g, -1.0D);
             if (player != null) {
                 double dist = player.distanceToSqr(g);

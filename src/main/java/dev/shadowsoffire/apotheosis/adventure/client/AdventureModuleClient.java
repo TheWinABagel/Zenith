@@ -16,6 +16,7 @@ import dev.shadowsoffire.apotheosis.adventure.affix.AffixInstance;
 import dev.shadowsoffire.apotheosis.adventure.affix.AffixRegistry;
 import dev.shadowsoffire.apotheosis.adventure.affix.augmenting.AugmentingScreen;
 import dev.shadowsoffire.apotheosis.adventure.affix.augmenting.AugmentingTableTileRenderer;
+import dev.shadowsoffire.apotheosis.adventure.affix.augmenting.RerollResultMessage;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingScreen;
 import dev.shadowsoffire.apotheosis.adventure.affix.reforging.ReforgingTableTileRenderer;
 import dev.shadowsoffire.apotheosis.adventure.affix.salvaging.SalvagingScreen;
@@ -89,6 +90,7 @@ public class AdventureModuleClient {
         comps();
         renderBossBeam();
         BossSpawnMessage.init();
+        RerollResultMessage.init();
         CoreShaderRegistrationCallback.EVENT.register(context -> context.register(Apotheosis.loc("gray"), DefaultVertexFormat.NEW_ENTITY, shaderInstance -> {}));
         AdventureKeys.registerKeys();
         AdventureKeys.handleKeys();

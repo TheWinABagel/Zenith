@@ -6,6 +6,7 @@ import dev.shadowsoffire.apotheosis.adventure.Adventure;
 import dev.shadowsoffire.apotheosis.adventure.AdventureModule.ApothSmithingRecipe;
 import dev.shadowsoffire.apotheosis.adventure.event.ItemSocketingEvent;
 import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemInstance;
+import net.fabricmc.fabric.api.util.TriState;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -39,10 +40,9 @@ public class SocketingRecipe extends ApothSmithingRecipe {
         if (!gem.isValidUnsocketed()) return false;
         if (!SocketHelper.hasEmptySockets(input)) return false;
         var event = new ItemSocketingEvent.CanSocket(input, gemStack);
-        //MinecraftForge.EVENT_BUS.post(event);
-        //BaseEvent.Result res = event.getResult();
-        //return res == BaseEvent.Result.ALLOW ? true : res == BaseEvent.Result.DEFAULT && gem.canApplyTo(input);
-        return gem.canApplyTo(input); //TODO add socketing events
+        TriState res = ItemSocketingEvent.CanSocket.CAN_SOCKET.invoker().onSocket(event);
+
+        return res == TriState.TRUE ? true : res == TriState.DEFAULT && gem.canApplyTo(input);
     }
 
     /**
@@ -63,9 +63,8 @@ public class SocketingRecipe extends ApothSmithingRecipe {
         SocketHelper.setGems(result, new SocketedGems(gems));
 
         var event = new ItemSocketingEvent.ModifyResult(input, gemToInsert, result);
-
-        //MinecraftForge.EVENT_BUS.post(event);
-        //result = event.getOutput();
+        ItemSocketingEvent.ModifyResult.MODIFY_SOCKET_RESULT.invoker().modifyResult(event);
+        result = event.getOutput();
         if (result.isEmpty()) throw new IllegalArgumentException("ItemSocketingEvent$ModifyResult produced an empty output stack.");
         return result;
     }
