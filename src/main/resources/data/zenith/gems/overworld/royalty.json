@@ -31,7 +31,7 @@
 			"minecraft:generic.luck",
 			"zenith_attributes:armor_pierce",
 			"zenith_attributes:armor_shred",
-			"projectile_damage:generic",
+			"zenith_attributes:arrow_damage",
 			"zenith_attributes:arrow_velocity",
 			"zenith_attributes:cold_damage",
 			"zenith_attributes:crit_chance",

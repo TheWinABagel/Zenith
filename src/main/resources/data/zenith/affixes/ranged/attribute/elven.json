@@ -1,6 +1,6 @@
 {
 	"type": "zenith:attribute",
-	"attribute": "projectile_damage:generic",
+	"attribute": "zenith_attributes:arrow_damage",
 	"operation": "ADDITION",
 	"values": {
 		"common": {
