@@ -80,8 +80,6 @@ dependencies {
 	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components_version}")
 	modImplementation("io.github.ladysnake:PlayerAbilityLib:${project.pal_version}")
 
-	modImplementation("maven.modrinth:projectile-damage-attribute:${project.projectile_damage}-fabric")
-
 	// ModMenu
 	modCompileOnly modRuntimeOnly("com.terraformersmc:modmenu:${project.modmenu_version}"), {
 		exclude(group: "net.fabricmc.fabric-api")
