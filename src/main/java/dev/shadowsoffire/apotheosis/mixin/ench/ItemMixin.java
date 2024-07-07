@@ -28,7 +28,7 @@ public abstract class ItemMixin implements IEnchantableItem {
         if (Apotheosis.enableEnch && EnchModule.isVanillaAnvil(stack)) cir.setReturnValue(true);
     }
 
-    @Redirect(method = "isEnchantable(Lnet/minecraft/world/item/ItemStack;)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/Item;canBeDepleted()Z", remap = false))
+    @Redirect(method = "isEnchantable(Lnet/minecraft/world/item/ItemStack;)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/Item;canBeDepleted()Z"))
     private boolean zenith$ignoreDamageForEnchantable(Item ths, ItemStack stack) {
         return true;
     }
