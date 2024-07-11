@@ -91,7 +91,9 @@ public class AdventureModuleClient {
         renderBossBeam();
         BossSpawnMessage.init();
         RerollResultMessage.init();
-        CoreShaderRegistrationCallback.EVENT.register(context -> context.register(Apotheosis.loc("gray"), DefaultVertexFormat.NEW_ENTITY, shaderInstance -> {}));
+        CoreShaderRegistrationCallback.EVENT.register(context -> context.register(Apotheosis.loc("gray"), DefaultVertexFormat.NEW_ENTITY, shaderInstance -> {
+            CustomRenderTypes.grayShader = shaderInstance;
+        }));
         AdventureKeys.registerKeys();
         AdventureKeys.handleKeys();
     }
