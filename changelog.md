@@ -3,6 +3,9 @@
 * add compat for fancy enchant descriptions mod that aof has
 
 
+## 1.2.2
+* Update to latest ZenithAttributes
+
 ## 1.2.1
 * Fix mixin inject error
 
