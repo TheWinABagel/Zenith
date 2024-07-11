@@ -1,7 +1,7 @@
 package dev.shadowsoffire.apotheosis.ench.enchantments.corrupted;
 
 import dev.emi.trinkets.api.TrinketsApi;
-import dev.shadowsoffire.attributeslib.api.HealEvent;
+import dev.shadowsoffire.attributeslib.api.events.LivingHealEvent;
 import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingTableBehaviorEnchantment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
@@ -76,7 +76,7 @@ public class LifeMendingEnchant extends Enchantment implements CustomEnchantingT
     }
 
     public void lifeMend() {
-         HealEvent.EVENT.register((entity, amount) -> {
+         LivingHealEvent.EVENT.register((entity, amount) -> {
             if (entity.getType() == EntityType.ARMOR_STAND) return amount;
             if (entity.level().isClientSide) return amount;
             if (amount <= 0F) return 0f;
