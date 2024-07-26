@@ -5,6 +5,7 @@
 
 ## 1.2.2
 * Update to latest ZenithAttributes
+* Fix UI crashes
 
 ## 1.2.1
 * Fix mixin inject error
