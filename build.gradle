@@ -12,6 +12,9 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
+def localFakerLib = findProject(':FakerLib') != null
+def localAttributes = findProject(':ZenithAttributes') != null
+
 repositories {
 	maven { url = 'https://maven.parchmentmc.org' }						//Parchment mappings
 	maven { url = "https://mvn.devos.one/snapshots/" } 					//Porting lib snapshots
@@ -50,8 +53,18 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modImplementation("dev.bagel.fakerlib:FakerLib:${project.fakerlib_version}")
-	modCompileOnly modRuntimeOnly("dev.bagel:ZenithAttributes:${project.zenith_attributes_version}")
+	if (localFakerLib) {
+		modImplementation("dev.bagel.fakerlib:FakerLib:${project.fakerlib_version}")
+	}
+	else {
+		modCompileOnly(("maven.modrinth:fakerlib:${project.fakerlib_version}-fabric"))
+	}
+	if (localAttributes) {
+		modCompileOnly modRuntimeOnly("dev.bagel:ZenithAttributes:${project.zenith_attributes_version}")
+	}
+	else {
+		modCompileOnly(("maven.modrinth:zenith-attributes:${project.zenith_attributes_version}-fabric"))
+	}
 
 	// Mixin^2 for mod compat
 	implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${project.mixin_squared_version}"))
