@@ -97,21 +97,14 @@ public class EnchModuleEvents {
 
     public static void dropsWarden() {
         LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
-             if (EntityType.WARDEN.getDefaultLootTable().equals(id) && source.isBuiltin()) {
-             LootPool pool = LootPool.lootPool()
-                     .add(LootItem.lootTableItem(Ench.Items.WARDEN_TENDRIL)
-                     .apply(SetItemCountFunction.setCount(UniformGenerator.between(0f, .1f)))
-                     .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0f, .1f)).setLimit(1)))
-                     .build();
-                 tableBuilder.pool(pool);
-             }
-        });
-        LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
-            if (EntityType.WARDEN.getDefaultLootTable().equals(id) && source.isBuiltin()) {
-                LootPool pool = LootPool.lootPool()
-                        .add(LootItem.lootTableItem(Ench.Items.WARDEN_TENDRIL))
-                        .build();
-                tableBuilder.pool(pool);
+            if (EntityType.WARDEN.getLootTableId().equals(id) && source.isBuiltin()) {
+                LootPool.Builder poolBuilder = LootPool.builder()
+                    .rolls(ConstantLootNumberProvider.create(1))
+                    .conditionally(RandomChanceLootCondition.builder(0.01f))
+                    .with(ItemEntry.builder(Ench.Items.WARDEN_TENDRIL))
+                    .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1.0f)).build());
+                
+                tableBuilder.pool(poolBuilder.build());
             }
         });
     }
