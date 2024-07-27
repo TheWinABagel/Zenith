@@ -2,6 +2,8 @@
 * yeet the porting lib
 * add compat for fancy enchant descriptions mod that aof has
 
+## 1.2.3
+* Fix Warden Tendril drops
 
 ## 1.2.2
 * Update to latest ZenithAttributes
