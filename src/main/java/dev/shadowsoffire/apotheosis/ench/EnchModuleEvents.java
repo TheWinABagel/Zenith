@@ -21,7 +21,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.functions.LootingEnchantFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
@@ -97,14 +96,13 @@ public class EnchModuleEvents {
 
     public static void dropsWarden() {
         LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
-            if (EntityType.WARDEN.getLootTableId().equals(id) && source.isBuiltin()) {
-                LootPool.Builder poolBuilder = LootPool.builder()
-                    .rolls(ConstantLootNumberProvider.create(1))
-                    .conditionally(RandomChanceLootCondition.builder(0.01f))
-                    .with(ItemEntry.builder(Ench.Items.WARDEN_TENDRIL))
-                    .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1.0f)).build());
+            if (EntityType.WARDEN.getDefaultLootTable().equals(id) && source.isBuiltin()) {
+                LootPool pool = LootPool.lootPool()
+                    .add(LootItem.lootTableItem(Ench.Items.WARDEN_TENDRIL))
+                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0f, 1.0f)))
+                    .build();
                 
-                tableBuilder.pool(poolBuilder.build());
+                tableBuilder.pool(pool);
             }
         });
     }
