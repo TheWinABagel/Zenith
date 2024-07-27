@@ -21,8 +21,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithLootingCondition;
 
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
@@ -97,15 +96,22 @@ public class EnchModuleEvents {
     public static void dropsWarden() {
         LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
             if (EntityType.WARDEN.getDefaultLootTable().equals(id) && source.isBuiltin()) {
+                // guaranteed 1 tendril
                 LootPool pool = LootPool.lootPool()
-                    .setRolls(ConstantValue.exactly(1.0f))
                     .add(LootItem.lootTableItem(Ench.Items.WARDEN_TENDRIL))
-                    .when(LootItemRandomChanceCondition.randomChance(0.5f))
                     .build();
-                
+
                 tableBuilder.pool(pool);
+
+                // 10% chance + additional 10% chance per looting level for 2nd tendril
+                LootPool chancePool = LootPool.lootPool()
+                    .add(LootItem.lootTableItem(Ench.Items.WARDEN_TENDRIL))
+                    .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.1f, 0.1f))
+                    .build();
+
+                tableBuilder.pool(chancePool);
             }
-        });
+       });
     }
 
     public static void healing() {

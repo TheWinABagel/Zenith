@@ -19,7 +19,6 @@ Zenith requires both [FakerLib](https://github.com/TheWinABagel/FakerLib) and [Z
 For each of these dependencies, you must clone the repository and then publish it to `mavenLocal`:
 
 ```
-./gradlew.bat build
 ./gradlew.bat publishToMavenLocal
 ```
 
