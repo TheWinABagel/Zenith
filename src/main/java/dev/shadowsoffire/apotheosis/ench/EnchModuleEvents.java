@@ -21,9 +21,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.functions.LootingEnchantFunction;
-import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithLootingCondition;
 
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
@@ -97,23 +95,23 @@ public class EnchModuleEvents {
 
     public static void dropsWarden() {
         LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
-             if (EntityType.WARDEN.getDefaultLootTable().equals(id) && source.isBuiltin()) {
-             LootPool pool = LootPool.lootPool()
-                     .add(LootItem.lootTableItem(Ench.Items.WARDEN_TENDRIL)
-                     .apply(SetItemCountFunction.setCount(UniformGenerator.between(0f, .1f)))
-                     .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0f, .1f)).setLimit(1)))
-                     .build();
-                 tableBuilder.pool(pool);
-             }
-        });
-        LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
             if (EntityType.WARDEN.getDefaultLootTable().equals(id) && source.isBuiltin()) {
+                // guaranteed 1 tendril
                 LootPool pool = LootPool.lootPool()
-                        .add(LootItem.lootTableItem(Ench.Items.WARDEN_TENDRIL))
-                        .build();
+                    .add(LootItem.lootTableItem(Ench.Items.WARDEN_TENDRIL))
+                    .build();
+
                 tableBuilder.pool(pool);
+
+                // 10% chance + additional 10% chance per looting level for 2nd tendril
+                LootPool chancePool = LootPool.lootPool()
+                    .add(LootItem.lootTableItem(Ench.Items.WARDEN_TENDRIL))
+                    .when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.1f, 0.1f))
+                    .build();
+
+                tableBuilder.pool(chancePool);
             }
-        });
+       });
     }
 
     public static void healing() {
