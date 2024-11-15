@@ -42,7 +42,6 @@ import java.util.Map;
 public class EnchModule {
     public static final Map<Enchantment, EnchantmentInfo> ENCHANTMENT_INFO = new HashMap<>();
     public static final Object2IntMap<Enchantment> ENCH_HARD_CAPS = new Object2IntOpenHashMap<>();
-    public static final String ENCH_HARD_CAP_IMC = "set_ench_hard_cap";
     public static final Logger LOGGER = LogManager.getLogger("Zenith : Enchantment");
     public static final List<TomeItem> TYPED_BOOKS = new ArrayList<>();
     public static final EnchantmentCategory HOE = ClassTinkerers.getEnum(EnchantmentCategory.class, "HOE");

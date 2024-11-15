@@ -54,16 +54,16 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 //	if (localFakerLib) {
-//		modImplementation("dev.bagel.fakerlib:FakerLib:${project.fakerlib_version}")
+		modImplementation("dev.bagel.fakerlib:FakerLib:${project.fakerlib_version}")
 //	}
 //	else {
-		modImplementation("maven.modrinth:fakerlib:${project.fakerlib_version}")
+//		modImplementation("maven.modrinth:fakerlib:${project.fakerlib_version}")
 //	}
 //	if (localAttributes) {
-//		modImplementation("dev.bagel:ZenithAttributes:${project.zenith_attributes_version}")
+		modImplementation("dev.bagel:ZenithAttributes:${project.zenith_attributes_version}")
 //	}
 //	else {
-		modImplementation("maven.modrinth:zenith-attributes:${project.zenith_attributes_version}")
+//		modImplementation("maven.modrinth:zenith-attributes:${project.zenith_attributes_version}")
 //	}
 
 	// Mixin^2 for mod compat
@@ -134,8 +134,8 @@ dependencies {
 
 	//Fixes +compat for other mods
 	//Spell power + Spell engine
-	modCompileOnly(("maven.modrinth:spell-power:${project.spell_power_version}-fabric"))
-	modCompileOnly(("maven.modrinth:spell-engine:${project.spell_engine_version}-fabric"))
+	modImplementation(("maven.modrinth:spell-power:${project.spell_power_version}-fabric"))
+	modImplementation(("maven.modrinth:spell-engine:${project.spell_engine_version}-fabric"))
 
 
 	//puzzlelib
@@ -168,6 +168,8 @@ dependencies {
 
 	//YUNGS api
 	modCompileOnly "curse.maven:yungs-api-fabric-421649:5147000"
+
+	modImplementation "curse.maven:endremastered-fabric-515523:4972591"
 
 }
 loom {

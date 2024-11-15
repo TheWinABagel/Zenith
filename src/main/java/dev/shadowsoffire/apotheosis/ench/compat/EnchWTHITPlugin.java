@@ -6,6 +6,7 @@ import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.ench.objects.FilteringShelfBlock;
 import dev.shadowsoffire.apotheosis.mixin.accessors.ChiseledBookShelfBlockAccessor;
 import dev.shadowsoffire.apotheosis.util.CommonTooltipUtil;
+import dev.shadowsoffire.apotheosis.util.ZenithModCompat;
 import mcp.mobius.waila.api.*;
 import mcp.mobius.waila.api.component.ItemComponent;
 import net.minecraft.nbt.CompoundTag;
@@ -44,12 +45,18 @@ public class EnchWTHITPlugin implements IWailaPlugin, IBlockComponentProvider {
         if (accessor.getBlock() instanceof AnvilBlock) {
             CompoundTag tag = accessor.getData().raw();
             Map<Enchantment, Integer> enchants = EnchantmentHelper.deserializeEnchantments(tag.getList("enchantments", Tag.TAG_COMPOUND));
+            if (ZenithModCompat.EASY_ANVILS_LOADED) {
+                tooltip.addLine(Component.translatable("zenith.easy_anvils"));
+            }
             for (Map.Entry<Enchantment, Integer> e : enchants.entrySet()) {
                 tooltip.addLine(e.getKey().getFullname(e.getValue()));
             }
         }
         CommonTooltipUtil.appendBlockStats(accessor.getWorld(), accessor.getBlockState(), accessor.getPosition(), tooltip::addLine);
         if (accessor.getBlock() == Blocks.ENCHANTING_TABLE) {
+            if (ZenithModCompat.EASY_MAGIC_LOADED) {
+                tooltip.addLine(Component.translatable("zenith.easy_magic"));
+            }
             CommonTooltipUtil.appendTableStats(accessor.getWorld(), accessor.getPosition(), tooltip::addLine);
         }
 

@@ -1186,7 +1186,8 @@
     
     "comment_id": "/Anvil Module",
     "info.zenith.anvil": "Can be enchanted.",
-	"zenith.easy_anvils": "Easy Anvils is not compatible with Zenith's anvil additions. Enchantments will not work!",
+	"zenith.easy_anvils": "Easy Anvils is not compatible with Zenith's anvil additions. Anvil enchantments will not work!",
+	"zenith.easy_magic": "Easy Magic is not compatible with Zenith's enchanting table additions. Zenith enchanting will not work!",
 
     "comment_id": "/Garden Module",
     "item.zenith.ender_lead": "Ender Lead",
