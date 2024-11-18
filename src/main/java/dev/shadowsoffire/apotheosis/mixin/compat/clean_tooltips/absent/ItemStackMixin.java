@@ -1,5 +1,7 @@
 package dev.shadowsoffire.apotheosis.mixin.compat.clean_tooltips.absent;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
 import dev.shadowsoffire.placebo.events.PlaceboEventFactory;
 import net.minecraft.ChatFormatting;
@@ -16,7 +18,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.*;
 
@@ -41,12 +42,8 @@ public abstract class ItemStackMixin {
         tooltip.add(mc);
     }
 
-    /**
-     * Rewrites the enchantment tooltip lines to include the effective level, as well as the (NBT + bonus) calculation.
-     */
-    @SuppressWarnings("deprecation")
-    @Redirect(method = "getTooltipLines", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;appendEnchantmentNames(Ljava/util/List;Lnet/minecraft/nbt/ListTag;)V"))
-    public void zenith$enchTooltipRewrite(List<Component> tooltip, ListTag tagEnchants) {
+    @WrapOperation(method = "getTooltipLines", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;appendEnchantmentNames(Ljava/util/List;Lnet/minecraft/nbt/ListTag;)V"))
+    public void zenith$tooltipAddEnchantmentLinesWrapper(List<Component> tooltip, ListTag tagEnchants, Operation<Void> original) {
         ItemStack ths = (ItemStack) (Object) this;
         Map<Enchantment, Integer> realLevels = new HashMap<>(EnchantmentHelper.getEnchantments(ths));
         List<Component> enchTooltips = new ArrayList<>();
