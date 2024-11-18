@@ -98,8 +98,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 
     @WrapOperation(method = "createResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/Enchantment;getMaxLevel()I"))
     private int zenithModifyMaxLevel(Enchantment enchantment, Operation<Integer> original) {
-        if (!Apotheosis.enableEnch) return enchantment.getMaxLevel();
-        int i = enchantment.getMaxLevel();
-        return Math.max(EnchHooks.getMaxLevel(enchantment), Math.min(i, original.call(enchantment)));
+        if (!Apotheosis.enableEnch) return original.call(enchantment);
+        return EnchHooks.getMaxLevel(enchantment);
     }
 }
