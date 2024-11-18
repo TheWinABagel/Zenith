@@ -1,5 +1,7 @@
 package dev.shadowsoffire.apotheosis.mixin.ench.enchantment;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
 import net.minecraft.server.commands.EnchantCommand;
@@ -11,9 +13,9 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(EnchantCommand.class)
 public abstract class EnchantCommandMixin {
 
-    @Redirect(method = "enchant", at = @At(value = "INVOKE", target = "net/minecraft/world/item/enchantment/Enchantment.getMaxLevel ()I"))
-    private static int zenithMax(Enchantment instance){
-        if (!Apotheosis.enableEnch) return instance.getMaxLevel();
+    @WrapOperation(method = "enchant", at = @At(value = "INVOKE", target = "net/minecraft/world/item/enchantment/Enchantment.getMaxLevel ()I"))
+    private static int zenithMax(Enchantment instance, Operation<Integer> original){
+        if (!Apotheosis.enableEnch) return original.call(instance);
         return EnchHooks.getMaxLevel(instance);
     }
 }

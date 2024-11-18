@@ -1,5 +1,7 @@
 package dev.shadowsoffire.apotheosis.mixin.ench;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
 import dev.shadowsoffire.apotheosis.ench.table.RealEnchantmentHelper;
@@ -11,7 +13,6 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Collections;
@@ -49,18 +50,18 @@ public class EnchantmentHelperMixin {
         }
     }
 
-    @Redirect(method = "getAvailableEnchantmentResults", at = @At(value = "INVOKE", target = "net/minecraft/world/item/enchantment/Enchantment.isTreasureOnly ()Z"))
-    private static boolean zenith_redirectTreasureOnly(Enchantment ench) {
+    @WrapOperation(method = "getAvailableEnchantmentResults", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/Enchantment;isTreasureOnly()Z"))
+    private static boolean zenith_redirectTreasureOnly(Enchantment ench, Operation<Boolean> original) {
         return EnchHooks.isTreasureOnly(ench);
     }
 
-    @Redirect(method = "getAvailableEnchantmentResults", at = @At(value = "INVOKE", target = "net/minecraft/world/item/enchantment/Enchantment.isDiscoverable ()Z"))
-    private static boolean zenith_redirectDiscoverable(Enchantment ench) {
+    @WrapOperation(method = "getAvailableEnchantmentResults", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/Enchantment;isDiscoverable()Z"))
+    private static boolean zenith_redirectDiscoverable(Enchantment ench, Operation<Boolean> original) {
         return EnchHooks.isDiscoverable(ench);
     }
 
-    @Redirect(method = "getAvailableEnchantmentResults", at = @At(value = "INVOKE", target = "net/minecraft/world/item/enchantment/Enchantment.getMaxLevel ()I"))
-    private static int zenith_redirectMaxLevel(Enchantment ench) {
+    @WrapOperation(method = "getAvailableEnchantmentResults", at = @At(value = "INVOKE", target = "net/minecraft/world/item/enchantment/Enchantment.getMaxLevel ()I"))
+    private static int zenith_redirectMaxLevel(Enchantment ench, Operation<Boolean> original) {
         return EnchHooks.getMaxLevel(ench);
     }
 }

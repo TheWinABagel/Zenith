@@ -1,5 +1,7 @@
 package dev.shadowsoffire.apotheosis.mixin.ench.anvil;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
 import dev.shadowsoffire.apotheosis.util.Events;
@@ -47,8 +49,8 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
      * @param player The player using the anvil.
      * @param level  The negative of the cost of performing the anvil operation.
      */
-    @Redirect(method = "onTake", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;giveExperienceLevels(I)V"))
-    public void zenith$chargeOptimalLevels(Player player, int level) {
+    @WrapOperation(method = "onTake", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;giveExperienceLevels(I)V"))
+    public void zenith$chargeOptimalLevels(Player player, int level, Operation<Void> original) {
         EnchantmentUtils.chargeExperience(player, EnchantmentUtils.getTotalExperienceForLevel(-level));
     }
 
@@ -94,10 +96,9 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
         return true;
     }
 
-    @Redirect(method = "createResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/Enchantment;getMaxLevel()I"))
-    private int zenithModifyMaxLevel(Enchantment enchantment) {
-        if (!Apotheosis.enableEnch) return enchantment.getMaxLevel();
+    @WrapOperation(method = "createResult", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/Enchantment;getMaxLevel()I"))
+    private int zenithModifyMaxLevel(Enchantment enchantment, Operation<Integer> original) {
+        if (!Apotheosis.enableEnch) return original.call(enchantment);
         return EnchHooks.getMaxLevel(enchantment);
     }
-
 }
