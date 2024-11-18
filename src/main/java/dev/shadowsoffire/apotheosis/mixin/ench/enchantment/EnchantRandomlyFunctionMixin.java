@@ -1,5 +1,7 @@
 package dev.shadowsoffire.apotheosis.mixin.ench.enchantment;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
@@ -14,7 +16,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
 
 import java.util.List;
@@ -23,8 +24,9 @@ import java.util.stream.Collectors;
 @Mixin(value = EnchantRandomlyFunction.class, priority = 1100)// Patches vanilla loot to include possibility of config set level enchants
 public abstract class EnchantRandomlyFunctionMixin {
 
-    @Redirect(method = "enchantItem", at = @At(value = "INVOKE", target = "net/minecraft/world/item/enchantment/Enchantment.getMaxLevel ()I"))
-    private static int redirectLootLevel(Enchantment instance){
+    @WrapOperation(method = "enchantItem", at = @At(value = "INVOKE", target = "net/minecraft/world/item/enchantment/Enchantment.getMaxLevel ()I"))
+    private static int redirectLootLevel(Enchantment instance, Operation<Integer> original) {
+        if (!Apotheosis.enableEnch) return original.call(instance);
         return EnchHooks.getMaxLootLevel(instance);
     }
 
