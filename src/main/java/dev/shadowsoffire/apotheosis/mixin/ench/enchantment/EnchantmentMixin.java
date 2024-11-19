@@ -1,28 +1,26 @@
 package dev.shadowsoffire.apotheosis.mixin.ench.enchantment;
 
-import dev.shadowsoffire.apotheosis.Apotheosis;
-import dev.shadowsoffire.apotheosis.ench.Ench;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.enchantment.Enchantment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = Enchantment.class, priority = 1500)
 public abstract class EnchantmentMixin {
 
     /**
      * Adjusts the color of the enchantment text if above the vanilla max.
+     *
+     * @return Component with potentially modified color
      */
-    @Inject(method = "getFullname", at = @At("RETURN"), cancellable = true)
-    public void zenith$modifyEnchColorForAboveMaxLevel(int level, CallbackInfoReturnable<Component> cir) {
-        if (!Apotheosis.enableEnch) return;
-        Enchantment ench = (Enchantment) (Object) this;
-        if (!ench.isCurse() && level > ench.getMaxLevel() && cir.getReturnValue() instanceof MutableComponent mc) {
-            cir.setReturnValue(mc.withStyle(s -> s.withColor(Ench.Colors.LIGHT_BLUE_FLASH)));
+    @ModifyReturnValue(method = "getFullname", at = @At("RETURN"))
+    public Component zenith$modifyEnchColorForAboveMaxLevel(Component original, int level) {
+        if (original instanceof MutableComponent mc) {
+            return ApothMiscUtil.modifyEnchantColor(level, (Enchantment) (Object) this, mc);
         }
+        return original;
     }
-
 }

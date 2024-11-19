@@ -1,6 +1,10 @@
 package dev.shadowsoffire.apotheosis.util;
 
+import dev.shadowsoffire.apotheosis.Apotheosis;
+import dev.shadowsoffire.apotheosis.ench.EnchConfig;
 import dev.shadowsoffire.placebo.util.EnchantmentUtils;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.item.enchantment.Enchantment;
 
 public class ApothMiscUtil {
 
@@ -41,5 +45,18 @@ public class ApothMiscUtil {
             out[data.length * 2 - 1 - i] = data[i];
         }
         return out;
+    }
+
+    /**
+     * Adjusts the color of the enchantment text if above the vanilla max.
+     *
+     * @return component with modified color
+     */
+    public static MutableComponent modifyEnchantColor(int level, Enchantment ench, MutableComponent mc) {
+        if (!Apotheosis.enableEnch || EnchConfig.overleveledEnchColor == null) return mc;
+        if (!ench.isCurse() && level > ench.getMaxLevel()) {
+            return mc.withStyle(s -> s.withColor(EnchConfig.overleveledEnchColor));
+        }
+        return mc;
     }
 }
