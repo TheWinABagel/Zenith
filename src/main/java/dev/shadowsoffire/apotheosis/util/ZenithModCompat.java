@@ -5,6 +5,7 @@ import com.teamremastered.endrem.registry.ERItems;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.spell_power.api.enchantment.EnchantmentRestriction;
 
@@ -19,12 +20,13 @@ public class ZenithModCompat {
 
 
         public static boolean isProhibitedSpellEngine(Enchantment ench, ItemStack stack) {
-            if (!SPELL_ENGINE_LOADED) return false;
+            if (!SPELL_ENGINE_LOADED || stack.is(Items.BOOK)) return false;
             return EnchantmentRestriction.isProhibited(ench, stack);
         }
 
         public static boolean isPermittedSpellEngine(Enchantment ench, ItemStack stack) {
             if (!SPELL_ENGINE_LOADED) return false;
+            if (stack.is(Items.BOOK)) return true;
             return EnchantmentRestriction.isPermitted(ench, stack);
         }
 
