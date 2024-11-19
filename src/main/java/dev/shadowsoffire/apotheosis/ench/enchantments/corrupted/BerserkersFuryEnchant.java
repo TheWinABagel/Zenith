@@ -2,7 +2,7 @@ package dev.shadowsoffire.apotheosis.ench.enchantments.corrupted;
 
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.adventure.affix.Affix;
-import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
+import dev.shadowsoffire.attributeslib.api.events.LivingHurtEvent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -50,7 +50,7 @@ public class BerserkersFuryEnchant extends Enchantment {
      * Handles the application of Berserker's Fury.
      */
     public void livingHurt() {
-        LivingEntityEvents.HURT.register((source, user, amount) -> {
+        LivingHurtEvent.EVENT.register((source, user, amount) -> {
             if (source.getEntity() instanceof Entity && user.getEffect(MobEffects.DAMAGE_RESISTANCE) == null) {
                 int level = EnchantmentHelper.getEnchantmentLevel(this, user);
                 if (level > 0) {

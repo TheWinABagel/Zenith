@@ -14,6 +14,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -57,7 +58,8 @@ public class PotionModule {
         drops();
 
         if (FabricLoader.getInstance().isModLoaded("trinkets")) {
-            LivingEntityEvents.TICK.register(entity -> {
+        LivingEntityEvents.LivingTickEvent.TICK.register(e -> {
+            LivingEntity entity = e.getEntity();
                 TrinketsApi.getTrinketComponent(entity).ifPresent(c -> c.forEach((slotReference, stack) -> {
                     if (stack.getItem() instanceof PotionCharmItem charm) {
                         charm.charmLogic(stack, entity.level(), entity, slotReference.index(), false);

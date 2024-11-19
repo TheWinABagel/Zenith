@@ -16,6 +16,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
@@ -89,7 +90,8 @@ public class SpawnerModule {
 
 
     public static void tickDumbMobs() {
-        LivingEntityEvents.TICK.register(entity -> {
+        LivingEntityEvents.LivingTickEvent.TICK.register(e -> {
+            LivingEntity entity = e.getEntity();
             if (entity instanceof Mob mob) {
                 if (mob.getCustomData().contains("zenith:movable")) {
                     ZenithComponents.MOVABLE.get(mob).setValue(mob.getCustomData().getBoolean("zenith:movable"));
