@@ -15,6 +15,7 @@ import dev.shadowsoffire.apotheosis.adventure.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.cca.ZenithComponents;
 import dev.shadowsoffire.apotheosis.util.Events;
+import dev.shadowsoffire.apotheosis.util.ZenithModCompat;
 import dev.shadowsoffire.attributeslib.api.events.LivingHurtEvent;
 import dev.shadowsoffire.placebo.events.AnvilLandCallback;
 import dev.shadowsoffire.placebo.events.GetEnchantmentLevelEvent;
@@ -71,7 +72,7 @@ public class AdventureEvents {
         gemSmashing();
         enchLevels();
         update();
-        if (FabricLoader.getInstance().isModLoaded("spell_engine")) onSpellCast();
+        ZenithModCompat.Adventure.spellEngineCast();
     }
 
     public static void cmds() {

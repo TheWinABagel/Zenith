@@ -4,6 +4,7 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.api.IEnchantingBlock;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantTile;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu;
+import dev.shadowsoffire.apotheosis.util.ZenithModCompat;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
@@ -13,12 +14,16 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EnchantmentTableBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -77,5 +82,10 @@ abstract class EnchantmentTableBlockMixin extends BaseEntityBlock {
                 ((IEnchantingBlock) shelfState.getBlock()).spawnTableParticle(shelfState, level, random, pos, offset);
             }
         }
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
+        ZenithModCompat.Ench.easyMagicWarn(tooltip::add);
     }
 }

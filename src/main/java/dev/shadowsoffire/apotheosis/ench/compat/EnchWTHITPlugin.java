@@ -45,18 +45,14 @@ public class EnchWTHITPlugin implements IWailaPlugin, IBlockComponentProvider {
         if (accessor.getBlock() instanceof AnvilBlock) {
             CompoundTag tag = accessor.getData().raw();
             Map<Enchantment, Integer> enchants = EnchantmentHelper.deserializeEnchantments(tag.getList("enchantments", Tag.TAG_COMPOUND));
-            if (ZenithModCompat.EASY_ANVILS_LOADED) {
-                tooltip.addLine(Component.translatable("zenith.easy_anvils"));
-            }
+            ZenithModCompat.Ench.easyAnvilsWarn(tooltip::addLine);
             for (Map.Entry<Enchantment, Integer> e : enchants.entrySet()) {
                 tooltip.addLine(e.getKey().getFullname(e.getValue()));
             }
         }
         CommonTooltipUtil.appendBlockStats(accessor.getWorld(), accessor.getBlockState(), accessor.getPosition(), tooltip::addLine);
         if (accessor.getBlock() == Blocks.ENCHANTING_TABLE) {
-            if (ZenithModCompat.EASY_MAGIC_LOADED) {
-                tooltip.addLine(Component.translatable("zenith.easy_magic"));
-            }
+            ZenithModCompat.Ench.easyMagicWarn(tooltip::addLine);
             CommonTooltipUtil.appendTableStats(accessor.getWorld(), accessor.getPosition(), tooltip::addLine);
         }
 

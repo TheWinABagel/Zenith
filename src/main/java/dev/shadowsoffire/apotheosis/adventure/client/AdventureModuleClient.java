@@ -25,6 +25,7 @@ import dev.shadowsoffire.apotheosis.adventure.client.SocketTooltipRenderer.Socke
 import dev.shadowsoffire.apotheosis.adventure.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemInstance;
 import dev.shadowsoffire.apotheosis.adventure.socket.gem.cutting.GemCuttingScreen;
+import dev.shadowsoffire.apotheosis.util.ZenithModCompat;
 import dev.shadowsoffire.apotheosis.util.events.ModifyComponents;
 import dev.shadowsoffire.attributeslib.api.client.AddAttributeTooltipsEvent;
 import dev.shadowsoffire.attributeslib.api.client.GatherSkippedAttributeTooltipsEvent;
@@ -160,14 +161,7 @@ public class AdventureModuleClient {
             }
             return null;
         });
-        if (FabricLoader.getInstance().isModLoaded("iceberg")) {
-            RenderTooltipEvents.GATHER.register((itemStack, screenWidth, screenHeight, tooltipElements, maxWidth, index) -> {
-                ModifyComponents.ModifyComponentsEvent event = new ModifyComponents.ModifyComponentsEvent(itemStack, screenWidth, screenHeight, tooltipElements, maxWidth);
-                ModifyComponents.MODIFY_COMPONENTS.invoker().modifyComponents(event);
-                InteractionResult result = event.isCanceled() ? InteractionResult.CONSUME : InteractionResult.PASS;
-                return new RenderTooltipEvents.GatherResult(result, event.maxWidth, event.tooltipElements);
-            });
-        }
+        ZenithModCompat.Adventure.icebergCompat();
         ModifyComponents.MODIFY_COMPONENTS.register(e -> {
             int sockets = SocketHelper.getSockets(e.stack);
             if (sockets == 0) return;

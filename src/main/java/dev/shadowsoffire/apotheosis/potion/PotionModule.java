@@ -1,9 +1,12 @@
 package dev.shadowsoffire.apotheosis.potion;
 
+import dev.emi.trinkets.api.Trinket;
 import dev.emi.trinkets.api.TrinketsApi;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.objects.GlowyBlockItem;
+import dev.shadowsoffire.apotheosis.potion.compat.PotionCharmTrinket;
+import dev.shadowsoffire.apotheosis.util.ZenithModCompat;
 import dev.shadowsoffire.attributeslib.api.ALObjects;
 import dev.shadowsoffire.placebo.config.Configuration;
 import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
@@ -57,16 +60,17 @@ public class PotionModule {
         serializers();
         drops();
 
-        if (FabricLoader.getInstance().isModLoaded("trinkets")) {
-        LivingEntityEvents.LivingTickEvent.TICK.register(e -> {
-            LivingEntity entity = e.getEntity();
-                TrinketsApi.getTrinketComponent(entity).ifPresent(c -> c.forEach((slotReference, stack) -> {
-                    if (stack.getItem() instanceof PotionCharmItem charm) {
-                        charm.charmLogic(stack, entity.level(), entity, slotReference.index(), false);
-                    }
-                }));
-            });
-        }
+        ZenithModCompat.Potion.registerTrinkets();
+//        if (FabricLoader.getInstance().isModLoaded("trinkets")) {
+//            LivingEntityEvents.LivingTickEvent.TICK.register(e -> {
+//                LivingEntity entity = e.getEntity();
+//                TrinketsApi.getTrinketComponent(entity).ifPresent(c -> c.forEach((slotReference, stack) -> {
+//                    if (stack.getItem() instanceof PotionCharmItem charm) {
+//                        charm.charmLogic(stack, entity.level(), entity, slotReference.index(), false);
+//                    }
+//                }));
+//            });
+//        }
     }
 
     public static void items() {

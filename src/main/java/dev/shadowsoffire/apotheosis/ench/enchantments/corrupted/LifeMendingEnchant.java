@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.ench.enchantments.corrupted;
 
 import dev.emi.trinkets.api.TrinketsApi;
+import dev.shadowsoffire.apotheosis.util.ZenithModCompat;
 import dev.shadowsoffire.attributeslib.api.events.LivingHealEvent;
 import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingTableBehaviorEnchantment;
 import net.fabricmc.loader.api.FabricLoader;
@@ -63,7 +64,7 @@ public class LifeMendingEnchant extends Enchantment implements CustomEnchantingT
 
     private static final EquipmentSlot[] SLOTS = EquipmentSlot.values();
 
-    private float lifeMend(float amount, ItemStack stack) {
+    public float lifeMend(float amount, ItemStack stack) {
         if (!stack.isEmpty() && stack.isDamaged()) {
             int level = EnchantmentHelper.getItemEnchantmentLevel(this, stack);
             if (level <= 0) return amount;
@@ -85,16 +86,8 @@ public class LifeMendingEnchant extends Enchantment implements CustomEnchantingT
                 ItemStack stack = living.getItemBySlot(slot);
                 amount = this.lifeMend(amount, stack);
             }
-            if (FabricLoader.getInstance().isModLoaded("trinkets")) {
-                if (entity instanceof LivingEntity livingEntity) {
-                    AtomicReference<Float> atomicAmount = new AtomicReference<>(amount);
-                    TrinketsApi.getTrinketComponent(livingEntity).ifPresent(c -> c.forEach((slotReference, stack) -> {
-                        atomicAmount.set(this.lifeMend(atomicAmount.get(), stack));
-                    }));
-                    amount = atomicAmount.get();
-                }
-            }
-             return Math.max(amount, 0F);
+            amount = ZenithModCompat.Ench.lifeMendTrinkets(entity, amount, this);
+            return Math.max(amount, 0F);
          });
 
     }

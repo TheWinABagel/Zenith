@@ -50,8 +50,9 @@ public class PotionCharmItem extends Item implements CustomEnchantingBehaviorIte
 
     @Override
     public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean isSelected) {
-        if (PotionModule.charmsInTrinketsOnly) return;
-        charmLogic(stack, world, entity, slot , isSelected);
+        if (!PotionModule.charmsInTrinketsOnly) {
+            charmLogic(stack, world, entity, slot, isSelected);
+        }
     }
 
     public void charmLogic(ItemStack stack, Level world, Entity entity, int slot, boolean isSelected){
