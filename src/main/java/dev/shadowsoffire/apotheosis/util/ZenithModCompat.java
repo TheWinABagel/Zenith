@@ -35,7 +35,7 @@ public class ZenithModCompat {
     public static boolean SPELL_ENGINE_LOADED = loaded("spell_engine");
     public static boolean END_REMASTERED_LOADED = loaded("endrem");
 
-    public static boolean ICEBERG_LOADED = loaded("endrem");
+    public static boolean ICEBERG_LOADED = loaded("iceberg");
 
     public static boolean loaded(String modId) {
         return FabricLoader.getInstance().isModLoaded(modId);
@@ -50,10 +50,17 @@ public class ZenithModCompat {
     public static class Potion {
         public static void registerTrinkets() {
             if (TRINKETS_LOADED) {
+                Trinkets.reg();
+            }
+        }
+
+        private static class Trinkets {
+            private static void reg() {
                 TrinketsApi.registerTrinket(PotionModule.POTION_CHARM, new PotionCharmTrinket());
             }
         }
     }
+
 
     public static class Adventure {
 
@@ -65,6 +72,12 @@ public class ZenithModCompat {
 
         public static void icebergCompat() {
             if (ICEBERG_LOADED) {
+                Iceberg.init();
+            }
+        }
+
+        private static class Iceberg {
+            private static void init() {
                 RenderTooltipEvents.GATHER.register((itemStack, screenWidth, screenHeight, tooltipElements, maxWidth, index) -> {
                     ModifyComponents.ModifyComponentsEvent event = new ModifyComponents.ModifyComponentsEvent(itemStack, screenWidth, screenHeight, tooltipElements, maxWidth);
                     ModifyComponents.MODIFY_COMPONENTS.invoker().modifyComponents(event);
