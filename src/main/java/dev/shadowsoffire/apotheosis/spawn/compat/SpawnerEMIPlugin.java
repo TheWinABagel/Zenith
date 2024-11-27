@@ -36,14 +36,14 @@ public class SpawnerEMIPlugin {
 
         if (SpawnerModule.spawnerSilkLevel == -1) {
             ZenithEMIPlugin.addRecipeSafe(registry, () ->
-                    new EmiInfoRecipe(List.of(EmiStack.of(Blocks.SPAWNER)), List.of(Component.translatable("info.zenith.spawner.no_silk")), Apotheosis.loc("no_silk_info")));
+                    new EmiInfoRecipe(List.of(EmiStack.of(Blocks.SPAWNER)), List.of(Component.translatable("info.zenith.spawner.no_silk")), Apotheosis.syntheticLoc("no_silk_info")));
         }
         else if (SpawnerModule.spawnerSilkLevel == 0) {
             ZenithEMIPlugin.addRecipeSafe(registry, () ->
-                    new EmiInfoRecipe(List.of(EmiStack.of(Blocks.SPAWNER)), List.of(Component.translatable("info.zenith.spawner.always_drop")), Apotheosis.loc("always_drop_info")));
+                    new EmiInfoRecipe(List.of(EmiStack.of(Blocks.SPAWNER)), List.of(Component.translatable("info.zenith.spawner.always_drop")), Apotheosis.syntheticLoc("always_drop_info")));
         }
         else ZenithEMIPlugin.addRecipeSafe(registry, () ->
-                new EmiInfoRecipe(List.of(EmiStack.of(Blocks.SPAWNER)), List.of(Component.translatable("info.zenith.spawner", Enchantments.SILK_TOUCH.getFullname(SpawnerModule.spawnerSilkLevel))), Apotheosis.loc("spawner_info")));
+                new EmiInfoRecipe(List.of(EmiStack.of(Blocks.SPAWNER)), List.of(Component.translatable("info.zenith.spawner", Enchantments.SILK_TOUCH.getFullname(SpawnerModule.spawnerSilkLevel))), Apotheosis.syntheticLoc("spawner_info")));
         List<Ingredient> eggList = new ArrayList<>();
         for (Item i : BuiltInRegistries.ITEM) {
             if (i instanceof SpawnEggItem) {
@@ -51,7 +51,7 @@ public class SpawnerEMIPlugin {
             }
         }
         ZenithEMIPlugin.addRecipeSafe(registry, () ->
-                new EmiInfoRecipe(eggList.stream().map(EmiIngredient::of).toList(), List.of(Component.translatable("info.zenith.capturing")), Apotheosis.loc("spawn_egg_info")));
+                new EmiInfoRecipe(eggList.stream().map(EmiIngredient::of).toList(), List.of(Component.translatable("info.zenith.capturing")), Apotheosis.syntheticLoc("spawn_egg_info")));
 
 
     }

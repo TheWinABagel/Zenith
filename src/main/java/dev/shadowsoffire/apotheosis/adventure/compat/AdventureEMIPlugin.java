@@ -38,13 +38,13 @@ public class AdventureEMIPlugin {
         RarityRegistry.INSTANCE.getValues().forEach(lootRarity -> gemlist.add(new GemIngredient(RarityRegistry.INSTANCE.holder(lootRarity)).toVanilla()));
 
         ZenithEMIPlugin.addRecipeSafe(registry, () ->
-                new EmiInfoRecipe(gemlist.stream().map(EmiIngredient::of).toList(), List.of(Component.translatable("info.zenith.socketing")), Apotheosis.loc("socketing_info")));
+                new EmiInfoRecipe(gemlist.stream().map(EmiIngredient::of).toList(), List.of(Component.translatable("info.zenith.socketing")), Apotheosis.syntheticLoc("socketing_info")));
 
         ZenithEMIPlugin.addRecipeSafe(registry, () ->
-                new EmiInfoRecipe(List.of(EmiStack.of(Adventure.Items.GEM_DUST)), List.of(Component.translatable("info.zenith.gem_crushing")), Apotheosis.loc("gem_crushing_info")));
+                new EmiInfoRecipe(List.of(EmiStack.of(Adventure.Items.GEM_DUST)), List.of(Component.translatable("info.zenith.gem_crushing")), Apotheosis.syntheticLoc("gem_crushing_info")));
 
         ZenithEMIPlugin.addRecipeSafe(registry, () ->
-                new EmiInfoRecipe(List.of(EmiStack.of(Adventure.Items.SIGIL_OF_SOCKETING)), List.of(Component.translatable("info.zenith.unnaming")), Apotheosis.loc("unnaming_info")));
+                new EmiInfoRecipe(List.of(EmiStack.of(Adventure.Items.SIGIL_OF_SOCKETING)), List.of(Component.translatable("info.zenith.unnaming")), Apotheosis.syntheticLoc("unnaming_info")));
 
 
         for (SalvagingRecipe recipe : registry.getRecipeManager().getAllRecipesFor(Adventure.RecipeTypes.SALVAGING)) {

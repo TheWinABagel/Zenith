@@ -77,8 +77,13 @@ public class Apotheosis implements ModInitializer {
         config.setComment("This file allows individual modules of Zenith to be enabled or disabled.\nChanges will have no effect until the next game restart.\nThis file must match on client and server.\nReport any issues found to https://github.com/TheWinABagel/Zenith/issues, not to Apotheosis!");
         if (config.hasChanged()) config.save();
     }
+
     public static ResourceLocation loc(String id) {
         return new ResourceLocation(MODID, id);
+    }
+
+    public static ResourceLocation syntheticLoc(String id) {
+        return loc("/" + id);
     }
 
     /**

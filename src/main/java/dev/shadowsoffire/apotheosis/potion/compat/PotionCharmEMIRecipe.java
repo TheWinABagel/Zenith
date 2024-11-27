@@ -7,6 +7,7 @@ import dev.emi.emi.api.recipe.EmiCraftingRecipe;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.runtime.EmiLog;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.potion.PotionModule;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -81,7 +82,8 @@ public class PotionCharmEMIRecipe extends EmiCraftingRecipe {
     }
 
     private static ResourceLocation getPotionId(ShapedRecipe recipe, ItemStack stack) {
-        return new ResourceLocation(recipe.getId() + "_" + BuiltInRegistries.POTION.getKey(PotionUtils.getPotion(stack)).getPath());
+//        var loc = new ResourceLocation(recipe.getId() + "_" + BuiltInRegistries.POTION.getKey(PotionUtils.getPotion(stack)).getPath());
+        return Apotheosis.syntheticLoc(recipe.getId().getPath() + "_" + BuiltInRegistries.POTION.getKey(PotionUtils.getPotion(stack)).getPath());
     }
 
     private static ItemStack getOutputCharm(ItemStack potionStack) {

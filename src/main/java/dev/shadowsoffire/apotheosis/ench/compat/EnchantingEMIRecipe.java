@@ -28,13 +28,17 @@ import java.util.List;
 
 public class EnchantingEMIRecipe implements EmiRecipe {
     private final EnchantingRecipe recipe;
+    protected final ResourceLocation id;
     protected EmiIngredient input;
     protected EmiStack output;
+
     private static final ResourceLocation TEXTURES = Apotheosis.loc( "textures/gui/enchanting_jei.png");
+
     public EnchantingEMIRecipe(EnchantingRecipe recipe) {
         this.recipe = recipe;
         this.input = EmiIngredient.of(recipe.getInput());
         this.output = EmiStack.of(recipe.getOutput());
+        this.id = recipe.getId();
     }
 
     @Override
@@ -43,8 +47,8 @@ public class EnchantingEMIRecipe implements EmiRecipe {
     }
 
     @Override
-    public @Nullable ResourceLocation getId() {
-        return recipe.getId();
+    public ResourceLocation getId() {
+        return this.id;
     }
 
     @Override

@@ -14,6 +14,6 @@ public class GardenEMIPlugin {
 
     public static void register(EmiRegistry registry) {
         ZenithEMIPlugin.addRecipeSafe(registry, () ->
-                new EmiInfoRecipe(List.of(EmiStack.of(GardenModule.ENDER_LEAD)), List.of(Component.translatable("info.zenith.ender_lead")), Apotheosis.loc("ender_lead_info")));
+                new EmiInfoRecipe(List.of(EmiStack.of(GardenModule.ENDER_LEAD)), List.of(Component.translatable("info.zenith.ender_lead")), Apotheosis.syntheticLoc("ender_lead_info")));
     }
 }

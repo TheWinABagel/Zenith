@@ -28,10 +28,10 @@ public class EnchEMIPlugin {
         registry.addWorkstation(ENCHANTING, EmiStack.of(Blocks.ENCHANTING_TABLE));
 
         ZenithEMIPlugin.addRecipeSafe(registry, () ->
-                new EmiInfoRecipe(List.of(EmiStack.of(Blocks.ENCHANTING_TABLE)), List.of(Component.translatable("info.zenith.enchanting")), Apotheosis.loc("enchanting_info")));
+                new EmiInfoRecipe(List.of(EmiStack.of(Blocks.ENCHANTING_TABLE)), List.of(Component.translatable("info.zenith.enchanting")), Apotheosis.syntheticLoc("enchanting_info")));
 
         ZenithEMIPlugin.addRecipeSafe(registry, () ->
-                new EmiInfoRecipe(List.of(EmiStack.of(Ench.Blocks.LIBRARY)), List.of(Component.translatable("info.zenith.library")), Apotheosis.loc("library_info")));
+                new EmiInfoRecipe(List.of(EmiStack.of(Ench.Blocks.LIBRARY)), List.of(Component.translatable("info.zenith.library")), Apotheosis.syntheticLoc("library_info")));
 
         for (EnchantingRecipe recipe : registry.getRecipeManager().getAllRecipesFor(Ench.RecipeTypes.INFUSION)) {
             ZenithEMIPlugin.addRecipeSafe(registry, () -> new EnchantingEMIRecipe(recipe), recipe);
@@ -45,12 +45,12 @@ public class EnchEMIPlugin {
         EnchantmentHelper.setEnchantments(ImmutableMap.of(Enchantments.SHARPNESS, 1), enchBook);
 
         ZenithEMIPlugin.addRecipeSafe(registry, () -> new AnvilCustomEMIRecipe(EmiStack.of(enchDiaSword), EmiStack.of(Blocks.COBWEB),
-               EmiStack.of(Items.DIAMOND_SWORD), Apotheosis.loc("zenith_custom_cobweb_anvil")));
+               EmiStack.of(Items.DIAMOND_SWORD), Apotheosis.syntheticLoc("zenith_custom_cobweb_anvil")));
         ZenithEMIPlugin.addRecipeSafe(registry, () -> new AnvilCustomEMIRecipe(EmiStack.of(cursedDiaSword), EmiStack.of(Ench.Items.PRISMATIC_WEB),
-                EmiStack.of(Items.DIAMOND_SWORD), Apotheosis.loc("zenith_custom_prismatic_cobweb_anvil")));
+                EmiStack.of(Items.DIAMOND_SWORD), Apotheosis.syntheticLoc("zenith_custom_prismatic_cobweb_anvil")));
         ZenithEMIPlugin.addRecipeSafe(registry, () -> new AnvilCustomEMIRecipe(EmiStack.of(enchDiaSword), EmiStack.of(Ench.Items.SCRAP_TOME),
-                EmiStack.of(enchBook), Apotheosis.loc("zenith_scrap_tome_anvil")));
+                EmiStack.of(enchBook), Apotheosis.syntheticLoc("zenith_scrap_tome_anvil")));
         ZenithEMIPlugin.addRecipeSafe(registry, () -> new AnvilCustomEMIRecipe(EmiStack.of(Items.DAMAGED_ANVIL), EmiStack.of(Blocks.IRON_BLOCK),
-                EmiStack.of(Blocks.ANVIL), Apotheosis.loc("zenith_anvil_repair")));
+                EmiStack.of(Blocks.ANVIL), Apotheosis.syntheticLoc("zenith_anvil_repair")));
     }
 }
