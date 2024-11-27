@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.mixin.village;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.village.wanderer.WandererReplacements;
 import net.minecraft.core.BlockPos;
@@ -14,9 +15,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(WanderingTraderSpawner.class)
@@ -24,17 +23,17 @@ public abstract class WandererSpawnerMixin {
 
     @Final @Shadow private RandomSource random;
 
-    @ModifyConstant(method = "tick", constant = @Constant(intValue = 75))
+    @ModifyExpressionValue(method = "tick",  at = @At(value = "CONSTANT", args = "intValue=75"))
     public int zenith$replaceMaxChance(int old) {
         return Apotheosis.enableVillage ? 90 : old;
     }
 
-    @ModifyConstant(method = "spawn", constant = @Constant(intValue = 10))
+    @ModifyExpressionValue(method = "spawn",  at = @At(value = "CONSTANT", args = "intValue=10"))
     public int zenith$replaceRng(int old) {
         return Apotheosis.enableVillage ? 4 : old;
     }
 
-    @ModifyConstant(method = "spawn", constant = @Constant(intValue = 48000))
+    @ModifyExpressionValue(method = "spawn", at = @At(value = "CONSTANT", args = "intValue=48000"))
     public int zenith$replaceDespawnDelay(int old) {
         return Apotheosis.enableVillage ? 28000 : old;
     }

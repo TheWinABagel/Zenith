@@ -1,5 +1,6 @@
 package dev.shadowsoffire.apotheosis.mixin.ench.enchantment;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.shadowsoffire.apotheosis.Apotheosis;
@@ -16,6 +17,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -28,7 +30,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//todo this sucks
 @Mixin(Sheep.class)
 public abstract class SheepMixin implements IShearHelper {
 
@@ -63,7 +65,7 @@ public abstract class SheepMixin implements IShearHelper {
         return instance.getColor();
     }
 
-    @ModifyConstant(method = "shear", constant = @Constant(intValue = 3), remap = false)
+    @ModifyExpressionValue(method = "shear", at = @At(value = "CONSTANT", args = "intValue=3"), remap = false)
     private int zenith$applyFortune(int oldVal) {
         if (!Apotheosis.enableEnch || shears.isEmpty()) return oldVal;
         return oldVal + (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, shears)) * 2;
