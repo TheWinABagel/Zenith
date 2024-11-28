@@ -1,23 +1,19 @@
 package dev.shadowsoffire.apotheosis.potion;
 
-import dev.emi.trinkets.api.Trinket;
-import dev.emi.trinkets.api.TrinketsApi;
 import dev.shadowsoffire.apotheosis.Apoth;
 import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.objects.GlowyBlockItem;
-import dev.shadowsoffire.apotheosis.potion.compat.PotionCharmTrinket;
 import dev.shadowsoffire.apotheosis.util.ZenithModCompat;
 import dev.shadowsoffire.attributeslib.api.ALObjects;
 import dev.shadowsoffire.placebo.config.Configuration;
 import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -30,6 +26,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 
 public class PotionModule {
 
@@ -39,6 +38,8 @@ public class PotionModule {
     public static int knowledgeMult = 4;
     public static boolean charmsInTrinketsOnly = false;
     public static boolean yeetInvalidCharms = false;
+
+    public static List<CharmMatcher> LIMITED_CHARMS = new ArrayList<>();
 
     public static boolean resistanceEnabled = true;
     public static boolean sunderingEnabled = true;
@@ -61,16 +62,6 @@ public class PotionModule {
         drops();
 
         ZenithModCompat.Potion.registerTrinkets();
-//        if (FabricLoader.getInstance().isModLoaded("trinkets")) {
-//            LivingEntityEvents.LivingTickEvent.TICK.register(e -> {
-//                LivingEntity entity = e.getEntity();
-//                TrinketsApi.getTrinketComponent(entity).ifPresent(c -> c.forEach((slotReference, stack) -> {
-//                    if (stack.getItem() instanceof PotionCharmItem charm) {
-//                        charm.charmLogic(stack, entity.level(), entity, slotReference.index(), false);
-//                    }
-//                }));
-//            });
-//        }
     }
 
     public static void items() {
@@ -116,19 +107,27 @@ public class PotionModule {
                 LOGGER.error("Invalid extended potion charm entry {} will be ignored.", s);
             }
         }
-        String[] defDis = { "modid:charm_id" };
+
+        String[] defDis = { "modid:charm_id", "modid:charm_id_two|3" };
         String[] disabled = config.getStringList("Disabled Potion Charms", "general", defDis,
-                "A list of effects that will be unable to be crafted into charms.\nServer-authoritative.");
+                "Disabled Charm Rules, in the form of Charm Matchers, permitting potion charms to reach a certain level.\n" +
+                        "The format for these is domain:pattern|max and domain is optional.  Domain is a modid, pattern is a regex string, and max is a positive integer that is the maximum possible charm level.\n" +
+                        "If you omit the domain, the format is pattern|chance, and the matcher will run for all domains.\n" +
+                        "The pattern MUST be a valid regex string, and should match the paths of desired loot tables under the specified domain.  Note: \"Match Any Character\" is \".*\" (dot star) and not \"*\" (star).\n" +
+                        "If there is a match, a charm up that level (inclusive) can be crafted.\n" +
+                        "Server-authoritative.");
         yeetInvalidCharms = config.getBoolean("Yeet Uncraftable Charms", "general", yeetInvalidCharms, "If charms that are uncraftable are removed from the user.");
-        PotionCharmItem.DISABLED_POTIONS.clear();
+        PotionModule.LIMITED_CHARMS.clear();
         for (String s : disabled) {
             try {
-                PotionCharmItem.DISABLED_POTIONS.add(new ResourceLocation(s));
+                PotionModule.LIMITED_CHARMS.add(CharmMatcher.parse(s));
             }
-            catch (ResourceLocationException ex) {
+            catch (Exception ex) {
                 LOGGER.error("Invalid disabled potion charm entry {} will be ignored.", s);
+                ex.printStackTrace();
             }
         }
+
         config.setCategoryComment("brewing", "All brewing recipe disables are Server-authoritative.");
         resistanceEnabled = config.getBoolean("Resistance", "brewing", resistanceEnabled, "If this potion type will be craftable in the brewing stand.");
         sunderingEnabled = config.getBoolean("Sundering", "brewing", sunderingEnabled, "If this potion type will be craftable in the brewing stand.");
@@ -244,5 +243,44 @@ public class PotionModule {
         public static final net.minecraft.world.item.alchemy.Potion FLYING = Apoth.registerPot(new net.minecraft.world.item.alchemy.Potion("flying", new MobEffectInstance(ALObjects.MobEffects.FLYING, 9600)), "flying");
         public static final net.minecraft.world.item.alchemy.Potion LONG_FLYING = Apoth.registerPot(new net.minecraft.world.item.alchemy.Potion("flying", new MobEffectInstance(ALObjects.MobEffects.FLYING, 18000)), "long_flying");
         public static final net.minecraft.world.item.alchemy.Potion EXTRA_LONG_FLYING = Apoth.registerPot(new net.minecraft.world.item.alchemy.Potion("flying", new MobEffectInstance(ALObjects.MobEffects.FLYING, 36000)), "extra_long_flying");
+    }
+
+    public static record CharmMatcher(String domain, Pattern pathRegex, int maxLevel) {
+
+        public static boolean isDisabled(MobEffect effect, int amplifier) {
+            return isDisabled(BuiltInRegistries.MOB_EFFECT.getKey(effect), amplifier);
+        }
+
+        public static boolean isDisabled(ResourceLocation id, int amplifier) {
+            return PotionModule.LIMITED_CHARMS.stream().anyMatch(charmMatcher -> charmMatcher.matches(id, amplifier + 1));
+        }
+
+        public boolean matches(MobEffect effect, int amplifier) {
+            ResourceLocation id = BuiltInRegistries.MOB_EFFECT.getKey(effect);
+            return matches(id, amplifier);
+        }
+
+        public boolean matches(ResourceLocation id, int amplifier) {
+            return (this.domain == null || this.domain.equals(id.getNamespace())) && this.pathRegex.matcher(id.getPath()).matches() && (amplifier == maxLevel || maxLevel == Integer.MAX_VALUE);
+        }
+
+        public static CharmMatcher parse(String s) throws Exception {
+            int pipe = s.lastIndexOf('|');
+            int colon = s.indexOf(':');
+            int maxLevel = Integer.MAX_VALUE;
+            if (pipe > 0) {
+                maxLevel = Integer.parseInt(s.substring(pipe + 1));
+                if (maxLevel < 1) {
+                    throw new Exception("Level " + maxLevel + " cannot be less than 1!");
+                }
+            }
+            else {
+                //if no pipe, compile pattern to the end of the string
+                pipe = s.length();
+            }
+            String domain = s.substring(0, colon);
+            Pattern pattern = Pattern.compile(s.substring(colon + 1, pipe));
+            return new CharmMatcher(domain, pattern, maxLevel);
+        }
     }
 }

@@ -37,7 +37,6 @@ import java.util.Set;
 public class PotionCharmItem extends Item implements CustomEnchantingBehaviorItem, DamageableItem {
 
     public static final Set<ResourceLocation> EXTENDED_POTIONS = new HashSet<>();
-    public static final Set<ResourceLocation> DISABLED_POTIONS = new HashSet<>();
 
     public PotionCharmItem() {
         super(new Properties().stacksTo(1).durability(192));
@@ -59,20 +58,22 @@ public class PotionCharmItem extends Item implements CustomEnchantingBehaviorIte
         if (!hasEffect(stack)) return;
         if (stack.getOrCreateTag().getBoolean("charm_enabled") && entity instanceof ServerPlayer serverPlayer) {
             MobEffectInstance contained = getEffect(stack);
-            MobEffectInstance active = serverPlayer.getEffect(contained.getEffect());
+            MobEffect eff = contained.getEffect();
+            MobEffectInstance active = serverPlayer.getEffect(eff);
 
             if (active == null || active.getDuration() < getCriticalDuration(active.getEffect())) {
-                int durationOffset = getCriticalDuration(contained.getEffect());
-                if (contained.getEffect() == MobEffects.REGENERATION) durationOffset += 50 >> contained.getAmplifier();
-                MobEffectInstance newEffect = new MobEffectInstance(contained.getEffect(), (int) Math.ceil(contained.getDuration() / 24D) + durationOffset, contained.getAmplifier(), false, false);
+                int durationOffset = getCriticalDuration(eff);
+                if (eff == MobEffects.REGENERATION) durationOffset += 50 >> contained.getAmplifier();
+                MobEffectInstance newEffect = new MobEffectInstance(eff, (int) Math.ceil(contained.getDuration() / 24D) + durationOffset, contained.getAmplifier(), false, false);
                 serverPlayer.addEffect(newEffect);
                 if (!serverPlayer.isCreative()) {
-                    if (stack.hurt(contained.getEffect() == MobEffects.REGENERATION ? 2 : 1, world.random, (ServerPlayer) entity)) stack.shrink(1);
+                    if (stack.hurt(eff == MobEffects.REGENERATION ? 2 : 1, world.random, (ServerPlayer) entity)) stack.shrink(1);
                 }
             }
-            if (PotionCharmItem.DISABLED_POTIONS.contains(BuiltInRegistries.MOB_EFFECT.getKey(contained.getEffect())) && PotionModule.yeetInvalidCharms) {
+            boolean matches = PotionModule.CharmMatcher.isDisabled(eff, contained.getAmplifier());
+            if (matches && PotionModule.yeetInvalidCharms) {
                 stack.setCount(0);
-                serverPlayer.displayClientMessage(Component.literal("Illegal charm yeeted, don't die ;)"), false);
+                serverPlayer.displayClientMessage(Component.literal("Illegal charm " + eff.getDescriptionId() + " yeeted, don't die ;)").withStyle(ChatFormatting.RED), false);
             }
         }
     }
@@ -114,7 +115,7 @@ public class PotionCharmItem extends Item implements CustomEnchantingBehaviorIte
         }
         if (hasEffect(stack)) {
             MobEffectInstance effect = getEffect(stack);
-            if (DISABLED_POTIONS.contains(BuiltInRegistries.MOB_EFFECT.getKey(effect.getEffect()))){
+            if (PotionModule.CharmMatcher.isDisabled(effect.getEffect(), effect.getAmplifier())){
                 tooltip.add(Component.translatable(this.getDescriptionId() + ".crafting_disabled").withStyle(ChatFormatting.RED));
             }
             MutableComponent potionCmp = Component.translatable(effect.getDescriptionId());
@@ -174,7 +175,7 @@ public class PotionCharmItem extends Item implements CustomEnchantingBehaviorIte
 
     public static void fillItemCategory(CreativeModeTab.Output out) {
         for (Potion potion : BuiltInRegistries.POTION) {
-            if (potion.getEffects().size() == 1 && !potion.getEffects().get(0).getEffect().isInstantenous() && !DISABLED_POTIONS.contains(BuiltInRegistries.MOB_EFFECT.getKey(potion.getEffects().get(0).getEffect()))) {
+            if (potion.getEffects().size() == 1 && !potion.getEffects().get(0).getEffect().isInstantenous() && !PotionModule.CharmMatcher.isDisabled(potion.getEffects().get(0).getEffect(), potion.getEffects().get(0).getAmplifier())) {
                 out.accept(PotionUtils.setPotion(new ItemStack(PotionModule.POTION_CHARM), potion));
             }
         }
