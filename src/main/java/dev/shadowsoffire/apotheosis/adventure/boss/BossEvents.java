@@ -83,6 +83,9 @@ public class BossEvents {
                             return true; // Spawns require player context
                         }
                         ApothBoss item = BossRegistry.INSTANCE.getRandomItem(rand, player.getLuck(), IDimensional.matches(sLevel.getLevel()), IStaged.matches(player));
+                        if (item == null) {
+                            return true; // Item is null if dim has no bosses (most likely impl issue for IDimensional)
+                        }
                         Mob boss = item.createBoss(sLevel, BlockPos.containing(x - 0.5, y, z - 0.5), rand, player.getLuck());
                         if (AdventureConfig.bossAutoAggro && !player.isCreative()) {
                             boss.setTarget(player);
