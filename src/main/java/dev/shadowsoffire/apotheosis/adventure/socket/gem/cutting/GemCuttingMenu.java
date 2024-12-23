@@ -47,13 +47,13 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
         super(Menus.GEM_CUTTING, id, playerInv);
         this.player = playerInv.player;
         this.access = access;
-        this.addSlot(new UpdatingSlot(this.inventory, 0, 62, 45, stack -> GemItem.getGem(stack).isBound()));
+        this.addSlot(new UpdatingSlot(this.inventory, 0, 62, 45, stack -> stack.getCount() == 1 && GemItem.getGem(stack).isBound()));
         this.addSlot(new UpdatingSlot(this.inventory, 1, 90, 64, stack -> stack.getItem() == Items.GEM_DUST));
         this.addSlot(new UpdatingSlot(this.inventory, 2, 33, 64, this::matchesMainGem));
         this.addSlot(new UpdatingSlot(this.inventory, 3, 62, 12, this::isValidMaterial));
 
         this.addPlayerSlots(playerInv, 8, 98);
-        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.inventory.getItem(0).isEmpty() && GemCuttingMenu.isValidMainGem(stack), 0, 1);
+        this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.inventory.getItem(0).isEmpty() && GemCuttingMenu.isValidMainGem(stack) && stack.getCount() == 1, 0, 1);
         this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && stack.getItem() == Items.GEM_DUST, 1, 2);
         this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.matchesMainGem(stack), 2, 3);
         this.mover.registerRule((stack, slot) -> slot >= this.playerInvStart && this.isValidMaterial(stack), 3, 4);
@@ -65,6 +65,10 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
     public boolean clickMenuButton(Player player, int id) {
         if (id == 0) {
             ItemStack gem = this.inventory.getItem(0);
+            if (gem.getCount() > 1)
+            {
+                return false;
+            }
             ItemStack left = this.inventory.getItem(1);
             ItemStack bot = this.inventory.getItem(2);
             ItemStack right = this.inventory.getItem(3);
@@ -84,7 +88,7 @@ public class GemCuttingMenu extends PlaceboContainerMenu {
 
     public static boolean isValidMainGem(ItemStack stack) {
         GemInstance inst = GemInstance.unsocketed(stack);
-        return inst.isValidUnsocketed() && !inst.isMaxRarity();
+        return inst.isValidUnsocketed() && !inst.isMaxRarity() && stack.getCount() == 1;
     }
 
     protected boolean isValidMaterial(ItemStack stack) {
