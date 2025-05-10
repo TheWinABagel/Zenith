@@ -2,6 +2,11 @@
 * yeet the porting lib
 * add compat for fancy enchant descriptions mod that aof has
 
+## 1.2.4
+* Add a warning if easymagic/easyanvils is installed
+* Fix End remastered cryptic eye not being obtainable 
+* Fix spell engine enchants showing up on items they shouldn't
+
 ## 1.2.3
 * Fix Warden Tendril drops
 

@@ -1,5 +1,7 @@
 package dev.shadowsoffire.apotheosis.mixin.compat.clean_tooltips.absent;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.shadowsoffire.apotheosis.ench.asm.EnchHooks;
 import dev.shadowsoffire.placebo.events.PlaceboEventFactory;
 import net.minecraft.ChatFormatting;
@@ -14,17 +16,14 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.*;
 
 @Mixin(value = ItemStack.class, priority = 500)
 public abstract class ItemStackMixin {
 
-    @Unique
-    private static void appendModifiedEnchTooltip(List<Component> tooltip, Enchantment ench, int realLevel, int nbtLevel) {
+    private static void zenith$appendModifiedEnchTooltip(List<Component> tooltip, Enchantment ench, int realLevel, int nbtLevel) {
         MutableComponent mc = ench.getFullname(realLevel).copy();
         mc.getSiblings().clear();
         Component nbtLevelComp = Component.translatable("enchantment.level." + nbtLevel);
@@ -42,11 +41,10 @@ public abstract class ItemStackMixin {
     }
 
     /**
-     * Rewrites the enchantment tooltip lines to include the effective level, as well as the (NBT + bonus) calculation.
+     * Modifies the enchantment tooltip lines to include the effective level, as well as the (NBT + bonus) calculation.
      */
-    @SuppressWarnings("deprecation")
-    @Redirect(method = "getTooltipLines", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;appendEnchantmentNames(Ljava/util/List;Lnet/minecraft/nbt/ListTag;)V"))
-    public void zenith$enchTooltipRewrite(List<Component> tooltip, ListTag tagEnchants) {
+    @WrapOperation(method = "getTooltipLines", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;appendEnchantmentNames(Ljava/util/List;Lnet/minecraft/nbt/ListTag;)V"))
+    public void zenith$tooltipAddEnchantmentLinesWrapper(List<Component> tooltip, ListTag tagEnchants, Operation<Void> original) {
         ItemStack ths = (ItemStack) (Object) this;
         Map<Enchantment, Integer> realLevels = new HashMap<>(EnchantmentHelper.getEnchantments(ths));
         List<Component> enchTooltips = new ArrayList<>();
@@ -68,7 +66,7 @@ public abstract class ItemStackMixin {
             }
             else {
                 // Show the change vs nbt level
-                appendModifiedEnchTooltip(enchTooltips, ench, realLevel, nbtLevel);
+                zenith$appendModifiedEnchTooltip(enchTooltips, ench, realLevel, nbtLevel);
             }
         }
 
@@ -78,9 +76,7 @@ public abstract class ItemStackMixin {
         if(ths.is(Items.ENCHANTED_BOOK)) return;
         // Show the tooltip for any modified enchantments not present in NBT.
         for (Map.Entry<Enchantment, Integer> real : realLevels.entrySet()) {
-            if (real.getValue() > 0) appendModifiedEnchTooltip(tooltip, real.getKey(), real.getValue(), 0);
+            if (real.getValue() > 0) zenith$appendModifiedEnchTooltip(tooltip, real.getKey(), real.getValue(), 0);
         }
     }
-
-
 }

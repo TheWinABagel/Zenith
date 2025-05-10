@@ -5,6 +5,7 @@ import dev.shadowsoffire.apotheosis.ench.Ench;
 import dev.shadowsoffire.apotheosis.ench.api.IEnchantingBlock;
 import dev.shadowsoffire.apotheosis.mixin.accessors.EnchantmentMenuAccessor;
 import dev.shadowsoffire.apotheosis.util.ApothMiscUtil;
+import dev.shadowsoffire.apotheosis.util.ZenithModCompat;
 import dev.shadowsoffire.placebo.util.EnchantmentUtils;
 import io.github.fabricators_of_create.porting_lib.tags.Tags;
 import it.unimi.dsi.fastutil.floats.Float2FloatMap;
@@ -126,6 +127,7 @@ public class ApothEnchantmentMenu extends EnchantmentMenu {
             if (!list.isEmpty()) {
                 EnchantmentUtils.chargeExperience(player, ApothMiscUtil.getExpCostForSlot(level, slot));
                 player.onEnchantmentPerformed(toEnchant, 0); // Pass zero here instead of the cost so no experience is taken, but the method is still called for tracking reasons.
+                ZenithModCompat.Ench.endRemasteredEnchHook(player);
                 if (list.get(0).enchantment == Ench.Enchantments.INFUSION) {
                     EnchantingRecipe match = EnchantingRecipe.findMatch(world, toEnchant, eterna, quanta, arcana);
                     if (match != null) ((EnchantmentMenuAccessor) this).getEnchantSlots().setItem(0, match.assemble(toEnchant, eterna, quanta, arcana));

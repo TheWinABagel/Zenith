@@ -48,7 +48,7 @@ public class GemCuttingEMIRecipe implements EmiRecipe {
             this.materials[1] = new ItemStack(rarity.getMaterial(), GemCuttingMenu.STD_MAT_COST);
             this.materials[2] = new ItemStack(rarity.next().getMaterial(), GemCuttingMenu.NEXT_MAT_COST);
         }
-        this.id = Apotheosis.loc(gem.getId().getPath() + "." + rarity.getMaterial().getDescriptionId());
+        this.id = Apotheosis.syntheticLoc(gem.getId().getPath() + "." + rarity.getMaterial().getDescriptionId());
     }
 
     @Override

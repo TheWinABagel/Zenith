@@ -15,6 +15,8 @@ import dev.shadowsoffire.apotheosis.adventure.socket.SocketHelper;
 import dev.shadowsoffire.apotheosis.adventure.socket.gem.GemRegistry;
 import dev.shadowsoffire.apotheosis.cca.ZenithComponents;
 import dev.shadowsoffire.apotheosis.util.Events;
+import dev.shadowsoffire.apotheosis.util.ZenithModCompat;
+import dev.shadowsoffire.attributeslib.api.events.LivingHurtEvent;
 import dev.shadowsoffire.placebo.events.AnvilLandCallback;
 import dev.shadowsoffire.placebo.events.GetEnchantmentLevelEvent;
 import dev.shadowsoffire.placebo.events.ItemUseEvent;
@@ -70,7 +72,7 @@ public class AdventureEvents {
         gemSmashing();
         enchLevels();
         update();
-        if (FabricLoader.getInstance().isModLoaded("spell_engine")) onSpellCast();
+        ZenithModCompat.Adventure.spellEngineCast();
     }
 
     public static void cmds() {
@@ -100,7 +102,7 @@ public class AdventureEvents {
     }
 
     public static void preventBossSuffocate() {
-        LivingEntityEvents.HURT.register((source, damaged, amount) -> {
+        LivingHurtEvent.EVENT.register((source, damaged, amount) -> {
             if (damaged.getCustomData().contains("apoth.boss")) {
                 ZenithComponents.BOSS_DATA.get(damaged).setIsBoss(damaged.getCustomData().getBoolean("apoth.boss"));
                 damaged.getCustomData().remove("apoth.boss");
@@ -119,7 +121,6 @@ public class AdventureEvents {
 
     public static void fireArrow(AbstractArrow arrow) {
         if (!ZenithComponents.GENERATED_ARROW.get(arrow).getValue()) {
-            Entity shooter = arrow.getOwner();
             if (arrow.getOwner() instanceof LivingEntity user) {
                 ItemStack bow = user.getUseItem();
                 if (bow.isEmpty()) {
@@ -153,7 +154,7 @@ public class AdventureEvents {
     }
 
     public static void onDamage() {
-        LivingEntityEvents.HURT.register((source, damaged, amount) -> {
+        LivingHurtEvent.EVENT.register((source, damaged, amount) -> {
             float finalAmount = amount;
             Adventure.Affixes.MAGICAL.getOptional().ifPresent(afx -> afx.onHurt(source, damaged, finalAmount));
             amount = finalAmount;
@@ -312,29 +313,10 @@ public class AdventureEvents {
         }));
     }
 
-    /**
-     * Allows bosses that descend from {@link net.minecraft.world.entity.animal.AbstractGolem} to despawn naturally, only after they have existed for 10 minutes.
-     * Without this, they'll pile up forever - https://github.com/Shadows-of-Fire/Apotheosis/issues/1248
-     */
-    //todo MOB SPAWN EVENT, will cause issues if not implemented
-/*    @SubscribeEvent
-    public void despawn(MobSpawnEvent.AllowDespawn e) {
-        if (e.getEntity() instanceof AbstractGolem g && g.tickCount > 12000 && ZenithComponents.BOSS_DATA.get(living).getIsBoss()) {
-            Entity player = g.level().getNearestPlayer(g, -1.0D);
-            if (player != null) {
-                double dist = player.distanceToSqr(g);
-                int despawnDist = g.getType().getCategory().getDespawnDistance();
-                int dsDistSq = despawnDist * despawnDist;
-                if (dist > dsDistSq) {
-                    e.setResult(Result.ALLOW);
-                }
-            }
-        }
-    }*/
-
     @SuppressWarnings("deprecation")
     public static void update() {
-        LivingEntityEvents.TICK.register(entity -> {
+        LivingEntityEvents.LivingTickEvent.TICK.register(e -> {
+            LivingEntity entity = e.getEntity();
             if (entity.getCustomData().contains("apoth.burns_in_sun")) {
                 ZenithComponents.BURNS.get(entity).setValue(entity.getCustomData().getBoolean("apoth.burns_in_sun"));
                 entity.getCustomData().remove("apoth.burns_in_sun");

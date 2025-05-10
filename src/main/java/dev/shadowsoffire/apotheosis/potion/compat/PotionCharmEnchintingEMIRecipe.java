@@ -1,6 +1,7 @@
 package dev.shadowsoffire.apotheosis.potion.compat;
 
 import dev.emi.emi.api.stack.EmiStack;
+import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.compat.EnchantingEMIRecipe;
 import dev.shadowsoffire.apotheosis.ench.table.EnchantingRecipe;
 import dev.shadowsoffire.apotheosis.potion.PotionModule;
@@ -36,7 +37,7 @@ public class PotionCharmEnchintingEMIRecipe extends EnchantingEMIRecipe {
     private ResourceLocation getRecipeId(ItemStack stack) {
         Potion pot = PotionUtils.getPotion(stack);
         MobEffectInstance contained = pot.getEffects().get(0);
-        return new ResourceLocation(BuiltInRegistries.MOB_EFFECT.getKey(contained.getEffect()) + "_" + contained.getAmplifier() + "_" + contained.getDuration());
+        return Apotheosis.syntheticLoc(BuiltInRegistries.MOB_EFFECT.getKey(contained.getEffect()).getPath() + "_" + contained.getAmplifier() + "_" + contained.getDuration());
     }
 
     @Override

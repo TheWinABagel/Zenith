@@ -5,6 +5,7 @@ import dev.shadowsoffire.apotheosis.Apotheosis;
 import dev.shadowsoffire.apotheosis.ench.EnchModule;
 import dev.shadowsoffire.apotheosis.ench.EnchantmentInfo;
 import dev.shadowsoffire.apotheosis.ench.table.ApothEnchantmentMenu.Arcana;
+import dev.shadowsoffire.apotheosis.util.ZenithModCompat;
 import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingBehaviorItem;
 import io.github.fabricators_of_create.porting_lib.enchant.CustomEnchantingTableBehaviorEnchantment;
 import net.minecraft.Util;
@@ -135,8 +136,9 @@ public class RealEnchantmentHelper {
             if (enchantment instanceof CustomEnchantingTableBehaviorEnchantment customEnch) special = customEnch.canApplyAtEnchantingTable(stack);
             if (stack.getItem() instanceof CustomEnchantingBehaviorItem customItem) special = customItem.canApplyAtEnchantingTable(stack, enchantment);
             if (blacklist.contains(enchantment)) continue;
+            if (ZenithModCompat.Ench.isProhibitedSpellEngine(enchantment, stack)) continue;
 
-            if (special || enchantment.canEnchant(stack) || item.forciblyAllowsTableEnchantment(stack, enchantment) ) {
+            if (special || enchantment.canEnchant(stack) || item.forciblyAllowsTableEnchantment(stack, enchantment) || ZenithModCompat.Ench.isPermittedSpellEngine(enchantment, stack)) {
                 for (int level = info.getMaxLevel(); level > enchantment.getMinLevel() - 1; --level) {
                     if (power >= info.getMinPower(level) && (power >= info.getMaxPower(level) || level == enchantment.getMinLevel())) {
                         list.add(new EnchantmentInstance(enchantment, level));

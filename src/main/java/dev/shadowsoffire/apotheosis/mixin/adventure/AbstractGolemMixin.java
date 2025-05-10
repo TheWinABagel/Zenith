@@ -10,6 +10,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(AbstractGolem.class)
 public class AbstractGolemMixin {
+
+    /**
+     * Allows bosses that descend from {@link net.minecraft.world.entity.animal.AbstractGolem} to despawn naturally, only after they have existed for 10 minutes.
+     * Without this, they'll pile up forever - https://github.com/Shadows-of-Fire/Apotheosis/issues/1248
+     */
     @Inject(method = "removeWhenFarAway", at = @At("HEAD"), cancellable = true)
     private void zenith$fixBossesNotDespawning(double dist, CallbackInfoReturnable<Boolean> cir) {
         if (!Apotheosis.enableAdventure) return;

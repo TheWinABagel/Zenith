@@ -20,10 +20,9 @@ public abstract class AdventureContainerScreen<T extends AbstractContainerMenu> 
     @Override
     protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) {}
 
-    //todo slot color, search for 2130706433 in AbstractContainerScreen
-/*    @Override
+//    @Override
     public int getSlotColor(int index) {
         return 0x40FFFFFF;
-    }*/
+    }
 
 }

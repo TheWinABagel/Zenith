@@ -52,7 +52,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Mixin(value = AnvilBlock.class, priority = 1500)
-public abstract class AnvilBlockMixin  extends FallingBlock implements INBTSensitiveFallingBlock, EntityBlock {
+public abstract class AnvilBlockMixin extends FallingBlock implements INBTSensitiveFallingBlock, EntityBlock {
 
     public AnvilBlockMixin(Properties properties) {
         super(properties);
@@ -67,10 +67,9 @@ public abstract class AnvilBlockMixin  extends FallingBlock implements INBTSensi
     @Environment(EnvType.CLIENT)
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable BlockGetter blockGetter, List<Component> list, TooltipFlag tooltipFlag) {
-        if (Apotheosis.enableEnch) {
-            if (EnchModule.isVanillaAnvil(itemStack)) {
-                if (!itemStack.hasFoil())
-                    list.add(Component.translatable("info.zenith.anvil").withStyle(ChatFormatting.GRAY));
+        if (Apotheosis.enableEnch && EnchModule.isVanillaAnvil(itemStack)) {
+            if (!itemStack.hasFoil()) {
+                list.add(Component.translatable("info.zenith.anvil").withStyle(ChatFormatting.GRAY));
             }
         }
     }
