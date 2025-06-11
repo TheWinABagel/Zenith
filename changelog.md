@@ -1,6 +1,7 @@
-### TODO
-* yeet the porting lib
-* add compat for fancy enchant descriptions mod that aof has
+
+
+## 1.2.5
+* Fix some tooltip log spam with EMI
 
 ## 1.2.4
 * Add a warning if easymagic/easyanvils is installed
