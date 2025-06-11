@@ -53,18 +53,19 @@ public class EnchModuleClient {
                 if (world == null || Minecraft.getInstance().player == null) return;
                 BlockPlaceContext ctx = new BlockPlaceContext(world, Minecraft.getInstance().player, InteractionHand.MAIN_HAND, stack, res){};
                 BlockState state = null;
-                try {
-                    state = block.getStateForPlacement(ctx);
-                }
-                catch (Exception ex) {
-                    // Since we're calling with an invalid context, this may fail, and we need to handle that quietly.
-                    EnchModule.LOGGER.trace(ex.getMessage());
-                    StackTraceElement[] trace = ex.getStackTrace();
-                    for (StackTraceElement traceElement : trace)
-                        EnchModule.LOGGER.trace("\tat " + traceElement);
-                }
-
-                if (state == null) state = block.defaultBlockState();
+                //id make this a todo if i ever actually updated this mod: causes crashes with emi, investigate?
+//                try {
+//                    state = block.getStateForPlacement(ctx);
+//                }
+//                catch (Exception ex) {
+//                    // Since we're calling with an invalid context, this may fail, and we need to handle that quietly.
+//                    EnchModule.LOGGER.trace(ex.getMessage());
+//                    StackTraceElement[] trace = ex.getStackTrace();
+//                    for (StackTraceElement traceElement : trace)
+//                        EnchModule.LOGGER.trace("\tat " + traceElement);
+//                }
+//                if (state == null)
+                    state = block.defaultBlockState();
                 float maxEterna = EnchantingStatRegistry.getMaxEterna(state, world, BlockPos.ZERO);
                 float eterna = EnchantingStatRegistry.getEterna(state, world, BlockPos.ZERO);
                 float quanta = EnchantingStatRegistry.getQuanta(state, world, BlockPos.ZERO);
