@@ -182,25 +182,13 @@ public class Adventure {
     public static class Features {
 
         public static final Feature<NoneFeatureConfiguration> BOSS_DUNGEON = Registry.register(BuiltInRegistries.FEATURE, Apotheosis.loc("boss_dungeon"), new BossDungeonFeature());
-
         public static final Feature<NoneFeatureConfiguration> BOSS_DUNGEON_2 = Registry.register(BuiltInRegistries.FEATURE, Apotheosis.loc("boss_dungeon_2"), new BossDungeonFeature2());
-
         public static final Feature<RogueSpawnerFeature.Config> ROGUE_SPAWNER = Registry.register(BuiltInRegistries.FEATURE, Apotheosis.loc("rogue_spawner"), new RogueSpawnerFeature());;
-        public static final StructureProcessorType<ItemFrameGemsProcessor> ITEM_FRAME_GEMS;
-        public static final StructureProcessorType<ItemFrameGemsProcessorYung> ITEM_FRAME_GEMS_YUNG;
-        static {
-            //todo remove when yung fixes mixin compat
-            if (FabricLoader.getInstance().isModLoaded("yungsapi") && FabricLoader.getInstance().getModContainer("yungsapi").get().getMetadata().getVersion().getFriendlyString().equals("1.20-Fabric-4.0.4")) {
-                ITEM_FRAME_GEMS_YUNG = Registry.register(BuiltInRegistries.STRUCTURE_PROCESSOR, Apotheosis.loc("item_frame_gems"), () -> ItemFrameGemsProcessorYung.CODEC);
-                ITEM_FRAME_GEMS = null;
-            }
-            else {
-                ITEM_FRAME_GEMS = Registry.register(BuiltInRegistries.STRUCTURE_PROCESSOR, Apotheosis.loc("item_frame_gems"), () -> ItemFrameGemsProcessor.CODEC);
-                ITEM_FRAME_GEMS_YUNG = null;
-            }
-        }
+        public static final StructureProcessorType<ItemFrameGemsProcessor> ITEM_FRAME_GEMS = Registry.register(BuiltInRegistries.STRUCTURE_PROCESSOR, Apotheosis.loc("item_frame_gems"), () -> ItemFrameGemsProcessor.CODEC);
+
         public static void bootstrap() {}
     }
+
     public static class Sounds {
         private static final ResourceLocation REFORGE_ID = Apotheosis.loc("reforge");
         public static final SoundEvent REFORGE = Registry.register(BuiltInRegistries.SOUND_EVENT, REFORGE_ID, SoundEvent.createVariableRangeEvent(REFORGE_ID));

@@ -50,7 +50,8 @@ public class PotionCharmRecipe extends ShapedRecipe {
     public static void getValidPotions(List<ItemStack> addedList) {
         for (Potion p : BuiltInRegistries.POTION) {
             if (p.getEffects().size() != 1 || p.getEffects().get(0).getEffect().isInstantenous()) continue;
-            if (PotionCharmItem.DISABLED_POTIONS.contains(BuiltInRegistries.MOB_EFFECT.getKey(p.getEffects().get(0).getEffect()))) continue;
+            ResourceLocation id = BuiltInRegistries.MOB_EFFECT.getKey(p.getEffects().get(0).getEffect());
+            if (PotionModule.CharmMatcher.isDisabled(id, p.getEffects().get(0).getAmplifier())) continue;
             ItemStack potion = new ItemStack(Items.POTION);
             PotionUtils.setPotion(potion, p);
             addedList.add(potion);
@@ -88,7 +89,7 @@ public class PotionCharmRecipe extends ShapedRecipe {
     public boolean matches(CraftingContainer inv, Level world) {
         if (super.matches(inv, world)) {
             List<Potion> potions = this.potionSlots.intStream().mapToObj(s -> inv.getItem(s)).map(PotionUtils::getPotion).collect(Collectors.toList());
-            if (potions.size() > 0 && potions.stream().allMatch(p -> p != null && p.getEffects().size() == 1 && !p.getEffects().get(0).getEffect().isInstantenous() && !PotionCharmItem.DISABLED_POTIONS.contains(BuiltInRegistries.MOB_EFFECT.getKey(p.getEffects().get(0).getEffect())))) {
+            if (potions.size() > 0 && potions.stream().allMatch(p -> p != null && p.getEffects().size() == 1 && !p.getEffects().get(0).getEffect().isInstantenous() && !PotionModule.CharmMatcher.isDisabled(p.getEffects().get(0).getEffect(), p.getEffects().get(0).getAmplifier()))) {
                 return potions.stream().distinct().count() == 1;
             }
         }

@@ -9,6 +9,7 @@ import dev.shadowsoffire.apotheosis.potion.PotionModule;
 import dev.shadowsoffire.apotheosis.spawn.SpawnerModule;
 import dev.shadowsoffire.apotheosis.util.Events;
 import dev.shadowsoffire.apotheosis.util.ModuleCondition;
+import dev.shadowsoffire.apotheosis.util.ZenithModCompat;
 import dev.shadowsoffire.apotheosis.village.VillageModule;
 import dev.shadowsoffire.placebo.config.Configuration;
 import net.fabricmc.api.ModInitializer;
@@ -56,7 +57,7 @@ public class Apotheosis implements ModInitializer {
         AdvancementTriggers.init();
         Events.init();
         ResourceConditions.register(ModuleCondition.ID, ModuleCondition::test);
-        if (FabricLoader.getInstance().isModLoaded("patchouli")) PatchouliCompat.registerPatchouli();
+        ZenithModCompat.patchouliCompat();
 
         Apoth.Tiles.bootstrap();
     }
@@ -76,8 +77,13 @@ public class Apotheosis implements ModInitializer {
         config.setComment("This file allows individual modules of Zenith to be enabled or disabled.\nChanges will have no effect until the next game restart.\nThis file must match on client and server.\nReport any issues found to https://github.com/TheWinABagel/Zenith/issues, not to Apotheosis!");
         if (config.hasChanged()) config.save();
     }
+
     public static ResourceLocation loc(String id) {
         return new ResourceLocation(MODID, id);
+    }
+
+    public static ResourceLocation syntheticLoc(String id) {
+        return loc("/" + id);
     }
 
     /**

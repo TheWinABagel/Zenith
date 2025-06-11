@@ -51,9 +51,7 @@ public class EnchJadePlugin implements IWailaPlugin, IBlockComponentProvider, IS
         if (!Apotheosis.enableEnch) return;
         if (accessor.getBlock() instanceof AnvilBlock) {
             CompoundTag tag = accessor.getServerData();
-            if (ZenithModCompat.EASY_ANVILS_LOADED) {
-                tooltip.add(Component.translatable("zenith.easy_anvils"));
-            }
+            ZenithModCompat.Ench.easyAnvilsWarn(tooltip::add);
             Map<Enchantment, Integer> enchants = EnchantmentHelper.deserializeEnchantments(tag.getList("enchantments", Tag.TAG_COMPOUND));
             for (Map.Entry<Enchantment, Integer> e : enchants.entrySet()) {
                 tooltip.add(e.getKey().getFullname(e.getValue()));
@@ -61,9 +59,7 @@ public class EnchJadePlugin implements IWailaPlugin, IBlockComponentProvider, IS
         }
         CommonTooltipUtil.appendBlockStats(accessor.getLevel(), accessor.getBlockState(), accessor.getPosition(), tooltip::add);
         if (accessor.getBlock() == Blocks.ENCHANTING_TABLE) {
-            if (ZenithModCompat.EASY_MAGIC_LOADED) {
-                tooltip.add(Component.translatable("zenith.easy_magic"));
-            }
+            ZenithModCompat.Ench.easyMagicWarn(tooltip::add);
             CommonTooltipUtil.appendTableStats(accessor.getLevel(), accessor.getPosition(), tooltip::add);
             tooltip.remove(Identifiers.MC_TOTAL_ENCHANTMENT_POWER);
         }

@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.6-SNAPSHOT'
+	id 'fabric-loom' version '1.8-SNAPSHOT'
 	id 'maven-publish'
 	id "com.modrinth.minotaur" version "2.+"
 	id 'net.darkhax.curseforgegradle' version "1.1.16"
@@ -134,8 +134,8 @@ dependencies {
 
 	//Fixes +compat for other mods
 	//Spell power + Spell engine
-	modImplementation(("maven.modrinth:spell-power:${project.spell_power_version}-fabric"))
-	modImplementation(("maven.modrinth:spell-engine:${project.spell_engine_version}-fabric"))
+	modCompileOnly(("maven.modrinth:spell-power:${project.spell_power_version}-fabric"))
+	modCompileOnly(("maven.modrinth:spell-engine:${project.spell_engine_version}-fabric"))
 
 
 	//puzzlelib
