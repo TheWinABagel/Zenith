@@ -61,7 +61,9 @@ public abstract class AnvilBlockMixin extends FallingBlock implements INBTSensit
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new AnvilTile(pos, state);
+        if (Apotheosis.enableEnch){
+            return new AnvilTile(pos, state);
+        } else return null;
     }
 
     @Environment(EnvType.CLIENT)
